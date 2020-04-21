@@ -9,3 +9,4 @@ It should handle the following functions:
 * Return fluorescence data
 * Notify thermal cycler's transition events (cycles and steps)
 * Notify errors and alerts
+
