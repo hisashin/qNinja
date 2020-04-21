@@ -1,0 +1,7 @@
+# app configuration file, instance specific, ties to hostname
+
+# Winston Logging Level. Production should be set to info, see lib/logger.js
+logging_level: debug
+
+# Set the websockets listener port
+port: 10101

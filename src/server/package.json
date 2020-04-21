@@ -1,0 +1,24 @@
+{
+  "name": "Ninja-qPCR-server",
+  "version": "0.0.1",
+  "private": false,
+  "description": "The Ninja-qPCR server component.",
+  "keywords": [
+    "Ninja-qPCR",
+    "realtime",
+    "connection"
+  ],
+  "author": "Valerio della Porta <valerio@della-porta.com> (http://valerio.della-porta.com)",
+  "license": "GPL-3.0",
+  "main": "Ninja-qPCR-server.js",
+  "dependencies": {
+    "config": "^3.1.0",
+    "js-yaml": "^3.13.1",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1",
+    "ws": "^6.2.1"
+  },
+  "scripts": {
+    "start": "export NODE_ENV=dev && nodemon Ninja-qPCR-server.js"
+  }
+}
