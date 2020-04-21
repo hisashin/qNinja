@@ -10,3 +10,8 @@ It should handle the following functions:
 * Notify thermal cycler's transition events (cycles and steps)
 * Notify errors and alerts
 
+## Development
+```
+yarn
+yarn start
+```
