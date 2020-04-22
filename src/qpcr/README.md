@@ -10,7 +10,7 @@ It is just a simple stub. The module simulates  simple PCR thermal profiles.
 # Usage
 
 
-"server_example.js" shows a demo of calling the core module.
+"server_example.js" shows a demo of calling the core module. It simulates a typical PCR thermal profile 10 times faster than real.
 
 ```
 node server_example.js
