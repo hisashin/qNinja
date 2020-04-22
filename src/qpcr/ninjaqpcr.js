@@ -1,7 +1,7 @@
 "use strict";
 
-const ThermalCycler = require("./thermal_cycler");
-const Optics = require("./optics");
+const ThermalCycler = require("./control/thermal_cycler");
+const Optics = require("./control/optics");
 
 /* QPCR Interface */
 class NinjaQPCR {
