@@ -45,7 +45,7 @@ function run_server(controllers, swagger){
       // Message validation TBD.
       messageObj = JSON.parse(message);
 
-      if(messageObj.trans_id && messageObj.service){
+      if(messageObj.trans_id){
         // Save the connection for the transaction id so we can send the reply.
         if(! clients[messageObj.trans_id]){
           if(logger) logger.debug('connection - on message - set clients trans_id ' + messageObj.trans_id);
@@ -67,8 +67,6 @@ function run_server(controllers, swagger){
         // Log the error.
         var err = '';
         if(! messageObj.trans_id) err += 'Missing trans_id';
-        if(! messageObj.service) err += 'Missing service';
-        // if(! service_connections[messageObj.service]) err += 'Unknown service ' + messageObj.service;
         if(logger) logger.error('Could not send message ' + message + ' - ERROR: ' + err);
         send_response(messageObj, {code : 500, message : err}, ws);
       }
@@ -107,7 +105,6 @@ const send_response = (messageObj, data, ws) => {
   var res_msg = { 
     trans_id : messageObj.trans_id,
     action : get_response_action_name(messageObj.action, data),
-    service : messageObj.service,
     resource : messageObj.resource,
     response : data,
     connection_latency : ws.connection_latency,

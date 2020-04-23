@@ -1,0 +1,20 @@
+{
+ "short_name": "Ninja-qPCR Console",
+ "name": "Ninja-qPCR Console",
+ "icons": [
+  {
+   "src": "logo.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "logo-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ],
+ "start_url": "/Users/valerio/Documents/_workarea/COVID19TestTruck.com/Ninjia-qPCR/console/Ninja-qPCR/src/qpcr-console",
+ "display": "standalone",
+ "theme_color": "#000000",
+ "background_color": "#ffffff"
+}
