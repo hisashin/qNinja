@@ -94,7 +94,7 @@ class ThermalCycler {
         this.heatLid.setTargetTemperature(lidTargetTemp);
       }
       this.state.start(now);
-      if (this.eventReceiver != null) {
+      if (this.eventReceiver != null && this.eventReceiver.onThermalTransition != null) {
         // TODO: define data format
         this.eventReceiver.onThermalTransition({ "data":"TODO thermal transition event" });
       }
