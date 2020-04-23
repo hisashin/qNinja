@@ -42,14 +42,30 @@ class Optics {
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
   measureFluorescence (well) {
-    // TODO: add measurement data
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
-    const measurement = Math.random(); //TODO dummy
+    const measurement = Math.random(); //TODO: better dummy data (such as sigmoid)
     well.fluorescence.push({t:elapsed, f:measurement});
+    if (well.index == this.wellsCount - 1) {
+      // Last well
+      if (this.eventReceiver != null && this.eventReceiver.onFluorescenceDataUpdate != null) {
+        this.eventReceiver.onFluorescenceDataUpdate(this.getStatus());
+      }
+    }
   }
   getStatus () {
-    return this.wells;
-    //return "TODO optics";
+    // TODO: return only latest measurements
+    let data = [];
+    this.wells.forEach((well)=>{
+      let wellData = {
+        id:well.id,
+        fluorescence:[]
+      };
+      if (well.fluorescence.length > 0) {
+        wellData.fluorescence.push(well.fluorescence[well.fluorescence.length-1]);
+      }
+      data.push(wellData);
+    });
+    return data;
   }
 }
 

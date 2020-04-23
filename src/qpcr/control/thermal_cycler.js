@@ -99,6 +99,9 @@ class ThermalCycler {
         this.eventReceiver.onThermalTransition({ "data":"TODO thermal transition event" });
       }
     }
+    if (this.eventReceiver != null && this.eventReceiver.onThermalDataUpdate != null) {
+      this.eventReceiver.onThermalDataUpdate(this.getStatus());
+    }
   }
   getStatus () {
     // TODO: define data format

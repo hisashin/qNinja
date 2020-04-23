@@ -37,9 +37,20 @@ class NinjaQPCR {
     return this.optics.getStatus();
   }
   onThermalTransition (data) {
-    if (this.receiver != null) {
+    if (this.receiver != null && this.receiver.onThermalTransition != null) {
       this.receiver.onThermalTransition(data);
     }
+  }
+  onThermalDataUpdate (data) {
+    if (this.receiver != null && this.receiver.onThermalDataUpdate) {
+      this.receiver.onThermalDataUpdate(data);
+    }
+  }
+  onFluorescenceDataUpdate (data) {
+    if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
+      this.receiver.onFluorescenceDataUpdate(data);
+    }
+    
   }
   
 }

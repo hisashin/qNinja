@@ -33,12 +33,23 @@ class NinjaQPCRServerExample {
     };
     qpcr.start(protocol);
     /*
+    // Polling
      setInterval(()=>{ console.log(qpcr.getStatus()); }, 1000);
-     */
-    setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
-    setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);
+     setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);
+    */
   }
+  /* Callback functions */
   onThermalTransition (data) {
+    console.log("onThermalTransition");
+    console.log(data);
+  }
+  onThermalDataUpdate (data) {
+    console.log("onThermalDataUpdate");
+    console.log(data);
+  }
+  onFluorescenceDataUpdate (data) {
+    console.log("onFluorescenceDataUpdate");
     console.log(data);
   }
 }
