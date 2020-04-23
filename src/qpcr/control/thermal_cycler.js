@@ -1,11 +1,8 @@
 "use strict";
-class PID {
-  constructor (p, i, d) {
-    this.p = p;
-    this.i = i;
-    this.d = d;
-  }
-}
+
+const Well = require("./well");
+const HeatLid = require("./heat_lid");
+
 class Thermistor {
   constructor () {
     this.temperature = 25.0; // Celsiust
@@ -13,38 +10,6 @@ class Thermistor {
   measure () {
     
   }
-}
-const getDummyTemp = (current, target, interval) => {
-  if (current < target) {
-    return Math.min(target, current + DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
-  } else {
-    return Math.max(target, current - DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
-  }
-};
-class Well {
-  constructor () {
-    this.temperature = 25;
-    this.targetTemperature = 25;
-  }
-  setTargetTemperature (targetTemperature) {
-    this.targetTemperature = targetTemperature;
-  }
-  control () {
-    this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
-  }
-}
-class HeatLid {
-  constructor () {
-    this.temperature = 25;
-    this.targetTemperature = 25;
-  }
-  setTargetTemperature (targetTemperature) {
-    this.targetTemperature = targetTemperature;
-  }
-  control () {
-    this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
-  }
-  
 }
 const TEMP_TOLERANCE_LID = 1.0;
 const TEMP_TOLERANCE_WELL = 1.0;
