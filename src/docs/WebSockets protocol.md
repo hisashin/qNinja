@@ -48,6 +48,7 @@ Here is a template of JSON message formats for the request and response, phases 
 ```
 // request
 { trans_id   : "2c592003-1667-491f-8fd2-796acbae198b",
+  service    : null,
   action     : "crt_updt",
   resource   : "experiment",
   parameters : {title : "Canonical PCR", 
