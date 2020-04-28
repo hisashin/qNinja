@@ -101,6 +101,25 @@ function run_server(controllers, swagger){
   });
 }
 
+module.exports.broadcast = function(resource, data) {
+  console.log('broadcast', data)
+  wss.clients.forEach(function each(ws) {
+    var res_msg = { 
+      trans_id : uuidv4(),
+      action : 'CRT_UPDTD',
+      resource : resource,
+      response : data
+    }
+    console.log('== broadcast:', res_msg)
+    try{
+      ws.send(JSON.stringify(res_msg));
+      console.log('== broadcast sent')
+    }catch(e){
+      if(logger) logger.error('broadcast - ' + JSON.stringify(e, null, ' '));
+    }
+  });
+}
+
 const send_response = (messageObj, data, ws) => {
   var res_msg = { 
     trans_id : messageObj.trans_id,

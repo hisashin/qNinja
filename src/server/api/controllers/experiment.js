@@ -1,4 +1,5 @@
 'use strict';
+const ExperimentCtrl = require('../lib/ExperimentCtrl.js');
 
 module.exports = {
 	update_experiment: update_experiment,
@@ -9,6 +10,7 @@ module.exports = {
 async function update_experiment(messageObj) {
   try{
     if(logger) logger.info('update_experiment controller called - messageObj: ' + JSON.stringify(messageObj));
+    ExperimentCtrl.start();
     const data = {
       code : 200,
       message : 'Started experiment'
@@ -25,6 +27,7 @@ async function update_experiment(messageObj) {
 async function delete_experiment(messageObj) {
   try{
     if(logger) logger.info('delete_experiment controller called');
+    ExperimentCtrl.stop();
     const data = {
       code : 200,
       message : 'Stopped experiment'

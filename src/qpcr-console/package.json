@@ -19,7 +19,7 @@
   "react-router-bootstrap": "^0.25.0",
   "react-router-dom": "^5.1.2",
   "react-scripts": "3.4.1",
-  "rtcmesh-react": "^0.0.13"
+  "rtcmesh-react": "^0.0.15"
  },
  "scripts": {
   "start": "react-scripts start",
