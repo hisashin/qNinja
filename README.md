@@ -1,2 +1,2 @@
 # Ninja-qPCR
-Open source Real-Time PCR Implementation
+Open source Real-Time Quantitative PCR Implementation

@@ -1,0 +1,27 @@
+.DS_Store
+build/
+
+# Logs
+logs/
+*.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Output of 'npm pack'
+*.tgz
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Optional npm cache directory
+.npm

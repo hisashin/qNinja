@@ -1,0 +1,102 @@
+swagger-ws: "2.0"
+info:
+  version: "0.0.1"
+  title: Server
+# during dev, should point to your local machine
+#host: localhost:10101
+# basePath prefixes all resource paths 
+#basePath: /
+# 
+# schemes:
+#   # tip: remove ws to make production-grade
+#   - ws
+#   - wss
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+resources:
+  experiment:
+    x-swagger-router-controller: experiment
+    crt_updt:
+      description: Start an experiment.
+      operationId: update_experiment
+      parameters:
+        - name: id
+          description: The experiment id
+          required: true
+          type: string
+        - name: data
+          description: The experiment data
+          required: true
+          schema:
+            $ref: '#/definitions/experiment'
+      responses:
+        "200":
+          message: Success
+          schema:
+            $ref: '#/definitions/thermal_cycler_status'
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+    delete:
+      description: Cancel an experiment.
+      operationId: delete_experiment
+      parameters:
+        - name: id
+          description: The experiment id
+          required: true
+          type: string
+      responses:
+        "200":
+          message: Success
+          schema:
+            type: object
+            properties:
+              experiment_id:
+                type: string
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+  thermal_cycler_status:
+    x-swagger-router-controller: thermal_cycler_status
+    retrieve:
+      description: Returns the thermal_cycler_status
+      operationId: get_thermal_cycler_status
+      parameters:
+        - name: id
+          description: The thermal_cycler_status id
+          required: true
+          type: string
+      responses:
+        "200":
+          message: Success
+          schema:
+            type: object
+            properties:
+              request:
+                $ref: '#/definitions/thermal_cycler_status'
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+# complex objects have schema definitions
+definitions:
+  experiment:
+    example: '{id:e0588b11-b11e-416d-abc2-7d910c7e, prop1:"hello", prop2:"there"}'
+    properties:
+      prop1:
+        type: string
+      prop2:
+        type: string
+  thermal_cycler_status:
+    example: '{id:e0588b11-b11e-416d-abc2-7d910c7e, prop1:"hello", prop2:"there"}'
+    properties:
+      prop1:
+        type: string
+      prop2:
+        type: string

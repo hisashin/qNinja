@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.content{
+  margin: 0;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+.centered{ text-align: center; }
+
+.cursor_pointer{ cursor: pointer; }

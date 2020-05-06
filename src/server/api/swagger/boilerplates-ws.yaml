@@ -1,0 +1,134 @@
+resources:
+  boilerplates:
+    x-swagger-router-controller: boilerplates
+    retrieve:
+      description: Returns all or part of the boilerplates
+      operationId: get_boilerplates
+      parameters:
+        - name: filter
+          description: Returns only the records for this filter if present
+          required: false
+          type: string
+      response:
+        "200":
+          message: Success
+          schema:
+            type: object
+            example: 
+            properties:
+              boilerplate:
+                type: array
+                boilerplates:
+                  $ref: '#/definitions/boilerplate'
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+    patch:
+      description: Partial update of one or more boilerplates.
+      operationId: patch_boilerplates
+      parameters:
+        - name: instructions
+          schema:
+            type: array
+            boilerplates:
+              $ref: "#/definitions/boilerplate_patch"
+      responses:
+        "200":
+          message: Success
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+  boilerplate:
+    x-swagger-router-controller: boilerplates
+    retrieve:
+      description: Returns the boilerplate
+      operationId: get_boilerplate
+      parameters:
+        - name: id
+          description: The boilerplate id
+          required: true
+          type: string
+      responses:
+        "200":
+          message: Success
+          schema:
+            type: object
+            properties:
+              request:
+                $ref: '#/definitions/boilerplate'
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+    crt_updt:
+      description: Create or Update a boilerplate.
+      operationId: update_boilerplate
+      parameters:
+        - name: id
+          description: The boilerplate id
+          required: true
+          type: string
+        - name: data
+          description: The boilerplate data
+          required: true
+          schema:
+            $ref: '#/definitions/boilerplate'
+      responses:
+        "200":
+          message: Success
+          schema:
+            type: object
+            properties:
+             boilerplate_id:
+                type: string
+                example: e0588b11-b11e-416d-abc2-7d910c7e
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+    delete:
+      description: Delete a boilerplate.
+      operationId: delete_boilerplate
+      parameters:
+        - name: id
+          description: The boilerplate id
+          required: true
+          type: string
+      responses:
+        "200":
+          message: Success
+          schema:
+            type: object
+            properties:
+              boilerplate_id:
+                type: string
+        "400":
+          message: Failed validation.
+        default:
+          message: Error
+
+
+# complex objects have schema definitions
+definitions:
+  boilerplate:
+    example: '{id:e0588b11-b11e-416d-abc2-7d910c7e, prop1:"hello", prop2:"there"}'
+    required:
+      - id
+    properties:
+      id:
+        type: string
+      prop1:
+        type: string
+      prop2:
+        type: string
+  boilerplate_patch:
+    properties:
+      op:
+        type: string
+      boilerplate_id:
+        type: string
+      data:
+        type: object
+      
