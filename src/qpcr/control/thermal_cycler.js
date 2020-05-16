@@ -1,7 +1,9 @@
 "use strict";
 
+/*
 const Well = require("./well");
 const HeatLid = require("./heat_lid");
+*/
 
 class Thermistor {
   constructor () {
@@ -18,9 +20,13 @@ const TEMP_CONTROL_INTERVAL_MSEC = 500;
 const TIME_RATIO = 5; // For fast debugging
 
 class ThermalCycler {
-  constructor () {
+  constructor (conf) {
+    this.well = conf.getWell();
+    this.heatLid = conf.getHeatLid();
+    /*
     this.well = new Well();
     this.heatLid = new HeatLid();
+    */
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {

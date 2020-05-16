@@ -5,8 +5,11 @@ const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
 const MEASUREMENT_PER_CH_MSEC = 500;
 const EXCITATION_DURATION_MSEC = 100;
 class Optics {
-  constructor () {
-    this.wellsCount = 8;
+  constructor (hardwareConf) {
+    // TODO apply hardware conf (getLED/getFluorescenceSensingUnit)
+    this.ledUnit = hardwareConf.getLEDUnit();
+    this.fluorescenceSensingUnit = hardwareConf.getFluorescenceSensingUnit();
+    this.wellsCount = hardwareConf.wellsCount();
     this.fluorescence = [
       // Channel array?
     ];

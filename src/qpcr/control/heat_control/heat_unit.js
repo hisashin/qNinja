@@ -14,25 +14,32 @@ class SampleOutput {
   setOutput (outputValue) {
     // TODO: Set physical output here.
   }
+  off () {
+    // TODO: Turn off
+  }
 }
-class SampleSensing {
-  
-}
-class HeatUnit () {
+class HeatUnit {
   constructor (pid, sensing, output) {
     this.pid = pid;
     this.sensing = sensing;
     this.output = output;
+    this.temperature = 0.0; // Celsius
+    this.targetTemperature = 0.0; // Celsius
   }
-  setTargetTemperature () {
-    // TODO
+  setTargetTemperature (targetTemperature) {
+    this.targetTemperature = targetTemperature;
   }
   control () {
-    const temperature = this.sensing.getTemperature();
+    this.temperature = this.sensing.getTemperature();
     this.pid.setTemperature(temperature);
     this.output.setOutput(this.pid.getOutput())
   }
   temperature () {
-
+    return this.temperature;
+  }
+  off() {
+    this.output.off();
   }
 }
+
+module.exports = HeatUnit;
