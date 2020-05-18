@@ -6,23 +6,24 @@ const SPI = require('pi-spi');
 const rpio = require('rpio');
 
 class TLC59281DBQR {
-  // SPI
-  // TODO: Grayscale
-  // TODO: Dot Correction
-  // TODO: Channel On/Off
-  constructor (spiCh, pinLat, pinBlank) {
-    this.pinLat = pinLat;
-    this.device = "/dev/spidev0.0";
+  constructor (spiCh, pinLatch, pinBlank) {
+    this.pinLatch = pinLatch;
+    this.pinBlank = pinBlank;
+    this.device = spiCh;
     this.spi = null;
+    rpio.open(this.pinLatch, rpio.OUTPUT, rpio.LOW);
   }
   initialize () {
     this.spi = SPI.initialize(device);
+    // TODO: Start PWM on BLANK pin
   }
   selectChannel (ch) {
-    buff = 0x0001;
-    this.spi.write(buff, );
-    //spi.write(outbuffer, cb);
-    // latch
+    const buff = 0x01 << ch;
+    this.spi.write(buff, ()=>{
+      // Latch pulse
+      rpio.write(this.pinLatch, rpio.HIGH);
+      rpio.write(this.pinLatch, rpio.LOW);
+    });
   }
 }
 module.exports = TLC59281DBQR;
