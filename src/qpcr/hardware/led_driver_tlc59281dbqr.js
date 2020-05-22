@@ -20,8 +20,10 @@ class TLC59281DBQR {
     // TODO: Start PWM on BLANK pin
   }
   selectChannel (ch) {
-    const buffVal = 0x01 << ch;
-    this.spi.write(new Buffer([buffVal]), ()=>{
+    const buffVal = 0x0001 << ch;
+    const lower = 0xFF & buffVal;
+    const upper = 0xFF & (buffVal >> 8);
+    this.spi.write(new Buffer([lower, upper]), ()=>{
       // Latch pulse
       rpio.write(this.pinLatch, rpio.HIGH);
       rpio.write(this.pinLatch, rpio.LOW);
