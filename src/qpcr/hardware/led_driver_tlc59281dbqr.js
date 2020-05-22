@@ -6,6 +6,8 @@
 // npm pi-spi https://www.npmjs.com/package/pi-spi
 const SPI = require('pi-spi');
 const rpio = require('rpio');
+const raspi = require('raspi');
+const pwm = require('raspi-pwm');
 
 class TLC59281DBQR {
   constructor (spiCh, pinLatch, pinBlank) {
@@ -17,17 +19,21 @@ class TLC59281DBQR {
   }
   initialize () {
     this.spi = SPI.initialize(this.device);
-    // TODO: Start PWM on BLANK pin
+    this.blank = new pwm.PWM(23); // Use GPIO{n} number
   }
   selectChannel (ch) {
     const buffVal = 0x0001 << ch;
     const lower = 0xFF & buffVal;
     const upper = 0xFF & (buffVal >> 8);
-    this.spi.write(new Buffer([lower, upper]), ()=>{
+    this.spi.write(new Buffer([upper, lower]), ()=>{
       // Latch pulse
       rpio.write(this.pinLatch, rpio.HIGH);
       rpio.write(this.pinLatch, rpio.LOW);
     });
   }
+  setDuty (val) {
+    this.blank.write(val);
+  }
 }
 module.exports = TLC59281DBQR;
+

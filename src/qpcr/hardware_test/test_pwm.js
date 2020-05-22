@@ -2,7 +2,7 @@ const raspi = require('raspi');
 const pwm = require('raspi-pwm');
  
 raspi.init(() => {
-  const led = new pwm.PWM(23);
+  const led = new pwm.PWM(23); // Use GPIO{n} number
   let val = 0.1;
   setInterval(()=>{
     led.write(val);
