@@ -38,7 +38,8 @@ class HeatLidSensing {
     
   }
   getTemperature () {
-    // TODO: Get temperature.
+    // TODO: Read ADC
+    // TODO: calculate
     return 42.0;
   }
 }
@@ -62,33 +63,31 @@ class NinjaQPCRHardwareConf {
   }
   getWell () {
     // TODO
-    const WELL_P = 1.0;
-    const WELL_I = 1.0;
-    const WELL_D = 1.0;
-    const pid = new PID(LID_P, LID_I, LID_D);
-    /*
-    const sensing = new WellSensing (); // TODO replace with concrete thermistor unit or dummy
-    const output = new WellOutput(); // TODO replace with concrete thermistor unit or dummy 
+    const WELL_KP = 1.0;
+    const WELL_KI = 1.0;
+    const WELL_KD = 1.0;
+    const pid = new PID(LID_KP, LID_KI, LID_KD);
+    const sensing = new WellSensing ();
+    const output = new WellOutput();
     return new HeatUnit(pid, sensing, output);
-    */
   }
   getHeatLid () {
     // TODO
-    const HEATER_P = 1.0;
-    const HEATER_I = 1.0;
-    const HEATER_D = 1.0;
-    const pid = new PID(HEATER_P, HEATER_I, HEATER_D);
-    /*
-    const sensing = new HeatLidSensing (); // TODO replace with concrete thermistor unit or dummy
-    const output = new HeatLidOutput(); // TODO replace with concrete thermistor unit or dummy 
+    const HEATER_KP = 1.0;
+    const HEATER_KI = 1.0;
+    const HEATER_KD = 1.0;
+    const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
+    const sensing = new HeatLidSensing ();
+    const output = new HeatLidOutput();
     return new HeatUnit(pid, sensing, output);
-    */
   }
   getLEDUnit () {
     // TODO
+    return null;
   }
   getFluorescenceSensingUnit () {
     // TODO
+    return null;
   }
 };
 

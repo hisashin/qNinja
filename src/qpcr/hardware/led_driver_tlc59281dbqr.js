@@ -1,9 +1,13 @@
 // TLC59281DBQR
 // RPi SPI: https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
+// $ sudo raspi-config
+// and enable SPI, then reboot
 // Datasheet: https://www.ti.com/store/ti/en/p/product/?p=TLC59281DBQR
 // npm pi-spi https://www.npmjs.com/package/pi-spi
 const SPI = require('pi-spi');
 const rpio = require('rpio');
+const raspi = require('raspi');
+const pwm = require('raspi-pwm');
 
 class TLC59281DBQR {
   constructor (spiCh, pinLatch, pinBlank) {
@@ -14,16 +18,22 @@ class TLC59281DBQR {
     rpio.open(this.pinLatch, rpio.OUTPUT, rpio.LOW);
   }
   initialize () {
-    this.spi = SPI.initialize(device);
-    // TODO: Start PWM on BLANK pin
+    this.spi = SPI.initialize(this.device);
+    this.blank = new pwm.PWM(23); // Use GPIO{n} number
   }
   selectChannel (ch) {
-    const buff = 0x01 << ch;
-    this.spi.write(buff, ()=>{
+    const buffVal = 0x0001 << ch;
+    const lower = 0xFF & buffVal;
+    const upper = 0xFF & (buffVal >> 8);
+    this.spi.write(new Buffer([upper, lower]), ()=>{
       // Latch pulse
       rpio.write(this.pinLatch, rpio.HIGH);
       rpio.write(this.pinLatch, rpio.LOW);
     });
   }
+  setDuty (val) {
+    this.blank.write(val);
+  }
 }
 module.exports = TLC59281DBQR;
+
