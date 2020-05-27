@@ -62,6 +62,7 @@ class ADS1219IPWR {
     const currentVal = this.readConfigurationRegister();
     // console.log(currentVal);
     const muxBits = MUX_SINGLE_END_VALS[channel];
+    // Note: By default, it uses internal ref voltage (2.048V)
     const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
     this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
