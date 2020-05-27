@@ -25,6 +25,7 @@ const MUX_SINGLE_END_VALS = [
 
 /* Commands */
 const COMMAND_RDATA = 0b00010000;
+const COMMAND_SSYNC = 0b00001000;
 const COMMAND_RREG = 0b00100000;
 const COMMAND_WREG = 0b01000000;
 
@@ -40,7 +41,7 @@ class ADS1219IPWR {
     }
     this.i2cBusNumber = i2cBusNumber;
   }
-  start () {
+  initialize () {
     this.i2c = i2c.openSync(this.i2cBusNumber);  //i2c1 or i2c2
   }
   /*
@@ -59,9 +60,11 @@ class ADS1219IPWR {
   }
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
+    // console.log(currentVal);
     const muxBits = MUX_SINGLE_END_VALS[channel];
-    const val = (0b00011111 & currentVal) | (muxBits << 5);
+    const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
     this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
   }
   setDataRate () {
     //20,90,330,1000
@@ -70,16 +73,16 @@ class ADS1219IPWR {
   readConversionData () {
     this.i2c.sendByteSync(this.slaveAddress, COMMAND_RDATA);
     // Read 3 bytes
-    let val = this.i2c.receiveByteSync(NAU7802_ADDR);
+    let val = this.i2c.receiveByteSync(this.slaveAddress);
     val <<= 8;
-    val |= this.i2c.receiveByteSync(NAU7802_ADDR);
+    val |= this.i2c.receiveByteSync(this.slaveAddress);
     val <<= 8;
-    val |= this.i2c.receiveByteSync(NAU7802_ADDR);
+    val |= this.i2c.receiveByteSync(this.slaveAddress);
     if(val & 0x00800000){
       val = ~val + 1;
       val = -(val & 0xFFFFFF);
     }
-    return val;
+    return val / (1.0 * 0x00800000);
     
   }
   reset () {
