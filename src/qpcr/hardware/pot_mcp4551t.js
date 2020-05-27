@@ -1,4 +1,4 @@
-// MCP4551T-502E/MS
+// Digital potentiometer MCP4551T-502E/MS
 // TODO
 class MCP4551T {
   
