@@ -8,20 +8,20 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -30,8 +30,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -39,12 +39,12 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
@@ -916,6 +916,65 @@
 <text x="-3.7084" y="2.3622" size="1.27" layer="51" ratio="6" rot="SR0">*</text>
 <text x="-3.9878" y="5.0546" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="SU_48_ADI-BREAK" urn="urn:adsk.eagle:footprint:20462948/1" library_version="26">
+<pad name="P$1" x="0" y="0" drill="0.6" shape="square"/>
+<pad name="P$2" x="0" y="-2.54" drill="0.6"/>
+<pad name="P$3" x="0" y="-5.08" drill="0.6"/>
+<pad name="P$4" x="0" y="-7.62" drill="0.6"/>
+<pad name="P$5" x="0" y="-10.16" drill="0.6"/>
+<pad name="P$6" x="0" y="-12.7" drill="0.6"/>
+<pad name="P$7" x="0" y="-15.24" drill="0.6"/>
+<pad name="P$8" x="0" y="-17.78" drill="0.6"/>
+<pad name="P$9" x="0" y="-20.32" drill="0.6"/>
+<pad name="P$10" x="0" y="-22.86" drill="0.6"/>
+<pad name="P$11" x="0" y="-25.4" drill="0.6"/>
+<pad name="P$12" x="0" y="-27.94" drill="0.6"/>
+<pad name="P$13" x="0" y="-30.48" drill="0.6"/>
+<pad name="P$14" x="0" y="-33.02" drill="0.6"/>
+<pad name="P$15" x="0" y="-35.56" drill="0.6"/>
+<pad name="P$16" x="0" y="-38.1" drill="0.6"/>
+<pad name="P$17" x="0" y="-40.64" drill="0.6"/>
+<pad name="P$18" x="0" y="-43.18" drill="0.6"/>
+<pad name="P$19" x="0" y="-45.72" drill="0.6"/>
+<pad name="P$20" x="0" y="-48.26" drill="0.6"/>
+<pad name="P$21" x="0" y="-50.8" drill="0.6"/>
+<pad name="P$22" x="0" y="-53.34" drill="0.6"/>
+<pad name="P$23" x="0" y="-55.88" drill="0.6"/>
+<pad name="P$24" x="0" y="-58.42" drill="0.6"/>
+<pad name="P$25" x="22.86" y="-58.42" drill="0.6"/>
+<pad name="P$26" x="22.86" y="-55.88" drill="0.6"/>
+<pad name="P$27" x="22.86" y="-53.34" drill="0.6"/>
+<pad name="P$28" x="22.86" y="-50.8" drill="0.6"/>
+<pad name="P$29" x="22.86" y="-48.26" drill="0.6"/>
+<pad name="P$30" x="22.86" y="-45.72" drill="0.6"/>
+<pad name="P$31" x="22.86" y="-43.18" drill="0.6"/>
+<pad name="P$32" x="22.86" y="-40.64" drill="0.6"/>
+<pad name="P$33" x="22.86" y="-38.1" drill="0.6"/>
+<pad name="P$34" x="22.86" y="-35.56" drill="0.6"/>
+<pad name="P$35" x="22.86" y="-33.02" drill="0.6"/>
+<pad name="P$36" x="22.86" y="-30.48" drill="0.6"/>
+<pad name="P$37" x="22.86" y="-27.94" drill="0.6"/>
+<pad name="P$38" x="22.86" y="-25.4" drill="0.6"/>
+<pad name="P$39" x="22.86" y="-22.86" drill="0.6"/>
+<pad name="P$40" x="22.86" y="-20.32" drill="0.6"/>
+<pad name="P$41" x="22.86" y="-17.78" drill="0.6"/>
+<pad name="P$42" x="22.86" y="-15.24" drill="0.6"/>
+<pad name="P$43" x="22.86" y="-12.7" drill="0.6"/>
+<pad name="P$44" x="22.86" y="-10.16" drill="0.6"/>
+<pad name="P$45" x="22.86" y="-7.62" drill="0.6"/>
+<pad name="P$46" x="22.86" y="-5.08" drill="0.6"/>
+<pad name="P$47" x="22.86" y="-2.54" drill="0.6"/>
+<pad name="P$48" x="22.86" y="0" drill="0.6"/>
+<wire x1="-1.27" y1="1.27" x2="1.27" y2="1.27" width="0.127" layer="21"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="-59.69" width="0.127" layer="21"/>
+<wire x1="1.27" y1="-59.69" x2="-1.27" y2="-59.69" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="-59.69" x2="-1.27" y2="1.27" width="0.127" layer="21"/>
+<wire x1="21.59" y1="1.27" x2="21.59" y2="-59.69" width="0.127" layer="21"/>
+<wire x1="21.59" y1="-59.69" x2="24.13" y2="-59.69" width="0.127" layer="21"/>
+<wire x1="24.13" y1="-59.69" x2="24.13" y2="1.27" width="0.127" layer="21"/>
+<wire x1="24.13" y1="1.27" x2="21.59" y2="1.27" width="0.127" layer="21"/>
+<circle x="-0.8128" y="2.8194" radius="0.86285" width="0.127" layer="21"/>
+</package>
 </packages>
 <packages3d>
 <package3d name="SU_48_ADI" urn="urn:adsk.eagle:package:20301612/2" type="model" library_version="9">
@@ -931,6 +990,11 @@
 <package3d name="SU_48_ADI-L" urn="urn:adsk.eagle:package:20301611/2" type="model" library_version="9">
 <packageinstances>
 <packageinstance name="SU_48_ADI-L"/>
+</packageinstances>
+</package3d>
+<package3d name="SU_48_ADI-BREAK" urn="urn:adsk.eagle:package:20462949/2" type="model" library_version="26">
+<packageinstances>
+<packageinstance name="SU_48_ADI-BREAK"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -1003,7 +1067,7 @@
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="ADG731BSUZ" urn="urn:adsk.eagle:component:20301619/2" prefix="U" library_version="9">
+<deviceset name="ADG731BSUZ" urn="urn:adsk.eagle:component:20301619/4" prefix="U" library_version="26">
 <gates>
 <gate name="A" symbol="ADG731BSUZ" x="0" y="0"/>
 <gate name="B" symbol="ADG731BSUZ_A" x="54.356" y="0"/>
@@ -1198,6 +1262,64 @@
 </technology>
 </technologies>
 </device>
+<device name="B" package="SU_48_ADI-BREAK">
+<connects>
+<connect gate="A" pin="D" pad="P$43"/>
+<connect gate="A" pin="DIN" pad="P$18"/>
+<connect gate="A" pin="S1" pad="P$12"/>
+<connect gate="A" pin="S10" pad="P$3"/>
+<connect gate="A" pin="S11" pad="P$2"/>
+<connect gate="A" pin="S12" pad="P$1"/>
+<connect gate="A" pin="S13" pad="P$48"/>
+<connect gate="A" pin="S14" pad="P$47"/>
+<connect gate="A" pin="S15" pad="P$46"/>
+<connect gate="A" pin="S16" pad="P$45"/>
+<connect gate="A" pin="S17" pad="P$25"/>
+<connect gate="A" pin="S18" pad="P$26"/>
+<connect gate="A" pin="S19" pad="P$27"/>
+<connect gate="A" pin="S2" pad="P$11"/>
+<connect gate="A" pin="S20" pad="P$28"/>
+<connect gate="A" pin="S21" pad="P$29"/>
+<connect gate="A" pin="S22" pad="P$30"/>
+<connect gate="A" pin="S23" pad="P$31"/>
+<connect gate="A" pin="S24" pad="P$32"/>
+<connect gate="A" pin="S25" pad="P$33"/>
+<connect gate="A" pin="S26" pad="P$34"/>
+<connect gate="A" pin="S27" pad="P$35"/>
+<connect gate="A" pin="S28" pad="P$36"/>
+<connect gate="A" pin="S29" pad="P$37"/>
+<connect gate="A" pin="S3" pad="P$10"/>
+<connect gate="A" pin="S30" pad="P$38"/>
+<connect gate="A" pin="S31" pad="P$39"/>
+<connect gate="A" pin="S32" pad="P$40"/>
+<connect gate="A" pin="S4" pad="P$9"/>
+<connect gate="A" pin="S5" pad="P$8"/>
+<connect gate="A" pin="S6" pad="P$7"/>
+<connect gate="A" pin="S7" pad="P$6"/>
+<connect gate="A" pin="S8" pad="P$5"/>
+<connect gate="A" pin="S9" pad="P$4"/>
+<connect gate="A" pin="SCLK" pad="P$19"/>
+<connect gate="A" pin="SYNC" pad="P$17"/>
+<connect gate="B" pin="GND" pad="P$23"/>
+<connect gate="B" pin="NC" pad="P$44"/>
+<connect gate="B" pin="NC_2" pad="P$15"/>
+<connect gate="B" pin="NC_3" pad="P$16"/>
+<connect gate="B" pin="NC_4" pad="P$20"/>
+<connect gate="B" pin="NC_5" pad="P$21"/>
+<connect gate="B" pin="NC_6" pad="P$22"/>
+<connect gate="B" pin="NC_7" pad="P$41"/>
+<connect gate="B" pin="NC_8" pad="P$42"/>
+<connect gate="B" pin="VDD" pad="P$14"/>
+<connect gate="B" pin="VDD_2" pad="P$13"/>
+<connect gate="B" pin="VSS" pad="P$24"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:20462949/2"/>
+</package3dinstances>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
 </devices>
 </deviceset>
 </devicesets>
@@ -1212,7 +1334,7 @@
 </class>
 </classes>
 <parts>
-<part name="U1" library="Ninja_qPCR" library_urn="urn:adsk.eagle:library:20300418" deviceset="ADG731BSUZ" device="" package3d_urn="urn:adsk.eagle:package:20301612/2"/>
+<part name="U1" library="Ninja_qPCR" library_urn="urn:adsk.eagle:library:20300418" deviceset="ADG731BSUZ" device="B" package3d_urn="urn:adsk.eagle:package:20462949/2" value="ADG731BSUZB"/>
 </parts>
 <sheets>
 <sheet>
