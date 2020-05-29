@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name Ninja-qPCR)(type KiCad)(uri /Users/shingo/github/Ninja-qPCR/kicad/qPCR-kicad/Ninja-qPCR.pretty)(options "")(descr ""))
+)
