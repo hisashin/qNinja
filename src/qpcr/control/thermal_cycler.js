@@ -7,7 +7,7 @@ const HeatLid = require("./heat_lid");
 
 class Thermistor {
   constructor () {
-    this.temperature = 25.0; // Celsiust
+    this.temperature = 25.0; // Celsius
   }
   measure () {
     
