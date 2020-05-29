@@ -9,6 +9,9 @@ const rpio = require('rpio');
 const raspi = require('raspi');
 const pwm = require('raspi-pwm');
 
+/*
+  SPI channel example: "/dev/spidev0.0"
+*/ 
 class TLC59281DBQR {
   constructor (spiCh, pinLatch, pinBlank) {
     this.pinLatch = pinLatch;
