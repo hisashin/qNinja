@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/shingo/github/Ninja-qPCR/kicad/qPCR-kicad/module/photoarray/qPCR-photoarray.sch)
-    (date "2020 May 29, Friday 01:07:22")
+    (date "2020 May 29, Friday 23:15:39")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
