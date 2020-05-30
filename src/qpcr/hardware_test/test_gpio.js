@@ -7,9 +7,8 @@ const startBlink = (pin /* J8 pin number (not GPIO ID) */, interval /* msec */) 
   setInterval(()=>{
     on = !on;
     const val = (on) ? rpio.HIGH : rpio.LOW;
-    console.log(val);
     rpio.write(pin, val);
   }, interval);
   
 }
-startBlink(3, 1000);
+startBlink(40, 10);

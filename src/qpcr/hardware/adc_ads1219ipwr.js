@@ -58,6 +58,25 @@ class ADS1219IPWR {
       this.i2c.sendByteSync(this.slaveAddress, COMMAND_RREG);
       return this.i2c.receiveByteSync(this.slaveAddress);
   }
+  selectDataRate (rate) {
+    console.log("SelectDataRate %d", rate);
+    let rateBits = DATA_RATE_20SPS;
+    if (rate == 20) {
+      rateBits = DATA_RATE_20SPS;
+    } else if (rate == 90) {
+      rateBits = DATA_RATE_90SPS;
+    } else if (rate == 330) {
+      rateBits = DATA_RATE_330SPS;
+    } else if (rate == 1000) {
+      rateBits = DATA_RATE_1000SPS;
+    } else {
+      console.warn("Data rate %d is invalid. Supported values are 20, 90, 330 and 1000.", rate);
+    }
+    const currentVal = this.readConfigurationRegister();
+    const val = (0b11110011 & currentVal) | (rateBits << 2)
+    this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
+  }
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
     // console.log(currentVal);
@@ -67,8 +86,8 @@ class ADS1219IPWR {
     this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
   }
-  setDataRate () {
-    //20,90,330,1000
+  sync () {
+    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
   }
   /* Returns raw ADC value */
   readConversionData () {
