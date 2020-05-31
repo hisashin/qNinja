@@ -28,9 +28,10 @@ setInterval(()=>{
   adc.selectChannel(ch);
   const targetCh = ch;
   setTimeout(()=>{
-    const val = adc.readConversionData();
-    const temp = thermistor.getTemp(val);
-    console.log("Ch:%d %f %f", targetCh, val, temp);
+    adc.readConversionData((val)=>{
+      const temp = thermistor.getTemp(val);
+      console.log("Ch:%d %f %f", targetCh, val, temp);
+    });
   }, 250);
   ch = (ch + 1)  % 2;
 },500);

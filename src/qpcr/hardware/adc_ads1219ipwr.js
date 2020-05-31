@@ -90,7 +90,7 @@ class ADS1219IPWR {
     this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
   }
   /* Returns raw ADC value */
-  readConversionData () {
+  readConversionDataSync () {
     this.i2c.sendByteSync(this.slaveAddress, COMMAND_RDATA);
     // Read 3 bytes
     let val = this.i2c.receiveByteSync(this.slaveAddress);
@@ -103,8 +103,20 @@ class ADS1219IPWR {
       val = -(val & 0xFFFFFF);
     }
     return val / (1.0 * 0x00800000);
-    
   }
+  
+  readConversionData (callback) {
+    let buff = Buffer.alloc(3, 0x00);
+    this.i2c.readI2cBlock(this.slaveAddress, COMMAND_RDATA, 3, buff, ()=>{
+      let val = (buff[0] << 16) | (buff[0] << 16) | buff[2];
+      if(val & 0x00800000){
+        val = ~val + 1;
+        val = -(val & 0xFFFFFF);
+      }
+      callback(val / (1.0 * 0x00800000));
+    });
+  }
+  
   reset () {
     
   }
