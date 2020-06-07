@@ -56,6 +56,22 @@ class HeatLidOutput {
   }
 }
 
+class LEDUnit {
+  construtor () {
+  }
+  start () {
+    // TODO: init LED driver / init 
+  }
+  selectChannel (channel) {
+    // TODO: turn on PWM
+    // TODO: set potentiometer output
+    // TODO: select channel
+  }
+  off () {
+    // TODO turn off PWM
+  }
+}
+
 class NinjaQPCRHardwareConf {
   // TODO
   wellsCount () {
@@ -82,8 +98,7 @@ class NinjaQPCRHardwareConf {
     return new HeatUnit(pid, sensing, output);
   }
   getLEDUnit () {
-    // TODO
-    return null;
+    return new LEDUnit();
   }
   getFluorescenceSensingUnit () {
     // TODO

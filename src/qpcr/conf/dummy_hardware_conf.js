@@ -98,7 +98,7 @@ class DummyHardwareConf {
     Return LED control (Including MUX, POT and LED driver)
     */
   getLEDUnit () {
-    return new DummyLEDUnit();
+    return new LEDUnit();
   }
   /*
     Return fluorescence measurement unit (Including MUX)
@@ -107,9 +107,19 @@ class DummyHardwareConf {
     return new DummyFluorescenceSensingUnit();
   }
 };
-class DummyLEDUnit {
-  // TODO set light strength
-  // TODO select next channnel (Switch MUX / Set current value) 
+class LEDUnit {
+  construtor () {
+    // Nothing to do
+  }
+  start () {
+    // Nothing to do
+  }
+  selectChannel (channel) {
+    // Nothing to do
+  }
+  off () {
+    // Nothing to do
+  }
 }
 class DummyFluorescenceSensingUnit {
   // TODO read ADC and convert to physical value

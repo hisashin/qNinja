@@ -3,7 +3,7 @@
 /* Excitation and fluorescence measurement */
 const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
 const MEASUREMENT_PER_CH_MSEC = 500;
-const EXCITATION_DURATION_MSEC = 100;
+const EXCITATION_DURATION_MSEC = 100; 
 class Optics {
   constructor (hardwareConf) {
     // TODO apply hardware conf (getLED/getFluorescenceSensingUnit)
@@ -39,6 +39,7 @@ class Optics {
     });
   }
   selectWell (well) {
+    this.ledUnit.selectChannel(channel);
     // TODO: Switch LED channel
     // TODO: Switch photodiode MUX
     // TODO: Wait

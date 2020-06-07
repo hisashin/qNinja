@@ -31,11 +31,11 @@ setInterval(()=>{
 // DummyTemp
 const controlTemp = () => {
   adcManager.readChannelValue(0, (val)=>{
-    console.log("%d\tW\t%f", new Date().getTime()-startTime, val);
+    // console.log("%d\tW\t%f", new Date().getTime()-startTime, val);
     adcManager.readChannelValue(1, (val)=>{
-      console.log("%d\tL\t%f", new Date().getTime()-startTime, val);
+      // console.log("%d\tL\t%f", new Date().getTime()-startTime, val);
       adcManager.readChannelValue(2, (val)=>{
-        console.log("%d\tA\t%f", new Date().getTime()-startTime, val);
+        // console.log("%d\tA\t%f", new Date().getTime()-startTime, val);
       });
     });
   });
