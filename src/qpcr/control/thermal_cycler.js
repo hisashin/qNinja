@@ -23,16 +23,14 @@ class ThermalCycler {
   constructor (conf) {
     this.well = conf.getWell();
     this.heatLid = conf.getHeatLid();
-    /*
-    this.well = new Well();
-    this.heatLid = new HeatLid();
-    */
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
   }
   start (protocol) {
+    this.well.start();
+    this.heatLid.start();
     this.protocol = protocol;
     this.state = new StatePreheat(protocol);
     this.startTime = new Date();

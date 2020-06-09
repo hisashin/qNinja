@@ -20,6 +20,9 @@ class Well {
     this.temperature = 25;
     this.targetTemperature = 25;
   }
+  start () {
+    // Initialize hardware. This function is called once at the first run.
+  }
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
@@ -36,6 +39,9 @@ class HeatLid {
   constructor () {
     this.temperature = 25;
     this.targetTemperature = 25;
+  }
+  start () {
+    // Initialize hardware. This function is called once at the first run.
   }
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
