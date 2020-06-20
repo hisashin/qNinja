@@ -13,16 +13,17 @@ const pwm = require('raspi-pwm');
   SPI channel example: "/dev/spidev0.0"
 */ 
 class TLC59281DBQR {
-  constructor (spiCh, pinLatch, pinBlank) {
+  constructor (spiCh, pinLatch, pinBlank, blankFrequency) {
     this.pinLatch = pinLatch;
     this.pinBlank = pinBlank;
     this.device = spiCh;
     this.spi = null;
+    this.blankFrequency;
     rpio.open(this.pinLatch, rpio.OUTPUT, rpio.LOW);
   }
-  initialize () {
+  start () {
     this.spi = SPI.initialize(this.device);
-    this.blank = new pwm.PWM(23); // Use GPIO{n} number
+    this.blank = new pwm.PWM({pin:this.pinBlank, frequency:this.blankFrequency}); // Use GPIO{n} number
   }
   selectChannel (ch) {
     const buffVal = 0x0001 << ch;

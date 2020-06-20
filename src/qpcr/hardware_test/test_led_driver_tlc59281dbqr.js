@@ -6,8 +6,8 @@ const SPI_CHANNEL = "/dev/spidev0.0";
 const PIN_LATCH = 3; // Pin number
 const PIN_BLANK = 23; // GPIO{n} num
 const CHANNEL_COUNT = 8; //16;
-const ledDriver = new TLC59281DBQR(SPI_CHANNEL, PIN_LATCH, PIN_BLANK);
-ledDriver.initialize();
+const ledDriver = new TLC59281DBQR(SPI_CHANNEL, PIN_LATCH, PIN_BLANK, 1000 /* Hz (=1kHz) */);
+ledDriver.start();
 let channel = 0;
 let duty = 0.0;
 setInterval(()=>{

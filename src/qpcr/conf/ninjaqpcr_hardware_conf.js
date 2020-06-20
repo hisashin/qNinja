@@ -12,22 +12,26 @@ const raspi = require('raspi');
 const pwm = require('raspi-pwm');
 const softPwm = require('raspi-soft-pwm');
 
-const PIN_PWM_LID = 13;
+const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
+
+
+const SPI_CHANNEL = "/dev/spidev0.0";
+const PIN_LATCH = 15; // Pin number
+const PIN_LED_PWM = 23; // GPIO{n} num
 const PIN_WELL_PWM = 33;
 const FREQ_WELL_PWM = 1000; // Hz
+
+
+const PIN_PWM_LID = 13;
 const PIN_LED_PWM = 32;
 const FREQ_LED_PWM = 1000;
 const PIN_PWM_FAN = 37; // TODO これ適当にきめただけ
 
-// TODO other PWMs
-// TODO "wellHeater" と "wellFan" という名前にすべき
-// TODO output実装まだです
 
 // Example pin assignment 
 // https://docs.google.com/spreadsheets/d/1iU2gII_kSwVGeW8FTEcDqT59ksJSpKEOyM9GNM40jL0/edit#gid=1350445105
 
 const wellPWM = new pwm.PWM({pin:PIN_WELL_PWM, frequency:FREQ_WELL_PWM});
-const ledPWM = new pwm.PWM({pin:PIN_LED_PWM, frequency:FREQ_LED_PWM});
 const lidPWM = new softPwm.SoftPWM(PIN_PWM_LID);
 const fanPWM = new softPwm.SoftPWM(PIN_PWM_FAN);
 
@@ -83,14 +87,20 @@ class WellOutput {
     // TODO active low / active high
   }
   start () {
-    
   }
-  setOutput (outputValue /* Range? */) {
-    // this.wellPWM.write(outputValue);
-    // this.fanPWM.write(outputValue);
+  setOutput (outputValue /* Range={-1,1.0} */) {
+    outputValue = Math.min(1.0, Math.max(0, outputValue));
+    if (outputValue > 0) {
+      this.wellPWM.write(outputValue);
+      this.fanPWM.write(0);
+    } else {
+      this.wellPWM.write(0);
+      this.fanPwm.write(-outputValue);
+    }
   }
   off () {
-    // TODO: Turn off
+    this.wellPWM.write(0);
+    this.fanPWM.write(0);
   }
 }
 
@@ -103,27 +113,32 @@ class HeatLidOutput {
   start () {
     
   }
-  setOutput (outputValue) {
-    // this.pwm.write(outputValue);
+  setOutput (outputValue /* Range={0,1.0} */) {
+    outputValue = Math.min(1.0, Math.max(0, outputValue));
+    this.pwm.write(outputValue);
   }
   off () {
-    // TODO: Turn off
+    this.pwm.write(0);
   }
 }
 
+
+const ledDriver = new TLC59281DBQR(SPI_CHANNEL, PIN_LATCH, PIN_BLANK, FREQ_WELL_PWM);
+
 class LEDUnit {
-  construtor () {
+  construtor (ledDriver) {
+    this.ledDriver = ledDriver;
+    
   }
   start () {
-    // TODO: init LED driver / init 
+    this.ledDriver.start();
   }
   selectChannel (channel) {
-    // TODO: turn on PWM
-    // TODO: set potentiometer output
-    // TODO: select channel
+    this.ledDriver.setDuty(0.5);
+    this.ledDriver.selectChannel(channel);
   }
   off () {
-    // TODO turn off PWM
+    this.ledDriver.setDuty(0);
   }
 }
 
@@ -138,6 +153,7 @@ class NinjaQPCRHardwareConf {
     const WELL_KI = 1.0;
     const WELL_KD = 1.0;
     const pid = new PID(LID_KP, LID_KI, LID_KD);
+    pid.setOutputRange(-1, 1.0);
     const output = new WellOutput();
     return new HeatUnit(pid, wellSensing, output);
   }
@@ -147,11 +163,12 @@ class NinjaQPCRHardwareConf {
     const HEATER_KI = 1.0;
     const HEATER_KD = 1.0;
     const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
+    pid.setOutputRange(0, 1.0);
     const output = new HeatLidOutput();
     return new HeatUnit(pid, wellSensing, output);
   }
   getLEDUnit () {
-    return new LEDUnit();
+    return new LEDUnit(ledDriver);
   }
   getFluorescenceSensingUnit () {
     // TODO

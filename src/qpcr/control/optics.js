@@ -40,9 +40,6 @@ class Optics {
   }
   selectWell (well) {
     this.ledUnit.selectChannel(channel);
-    // TODO: Switch LED channel
-    // TODO: Switch photodiode MUX
-    // TODO: Wait
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
   measureFluorescence (well) {
