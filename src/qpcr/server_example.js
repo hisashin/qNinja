@@ -1,6 +1,11 @@
 "use strict";
-const qpcr = require("./ninjaqpcr");
+const NinjaQPCR = require("./ninjaqpcr");
+//const hardwareConf = require("./conf/ninjaqpcr_hardware_conf.js");
+const hardwareConf = require("./conf/dummy_hardware_conf.js");
+
+const qpcr = new NinjaQPCR(hardwareConf)
 const protocol = require("./protocol_example");
+
 /* Implementation example */
 class NinjaQPCRServerExample {
   constructor  () {

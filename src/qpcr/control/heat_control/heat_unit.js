@@ -3,7 +3,9 @@
 class SampleSensing {
   constructor () {
   }
-  start ();
+  start () {
+    
+  }
   getTemperature (callback) {
     callback(42.0);
   }

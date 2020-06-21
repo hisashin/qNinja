@@ -3,12 +3,9 @@
 const ThermalCycler = require("./control/thermal_cycler");
 const Optics = require("./control/optics");
 
-//const hardwareConf = require("./conf/ninjaqpcr_hardware_conf.js");
-const hardwareConf = require("./conf/dummy_hardware_conf.js");
-
 /* QPCR Interface */
 class NinjaQPCR {
-  constructor () {
+  constructor (hardwareConf) {
     this.thermalCycler = new ThermalCycler(hardwareConf);
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(hardwareConf);
@@ -58,4 +55,4 @@ class NinjaQPCR {
   
 }
 
-module.exports = new NinjaQPCR();
+module.exports = NinjaQPCR;
