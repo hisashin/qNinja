@@ -4,6 +4,7 @@
 // and enable SPI, then reboot
 // Datasheet: https://www.ti.com/store/ti/en/p/product/?p=TLC59281DBQR
 // npm pi-spi https://www.npmjs.com/package/pi-spi
+"use strict";
 const SPI = require('pi-spi');
 const rpio = require('rpio');
 const raspi = require('raspi');

@@ -1,3 +1,4 @@
+"use strict";
 /*
   NAU7802 : 24bit A/D Converter
 */

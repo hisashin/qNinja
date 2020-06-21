@@ -1,4 +1,6 @@
 // 32ch MUX ADG731BSUZ
+"use strict";
+
 const SPI = require('pi-spi');
 const rpio = require('rpio');
 const raspi = require('raspi');

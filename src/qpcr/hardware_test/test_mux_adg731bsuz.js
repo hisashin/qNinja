@@ -1,3 +1,4 @@
+"use strict";
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 
 const SPI_CHANNEL = "/dev/spidev0.0";

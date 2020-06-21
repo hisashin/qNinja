@@ -1,3 +1,4 @@
+"use strict";
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const pot = new MCP4551T(1, 0x2F);
 pot.initialize();

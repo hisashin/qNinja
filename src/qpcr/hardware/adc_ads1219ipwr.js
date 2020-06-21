@@ -1,4 +1,5 @@
 // ADS1219IPWR (4ch ADC)
+"use strict";
 
 const i2c = require('i2c-bus');
 const DEFAULT_DEVICE_NUMBER = 1;

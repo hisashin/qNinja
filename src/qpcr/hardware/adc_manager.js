@@ -1,3 +1,5 @@
+"use strict";
+
 class ADCManager {
   constructor (adc, dataRate) {
     this.adc = adc;

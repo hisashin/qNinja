@@ -1,6 +1,7 @@
 /*
   Temperature caculation module
 */
+"use strict";
 /* Library */
 const KELVIN = 273.15;
 const voltageToTemp = (voltageRatio, resistance, b_constant, r0, baseTemp) => {

@@ -1,3 +1,4 @@
+"use strict";
 const raspi = require('raspi');
 const pwm = require('raspi-soft-pwm');
  

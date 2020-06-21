@@ -1,3 +1,5 @@
+"use strict";
+
 /* Simple blinkey for GPIO test */
 const rpio = require('rpio');
 

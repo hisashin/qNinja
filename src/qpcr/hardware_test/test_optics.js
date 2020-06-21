@@ -1,3 +1,5 @@
+"use strict";
+
 const raspi = require('raspi');
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const rpio = require('rpio');

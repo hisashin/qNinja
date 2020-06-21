@@ -1,3 +1,4 @@
+"use strict";
 // TLC59281DBQR test
 const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
 

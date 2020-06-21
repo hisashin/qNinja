@@ -1,36 +1,12 @@
 "use strict";
 const qpcr = require("./ninjaqpcr");
+const protocol = require("./protocol_example");
 /* Implementation example */
 class NinjaQPCRServerExample {
   constructor  () {
   }
   start () {
     qpcr.setEventReceiver(this);
-    const protocol = {
-      lidTemp: 110,
-      cycles: [
-        {
-          repeat: 1,
-          steps: [
-            { type:"initial denaturation", temp:94.0, duration:15.0 }
-          ]
-        },
-        {
-          repeat: 30,
-          steps: [
-            { type:"denaturation", temp:94.0, duration:15.0 },
-            { type:"annealing", temp:55.0, duration:15.0 },
-            { type:"extension", temp:72.0, duration:15.0 }
-          ]
-        },
-        {
-          repat: 1,
-          steps: [
-            { type:"final extension", temp:72.0, duration:30.0 }
-          ]
-        }
-      ]
-    };
     qpcr.start(protocol);
     /*
     // Polling
