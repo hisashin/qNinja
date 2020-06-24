@@ -3,9 +3,10 @@ const STAGE_TYPE_HOLD = 1;
 const STAGE_TYPE_PCR = 2;
 const STAGE_TYPE_MELT_CURVE = 3;
 
-const MEASUREMENT_CONTINUOUS = 1;
-const MEASUREMENT_RAMP_END = 2;
-const MEASUREMENT_HOLD_END = 3;
+const MEASUREMENT_RAMP_CONTINUOUS = 1;
+const MEASUREMENT_HOLD_CONTINUOUS = 2;
+const MEASUREMENT_RAMP_END = 3;
+const MEASUREMENT_HOLD_END = 4;
 
 /* Initial extension */
 const example_hold_stage = {
@@ -32,8 +33,8 @@ const example_melt_curve_stage = {
   repeat: 1,
   steps: [
     { label:"denature", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[] },
-    { label:"cool", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[] },
-    { label:"melt", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[{type:MEASUREMENT_CONTINUOUS} ] }
+    { label:"cool", ramp_speed: 1.0, hold_duration:15, temp:55.0, data_collection:[] },
+    { label:"melt", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
   ]
 };
 

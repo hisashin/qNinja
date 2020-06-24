@@ -51,6 +51,8 @@ class ThermalCycler {
     this.heatLid.control();
     const now = new Date();
     if (this.state.complete(this.well.temperature, this.heatLid.temperature, now)) {
+      // Transition
+      this.stateFrom = this.state;
       this.state = this.state.next();
       let wellTargetTemp = this.state.wellTargetTemp();
       if (wellTargetTemp != null) {
@@ -65,7 +67,11 @@ class ThermalCycler {
       this.state.start(now);
       if (this.eventReceiver != null && this.eventReceiver.onThermalTransition != null) {
         // TODO: define data format
-        this.eventReceiver.onThermalTransition({ "data":"TODO thermal transition event" });
+        // Notify thermal transition -> fluorescence measurement (if needed)
+        this.eventReceiver.onThermalTransition({ from:this.stateFrom.getStatus(), to:this.state.getStatus() });
+      }
+      if (this.state.isFinished () && this.eventReceiver != null && this.eventReceiver.onFinish != null)  {
+        this.eventReceiver.onFinish();
       }
     }
     if (this.eventReceiver != null && this.eventReceiver.onThermalDataUpdate != null) {
@@ -100,6 +106,7 @@ class StateIdle {
       state: "idle"
     }
   }
+  isFinished () { return false; }
 }
 class StatePreheat {
   constructor (protocol) {
@@ -131,10 +138,17 @@ class StatePreheat {
   getStatus() {
     // TODO define data format
     return {
-      state: "preheat"
+      state: "preheat",
+      stepElapsed: new Date().getTime() - this.startTimestamp
     }
   }
+  isFinished () { return false; }
 }
+
+class StateStepControlledRamp  {
+  // TODO
+}
+
 class StateStepFastRamp {
   constructor (protocol, cycleIndex, repeatIndex, stepIndex) {
     this.protocol = protocol;
@@ -165,9 +179,11 @@ class StateStepFastRamp {
       state: "ramp",
       cycle: this.cycleIndex,
       step: this.stepIndex,
-      repeat: this.repeatIndex
+      repeat: this.repeatIndex,
+      stepElapsed: new Date().getTime() - this.startTimestamp
     }
   }
+  isFinished () { return false; }
 }
 
 class StateStepHold {
@@ -219,9 +235,11 @@ class StateStepHold {
       state: "hold",
       cycle: this.cycleIndex,
       step: this.stepIndex,
-      repeat: this.repeatIndex
+      repeat: this.repeatIndex,
+      stepElapsed: new Date().getTime() - this.startTimestamp
     }
   }
+  isFinished () { return false; }
 }
 class StateFinalHold {
   constructor (protocol) {}
@@ -245,6 +263,7 @@ class StateFinalHold {
       state: "complete"
     }
   }
+  isFinished () { return true; }
 }
 
 module.exports = ThermalCycler;

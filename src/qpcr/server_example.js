@@ -4,7 +4,8 @@ const NinjaQPCR = require("./ninjaqpcr");
 const hardwareConf = require("./conf/dummy_hardware_conf.js");
 
 const qpcr = new NinjaQPCR(hardwareConf)
-const protocol = require("./protocol_example");
+// const protocol = require("./protocol_example");
+const protocol = require("./dev_protocol");
 
 /* Implementation example */
 class NinjaQPCRServerExample {
@@ -22,15 +23,12 @@ class NinjaQPCRServerExample {
   }
   /* Callback functions */
   onThermalTransition (data) {
-    console.log("onThermalTransition");
     console.log(data);
   }
   onThermalDataUpdate (data) {
-    console.log("onThermalDataUpdate");
-    console.log(data);
+    // console.log(data);
   }
   onFluorescenceDataUpdate (data) {
-    console.log("onFluorescenceDataUpdate");
     console.log(data);
   }
 }
