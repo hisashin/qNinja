@@ -3,7 +3,7 @@
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 
-const DUMMY_TEMP_TRANSITION_PER_SEC = 1.0;
+const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
 
 const getDummyTemp = (current, target, interval) => {
@@ -119,6 +119,7 @@ class LEDUnit {
   }
   start () {
     // Nothing to do
+    
   }
   selectChannel (channel) {
     // Nothing to do
@@ -128,7 +129,25 @@ class LEDUnit {
   }
 }
 class DummyFluorescenceSensingUnit {
-  // TODO read ADC and convert to physical value
-  // TODO switch MUX
+  constructor () {
+  }
+  start () {
+    this.startTimestamp = new Date();
+  }
+  select (well) {
+    // Do nothing
+  }
+  getDummySigmoid (channel) {
+    const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
+    const thresholdMsec = (20 + channel * 2) * 1000;
+    const intercept = 2.0;
+    const x =  (elapsedMsec/thresholdMsec-1) * intercept;
+    const sigmoid = 1 / (1 + Math.exp(-x));
+    return sigmoid;
+  }
+  measure(well, callback) {
+    let value = this.getDummySigmoid(well.index);
+    setTimeout(()=>{ callback(value); }, 10);
+  }
 }
 module.exports = new DummyHardwareConf();

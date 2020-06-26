@@ -6,7 +6,6 @@ const MEASUREMENT_PER_CH_MSEC = 60;
 const EXCITATION_DURATION_MSEC = 30;
 class Optics {
   constructor (hardwareConf) {
-    // TODO apply hardware conf (getLED/getFluorescenceSensingUnit)
     this.ledUnit = hardwareConf.getLEDUnit();
     this.fluorescenceSensingUnit = hardwareConf.getFluorescenceSensingUnit();
     this.wellsCount = hardwareConf.wellsCount();
@@ -24,6 +23,8 @@ class Optics {
   }
   start () {
     this.startTimestamp = new Date();
+    this.ledUnit.start();
+    this.fluorescenceSensingUnit.start();
     // Set dummy timeout
     // Well ID <=> Channel ID (MUX)
     this.wells = [];
@@ -34,14 +35,6 @@ class Optics {
         fluorescence:[]
       });
     }
-  }
-  getDummySigmoid (channel) {
-    const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
-    const thresholdMsec = (15 + channel * 2) * 1000;
-    const intercept = 2.0;
-    const x =  (elapsedMsec/thresholdMsec-1) * intercept;
-    const sigmoid = 1 / (1 + Math.exp(-x));
-    return sigmoid;
   }
   measureAll (callback) {
     console.log("Optics.measureAll");
@@ -60,30 +53,32 @@ class Optics {
   }
   selectWell (well) {
     this.ledUnit.selectChannel(well);
+    this.fluorescenceSensingUnit.select(well);
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
   measureFluorescence (well) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
+    this.fluorescenceSensingUnit.measure(well, (measurement)=>{
+      this.values.push(measurement);
+      if (well.index == this.wellsCount - 1) {
+        // Last well
+        if (this.oneShotCallbacks.length > 0) {
+          this.oneShotCallbacks.forEach((callback)=>{
+              callback(this.values);
+          });
+          this.oneShotCallbacks = [];
+        }
+        if (this.continuous && this.continuousCallback != null) {
+          this.continuousCallback(this.values);
+        }
+        this.isMeasuring = false;
+        if (this.continuous) {
+          this.measureAll(null);
+        }
+      }
+    });
     // TODO use fluorescence sensing unit obj
-    const measurement = this.getDummySigmoid(well.index);
-    this.values.push(measurement);
-    if (well.index == this.wellsCount - 1) {
-      // Last well
-      if (this.oneShotCallbacks.length > 0) {
-        this.oneShotCallbacks.forEach((callback)=>{
-            callback(this.values);
-        });
-        this.oneShotCallbacks = [];
-      }
-      if (this.continuous && this.continuousCallback != null) {
-        console.log("Calling continuousCallback");
-        this.continuousCallback(this.values);
-      }
-      this.isMeasuring = false;
-      if (this.continuous) {
-        this.measureAll(null);
-      }
-    }
+    // const measurement = this.getDummySigmoid(well.index);
   }
   startContinuousDataCollection (callback) {
     console.log("startContinuousDataCollection");

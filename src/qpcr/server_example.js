@@ -26,7 +26,8 @@ class NinjaQPCRServerExample {
     console.log(data);
   }
   onThermalDataUpdate (data) {
-    // console.log(data);
+    //console.log(data);
+    console.log("TEMP_DEMO\t%f\t%f", data.well, data.lid);
   }
   onFluorescenceDataUpdate (data) {
     console.log(data);
