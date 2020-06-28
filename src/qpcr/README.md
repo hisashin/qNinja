@@ -19,7 +19,10 @@ node server_example.js
 Import the qPCR module.
 
 ```
-const qpcr = require("./ninjaqpcr");
+const NinjaQPCR = require("./ninjaqpcr");
+const hardwareConf = require("./conf/dummy_hardware_conf.js");
+const qpcr = new NinjaQPCR(hardwareConf);
+
 ```
 
 Start an experiment.

@@ -14,6 +14,7 @@ class NinjaQPCRServerExample {
   start () {
     qpcr.setEventReceiver(this);
     qpcr.start(protocol);
+    this.isRunning = true;
     /*
     // Polling
      setInterval(()=>{ console.log(qpcr.getStatus()); }, 1000);
@@ -27,10 +28,14 @@ class NinjaQPCRServerExample {
   }
   onThermalDataUpdate (data) {
     //console.log(data);
-    console.log("TEMP_DEMO\t%f\t%f", data.well, data.lid);
+    if (this.isRunning)
+      console.log("TEMP_DEMO\t%f\t%f", data.well, data.lid);
   }
   onFluorescenceDataUpdate (data) {
     console.log(data);
+  }
+  onFinish () {
+    this.isRunning = false;
   }
 }
 new NinjaQPCRServerExample().start();
