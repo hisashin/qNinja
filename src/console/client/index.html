@@ -4,8 +4,19 @@
   <title>Ninja qPCR</title>
 </head>
 <body>
+  <script src="src/index.js" type="text/javascript"></script>
+  <div>
+    <input type="button" value="Start Experiment" onclick="startExperiment()"/>
+    <input type="button" value="Stop Experiment" onclick="stopExperiment()"/>
+  </div>
+  <h2>Temperature</h2>
+  <div id="messageThermal">
+  </div>
+  <h2>Transition</h2>
+  <div id="messageTransition">
+  </div>
+  <h2>Fluorescence</h2>
+  <div id="messageFluorescence">
+  </div>
 </body>
-<script src=""src/index.js" type="text/javascript"></script>
-<div id="message">
-</div>
 </html>

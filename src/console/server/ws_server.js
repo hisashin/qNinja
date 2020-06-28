@@ -25,32 +25,65 @@ class NinjaQPCRServerExample {
         this.connection = request.accept(null, request.origin);
         let count = 0;
         this.connection.on('message', (message)=>{
-          console.log('Incoming message:', message.utf8Data);
-          this.connection.sendUTF('Connected');
-          this.start();
+          const obj = JSON.parse(message.utf8Data);
+          this.handleMessage(obj);
+          
         });
         this.connection.on('close', (reasonCode, description)=>{
             console.log('Disconnected.');
         });
-        this.start();
     });
+  }
+  handleMessage (obj) {
+    switch (obj.category) {
+      case "experiment.start":
+        this.start();
+        break;
+      case "experiment.stop":
+        this.start();
+        break;
+      default:
+        break;
+    }
+    /*
+    this.connection.sendUTF('Connected');
+    */
   }
   start () {
     qpcr.setEventReceiver(this);
     qpcr.start(protocol);
     this.isRunning = true;
   }
+  stop () {
+    // TODO
+  }
   onThermalTransition (data) {
-    console.log(data);
+    const obj = {
+      category:"experiment.transition",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
   }
   onThermalDataUpdate (data) {
-    this.connection.sendUTF(JSON.stringify(data));
-    // console.log("TEMP_DEMO\t%f\t%f", data.well, data.lid);
+    const obj = {
+      category:"experiment.thermal",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
   }
   onFluorescenceDataUpdate (data) {
-    console.log(data);
+    const obj = {
+      category:"experiment.fluorescence",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
   }
   onFinish () {
+    const obj = {
+      category:"experiment.finish",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
     this.isRunning = false;
   }
 }
