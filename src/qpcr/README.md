@@ -31,7 +31,7 @@ Start an experiment.
 ```
 const protocol = {
   lidTemp: 110,
-  cycles: [
+  stages: [
     {
       repeat: 1,
       steps: [

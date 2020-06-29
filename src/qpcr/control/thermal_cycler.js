@@ -123,8 +123,8 @@ class StatePreheat {
     return this.protocol.lidTemp;
   }
   next (startTemperature) { 
-    if (this.protocol.cycles.length > 0 && 
-      this.protocol.cycles[0].repeat > 0 && this.protocol.cycles[0].steps.length > 0) {
+    if (this.protocol.stages.length > 0 && 
+      this.protocol.stages[0].repeat > 0 && this.protocol.stages[0].steps.length > 0) {
       // Choose the first step of the first cycle
       const state = new StateStepRamp(this.protocol, 
         0, 0, 0, startTemperature);
@@ -155,7 +155,7 @@ class StateStepRamp {
     this.cycleIndex = cycleIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex
-    this.cycle = protocol.cycles[cycleIndex];
+    this.cycle = protocol.stages[cycleIndex];
     this.step = this.cycle.steps[stepIndex];
     this.isFastRamp = (this.step.ramp_speed == null);
     if (!this.isFastRamp) {
@@ -213,7 +213,7 @@ class StateStepHold {
     this.cycleIndex = cycleIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex;
-    this.cycle = protocol.cycles[cycleIndex];
+    this.cycle = protocol.stages[cycleIndex];
     this.step = this.cycle.steps[stepIndex];
   }
   start (timestamp) { this.startTimestamp = timestamp; }
@@ -237,7 +237,7 @@ class StateStepHold {
       // Repeat the cycle
       nextStep = 0;
       nextRepeat += 1;
-    } else if (this.cycleIndex < this.protocol.cycles.length - 1) {
+    } else if (this.cycleIndex < this.protocol.stages.length - 1) {
       // Next cycle
       nextCycle = this.cycleIndex += 1;
       nextRepeat = 0;

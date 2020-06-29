@@ -40,7 +40,7 @@ const example_melt_curve_stage = {
 
 const protocol = {
   lidTemp: 110.0, // Celsius
-  cycles: [
+  stages: [
     example_hold_stage,
     example_pcr_stage,
     example_melt_curve_stage

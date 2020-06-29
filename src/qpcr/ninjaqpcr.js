@@ -87,13 +87,13 @@ class NinjaQPCR {
         */
       ]
     };
-    for (let stageIndex = 0; stageIndex < this.protocol.cycles.length; stageIndex++) {
+    for (let stageIndex = 0; stageIndex < this.protocol.stages.length; stageIndex++) {
       let stageObj = {
         stage:stageIndex,
         steps:[]
       };
-      for (let stepIndex = 0; stepIndex < this.protocol.cycles[stageIndex].steps.length; stepIndex ++) {
-        const step = this.protocol.cycles[stageIndex].steps[stepIndex];
+      for (let stepIndex = 0; stepIndex < this.protocol.stages[stageIndex].steps.length; stepIndex ++) {
+        const step = this.protocol.stages[stageIndex].steps[stepIndex];
         let stepObj = {
           step:stepIndex,
           measurements:[]
@@ -159,7 +159,7 @@ class NinjaQPCR {
     if (!(state.cycle >= 0) || !(state.step >= 0) ) {
       return null;
     }
-    const cycle = this.protocol.cycles[state.cycle];
+    const cycle = this.protocol.stages[state.cycle];
     if (cycle == null) {
       return null;
     }
