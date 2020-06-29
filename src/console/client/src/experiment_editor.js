@@ -150,6 +150,20 @@ new Vue({
   methods: {
     add: function () {
       this.stages.push({ type: STAGE_TYPE_MELT_CURVE});
+    },
+    save: function () {
+      this.stages.forEach((stage)=>{
+        console.log(stage)
+        if (stage.type==STAGE_TYPE_HOLD) {
+          console.log("Hold %d, %d", stage.temp, stage.hold);
+        }
+        if (stage.type==STAGE_TYPE_PCR) {
+          console.log("PCR %d, %d", stage.temp, stage.hold);
+        }
+        if (stage.type==STAGE_TYPE_MELT_CURVE) {
+          console.log("Melt Curve %d, %d", stage.temp, stage.hold);
+        }
+      });
     }
   }
 });
