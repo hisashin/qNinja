@@ -3,13 +3,23 @@
   <head>
     <script src="src/vue.js"></script>
     <title>Ninja qPCR</title>
+    <meta charset="UTF-8">
     <link rel='stylesheet' href='./css/ninjaqpcr.css'/>
   </head>
   <body>
     
     <h1>Protocol editor</h1>
     <div id="protocolEditor">
-      <pcr-stage v-for="stage in stages"></pcr-stage>
+      <!--
+      <stage v-for="stage in stages">
+      </stage>
+      -->
+      <div v-for="stage in stages">
+        <hold-stage v-if="stage.type==1"></hold-stage>
+        <pcr-stage v-if="stage.type==2"></pcr-stage>
+        <melt-curve-stage v-if="stage.type==3"></melt-curve-stage>
+      </div>
+      
       <button v-on:click="add">Add</button>
     </div>
     <script src="src/chartjs/Chart.js"></script>

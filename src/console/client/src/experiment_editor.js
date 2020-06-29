@@ -1,4 +1,22 @@
-const templatePCR = `
+const STAGE_TYPE_HOLD = 1;
+const STAGE_TYPE_PCR = 2;
+const STAGE_TYPE_MELT_CURVE = 3;
+
+/* Templates */
+const templateHoldStage = `
+<div>
+  <h3>Hold Stage</h3>
+  <ul>
+    <li>
+      <input v-model.number="temp" type="number"/>℃
+      <input v-model.number="hold" type="number" step="1"/>sec
+    </li>
+  </ul>
+  <button v-on:click="confirmDelete">Delete</button>
+</div>
+`;
+
+const templatePCRStage = `
 <div>
   <h3>PCR Stage</h3>
   Repeat <input v-model.number="repeat" type="number"/> times
@@ -19,9 +37,60 @@ const templatePCR = `
       <input v-model.number="extendingHold" type="number" step="1"/>sec
     </li>
   </ul>
-  <button v-on:click="save">OK</button>
+  <button v-on:click="confirmDelete">Delete</button>
 </div>
 `;
+
+const templateMeltCurveStage = `
+<div>
+  <h3>Melt Curve Stage</h3>
+  <ul>
+    <li>
+      Heating
+      <input v-model.number="heatTemp" type="number"/>℃
+      <input v-model.number="heatHold" type="number" step="1"/>sec
+      <input v-model.number="heatSpeed" type="number" step="1"/>℃/sec
+    </li>
+    <li>
+      Cooling
+      <input v-model.number="coolTemp" type="number"/>℃
+      <input v-model.number="coolHold" type="number" step="1"/>sec
+      <input v-model.number="coolSpeed" type="number" step="1"/>℃/sec
+    </li>
+    <li>
+      Melting
+      <input v-model.number="meltTemp" type="number"/>℃
+      <input v-model.number="meltHold" type="number" step="1"/>sec
+      <input v-model.number="meltSpeed" type="number" step="1"/>℃/sec
+    </li>
+  </ul>
+  <button v-on:click="confirmDelete">Delete</button>
+</div>
+`;
+
+
+const templateStage = `
+<hold-stage v-if="stage.type==1"></hold-stage>
+<pcr-stage v-if="stage.type==2"></pcr-stage>
+<melt-curve-stage v-if="stage.type==3"></melt-curve-stage>
+`;
+
+/* Components */
+Vue.component('hold-stage', {
+  data: function () {
+    return {
+      temp:94,
+      hold:120
+    }
+  },
+  methods: {
+    confirmDelete: function (event) {
+      alert("TODO delete");
+    }
+  },
+  template: templateHoldStage
+});
+
 Vue.component('pcr-stage', {
   data: function () {
     return {
@@ -35,23 +104,52 @@ Vue.component('pcr-stage', {
     }
   },
   methods: {
-    save: function (event) {
-      console.log("Repeat %d times", this.repeat);
-      console.log("Denaturing %fC %dsec", this.denaturingTemp, this.denaturingHold);
-      console.log("Annealing %fC %dsec", this.annealingTemp, this.annealingHold);
-      console.log("Extending %fC %dsec", this.extendingTemp, this.extendingHold);
+    confirmDelete: function (event) {
+      alert("TODO delete");
     }
   },
-  template: templatePCR
-})
+  template: templatePCRStage
+});
+
+Vue.component('melt-curve-stage', {
+  data: function () {
+    return {
+      heatTemp:94,
+      heatHold:20,
+      heatSpeed:4,
+      coolTemp:94,
+      coolHold:20,
+      coolSpeed:4,
+      meltTemp:94,
+      meltHold:20,
+      meltSpeed:0.04
+    }
+  },
+  methods: {
+    confirmDelete: function (event) {
+      alert("TODO delete");
+    }
+  },
+  template: templateMeltCurveStage
+});
+
+
+Vue.component('stage', {
+  template: templateStage
+});
+
 new Vue({ 
   el: '#protocolEditor',
   data: {
-    stages: [ 0 ]
+    stages: [ 
+      { type: STAGE_TYPE_HOLD },
+      { type: STAGE_TYPE_PCR },
+      { type: STAGE_TYPE_MELT_CURVE }
+    ]
   },
   methods: {
     add: function () {
-      this.stages.push(0);
+      this.stages.push({ type: STAGE_TYPE_MELT_CURVE});
     }
   }
-})
+});
