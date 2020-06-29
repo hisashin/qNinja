@@ -26,7 +26,7 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: STAGE_TYPE_PCR,
-  repeat: 2,
+  repeat: 7,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
     { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:5.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },

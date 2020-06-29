@@ -139,9 +139,9 @@ class DummyFluorescenceSensingUnit {
   }
   getDummySigmoid (channel) {
     const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
-    const thresholdMsec = (20 + channel * 2) * 1000;
-    const intercept = 2.0;
-    const x =  (elapsedMsec/thresholdMsec-1) * intercept;
+    const thresholdMsec = 50 * 1000;
+    const intercept = 6.0;
+    const x =  ((elapsedMsec - thresholdMsec - channel * 10 * 1000)/thresholdMsec) * intercept;
     const sigmoid = 1 / (1 + Math.exp(-x));
     return sigmoid;
   }
