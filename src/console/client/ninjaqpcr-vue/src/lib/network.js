@@ -1,42 +1,4 @@
 /* WebSocket Connection */
-let ws = null;
-const connect = ()=>{
-  try {
-    ws = new WebSocket('ws://localhost:2222/');
-  } catch (ex) {
-    return;
-  }
-
-  ws.onopen = function() {
-      console.log('WebSocket Client Connected');
-      connectionView.status = "Connected";
-  };
-  ws.onmessage = function(e) {
-    console.log("Received: '" + e.data + "'");
-    const obj = JSON.parse(e.data);
-    console.log(obj.category)
-    switch (obj.category) {
-      case "experiment.transition":
-        document.getElementById("messageTransition").innerHTML = 
-          JSON.stringify(obj.data);
-        break;
-      case "experiment.thermal":
-          temperatureView.message = JSON.stringify(obj.data);
-          updateTemp(obj);
-        break;
-      case "experiment.fluorescence":
-        //document.getElementById("messageFluorescence").innerHTML =
-        updateFluorescence(obj);
-        break;
-      case "experiment.finish":
-        break;
-      default:
-        break;
-    }
-  };
-};
-
-
 const TUBE_COUNT = 8;
 let tempWell = [];
 let tempLid = [];
@@ -45,6 +7,7 @@ for (let i=0; i<TUBE_COUNT; i++) {
   fluorescence.push([]);
 }
 
+/*
 const connectionView = new Vue({
   el: '#connectionView',
   data: {
@@ -52,6 +15,7 @@ const connectionView = new Vue({
   }
   
 });
+*/
 const colors = [
   "rgba(253,64,132, 1)",
   "rgba(0,164,239, 1)",
@@ -104,12 +68,6 @@ const updateFluorescence = (obj) => {
 };
 
 
-const startExperiment = ()=>{
-  const obj = {
-    "category":"experiment.start"
-  };
-  ws.send(JSON.stringify(obj));
-};
 const stopExperiment = ()=>{
   const obj = {
     "category":"experiment.stop"
@@ -117,6 +75,7 @@ const stopExperiment = ()=>{
   ws.send(JSON.stringify(obj));
 };
 
+/*
 const temperatureView = new Vue({
   el: '#progressView',
   data: {
@@ -125,15 +84,16 @@ const temperatureView = new Vue({
     lid: "-"
   }
 });
-
+*/
 const demoFluorescence = [0.9604030140621712,0.9383281839278435,0.9116271808325259,0.8813612698451002,0.8485607523442491,0.8144114129458446,0.779982174817932,0.7458700961350746];
-
+/*
 const tubesView = new Vue({
   el: '#tubesView',
   data: {
     tubes:demoFluorescence
   }
 });
+*/
 var temperatureChart = null;
 const createTemperatureChart = () => {
   const ctx = document.getElementById('chartTemperature').getContext('2d');
@@ -168,14 +128,13 @@ const createTemperatureChart = () => {
   temperatureChart.data.datasets[0] = createDataset(0, "Well", true);
   temperatureChart.data.datasets[1] = createDataset(1, "Lid", true);
 };
-createTemperatureChart();
+// createTemperatureChart();
 
 var fluorescenceChart = null;
 const createFluorescenceChart = () => {
   const ctx = document.getElementById('chartFluorescence').getContext('2d');
   var data = {
     datasets: [
-      /* createDataset() */
     ]
   };
   let options = {
@@ -205,7 +164,7 @@ const createFluorescenceChart = () => {
     fluorescenceChart.data.datasets[i] = createDataset(i, "Well " + i, true);
   }
 };
-createFluorescenceChart();
+// createFluorescenceChart();
 const updateChart = () => {
   if (!chart) return;
   chart.data.datasets[0].data.push({
@@ -214,3 +173,82 @@ const updateChart = () => {
   });
   chart.update();
 };
+
+class Network {
+  constructor () {
+    this.ws = null; // WebSocket object
+    this.count = 0;
+    this.connectionEventHandlers = [];
+    this.progressHandlers = [];
+  }
+  connect () {
+    try {
+      console.log("Connecting...");
+      this.ws = new WebSocket('ws://localhost:2222/');
+    } catch (ex) {
+      return;
+    }
+    this.ws.onopen = () => {
+      console.log('WebSocket Client Connected');
+      this.connectionEventHandlers.forEach((handler)=>{
+        if (handler.onOpen != null) {
+          handler.onOpen();
+        } else {
+          console.warn("connectionEventHandlers onOpen is not defined.");
+        }
+      });
+      // connectionView.status = "Connected";
+    };
+    this.ws.onmessage = (e) => {
+      console.log("Received: '" + e.data + "'");
+      const obj = JSON.parse(e.data);
+      // TODO this.deviceEventHandlers
+      switch (obj.category) {
+        case "experiment.transition":
+          /*
+          document.getElementById("messageTransition").innerHTML = 
+            JSON.stringify(obj.data);
+            */
+          break;
+        case "experiment.thermal":
+          this.progressHandlers.forEach((handler)=>{
+            if (handler.onProgress) {
+              handler.onProgress(obj.data);
+            }
+          });
+          //   updateTemp(obj);
+          break;
+        case "experiment.fluorescence":
+          //document.getElementById("messageFluorescence").innerHTML =
+          // updateFluorescence(obj);
+          break;
+        case "experiment.finish":
+          break;
+        default:
+          break;
+      }
+    };
+  }
+  
+  start () {
+    const obj = {
+      "category":"experiment.start"
+    };
+    this.ws.send(JSON.stringify(obj));
+  }
+  setProtocol (protocol) {
+    const obj = {
+      "category":"experiment.setProtocol",
+      data:protocol
+    };
+    this.ws.send(JSON.stringify(obj));
+  }
+  addConnectionEventHandlers (obj) {
+    this.connectionEventHandlers.push(obj);
+  }
+  addProgressHandler (obj) {
+    this.progressHandlers.push(obj);
+  }
+}
+const network = new Network();
+module.exports = network;

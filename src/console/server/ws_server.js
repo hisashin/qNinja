@@ -4,7 +4,7 @@ const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf");
 const qpcr = new NinjaQPCR(hardwareConf);
-const protocol = require(QPCR_PATH + "dev_protocol");
+const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 
 const http = require('http');
 const WebSocketServer = require('websocket').server;
@@ -33,6 +33,7 @@ class NinjaQPCRServerExample {
             console.log('Disconnected.');
         });
     });
+    this.protocol = defaultProtocol;
   }
   handleMessage (obj) {
     switch (obj.category) {
@@ -40,8 +41,14 @@ class NinjaQPCRServerExample {
         this.start();
         break;
       case "experiment.stop":
-        this.start();
+        this.stop();
         break;
+      case "experiment.setProtocol": {
+        console.log("Protocol updated.");
+        this.protocol = obj.data;
+        console.log(this.protocol);
+        break;
+      }
       default:
         break;
     }
@@ -51,7 +58,7 @@ class NinjaQPCRServerExample {
   }
   start () {
     qpcr.setEventReceiver(this);
-    qpcr.start(protocol);
+    qpcr.start(this.protocol);
     this.isRunning = true;
   }
   stop () {

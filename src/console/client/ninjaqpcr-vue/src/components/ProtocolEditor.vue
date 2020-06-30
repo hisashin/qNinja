@@ -1,0 +1,164 @@
+<template>
+  <div>
+    <h1>Protocol Editor</h1>
+    <p>
+    Name={{name}}
+    </p>
+    Lid temp: <input v-model.number="lidTemp" type="number"/>
+    <div v-for="(stage, index) in stages">
+      <div v-if="stage.type==1">
+        <h3>Hold Stage</h3>
+        <ul>
+          <li>
+            <input v-model.number="stage.steps[0].temp" type="number"/>℃
+            <input v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
+          </li>
+        </ul>
+      </div>
+      <div v-if="stage.type==2">
+        <h3>PCR Stage</h3>
+        Repeat <input v-model.number="stage.repeat" type="number"/> times
+        <ul>
+          <li>
+            Denaturing
+            <input v-model.number="stage.steps[0].temp" type="number"/>℃
+            <input v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
+          </li>
+          <li>
+            Annealing
+            <input v-model.number="stage.steps[1].temp" type="number"/>℃
+            <input v-model.number="stage.steps[1].duration" type="number" step="1"/>sec
+          </li>
+          <li>
+            Extending
+            <input v-model.number="stage.steps[2].temp" type="number"/>℃
+            <input v-model.number="stage.steps[2].duration" type="number" step="1"/>sec
+          </li>
+        </ul>
+      </div>
+      <div v-if="stage.type==3">
+        <h3>Melt Curve Stage</h3>
+        <ul>
+          <li>
+            Denaturing
+            <input v-model.number="stage.steps[0].temp" type="number"/>℃
+            <input v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
+            <input v-model.number="stage.steps[0].speed" type="number" step="1"/>℃/sec
+          </li>
+          <li>
+            Cooling
+            <input v-model.number="stage.steps[1].temp" type="number"/>℃
+            <input v-model.number="stage.steps[1].duration" type="number" step="1"/>sec
+            <input v-model.number="stage.steps[1].speed" type="number" step="1"/>℃/sec
+          </li>
+          <li>
+            Melting
+            <input v-model.number="stage.steps[2].temp" type="number"/>℃
+            <input v-model.number="stage.steps[2].duration" type="number" step="1"/>sec
+            <input v-model.number="stage.steps[2].speed" type="number" step="1"/>℃/sec
+          </li>
+        </ul>
+      </div>
+      <button v-on:click="confirmDelete(index)">Delete</button>
+    </div>
+    <div>
+      Add: 
+      <button v-on:click="addHold">Hold</button>
+      <button v-on:click="addPCR">PCR</button>
+      <button v-on:click="addMeltCurve">Melt Curve</button>
+    </div>
+    <div>
+      <button v-on:click="save">Save</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import network from "../lib/network.js";
+
+const STAGE_TYPE_HOLD = 1;
+const STAGE_TYPE_PCR = 2;
+const STAGE_TYPE_MELT_CURVE = 3;
+
+let LABEL_MAP = {};
+LABEL_MAP[STAGE_TYPE_HOLD] = "Hold";
+LABEL_MAP[STAGE_TYPE_PCR] = "PCR";
+LABEL_MAP[STAGE_TYPE_MELT_CURVE] = "Melt Curve";
+
+const MEASUREMENT_RAMP_CONTINUOUS = 1;
+const MEASUREMENT_HOLD_CONTINUOUS = 2;
+const MEASUREMENT_RAMP_END = 3;
+const MEASUREMENT_HOLD_END = 4;
+
+const DEFAULT_STAGE_HOLD = { type: STAGE_TYPE_HOLD, 
+  repeat:1, 
+  steps:[ {label:"hold", temp:94, duration:15, data_collection:[]} ] };
+const DEFAULT_STAGE_PCR = { type: STAGE_TYPE_PCR, 
+  repeat:30, 
+  steps:[ {label:"denature", temp:94, duration:15, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
+  {label:"anneal", temp:55, duration:12, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
+  {label:"extend", temp:72, duration:18, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]} ] };
+const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE, 
+  repeat:1, 
+  steps:[ {label:"denature", temp:94, duration:10, speed:4, data_collection:[]}, 
+  {label:"cool", temp:55, duration:5, speed:4, data_collection:[]}, 
+  {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
+  
+export default {
+  components:{},
+  props: {
+    name: String,
+    
+  },
+  data() {
+    return {
+      lidTemp: 110,
+      stages: [ 
+        DEFAULT_STAGE_HOLD,
+        DEFAULT_STAGE_PCR,
+        DEFAULT_STAGE_MELT_CURVE
+      ]
+    }
+  },
+  methods: {
+    confirmDelete: function (index) {
+      if (window.confirm("Delete " + index + "?")) {
+        this.stages.splice(index, 1);
+      }
+    },
+    addHold: function () {
+      console.log("addHold");
+      this.stages.push(DEFAULT_STAGE_HOLD);
+    },
+    addPCR: function () {
+      console.log("addPCR");
+      this.stages.push(DEFAULT_STAGE_PCR);
+    },
+    addMeltCurve: function () {
+      this.stages.push(DEFAULT_STAGE_MELT_CURVE);
+    },
+    save: function () {
+      console.log(JSON.stringify(this.$data))
+      network.setProtocol(JSON.parse(JSON.stringify(this.$data)));
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>

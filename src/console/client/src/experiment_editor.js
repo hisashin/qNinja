@@ -26,17 +26,18 @@ const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE,
   {label:"cool", temp:55, duration:5, speed:4, data_collection:[]}, 
   {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
   
-  new Vue({ 
-    el: '#protocolViewer',
-    data: {
-      lidTemp: 110,
-      stages: [ 
-        DEFAULT_STAGE_HOLD,
-        DEFAULT_STAGE_PCR,
-        DEFAULT_STAGE_MELT_CURVE
-      ]
-    }
-  });
+new Vue({ 
+  el: '#protocolViewer',
+  data: {
+    lidTemp: 110,
+    stages: [ 
+      DEFAULT_STAGE_HOLD,
+      DEFAULT_STAGE_PCR,
+      DEFAULT_STAGE_MELT_CURVE
+    ]
+  }
+});
+
 new Vue({ 
   el: '#protocolEditor',
   data: {

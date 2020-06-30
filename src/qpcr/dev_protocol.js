@@ -57,4 +57,6 @@ const protocol = {
 const vueProtocol = {"lidTemp":110,"stages":[{"type":1,"repeat":1,"steps":[{"label":"hold","temp":94,"duration":15,"data_collection":[]}]},{"type":2,"repeat":30,"steps":[{"label":"denature","temp":94,"duration":15,"data_collection":[3,4]},{"label":"anneal","temp":55,"duration":12,"data_collection":[3,4]},{"label":"extend","temp":72,"duration":18,"data_collection":[3,4]}]},{"type":3,"repeat":1,"steps":[{"label":"denature","temp":94,"duration":10,"speed":4,"data_collection":[]},{"label":"cool","temp":55,"duration":5,"speed":4,"data_collection":[]},{"label":"melt","temp":94,"duration":15,"speed":0.05,"data_collection":[1]}]}]}
 */
 
-module.exports = vueProtocol; //protocol;
+module.exports = protocol;
+
+
