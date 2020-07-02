@@ -1,38 +1,63 @@
 <template>
-  <div>
-    <h2>DeviceStatus</h2>
-    <dl>
-      <dt>Well</dt>
-      <dd><meter min="0" max="110" v-bind:value="wellTemp"></meter> {{ wellTemp }}</dd>
-      <dt>Lid</dt>
-      <dd><meter min="0" max="110" v-bind:value="lidTemp"></meter>{{ lidTemp }}</dd>
-      <dt>Cycle</dt>
-      <dd>{{ cycle }}</dd>
-      <dt>Step</dt>
-      <dd>{{ step }}</dd>
-      <dt>State</dt>
-      <dd>{{ state }}</dd>
-      <dt>Repeat</dt>
-      <dd>{{ repeat }}</dd>
-      <dt>StepElapsed</dt>
-      <dd>{{ stepElapsed }}</dd>
-    </dl>
+  <div class="col-12 mt-1">
+    <div class="card">
+      <div class="row">
+        <div class="col-6">
+          <div>
+            Well {{ wellTemp }}℃
+          </div>
+          <div>
+            <meter min="0" max="110" v-bind:value="wellTemp" style="width:100%"></meter>
+          </div>
+        </div>
+        <div class="col-6">
+          <div>
+            Well {{ lidTemp }}℃
+          </div>
+          <div>
+            <meter min="0" max="110" v-bind:value="lidTemp" style="width:100%"></meter>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          Stage {{ cycle }} / {{ totalCycles }}
+        </div>
+        <div class="col-2">
+          Step {{ step }} / {{ totalSteps }}
+        </div>
+        <div class="col-2">
+          Repeat {{ repeat }} / {{ totalRepeats }}
+        </div>
+        <div class="col-2">
+          {{ state }}
+        </div>
+        <div class="col-2">
+          {{ stepElapsed }} msec
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
-import network from "../lib/network.js";
+import network from "../lib/device.js";
 export default {
+  name: 'DeviceStatus',
   data() {
     return {
       wellTemp:0,
       lidTemp:0,
+      totalCycles:0,
       cycle:0,
+      totalSteps:0,
       step:0,
       state:"Idle",
+      totalRepeats:0,
       repeat:0,
-      stepElapsed:0
+      stepElapsed:0,
+      protocol:null,
     }
   },
   methods: {
@@ -41,6 +66,23 @@ export default {
   },
   created: function () {
     this.network = network;
+    this.network.addTransitionHandler({
+      onStart:(obj)=>{
+        console.log("onStart");
+        console.log(obj);
+        this.protocol = obj.protocol;
+        console.log(this.protocol);
+        this.totalCycles = this.protocol.stages.length;
+      },
+      onTransition:(obj)=>{
+        let status = obj.to;
+        if (obj.to == null) { return; }
+        const stage = this.protocol.stages[status.cycle];
+        this.totalRepeats = stage.repeat;
+        this.totalSteps = stage.steps.length;
+        const step = stage.steps[status.step];
+      }
+    });
     this.network.addProgressHandler({
       onProgress:(obj)=>{
         this.wellTemp = obj.well;

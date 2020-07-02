@@ -28,14 +28,8 @@ class NinjaQPCR {
   getExperimentElapsedTime () {
     return new Date().getTime() - this.startTimestamp.getTime();
   }
-  start (protocol) {
-    this.protocol = protocol;
-    this.thermalCycler.start(protocol);
-    this.optics.start();
-    this.startTimestamp = new Date();
-    this.finished = false;
-
-    this.experimentLog = {
+  createExperimentLog (protocol) {
+    let experimentLog = {
       protocol: protocol,
       temp: {
         time:[],
@@ -87,13 +81,13 @@ class NinjaQPCR {
         */
       ]
     };
-    for (let stageIndex = 0; stageIndex < this.protocol.stages.length; stageIndex++) {
+    for (let stageIndex = 0; stageIndex < protocol.stages.length; stageIndex++) {
       let stageObj = {
         stage:stageIndex,
         steps:[]
       };
-      for (let stepIndex = 0; stepIndex < this.protocol.stages[stageIndex].steps.length; stepIndex ++) {
-        const step = this.protocol.stages[stageIndex].steps[stepIndex];
+      for (let stepIndex = 0; stepIndex < protocol.stages[stageIndex].steps.length; stepIndex ++) {
+        const step = protocol.stages[stageIndex].steps[stepIndex];
         let stepObj = {
           step:stepIndex,
           measurements:[]
@@ -109,9 +103,18 @@ class NinjaQPCR {
         stageObj.steps.push(stepObj);
         
       }
-      this.experimentLog.fluorescence.push(stageObj);
+      experimentLog.fluorescence.push(stageObj);
     }
-    console.log(this.experimentLog)
+    return experimentLog;
+  }
+  start (protocol) {
+    this.protocol = protocol;
+    this.startTimestamp = new Date();
+    this.finished = false;
+    this.experimentLog = this.createExperimentLog(protocol);
+    this.thermalCycler.start(protocol);
+    this.optics.start();
+    this.onStart();
   }
   addFluorescenceMeasurementLog (step, measurementType, values) {
     console.log("addFluorescenceMeasurementLog", JSON.stringify(step));
@@ -132,15 +135,6 @@ class NinjaQPCR {
     if (!added ) {
       console.log("Something went wrong????");
     }
-    /*
-    this.fluorescence
-    */
-    // Find stage
-    // Find step
-    // Find type
-    // add values
-    //  { state: 'ramp', cycle: 1, step: 0, repeat: 1, stepElapsed: 6033 }
-    
   }
   getStatus () {
     const status = {
@@ -233,9 +227,17 @@ class NinjaQPCR {
     }
     
   }
+  onStart () {
+    this.finished = false;
+    const data = {
+      protocol:this.protocol
+    };
+    if (this.receiver != null && this.receiver.onStart) {
+      this.receiver.onStart(data);
+    }
+  }
   onFinish () {
     this.finished = true;
-    console.log("Finish");
     console.log(this.experimentLog);
     
     fs.writeFile("./result.txt", JSON.stringify(this.experimentLog), (err)=>{
@@ -243,8 +245,12 @@ class NinjaQPCR {
         console.log(err);
       }
     });
-    if (this.receiver != null && this.receiver.onFinish()) {
-      this.receiver.onFinish();
+    const data = {
+      protocol:this.protocol,
+      log:this.experimentLog
+    };
+    if (this.receiver != null && this.receiver.onFinish) {
+      this.receiver.onFinish(data);
     }
   }
   

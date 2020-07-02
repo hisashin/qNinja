@@ -1,23 +1,26 @@
 <template>
   <div id="app">
-    <h1>Ninja qPCR</h1>
-    <NetworkStatus />
-    <DeviceStatus />
-    <ProtocolEditor name="New Protocol" />
+    <header class="header">
+      <h1>Ninja qPCR</h1>
+    </header>
+    <main class="main p-3">
+      <div class="row">
+        <NetworkStatus />
+      </div>
+      <DeviceMonitor></DeviceMonitor>
+    </main>
   </div>
 </template>
 
 <script>
-import DeviceStatus from './components/DeviceStatus.vue'
-import ProtocolEditor from './components/ProtocolEditor.vue'
+import DeviceMonitor from './components/DeviceMonitor.vue'
 import NetworkStatus from './components/NetworkStatus.vue'
 
 export default {
   name: 'App',
   components: {
-    ProtocolEditor,
     NetworkStatus,
-    DeviceStatus
+    DeviceMonitor
   }
 }
 </script>
@@ -28,6 +31,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+  max-width: 800px;
 }
 </style>

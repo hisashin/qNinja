@@ -5,20 +5,45 @@ const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf");
 const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
+const ProtocolManager = require(QPCR_PATH + "protocol_manager");
+const pm = new ProtocolManager();
 
 const http = require('http');
+var URL = require('url');
 const WebSocketServer = require('websocket').server;
 
 const WEBSOCKET_PORT = 2222;
 
-class NinjaQPCRServerExample {
+class NinjwQPCRServer {
   constructor  () {
+  }
+  protocols (req, res) {
+    pm.getProtocols((protocols)=>{
+      console.log("onLoad");
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      res.write(JSON.stringify(protocols));
+      res.end();
+    },
+    (err)=>{
+      res.writeHead(500,{'Content-Type': 'application/json'});
+      res.write(err);
+      res.end();
+    });
+    
   }
   init () {
     this.server = http.createServer();
     this.server.listen(WEBSOCKET_PORT);
     this.wsServer = new WebSocketServer({
         httpServer: this.server
+    });
+    const routes = {
+      '/protocols': this.protocols
+    };
+    this.server.on('request',(req, res)=>{
+        const url = URL.parse(req.url);
+        const route = routes[url.pathname];
+        if (route) route(req, res);
     });
     this.connection = null;
     this.wsServer.on('request', (request)=>{
@@ -27,7 +52,6 @@ class NinjaQPCRServerExample {
         this.connection.on('message', (message)=>{
           const obj = JSON.parse(message.utf8Data);
           this.handleMessage(obj);
-          
         });
         this.connection.on('close', (reasonCode, description)=>{
             console.log('Disconnected.');
@@ -52,9 +76,6 @@ class NinjaQPCRServerExample {
       default:
         break;
     }
-    /*
-    this.connection.sendUTF('Connected');
-    */
   }
   start () {
     qpcr.setEventReceiver(this);
@@ -64,6 +85,8 @@ class NinjaQPCRServerExample {
   stop () {
     // TODO
   }
+  
+  /* NinjaQPCR Event Handling */
   onThermalTransition (data) {
     const obj = {
       category:"experiment.transition",
@@ -85,7 +108,16 @@ class NinjaQPCRServerExample {
     };
     this.connection.sendUTF(JSON.stringify(obj));
   }
-  onFinish () {
+  onStart (data) {
+    const obj = {
+      category:"experiment.start",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
+    this.isRunning = false;
+    
+  }
+  onFinish (data) {
     const obj = {
       category:"experiment.finish",
       data:data
@@ -94,4 +126,4 @@ class NinjaQPCRServerExample {
     this.isRunning = false;
   }
 }
-new NinjaQPCRServerExample().init();
+new NinjwQPCRServer().init();

@@ -1,15 +1,18 @@
 <template>
-  <div>
-    <h2>NetworkStatus</h2>
-    <p>{{connectionStatus}}</p>
-    <button v-on:click="connect">Connect</button>
-    <button v-on:click="start" v-show="connected">Start</button>
+  <div class="col-12 mt-1">
+    <div class="card p-3">
+      <p>Device: {{connectionStatus}}</p>
+      <div>
+        <b-button pill variant="primary" v-on:click="connect" v-show="!connected">Connect</b-button>
+        <b-button pill variant="primary" v-on:click="start" v-show="connected">Start</b-button>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
-import network from "../lib/network.js";
+import network from "../lib/device.js";
 export default {
   data() {
     return {
@@ -36,7 +39,7 @@ export default {
         this.connectionStatus = "Connected";
       }
     };
-    this.network.addConnectionEventHandlers(handler);
+    this.network.addConnectionEventHandler(handler);
   }
 }
 </script>
