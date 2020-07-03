@@ -7,6 +7,7 @@ const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const pm = new ProtocolManager();
+const Router = require("./router");
 
 const http = require('http');
 var URL = require('url');
@@ -14,10 +15,55 @@ const WebSocketServer = require('websocket').server;
 
 const WEBSOCKET_PORT = 2222;
 
-class NinjwQPCRServer {
-  constructor  () {
+class NinjaQPCRHTTPServer {
+  constructor (server) {
+    this.server = server;
+    const router = new Router();
+    
+    router.addPath("/protocols", this.protocols);
+    router.addPath("/protocols/{pid}", this.protocolGet);
+    router.addPath("/protocols/{pid}/update", this.protocolUpdate);
+    router.add404(this.error404);
+    
+    this.server.on('request', (req, res)=>{
+      // CORS
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      router.route(req, res);
+    });
   }
-  protocols (req, res) {
+  protocolUpdate (req, res, map) {
+    console.log("protocolUpdate");
+    req.on("data", (rawData)=>{
+      console.log("protocolUpdate received data.");
+      const item = JSON.parse(rawData);
+      console.log("name=%s", item.protocol.name);
+      console.log("id=%s", item.id);
+      if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
+        
+        pm.update(item, ()=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.write("Saved");
+          res.end();
+        }, (err)=>{
+          this.error500(err);
+          
+        });
+      }
+    });
+  }
+  protocolGet (req, res, map) {
+    pm.getProtocol(map.pid, (item)=>{
+      console.log("onLoad");
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      res.write(JSON.stringify(item));
+      res.end();
+    },
+    (err)=>{
+      this.error500(err);
+    });
+    
+  }
+  protocols (req, res, map) {
     pm.getProtocols((protocols)=>{
       console.log("onLoad");
       res.writeHead(200,{'Content-Type': 'application/json'});
@@ -25,25 +71,26 @@ class NinjwQPCRServer {
       res.end();
     },
     (err)=>{
-      res.writeHead(500,{'Content-Type': 'application/json'});
-      res.write(err);
-      res.end();
+      this.error500(err);
     });
-    
   }
-  init () {
-    this.server = http.createServer();
-    this.server.listen(WEBSOCKET_PORT);
+  error404 (req, res) {
+    res.writeHead(404,{'Content-Type': 'application/json'});
+    res.write("Not found.");
+    res.end();
+  }
+  error500 (req, res, message) {
+    res.writeHead(500,{'Content-Type': 'application/json'});
+    res.write(message);
+    res.end();
+  }
+}
+
+class NinjaQPCRWebSocketServer {
+  constructor (server) {
+    this.server = server;
     this.wsServer = new WebSocketServer({
         httpServer: this.server
-    });
-    const routes = {
-      '/protocols': this.protocols
-    };
-    this.server.on('request',(req, res)=>{
-        const url = URL.parse(req.url);
-        const route = routes[url.pathname];
-        if (route) route(req, res);
     });
     this.connection = null;
     this.wsServer.on('request', (request)=>{
@@ -126,4 +173,15 @@ class NinjwQPCRServer {
     this.isRunning = false;
   }
 }
-new NinjwQPCRServer().init();
+class NinjaQPCRServer {
+  constructor  () {
+  }
+  init () {
+    this.server = http.createServer();
+    this.server.listen(WEBSOCKET_PORT);
+    this.httpServer = new NinjaQPCRHTTPServer(this.server);
+    this.webSocketSErver = new NinjaQPCRWebSocketServer(this.server);
+    
+  }
+}
+new NinjaQPCRServer().init();

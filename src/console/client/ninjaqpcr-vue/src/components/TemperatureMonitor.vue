@@ -6,7 +6,7 @@
 <script>
 
 const Chart = require('chart.js');
-import network from "../lib/device.js";
+import network from "../lib/Device.js";
 let tempWell = [];
 let tempLid = [];
 let startTime = new Date();

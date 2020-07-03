@@ -42,7 +42,7 @@
 
 
 <script>
-import network from "../lib/device.js";
+import network from "../lib/Device.js";
 export default {
   name: 'DeviceStatus',
   data() {

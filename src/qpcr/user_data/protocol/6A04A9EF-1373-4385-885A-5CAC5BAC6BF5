@@ -1,8 +1,8 @@
-{
-  "name": "Demo Protocol B",
+{ "id":"6A04A9EF-1373-4385-885A-5CAC5BAC6BF5",
   "created": 1593661111711,
   "modified": 1593661111711,
   "protocol": {
+    "name": "Demo Protocol B",
     "lidTemp": 110,
     "stages": [
       {

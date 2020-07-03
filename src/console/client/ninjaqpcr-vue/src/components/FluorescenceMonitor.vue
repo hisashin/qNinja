@@ -27,7 +27,7 @@ const createDataset = (channelIndex, name, showLine)=>{
     ]
   };
 };
-import network from "../lib/device.js";
+import network from "../lib/Device.js";
 const TUBE_COUNT = 8;
 let fluorescence = [];
 for (let i=0; i<TUBE_COUNT; i++) {

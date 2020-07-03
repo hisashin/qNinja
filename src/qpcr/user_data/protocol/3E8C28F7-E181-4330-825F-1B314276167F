@@ -1,8 +1,8 @@
-{
-  "name": "Demo Protocol C",
+{ "id":"3E8C28F7-E181-4330-825F-1B314276167F",
   "created": 1593661111711,
   "modified": 1593661111711,
   "protocol": {
+    "name": "Demo Protocol C",
     "lidTemp": 110,
     "stages": [
       {

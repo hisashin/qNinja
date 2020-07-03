@@ -6,35 +6,30 @@ const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO
 
 class ProtocolManager {
   constructor () {
-    this.protocols = null;
+    this.items = null;
   }
   /* API */
   getProtocols (onLoad, onError) {
-    if (this.protocols != null) {
+    if (this.items != null) {
       if (onLoad) {
-        onLoad(this.protocols);
+        onLoad(this.items);
       }
       return;
     }
-    this._loadProtocols((protocols)=>{
+    this._loadProtocols((items)=>{
       if (onLoad) {
-        onLoad(this.protocols);
+        onLoad(this.items);
       }
-      
     }, onError);
   }
-  
-  save (content, id, onsSave /* (content, id)=>{} */, onError) {
+  // TODO
+  insert () {
+    
+  }
+  update (content, onUpdate /* (content)=>{} */, onError) {
     const dateStr = new Date().getTime();
     content.modified = dateStr;
-    if (id == null) {
-      id = uuidv4();
-      console.log("Creating protocol. UUID:%s", id);
-      content.created = dateStr;
-    } else {
-      console.log("Updating protocol. UUID:%s", id);
-    }
-    const filePath = this._protocolDir() + "/" + id;
+    const filePath = this._protocolDir() + "/" + content.id;
     console.log("Writing the protocol to %s", filePath);
     fs.writeFile(filePath, JSON.stringify(content), (err)=>{
       if (err) {
@@ -46,8 +41,8 @@ class ProtocolManager {
         // Reload
         this._loadProtocols(
           ()=>{
-            if (onsSave) {
-              onsSave(id, content);
+            if (onUpdate) {
+              onUpdate(content);
             }
           },
           (err)=>{
@@ -71,7 +66,7 @@ class ProtocolManager {
       }
       // Reload
       this._loadProtocols(
-        (protocols)=>{
+        (items)=>{
           if (onDelete) {
             onDelete();
           }
@@ -82,25 +77,42 @@ class ProtocolManager {
     });
   }
   duplicate (id, onSuccess/* (id, content)=>{}*/, onError) {
-    this._getProtocol(id, (fromProtocol)=>{
-      if (fromProtocol == null) {
+    this._getProtocol(id, (fromItem)=>{
+      if (fromItem == null) {
         if (onError) {
           onError("Protocol not found id:" + id);
         }
         return;
       }
-      const now = new Date();
-      const toProtocol = JSON.parse(JSON.stringify(fromProtocol));
-      toProtocol.name = "Copy of " + fromProtocol.name;
-      this.save(toProtocol, null, onSuccess, onError);
+      const toItem = this._createProtocol();
+      toItem.protocol = fromItem.protocol;
+      toItem.protocol.name = "Copy of " + fromItem.protocol.name;
+      this.update(toItem, onSuccess, onError);
     }, onError);
   }
+  
+  getProtocol (id, callback, onError) {
+    console.log("getProtocol %s", id)
+    this._getProtocol (id, callback, onError);
+  }
+  
+  _createProtocol () {
+    const now = new Date().getTime();
+    return {
+      id: uuidv4(),
+      created:now,
+      modified:now,
+      protocol:{}
+    }
+  }
+  
   _getProtocol (id, callback, onError) {
     this.getProtocols(
-      (protocols)=>{
-        for (let i=0; i<protocols.length; i++) {
-          if (protocols[i].id == id) {
-            callback(protocols[i].content);
+      (items)=>{
+        for (let i=0; i<items.length; i++) {
+          if (items[i].id == id) {
+            console.log(items[i].id)
+            callback(items[i]);
             return;
           }
         }
@@ -117,9 +129,9 @@ class ProtocolManager {
   _logDir ( ) {
     return DATA_DIR_ROOT + "/protocol";
   }
-  /* Load all protocols async */
+  /* Load all items async */
   _loadProtocols (onLoad, onError) {
-    console.log("Loading protocols from %s", this._protocolDir());
+    console.log("Loading items from %s", this._protocolDir());
     fs.readdir(this._protocolDir(), (err, allFiles) => {
       if (err) {
         throw err;
@@ -133,7 +145,7 @@ class ProtocolManager {
             fs.readFile(path, (err, rawData)=>{
               if (err == null) {
                 try {
-                  contents.push({id:file, content:JSON.parse(rawData)});
+                  contents.push(JSON.parse(rawData));
                   resolve();
                 } catch (ex) {
                   reject(ex);
@@ -147,9 +159,9 @@ class ProtocolManager {
         tasks.push(task)
       });
       Promise.all(tasks).then(()=>{
-        this.protocols = contents;
+        this.items = contents;
         if (onLoad) {
-          onLoad(this.protocols);
+          onLoad(this.items);
         }
       }).catch((err)=>{
         console.log(err);

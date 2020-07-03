@@ -2,14 +2,14 @@
   <div class="col-12 mt-3">
     <div class="card">
       <div class="card-header">
-        Protocol Editor {{ id }}
+        Protocol Detail {{ id }}
       </div>
       <div class="p-3">
         <div>
-          <input v-model.number="protocol.name" type="text"/>
+          {{protocol.name}}
         </div>
         <div>
-          Lid temp: <input v-model.number="protocol.lidTemp" type="number"/>
+          Lid temp: {{protocol.lidTemp}}
         </div>
         <div v-for="(stage, index) in protocol.stages">
           <div v-if="stage.type==1">
@@ -113,7 +113,7 @@ const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE,
   {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
   
 export default {
-  name: 'ProtocolEditor',
+  name: 'ProtocolDetail',
   components:{},
   data() {
     return {
@@ -183,8 +183,6 @@ export default {
   
   }
 }
-
-
 
 </script>
 
