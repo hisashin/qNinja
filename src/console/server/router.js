@@ -35,6 +35,11 @@ class Path {
     }
     return params;
   }
+  document () {
+    return {
+      path: this.expression
+    };
+  }
 }
 
 class Router {
@@ -60,6 +65,13 @@ class Router {
     } else {
       console.warn("Router.route handler404 is not defined.");
     }
+  }
+  list () {
+    let items = [];
+    this.paths.forEach((path)=>{
+      items.push(path.document());
+    });
+    return items;
   }
 }
 

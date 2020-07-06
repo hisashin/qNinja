@@ -6,7 +6,9 @@ const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf");
 const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
+const LogManager = require(QPCR_PATH + "log_manager");
 const pm = new ProtocolManager();
+const lm = new LogManager();
 const Router = require("./router");
 
 const http = require('http');
@@ -19,58 +21,109 @@ class NinjaQPCRHTTPServer {
   constructor (server) {
     this.server = server;
     const router = new Router();
-    
-    router.addPath("/protocols", this.protocols);
-    router.addPath("/protocols/{pid}", this.protocolGet);
-    router.addPath("/protocols/{pid}/update", this.protocolUpdate);
+    this.router = router;
+    router.addPath("/", this.root());
+    router.addPath("/protocols", this.protocols());
+    router.addPath("/protocols/{pid}", this.protocolGet());
+    router.addPath("/protocols/{pid}/update", this.protocolUpdate());
+    router.addPath("/logs", this.logs());
+    router.addPath("/logs/latest", this.logLatest());
+    router.addPath("/logs/{lid}", this.logGet());
     router.add404(this.error404);
-    
     this.server.on('request', (req, res)=>{
       // CORS
       res.setHeader('Access-Control-Allow-Origin', '*');
       router.route(req, res);
     });
   }
-  protocolUpdate (req, res, map) {
-    req.on("data", (rawData)=>{
-      console.log("protocolUpdate received data.");
-      const item = JSON.parse(rawData);
-      console.log("name=%s", item.protocol.name);
-      console.log("id=%s", item.id);
-      if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
-        
-        pm.update(item, ()=>{
-          res.writeHead(200,{'Content-Type': 'application/json'});
-          const obj = {success:true}
-          res.write(JSON.stringify(obj));
-          res.end();
-        }, (err)=>{
-          this.error500(err);
+  root () {
+    return (req, res, map)=>{
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      res.write(JSON.stringify(this.router.list()));
+      res.end();
+    }
+  }
+  protocolUpdate () {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("protocolUpdate received data.");
+        const item = JSON.parse(rawData);
+        console.log("name=%s", item.protocol.name);
+        console.log("id=%s", item.id);
+        if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
           
-        });
-      }
-    });
+          pm.update(item, ()=>{
+            res.writeHead(200,{'Content-Type': 'application/json'});
+            const obj = {success:true}
+            res.write(JSON.stringify(obj));
+            res.end();
+          }, (err)=>{
+            this.error500(err);
+            
+          });
+        }
+      });
+    }
   }
-  protocolGet (req, res, map) {
-    pm.getProtocol(map.pid, (item)=>{
-      res.writeHead(200,{'Content-Type': 'application/json'});
-      res.write(JSON.stringify(item));
-      res.end();
-    },
-    (err)=>{
-      this.error500(err);
-    });
-    
+  logs () {
+    return (req, res, map)=>{
+      lm.getSummaries({}, {}, (summaries)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(summaries));
+        res.end();
+      },
+      (err)=>{
+        this.error500(err);
+      });
+    };
   }
-  protocols (req, res, map) {
-    pm.getProtocols((protocols)=>{
-      res.writeHead(200,{'Content-Type': 'application/json'});
-      res.write(JSON.stringify(protocols));
-      res.end();
-    },
-    (err)=>{
-      this.error500(err);
-    });
+  logLatest () {
+    return (req, res, map)=>{
+      lm.getLatestLog((log)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(log));
+        res.end();
+      },
+      (err)=>{
+        this.error500(err);
+      });
+    };
+  }
+  logGet () {
+    return (req, res, map)=>{
+      lm.getLog(map.lid, (log)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(log));
+        res.end();
+      },
+      (err)=>{
+        this.error500(err);
+      });
+    };
+  }
+  protocolGet () {
+    return (req, res, map)=>{
+      pm.getProtocol(map.pid, (item)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(item));
+        res.end();
+      },
+      (err)=>{
+        this.error500(err);
+      });
+    };
+  }
+  protocols () {
+    return (req, res, map)=>{
+      pm.getProtocols((protocols)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(protocols));
+        res.end();
+      },
+      (err)=>{
+        this.error500(err);
+      });
+    };
   }
   error404 (req, res) {
     res.writeHead(404,{'Content-Type': 'application/json'});
