@@ -111,7 +111,7 @@ class ProtocolManager {
       (items)=>{
         for (let i=0; i<items.length; i++) {
           if (items[i].id == id) {
-            console.log(items[i].id)
+            console.log(items[i].id);
             callback(items[i]);
             return;
           }
@@ -124,9 +124,6 @@ class ProtocolManager {
   
   /* Private */
   _protocolDir ( ) {
-    return DATA_DIR_ROOT + "/protocol";
-  }
-  _logDir ( ) {
     return DATA_DIR_ROOT + "/protocol";
   }
   /* Load all items async */

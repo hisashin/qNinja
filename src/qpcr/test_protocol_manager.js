@@ -1,6 +1,5 @@
 "use strict";
 const ProtocolManager = require("./protocol_manager.js");
-
 const pm = new ProtocolManager();
 
 const demo_protocol_d = {
