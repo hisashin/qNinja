@@ -1,10 +1,24 @@
 <template>
   <div class="">
     <div class="card p-3">
-      <p>Device: {{connectionStatus}}</p>
+      <p>Device: {{ connectionStatus }}</p>
       <div>
-        <b-button pill variant="primary" v-on:click="connect" v-show="!connected">Connect</b-button>
-        <b-button pill variant="primary" v-on:click="start" v-show="connected">Start</b-button>
+        <b-button
+          v-show="!connected"
+          pill
+          variant="primary"
+          @click="connect"
+        >
+          Connect
+        </b-button>
+        <b-button
+          v-show="connected"
+          pill
+          variant="primary"
+          @click="start"
+        >
+          Start
+        </b-button>
       </div>
     </div>
   </div>
@@ -20,15 +34,6 @@ export default {
       connectionStatus: "Disconnected"
     }
   },
-  methods: {
-    connect: function () {
-      console.log("connect");
-      this.network.connect();
-    },
-    start: function () {
-      this.network.start();
-    }
-  },
   created: function () {
     console.log("NetworkStatus.created");
     this.network = network;
@@ -40,6 +45,15 @@ export default {
       }
     };
     this.network.addConnectionEventHandler(handler);
+  },
+  methods: {
+    connect: function () {
+      console.log("connect");
+      this.network.connect();
+    },
+    start: function () {
+      this.network.start();
+    }
   }
 }
 </script>

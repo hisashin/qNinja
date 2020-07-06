@@ -4,19 +4,24 @@ const API_ENDPOINT = "http://localhost:2222/";
 class AppState {
   constructor () {
     this.protocols = [];
+    this.logSummaries = [];
     this.selectedProtocol = null;
+    this.selectedLog = null;
     
     /* Event handlers */
     this.protocolEventHandlers = [];
+    this.logEventHandlers = [];
     this.panelContainer = null;
     this.panelStack = [];
     
     this.PANELS = {
       DASHBOARD:1,
       PROTOCOL_LIST:2,
-      PROTOCOL_EDITOR:3,
-      PROTOCOL_DETAIL:4,
-      EXPERIMENT_MONITOR:5
+      PROTOCOL_DETAIL:3,
+      PROTOCOL_EDITOR:4,
+      LOG_LIST:5,
+      LOG_DETAIL:6,
+      EXPERIMENT_MONITOR:7
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
@@ -75,13 +80,21 @@ class AppState {
     console.log("AppState.sortProtocols");
   }
   
-  /* Getting protocols */
+  /* Utilities */
   _requestData (path, data, method, onSuccess, onError) {
     const xmlhttp = new XMLHttpRequest();
     const url = API_ENDPOINT + path;
+    console.log("AppState._requestData Requesting %s", url);
     xmlhttp.onreadystatechange = ()=>{
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        onSuccess(JSON.parse(xmlhttp.responseText));
+        console.log("AppState._requestData Success %s", url);
+        try {
+          onSuccess(JSON.parse(xmlhttp.responseText));
+        } catch (e) {
+          if (onError != null) {
+            onError(e);
+          }
+        }
       }
     };
     xmlhttp.open(method, url, true);
@@ -92,8 +105,8 @@ class AppState {
     } else {
       xmlhttp.send(JSON.stringify(data));
     }
-    
   }
+  
   reloadProtocols () {
     console.log("AppState.reloadProtocols");
     this._requestData("protocols", null, "GET", 
@@ -109,6 +122,49 @@ class AppState {
       }
     );
   }
+  getLogSummaries () {
+    return this.logSummaries;
+  }
+  reloadLogs () {
+    console.log("AppState.reloadLogs");
+    this._requestData("logs", null, "GET", 
+      (data)=>{
+        console.log("AppState.reloadLogs callback");
+        this.logSummaries = data;
+        this.logEventHandlers.forEach((handler)=>{
+          if (handler.onLogSummariesUpdate) {
+            handler.onLogSummariesUpdate(this.logSummaries);
+          }
+        });
+      }, (error)=>{
+        console.log("Error %s", error);
+      }
+    );
+  }
+  
+  revealDetailLog (id) {
+    console.log("AppState.revealDetailLog");
+    this._selectLog(id, ()=>{
+      this.pushPanel(this.PANELS.LOG_DETAIL);
+    });
+  }
+  _selectLog (id, callback) {
+    this._requestData("logs/" + id, null, "GET", 
+      (data)=>{
+        this.selectedLog = data;
+        this.logEventHandlers.forEach((handler)=>{
+          if (handler.onSelectLog) {
+            handler.onSelectLog(data);
+          }
+        });
+        callback();
+      }, (error)=>{
+        console.log(error);
+      }
+    );
+    
+  }
+  
   // Get protocol from server
   _selectProtocol (id, callback) {
     this._requestData("protocols/" + id, null, "GET", 
@@ -121,8 +177,8 @@ class AppState {
           }
         });
         callback(this.selectedProtocol);
-      }, ()=>{
-        console.log("Error");
+      }, (error)=>{
+        console.log(error);
       }
     );
   }
@@ -141,7 +197,9 @@ class AppState {
   /* Event handler registration */
   addProtocolEventHandler (handler) {
     this.protocolEventHandlers.push(handler);
-    console.log("AppState.addProtocolEventHandler added. (current num=%d)",this.protocolEventHandlers.length);
+  }
+  addLogEventHandler (handler) {
+    this.logEventHandlers.push(handler);
   }
   setPanelContainer (container) {
     this.panelContainer = container;

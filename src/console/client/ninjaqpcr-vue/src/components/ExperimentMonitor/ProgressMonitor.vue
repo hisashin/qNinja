@@ -7,7 +7,12 @@
             Well {{ wellTemp }}℃
           </div>
           <div>
-            <meter min="0" max="110" v-bind:value="wellTemp" style="width:100%"></meter>
+            <meter
+              min="0"
+              max="110"
+              :value="wellTemp"
+              style="width:100%"
+            />
           </div>
         </div>
         <div class="col-6">
@@ -15,7 +20,12 @@
             Well {{ lidTemp }}℃
           </div>
           <div>
-            <meter min="0" max="110" v-bind:value="lidTemp" style="width:100%"></meter>
+            <meter
+              min="0"
+              max="110"
+              :value="lidTemp"
+              style="width:100%"
+            />
           </div>
         </div>
       </div>
@@ -60,10 +70,6 @@ export default {
       protocol:null,
     }
   },
-  methods: {
-    connect: function () {
-    }
-  },
   created: function () {
     this.network = network;
     this.network.addTransitionHandler({
@@ -96,6 +102,10 @@ export default {
         }
       }
     });
+  },
+  methods: {
+    connect: function () {
+    }
   }
 }
 </script>

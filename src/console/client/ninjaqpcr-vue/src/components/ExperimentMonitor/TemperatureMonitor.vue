@@ -1,6 +1,11 @@
 <template>
   <div style="width:400px,height:200px">
-    <canvas id="chartTemperature" width="400" height="200" style="width:400px,height:200px"></canvas>
+    <canvas
+      id="chartTemperature"
+      width="400"
+      height="200"
+      style="width:400px,height:200px"
+    />
   </div>
 </template>
 <script>
@@ -37,8 +42,6 @@ export default {
   data() {
     return {
     }
-  },
-  methods: {
   },
   created: function () {
     this.network = network;
@@ -100,6 +103,8 @@ export default {
       temperatureChart.data.datasets[1] = createDataset(1, "Lid", true);
     };
     createTemperatureChart();
+  },
+  methods: {
   }
 }
 </script>

@@ -20,8 +20,10 @@ const WEBSOCKET_PORT = 2222;
 class NinjaQPCRHTTPServer {
   constructor (server) {
     this.server = server;
+    
     const router = new Router();
     this.router = router;
+    
     router.addPath("/", this.root());
     router.addPath("/protocols", this.protocols());
     router.addPath("/protocols/{pid}", this.protocolGet());
@@ -29,6 +31,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/logs", this.logs());
     router.addPath("/logs/latest", this.logLatest());
     router.addPath("/logs/{lid}", this.logGet());
+    
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
       // CORS

@@ -5,98 +5,267 @@
         Protocol Editor
       </div>
       <!-- Modal (Select stage type) -->
-      <b-modal id="add-stage-modal" title="Add a Stage" hide-footer>
-        <b-button v-on:click="addHold()" variant="primary" block class="mr-1">+ Hold</b-button>
-        <b-button v-on:click="addPCR()" variant="primary" block class="mr-1">+ PCR</b-button>
-        <b-button v-on:click="addMeltCurve()" variant="primary" block>+ Melt Curve</b-button>
-        <b-button class="mt-3" block @click="$bvModal.hide('add-stage-modal')">Close</b-button>
+      <b-modal
+        id="add-stage-modal"
+        title="Add a Stage"
+        hide-footer
+      >
+        <b-button
+          variant="primary"
+          block
+          class="mr-1"
+          @click="addHold()"
+        >
+          + Hold
+        </b-button>
+        <b-button
+          variant="primary"
+          block
+          class="mr-1"
+          @click="addPCR()"
+        >
+          + PCR
+        </b-button>
+        <b-button
+          variant="primary"
+          block
+          @click="addMeltCurve()"
+        >
+          + Melt Curve
+        </b-button>
+        <b-button
+          class="mt-3"
+          block
+          @click="$bvModal.hide('add-stage-modal')"
+        >
+          Close
+        </b-button>
       </b-modal>
       <div class="protocol">
         <div class="protocol-header">
           <div>
-            Name <input v-model.number="protocol.name" type="text"/>
+            Name <input
+              v-model.number="protocol.name"
+              type="text"
+            >
           </div>
           <div>
-            Lid temp <input v-model.number="protocol.lidTemp" class="input-temp" type="number"/>
+            Lid temp <input
+              v-model.number="protocol.lidTemp"
+              class="input-temp"
+              type="number"
+            >
           </div>
         </div>
         <ul class="protocol-stages">
           <template v-for="(stage, index) in protocol.stages">
             <li class="protocol-stage-add">
-              <b-button pill @click="openAddStageModal(index)">Add</b-button>
+              <b-button
+                pill
+                @click="openAddStageModal(index)"
+              >
+                Add
+              </b-button>
             </li>
             <li class="protocol-stage">
               <template v-if="stage.type==1">
                 <h3 class="protocol-stage-label">
                   Hold Stage
-                  <b-button size="sm" variant="outline-danger" class="ml-2" v-on:click="confirmDelete(index)">Delete</b-button>
+                  <b-button
+                    size="sm"
+                    variant="outline-danger"
+                    class="ml-2"
+                    @click="confirmDelete(index)"
+                  >
+                    Delete
+                  </b-button>
                 </h3>
                 <ul class="protocol-steps">
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Hold</div>
-                    <input class="input-temp" v-model.number="stage.steps[0].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
+                    <div class="protocol-step-label">
+                      Hold
+                    </div>
+                    <input
+                      v-model.number="stage.steps[0].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[0].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
                   </li>
                 </ul>
               </template>
               <template v-if="stage.type==2">
                 <h3 class="protocol-stage-label">
                   PCR Stage
-                  <b-button size="sm" variant="outline-danger" class="ml-2" v-on:click="confirmDelete(index)">Delete</b-button>
+                  <b-button
+                    size="sm"
+                    variant="outline-danger"
+                    class="ml-2"
+                    @click="confirmDelete(index)"
+                  >
+                    Delete
+                  </b-button>
                 </h3>
-                Repeat <input v-model.number="stage.repeat" type="number" class="input-repeat"/> times
+                Repeat <input
+                  v-model.number="stage.repeat"
+                  type="number"
+                  class="input-repeat"
+                > times
                 <ul class="protocol-steps">
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Denaturing</div>
-                    <input class="input-temp" v-model.number="stage.steps[0].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
+                    <div class="protocol-step-label">
+                      Denaturing
+                    </div>
+                    <input
+                      v-model.number="stage.steps[0].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[0].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
                   </li>
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Annealing</div>
-                    <input class="input-temp" v-model.number="stage.steps[1].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[1].duration" type="number" step="1"/>sec
+                    <div class="protocol-step-label">
+                      Annealing
+                    </div>
+                    <input
+                      v-model.number="stage.steps[1].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[1].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
                   </li>
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Extending</div>
-                    <input class="input-temp" v-model.number="stage.steps[2].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[2].duration" type="number" step="1"/>sec
+                    <div class="protocol-step-label">
+                      Extending
+                    </div>
+                    <input
+                      v-model.number="stage.steps[2].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[2].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
                   </li>
                 </ul>
               </template>
               <template v-if="stage.type==3">
                 <h3 class="protocol-stage-label">
                   Melt Curve Stage
-                  <b-button size="sm" variant="outline-danger" class="ml-2" v-on:click="confirmDelete(index)">Delete</b-button>
+                  <b-button
+                    size="sm"
+                    variant="outline-danger"
+                    class="ml-2"
+                    @click="confirmDelete(index)"
+                  >
+                    Delete
+                  </b-button>
                 </h3>
                 <ul class="protocol-steps">
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Denaturing</div>
-                    <input class="input-temp" v-model.number="stage.steps[0].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[0].duration" type="number" step="1"/>sec
-                    <input class="input-speed"  v-model.number="stage.steps[0].speed" type="number" step="1"/>℃/sec
+                    <div class="protocol-step-label">
+                      Denaturing
+                    </div>
+                    <input
+                      v-model.number="stage.steps[0].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[0].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
+                    <input
+                      v-model.number="stage.steps[0].speed"
+                      class="input-speed"
+                      type="number"
+                      step="1"
+                    >℃/sec
                   </li>
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Cooling</div>
-                    <input class="input-temp" v-model.number="stage.steps[1].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[1].duration" type="number" step="1"/>sec
-                    <input class="input-speed"  v-model.number="stage.steps[1].speed" type="number" step="1"/>℃/sec
+                    <div class="protocol-step-label">
+                      Cooling
+                    </div>
+                    <input
+                      v-model.number="stage.steps[1].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[1].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
+                    <input
+                      v-model.number="stage.steps[1].speed"
+                      class="input-speed"
+                      type="number"
+                      step="1"
+                    >℃/sec
                   </li>
                   <li class="protocol-step">
-                    <div class="protocol-step-label">Melting</div>
-                    <input class="input-temp" v-model.number="stage.steps[2].temp" type="number"/>℃
-                    <input class="input-duration" v-model.number="stage.steps[2].duration" type="number" step="1"/>sec
-                    <input class="input-speed" v-model.number="stage.steps[2].speed" type="number" step="1"/>℃/sec
+                    <div class="protocol-step-label">
+                      Melting
+                    </div>
+                    <input
+                      v-model.number="stage.steps[2].temp"
+                      class="input-temp"
+                      type="number"
+                    >℃
+                    <input
+                      v-model.number="stage.steps[2].duration"
+                      class="input-duration"
+                      type="number"
+                      step="1"
+                    >sec
+                    <input
+                      v-model.number="stage.steps[2].speed"
+                      class="input-speed"
+                      type="number"
+                      step="1"
+                    >℃/sec
                   </li>
                 </ul>
               </template>
             </li>
           </template>
           <li class="protocol-stage-add">
-            <b-button pill @click="openAddStageModal(protocol.stages.length)">Add</b-button>
+            <b-button
+              pill
+              @click="openAddStageModal(protocol.stages.length)"
+            >
+              Add
+            </b-button>
           </li>
         </ul>
         <div class="protocol-footer">
-          <b-button variant="primary" v-on:click="save">Save</b-button>
+          <b-button
+            variant="primary"
+            @click="save"
+          >
+            Save
+          </b-button>
         </div>
       </div>
     </div>
@@ -151,6 +320,10 @@ export default {
       addStagePosition:0
     }
   },
+  created: function () {
+    console.log("ExperimentMonitor.created");
+    appState.addProtocolEventHandler(this);
+  },
   methods: {
     confirmDelete: function (index) {
       if (window.confirm("Delete " + index + "?")) {
@@ -190,10 +363,6 @@ export default {
       this.$bvModal.show('add-stage-modal')
       this.addStagePosition = before;
     }
-  },
-  created: function () {
-    console.log("ExperimentMonitor.created");
-    appState.addProtocolEventHandler(this);
   }
 }
 </script>

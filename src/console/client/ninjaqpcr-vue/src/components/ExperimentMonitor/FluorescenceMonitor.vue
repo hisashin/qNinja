@@ -1,6 +1,11 @@
 <template>
   <div style="width:400px,height:200px">
-    <canvas id="chartFluorescence" width="400" height="200" style="width:400px,height:200px"></canvas>
+    <canvas
+      id="chartFluorescence"
+      width="400"
+      height="200"
+      style="width:400px,height:200px"
+    />
   </div>
 </template>
 
@@ -40,8 +45,6 @@ export default {
   data() {
     return {
     }
-  },
-  methods: {
   },
   created: function () {
     this.network = network;
@@ -107,6 +110,8 @@ export default {
       }
     };
     createFluorescenceChart();
+  },
+  methods: {
   }
 }
 </script>

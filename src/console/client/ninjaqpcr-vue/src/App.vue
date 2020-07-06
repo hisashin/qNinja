@@ -5,7 +5,7 @@
       <NetworkStatus />
     </header>
     <main class="main">
-      <DeviceMonitor></DeviceMonitor>
+      <DeviceMonitor />
     </main>
   </div>
 </template>

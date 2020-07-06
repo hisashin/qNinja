@@ -6,10 +6,10 @@
       </div>
       <div class="p-3">
         <div>
-          {{protocol.name}}
+          {{ protocol.name }}
         </div>
         <div>
-          Lid temp: {{protocol.lidTemp}}
+          Lid temp: {{ protocol.lidTemp }}
         </div>
         <ul v-for="(stage, index) in protocol.stages">
           <li>
@@ -17,29 +17,29 @@
               <h3>Hold Stage</h3>
               <ul>
                 <li>
-                  {{stage.steps[0].temp}}℃
-                  {{stage.steps[0].duration}}s
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
                 </li>
               </ul>
             </template>
             <template v-if="stage.type==2">
               <h3>PCR Stage</h3>
-              Repeat {{stage.repeat}} times
+              Repeat {{ stage.repeat }} times
               <ul>
                 <li>
                   Denaturing
-                  {{stage.steps[0].temp}}℃
-                  {{stage.steps[0].duration}}s
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
                 </li>
                 <li>
                   Annealing
-                  {{stage.steps[1].temp}}℃
-                  {{stage.steps[1].duration}}s
+                  {{ stage.steps[1].temp }}℃
+                  {{ stage.steps[1].duration }}s
                 </li>
                 <li>
                   Extending
-                  {{stage.steps[2].temp}}℃
-                  {{stage.steps[2].duration}}s
+                  {{ stage.steps[2].temp }}℃
+                  {{ stage.steps[2].duration }}s
                 </li>
               </ul>
             </template>
@@ -48,21 +48,21 @@
               <ul>
                 <li>
                   Denaturing
-                  {{stage.steps[0].temp}}℃
-                  {{stage.steps[0].duration}}s
-                  {{stage.steps[0].speed}}℃/s
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
+                  {{ stage.steps[0].speed }}℃/s
                 </li>
                 <li>
                   Cooling
-                  {{stage.steps[1].temp}}℃
-                  {{stage.steps[1].duration}}s
-                  {{stage.steps[1].speed}}℃/s
+                  {{ stage.steps[1].temp }}℃
+                  {{ stage.steps[1].duration }}s
+                  {{ stage.steps[1].speed }}℃/s
                 </li>
                 <li>
                   Melting
-                  {{stage.steps[2].temp}}℃
-                  {{stage.steps[2].duration}}s
-                  {{stage.steps[2].speed}}℃/s
+                  {{ stage.steps[2].temp }}℃
+                  {{ stage.steps[2].duration }}s
+                  {{ stage.steps[2].speed }}℃/s
                 </li>
               </ul>
             </template>
@@ -119,6 +119,10 @@ export default {
       }
     }
   },
+  created: function () {
+    console.log("ProtocolDetail.created");
+    appState.addProtocolEventHandler(this);
+  },
   methods: {
     back: function () {
       appState.backPanel();
@@ -127,10 +131,6 @@ export default {
       this.protocol = item.protocol;
       this.id = item.id;
     }
-  },
-  created: function () {
-    console.log("ProtocolDetail.created");
-    appState.addProtocolEventHandler(this);
   }
 }
 </script>
