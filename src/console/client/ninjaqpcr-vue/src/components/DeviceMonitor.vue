@@ -1,55 +1,36 @@
 <template>
-  <div>
+  <div class="device-monitor">
     <div v-show="selectedPanel==panels.DASHBOARD">
-      <h1>Dashboard</h1>
-      <ProtocolList />
+      <h2>Recent protocols</h2>
+      <ProtocolList :limit="2"/>
+      <b-button v-on:click="viewProtocolList">More</b-button>
+      <h2>Recent experiments</h2>
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_LIST">
-      <div v-show="status==1" class="row">
-        <ProtocolList />
-      </div>
+      <BackButton />
+      <ProtocolList :limit="16"/>
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
+      <BackButton />
       <ProtocolDetail />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
-      <div v-show="status==1" class="row">
-        <ProtocolEditor />
-      </div>
+      <BackButton />
+      <ProtocolEditor />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
-      <div v-show="status==2" class="row">
-        <DeviceStatus />
-        <div class="col-12 mt-1">
-          <div class="card p-3">
-            <b-tabs content-class="mt-3">
-              <b-tab title="Fluorescence"><p><FluorescenceMonitor /></p></b-tab>
-              <b-tab title="Temperature" active><p><TemperatureMonitor /></p></b-tab>
-            </b-tabs>
-          </div>
-        </div>
-      </div>
-      <div v-show="status==3" class="row">
-        <div class="col-12 mt-3">
-          <div class="card p-3">
-            Complete!
-          </div>
-        </div>
-      </div>
+      <ExperimentMonitor />
     </div>
-    
-    
   </div>
 </template>
 <script>
+import ExperimentMonitor from './ExperimentMonitor.vue'
 import ProtocolEditor from './ProtocolEditor.vue'
 import ProtocolDetail from './ProtocolDetail.vue'
-import DeviceStatus from './DeviceStatus.vue'
-import TemperatureMonitor from './TemperatureMonitor.vue'
-import FluorescenceMonitor from './FluorescenceMonitor.vue'
 import ProtocolList from './ProtocolList.vue'
 import network from "../lib/Device.js";
 import appState from "../lib/AppState.js";
+import BackButton from './BackButton.vue';
 
 const DEVICE_STATUS_IDLE = 1;
 const DEVICE_STATUS_RUNNING = 2;
@@ -67,15 +48,18 @@ export default {
   },
   components: {
     ProtocolList,
+    ExperimentMonitor,
     ProtocolEditor,
     ProtocolDetail,
-    DeviceStatus,
-    FluorescenceMonitor,
-    TemperatureMonitor
+    BackButton
   },
   methods: {
     presentPanel(panel) {
       this.selectedPanel = panel;
+    },
+    viewProtocolList () {
+      console.log("viewProtocolList");
+      appState.pushPanel(this.panels.PROTOCOL_LIST);
     }
   },
   created: function () {

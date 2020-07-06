@@ -32,7 +32,6 @@ class NinjaQPCRHTTPServer {
     });
   }
   protocolUpdate (req, res, map) {
-    console.log("protocolUpdate");
     req.on("data", (rawData)=>{
       console.log("protocolUpdate received data.");
       const item = JSON.parse(rawData);
@@ -42,7 +41,8 @@ class NinjaQPCRHTTPServer {
         
         pm.update(item, ()=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
-          res.write("Saved");
+          const obj = {success:true}
+          res.write(JSON.stringify(obj));
           res.end();
         }, (err)=>{
           this.error500(err);
@@ -53,7 +53,6 @@ class NinjaQPCRHTTPServer {
   }
   protocolGet (req, res, map) {
     pm.getProtocol(map.pid, (item)=>{
-      console.log("onLoad");
       res.writeHead(200,{'Content-Type': 'application/json'});
       res.write(JSON.stringify(item));
       res.end();
@@ -65,7 +64,6 @@ class NinjaQPCRHTTPServer {
   }
   protocols (req, res, map) {
     pm.getProtocols((protocols)=>{
-      console.log("onLoad");
       res.writeHead(200,{'Content-Type': 'application/json'});
       res.write(JSON.stringify(protocols));
       res.end();

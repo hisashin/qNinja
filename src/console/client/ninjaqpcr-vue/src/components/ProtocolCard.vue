@@ -1,5 +1,5 @@
 <template>
-  <li class="row" v-on:click="revealDetail">
+  <li class="col-12" v-on:click="revealDetail">
     <!-- {{pid}} -->
     {{protocol.name}}
       <ul v-for="stage in protocol.stages" class="col-8">

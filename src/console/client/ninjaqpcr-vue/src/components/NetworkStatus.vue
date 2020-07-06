@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 mt-1">
+  <div class="">
     <div class="card p-3">
       <p>Device: {{connectionStatus}}</p>
       <div>

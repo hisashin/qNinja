@@ -1,3 +1,5 @@
+const device = require("../lib/Device.js");
+
 const API_ENDPOINT = "http://localhost:2222/";
 class AppState {
   constructor () {
@@ -7,6 +9,7 @@ class AppState {
     /* Event handlers */
     this.protocolEventHandlers = [];
     this.panelContainer = null;
+    this.panelStack = [];
     
     this.PANELS = {
       DASHBOARD:1,
@@ -15,34 +18,47 @@ class AppState {
       PROTOCOL_DETAIL:4,
       EXPERIMENT_MONITOR:5
     };
+    this.panelStack.push(this.PANELS.DASHBOARD);
   }
   
   /* Public methods */
-  presentPanel (panel) {
-    console.log("AppState.presentPanel");
+  pushPanel (panel) {
+    console.log("AppState.pushPanel %d",panel);
+    this.panelStack.push(panel);
     if (this.panelContainer) {
       this.panelContainer.presentPanel(panel);
+    } else {
+      console.log("PushPanel panelContainer is null.");
+    }
+  }
+  backPanel () {
+    console.log("backPanel Stack=" + this.panelStack);
+    if (this.panelStack.length < 2) {
+      return;
+    }
+    this.panelStack.pop();
+    if (this.panelContainer) {
+      this.panelContainer.presentPanel(this.panelStack[this.panelStack.length-1]);
     }
   }
   runProtocol (id) {
     console.log("AppState.runProtocol");
     this._selectProtocol(id, (protocol)=>{
-      this.presentPanel(this.PANELS.EXPERIMENT_MONITOR);
+      device.setProtocol(protocol.protocol);
+      device.start();
+      this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
     });
-  }
-  saveProtocol (id) {
-    console.log("AppState.saveProtocol");
   }
   editProtocol (id) {
     console.log("AppState.editProtocol");
     this._selectProtocol(id, (protocol)=>{
-      this.presentPanel(this.PANELS.PROTOCOL_EDITOR);
+      this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
   revealDetailProtocol (id) {
     console.log("AppState.revealDetailProtocol");
     this._selectProtocol(id, (protocol)=>{
-      this.presentPanel(this.PANELS.PROTOCOL_DETAIL);
+      this.pushPanel(this.PANELS.PROTOCOL_DETAIL);
     });
   }
   deleteProtocol (id) {
@@ -69,7 +85,13 @@ class AppState {
       }
     };
     xmlhttp.open(method, url, true);
-    xmlhttp.send();
+    if (data == null) {
+      xmlhttp.send();
+    } else if (typeof(data)=='string') {
+      xmlhttp.send(data);
+    } else {
+      xmlhttp.send(JSON.stringify(data));
+    }
     
   }
   reloadProtocols () {
@@ -89,24 +111,37 @@ class AppState {
   }
   // Get protocol from server
   _selectProtocol (id, callback) {
-    console.log("AppState.selectProtocol");
     this._requestData("protocols/" + id, null, "GET", 
       (data)=>{
         this.selectedProtocol = data;
+        console.log("AppState._selectProtocol selected. calling %d handlers.", this.protocolEventHandlers.length);
         this.protocolEventHandlers.forEach((handler)=>{
           if (handler.onSelectProtocol) {
             handler.onSelectProtocol(this.selectedProtocol);
           }
-          callback(this.selectedProtocol);
         });
+        callback(this.selectedProtocol);
       }, ()=>{
         console.log("Error");
       }
     );
   }
+  saveProtocol (obj, onSave) {
+    console.log("AppState.saveProtocol");
+    const xmlhttp = new XMLHttpRequest();
+    const path = "protocols/" + obj.id + "/update";
+    this._requestData(path, obj, "POST", ()=>{
+      if (onSave) {
+        onSave();
+      }
+      this.reloadProtocols();
+    }, ()=>{
+    });
+  }
   /* Event handler registration */
   addProtocolEventHandler (handler) {
     this.protocolEventHandlers.push(handler);
+    console.log("AppState.addProtocolEventHandler added. (current num=%d)",this.protocolEventHandlers.length);
   }
   setPanelContainer (container) {
     this.panelContainer = container;

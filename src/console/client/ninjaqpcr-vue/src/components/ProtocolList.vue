@@ -1,12 +1,8 @@
 <template>
-  <div class="col-12 mt-1">
-    <h3>Protocol List</h3>
-    <button>New</button>
-    <div class="card p-3">
-      <ul v-for="(item, index) in protocols">
-        <ProtocolCard :pid="item.id" :protocol="item.protocol" />
-      </ul>
-    </div>
+  <div class="card">
+    <ul v-for="(item, index) in protocols" class="row">
+      <ProtocolCard :pid="item.id" :protocol="item.protocol" v-if="index < limit" />
+    </ul>
   </div>
 </template>
 <script>
@@ -19,6 +15,9 @@ export default {
       protocols:[]
     }
   },
+  props: {
+    limit: { type:Number }
+  },
   methods: {
   },
   components: {
@@ -26,6 +25,7 @@ export default {
   },
   created: function () {
     this.protocols = appState.getProtocols();
+    console.log("ProtocolList.created");
     appState.addProtocolEventHandler({
       onProtocolListUpdate:(protocols)=>{
         this.protocols = protocols;
