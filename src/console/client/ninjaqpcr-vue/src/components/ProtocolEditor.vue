@@ -51,15 +51,15 @@
           </div>
           <div>
             Lid temp <input
-              v-model.number="protocol.lidTemp"
+              v-model.number="protocol.lid_temp"
               class="input-temp"
               type="number"
             >
           </div>
         </div>
         <ul class="protocol-stages">
-          <template v-for="(stage, index) in protocol.stages">
-            <li class="protocol-stage-add">
+          <template v-for="(stage, index) in protocol.stages" >
+            <li class="protocol-stage-add" :key="index + '_add'">
               <b-button
                 pill
                 @click="openAddStageModal(index)"
@@ -67,7 +67,7 @@
                 Add
               </b-button>
             </li>
-            <li class="protocol-stage">
+            <li class="protocol-stage" :key="index + '_stage'">
               <template v-if="stage.type==1">
                 <h3 class="protocol-stage-label">
                   Hold Stage
@@ -312,7 +312,7 @@ export default {
       id:"",
       protocol: {
         name: "New Protocol",
-        lidTemp: 110,
+        lid_temp: 110,
         stages: [
         ]
       },

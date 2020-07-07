@@ -24,7 +24,6 @@
   </div>
 </template>
 
-
 <script>
 import network from "../lib/Device.js";
 export default {

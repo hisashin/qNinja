@@ -8,14 +8,11 @@
         </b-tab>
         <b-tab
           title="Temperature"
-          active
-        >
+          active>
           <p><TemperatureMonitor /></p>
         </b-tab>
         <b-tab
-          title="Protocol"
-          active
-        >
+          title="Protocol">
           <p><ProtocolDetail /></p>
         </b-tab>
       </b-tabs>

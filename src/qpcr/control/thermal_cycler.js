@@ -35,7 +35,7 @@ class ThermalCycler {
     this.startTime = new Date();
     this.state.start(this.startTime);
     console.log(this.protocol);
-    this.heatLid.setTargetTemperature(protocol.lidTemp);
+    this.heatLid.setTargetTemperature(protocol.lid_temp);
     this.controlTempInterval = setInterval(()=>{ this.control(); }, TEMP_CONTROL_INTERVAL_MSEC);
   }
   stop () {
@@ -93,7 +93,7 @@ class StateIdle {
   constructor (protocol) {}
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "Idle"; }
-  complete (wellTemp, lidTemp, timestamp) { 
+  complete (wellTemp, lid_temp, timestamp) { 
     return false; 
   }
   next (startTemperature) { 
@@ -113,14 +113,14 @@ class StatePreheat {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "Preheat"; }
-  complete (wellTemp, lidTemp, timestamp) { 
-    return Math.abs(lidTemp - this.protocol.lidTemp) <= TEMP_TOLERANCE_LID;
+  complete (wellTemp, lid_temp, timestamp) { 
+    return Math.abs(lid_temp - this.protocol.lid_temp) <= TEMP_TOLERANCE_LID;
   }
   wellTargetTemp () {
     return null;
   }
   lidTargetTemp () {
-    return this.protocol.lidTemp;
+    return this.protocol.lid_temp;
   }
   next (startTemperature) { 
     if (this.protocol.stages.length > 0 && 
@@ -164,7 +164,7 @@ class StateStepRamp {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepFastRamp"; };
-  complete (wellTemp, lidTemp, timestamp) { 
+  complete (wellTemp, lid_temp, timestamp) { 
     return Math.abs(wellTemp - this.step.temp) <= TEMP_TOLERANCE_WELL;
   }
   wellTargetTemp () {
@@ -184,7 +184,7 @@ class StateStepRamp {
     }
   }
   lidTargetTemp () {
-    return this.protocol.lidTemp;
+    return this.protocol.lid_temp;
   }
   next (startTemperature) {
     return new StateStepHold(this.protocol, this.cycleIndex, 
@@ -218,14 +218,14 @@ class StateStepHold {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepHold"; }
-  complete (wellTemp, lidTemp, timestamp) { 
+  complete (wellTemp, lid_temp, timestamp) { 
     return timestamp.getTime() > this.startTimestamp.getTime() + this.step.duration * 1000;
   }
   wellTargetTemp () {
     return this.step.temp;
   }
   lidTargetTemp () {
-    return this.protocol.lidTemp;
+    return this.protocol.lid_temp;
   }
   next (startTemperature) { 
     let nextCycle = this.cycleIndex;
@@ -265,7 +265,7 @@ class StateFinalHold {
   constructor (protocol) {}
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "FinalHold"; }
-  complete (wellTemp, lidTemp, timestamp) { 
+  complete (wellTemp, lid_temp, timestamp) { 
     return false; 
   }
   wellTargetTemp () {

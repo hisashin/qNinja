@@ -1,74 +1,69 @@
 <template>
-  <div class="">
-    <div class="card">
-      <div class="card-header">
-        Protocol Detail
+  <div class="card" v-if="protocol!=null">
+    <div class="card-header">
+      {{ protocol.name }}
+    </div>
+    <div class="p-3">
+      <div>
+        Lid temp: {{ protocol.lid_temp }}
       </div>
-      <div class="p-3">
-        <div>
-          {{ protocol.name }}
-        </div>
-        <div>
-          Lid temp: {{ protocol.lidTemp }}
-        </div>
-        <ul v-for="(stage, index) in protocol.stages">
-          <li>
-            <template v-if="stage.type==1">
-              <h3>Hold Stage</h3>
-              <ul>
-                <li>
-                  {{ stage.steps[0].temp }}℃
-                  {{ stage.steps[0].duration }}s
-                </li>
-              </ul>
-            </template>
-            <template v-if="stage.type==2">
-              <h3>PCR Stage</h3>
-              Repeat {{ stage.repeat }} times
-              <ul>
-                <li>
-                  Denaturing
-                  {{ stage.steps[0].temp }}℃
-                  {{ stage.steps[0].duration }}s
-                </li>
-                <li>
-                  Annealing
-                  {{ stage.steps[1].temp }}℃
-                  {{ stage.steps[1].duration }}s
-                </li>
-                <li>
-                  Extending
-                  {{ stage.steps[2].temp }}℃
-                  {{ stage.steps[2].duration }}s
-                </li>
-              </ul>
-            </template>
-            <template v-if="stage.type==3">
-              <h3>Melt Curve Stage</h3>
-              <ul>
-                <li>
-                  Denaturing
-                  {{ stage.steps[0].temp }}℃
-                  {{ stage.steps[0].duration }}s
-                  {{ stage.steps[0].speed }}℃/s
-                </li>
-                <li>
-                  Cooling
-                  {{ stage.steps[1].temp }}℃
-                  {{ stage.steps[1].duration }}s
-                  {{ stage.steps[1].speed }}℃/s
-                </li>
-                <li>
-                  Melting
-                  {{ stage.steps[2].temp }}℃
-                  {{ stage.steps[2].duration }}s
-                  {{ stage.steps[2].speed }}℃/s
-                </li>
-              </ul>
-            </template>
-          </li>
-        </ul>
-      </div>
+      <ul v-for="(stage, index) in protocol.stages">
+        <li :key="index">
+          <template v-if="stage.type==1">
+            <h3>Hold Stage</h3>
+            <ul>
+              <li>
+                {{ stage.steps[0].temp }}℃
+                {{ stage.steps[0].duration }}s
+              </li>
+            </ul>
+          </template>
+          <template v-if="stage.type==2">
+            <h3>PCR Stage</h3>
+            Repeat {{ stage.repeat }} times
+            <ul>
+              <li>
+                Denaturing
+                {{ stage.steps[0].temp }}℃
+                {{ stage.steps[0].duration }}s
+              </li>
+              <li>
+                Annealing
+                {{ stage.steps[1].temp }}℃
+                {{ stage.steps[1].duration }}s
+              </li>
+              <li>
+                Extending
+                {{ stage.steps[2].temp }}℃
+                {{ stage.steps[2].duration }}s
+              </li>
+            </ul>
+          </template>
+          <template v-if="stage.type==3">
+            <h3>Melt Curve Stage</h3>
+            <ul>
+              <li>
+                Denaturing
+                {{ stage.steps[0].temp }}℃
+                {{ stage.steps[0].duration }}s
+                {{ stage.steps[0].speed }}℃/s
+              </li>
+              <li>
+                Cooling
+                {{ stage.steps[1].temp }}℃
+                {{ stage.steps[1].duration }}s
+                {{ stage.steps[1].speed }}℃/s
+              </li>
+              <li>
+                Melting
+                {{ stage.steps[2].temp }}℃
+                {{ stage.steps[2].duration }}s
+                {{ stage.steps[2].speed }}℃/s
+              </li>
+            </ul>
+          </template>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -110,27 +105,34 @@ export default {
   components:{},
   data() {
     return {
+    /*
       id:"",
       protocol: {
         name: "New Protocol",
-        lidTemp: 110,
+        lid_temp: 110,
         stages: [
         ]
       }
+      */
     }
+  },
+  props: {
+    id: { type:String },
+    protocol: { type:Object },
   },
   created: function () {
     console.log("ProtocolDetail.created");
-    appState.addProtocolEventHandler(this);
+    // appState.addProtocolEventHandler(this);
   },
   methods: {
     back: function () {
       appState.backPanel();
-    },
+    } /*,
     onSelectProtocol: function (item) {
       this.protocol = item.protocol;
       this.id = item.id;
     }
+    */
   }
 }
 </script>

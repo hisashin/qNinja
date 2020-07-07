@@ -4,6 +4,9 @@ const fs = require('fs');
 
 const ThermalCycler = require("./control/thermal_cycler");
 const Optics = require("./control/optics");
+const LogManager = require("./log_manager.js");
+
+const logManager = new LogManager();
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
@@ -30,6 +33,8 @@ class NinjaQPCR {
   }
   createExperimentLog (protocol) {
     let experimentLog = {
+      id: logManager.generateExperimentId(),
+      protocol_id: protocol.id,
       protocol: protocol,
       temp: {
         time:[],
@@ -229,6 +234,7 @@ class NinjaQPCR {
   }
   onStart () {
     this.finished = false;
+    this.experimentLog.start = new Date().getTime();
     const data = {
       protocol:this.protocol
     };
@@ -236,15 +242,17 @@ class NinjaQPCR {
       this.receiver.onStart(data);
     }
   }
+  onCheckpoint () {
+    // TODO checkpoint logging (stage end)
+  }
   onFinish () {
     this.finished = true;
-    console.log(this.experimentLog);
-    
-    fs.writeFile("./result.txt", JSON.stringify(this.experimentLog), (err)=>{
-      if (err) {
-        console.log(err);
-      }
+    this.experimentLog.end = new Date().getTime();
+    logManager.saveExperimentLog(this.experimentLog, ()=>{}, 
+    (error)=>{
+      console.error(error);
     });
+    
     const data = {
       protocol:this.protocol,
       log:this.experimentLog

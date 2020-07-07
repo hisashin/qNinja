@@ -39,7 +39,9 @@ const example_melt_curve_stage = {
 };
 
 const protocol = {
-  lidTemp: 110.0, // Celsius
+  name: "Dev Protocol",
+  id:"457DE8E9-604D-4CE6-9E7A-4E10CD9D9160",
+  lid_temp: 110.0, // Celsius
   stages: [
     example_hold_stage,
     example_pcr_stage,

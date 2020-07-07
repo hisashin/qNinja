@@ -29,7 +29,7 @@ const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE,
 new Vue({ 
   el: '#protocolViewer',
   data: {
-    lidTemp: 110,
+    lid_temp: 110,
     stages: [ 
       DEFAULT_STAGE_HOLD,
       DEFAULT_STAGE_PCR,
@@ -41,7 +41,7 @@ new Vue({
 new Vue({ 
   el: '#protocolEditor',
   data: {
-    lidTemp: 110,
+    lid_temp: 110,
     stages: [ 
       DEFAULT_STAGE_HOLD,
       DEFAULT_STAGE_PCR,

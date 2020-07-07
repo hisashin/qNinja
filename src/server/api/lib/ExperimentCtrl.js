@@ -13,7 +13,7 @@ class ExperimentCtrl {
   start () {
     qpcr.setEventReceiver(this);
     const protocol = {
-      lidTemp: 110,
+      lid_temp: 110,
       stages: [
         {
           repeat: 1,

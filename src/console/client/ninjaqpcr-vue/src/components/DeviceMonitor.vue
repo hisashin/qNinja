@@ -7,7 +7,7 @@
         More
       </b-button>
       <h2>Recent experiments</h2>
-      <LogList :limit="5" />
+      <LogList :limit="3" />
       <b-button @click="viewLogList">
         More
       </b-button>
@@ -18,7 +18,9 @@
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
       <BackButton />
-      <ProtocolDetail />
+      <ProtocolDetail 
+        :id="selectedProtocolId"
+        :protocol="selectedProtocol"/>
     </div>
     <div v-show="selectedPanel==panels.LOG_LIST">
       <BackButton />
@@ -68,7 +70,9 @@ export default {
       isIdle:true,
       status:DEVICE_STATUS_IDLE,
       panels:appState.PANELS,
-      selectedPanel:appState.PANELS.DASHBOARD
+      selectedPanel:appState.PANELS.DASHBOARD,
+      selectedProtocolId:"",
+      selectedProtocol:null
     }
   },
   created: function () {
@@ -76,6 +80,7 @@ export default {
     appState.reloadProtocols();
     appState.reloadLogs();
     appState.setPanelContainer(this);
+    appState.addProtocolEventHandler(this);
     this.network.addTransitionHandler({
       onStart: (obj)=>{
         console.log("Experiment started.");
@@ -99,6 +104,11 @@ export default {
     },
     viewLogList () {
       appState.pushPanel(this.panels.LOG_LIST);
+    },
+    onSelectProtocol (item) {
+      this.selectedProtocol = item.protocol;
+      this.selectedProtocolId = item.id;
+      
     }
   }
 }

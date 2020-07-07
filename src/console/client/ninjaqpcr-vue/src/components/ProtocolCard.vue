@@ -9,6 +9,7 @@
       v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex"
       class="col-8"
     >
+      <li>
       <span v-if="stage.type==1">Hold</span>
       <span v-if="stage.type==2">PCR</span>
       <span v-if="stage.type==3">Melt Curve</span>
@@ -19,6 +20,7 @@
         {{ step.data_collection }}
       </span>
       <span v-if="stage.type==2">x{{ stage.repeat }}</span>
+      </li>
     </ul>
     <div class="col-4">
       <b-button @click.stop="edit">
@@ -31,7 +33,6 @@
         Run
       </b-button>
     </div>
-    </ul>
   </li>
 </template>
 <script>
@@ -40,7 +41,7 @@ export default {
   name: 'ProtocolCard',
   props: {
     pid: { type:String },
-    protocol: { type:Object },
+    protocol: { type:Object }
   },
   data() {
     return {

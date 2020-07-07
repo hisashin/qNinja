@@ -7,7 +7,7 @@ const demo_protocol_d = {
   "created": "2020-06-27T00:00:00Z",
   "modified": "2020-06-28T00:00:00Z",
   "protocol": {
-    "lidTemp": 110,
+    "lid_temp": 110,
     "stages": [
       {
         "type": 1,

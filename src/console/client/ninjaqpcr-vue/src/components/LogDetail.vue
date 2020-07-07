@@ -8,23 +8,45 @@
         {{log.start}}
       </div>
     </div>
+    <ProtocolDetail
+      :id="log.protocol_name"
+      :protocol="log.protocol" />
+    <div class="card">
+      <b-tabs content-class="mt-3">
+        <b-tab title="Fluorescence">
+          <p>TODO</p>
+        </b-tab>
+        <b-tab
+          title="Temperature"
+          active>
+          <p>TODO</p>
+        </b-tab>
+        <b-tab
+          title="Standard Curve">
+          <p>TODO</p>
+        </b-tab>
+      </b-tabs>
+    </div>
   </div>
 </template>
 
 <script>
 import network from "../lib/Device.js";
 import appState from "../lib/AppState.js";
+import ProtocolDetail from './ProtocolDetail.vue'
 
 export default {
-  name: 'ProtocolDetail',
-  components:{},
+  name: 'LogDetail',
+  components:{
+    ProtocolDetail
+  },
   data() {
     return {
       log:{}
     }
   },
   created: function () {
-    appState.addLogEventHandler(this);
+    network.connect();
   },
   methods: {
     onSelectLog: function (log) {

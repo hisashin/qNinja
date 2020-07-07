@@ -17,13 +17,13 @@
         </div>
         <div class="col-6">
           <div>
-            Well {{ lidTemp }}℃
+            Well {{ lid_temp }}℃
           </div>
           <div>
             <meter
               min="0"
               max="110"
-              :value="lidTemp"
+              :value="lid_temp"
               style="width:100%"
             />
           </div>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       wellTemp:0,
-      lidTemp:0,
+      lid_temp:0,
       totalCycles:0,
       cycle:0,
       totalSteps:0,
@@ -92,7 +92,7 @@ export default {
     this.network.addProgressHandler({
       onProgress:(obj)=>{
         this.wellTemp = obj.well;
-        this.lidTemp = obj.lid;
+        this.lid_temp = obj.lid;
         if (obj.state) {
           this.cycle = obj.state.cycle;
           this.step = obj.state.step;
