@@ -142,6 +142,7 @@ class NinjaQPCRHTTPServer {
 
 class NinjaQPCRWebSocketServer {
   constructor (server) {
+    qpcr.setEventReceiver(this);
     this.server = server;
     this.wsServer = new WebSocketServer({
         httpServer: this.server
@@ -165,9 +166,14 @@ class NinjaQPCRWebSocketServer {
       case "experiment.start":
         this.start();
         break;
-      case "experiment.stop":
-        this.stop();
-        break;
+      case "experiment.pause":
+        this.pause(); break;
+      case "experiment.resume":
+        this.resume(); break;
+      case "experiment.abort":
+        this.abort(); break;
+      case "experiment.finish":
+        this.finish(); break;
       case "experiment.setProtocol": {
         console.log("Protocol updated.");
         this.protocol = obj.data;
@@ -179,12 +185,20 @@ class NinjaQPCRWebSocketServer {
     }
   }
   start () {
-    qpcr.setEventReceiver(this);
     qpcr.start(this.protocol);
     this.isRunning = true;
   }
-  stop () {
-    // TODO
+  pause () {
+    qpcr.pause(this.protocol);
+  }
+  resume () {
+    qpcr.resume(this.protocol);
+  }
+  finish () {
+    qpcr.finish(this.protocol);
+  }
+  abort () {
+    qpcr.abort(this.protocol);
   }
   
   /* NinjaQPCR Event Handling */
@@ -209,6 +223,14 @@ class NinjaQPCRWebSocketServer {
     };
     this.connection.sendUTF(JSON.stringify(obj));
   }
+  onDeviceStateChange (state) {
+    const obj = {
+      category:"device.transition",
+      data:state
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
+    console.log("ws_server onDeviceStateChange" + state);
+  }
   onStart (data) {
     const obj = {
       category:"experiment.start",
@@ -218,7 +240,7 @@ class NinjaQPCRWebSocketServer {
     this.isRunning = false;
     
   }
-  onFinish (data) {
+  onComplete (data) {
     const obj = {
       category:"experiment.finish",
       data:data

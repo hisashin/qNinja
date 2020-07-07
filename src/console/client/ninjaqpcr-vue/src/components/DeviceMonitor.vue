@@ -86,8 +86,8 @@ export default {
         console.log("Experiment started.");
         this.status = DEVICE_STATUS_RUNNING;
       },
-      onFinish: (obj)=>{
-        console.log("Experiment finished.");
+      onComplete: (obj)=>{
+        console.log("Experiment is complete!");
         this.status = DEVICE_STATUS_FINISHED;
       },
       onTransition:(obj)=>{

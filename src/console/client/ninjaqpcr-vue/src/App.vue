@@ -13,12 +13,16 @@
 <script>
 import DeviceMonitor from './components/DeviceMonitor.vue'
 import NetworkStatus from './components/NetworkStatus.vue'
+import network from "./lib/AppState.js";
 
 export default {
   name: 'App',
   components: {
     NetworkStatus,
     DeviceMonitor
+  },
+  created: function () {
+    appState.addLogEventHandler(this);
   }
 }
 </script>

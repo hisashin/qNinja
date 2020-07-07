@@ -82,6 +82,9 @@ export default {
         type: 'scatter',
         data: data,
         options: {
+          elements: {
+              point:{ radius: 0 }
+          },
           animation: false,
           scales: {
               xAxes: [{
@@ -93,7 +96,7 @@ export default {
               yAxes: [{
                   ticks: {
                       min: 20,
-                      max: 100.0
+                      max: 115.0
                   }
               }]
           }

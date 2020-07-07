@@ -79,6 +79,7 @@ class TempSensingUnit  {
       callback(temp);
     });
   }
+  off () {}
 }
 const wellSensing = new TempSensingUnit(ADC_CHANNEL_WELL_THERMISTOR);
 const lidSensing = new TempSensingUnit(ADC_CHANNEL_LID_THERMISTOR);
@@ -147,6 +148,7 @@ class LEDUnit {
     this.ledDriver.setDuty(0);
   }
 }
+
 class FluorescenceSensingUnit {
   constructor () {
     
@@ -154,6 +156,7 @@ class FluorescenceSensingUnit {
   start () {
     mux.initialize();
   }
+  off () {}
   select (well) {
     mux.selectChannel(well.index);
   }
@@ -169,6 +172,7 @@ class NinjaQPCRHardwareConf {
   wellsCount () {
     return 8;
   }
+  start () {}
   getWell () {
     // TODO
     const WELL_KP = 1.0;

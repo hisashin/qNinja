@@ -89,6 +89,9 @@ export default {
         data: data,
         options: {
           animation: false,
+          elements: {
+              point:{ radius: 0 }
+          },
           scales: {
               xAxes: [{
                   ticks: {

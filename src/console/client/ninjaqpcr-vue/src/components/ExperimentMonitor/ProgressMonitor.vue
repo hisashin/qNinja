@@ -1,50 +1,56 @@
 <template>
-  <div class="col-12 mt-1">
-    <div class="card">
-      <div class="row">
-        <div class="col-6">
-          <div>
-            Well {{ wellTemp }}℃
-          </div>
-          <div>
-            <meter
-              min="0"
-              max="110"
-              :value="wellTemp"
-              style="width:100%"
-            />
-          </div>
+  <div class="card p-3 mb-3">
+    <div>
+    <template v-if="deviceState != null">
+      <b-button pill v-if="deviceState.pauseAvailable" @click="pause">Pause</b-button>
+      <b-button pill v-if="deviceState.resumeAvailable" @click="resume">Resume</b-button>
+      <b-button pill v-if="deviceState.abortAvailable" @click="abort">Abort</b-button>
+      <b-button pill v-if="deviceState.finishAvailable" @click="finish">Finish</b-button>
+      <b-button pill v-if="deviceState.startAvailable" @click="start">Start</b-button>
+    </template>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div>
+          Well {{ wellTemp }}℃
         </div>
-        <div class="col-6">
-          <div>
-            Well {{ lid_temp }}℃
-          </div>
-          <div>
-            <meter
-              min="0"
-              max="110"
-              :value="lid_temp"
-              style="width:100%"
-            />
-          </div>
+        <div>
+          <meter
+            min="0"
+            max="110"
+            :value="wellTemp"
+            style="width:100%" />
         </div>
       </div>
-      <div class="row">
-        <div class="col-2">
-          Stage {{ cycle }} / {{ totalCycles }}
+      <div class="col-6">
+        <div>
+          Well {{ lid_temp }}℃
         </div>
-        <div class="col-2">
-          Step {{ step }} / {{ totalSteps }}
+        <div>
+          <meter
+            min="0"
+            max="110"
+            :value="lid_temp"
+            style="width:100%"
+          />
         </div>
-        <div class="col-2">
-          Repeat {{ repeat }} / {{ totalRepeats }}
-        </div>
-        <div class="col-2">
-          {{ state }}
-        </div>
-        <div class="col-2">
-          {{ stepElapsed }} msec
-        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        Stage {{ cycle }} / {{ totalCycles }}
+      </div>
+      <div class="col-2">
+        Step {{ step }} / {{ totalSteps }}
+      </div>
+      <div class="col-2">
+        Repeat {{ repeat }} / {{ totalRepeats }}
+      </div>
+      <div class="col-2">
+        {{ state }}
+      </div>
+      <div class="col-2">
+        {{ stepElapsed }} msec
       </div>
     </div>
   </div>
@@ -68,10 +74,12 @@ export default {
       repeat:0,
       stepElapsed:0,
       protocol:null,
+      deviceState: null
     }
   },
   created: function () {
     this.network = network;
+    this.deviceState = this.network.deviceState;
     this.network.addTransitionHandler({
       onStart:(obj)=>{
         console.log("onStart");
@@ -102,10 +110,20 @@ export default {
         }
       }
     });
+    this.network.addDeviceStateHandler({
+      onDeviceStateChange: (obj)=>{
+        console.log("ProgressMonitor.onDeviceStateChange");
+        console.log(obj);
+        this.deviceState = obj;
+      }
+    });
   },
   methods: {
-    connect: function () {
-    }
+    start : ()=>{ network.start(); },
+    pause : ()=>{ network.pause(); },
+    resume : ()=>{ network.resume(); },
+    abort : ()=>{ network.abort(); },
+    finish : ()=>{ network.finish(); }
   }
 }
 </script>

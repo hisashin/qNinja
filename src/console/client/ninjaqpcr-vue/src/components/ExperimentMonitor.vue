@@ -40,7 +40,7 @@ export default {
     return {
       protocol:null,
       id:null
-    }
+    };
   },
   created: function () {
     console.log("ExperimentMonitor.created");

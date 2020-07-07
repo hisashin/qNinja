@@ -17,7 +17,8 @@ class NinjaQPCRServerExample {
     this.isRunning = true;
     /*
     // Polling
-     setInterval(()=>{ console.log(qpcr.getStatus()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getDeviceStatus()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getExperimentStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);
     */
@@ -34,8 +35,11 @@ class NinjaQPCRServerExample {
   onFluorescenceDataUpdate (data) {
     console.log(data);
   }
-  onFinish () {
+  onComplete () {
     this.isRunning = false;
+  }
+  onDeviceStateChange (state) {
+    console.log(state);
   }
 }
 new NinjaQPCRServerExample().start();

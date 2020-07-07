@@ -7,7 +7,7 @@
       <div>
         Lid temp: {{ protocol.lid_temp }}
       </div>
-      <ul v-for="(stage, index) in protocol.stages">
+      <ul v-for="(stage, index) in protocol.stages" :key="index">
         <li :key="index">
           <template v-if="stage.type==1">
             <h3>Hold Stage</h3>
@@ -18,7 +18,7 @@
               </li>
             </ul>
           </template>
-          <template v-if="stage.type==2">
+          <template v-show="stage.type==2">
             <h3>PCR Stage</h3>
             Repeat {{ stage.repeat }} times
             <ul>
@@ -105,15 +105,6 @@ export default {
   components:{},
   data() {
     return {
-    /*
-      id:"",
-      protocol: {
-        name: "New Protocol",
-        lid_temp: 110,
-        stages: [
-        ]
-      }
-      */
     }
   },
   props: {

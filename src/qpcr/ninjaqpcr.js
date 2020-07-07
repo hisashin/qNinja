@@ -12,6 +12,14 @@ const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
+
+const DEVICE_STATE = {
+  IDLE: { label:"idle", startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
+  RUNNING: { label:"running", startAvailable:false, resumeAvailable:false, pauseAvailable:true, abortAvailable:true, finishAvailable:false },
+  PAUSED: { label:"paused", startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
+  COMPLETE: { label:"complete", startAvailable:false, resumeAvailable:false, pauseAvailable:false, abortAvailable:true, finishAvailable:true }
+};
+
 /* QPCR Interface */
 class NinjaQPCR {
   constructor (hardwareConf) {
@@ -19,7 +27,10 @@ class NinjaQPCR {
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(hardwareConf);
     this.optics.setEventReceiver(this);
+    this.deviceState = DEVICE_STATE.IDLE;
   }
+  
+  /* API */
   setEventReceiver (receiver) {
     this.receiver = receiver;
     /*
@@ -28,10 +39,77 @@ class NinjaQPCR {
       onExperimentFinish()
     */
   }
+  start (protocol) {
+    if (!this.deviceState.startAvailable) {
+      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      return false;
+    }
+    this._setDeviceState(DEVICE_STATE.RUNNING);
+    this.protocol = protocol;
+    this.startTimestamp = new Date();
+    this.experimentLog = this._createExperimentLog(protocol);
+    this.thermalCycler.start(protocol);
+    this.optics.start();
+    this.onStart();
+    return true;
+  }
+  pause () {
+    if (!this.deviceState.pauseAvailable) {
+      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      return false;
+    }
+    this.thermalCycler.pause();
+    this.optics.pause();
+    this._setDeviceState(DEVICE_STATE.PAUSED);
+  }
+  resume () {
+    if (!this.deviceState.resumeAvailable) {
+      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      return false;
+    }
+    this.thermalCycler.resume();
+    this.optics.resume();
+    this._setDeviceState(DEVICE_STATE.RUNNING);
+    
+  }
+  abort () {
+    if (!this.deviceState.abortAvailable) {
+      console.warn("Unable to start experiment. Device is idle. deviceState=%s", this.deviceState.label);
+      return false;
+    }
+    this.thermalCycler.abort();
+    this.optics.abort();
+    this._setDeviceState(DEVICE_STATE.IDLE);
+  }
+  finish () {
+    if (!this.deviceState.abortAvailable) {
+      console.warn("Unable to finish. Experiment is not finishAvailable. deviceState=%s", this.deviceState.finishAvailable);
+      return false;
+    }
+    this.thermalCycler.finish();
+    this.optics.finish();
+    this._setDeviceState(DEVICE_STATE.IDLE);
+  }
+  getDeviceStatus () {
+    return this.deviceState.label;
+  }
+  getExperimentStatus () {
+    const status = {
+      thermalCycler: this.thermalCycler.getStatus(),
+      fluorescence: this.optics.getStatus()
+    };
+    return status;
+  }
+  getThermalCyclerStatus () {
+    return this.thermalCycler.getStatus();
+  }
+  getFluorescenceLogs () {
+    return this.optics.getStatus();
+  }
   getExperimentElapsedTime () {
     return new Date().getTime() - this.startTimestamp.getTime();
   }
-  createExperimentLog (protocol) {
+  _createExperimentLog (protocol) {
     let experimentLog = {
       id: logManager.generateExperimentId(),
       protocol_id: protocol.id,
@@ -112,15 +190,6 @@ class NinjaQPCR {
     }
     return experimentLog;
   }
-  start (protocol) {
-    this.protocol = protocol;
-    this.startTimestamp = new Date();
-    this.finished = false;
-    this.experimentLog = this.createExperimentLog(protocol);
-    this.thermalCycler.start(protocol);
-    this.optics.start();
-    this.onStart();
-  }
   addFluorescenceMeasurementLog (step, measurementType, values) {
     console.log("addFluorescenceMeasurementLog", JSON.stringify(step));
     const stepObj = this.experimentLog.fluorescence[step.cycle].steps[step.step];
@@ -140,19 +209,6 @@ class NinjaQPCR {
     if (!added ) {
       console.log("Something went wrong????");
     }
-  }
-  getStatus () {
-    const status = {
-      thermalCycler: this.thermalCycler.getStatus(),
-      fluorescence: this.optics.getStatus()
-    };
-    return status;
-  }
-  getThermalCyclerStatus () {
-    return this.thermalCycler.getStatus();
-  }
-  getFluorescenceLogs () {
-    return this.optics.getStatus();
   }
   _getStep (state) {
     if (!(state.cycle >= 0) || !(state.step >= 0) ) {
@@ -233,7 +289,6 @@ class NinjaQPCR {
     
   }
   onStart () {
-    this.finished = false;
     this.experimentLog.start = new Date().getTime();
     const data = {
       protocol:this.protocol
@@ -245,8 +300,9 @@ class NinjaQPCR {
   onCheckpoint () {
     // TODO checkpoint logging (stage end)
   }
-  onFinish () {
-    this.finished = true;
+  onComplete () {
+    // Experiment is finished. Note that the thermal cycler is still keeping temp.
+    this._setDeviceState(DEVICE_STATE.COMPLETE);
     this.experimentLog.end = new Date().getTime();
     logManager.saveExperimentLog(this.experimentLog, ()=>{}, 
     (error)=>{
@@ -257,9 +313,26 @@ class NinjaQPCR {
       protocol:this.protocol,
       log:this.experimentLog
     };
-    if (this.receiver != null && this.receiver.onFinish) {
-      this.receiver.onFinish(data);
+    if (this.receiver != null && this.receiver.onComplete) {
+      this.receiver.onComplete(data);
     }
+  }
+  deviceState () {
+    return this.deviceState;
+  }
+  _setDeviceState (state) {
+    this.deviceState = state;
+    console.log("_setDeviceState 1");
+    setTimeout(()=>{
+      if (this.receiver != null && this.receiver.onDeviceStateChange) {
+        console.log("_setDeviceState 2");
+        this.receiver.onDeviceStateChange(this.deviceState);
+      } else {
+        
+        console.log("_setDeviceState 3");
+      }
+    }, 1);
+    
   }
   
 }

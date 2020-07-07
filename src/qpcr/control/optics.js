@@ -17,6 +17,7 @@ class Optics {
     this.oneShotCallbacks = [];
     this.continuousCallback = null;
     this.continuous = false;
+    this.shouldResumeContinuous = false;
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
@@ -35,6 +36,25 @@ class Optics {
         fluorescence:[]
       });
     }
+  }
+  pause () {
+    this.shouldResumeContinuous = this.continuous;
+    this.continuous = false;
+  }
+  resume () {
+    this.continuous = this.shouldResumeContinuous;
+    this.continuous = this.shouldResumeContinuous = false;
+    if (this.continuous) {
+      this.startContinuousDataCollection(this.continuousCallback);
+    }
+  }
+  abort () {
+    this.continuous = false;
+    this.shouldResumeContinuous = false;
+  }
+  finish () {
+    this.continuous = false;
+    this.shouldResumeContinuous = false;
   }
   measureAll (callback) {
     console.log("Optics.measureAll");
@@ -77,8 +97,6 @@ class Optics {
         }
       }
     });
-    // TODO use fluorescence sensing unit obj
-    // const measurement = this.getDummySigmoid(well.index);
   }
   startContinuousDataCollection (callback) {
     console.log("startContinuousDataCollection");

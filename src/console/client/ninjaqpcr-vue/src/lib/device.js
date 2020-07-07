@@ -3,6 +3,7 @@ class Device {
     this.ws = null; // WebSocket object
     this.count = 0;
     this.connectionEventHandlers = [];
+    this.deviceStateHandlers = [];
     this.transitionHandlers = [];
     this.progressHandlers = [];
     this.fluorescenceUpdateHandlers = [];
@@ -60,8 +61,15 @@ class Device {
           break;
         case "experiment.finish":
           this.transitionHandlers.forEach((handler)=>{
-            if (handler.onFinish) {
-              handler.onFinish(obj.data);
+            if (handler.onComplete) {
+              handler.onComplete(obj.data);
+            }
+          });
+          break;
+        case "device.transition":
+          this.deviceStateHandlers.forEach((handler)=>{
+            if (handler.onDeviceStateChange) {
+              handler.onDeviceStateChange(obj.data);
             }
           });
           break;
@@ -71,11 +79,29 @@ class Device {
       }
     };
   }
-  stop () {
+  pause () {
     const obj = {
-      "category":"experiment.stop"
+      "category":"experiment.pause"
     };
-    ws.send(JSON.stringify(obj));
+    this.ws.send(JSON.stringify(obj));
+  }
+  resume () {
+    const obj = {
+      "category":"experiment.resume"
+    };
+    this.ws.send(JSON.stringify(obj));
+  }
+  abort () {
+    const obj = {
+      "category":"experiment.abort"
+    };
+    this.ws.send(JSON.stringify(obj));
+  }
+  resume () {
+    const obj = {
+      "category":"experiment.resume"
+    };
+    this.ws.send(JSON.stringify(obj));
   }
   start () {
     const obj = {
@@ -92,6 +118,9 @@ class Device {
   }
   addConnectionEventHandler (obj) {
     this.connectionEventHandlers.push(obj);
+  }
+  addDeviceStateHandler (obj) {
+    this.deviceStateHandlers.push(obj);
   }
   addTransitionHandler (obj) {
     this.transitionHandlers.push(obj);
