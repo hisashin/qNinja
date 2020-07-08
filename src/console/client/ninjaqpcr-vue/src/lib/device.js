@@ -7,7 +7,12 @@ class Device {
     this.transitionHandlers = [];
     this.progressHandlers = [];
     this.fluorescenceUpdateHandlers = [];
+    
+    this.deviceState = null;
+    this.experimentProgress = null;
   }
+  
+  /* API */
   connect () {
     try {
       console.log("Connecting...");
@@ -24,7 +29,6 @@ class Device {
           console.warn("connectionEventHandlers onOpen is not defined.");
         }
       });
-      // connectionView.status = "Connected";
     };
     this.ws.onmessage = (e) => {
       const obj = JSON.parse(e.data);
@@ -67,17 +71,21 @@ class Device {
           });
           break;
         case "device.transition":
-          this.deviceStateHandlers.forEach((handler)=>{
-            if (handler.onDeviceStateChange) {
-              handler.onDeviceStateChange(obj.data);
-            }
-          });
+          this.setDeviceState(obj.data);
           break;
         default:
           console.log("Warning: unhandled category=%s", obj.category);
           break;
       }
     };
+  }
+  
+  /* Experiment Control */
+  start () {
+    const obj = {
+      "category":"experiment.start"
+    };
+    this.ws.send(JSON.stringify(obj));
   }
   pause () {
     const obj = {
@@ -103,12 +111,6 @@ class Device {
     };
     this.ws.send(JSON.stringify(obj));
   }
-  start () {
-    const obj = {
-      "category":"experiment.start"
-    };
-    this.ws.send(JSON.stringify(obj));
-  }
   setProtocol (protocol) {
     const obj = {
       "category":"experiment.setProtocol",
@@ -116,20 +118,54 @@ class Device {
     };
     this.ws.send(JSON.stringify(obj));
   }
+  
+  /* Event handler registration */
   addConnectionEventHandler (obj) {
+    if (this.connectionEventHandlers.indexOf(obj) > -1) {
+      console.warn("Device.addConnectionEventHandler: This object is already registered. Skip.");
+      return;
+    }
     this.connectionEventHandlers.push(obj);
   }
   addDeviceStateHandler (obj) {
+    if (this.deviceStateHandlers.indexOf(obj) > -1) {
+      console.warn("Device.addDeviceStateHandler: This object is already registered. Skip.");
+      return;
+    }
     this.deviceStateHandlers.push(obj);
   }
   addTransitionHandler (obj) {
+    if (this.transitionHandlers.indexOf(obj) > -1) {
+      console.warn("Device.addTransitionHandler: This object is already registered. Skip.");
+      return;
+    }
     this.transitionHandlers.push(obj);
   }
   addProgressHandler (obj) {
+    if (this.progressHandlers.indexOf(obj) > -1) {
+      console.warn("Device.addProgressHandler: This object is already registered. Skip.");
+      return;
+    }
     this.progressHandlers.push(obj);
   }
   addFluorescenceUpdateHandler (obj) {
+    if (this.fluorescenceUpdateHandlers.indexOf(obj) > -1) {
+      console.warn("Device.addFluorescenceUpdateHandler: This object is already registered. Skip.");
+      return;
+    }
     this.fluorescenceUpdateHandlers.push(obj);
+  }
+  
+  getDeviceState () {
+    return this.deviceState;
+  }
+  setDeviceState (deviceState) {
+    this.deviceState = deviceState;
+    this.deviceStateHandlers.forEach((handler)=>{
+      if (handler.onDeviceStateChange) {
+        handler.onDeviceStateChange(deviceState);
+      }
+    });
   }
 }
 const device = new Device();

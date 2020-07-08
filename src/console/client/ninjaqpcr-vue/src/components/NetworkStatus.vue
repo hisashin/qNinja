@@ -3,21 +3,16 @@
     <div class="card p-3">
       <p>Device: {{ connectionStatus }}</p>
       <div>
+        <template v-if="deviceState!=null">
+          DeviceState={{ deviceState.label }}
+        </template>
         <b-button
           v-show="!connected"
           pill
           variant="primary"
-          @click="connect"
+          @click="reConnect"
         >
           Connect
-        </b-button>
-        <b-button
-          v-show="connected"
-          pill
-          variant="primary"
-          @click="start"
-        >
-          Start
         </b-button>
       </div>
     </div>
@@ -25,33 +20,36 @@
 </template>
 
 <script>
-import network from "../lib/Device.js";
+import device from "../lib/Device.js";
 export default {
   data() {
     return {
       connected: false,
-      connectionStatus: "Disconnected"
+      connectionStatus: "Disconnected",
+      deviceState: null
     }
   },
   created: function () {
     console.log("NetworkStatus.created");
-    this.network = network;
-    const handler = {
-      onOpen: ()=>{
-        console.log("NetworkStatus.onOpen");
-        this.connected = true;
-        this.connectionStatus = "Connected";
-      }
-    };
-    this.network.addConnectionEventHandler(handler);
+    this.device = device;
+    this.device.addConnectionEventHandler(this);
+    this.deviceState = this.device.getDeviceState();
+    this.device.addDeviceStateHandler(this);
   },
   methods: {
-    connect: function () {
-      console.log("connect");
-      this.network.connect();
+    reConnect: function () {
+      console.log("reConnect");
+      this.device.connect();
     },
     start: function () {
-      this.network.start();
+    },
+    onOpen: function () {
+      console.log("NetworkStatus.onOpen");
+      this.connected = true;
+      this.connectionStatus = "Connected";
+    },
+    onDeviceStateChange: function (deviceState){
+      this.deviceState = deviceState;
     }
   }
 }

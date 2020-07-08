@@ -1,68 +1,90 @@
 <template>
   <div class="card" v-if="protocol!=null">
     <div class="card-header">
-      {{ protocol.name }}
+      Protocol
     </div>
-    <div class="p-3">
-      <div>
-        Lid temp: {{ protocol.lid_temp }}
+    <div class="protocol" v-if="protocol!=null">
+      <div class="protocol-header">
+        <div>
+          {{ protocol.name }}
+        </div>
+        <div>
+          Lid temp: {{ protocol.lid_temp }}
+        </div>
       </div>
-      <ul v-for="(stage, index) in protocol.stages" :key="index">
-        <li :key="index">
-          <template v-if="stage.type==1">
-            <h3>Hold Stage</h3>
-            <ul>
-              <li>
-                {{ stage.steps[0].temp }}℃
-                {{ stage.steps[0].duration }}s
-              </li>
-            </ul>
-          </template>
-          <template v-show="stage.type==2">
-            <h3>PCR Stage</h3>
-            Repeat {{ stage.repeat }} times
-            <ul>
-              <li>
-                Denaturing
-                {{ stage.steps[0].temp }}℃
-                {{ stage.steps[0].duration }}s
-              </li>
-              <li>
-                Annealing
-                {{ stage.steps[1].temp }}℃
-                {{ stage.steps[1].duration }}s
-              </li>
-              <li>
-                Extending
-                {{ stage.steps[2].temp }}℃
-                {{ stage.steps[2].duration }}s
-              </li>
-            </ul>
-          </template>
-          <template v-if="stage.type==3">
-            <h3>Melt Curve Stage</h3>
-            <ul>
-              <li>
-                Denaturing
-                {{ stage.steps[0].temp }}℃
-                {{ stage.steps[0].duration }}s
-                {{ stage.steps[0].speed }}℃/s
-              </li>
-              <li>
-                Cooling
-                {{ stage.steps[1].temp }}℃
-                {{ stage.steps[1].duration }}s
-                {{ stage.steps[1].speed }}℃/s
-              </li>
-              <li>
-                Melting
-                {{ stage.steps[2].temp }}℃
-                {{ stage.steps[2].duration }}s
-                {{ stage.steps[2].speed }}℃/s
-              </li>
-            </ul>
-          </template>
-        </li>
+      <ul class="protocol-stages">
+        <template v-for="(stage, index) in protocol.stages">
+          <li :key="index" class="protocol-stage">
+            <template v-if="stage.type==1 && stage.steps.length>0">
+              <h3 class="protocol-stage-label">Hold Stage</h3>
+              <ul class="protocol-steps">
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Hold
+                  </div>
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
+                </li>
+              </ul>
+            </template>
+            <template v-if="stage.type==2 && stage.steps.length>2">
+              <h3 class="protocol-stage-label">PCR Stage!{{stage.type}}</h3>
+              Repeat {{ stage.repeat }} times
+              <ul class="protocol-steps">
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Denaturing
+                  </div>
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Annealing
+                  </div>
+                  {{ stage.steps[1].temp }}℃
+                  {{ stage.steps[1].duration }}s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Extending
+                  </div>
+                  {{ stage.steps[2].temp }}℃
+                  {{ stage.steps[2].duration }}s
+                </li>
+              </ul>
+            </template>
+            <template v-if="stage.type==3 && stage.steps.length>2">
+              <h3 class="protocol-stage-label">Melt Curve Stage</h3>
+              <ul class="protocol-steps">
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Denaturing
+                  </div>
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
+                  {{ stage.steps[0].speed }}℃/s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Cooling
+                  </div>
+                  {{ stage.steps[1].temp }}℃
+                  {{ stage.steps[1].duration }}s
+                  {{ stage.steps[1].speed }}℃/s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Melting
+                  </div>
+                  {{ stage.steps[2].temp }}℃
+                  {{ stage.steps[2].duration }}s
+                  {{ stage.steps[2].speed }}℃/s
+                </li>
+              </ul>
+            </template>
+          </li>
+        </template>
       </ul>
     </div>
   </div>
@@ -130,17 +152,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-}
-a {
-  color: #42b983;
-}
 </style>

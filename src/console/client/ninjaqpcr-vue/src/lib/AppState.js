@@ -26,6 +26,19 @@ class AppState {
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
   
+  init () {
+    console.log("AppState.init");
+    /* HTTP request methods */
+    this._requestData("device", null, "GET", 
+      (data)=>{
+        console.log("AppState.init received device state");
+        device.setDeviceState(data);
+      }, (error)=>{
+        console.error(error);
+      }
+    );
+  }
+  
   /* Public methods */
   pushPanel (panel) {
     console.log("AppState.pushPanel %d",panel);
@@ -143,15 +156,22 @@ class AppState {
   }
   
   revealDetailLog (id) {
-    console.log("AppState.revealDetailLog");
+    console.log("AppState.revealDetailLog.");
     this._selectLog(id, ()=>{
       this.pushPanel(this.PANELS.LOG_DETAIL);
     });
   }
+  
+  getSelectedLog() {
+    this.selectedLog;
+  }
   _selectLog (id, callback) {
+    console.log("AppState.selectLog id=%s", id);
     this._requestData("logs/" + id, null, "GET", 
       (data)=>{
         this.selectedLog = data;
+        console.log("AppState.selectLog id=%s data received.", id);
+        console.log("AppState.selectLog calling %d handlers", this.logEventHandlers.length);
         this.logEventHandlers.forEach((handler)=>{
           if (handler.onSelectLog) {
             handler.onSelectLog(data);
@@ -184,7 +204,6 @@ class AppState {
   }
   saveProtocol (obj, onSave) {
     console.log("AppState.saveProtocol");
-    const xmlhttp = new XMLHttpRequest();
     const path = "protocols/" + obj.id + "/update";
     this._requestData(path, obj, "POST", ()=>{
       if (onSave) {

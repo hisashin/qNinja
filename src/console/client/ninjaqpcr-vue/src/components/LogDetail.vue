@@ -1,29 +1,30 @@
 <template>
-  <div class="">
+  <div v-if="log!=null">
     <div class="card">
       <div class="card-header">
         Log Detail
       </div>
       <div class="p-3">
-        {{log.start}}
+        {{log.id}}
       </div>
     </div>
     <ProtocolDetail
-      :id="log.protocol_name"
+      :id="log.protocol_id"
       :protocol="log.protocol" />
     <div class="card">
       <b-tabs content-class="mt-3">
         <b-tab title="Fluorescence">
-          <p>TODO</p>
+          <p>TODO Graph Here</p>
+          <p></p>
         </b-tab>
         <b-tab
           title="Temperature"
           active>
-          <p>TODO</p>
+          <p>TODO Graph Here</p>
         </b-tab>
         <b-tab
           title="Standard Curve">
-          <p>TODO</p>
+          <p>TODO Graph Here</p>
         </b-tab>
       </b-tabs>
     </div>
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-import network from "../lib/Device.js";
+import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
 import ProtocolDetail from './ProtocolDetail.vue'
 
@@ -46,12 +47,14 @@ export default {
     }
   },
   created: function () {
-    network.connect();
+    appState.addLogEventHandler(this);
+    this.log = appState.getSelectedLog();
   },
   methods: {
     onSelectLog: function (log) {
-      console.log("LogDetaio.onSelectLog");
+      console.log("LogDetail.onSelectLog");
       this.log = log;
+      console.log(log)
     }
   }
 }

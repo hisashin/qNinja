@@ -17,7 +17,7 @@ class NinjaQPCRServerExample {
     this.isRunning = true;
     /*
     // Polling
-     setInterval(()=>{ console.log(qpcr.getDeviceStatus()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getDeviceState()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getExperimentStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);

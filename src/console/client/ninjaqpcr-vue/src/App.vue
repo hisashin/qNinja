@@ -2,9 +2,9 @@
   <div id="app">
     <header class="header">
       <h1>Ninja qPCR</h1>
-      <NetworkStatus />
     </header>
     <main class="main">
+      <NetworkStatus />
       <DeviceMonitor />
     </main>
   </div>
@@ -13,7 +13,8 @@
 <script>
 import DeviceMonitor from './components/DeviceMonitor.vue'
 import NetworkStatus from './components/NetworkStatus.vue'
-import network from "./lib/AppState.js";
+import appState from "./lib/AppState.js";
+import device from "./lib/Device.js";
 
 export default {
   name: 'App',
@@ -22,7 +23,8 @@ export default {
     DeviceMonitor
   },
   created: function () {
-    appState.addLogEventHandler(this);
+    appState.init();
+    device.connect();
   }
 }
 </script>

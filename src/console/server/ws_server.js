@@ -31,6 +31,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/logs", this.logs());
     router.addPath("/logs/latest", this.logLatest());
     router.addPath("/logs/{lid}", this.logGet());
+    router.addPath("/device", this.device());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
@@ -46,6 +47,17 @@ class NinjaQPCRHTTPServer {
       res.end();
     }
   }
+  
+  device () {
+    return (req, res, map)=>{
+      // Device state and experiment status
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = qpcr.getDeviceState();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  
   protocolUpdate () {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
@@ -61,13 +73,14 @@ class NinjaQPCRHTTPServer {
             res.write(JSON.stringify(obj));
             res.end();
           }, (err)=>{
-            this.error500(err);
+            this.error500(req, res, err);
             
           });
         }
       });
     }
   }
+  
   logs () {
     return (req, res, map)=>{
       lm.getSummaries({}, {}, (summaries)=>{
@@ -76,10 +89,11 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (err)=>{
-        this.error500(err);
+        this.error500(req, res, err);
       });
     };
   }
+  
   logLatest () {
     return (req, res, map)=>{
       lm.getLatestLog((log)=>{
@@ -88,7 +102,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (err)=>{
-        this.error500(err);
+        this.error500(req, res, err);
       });
     };
   }
@@ -100,7 +114,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (err)=>{
-        this.error500(err);
+        this.error500(req, res, err);
       });
     };
   }
@@ -112,7 +126,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (err)=>{
-        this.error500(err);
+        this.error500(req, res, err);
       });
     };
   }
@@ -124,7 +138,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (err)=>{
-        this.error500(err);
+        this.error500(req, res, err);
       });
     };
   }
@@ -135,7 +149,7 @@ class NinjaQPCRHTTPServer {
   }
   error500 (req, res, message) {
     res.writeHead(500,{'Content-Type': 'application/json'});
-    res.write(message);
+    res.write(JSON.stringify(message));
     res.end();
   }
 }

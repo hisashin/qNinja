@@ -14,10 +14,10 @@ const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
 
 const DEVICE_STATE = {
-  IDLE: { label:"idle", startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
-  RUNNING: { label:"running", startAvailable:false, resumeAvailable:false, pauseAvailable:true, abortAvailable:true, finishAvailable:false },
-  PAUSED: { label:"paused", startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
-  COMPLETE: { label:"complete", startAvailable:false, resumeAvailable:false, pauseAvailable:false, abortAvailable:true, finishAvailable:true }
+  IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
+  RUNNING: { label:"running", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:true, abortAvailable:true, finishAvailable:false },
+  PAUSED: { label:"paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
+  COMPLETE: { label:"complete", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:false, abortAvailable:true, finishAvailable:true }
 };
 
 /* QPCR Interface */
@@ -31,14 +31,22 @@ class NinjaQPCR {
   }
   
   /* API */
+  
+  /* Event handler registration */
   setEventReceiver (receiver) {
     this.receiver = receiver;
     /*
       onThermalTransition(transition)
+      onThermalDataUpdate(data)
       onError(error)
-      onExperimentFinish()
+      onStart()
+      onComplete()
+      onDeviceStateChange()
+      onFluorescenceDataUpdate()
     */
   }
+  
+  /* Experiment Control */
   start (protocol) {
     if (!this.deviceState.startAvailable) {
       console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
@@ -90,10 +98,16 @@ class NinjaQPCR {
     this.optics.finish();
     this._setDeviceState(DEVICE_STATE.IDLE);
   }
-  getDeviceStatus () {
-    return this.deviceState.label;
+  
+  /* Geters */
+  getDeviceState () {
+    return this.deviceState;
   }
   getExperimentStatus () {
+    if (!this.deviceState.hasExperiment) {
+      
+      return {};
+    }
     const status = {
       thermalCycler: this.thermalCycler.getStatus(),
       fluorescence: this.optics.getStatus()
@@ -109,6 +123,8 @@ class NinjaQPCR {
   getExperimentElapsedTime () {
     return new Date().getTime() - this.startTimestamp.getTime();
   }
+  
+  /* Private */
   _createExperimentLog (protocol) {
     let experimentLog = {
       id: logManager.generateExperimentId(),
@@ -190,8 +206,7 @@ class NinjaQPCR {
     }
     return experimentLog;
   }
-  addFluorescenceMeasurementLog (step, measurementType, values) {
-    console.log("addFluorescenceMeasurementLog", JSON.stringify(step));
+  _addFluorescenceMeasurementLog (step, measurementType, values) {
     const stepObj = this.experimentLog.fluorescence[step.cycle].steps[step.step];
     let added = false;
     stepObj.measurements.forEach((measurement)=>{
@@ -220,6 +235,8 @@ class NinjaQPCR {
     }
     return cycle.steps[state.step];
   }
+  
+  /* Handling ThermalCycler's events */
   onThermalTransition (data) {
     const from = this._getStep(data.from);
     const to = this._getStep(data.to);
@@ -281,13 +298,17 @@ class NinjaQPCR {
       this.receiver.onThermalDataUpdate(data);
     }
   }
+  
+  /* Handling ThermalCycler's events */
   onFluorescenceDataUpdate (step, measurementType, values) {
-    this.addFluorescenceMeasurementLog(step, measurementType, values);
+    this._addFluorescenceMeasurementLog(step, measurementType, values);
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
       this.receiver.onFluorescenceDataUpdate(values);
     }
     
   }
+  
+  /* Misc */
   onStart () {
     this.experimentLog.start = new Date().getTime();
     const data = {
@@ -317,9 +338,8 @@ class NinjaQPCR {
       this.receiver.onComplete(data);
     }
   }
-  deviceState () {
-    return this.deviceState;
-  }
+  
+  // Set device state and notify the event
   _setDeviceState (state) {
     this.deviceState = state;
     console.log("_setDeviceState 1");
@@ -332,7 +352,6 @@ class NinjaQPCR {
         console.log("_setDeviceState 3");
       }
     }, 1);
-    
   }
   
 }
