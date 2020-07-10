@@ -1,5 +1,6 @@
 <template>
   <div class="device-monitor">
+    <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     <div v-show="selectedPanel==panels.DASHBOARD">
       <h2>Recent protocols</h2>
       <ProtocolList :limit="2" />
@@ -41,6 +42,7 @@
 </template>
 <script>
 import ExperimentMonitor from './ExperimentMonitor.vue'
+import DeviceSummary from './DeviceSummary.vue'
 import ProtocolEditor from './ProtocolEditor.vue'
 import ProtocolDetail from './ProtocolDetail.vue'
 import ProtocolList from './ProtocolList.vue'
@@ -60,6 +62,7 @@ export default {
     ProtocolList,
     LogList,
     LogDetail,
+    DeviceSummary,
     ExperimentMonitor,
     ProtocolEditor,
     ProtocolDetail,

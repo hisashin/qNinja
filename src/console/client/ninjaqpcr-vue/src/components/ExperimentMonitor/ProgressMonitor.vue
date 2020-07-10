@@ -58,7 +58,7 @@
 
 
 <script>
-import network from "../../lib/Device.js";
+import device from "../../lib/Device.js";
 export default {
   name: 'ProgressMonitor',
   data() {
@@ -78,9 +78,10 @@ export default {
     }
   },
   created: function () {
-    this.network = network;
-    this.deviceState = this.network.deviceState;
-    this.network.addTransitionHandler({
+    this.device = device;
+    this.deviceState = this.device.deviceState;
+    this.protocol = this.device.protocol;
+    this.device.addTransitionHandler({
       onStart:(obj)=>{
         console.log("onStart");
         console.log(obj);
@@ -97,33 +98,37 @@ export default {
         const step = stage.steps[status.step];
       }
     });
-    this.network.addProgressHandler({
-      onProgress:(obj)=>{
-        this.wellTemp = obj.well;
-        this.lid_temp = obj.lid;
-        if (obj.state) {
-          this.cycle = obj.state.cycle;
-          this.step = obj.state.step;
-          this.state = obj.state.state;
-          this.repeat = obj.state.repeat;
-          this.stepElapsed = obj.state.stepElapsed;
+    this.device.addProgressHandler({
+      onProgress:(progress)=>{
+        this.wellTemp = progress.well;
+        this.lid_temp = progress.lid;
+        if (progress.state) {
+          this.cycle = progress.state.cycle;
+          this.step = progress.state.step;
+          this.state = progress.state.state;
+          this.repeat = progress.state.repeat;
+          this.stepElapsed = progress.state.stepElapsed;
         }
       }
     });
-    this.network.addDeviceStateHandler({
-      onDeviceStateChange: (obj)=>{
+    this.device.addDeviceStateHandler({
+      onDeviceStateChange: (state)=>{
         console.log("ProgressMonitor.onDeviceStateChange");
-        console.log(obj);
-        this.deviceState = obj;
+        console.log(state);
+        this.deviceState = state;
+      },
+      onUpdateProtocol: (protocol)=>{
+        this.protocol = protocol;
       }
     });
   },
   methods: {
-    start : ()=>{ network.start(); },
-    pause : ()=>{ network.pause(); },
-    resume : ()=>{ network.resume(); },
-    abort : ()=>{ network.abort(); },
-    finish : ()=>{ network.finish(); }
+    start : ()=>{ device.start(); },
+    pause : ()=>{ device.pause(); },
+    resume : ()=>{ device.resume(); },
+    abort : ()=>{ device.abort(); },
+    finish : ()=>{ device.finish(); }
+    
   }
 }
 </script>

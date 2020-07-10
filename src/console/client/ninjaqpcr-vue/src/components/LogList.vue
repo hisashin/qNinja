@@ -4,7 +4,7 @@
       v-for="(summary, index) in summaries"
       :key="index"
       class="row">
-      <li class="col-12" @click="revealDetail(summary.id)">
+      <li class="col-12" v-if="limit==null || index<limit" @click="revealDetail(summary.id)">
         {{summary.protocol_name}}
         {{summary.id}}
       </li>

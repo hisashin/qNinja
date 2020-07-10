@@ -33,6 +33,15 @@ class AppState {
       (data)=>{
         console.log("AppState.init received device state");
         device.setDeviceState(data);
+        if (data.hasProtocol) {
+          console.log("AppState.init Getting protocol");
+          this._requestData("device/protocol", null, "GET", 
+            (protocol)=>{
+              device.setProtocol(protocol);
+            }, 
+            ()=>{});
+          
+        }
       }, (error)=>{
         console.error(error);
       }
@@ -62,7 +71,7 @@ class AppState {
   runProtocol (id) {
     console.log("AppState.runProtocol");
     this._selectProtocol(id, (protocol)=>{
-      device.setProtocol(protocol.protocol);
+      device.registerProtocol(protocol.protocol);
       device.start();
       this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
     });

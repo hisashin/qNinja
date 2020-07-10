@@ -113,6 +113,8 @@ class DummyHardwareConf {
     return new DummyFluorescenceSensingUnit();
   }
 };
+const MAX_ABSOLUTE_FLUORESCENCE = 0.7;
+const DUMMY_BASELINE_RATIO = 0.05;
 class LEDUnit {
   construtor () {
     // Nothing to do
@@ -139,14 +141,18 @@ class DummyFluorescenceSensingUnit {
   }
   getDummySigmoid (channel) {
     const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
-    const thresholdMsec = 50 * 1000;
+    const thresholdMsec = 100 * 1000;
     const intercept = 6.0;
     const x =  ((elapsedMsec - thresholdMsec - channel * 10 * 1000)/thresholdMsec) * intercept;
-    const sigmoid = 1 / (1 + Math.exp(-x));
+    const sigmoid = MAX_ABSOLUTE_FLUORESCENCE / (1 + Math.exp(-x));
     return sigmoid;
+  }
+  getDummyBaseline (value) {
+    return Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
   }
   measure(well, callback) {
     let value = this.getDummySigmoid(well.index);
+    value += this.getDummyBaseline(value);
     setTimeout(()=>{ callback(value); }, 10);
   }
 }

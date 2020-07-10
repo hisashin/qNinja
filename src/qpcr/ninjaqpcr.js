@@ -28,6 +28,7 @@ class NinjaQPCR {
     this.optics = new Optics(hardwareConf);
     this.optics.setEventReceiver(this);
     this.deviceState = DEVICE_STATE.IDLE;
+    this.progress = null;
   }
   
   /* API */
@@ -37,7 +38,7 @@ class NinjaQPCR {
     this.receiver = receiver;
     /*
       onThermalTransition(transition)
-      onThermalDataUpdate(data)
+      onProgress(data)
       onError(error)
       onStart()
       onComplete()
@@ -100,6 +101,9 @@ class NinjaQPCR {
   }
   
   /* Geters */
+  getProtocol () {
+    return this.protocol || {};
+  }
   getDeviceState () {
     return this.deviceState;
   }
@@ -290,12 +294,13 @@ class NinjaQPCR {
       this.receiver.onThermalTransition(data);
     }
   }
-  onThermalDataUpdate (data) {
+  onProgress (data) {
     this.experimentLog.temp.time.push(this.getExperimentElapsedTime());
     this.experimentLog.temp.well.push(data.well);
     this.experimentLog.temp.lid.push(data.lid);
-    if (this.receiver != null && this.receiver.onThermalDataUpdate) {
-      this.receiver.onThermalDataUpdate(data);
+    this.progress = data;
+    if (this.receiver != null && this.receiver.onProgress) {
+      this.receiver.onProgress(data);
     }
   }
   

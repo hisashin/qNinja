@@ -109,8 +109,8 @@ class Optics {
     this.continuous = false;
     
   }
+  // Start one-shot fluorescence measurement
   getStatus () {
-    // TODO: return only latest measurements
     let data = [];
     this.wells.forEach((well)=>{
       let wellData = {

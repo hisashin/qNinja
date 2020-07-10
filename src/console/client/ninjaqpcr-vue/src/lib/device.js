@@ -10,6 +10,7 @@ class Device {
     
     this.deviceState = null;
     this.experimentProgress = null;
+    this.protocol = null;
   }
   
   /* API */
@@ -40,7 +41,7 @@ class Device {
             }
           });
           break;
-        case "experiment.thermal":
+        case "experiment.progress":
           this.progressHandlers.forEach((handler)=>{
             if (handler.onProgress) {
               handler.onProgress(obj.data);
@@ -57,7 +58,6 @@ class Device {
         case "experiment.start":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onStart) {
-
               console.log(obj)
               handler.onStart(obj.data);
             }
@@ -105,18 +105,34 @@ class Device {
     };
     this.ws.send(JSON.stringify(obj));
   }
+  
   resume () {
     const obj = {
       "category":"experiment.resume"
     };
     this.ws.send(JSON.stringify(obj));
   }
-  setProtocol (protocol) {
+  
+  registerProtocol (protocol) {
+    this.setProtocol(protocol);
     const obj = {
-      "category":"experiment.setProtocol",
+      "category":"experiment.registerProtocol",
       data:protocol
     };
     this.ws.send(JSON.stringify(obj));
+  }
+  
+  setProtocol (protocol) {
+    this.protocol = protocol;
+    this.progressHandlers.forEach((handler)=>{
+      if (handler.onUpdateProtocol) {
+        handler.onUpdateProtocol(this.protocol);
+      }
+    });
+  }
+  
+  getProtocol () {
+    return this.protocol;
   }
   
   /* Event handler registration */

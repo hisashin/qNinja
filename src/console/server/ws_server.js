@@ -32,6 +32,8 @@ class NinjaQPCRHTTPServer {
     router.addPath("/logs/latest", this.logLatest());
     router.addPath("/logs/{lid}", this.logGet());
     router.addPath("/device", this.device());
+    router.addPath("/device/protocol", this.deviceProtocol());
+    router.addPath("/device/progress", this.deviceProgress());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
@@ -53,6 +55,24 @@ class NinjaQPCRHTTPServer {
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
       const obj = qpcr.getDeviceState();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  
+  deviceProtocol () {
+    return (req, res, map)=>{
+      // Device state and experiment status
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = qpcr.getProtocol();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  deviceProgress () {
+    return (req, res, map)=>{
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = qpcr.getProgress();
       res.write(JSON.stringify(obj));
       res.end();
     };
@@ -188,7 +208,7 @@ class NinjaQPCRWebSocketServer {
         this.abort(); break;
       case "experiment.finish":
         this.finish(); break;
-      case "experiment.setProtocol": {
+      case "experiment.registerProtocol": {
         console.log("Protocol updated.");
         this.protocol = obj.data;
         console.log(this.protocol);
@@ -223,14 +243,16 @@ class NinjaQPCRWebSocketServer {
     };
     this.connection.sendUTF(JSON.stringify(obj));
   }
-  onThermalDataUpdate (data) {
+  onProgress (data) {
     const obj = {
-      category:"experiment.thermal",
+      category:"experiment.progress",
       data:data
     };
     this.connection.sendUTF(JSON.stringify(obj));
   }
   onFluorescenceDataUpdate (data) {
+    console.info("onFluorescenceDataUpdate");
+    console.info(data);
     const obj = {
       category:"experiment.fluorescence",
       data:data

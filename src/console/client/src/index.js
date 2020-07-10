@@ -20,7 +20,7 @@ const connect = ()=>{
         document.getElementById("messageTransition").innerHTML = 
           JSON.stringify(obj.data);
         break;
-      case "experiment.thermal":
+      case "experiment.progress":
           temperatureView.message = JSON.stringify(obj.data);
           updateTemp(obj);
         break;

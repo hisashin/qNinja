@@ -50,11 +50,19 @@
             >
           </div>
           <div>
-            Lid temp <input
+            Lid temp
+            <input
               v-model.number="protocol.lid_temp"
               class="input-temp"
               type="number"
-            >
+            >℃
+          </div>
+          <div>
+            Final Hold Temp
+            <input
+              v-model.number="final_hold_temp"
+              class="input-temp"
+            >℃ (Optional)
           </div>
         </div>
         <ul class="protocol-stages">
@@ -317,6 +325,7 @@ export default {
         ]
       },
       /* Form management (Do not send them) */
+      final_hold_temp: '', // Optional string
       addStagePosition:0
     }
   },
@@ -350,12 +359,24 @@ export default {
       appState.backPanel();
     },
     save: function () {
+      // TODO validation
+      const finalHoldTemp = parseFloat(this.final_hold_temp);
+      if (finalHoldTemp > 0) {
+        this.protocol.final_hold_temp = finalHoldTemp;
+      } else {
+        delete this.protocol.final_hold_temp;
+      }
       appState.saveProtocol(this.$data, ()=>{
         console.log("(Toast)");
       });
     },
     onSelectProtocol: function (item) {
       this.protocol = item.protocol;
+      if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
+        this.final_hold_temp = '' + this.protocol.final_hold_temp;
+      } else {
+        this.final_hold_temp = '';
+      }
       this.id = item.id;
     },
     openAddStageModal (before) {

@@ -90,8 +90,8 @@ class ThermalCycler {
         this.eventReceiver.onComplete();
       }
     }
-    if (this.eventReceiver != null && this.eventReceiver.onThermalDataUpdate != null) {
-      this.eventReceiver.onThermalDataUpdate(this.getStatus());
+    if (this.eventReceiver != null && this.eventReceiver.onProgress != null) {
+      this.eventReceiver.onProgress(this.getStatus());
     }
     let wellTargetTemp = this.state.wellTargetTemp();
     if (wellTargetTemp != null) {

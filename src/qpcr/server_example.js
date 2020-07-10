@@ -27,10 +27,8 @@ class NinjaQPCRServerExample {
   onThermalTransition (data) {
     console.log(data);
   }
-  onThermalDataUpdate (data) {
-    //console.log(data);
-    if (this.isRunning)
-      console.log("TEMP_DEMO\t%f\t%f", data.well, data.lid);
+  onProgress (progress) {
+    console.log("TEMP\t%f\t%f", progress.well, progress.lid);
   }
   onFluorescenceDataUpdate (data) {
     console.log(data);
