@@ -32,16 +32,16 @@ class AppState {
     this._requestData("device", null, "GET", 
       (data)=>{
         console.log("AppState.init received device state");
-        device.setDeviceState(data);
-        if (data.hasProtocol) {
+        console.log(data);
+        if (data.hasExperiment) {
           console.log("AppState.init Getting protocol");
           this._requestData("device/protocol", null, "GET", 
             (protocol)=>{
               device.setProtocol(protocol);
             }, 
             ()=>{});
-          
         }
+        device.setDeviceState(data);
       }, (error)=>{
         console.error(error);
       }

@@ -43,6 +43,7 @@ class Device {
           break;
         case "experiment.progress":
           this.progressHandlers.forEach((handler)=>{
+            this.progress = obj.data;
             if (handler.onProgress) {
               handler.onProgress(obj.data);
             }
@@ -123,8 +124,10 @@ class Device {
   }
   
   setProtocol (protocol) {
+    console.log("Device.setProtocol calling %d handlers", this.deviceStateHandlers.length);
+    console.log(protocol);
     this.protocol = protocol;
-    this.progressHandlers.forEach((handler)=>{
+    this.deviceStateHandlers.forEach((handler)=>{
       if (handler.onUpdateProtocol) {
         handler.onUpdateProtocol(this.protocol);
       }

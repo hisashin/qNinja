@@ -108,6 +108,26 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-conten
   padding:1em;
   border-top:1px solid rgba(0, 0, 0, 0.125);
 }
+
+.progress-meter {
+  display:flex;
+}
+.progress-meter-item {
+  border:1px solid rgba(0, 0, 0, 0.125);
+  text-align:center;
+  padding:0.2em;
+  margin:0.1em;
+  width: 100%;
+}
+.progress-meter-item-current {
+  text-align:center;
+  padding:0.2em;
+  margin:0.1em;
+  width: 100%;
+  background-color:#007bff;
+  border-color:#007bff;
+  color:#ffffff;
+}
 /* Input fields */
 .input-repeat {
   width:80px;
