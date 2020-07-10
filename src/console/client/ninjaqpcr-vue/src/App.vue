@@ -52,7 +52,24 @@ a {
   padding:2em;
 }
 
-/* Protocol view */
+/* Common list view */
+.protocol-list, .log-list {
+}
+.protocol-cell, .log-cell {
+}
+.protocol-cell-content, .log-cell-content {
+  padding:1em;
+}
+li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-content {
+  border-bottom:1px solid rgba(0, 0, 0, 0.125);
+
+}
+
+/* Protocol list */
+
+/* Log list */
+
+/* Protocol detail & editor view */
 .protocol {
 
 }

@@ -1,36 +1,38 @@
 <template>
   <li
-    class="col-12"
+    class="col-12 protocol-cell"
     @click="revealDetail">
-    <div class="row">
-      <div class="col-12">
-        {{ protocol.name }}
-      </div>
-      <ul class="col-9">
-        <li
-          v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
-          <span v-if="stage.type==1">Hold</span>
-          <span v-if="stage.type==2">PCR</span>
-          <span v-if="stage.type==3">Melt Curve</span>
-            
-          <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex">
-            {{ step.temp }}℃
-            {{ step.duration }}sec
-            {{ step.data_collection }}
-          </span>
-          <span v-if="stage.type==2">x{{ stage.repeat }}</span>
-        </li>
-      </ul>
-      <div class="col-3">
-        <b-button @click.stop="edit">
-          Edit
-        </b-button>
-        <b-button
-          class="ml-1"
-          @click.stop="run"
-        >
-          Run
-        </b-button>
+    <div class="protocol-cell-content">
+      <div class="row">
+        <div class="col-12">
+          {{ protocol.name }}
+        </div>
+        <ul class="col-9">
+          <li
+            v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
+            <span v-if="stage.type==1">Hold</span>
+            <span v-if="stage.type==2">PCR</span>
+            <span v-if="stage.type==3">Melt Curve</span>
+              
+            <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex">
+              {{ step.temp }}℃
+              {{ step.duration }}sec
+              {{ step.data_collection }}
+            </span>
+            <span v-if="stage.type==2">x{{ stage.repeat }}</span>
+          </li>
+        </ul>
+        <div class="col-3">
+          <b-button @click.stop="edit">
+            Edit
+          </b-button>
+          <b-button
+            class="ml-1"
+            @click.stop="run"
+          >
+            Run
+          </b-button>
+        </div>
       </div>
     </div>
   </li>

@@ -1,13 +1,17 @@
 <template>
   <div class="card">
     <ul
-      v-for="(summary, index) in summaries"
-      :key="index"
-      class="row">
-      <li class="col-12" v-if="limit==null || index<limit" @click="revealDetail(summary.id)">
-        {{summary.protocol_name}}
-        {{summary.id}}
-      </li>
+      class="row log-list">
+      <template v-for="(summary, index) in summaries">
+        <li 
+          class="col-12 log-cell"
+          :key="index" v-if="index < limit">
+          <div class="log-cell-content">
+            {{summary.protocol_name}}
+            {{summary.id}}
+          </div>
+        </li>
+      </template>
     </ul>
   </div>
 </template>

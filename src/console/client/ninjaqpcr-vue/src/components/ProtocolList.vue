@@ -1,14 +1,16 @@
 <template>
   <div class="card">
     <ul
-      v-for="(item, index) in protocols"
-      :key="index"
-      class="row">
-      <ProtocolCard
-        v-if="index < limit"
-        :pid="item.id"
-        :protocol="item.protocol"
-      />
+      class="row protocol-list">
+      <template v-for="(item, index) in protocols"
+      >
+        <ProtocolCard
+          :key="index"
+          v-if="index < limit"
+          :pid="item.id"
+          :protocol="item.protocol"
+        />
+      </template>
     </ul>
   </div>
 </template>
