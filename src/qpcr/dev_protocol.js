@@ -26,11 +26,11 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: STAGE_TYPE_PCR,
-  repeat: 1,
+  repeat: 3,
   steps: [
-    { label:"denature", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
-    { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:5.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
-    { label:"extend", temp:DEMO_TEMP_LOW, duration:5.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] }
+    { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
+    { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
+    { label:"extend", temp:DEMO_TEMP_LOW, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] }
   ]
 };
 
@@ -38,9 +38,9 @@ const example_melt_curve_stage = {
   type: STAGE_TYPE_MELT_CURVE,
   repeat: 1,
   steps: [
-    { label:"denature", duration:10, temp:DEMO_TEMP_HIGH, data_collection:[] },
-    { label:"cool", duration:10, temp:DEMO_TEMP_MEDIUM, data_collection:[] },
-    { label:"melt", ramp_speed: 0.4, duration:10, temp:DEMO_TEMP_HIGH, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
+    { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:[] },
+    { label:"cool", duration:5, temp:DEMO_TEMP_MEDIUM, data_collection:[] },
+    { label:"melt", ramp_speed: 0.4, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
   ]
 };
 
@@ -52,7 +52,7 @@ const protocol = {
   stages: [
     example_hold_stage,
     example_pcr_stage,
-    // example_melt_curve_stage
+    example_melt_curve_stage
   ]
 };
 /*

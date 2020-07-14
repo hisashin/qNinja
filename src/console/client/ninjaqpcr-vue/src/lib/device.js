@@ -11,6 +11,7 @@ class Device {
     this.deviceState = null;
     this.experimentProgress = null;
     this.protocol = null;
+    this.progress = null;
   }
   
   /* API */

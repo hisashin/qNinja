@@ -294,11 +294,13 @@ class NinjaQPCR {
       this.receiver.onThermalTransition(data);
     }
   }
+  
   onProgress (data) {
     this.experimentLog.temp.time.push(this.getExperimentElapsedTime());
     this.experimentLog.temp.well.push(data.well);
     this.experimentLog.temp.lid.push(data.lid);
     this.progress = data;
+    data.elapsed = this.getExperimentElapsedTime();
     if (this.receiver != null && this.receiver.onProgress) {
       this.receiver.onProgress(data);
     }
@@ -310,7 +312,6 @@ class NinjaQPCR {
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
       this.receiver.onFluorescenceDataUpdate(values);
     }
-    
   }
   
   /* Misc */
@@ -326,6 +327,7 @@ class NinjaQPCR {
   onCheckpoint () {
     // TODO checkpoint logging (stage end)
   }
+  
   onComplete () {
     // Experiment is finished. Note that the thermal cycler is still keeping temp.
     this._setDeviceState(DEVICE_STATE.COMPLETE);
@@ -353,7 +355,6 @@ class NinjaQPCR {
         console.log("_setDeviceState 2");
         this.receiver.onDeviceStateChange(this.deviceState);
       } else {
-        
         console.log("_setDeviceState 3");
       }
     }, 1);

@@ -5,18 +5,93 @@ const Well = require("./well");
 const HeatLid = require("./heat_lid");
 */
 
+const START_TEMP = 25.0;
+
 class Thermistor {
   constructor () {
-    this.temperature = 25.0; // Celsius
-  }
-  measure () {
-    
+    this.temperature = START_TEMP; // Celsius
   }
 }
 const TEMP_TOLERANCE_LID = 1.0;
 const TEMP_TOLERANCE_WELL = 1.0;
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
+
+
+// TODO: use measured > saved > default values.
+const WELL_TEMP_HEATING_SPEED = 5.0;
+const WELL_TEMP_COOLING_SPEED = 5.0;
+class RemainingTimeCalculator {
+  constructor (protocol) {
+    this.start = new Date();
+    this.protocol = protocol;
+    this.timestamp = new Date();
+    this.update(0, 0, new Date());
+  }
+  getRemainingMsec() {
+    return this.remainingMsec - (new Date().getTime() - this.timestamp.getTime()) 
+  }
+  getEstimatedTransitionTime (fromTemp, toTemp, rampSpeed) {
+    if (fromTemp < toTemp) {
+      let heatingSpeed = WELL_TEMP_HEATING_SPEED;
+      if (rampSpeed != null && rampSpeed > 0) {
+        console.log("Remaining:ramp specified: %f", rampSpeed);
+        heatingSpeed = Math.min(heatingSpeed, rampSpeed);
+      }
+      return (toTemp - fromTemp) / heatingSpeed;
+    }
+    let coolingSpeed = WELL_TEMP_COOLING_SPEED;
+    if (rampSpeed != null && rampSpeed > 0) {
+      console.log("Remaining:ramp specified: %f", rampSpeed);
+      coolingSpeed = Math.min(coolingSpeed, rampSpeed);
+    }
+    return (fromTemp - toTemp) / coolingSpeed;
+  }
+  update (currentStageIndex, currentRepeatIndex) {
+    // First
+    this.timestamp = new Date();
+    let temp = START_TEMP;
+    let remaining = 0; // sec
+    this.protocol.stages.forEach ((stage, stageIndex)=>{
+      let firstCycleDuration = 0;
+      let cycleDuration = 0;
+      stage.steps.forEach((step, stepIndex)=>{
+        const stepDuration = this.getEstimatedTransitionTime(temp, step.temp, step.ramp_speed) + step.duration;
+        /*
+        console.log("Remaining: stage=%d, step=%d (first) duration=%f, hold=%f [%f->%f]", 
+          stageIndex, stepIndex, stepDuration, step.duration,
+          temp, step.temp);
+          */
+        firstCycleDuration += stepDuration;
+        temp = step.temp;
+      });
+      stage.steps.forEach((step, stepIndex)=>{
+        const stepDuration = this.getEstimatedTransitionTime(temp, step.temp, step.ramp_speed) + step.duration;
+        /*
+        console.log("Remaining: stage=%d, step=%d (second) duration=%f, hold=%f [%f->%f]",
+          stageIndex, stepIndex, stepDuration, step.duration,
+        temp, step.temp);
+        */
+        cycleDuration += stepDuration;
+        temp = step.temp;
+      });
+      
+      if (stageIndex >= currentStageIndex) {
+        let targetRepeat = (stageIndex == currentStageIndex) ? currentRepeatIndex : 0;
+        let stageDuration = (stage.repeat - targetRepeat) * cycleDuration;
+        if (currentRepeatIndex == 0) {
+          stageDuration -= (cycleDuration - firstCycleDuration);
+        }
+        console.log("Remaining cycle=%f first=%f remainingRepeats=%d", cycleDuration, firstCycleDuration, (stage.repeat - targetRepeat));
+        remaining += stageDuration;
+        // console.log("Remaining: stage=%d duration=%f repeat=%d", stageIndex, stageDuration, stage.repeat);
+      }
+    });
+    const total = (this.timestamp.getTime() - this.start.getTime())/1000;
+    console.log("Remaining.update stage=%d repeat=%d remaining=%f (Total=%f)", currentStageIndex, currentRepeatIndex, remaining, total);
+    this.remainingMsec = remaining * 1000;
+  }
+}
 
 class ThermalCycler {
   constructor (conf) {
@@ -37,6 +112,7 @@ class ThermalCycler {
     console.log(this.protocol);
     this.heatLid.setTargetTemperature(protocol.lid_temp);
     this._startTimer();
+    this.remainingTimeCalculator = new RemainingTimeCalculator(protocol);
   }
   pause () {
     this._stopTimer();
@@ -76,15 +152,23 @@ class ThermalCycler {
       // Transition
       this.stateFrom = this.state;
       this.state = this.state.next(this.well.temperature);
+      
       let lidTargetTemp = this.state.lidTargetTemp();
       if (lidTargetTemp != null) {
         this.heatLid.setTargetTemperature(lidTargetTemp);
       }
       this.state.start(now);
+      const from = this.stateFrom.getStatus();
+      const to = this.state.getStatus();
+      console.log("Remaining demo " + JSON.stringify(to));
+      if (!(from.cycle == to.cycle && from.repeat == to.repeat)) {
+        this.remainingTimeCalculator.update(to.cycle, to.repeat);
+        
+      }
       if (this.eventReceiver != null && this.eventReceiver.onThermalTransition != null) {
         // TODO: define data format
         // Notify thermal transition -> fluorescence measurement (if needed)
-        this.eventReceiver.onThermalTransition({ from:this.stateFrom.getStatus(), to:this.state.getStatus() });
+        this.eventReceiver.onThermalTransition({ from:from, to:to });
       }
       if (this.state.isFinished () && this.eventReceiver != null && this.eventReceiver.onComplete != null)  {
         this.eventReceiver.onComplete();
@@ -105,7 +189,8 @@ class ThermalCycler {
     return {
       well: this.well.temperature,
       lid: this.heatLid.temperature,
-      state: this.state.getStatus()
+      state: this.state.getStatus(),
+      remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
   }
 }
@@ -184,8 +269,8 @@ class StateStepRamp {
     this.cycleIndex = cycleIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex
-    this.cycle = protocol.stages[cycleIndex];
-    this.step = this.cycle.steps[stepIndex];
+    this.stage = protocol.stages[cycleIndex];
+    this.step = this.stage.steps[stepIndex];
     this.isFastRamp = (this.step.ramp_speed == null);
     if (!this.isFastRamp) {
       this.rampSpeed = Math.abs(this.step.ramp_speed); // Degree per sec
@@ -250,8 +335,8 @@ class StateStepHold {
     this.cycleIndex = cycleIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex;
-    this.cycle = protocol.stages[cycleIndex];
-    this.step = this.cycle.steps[stepIndex];
+    this.stage = protocol.stages[cycleIndex];
+    this.step = this.stage.steps[stepIndex];
     this.elapsedMsec = 0;
     this.prevTimestamp = new Date();
   }
@@ -279,9 +364,9 @@ class StateStepHold {
     let nextCycle = this.cycleIndex;
     let nextRepeat = this.repeatIndex;
     let nextStep = this.stepIndex;
-    if (this.stepIndex < this.cycle.steps.length - 1) {
+    if (this.stepIndex < this.stage.steps.length - 1) {
       nextStep += 1;
-    } else if (this.repeatIndex < this.cycle.repeat - 1) {
+    } else if (this.repeatIndex < this.stage.repeat - 1) {
       // Repeat the cycle
       nextStep = 0;
       nextRepeat += 1;

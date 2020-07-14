@@ -60,6 +60,18 @@
       </div>
     </div>
     <div>
+      <div>
+        <meter
+          min="0"
+          :max="progress.remaining+progress.elapsed"
+          :value="progress.elapsed"
+          style="width:100%" />
+      </div>
+      <div>
+        Elapsed:{{ progress.elapsed/1000 }} Remaining:{{ progress.remaining/1000 }} Total: {{ (progress.elapsed + progress.remaining) / 1000}}
+      </div>
+    </div>
+    <div>
       <template v-if="deviceState != null">
         <b-button pill v-if="deviceState.pauseAvailable" @click="pause">Pause</b-button>
         <b-button pill v-if="deviceState.resumeAvailable" @click="resume">Resume</b-button>
