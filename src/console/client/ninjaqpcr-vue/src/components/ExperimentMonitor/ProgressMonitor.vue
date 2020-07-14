@@ -68,7 +68,9 @@
           style="width:100%" />
       </div>
       <div>
-        Elapsed:{{ progress.elapsed/1000 }} Remaining:{{ progress.remaining/1000 }} Total: {{ (progress.elapsed + progress.remaining) / 1000}}
+        Elapsed:{{ elapsedTime }} 
+        Remaining:{{ remainingTime }} 
+        Total: {{ totalTime }}
       </div>
     </div>
     <div>
@@ -86,6 +88,7 @@
 
 <script>
 import device from "../../lib/Device.js";
+import Util from "../../lib/Util.js";
 var numeral = require('numeral');
 const STAGE_TYPE_HOLD = 1;
 const STAGE_TYPE_PCR = 2;
@@ -105,6 +108,17 @@ export default {
       stage: { step:[]},
       step: {},
       stepElapsedSec: ""
+    }
+  },
+  computed: {
+    elapsedTime: function () {
+      return Util.humanTime(this.progress.elapsed/1000);
+    },
+    remainingTime: function () {
+      return Util.humanTime(this.progress.remaining/1000);
+    },
+    totalTime: function () {
+      return Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
     }
   },
   created: function () {
