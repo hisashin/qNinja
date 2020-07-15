@@ -6,10 +6,8 @@
         <li 
           class="col-12 log-cell"
           :key="index" v-if="index < limit">
-          <div class="log-cell-content">
-            {{summary.protocol_name}}
-            {{summary.id}}
-          </div>
+          <LogCell
+          :summary="summary"/>
         </li>
       </template>
     </ul>
@@ -17,9 +15,11 @@
 </template>
 <script>
 import appState from "../lib/AppState.js";
+import LogCell from './LogCell.vue'
 export default {
   name: 'LogList',
   components: {
+    LogCell
   },
   props: {
     limit: { type:Number }

@@ -38,7 +38,7 @@ export default {
 ul {
   list-style-type: none;
   padding: 0;
-  margin:0;
+  margin: 0;
 }
 li {
   margin: 0;
@@ -54,6 +54,7 @@ a {
 
 /* Common list view */
 .protocol-list, .log-list {
+  margin-bottom:0;
 }
 .protocol-cell, .log-cell {
 }
