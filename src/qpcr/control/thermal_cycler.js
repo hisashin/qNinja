@@ -361,7 +361,7 @@ class StateStepHold {
     return this.protocol.lid_temp;
   }
   next (startTemperature) { 
-    let nextCycle = this.stageIndex;
+    let nextStage = this.stageIndex;
     let nextRepeat = this.repeatIndex;
     let nextStep = this.stepIndex;
     if (this.stepIndex < this.stage.steps.length - 1) {
@@ -372,14 +372,14 @@ class StateStepHold {
       nextRepeat += 1;
     } else if (this.stageIndex < this.protocol.stages.length - 1) {
       // Next stage
-      nextCycle = this.stageIndex += 1;
+      nextStage = this.stageIndex += 1;
       nextRepeat = 0;
       nextStep = 0;
     } else {
       // Finish.
       return new StateFinalHold(this.protocol);
     }
-    return new StateStepRamp(this.protocol, nextCycle, 
+    return new StateStepRamp(this.protocol, nextStage, 
       nextRepeat, nextStep, startTemperature);
   }
   getStatus() {
