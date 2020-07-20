@@ -1,17 +1,22 @@
 <template>
-  <div style="width:400px,height:200px">
-    <canvas
-      id="chartFluorescence"
-      width="400"
-      height="200"
-      style="width:400px,height:200px"
-    />
+  <div>
+    <div>one-shot={{ oneShot }}</div>
+    <div>continuous={{ continuous }}</div>
+    <div>baseline={{ baselineExists }}</div>
+    <div style="width:400px,height:200px">
+      <canvas
+        id="chartFluorescence"
+        width="400"
+        height="200"
+        style="width:400px,height:200px"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 const Chart = require('chart.js');
-import network from "../../lib/Device.js";
+import device from "../../lib/Device.js";
 
 const colors = [
   "rgba(253,64,132, 1)",
@@ -44,18 +49,20 @@ let startTime = new Date();
 export default {
   data() {
     return {
+      oneShot:false,
+      continuous:false,
+      baselineExists:false,
+      baseline:[]
     }
   },
   created: function () {
-    this.network = network;
-    this.network.addTransitionHandler({
+    device.addTransitionHandler({
       onStart: (obj)=>{
         startTime = new Date();
       }
     });
   },
   mounted: function () {
-    this.network = network;
     const handler = {
       onFluorescenceUpdate: (data)=>{
         let timestamp = new Date().getTime() - startTime.getTime();
@@ -66,9 +73,30 @@ export default {
           );
         }
         fluorescenceChart.update();
+      },
+      onFluorescenceEvent: (data)=>{
+        console.log("onFluorescenceEvent " + JSON.stringify(data));
+        switch (data.type) {
+          case "start":
+          this.continuous = true;
+          break;
+          case "stop": 
+          this.continuous = false;
+          break;
+          case "measure": 
+          this.oneShot = true;
+          setTimeout(()=>{this.oneShot = false}, 1000);
+          break;
+          case "baseline": 
+          this.baselineExists = true;
+          break;
+          default:
+          break;
+        }
       }
     };
-    network.addFluorescenceUpdateHandler(handler);
+    device.addFluorescenceUpdateHandler(handler);
+    device.addBaselineHandler(this);
     
     var fluorescenceChart = null;
     const createFluorescenceChart = () => {
@@ -115,6 +143,12 @@ export default {
     createFluorescenceChart();
   },
   methods: {
+    onBaselineUpdate: function (baseline) {
+      console.log("FluorescenceMonitor.onBaselineUpdate");
+      console.log(baseline);
+      this.baseline = baseline;
+      // TODO auto baseline fetch (on start)
+    }
   }
 }
 </script>

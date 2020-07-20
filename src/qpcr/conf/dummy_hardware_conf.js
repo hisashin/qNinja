@@ -6,6 +6,8 @@ const HeatUnit = require("../control/heat_control/heat_unit.js");
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
 
+/* Constants and dependencies for testing */
+
 const getDummyTemp = (current, target, interval) => {
   if (current < target) {
     return Math.min(target, current + DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
@@ -141,14 +143,14 @@ class DummyFluorescenceSensingUnit {
   }
   getDummySigmoid (channel) {
     const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
-    const thresholdMsec = 100 * 1000;
+    const thresholdMsec = 150 * 1000;
     const intercept = 6.0;
     const x =  ((elapsedMsec - thresholdMsec - channel * 10 * 1000)/thresholdMsec) * intercept;
     const sigmoid = MAX_ABSOLUTE_FLUORESCENCE / (1 + Math.exp(-x));
     return sigmoid;
   }
   getDummyBaseline (value) {
-    return Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
+    return 0.1 + Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
   }
   measure(well, callback) {
     let value = this.getDummySigmoid(well.index);

@@ -1,6 +1,7 @@
+"use strict";
 const device = require("../lib/Device.js");
+const Util = require("../lib/Util.js");
 
-const API_ENDPOINT = "http://localhost:2222/";
 class AppState {
   constructor () {
     this.protocols = [];
@@ -29,13 +30,13 @@ class AppState {
   init () {
     console.log("AppState.init");
     /* HTTP request methods */
-    this._requestData("device", null, "GET", 
+    Util.requestData("device", null, "GET", 
       (data)=>{
         console.log("AppState.init received device state");
         console.log(data);
         if (data.hasExperiment) {
           console.log("AppState.init Getting protocol");
-          this._requestData("device/protocol", null, "GET", 
+          Util.requestData("device/protocol", null, "GET", 
             (protocol)=>{
               device.setProtocol(protocol);
             }, 
@@ -102,36 +103,10 @@ class AppState {
     console.log("AppState.sortProtocols");
   }
   
-  /* Utilities */
-  _requestData (path, data, method, onSuccess, onError) {
-    const xmlhttp = new XMLHttpRequest();
-    const url = API_ENDPOINT + path;
-    console.log("AppState._requestData Requesting %s", url);
-    xmlhttp.onreadystatechange = ()=>{
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        console.log("AppState._requestData Success %s", url);
-        try {
-          onSuccess(JSON.parse(xmlhttp.responseText));
-        } catch (e) {
-          if (onError != null) {
-            onError(e);
-          }
-        }
-      }
-    };
-    xmlhttp.open(method, url, true);
-    if (data == null) {
-      xmlhttp.send();
-    } else if (typeof(data)=='string') {
-      xmlhttp.send(data);
-    } else {
-      xmlhttp.send(JSON.stringify(data));
-    }
-  }
   
   reloadProtocols () {
     console.log("AppState.reloadProtocols");
-    this._requestData("protocols", null, "GET", 
+    Util.requestData("protocols", null, "GET", 
       (data)=>{
         this.protocols = data;
         this.protocolEventHandlers.forEach((handler)=>{
@@ -149,7 +124,7 @@ class AppState {
   }
   reloadLogs () {
     console.log("AppState.reloadLogs");
-    this._requestData("logs", null, "GET", 
+    Util.requestData("logs", null, "GET", 
       (data)=>{
         console.log("AppState.reloadLogs callback");
         this.logSummaries = data;
@@ -176,7 +151,7 @@ class AppState {
   }
   _selectLog (id, callback) {
     console.log("AppState.selectLog id=%s", id);
-    this._requestData("logs/" + id, null, "GET", 
+    Util.requestData("logs/" + id, null, "GET", 
       (data)=>{
         this.selectedLog = data;
         console.log("AppState.selectLog id=%s data received.", id);
@@ -196,7 +171,7 @@ class AppState {
   
   // Get protocol from server
   _selectProtocol (id, callback) {
-    this._requestData("protocols/" + id, null, "GET", 
+    Util.requestData("protocols/" + id, null, "GET", 
       (data)=>{
         this.selectedProtocol = data;
         console.log("AppState._selectProtocol selected. calling %d handlers.", this.protocolEventHandlers.length);
@@ -214,7 +189,7 @@ class AppState {
   saveProtocol (obj, onSave) {
     console.log("AppState.saveProtocol");
     const path = "protocols/" + obj.id + "/update";
-    this._requestData(path, obj, "POST", ()=>{
+    Util.requestData(path, obj, "POST", ()=>{
       if (onSave) {
         onSave();
       }

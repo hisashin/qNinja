@@ -28,10 +28,14 @@ class NinjaQPCRServerExample {
     console.log(data);
   }
   onProgress (progress) {
-    console.log("TEMP\t%f\t%f", progress.well, progress.lid);
+    // console.log("TEMP\t%f\t%f", progress.well, progress.lid);
   }
   onFluorescenceDataUpdate (data) {
-    console.log(data);
+    // console.log(data);
+  }
+  onFluorescenceEvent (data) {
+    // optics.start / optics.stop / optics.measure / optics.baseline
+    console.log("optics event. " + JSON.stringify(data));
   }
   onComplete () {
     this.isRunning = false;

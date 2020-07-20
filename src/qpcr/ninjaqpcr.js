@@ -4,7 +4,8 @@ const fs = require('fs');
 
 const ThermalCycler = require("./control/thermal_cycler");
 const Optics = require("./control/optics");
-const LogManager = require("./log_manager.js");
+const OpticsAnalysis = require("./optics_analysis");
+const LogManager = require("./log_manager");
 
 const logManager = new LogManager();
 
@@ -12,6 +13,9 @@ const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
+const MEASUREMENT_HOLD_BASELINE = 5;
+
+const DEFAULT_BASELINE_CYCLES = 1;
 
 const DEVICE_STATE = {
   IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
@@ -29,6 +33,8 @@ class NinjaQPCR {
     this.optics.setEventReceiver(this);
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
+    this.measuringBaseline = false;
+    this.analysis = null;
   }
   
   /* API */
@@ -38,12 +44,21 @@ class NinjaQPCR {
     this.receiver = receiver;
     /*
       onThermalTransition(transition)
+      
       onProgress(data)
+      
       onError(error)
+      
       onStart()
+      
       onComplete()
+      
       onDeviceStateChange()
+      
       onFluorescenceDataUpdate()
+      
+      onFluorescenceEvent (data)
+      type = optics.start / optics.stop / optics.measure / optics.baseline
     */
   }
   
@@ -56,10 +71,13 @@ class NinjaQPCR {
     this._setDeviceState(DEVICE_STATE.RUNNING);
     this.protocol = protocol;
     this.startTimestamp = new Date();
+    this.baselineStageIndex = -1;
     this.experimentLog = this._createExperimentLog(protocol);
     this.thermalCycler.start(protocol);
     this.optics.start();
     this.onStart();
+    this.analysis = new OpticsAnalysis(this.experimentLog);
+    this.isMeasuringFluorescenceContinuously = false;
     return true;
   }
   pause () {
@@ -142,6 +160,7 @@ class NinjaQPCR {
       events: [
         // transition
       ],
+      baseline:[], 
       fluorescence: [
         /*
         {
@@ -211,7 +230,17 @@ class NinjaQPCR {
     return experimentLog;
   }
   _addFluorescenceMeasurementLog (step, measurementType, values) {
-    const stepObj = this.experimentLog.fluorescence[step.cycle].steps[step.step];
+    if (measurementType == MEASUREMENT_HOLD_BASELINE) {
+      this.experimentLog.baseline.push(
+        {
+          repeat: step.repeat,
+          timestamp:this.getExperimentElapsedTime(),
+          values:values
+        }
+      );
+      return;
+    }
+    const stepObj = this.experimentLog.fluorescence[step.stage].steps[step.step];
     let added = false;
     stepObj.measurements.forEach((measurement)=>{
       if (measurement.type == measurementType) {
@@ -230,14 +259,14 @@ class NinjaQPCR {
     }
   }
   _getStep (state) {
-    if (!(state.cycle >= 0) || !(state.step >= 0) ) {
+    if (!(state.stage >= 0) || !(state.step >= 0) ) {
       return null;
     }
-    const cycle = this.protocol.stages[state.cycle];
-    if (cycle == null) {
+    const stage = this.protocol.stages[state.stage];
+    if (stage == null) {
       return null;
     }
-    return cycle.steps[state.step];
+    return stage.steps[state.step];
   }
   
   /* Handling ThermalCycler's events */
@@ -253,6 +282,7 @@ class NinjaQPCR {
           (values)=>{
             console.log("Ramp end.");
             // One-shot fluorescence measurement
+            this.notifyFluorescenceEvent("measure");
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_RAMP_END, values);
           });
       }
@@ -264,6 +294,7 @@ class NinjaQPCR {
           (values)=>{
             console.log("Hold end.");
             // One-shot fluorescence measurement
+            this.notifyFluorescenceEvent("measure");
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_HOLD_END, values);
             
           });
@@ -290,8 +321,43 @@ class NinjaQPCR {
           });
       }
     }
+    // Baseline
+    const toStage = this.protocol.stages[data.to.stage];
+    
+    this.baselineStageIndex = -1;
+    for (let i=0; i<this.protocol.stages.length; i++) {
+      if (this.protocol.stages[i].type == 2) {
+        this.baselineStageIndex = i;
+        break;
+      }
+    }
+    
+    
+    if (data.to.stage == this.baselineStageIndex && data.to.repeat < DEFAULT_BASELINE_CYCLES) {
+      this.optics.startContinuousDataCollection(
+        (values)=>{
+          this.onFluorescenceDataUpdate(data.to, MEASUREMENT_HOLD_BASELINE, values);
+        }
+      );
+      this.measuringBaseline = true;
+    } else if (this.measuringBaseline) {
+      this.analysis.calcBaseline();
+      this.notifyFluorescenceEvent("baseline");
+      this.measuringBaseline = false;
+    }
+    
     if (this.receiver != null && this.receiver.onThermalTransition != null) {
       this.receiver.onThermalTransition(data);
+    }
+    if (this.optics.continuous != this.isMeasuringFluorescenceContinuously) {
+      // Notify on/off of continuouos fluorescence measurement
+      this.notifyFluorescenceEvent(this.optics.continuous?"start":"stop");
+      this.isMeasuringFluorescenceContinuously = this.optics.continuous;
+    }
+  }
+  notifyFluorescenceEvent (eventType) {
+    if (this.receiver != null && this.receiver.onFluorescenceEvent != null) {
+      this.receiver.onFluorescenceEvent ({type:eventType});
     }
   }
   
@@ -305,6 +371,9 @@ class NinjaQPCR {
       this.receiver.onProgress(data);
     }
   }
+  getProgress () {
+    return this.progress || {};
+  }
   
   /* Handling ThermalCycler's events */
   onFluorescenceDataUpdate (step, measurementType, values) {
@@ -312,6 +381,12 @@ class NinjaQPCR {
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
       this.receiver.onFluorescenceDataUpdate(values);
     }
+  }
+  getBaseline () {
+    if (this.experimentLog == null) {
+      return {};
+    }
+    return this.experimentLog.baseline;
   }
   
   /* Misc */

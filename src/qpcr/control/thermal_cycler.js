@@ -82,7 +82,7 @@ class RemainingTimeCalculator {
         if (currentRepeatIndex == 0) {
           stageDuration -= (cycleDuration - firstCycleDuration);
         }
-        console.log("Remaining cycle=%f first=%f remainingRepeats=%d", cycleDuration, firstCycleDuration, (stage.repeat - targetRepeat));
+        console.log("Remaining stage=%f first=%f remainingRepeats=%d", cycleDuration, firstCycleDuration, (stage.repeat - targetRepeat));
         remaining += stageDuration;
         // console.log("Remaining: stage=%d duration=%f repeat=%d", stageIndex, stageDuration, stage.repeat);
       }
@@ -161,8 +161,8 @@ class ThermalCycler {
       const from = this.stateFrom.getStatus();
       const to = this.state.getStatus();
       console.log("Remaining demo " + JSON.stringify(to));
-      if (!(from.cycle == to.cycle && from.repeat == to.repeat)) {
-        this.remainingTimeCalculator.update(to.cycle, to.repeat);
+      if (!(from.stage == to.stage && from.repeat == to.repeat)) {
+        this.remainingTimeCalculator.update(to.stage, to.repeat);
         
       }
       if (this.eventReceiver != null && this.eventReceiver.onThermalTransition != null) {
@@ -239,7 +239,7 @@ class StatePreheat {
   next (startTemperature) { 
     if (this.protocol.stages.length > 0 && 
       this.protocol.stages[0].repeat > 0 && this.protocol.stages[0].steps.length > 0) {
-      // Choose the first step of the first cycle
+      // Choose the first step of the first stage
       const state = new StateStepRamp(this.protocol, 
         0, 0, 0, startTemperature);
       return state;
@@ -263,13 +263,13 @@ class StateStepControlledRamp  {
 }
 
 class StateStepRamp {
-  constructor (protocol, cycleIndex, repeatIndex, stepIndex, startTemperature) {
+  constructor (protocol, stageIndex, repeatIndex, stepIndex, startTemperature) {
     this.startTemperature = startTemperature;
     this.protocol = protocol;
-    this.cycleIndex = cycleIndex;
+    this.stageIndex = stageIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex
-    this.stage = protocol.stages[cycleIndex];
+    this.stage = protocol.stages[stageIndex];
     this.step = this.stage.steps[stepIndex];
     this.isFastRamp = (this.step.ramp_speed == null);
     if (!this.isFastRamp) {
@@ -312,14 +312,14 @@ class StateStepRamp {
     return this.protocol.lid_temp;
   }
   next (startTemperature) {
-    return new StateStepHold(this.protocol, this.cycleIndex, 
+    return new StateStepHold(this.protocol, this.stageIndex, 
       this.repeatIndex, this.stepIndex);
   }
   getStatus() {
     // TODO define data format
     return {
       state: "ramp",
-      cycle: this.cycleIndex,
+      stage: this.stageIndex,
       step: this.stepIndex,
       repeat: this.repeatIndex,
       stepElapsed: this.elapsedMsec
@@ -329,13 +329,13 @@ class StateStepRamp {
 }
 
 class StateStepHold {
-  constructor (protocol, cycleIndex, repeatIndex, stepIndex) {
-    // console.log("StateStepHold %d %d %d", cycleIndex, repeatIndex, stepIndex);
+  constructor (protocol, stageIndex, repeatIndex, stepIndex) {
+    // console.log("StateStepHold %d %d %d", stageIndex, repeatIndex, stepIndex);
     this.protocol = protocol;
-    this.cycleIndex = cycleIndex;
+    this.stageIndex = stageIndex;
     this.repeatIndex = repeatIndex;
     this.stepIndex = stepIndex;
-    this.stage = protocol.stages[cycleIndex];
+    this.stage = protocol.stages[stageIndex];
     this.step = this.stage.steps[stepIndex];
     this.elapsedMsec = 0;
     this.prevTimestamp = new Date();
@@ -361,18 +361,18 @@ class StateStepHold {
     return this.protocol.lid_temp;
   }
   next (startTemperature) { 
-    let nextCycle = this.cycleIndex;
+    let nextCycle = this.stageIndex;
     let nextRepeat = this.repeatIndex;
     let nextStep = this.stepIndex;
     if (this.stepIndex < this.stage.steps.length - 1) {
       nextStep += 1;
     } else if (this.repeatIndex < this.stage.repeat - 1) {
-      // Repeat the cycle
+      // Repeat the stage
       nextStep = 0;
       nextRepeat += 1;
-    } else if (this.cycleIndex < this.protocol.stages.length - 1) {
-      // Next cycle
-      nextCycle = this.cycleIndex += 1;
+    } else if (this.stageIndex < this.protocol.stages.length - 1) {
+      // Next stage
+      nextCycle = this.stageIndex += 1;
       nextRepeat = 0;
       nextStep = 0;
     } else {
@@ -386,7 +386,7 @@ class StateStepHold {
     // TODO define data format
     return {
       state: "hold",
-      cycle: this.cycleIndex,
+      stage: this.stageIndex,
       step: this.stepIndex,
       repeat: this.repeatIndex,
       stepElapsed: this.elapsedMsec

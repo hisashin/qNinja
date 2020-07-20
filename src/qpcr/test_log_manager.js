@@ -1,5 +1,5 @@
 "use strict";
-const LogManager = require("./log_manager.js");
+const LogManager = require("./log_manager");
 
 const lm = new LogManager();
 lm.getSummaries({}, {}, (summaries)=>{

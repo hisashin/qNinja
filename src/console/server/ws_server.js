@@ -34,6 +34,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/device", this.device());
     router.addPath("/device/protocol", this.deviceProtocol());
     router.addPath("/device/progress", this.deviceProgress());
+    router.addPath("/device/baseline", this.deviceBaseline());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
@@ -73,6 +74,14 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       res.writeHead(200,{'Content-Type': 'application/json'});
       const obj = qpcr.getProgress();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  deviceBaseline () {
+    return (req, res, map)=>{
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = qpcr.getBaseline();
       res.write(JSON.stringify(obj));
       res.end();
     };
@@ -258,6 +267,16 @@ class NinjaQPCRWebSocketServer {
       data:data
     };
     this.connection.sendUTF(JSON.stringify(obj));
+  }
+  onFluorescenceEvent (data) {
+    console.info("onFluorescenceEvent");
+    console.info(data);
+    const obj = {
+      category:"experiment.fluorescenceEvent",
+      data:data
+    };
+    this.connection.sendUTF(JSON.stringify(obj));
+    
   }
   onDeviceStateChange (state) {
     const obj = {

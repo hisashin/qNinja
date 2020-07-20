@@ -8,7 +8,7 @@
       <li 
         class="progress-meter-item"
         v-for="(stage, index) in protocol.stages" :key="index" 
-        v-bind:class="{ 'progress-meter-item-current': progress.state.cycle==index }">
+        v-bind:class="{ 'progress-meter-item-current': progress.state.stage==index }">
         {{ stageLabel(stage.type) }}
       </li>
       <li
@@ -46,7 +46,7 @@
     </div>
     <div class="row" v-if="progress.state.state!='preheat' && progress.state.state!='complete'">
       <div class="col-3">
-        Stage {{ progress.state.cycle+1 }}/{{ protocol.stages.length }}
+        Stage {{ progress.state.stage+1 }}/{{ protocol.stages.length }}
       </div>
       <div class="col-3">
         Step {{ progress.state.step+1 }}<template v-if="stage!=null">/{{stage.steps.length}}</template>
@@ -132,21 +132,19 @@ export default {
         this.protocol = obj.protocol;
       },
       onTransition:(obj)=>{
-        console.log("ProgressMonitor.onTransition");
-        console.log(obj);
         let status = obj.to;
         if (obj.to == null) { return; }
         if (this.protocol == null) {
           return;
         }
-        const stage = this.protocol.stages[status.cycle];
+        const stage = this.protocol.stages[status.stage];
         const step = stage.steps[status.step];
       }
     });
     device.addProgressHandler({
       onProgress:(progress)=>{
         this.progress = progress;
-        console.log(progress)
+        // console.log(progress)
         if (this.protocol == null) {
           return;
         }
@@ -159,7 +157,7 @@ export default {
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
         console.log("ProgressMonitor.onDeviceStateChange");
-        console.log(state);
+        // console.log(state);
         this.deviceState = state;
       },
       onUpdateProtocol: (protocol)=>{
@@ -177,10 +175,11 @@ export default {
       if (this.protocol == null) {
         return;
       }
-      this.stage = this.protocol.stages[this.progress.state.cycle];
+      this.stage = this.protocol.stages[this.progress.state.stage];
       if (this.stage != null) {
         this.step = this.stage.steps[this.progress.state.step];
       } else {
+        // TODO ignore this warning on preheating phase
         console.warn("this.stage is null")
       }
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
