@@ -17,33 +17,11 @@
 <script>
 const Chart = require('chart.js');
 import device from "../../lib/Device.js";
+import Graph from "../../lib/Graph.js";
 
-const colors = [
-  "rgba(253,64,132, 1)",
-  "rgba(0,164,239, 1)",
-  "rgba(106,180,62, 1)",
-  "rgba(232,157,65, 1)",
-  "rgba(115,92,176, 1)",
-];
-const createDataset = (channelIndex, name, showLine)=>{
-  let color = colors[channelIndex%colors.length]
-  return {
-    showLine: showLine,
-    label: name,
-    fill:false,
-    borderColor: color,
-    pointColor: color,
-    pointStrokeColor: "#fff",
-    lineTension: 0.1,
-    data: [
-    ]
-  };
-};
 const TUBE_COUNT = 8;
-let fluorescence = [];
-for (let i=0; i<TUBE_COUNT; i++) {
-  fluorescence.push([]);
-}
+const TIME_RANGE_SEC = 240;
+let graph = null;
 
 let startTime = new Date();
 export default {
@@ -67,12 +45,11 @@ export default {
       onFluorescenceUpdate: (data)=>{
         let timestamp = new Date().getTime() - startTime.getTime();
         for (let i=0; i<TUBE_COUNT; i++) {
-          fluorescence[i].push({t:timestamp, v:data[i]});
-          fluorescenceChart.data.datasets[i].data = fluorescence[i].map(
-            obj =>( { "x":obj.t/1000.0, "y":obj.v })
-          );
+          graph.addData(i, {t:timestamp, v:data[i]});
         }
-        fluorescenceChart.update();
+        const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
+        graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
+        graph.update();
       },
       onFluorescenceEvent: (data)=>{
         console.log("onFluorescenceEvent " + JSON.stringify(data));
@@ -98,56 +75,22 @@ export default {
     device.addFluorescenceUpdateHandler(handler);
     device.addBaselineHandler(this);
     
-    var fluorescenceChart = null;
-    const createFluorescenceChart = () => {
-      if (!document.getElementById('chartFluorescence')) {
-        console.log("Canvas not found. return.");
-        return;
-      }
-      const ctx = document.getElementById('chartFluorescence').getContext('2d');
-      const data = {
-        datasets: [
-          /* createDataset() */
-        ]
-      };
-      const options = {
-      };
-      fluorescenceChart = new Chart(ctx, {
-        type: 'scatter',
-        data: data,
-        options: {
-          animation: false,
-          elements: {
-              point:{ radius: 0 }
-          },
-          scales: {
-              xAxes: [{
-                  ticks: {
-                      min: 0,
-                      max:200
-                  }
-              }],
-              yAxes: [{
-                  ticks: {
-                      min: 0,
-                      max: 1.0
-                  }
-              }]
-          }
-        }
-      });
-      for (let i=0; i<8; i++) {
-        fluorescenceChart.data.datasets[i] = createDataset(i, "Well " + i, true);
-      }
-    };
-    createFluorescenceChart();
+    graph = new Graph('chartFluorescence');
+    let labels = [];
+    for (let i=0; i<TUBE_COUNT; i++) {
+      labels.push("Well " + (i+1));
+    }
+    graph.addSeries(labels);
+    graph.setConversionFunction(
+      (obj) =>{return { "x":obj.t/1000.0, "y":obj.v }}
+    );
+    graph.setMinMaxY(0, 1);
   },
   methods: {
-    onBaselineUpdate: function (baseline) {
+    onBaselineUpdate: function (data) {
       console.log("FluorescenceMonitor.onBaselineUpdate");
-      console.log(baseline);
-      this.baseline = baseline;
-      // TODO auto baseline fetch (on start)
+      this.baseline = data.baselines;
+      graph.setHLines(data.thresholds);
     }
   }
 }

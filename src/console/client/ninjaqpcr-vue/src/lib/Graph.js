@@ -23,11 +23,11 @@ const createDataset = (channelIndex, name, showLine)=>{
   };
 };
 
-const TIME_RANGE_SEC = 240;
 class Graph {
   constructor (container) {
     const ctx = document.getElementById(container).getContext('2d');
     this.conversionFunction = null;
+    this.hLines = [];
     const emptyData = {
       datasets: [
       ]
@@ -80,12 +80,31 @@ class Graph {
     this.chart.options.scales.yAxes[0].ticks.min = min;
     this.chart.options.scales.yAxes[0].ticks.max = max;
   }
+  setHLines (values) {
+    this.hLines = values;
+    for (let i=0; i<values.length; i++) {
+      if (this.chart.data.datasets.length < this.data.length + i+1) {
+        this.chart.data.datasets[this.data.length + i] = createDataset(i, i, true);
+      }
+    }
+  }
   update () {
     for (let i=0; i<this.data.length; i++) {
       if (this.conversionFunction != null) {
         this.chart.data.datasets[i].data = this.data[i].map(this.conversionFunction);
       } else {
         this.chart.data.datasets[i].data = this.data[i];
+      }
+    }
+    const xMin = this.chart.options.scales.xAxes[0].ticks.min;
+    const xMax = this.chart.options.scales.xAxes[0].ticks.max;
+    if (this.hLines) {
+      for (let i=0; i<this.hLines.length; i++) {
+        const index = this.data.length + i;
+        this.chart.data.datasets[index].data = [
+          {x:xMin, y:this.hLines[i]},
+          {x:xMax, y:this.hLines[i]}
+        ];
       }
     }
     this.chart.update();

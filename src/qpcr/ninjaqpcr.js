@@ -383,10 +383,13 @@ class NinjaQPCR {
     }
   }
   getBaseline () {
-    if (this.experimentLog == null) {
+    if (this.analysis == null) {
       return {};
     }
-    return this.experimentLog.baseline;
+    return {
+      baselines:this.analysis.baselines,
+      thresholds:this.analysis.thresholds
+    };
   }
   
   /* Misc */
