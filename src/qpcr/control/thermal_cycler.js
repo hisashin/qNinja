@@ -80,13 +80,11 @@ class RemainingTimeCalculator {
         if (currentRepeatIndex == 0) {
           stageDuration -= (cycleDuration - firstCycleDuration);
         }
-        console.log("Remaining stage=%f first=%f remainingRepeats=%d", cycleDuration, firstCycleDuration, (stage.repeat - targetRepeat));
         remaining += stageDuration;
         // console.log("Remaining: stage=%d duration=%f repeat=%d", stageIndex, stageDuration, stage.repeat);
       }
     });
     const total = (this.timestamp.getTime() - this.start.getTime())/1000;
-    console.log("Remaining.update stage=%d repeat=%d remaining=%f (Total=%f)", currentStageIndex, currentRepeatIndex, remaining, total);
     this.remainingMsec = remaining * 1000;
   }
 }
