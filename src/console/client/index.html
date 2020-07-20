@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="src/vue.js"></script>
+    <title>Ninja qPCR</title>
+    <link rel='stylesheet' href='./css/ninjaqpcr.css'/>
+  </head>
+  <body>
+    <div>
+      <input type="button" value="Start Experiment" onclick="startExperiment()"/>
+      <input type="button" value="Stop Experiment" onclick="stopExperiment()"/>
+      
+    </div>
+    <div id="connectionView">
+      <input type="button" value="Reconnect" onclick="connect()"/>
+      {{ status }}
+    </div>
+    <h2>Temperature</h2>
+    <div id="progressView">
+      <dl>
+        <p>{{message}}</p>
+        <dt>Well</dt>
+        <dd>{{ well }}</dd>
+        <dt>Lid</dt>
+        <dd>{{ lid }}</dd>
+      </dl>
+      <meter min="0" max="110" v-bind:value="well"></meter>
+      <meter min="0" max="110" v-bind:value="lid"></meter>
+    </div>
+    <canvas id="chartTemperature" width="400" height="200"></canvas>
+    <h2>Fluorescence</h2>
+    <canvas id="chartFluorescence" width="400" height="200"></canvas>
+    <div id="tubesView">
+      <ol>
+        <li v-for="tube in tubes">
+          <meter min="0" max="1" v-bind:value="tube"></meter>{{ tube }}
+        </li>
+      </ol>
+    </div>
+    <h2>Transition</h2>
+    <div id="messageTransition">
+    </div>
+    
+    <h2>Experiment Editor</h2>
+    <div id="experimentEditor">
+      
+    </div>
+    <script src="src/chartjs/Chart.js"></script>
+    <script src="src/index.js"></script>
+  </body>
+</html>

@@ -1,56 +1,47 @@
 "use strict";
-const qpcr = require("./ninjaqpcr");
+const NinjaQPCR = require("./ninjaqpcr");
+//const hardwareConf = require("./conf/ninjaqpcr_hardware_conf.js");
+const hardwareConf = require("./conf/dummy_hardware_conf.js");
+
+const qpcr = new NinjaQPCR(hardwareConf)
+// const protocol = require("./protocol_example");
+const protocol = require("./dev_protocol");
+
 /* Implementation example */
 class NinjaQPCRServerExample {
   constructor  () {
   }
   start () {
     qpcr.setEventReceiver(this);
-    const protocol = {
-      lidTemp: 110,
-      cycles: [
-        {
-          repeat: 1,
-          steps: [
-            { type:"initial denaturation", temp:94.0, duration:15.0 }
-          ]
-        },
-        {
-          repeat: 30,
-          steps: [
-            { type:"denaturation", temp:94.0, duration:15.0 },
-            { type:"annealing", temp:55.0, duration:15.0 },
-            { type:"extension", temp:72.0, duration:15.0 }
-          ]
-        },
-        {
-          repat: 1,
-          steps: [
-            { type:"final extension", temp:72.0, duration:30.0 }
-          ]
-        }
-      ]
-    };
     qpcr.start(protocol);
+    this.isRunning = true;
     /*
     // Polling
-     setInterval(()=>{ console.log(qpcr.getStatus()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getDeviceState()); }, 1000);
+     setInterval(()=>{ console.log(qpcr.getExperimentStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
      setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);
     */
   }
   /* Callback functions */
   onThermalTransition (data) {
-    console.log("onThermalTransition");
     console.log(data);
   }
-  onThermalDataUpdate (data) {
-    console.log("onThermalDataUpdate");
-    console.log(data);
+  onProgress (progress) {
+    // console.log("TEMP\t%f\t%f", progress.well, progress.lid);
   }
   onFluorescenceDataUpdate (data) {
-    console.log("onFluorescenceDataUpdate");
-    console.log(data);
+    // console.log(data);
+  }
+  onFluorescenceEvent (data) {
+    // optics.start / optics.stop / optics.measure / optics.baseline
+    console.log("optics event. " + JSON.stringify(data));
+  }
+  onComplete () {
+    this.isRunning = false;
+  }
+  onDeviceStateChange (state) {
+    console.log(state);
   }
 }
 new NinjaQPCRServerExample().start();
