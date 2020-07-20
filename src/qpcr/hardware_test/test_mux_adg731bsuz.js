@@ -1,9 +1,10 @@
+"use strict";
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 
 const SPI_CHANNEL = "/dev/spidev0.0";
-const PIN_SYNC = 40; // Pin number
+const PIN_MUX_SYNC = 40; // Pin number
 const CHANNEL_OFFSET = 28;
-let mux = new ADG731BSUZ(SPI_CHANNEL, PIN_SYNC);
+let mux = new ADG731BSUZ(SPI_CHANNEL, PIN_MUX_SYNC);
 mux.initialize();
 
 let channel = 0;

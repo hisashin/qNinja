@@ -3,9 +3,11 @@
 class SampleSensing {
   constructor () {
   }
-  getTemperature () {
-    // TODO: Get temperature.
-    return 42.0;
+  start () {
+    
+  }
+  getTemperature (callback) {
+    callback(42.0);
   }
 }
 class SampleOutput {
@@ -26,13 +28,19 @@ class HeatUnit {
     this.temperature = 0.0; // Celsius
     this.targetTemperature = 0.0; // Celsius
   }
+  start () {
+    // Initialize hardware. This function is called once at the first run.
+    this.sensing.start();
+    this.output.start();
+  }
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
   control () {
-    this.temperature = this.sensing.getTemperature();
-    this.pid.setTemperature(temperature);
-    this.output.setOutput(this.pid.getOutput())
+    this.sensing.getTemperature ((temperature)=>{
+      this.pid.setTemperature(temperature);
+      this.output.setOutput(this.pid.getOutput());
+    });
   }
   temperature () {
     return this.temperature;

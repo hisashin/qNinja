@@ -1,4 +1,5 @@
 // Digital potentiometer MCP4551T-502E/MS (5kOhm, full range)
+"use strict";
 
 const i2c = require('i2c-bus');
 class MCP4551T {

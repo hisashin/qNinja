@@ -1,24 +1,31 @@
 "use strict";
 
 /* Excitation and fluorescence measurement */
-const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
-const MEASUREMENT_PER_CH_MSEC = 500;
-const EXCITATION_DURATION_MSEC = 100;
+// const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
+const MEASUREMENT_PER_CH_MSEC = 60;
+const EXCITATION_DURATION_MSEC = 30;
 class Optics {
   constructor (hardwareConf) {
-    // TODO apply hardware conf (getLED/getFluorescenceSensingUnit)
     this.ledUnit = hardwareConf.getLEDUnit();
     this.fluorescenceSensingUnit = hardwareConf.getFluorescenceSensingUnit();
     this.wellsCount = hardwareConf.wellsCount();
     this.fluorescence = [
       // Channel array?
     ];
+    this.isMeasuring = false;
+    this.values = [];
+    this.oneShotCallbacks = [];
+    this.continuousCallback = null;
+    this.continuous = false;
+    this.shouldResumeContinuous = false;
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
   }
   start () {
     this.startTimestamp = new Date();
+    this.ledUnit.start();
+    this.fluorescenceSensingUnit.start();
     // Set dummy timeout
     // Well ID <=> Channel ID (MUX)
     this.wells = [];
@@ -29,34 +36,81 @@ class Optics {
         fluorescence:[]
       });
     }
-    this.measurementInterval = setInterval(()=>{ this.measureAll() }, MEASUREMENT_INTERVAL_MSEC);
   }
-  measureAll () {
-    // TODO: Repeat selectChannel
+  pause () {
+    this.shouldResumeContinuous = this.continuous;
+    this.continuous = false;
+  }
+  resume () {
+    this.continuous = this.shouldResumeContinuous;
+    this.continuous = this.shouldResumeContinuous = false;
+    if (this.continuous) {
+      this.startContinuousDataCollection(this.continuousCallback);
+    }
+  }
+  abort () {
+    this.continuous = false;
+    this.shouldResumeContinuous = false;
+  }
+  finish () {
+    this.continuous = false;
+    this.shouldResumeContinuous = false;
+  }
+  measureAll (callback) {
     console.log("Optics.measureAll");
-    this.wells.forEach((well)=>{
-      setTimeout(()=>{ this.selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
-    });
+    if (callback != null) {
+      this.oneShotCallbacks.push(callback);
+    }
+    if (!this.isMeasuring) {
+      this.values = [];
+      this.wells.forEach((well)=>{
+        setTimeout(()=>{ this.selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
+      });
+    } else {
+      console.log("Optics.measureAll busy.");
+    }
+    this.isMeasuring = true;
   }
   selectWell (well) {
-    // TODO: Switch LED channel
-    // TODO: Switch photodiode MUX
-    // TODO: Wait
+    this.ledUnit.selectChannel(well);
+    this.fluorescenceSensingUnit.select(well);
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
   measureFluorescence (well) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
-    const measurement = Math.random(); //TODO: better dummy data (such as sigmoid)
-    well.fluorescence.push({t:elapsed, f:measurement});
-    if (well.index == this.wellsCount - 1) {
-      // Last well
-      if (this.eventReceiver != null && this.eventReceiver.onFluorescenceDataUpdate != null) {
-        this.eventReceiver.onFluorescenceDataUpdate(this.getStatus());
+    this.fluorescenceSensingUnit.measure(well, (measurement)=>{
+      this.values.push(measurement);
+      if (well.index == this.wellsCount - 1) {
+        // Last well
+        if (this.oneShotCallbacks.length > 0) {
+          this.oneShotCallbacks.forEach((callback)=>{
+              callback(this.values);
+          });
+          this.oneShotCallbacks = [];
+        }
+        if (this.continuous && this.continuousCallback != null) {
+          this.continuousCallback(this.values);
+        }
+        this.isMeasuring = false;
+        if (this.continuous) {
+          this.measureAll(null);
+        }
       }
-    }
+    });
   }
+  startContinuousDataCollection (callback) {
+    console.log("startContinuousDataCollection");
+    this.continuous = true;
+    this.continuousCallback = callback;
+    this.measureAll(null);
+  }
+  stopContinuousDataCollection () {
+    console.log("stopContinuousDataCollection");
+    this.continuous = false;
+    
+  }
+  // Start one-shot fluorescence measurement
   getStatus () {
-    // TODO: return only latest measurements
     let data = [];
     this.wells.forEach((well)=>{
       let wellData = {

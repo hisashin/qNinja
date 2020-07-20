@@ -1,5 +1,7 @@
 "use strict";
-const qpcr = require("../../../qpcr/ninjaqpcr");
+const NinjaQPCR = require("../../../qpcr/ninjaqpcr.js");
+const hardwareConf = require("../../../qpcr/conf/dummy_hardware_conf.js");
+const qpcr = new NinjaQPCR(hardwareConf);
 const websocket_server = require('../../core_modules/websocket-server.js');
 
 class ExperimentCtrl {
@@ -11,8 +13,8 @@ class ExperimentCtrl {
   start () {
     qpcr.setEventReceiver(this);
     const protocol = {
-      lidTemp: 110,
-      cycles: [
+      lid_temp: 110,
+      stages: [
         {
           repeat: 1,
           steps: [
