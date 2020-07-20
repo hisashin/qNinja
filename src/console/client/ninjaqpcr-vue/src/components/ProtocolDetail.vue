@@ -28,7 +28,7 @@
               </ul>
             </template>
             <template v-if="stage.type==2 && stage.steps.length>2">
-              <h3 class="protocol-stage-label">PCR Stage!{{stage.type}}</h3>
+              <h3 class="protocol-stage-label">qPCR Stage</h3>
               Repeat {{ stage.repeat }} times
               <ul class="protocol-steps">
                 <li class="protocol-step">
@@ -83,6 +83,33 @@
                 </li>
               </ul>
             </template>
+            <template v-if="stage.type==4 && stage.steps.length>2">
+              <h3 class="protocol-stage-label">Normal PCR Stage</h3>
+              Repeat {{ stage.repeat }} times
+              <ul class="protocol-steps">
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Denaturing
+                  </div>
+                  {{ stage.steps[0].temp }}℃
+                  {{ stage.steps[0].duration }}s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Annealing
+                  </div>
+                  {{ stage.steps[1].temp }}℃
+                  {{ stage.steps[1].duration }}s
+                </li>
+                <li class="protocol-step">
+                  <div class="protocol-step-label">
+                    Extending
+                  </div>
+                  {{ stage.steps[2].temp }}℃
+                  {{ stage.steps[2].duration }}s
+                </li>
+              </ul>
+            </template>
           </li>
         </template>
       </ul>
@@ -93,34 +120,19 @@
 <script>
 import network from "../lib/Device.js";
 import appState from "../lib/AppState.js";
+import Constants from "../lib/constants.js";
 
-const STAGE_TYPE_HOLD = 1;
-const STAGE_TYPE_PCR = 2;
-const STAGE_TYPE_MELT_CURVE = 3;
 
 let LABEL_MAP = {};
-LABEL_MAP[STAGE_TYPE_HOLD] = "Hold";
-LABEL_MAP[STAGE_TYPE_PCR] = "PCR";
-LABEL_MAP[STAGE_TYPE_MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.HOLD] = "Hold";
+LABEL_MAP[Constants.StageType.QPCR] = "qPCR";
+LABEL_MAP[Constants.StageType.MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.PCR] = "Normal PCR";
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
-
-const DEFAULT_STAGE_HOLD = { type: STAGE_TYPE_HOLD, 
-  repeat:1, 
-  steps:[ {label:"hold", temp:94, duration:15, data_collection:[]} ] };
-const DEFAULT_STAGE_PCR = { type: STAGE_TYPE_PCR, 
-  repeat:30, 
-  steps:[ {label:"denature", temp:94, duration:15, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
-  {label:"anneal", temp:55, duration:12, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
-  {label:"extend", temp:72, duration:18, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]} ] };
-const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE, 
-  repeat:1, 
-  steps:[ {label:"denature", temp:94, duration:10, speed:4, data_collection:[]}, 
-  {label:"cool", temp:55, duration:5, speed:4, data_collection:[]}, 
-  {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
   
 export default {
   name: 'ProtocolDetail',

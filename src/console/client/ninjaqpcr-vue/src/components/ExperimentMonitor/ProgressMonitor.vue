@@ -89,15 +89,15 @@
 <script>
 import device from "../../lib/Device.js";
 import Util from "../../lib/Util.js";
+import Constants from "../../lib/constants.js";
 var numeral = require('numeral');
-const STAGE_TYPE_HOLD = 1;
-const STAGE_TYPE_PCR = 2;
-const STAGE_TYPE_MELT_CURVE = 3;
 
 let LABEL_MAP = {};
-LABEL_MAP[STAGE_TYPE_HOLD] = "Hold";
-LABEL_MAP[STAGE_TYPE_PCR] = "PCR";
-LABEL_MAP[STAGE_TYPE_MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.HOLD] = "Hold";
+LABEL_MAP[Constants.StageType.QPCR] = "qPCR";
+LABEL_MAP[Constants.StageType.MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.PCR] = "Normal PCR";
+
 export default {
   name: 'ProgressMonitor',
   data() {

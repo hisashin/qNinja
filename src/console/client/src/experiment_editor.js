@@ -1,3 +1,4 @@
+Constants.StageType.QPCR
 const STAGE_TYPE_HOLD = 1;
 const STAGE_TYPE_PCR = 2;
 const STAGE_TYPE_MELT_CURVE = 3;

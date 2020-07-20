@@ -4,7 +4,7 @@
       class="row protocol-list">
       <template v-for="(item, index) in protocols"
       >
-        <ProtocolCard
+        <ProtocolCell
           :key="index"
           v-if="index < limit"
           :pid="item.id"
@@ -15,12 +15,12 @@
   </div>
 </template>
 <script>
-import ProtocolCard from './ProtocolCard.vue'
+import ProtocolCell from './ProtocolCell.vue'
 import appState from "../lib/AppState.js";
 export default {
   name: 'ProtocolList',
   components: {
-    ProtocolCard
+    ProtocolCell
   },
   props: {
     limit: { type:Number }

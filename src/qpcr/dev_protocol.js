@@ -2,9 +2,7 @@
 /*
   Very short protocol for development
 */
-const STAGE_TYPE_HOLD = 1;
-const STAGE_TYPE_PCR = 2;
-const STAGE_TYPE_MELT_CURVE = 3;
+const Constants = require("./constants");
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
@@ -16,7 +14,7 @@ const DEMO_TEMP_MEDIUM = 50.0;
 const DEMO_TEMP_LOW = 35.0;
 /* Initial extension */
 const example_hold_stage = {
-  type: STAGE_TYPE_HOLD,
+  type: Constants.StageType.HOLD,
   repeat: 1,
   steps: [
     { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:[] }
@@ -25,7 +23,7 @@ const example_hold_stage = {
 
 /* PCR */
 const example_pcr_stage = {
-  type: STAGE_TYPE_PCR,
+  type: Constants.StageType.QPCR,
   repeat: 3,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
@@ -35,7 +33,7 @@ const example_pcr_stage = {
 };
 
 const example_melt_curve_stage = {
-  type: STAGE_TYPE_MELT_CURVE,
+  type: Constants.StageType.MELT_CURVE,
   repeat: 1,
   steps: [
     { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:[] },
