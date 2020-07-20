@@ -1,4 +1,4 @@
-update=2020 May 26, Tuesday 23:13:16
+update=2020 July 08, Wednesday 15:44:18
 version=1
 last_client=pcbnew
 [general]
@@ -25,7 +25,7 @@ ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=qPCR-ledarray.net
+LastNetListRead=bench_ver1.0.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=0
