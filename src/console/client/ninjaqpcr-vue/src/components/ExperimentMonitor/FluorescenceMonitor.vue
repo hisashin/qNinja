@@ -52,7 +52,6 @@ export default {
         graph.update();
       },
       onFluorescenceEvent: (data)=>{
-        console.log("onFluorescenceEvent " + JSON.stringify(data));
         switch (data.type) {
           case "start":
           this.continuous = true;
@@ -88,7 +87,6 @@ export default {
   },
   methods: {
     onBaselineUpdate: function (data) {
-      console.log("FluorescenceMonitor.onBaselineUpdate");
       this.baseline = data.baselines;
       graph.setHLines(data.thresholds);
     }

@@ -13,7 +13,9 @@
         </b-tab>
         <b-tab
           title="Protocol">
-          <p><ProtocolDetail /></p>
+          <p><ProtocolDetail
+            :id="id"
+            :protocol="protocol" /></p>
         </b-tab>
       </b-tabs>
     </div> 
