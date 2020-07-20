@@ -9803,10 +9803,10 @@ rsvp@^4.8.4:
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
 
-rtcmesh-react@^0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/rtcmesh-react/-/rtcmesh-react-0.0.15.tgz#3bb433bc37a7d8ec5df58351f5a0ca8195cc2045"
-  integrity sha512-mnpaBpci4p+eccfu5PXaNkz0yzvTLO4o+Vbme9LleUnWKZjWuiumrse7yymIZQz21kV41gk8amc9a19hicrulA==
+rtcmesh-react@^0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/rtcmesh-react/-/rtcmesh-react-0.0.17.tgz#109d44aec3a721e54d3336112b87da789a05a00f"
+  integrity sha512-DNzc9tPjhnlYZF89Ihzt/NxxSjOChks3Y3BAxbTLW6QhmHywaKSWlXo+V0/Fg7jhzQ1BuoV4D1trKSyILCehSg==
   dependencies:
     babel-loader "^8.0.6"
     css-loader "^3.2.0"

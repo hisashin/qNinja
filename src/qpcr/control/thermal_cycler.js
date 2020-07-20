@@ -35,14 +35,12 @@ class RemainingTimeCalculator {
     if (fromTemp < toTemp) {
       let heatingSpeed = WELL_TEMP_HEATING_SPEED;
       if (rampSpeed != null && rampSpeed > 0) {
-        console.log("Remaining:ramp specified: %f", rampSpeed);
         heatingSpeed = Math.min(heatingSpeed, rampSpeed);
       }
       return (toTemp - fromTemp) / heatingSpeed;
     }
     let coolingSpeed = WELL_TEMP_COOLING_SPEED;
     if (rampSpeed != null && rampSpeed > 0) {
-      console.log("Remaining:ramp specified: %f", rampSpeed);
       coolingSpeed = Math.min(coolingSpeed, rampSpeed);
     }
     return (fromTemp - toTemp) / coolingSpeed;
@@ -160,7 +158,6 @@ class ThermalCycler {
       this.state.start(now);
       const from = this.stateFrom.getStatus();
       const to = this.state.getStatus();
-      console.log("Remaining demo " + JSON.stringify(to));
       if (!(from.stage == to.stage && from.repeat == to.repeat)) {
         this.remainingTimeCalculator.update(to.stage, to.repeat);
         
