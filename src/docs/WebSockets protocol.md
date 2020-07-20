@@ -15,7 +15,7 @@ As we move to the real-time web we also need to move from RESTful APIs to a prot
 | `patch`    | `PATCHED or PATCH_FAIL`      | `abort, done, retry` |
 | `flush`    | `FLUSHED or FLUSH_FAIL`      | `abort, done, retry` |
 
-The `create` verb -- equivalent to a POST method in a RESTful API is not idempotent.  If possible we suggest to create the resource ID at the point of origin -- typically on the client -- so that multiple messages or retries do not result in a resource duplication. You can use the `crt_upd` verb to create the resource if it doesn't exist or update if it does abd ditch both `create` and `update`.
+The `create` verb -- equivalent to a POST method in a RESTful API is not idempotent.  If possible we suggest to create the resource ID at the point of origin -- typically on the client -- so that multiple messages or retries do not result in a resource duplication. You can use the `crt_upd` verb to create the resource if it doesn't exist or update if it doe/Users/valerio/Documents/_workarea/TheClothMask/how to keep your glasses clear while wearing a mask.mds abd ditch both `create` and `update`.
 
 The `flush` verb which does not have an equivalent on the REST API was added so that the client can tell the server when it has removed data from its storage. Thus when the server distributes notification of changed records, it doesn’t have to send messages to clients that have flushed the containing record or data set.
 
