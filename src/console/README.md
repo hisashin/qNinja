@@ -29,7 +29,7 @@ Exceptionally, paths beginning with "/device" return information about ongoing e
 
 WebSocket API:
 
-Client to server
+Client to server commands
 ```
 {
   category: <String>,
@@ -39,7 +39,31 @@ Client to server
 
 Categories
 
+* experiment.start :  Start an experiment
+* experiment.pause : Pause an ongoing experiment
+* experiment.resume : Resume an paused experiment
+* experiment.abort : Abort an ongoing or paused experiment
+* experiment.finish : Finish the experiment. This command is accepted only when the device is at "Final hold" state after an experiment. By this command, the device stop heat units and become "Idle" again.
+* experiment.registerProtocol : 
+
 Server to client
+
+```
+{
+  category: <String>,
+  data: <Object>
+}
+```
+* experiment.transition : Experiment-level status changes such as stages, cycles and steps.
+* experiment.progress : Current progress including temperatures, stages and steps. The latest data can also be obtained by /device/progress of the REST API.
+* experiment.fluorescence : Results of fluorescence measurements.
+* experiment.fluorescenceEvent : Significant events related to fluorescence measurements, such as 
+  * Start and end of continuous measurement
+  * Notification of baseline and threshold determination.
+* experiment.start
+* experiment.finish
+* device.transition : Notify device-level (not experiment-level) status change
+* (TODO) device.error : Notify device-level errors
 
 
 ## Client

@@ -2,7 +2,7 @@
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
-const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf");
+const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf"); // Use simulator
 const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
@@ -207,8 +207,7 @@ class NinjaQPCRWebSocketServer {
   handleMessage (obj) {
     switch (obj.category) {
       case "experiment.start":
-        this.start();
-        break;
+        this.start(); break;
       case "experiment.pause":
         this.pause(); break;
       case "experiment.resume":
@@ -260,8 +259,6 @@ class NinjaQPCRWebSocketServer {
     this.connection.sendUTF(JSON.stringify(obj));
   }
   onFluorescenceDataUpdate (data) {
-    console.info("onFluorescenceDataUpdate");
-    console.info(data);
     const obj = {
       category:"experiment.fluorescence",
       data:data
@@ -269,8 +266,6 @@ class NinjaQPCRWebSocketServer {
     this.connection.sendUTF(JSON.stringify(obj));
   }
   onFluorescenceEvent (data) {
-    console.info("onFluorescenceEvent");
-    console.info(data);
     const obj = {
       category:"experiment.fluorescenceEvent",
       data:data
