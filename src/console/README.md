@@ -44,7 +44,7 @@ Categories
 * experiment.resume : Resume an paused experiment
 * experiment.abort : Abort an ongoing or paused experiment
 * experiment.finish : Finish the experiment. This command is accepted only when the device is at "Final hold" state after an experiment. By this command, the device stop heat units and become "Idle" again.
-* experiment.registerProtocol : 
+* experiment.registerProtocol : Register a protocol for the next experiment.
 
 #### Server to client
 
@@ -65,22 +65,37 @@ Categories
 * device.transition : Notify device-level (not experiment-level) status change
 * (TODO) device.error : Notify device-level errors
 
+Each category corresponds to event handlers of NinjaQPCR class:
+
+| Category | Function |
+| ---- | --- |
+| experiment.transition | onThermalTransition |
+| experiment.progress | onProgress |
+| experiment.fluorescence | onFluorescenceDataUpdate |
+| experiment.fluorescenceEvent | onFluorescenceEvent |
+| experiment.start | onStart |
+| experiment.finish | onComplete |
+| device.transition | onDeviceStateChange |
+| device.error | onError |
+
+For details of data format, see [the document of NinjaQPCR class](../qpcr/API_ninjaqpcr.md).
+
 
 # Client
 
 The client is implemented as a Vue.js app.
 
+Run (and hot reload):
 ```
 npm run serve
 ```
-
-```
-App running at:
+By default, the app runs on
 - Local:   http://localhost:8080 
 - Network: http://192.168.1.15:8080
 
-Note that the development build is not optimized.
-To create a production build, run npm run build.
+Build for production:
+```
+npm run build
 ```
 
-Then access http://localhost:8080 by a web browser.
+Static files (HTML, css and js) are saved to "dist" directory.
