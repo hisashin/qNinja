@@ -13,7 +13,7 @@ The server app has WebSocket and REST interfaces.
 While the WebSocket API provides real-time device monitor and controller functionalities, the REST API is intended to manage protocols and logs. 
 Exceptionally, paths beginning with "/device" return information about ongoing experiments so that a browser can show the progress just after joining it.
 
-## REST API:
+### REST API:
 
 
 * /protocols : Get list of protocols
@@ -27,9 +27,9 @@ Exceptionally, paths beginning with "/device" return information about ongoing e
 * /device/progress : Get progress of current protocol
 * /device/baseline" : Get fluorescence baseline & threshold values
 
-WebSocket API:
+### WebSocket API:
 
-Client to server commands
+#### Client to server commands
 ```
 {
   category: <String>,
@@ -46,7 +46,7 @@ Categories
 * experiment.finish : Finish the experiment. This command is accepted only when the device is at "Final hold" state after an experiment. By this command, the device stop heat units and become "Idle" again.
 * experiment.registerProtocol : 
 
-Server to client
+#### Server to client
 
 ```
 {
@@ -66,7 +66,7 @@ Server to client
 * (TODO) device.error : Notify device-level errors
 
 
-## Client
+# Client
 
 The client is implemented as a Vue.js app.
 

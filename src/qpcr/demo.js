@@ -8,7 +8,7 @@ const qpcr = new NinjaQPCR(hardwareConf)
 const protocol = require("./dev_protocol");
 
 /* Implementation example */
-class NinjaQPCRServerExample {
+class NinjaQPCRDemo {
   constructor  () {
   }
   start () {
@@ -24,18 +24,24 @@ class NinjaQPCRServerExample {
     */
   }
   /* Callback functions */
-  onThermalTransition (data) {
+  onStart (data) {
     console.log(data);
   }
-  onProgress (progress) {
-    // console.log("TEMP\t%f\t%f", progress.well, progress.lid);
+  onComplete (data) {
+    console.log(data);
+  }
+  onThermalTransition (data) {
+    // console.log(data);
+  }
+  onProgress (data) {
+    // console.log(data);
   }
   onFluorescenceDataUpdate (data) {
     // console.log(data);
   }
   onFluorescenceEvent (data) {
     // optics.start / optics.stop / optics.measure / optics.baseline
-    console.log("optics event. " + JSON.stringify(data));
+    console.log(data);
   }
   onComplete () {
     this.isRunning = false;
@@ -44,4 +50,4 @@ class NinjaQPCRServerExample {
     console.log(state);
   }
 }
-new NinjaQPCRServerExample().start();
+new NinjaQPCRDemo().start();

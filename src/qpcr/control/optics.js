@@ -57,7 +57,6 @@ class Optics {
     this.shouldResumeContinuous = false;
   }
   measureAll (callback) {
-    console.log("Optics.measureAll");
     if (callback != null) {
       this.oneShotCallbacks.push(callback);
     }
@@ -66,8 +65,6 @@ class Optics {
       this.wells.forEach((well)=>{
         setTimeout(()=>{ this.selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
       });
-    } else {
-      console.log("Optics.measureAll busy.");
     }
     this.isMeasuring = true;
   }

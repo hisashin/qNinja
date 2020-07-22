@@ -396,7 +396,8 @@ class NinjaQPCR {
   onStart () {
     this.experimentLog.start = new Date().getTime();
     const data = {
-      protocol:this.protocol
+      id:this.experimentLog.id,
+      protocol:this.protocol.id
     };
     if (this.receiver != null && this.receiver.onStart) {
       this.receiver.onStart(data);
@@ -416,8 +417,8 @@ class NinjaQPCR {
     });
     
     const data = {
-      protocol:this.protocol,
-      log:this.experimentLog
+      id:this.experimentLog.id,
+      protocol:this.protocol.id
     };
     if (this.receiver != null && this.receiver.onComplete) {
       this.receiver.onComplete(data);

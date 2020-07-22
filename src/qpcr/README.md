@@ -1,21 +1,26 @@
 # Ninja-qPCR core application
 
 This directory contain the core application of Ninja-qPCR.
-Only "ninjaqpcr.js" is supposed to be exposed to the web server or other interface apps (such as LCD UI).
 
-# Current status
+* ninjaqpcr.js : Core functionalities for running experiments and control devices. [More...](./API_ninjaqpcr.md)
+* log_manager.js : Manager of experiment logs [More...](./API_log_manager.md)
+* protocol_manager.js : Manager of experiment logs [More...](./API_protocol_manager.md)
+* optics_analysis.js : Fluorescence analyzer class providing mathematical functionalities
+  * Basic qPCR analysis
+  * Baseline & threshold calculation (users can also set these values manually.)
+  * Standard curve
+  * Melt curve analysis
 
-It is just a simple stub. The module simulates  simple PCR thermal profiles.
 
-# Usage
+# Standalone demo
 
-
-"server_example.js" shows a demo of calling the core module. It simulates a typical PCR thermal profile 10 times faster than real.
+"demo.js" shows a demo of calling the core module. It simulates a typical qPCR + melt curve profile.
 
 ```
-node server_example.js
+node demo.js
 ```
 
+# Usage of NinjaQPCR class
 Import the qPCR module.
 
 ```
@@ -56,43 +61,3 @@ const protocol = {
 }
 qpcr.start(protocol);
 ```
-
-The module returns current status in three ways:
-
-```
-// Returns thermal cycler's status
-qpcr.getThermalCyclerStatus()
-```
-
-```
-// Returns fluorescence measurement data
-qpcr.getFluorescenceLogs()
-```
-
-```
-// Returns both of above
-qpcr.getStatus()
-```
-
-
-Respond to events by setting an event receiver and implement callback functions.
-
-```
-qpcr.setEventReceiver(this);
-
-```
-
-```
-onThermalTransition (data) {
-  // Do something
-}
-```
-
-# TODO
-* Implement real hardware
-* Define data format
-* More functions will be needed
-* Define API
-* Implement a simple simulator of fluorescence curves of realtime PCR
-* Move private classes into subdirs
-* and so on
