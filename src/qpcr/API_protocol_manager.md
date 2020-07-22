@@ -1,5 +1,7 @@
 # class ProtocolManager
 
+(TODO)
+
 ## getProtocols (onLoad, onError)
 ## update (content, onUpdate, onError)
 ## delete (id, onDelete, onError)

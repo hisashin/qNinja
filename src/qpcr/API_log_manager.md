@@ -1,5 +1,7 @@
 # class LogManager
 
+(TODO)
+
 ## generateExperimentId ()
 
 ## getSummaries (filter, order, onLoad, onError)
