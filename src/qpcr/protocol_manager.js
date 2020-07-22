@@ -96,6 +96,7 @@ class ProtocolManager {
     this._getProtocol (id, callback, onError);
   }
   
+  /* Private */
   _createProtocol () {
     const now = new Date().getTime();
     return {
