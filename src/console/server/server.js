@@ -190,17 +190,22 @@ class NinjaQPCRWebSocketServer {
     this.wsServer = new WebSocketServer({
         httpServer: this.server
     });
-    this.connection = null;
+    this.connections = [];
+    
     this.wsServer.on('request', (request)=>{
-        this.connection = request.accept(null, request.origin);
-        let count = 0;
-        this.connection.on('message', (message)=>{
-          const obj = JSON.parse(message.utf8Data);
-          this.handleMessage(obj);
-        });
-        this.connection.on('close', (reasonCode, description)=>{
-            console.log('Disconnected.');
-        });
+      const connection = request.accept(null, request.origin);
+      this.connections.push(connection);
+      connection.on('message', (message)=>{
+        const obj = JSON.parse(message.utf8Data);
+        this.handleMessage(obj);
+      });
+      connection.on('close', (reasonCode, description)=>{
+        console.log('Disconnected.');
+        const index = this.connections.indexOf(connection);
+        if (index > -1) {
+          this.connections.splice(index, 1);
+        }
+      });
     });
     this.protocol = defaultProtocol;
   }
@@ -244,33 +249,42 @@ class NinjaQPCRWebSocketServer {
   }
   
   /* NinjaQPCR Event Handling */
+  _send (data) {
+    this.connections.forEach((connection)=>{
+      try {
+        connection.sendUTF(JSON.stringify(data));
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
   onThermalTransition (data) {
     const obj = {
       category:"experiment.transition",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
   }
   onProgress (data) {
     const obj = {
       category:"experiment.progress",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
   }
   onFluorescenceDataUpdate (data) {
     const obj = {
       category:"experiment.fluorescence",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
   }
   onFluorescenceEvent (data) {
     const obj = {
       category:"experiment.fluorescenceEvent",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
     
   }
   onDeviceStateChange (state) {
@@ -278,15 +292,14 @@ class NinjaQPCRWebSocketServer {
       category:"device.transition",
       data:state
     };
-    this.connection.sendUTF(JSON.stringify(obj));
-    console.log("ws_server onDeviceStateChange" + state);
+    this._send(obj);
   }
   onStart (data) {
     const obj = {
       category:"experiment.start",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
     this.isRunning = false;
     
   }
@@ -295,7 +308,7 @@ class NinjaQPCRWebSocketServer {
       category:"experiment.finish",
       data:data
     };
-    this.connection.sendUTF(JSON.stringify(obj));
+    this._send(obj);
     this.isRunning = false;
   }
 }

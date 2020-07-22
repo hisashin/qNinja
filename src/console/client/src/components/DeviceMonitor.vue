@@ -36,6 +36,7 @@
       <ProtocolEditor />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
+      <BackButton />
       <ExperimentMonitor />
     </div>
   </div>

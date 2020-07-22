@@ -72,11 +72,11 @@
     </div>
     <div>
       <template v-if="deviceState != null">
-        <b-button pill v-if="deviceState.pauseAvailable" @click="pause">Pause</b-button>
-        <b-button pill v-if="deviceState.resumeAvailable" @click="resume">Resume</b-button>
-        <b-button pill v-if="deviceState.abortAvailable" @click="abort">Abort</b-button>
-        <b-button pill v-if="deviceState.finishAvailable" @click="finish">Finish</b-button>
-        <b-button pill v-if="deviceState.startAvailable" @click="start">Start</b-button>
+        <b-button pill v-if="deviceState.pauseAvailable" @click="pause" class="mr-1">Pause</b-button>
+        <b-button pill v-if="deviceState.resumeAvailable" @click="resume" class="mr-1">Resume</b-button>
+        <b-button pill v-if="deviceState.abortAvailable" @click="abort" class="mr-1">Abort</b-button>
+        <b-button pill v-if="deviceState.finishAvailable" @click="finish" class="mr-1">Finish</b-button>
+        <b-button pill v-if="deviceState.startAvailable" @click="start" class="mr-1">Start</b-button>
       </template>
     </div>
   </div>

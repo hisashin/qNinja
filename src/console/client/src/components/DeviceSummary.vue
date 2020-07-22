@@ -5,11 +5,6 @@
       <div>
         <template v-if="deviceState!=null">
           DeviceState={{ deviceState.label }}
-          <template v-if="deviceState.hasExperiment">
-            <!-- Progress summary -->
-            <ProgressMonitor />
-            <b-button pill variant="primary" @click="openExperimentMonitor">Open Experiment Monitor</b-button>
-          </template>
         </template>
         <!-- Network -->
         <b-button
@@ -22,6 +17,11 @@
         </b-button>
       </div>
     </div>
+    <template v-if="deviceState!=null && deviceState.hasExperiment">
+      <!-- Progress summary -->
+      <ProgressMonitor />
+      <b-button pill variant="primary" @click="openExperimentMonitor">Open Experiment Monitor</b-button>
+    </template>
   </div>
 </template>
 
