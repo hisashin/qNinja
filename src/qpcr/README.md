@@ -12,7 +12,7 @@ This directory contain the core application of Ninja-qPCR.
   * Melt curve analysis
 
 
-# Standalone demo
+## Standalone demo
 
 "demo.js" shows a demo of calling the core module. It simulates a typical qPCR + melt curve profile.
 
@@ -20,7 +20,7 @@ This directory contain the core application of Ninja-qPCR.
 node demo.js
 ```
 
-# Usage of NinjaQPCR class
+## Usage of NinjaQPCR class
 Import the qPCR module.
 
 ```
@@ -30,34 +30,67 @@ const qpcr = new NinjaQPCR(hardwareConf);
 
 ```
 
-Start an experiment.
-(Note: The data format below is undecided. More properties are needed.)
+## Protocols
+
+### Examples
+
+* protocol_example.js : Typical protocol with initial hold, qPCR cycles and melt curve.
+* protocol_example.js : Very short protocol for rapid testing.
+
+### Format
 
 ```
-const protocol = {
-  lidTemp: 110,
+{
+  id: "2B93DB54-E14D-444F-BAEE-5B595F3FB917",
+  lid_temp: 40.0,
+  final_hold_temp:20.0,
+  name: "Dev Protocol",
   stages: [
-    {
+    {  
+      type: Constants.StageType.HOLD,
       repeat: 1,
       steps: [
-        { type:"initial denaturation", temp:94.0, duration:15.0 }
+        { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:[] }
       ]
     },
     {
-      repeat: 30,
+      type: Constants.StageType.QPCR,
+      repeat: 3,
       steps: [
-        { type:"denaturation", temp:94.0, duration:15.0 },
-        { type:"annealing", temp:55.0, duration:15.0 },
-        { type:"extension", temp:72.0, duration:15.0 }
+        { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:[3, 4] },
+        { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:[3, 4] },
+        { label:"extend", temp:DEMO_TEMP_LOW, duration:6.0, data_collection:[3, 4] }
       ]
     },
     {
-      repat: 1,
+      type: Constants.StageType.MELT_CURVE,
+      repeat: 1,
       steps: [
-        { type:"final extension", temp:72.0, duration:30.0 }
+        { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:[] },
+        { label:"cool", duration:5, temp:DEMO_TEMP_MEDIUM, data_collection:[] },
+        { label:"melt", ramp_speed: 0.4, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:[1] }
       ]
     }
   ]
-}
-qpcr.start(protocol);
+};
 ```
+
+### Fields
+
+Protocol
+* id : UUID of the protocol. It corresponds the name of the file.
+* lid_temp : Temperature of the head lid (in Celsius)
+* final_hold_temp : Temperature of the head lid (in Celsius)
+* name : Name of the protocol
+* stages : List of stages (See below.)
+
+Stage
+* type : Type of the stage. 1=HOLD, 2=QPCR, 3=MELT_CURVE, 4=PCR (without fluorescence measurement)
+* repeat : Number of cycles
+* steps : List of steps (See below.)
+
+Step
+* label : Name
+* duration : Hold duration (in secs)
+* temp : Well temperature (in Celsius)
+* data_collection : List of fluorescence data collection. 1=RAMP_CONTINUOUS, 2=HOLD_CONTINUOUS, 3=RAMP_END, 4=HOLD_END
