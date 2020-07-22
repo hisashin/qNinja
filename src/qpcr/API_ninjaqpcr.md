@@ -49,16 +49,16 @@ Tells current progress of the experiment every 0.5 second.
 }
 ```
 
-* well <float> : Temperature of the well block
-* lid <float> : Temperature of the heat lid
-* remaining <long int> : Estimated remaining time in milliseconds
-* elapsed <long int> : Elapsed time in milliseconds
-* state <object> : State of the experiment
-  * state <string> : Label of the state. (preheat/ramp/hold/complete)
-  * stage <int> (*) : Index of the stage. 
-  * repeat <int> (*) : Index of the cycle
-  * step <int> (*) : Index of the step
-  * stepElapsed (*) <int> : Elapsed time of the step in milliseconds
+* well (float) : Temperature of the well block
+* lid (float) : Temperature of the heat lid
+* remaining (long int) : Estimated remaining time in milliseconds
+* elapsed (long int) : Elapsed time in milliseconds
+* state (object) : State of the experiment
+  * state (string) : Label of the state. (preheat/ramp/hold/complete)
+  * stage (int) (*) : Index of the stage. 
+  * repeat (int) (*) : Index of the cycle
+  * step (int) (*) : Index of the step
+  * stepElapsed (long) (*) : Elapsed time of the step in milliseconds
   
 Fields with "(*)" are empty when the state is "preheat" or "compete".
 
@@ -75,8 +75,8 @@ Notifies state changes of the thermal cycler.
 }
 ```
 
-* from <object> : Previous state.
-* to <object> : Current state.
+* from (object) : Previous state.
+* to (object) : Current state.
 
 ### onError(error)
 
@@ -128,7 +128,7 @@ Tell result of fluorescence measurement.
 { type: 'measure' }
 ```
 
-* type <string> : Type of the event
+* type (string) : Type of the event
 
 Event types are
 
