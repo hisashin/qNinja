@@ -2,7 +2,7 @@
   <div class="log-cell-content">
     <div class="p-1">
       <div class="row">
-        <div class="col-12">{{summary.protocol_name}}</div>
+        <div class="col-12"><strong>{{summary.protocol_name}}</strong></div>
         <div class="col-6">{{start}}</div>
         <div class="col-6">{{duration}}</div>
       </div>

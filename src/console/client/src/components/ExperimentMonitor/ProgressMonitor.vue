@@ -58,16 +58,13 @@
         {{ progress.state.state }} 
         {{ stepElapsedSec }} sec
       </div>
-    </div>
-    <div>
-      <div>
+      <div class="col-12">
         <meter
           min="0"
           :max="progress.remaining+progress.elapsed"
           :value="progress.elapsed"
           style="width:100%" />
-      </div>
-      <div>
+        {{ progress.state.state }}
         Elapsed:{{ elapsedTime }} 
         Remaining:{{ remainingTime }} 
         Total: {{ totalTime }}
