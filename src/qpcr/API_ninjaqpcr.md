@@ -21,13 +21,17 @@ Set an object to receive events.
 ## Event handling
 
 You can get notified of events by setting a receiver object.
+
 ```
 qpcr.setEventReceiver(receiver)
 ```
+
 Functions below are defined. All of them are optional.
   
 ### onProgress(data)
+
 Tells current progress of the experiment every 0.5 second.
+
 ```
 { 
   well: 50,
@@ -44,6 +48,7 @@ Tells current progress of the experiment every 0.5 second.
   elapsed: 8045 
 }
 ```
+
 * well <float> : Temperature of the well block
 * lid <float> : Temperature of the heat lid
 * remaining <long int> : Estimated remaining time in milliseconds
@@ -58,7 +63,9 @@ Tells current progress of the experiment every 0.5 second.
 Fields with "(*)" are empty when the state is "preheat" or "compete".
 
 ### onThermalTransition(transition)
+
 Notifies state changes of the thermal cycler.
+
 ```
 { 
   from:
@@ -67,14 +74,18 @@ Notifies state changes of the thermal cycler.
    { state: 'ramp', stage: 1, step: 0, repeat: 0, stepElapsed: 0 } }
 }
 ```
+
 * from <object> : Previous state.
-* to <object> : Current state. The content is 
+* to <object> : Current state.
 
 ### onError(error)
+
 Notifies device errors.
   
 ### onStart(data)
+
 Notifies that the experiment started.
+
 ```
 { 
   id: '34aa55dc-e63d-4562-836d-6900dee11608',
@@ -83,8 +94,10 @@ Notifies that the experiment started.
 ```
   
 ### onComplete(data)
+
 Tell the end of the experiment. The well unit is still working to keep the final hold temperature.
 "Finish" command is needed to completely stop heat units and make the device ready again.
+
 ```
 { 
   id: '34aa55dc-e63d-4562-836d-6900dee11608',
@@ -95,7 +108,9 @@ Tell the end of the experiment. The well unit is still working to keep the final
 ### onDeviceStateChange(data)
   
 ### onFluorescenceDataUpdate(data)
+
 Tell result of fluorescence measurement.
+
 ```
 [ 0.10801242489714052,
   0.12294936026411177,
@@ -108,6 +123,7 @@ Tell result of fluorescence measurement.
 ```
   
 ### onFluorescenceEvent (data)
+
 ```
 { type: 'measure' }
 ```
