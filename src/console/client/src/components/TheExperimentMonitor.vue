@@ -25,9 +25,9 @@
 import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
 import ProtocolDetail from './ProtocolDetail.vue';
-import ProgressMonitor from './TheExperimentMonitor/ProgressMonitor.vue';
-import TemperatureMonitor from './TheExperimentMonitor/TemperatureMonitor.vue';
-import FluorescenceMonitor from './TheExperimentMonitor/FluorescenceMonitor.vue';
+import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
+import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
+import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
 export default {
   name: 'TheExperimentMonitor',
   components: {

@@ -1,5 +1,8 @@
 <template>
   <div class="device-monitor">
+    <b-button @click="popToast">
+      Toast Test
+    </b-button>
     <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     <div v-show="selectedPanel==panels.DASHBOARD">
       <h2>Recent protocols</h2>
@@ -113,6 +116,13 @@ export default {
       this.selectedProtocol = item.protocol;
       this.selectedProtocolId = item.id;
       
+    },
+    popToast () {
+      this.$bvToast.toast('This is a toast.', {
+        title: 'Example',
+        toaster: 'b-toaster-bottom-full'
+      })
+    
     }
   }
 }
