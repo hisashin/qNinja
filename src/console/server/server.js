@@ -285,7 +285,6 @@ class NinjaQPCRWebSocketServer {
       data:data
     };
     this._send(obj);
-    
   }
   onDeviceStateChange (state) {
     const obj = {

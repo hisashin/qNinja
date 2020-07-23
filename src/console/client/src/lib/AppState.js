@@ -207,6 +207,11 @@ class AppState {
   setPanelContainer (container) {
     this.panelContainer = container;
   }
+  toast (title, message) {
+    this.$bvToast.toast(message, {
+      title: title
+    })
+  }
   
   
 }

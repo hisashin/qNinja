@@ -25,11 +25,11 @@
 import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
 import ProtocolDetail from './ProtocolDetail.vue';
-import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
-import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
-import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
+import ProgressMonitor from './TheExperimentMonitor/ProgressMonitor.vue';
+import TemperatureMonitor from './TheExperimentMonitor/TemperatureMonitor.vue';
+import FluorescenceMonitor from './TheExperimentMonitor/FluorescenceMonitor.vue';
 export default {
-  name: 'ExperimentMonitor',
+  name: 'TheExperimentMonitor',
   components: {
     ProgressMonitor,
     FluorescenceMonitor,
@@ -45,7 +45,7 @@ export default {
     };
   },
   created: function () {
-    console.log("ExperimentMonitor.created");
+    console.log("TheExperimentMonitor.created");
     appState.addProtocolEventHandler(this);
   },
   methods: {

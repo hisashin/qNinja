@@ -33,18 +33,18 @@
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
       <BackButton />
-      <ProtocolEditor />
+      <TheProtocolEditor />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
       <BackButton />
-      <ExperimentMonitor />
+      <TheExperimentMonitor />
     </div>
   </div>
 </template>
 <script>
-import ExperimentMonitor from './ExperimentMonitor.vue'
+import TheExperimentMonitor from './TheExperimentMonitor.vue'
 import DeviceSummary from './DeviceSummary.vue'
-import ProtocolEditor from './ProtocolEditor.vue'
+import TheProtocolEditor from './TheProtocolEditor.vue'
 import ProtocolDetail from './ProtocolDetail.vue'
 import ProtocolList from './ProtocolList.vue'
 import LogList from './LogList.vue'
@@ -58,14 +58,14 @@ const DEVICE_STATUS_RUNNING = 2;
 const DEVICE_STATUS_FINISHED = 3;
 
 export default {
-  name: 'DeviceMonitor',
+  name: 'TheMain',
   components: {
     ProtocolList,
     LogList,
     LogDetail,
     DeviceSummary,
-    ExperimentMonitor,
-    ProtocolEditor,
+    TheExperimentMonitor,
+    TheProtocolEditor,
     ProtocolDetail,
     BackButton
   },

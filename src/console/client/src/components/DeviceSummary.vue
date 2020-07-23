@@ -28,7 +28,7 @@
 <script>
 import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
-import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
+import ProgressMonitor from './TheExperimentMonitor/ProgressMonitor.vue';
 export default {
   components: {
     ProgressMonitor

@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     run: function(id) {
-      console.log("DeviceMonitor.runProtocol");
+      console.log("TheMain.runProtocol");
       appState.runProtocol(this.pid);
     },
     revealDetail: function() {

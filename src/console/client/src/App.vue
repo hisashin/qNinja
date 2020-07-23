@@ -4,20 +4,20 @@
       <h1>Ninja qPCR</h1>
     </header>
     <main class="main">
-      <DeviceMonitor />
+      <TheMain />
     </main>
   </div>
 </template>
 
 <script>
-import DeviceMonitor from './components/DeviceMonitor.vue'
+import TheMain from './components/TheMain.vue'
 import appState from "./lib/AppState.js";
 import device from "./lib/Device.js";
 
 export default {
   name: 'App',
   components: {
-    DeviceMonitor
+    TheMain
   },
   created: function () {
     appState.init();

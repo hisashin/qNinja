@@ -329,7 +329,7 @@ const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR,
   {label:"extend", temp:72, duration:18, data_collection:[]} ] };
   
 export default {
-  name: 'ProtocolEditor',
+  name: 'TheProtocolEditor',
   components:{},
   data() {
     return {
@@ -346,7 +346,7 @@ export default {
     }
   },
   created: function () {
-    console.log("ExperimentMonitor.created");
+    console.log("TheExperimentMonitor.created");
     appState.addProtocolEventHandler(this);
   },
   methods: {
