@@ -9,7 +9,8 @@
         <b-tab
           title="Temperature"
           active>
-          <p><TemperatureMonitor /></p>
+          <b-button @click="refTest">RefTest</b-button>
+          <p><TemperatureMonitor ref="temperatureMonitor" /></p>
         </b-tab>
         <b-tab
           title="Protocol">
@@ -28,6 +29,9 @@ import ProtocolDetail from './ProtocolDetail.vue';
 import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
 import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
 import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
+
+let startTime = new Date();
+
 export default {
   name: 'TheExperimentMonitor',
   components: {
@@ -47,6 +51,18 @@ export default {
   created: function () {
     console.log("TheExperimentMonitor.created");
     appState.addProtocolEventHandler(this);
+  
+    device.addTransitionHandler({
+      onStart: (obj)=>{
+        startTime = new Date();
+      }
+    });
+    device.addProgressHandler({
+      onProgress:(obj)=>{
+        let timestamp = new Date().getTime() - startTime.getTime();
+        this.$refs.temperatureMonitor.add(timestamp, obj.well, obj.lid);
+      }
+    });
   },
   methods: {
     onSelectProtocol: function (item) {

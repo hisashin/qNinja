@@ -5,7 +5,7 @@
     <div>baseline={{ baselineExists }}</div>
     <div style="width:400px,height:200px">
       <canvas
-        id="chartFluorescence"
+        ref="canvas"
         width="400"
         height="200"
         style="width:400px,height:200px"
@@ -62,7 +62,7 @@ export default {
     device.addFluorescenceUpdateHandler(this);
     device.addBaselineHandler(this);
     
-    graph = new Graph('chartFluorescence');
+    graph = new Graph(this.$refs.canvas);
     let labels = [];
     for (let i=0; i<TUBE_COUNT; i++) {
       labels.push("Well " + (i+1));

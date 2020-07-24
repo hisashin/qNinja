@@ -24,8 +24,8 @@ const createDataset = (channelIndex, name, showLine)=>{
 };
 
 class Graph {
-  constructor (container) {
-    const ctx = document.getElementById(container).getContext('2d');
+  constructor (canvas) {
+    const ctx = canvas.getContext('2d');
     this.conversionFunction = null;
     this.hLines = [];
     const emptyData = {
