@@ -4,13 +4,17 @@
     <div class="card p-3">
       <b-tabs content-class="mt-3">
         <b-tab title="Fluorescence">
-          <p><FluorescenceMonitor /></p>
+          <div>one-shot={{ oneShot }}</div>
+          <div>continuous={{ continuous }}</div>
+          <div>baseline={{ baselineExists }}</div>
+          <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
         </b-tab>
         <b-tab
           title="Temperature"
           active>
-          <b-button @click="refTest">RefTest</b-button>
-          <p><TemperatureMonitor ref="temperatureMonitor" /></p>
+          <p>
+            <TemperatureMonitor ref="temperatureMonitor" />
+          </p>
         </b-tab>
         <b-tab
           title="Protocol">
@@ -45,7 +49,10 @@ export default {
   data() {
     return {
       protocol:null,
-      id:null
+      id:null,
+      oneShot:false,
+      continuous:false,
+      baselineExists:false
     };
   },
   created: function () {
@@ -63,11 +70,39 @@ export default {
         this.$refs.temperatureMonitor.add(timestamp, obj.well, obj.lid);
       }
     });
+    device.addFluorescenceUpdateHandler(this);
+    device.addBaselineHandler(this);
   },
   methods: {
     onSelectProtocol: function (item) {
       this.protocol = item.protocol;
       this.id = item.id;
+    },
+    onBaselineUpdate: function (data) {
+      this.$refs.fluorescenceMonitor.setBaseline(data);
+    },
+    onFluorescenceUpdate: function (data) {
+      let timestamp = new Date().getTime() - startTime.getTime();
+      this.$refs.fluorescenceMonitor.add(timestamp, data);
+    },
+    onFluorescenceEvent (data) {
+      switch (data.type) {
+        case "start":
+        this.continuous = true;
+        break;
+        case "stop": 
+        this.continuous = false;
+        break;
+        case "measure": 
+        this.oneShot = true;
+        setTimeout(()=>{this.oneShot = false}, 1000);
+        break;
+        case "baseline": 
+        this.baselineExists = true;
+        break;
+        default:
+        break;
+      }
     }
   }
 }

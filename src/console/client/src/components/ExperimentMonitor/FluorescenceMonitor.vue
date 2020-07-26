@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div>one-shot={{ oneShot }}</div>
-    <div>continuous={{ continuous }}</div>
-    <div>baseline={{ baselineExists }}</div>
     <div style="width:400px,height:200px">
       <canvas
         ref="canvas"
@@ -33,9 +30,6 @@ let startTime = new Date();
 export default {
   data() {
     return {
-      oneShot:false,
-      continuous:false,
-      baselineExists:false,
       baseline:[],
       channels:[]
     }
@@ -59,39 +53,39 @@ export default {
     });
   },
   mounted: function () {
-    device.addFluorescenceUpdateHandler(this);
-    device.addBaselineHandler(this);
     
-    graph = new Graph(this.$refs.canvas);
+    this.graph = new Graph(this.$refs.canvas);
     let labels = [];
     for (let i=0; i<TUBE_COUNT; i++) {
       labels.push("Well " + (i+1));
     }
-    graph.addSeries(labels);
-    graph.setConversionFunction(
+    this.graph.addSeries(labels);
+    this.graph.setConversionFunction(
       (obj) =>{return { "x":obj.t/1000.0, "y":obj.v }}
     );
     this.baseline = device.getBaseline();
     this.applyBaseline();
-    graph.setMinMaxY(0, 1);
+    this.graph.setMinMaxY(0, 1);
   },
   methods: {
-    applyBaseline () {
+    applyBaseline: function () {
       if (this.hasBaseline()) {
-        graph.setHLines(this.baseline.thresholds);
+        this.graph.setHLines(this.baseline.thresholds);
       }
     },
-    hasBaseline () {
+    hasBaseline: function () {
       return this.baseline != null && this.baseline.thresholds != null;
     },
-    onBaselineUpdate: function (data) {
+    setBaseline: function (data) {
       this.baseline = data;
       this.applyBaseline();
     },
-    onFluorescenceUpdate: function (data) {
-      let timestamp = new Date().getTime() - startTime.getTime();
+    set: function () {
+      // TODO add all data (to display experiment log)
+    },
+    add: function (timestamp, data) {
       for (let i=0; i<TUBE_COUNT; i++) {
-        graph.addData(i, {t:timestamp, v:data[i]});
+        this.graph.addData(i, {t:timestamp, v:data[i]});
         this.channels[i].fluorescence = data[i];
       }
       if (this.hasBaseline()) {
@@ -100,27 +94,9 @@ export default {
         }
       }
       const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
-      graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
-      graph.update();
-    },
-    onFluorescenceEvent (data) {
-      switch (data.type) {
-        case "start":
-        this.continuous = true;
-        break;
-        case "stop": 
-        this.continuous = false;
-        break;
-        case "measure": 
-        this.oneShot = true;
-        setTimeout(()=>{this.oneShot = false}, 1000);
-        break;
-        case "baseline": 
-        this.baselineExists = true;
-        break;
-        default:
-        break;
-      }
+      this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
+      this.graph.update();
+    
     }
   }
 }

@@ -36,7 +36,7 @@ export default {
       const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
       this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
       this.graph.update();
-    }
+    },
     set: function () {
       // TODO add all data (to display experiment log)
     }
