@@ -8,38 +8,23 @@
         {{log.id}}
       </div>
     </div>
-    <ProtocolDetail
-      :id="log.protocol_id"
-      :protocol="log.protocol" />
-    <div class="card">
-      <b-tabs content-class="mt-3">
-        <b-tab title="Fluorescence">
-          <p>TODO Graph Here</p>
-          <p></p>
-        </b-tab>
-        <b-tab
-          title="Temperature"
-          active>
-          <p>TODO Graph Here</p>
-        </b-tab>
-        <b-tab
-          title="Standard Curve">
-          <p>TODO Graph Here</p>
-        </b-tab>
-      </b-tabs>
-    </div>
+    <h2>(TODO) Experiment Summary</h2>
+    <h2>(TODO) Protocol Detail</h2>
+    <h2>(TODO) Tube Config</h2>
+    <h2>(TODO) Temperature Chart</h2>
+    <h2>(TODO) qPCR Fluorescence Chart</h2>
+    <h2>(TODO) Melt Curve Chart</h2>
+    <h2>(TODO) Standard Curve</h2>
   </div>
 </template>
 
 <script>
 import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
-import ProtocolDetail from './ProtocolDetail.vue'
 
 export default {
   name: 'LogDetail',
   components:{
-    ProtocolDetail
   },
   data() {
     return {
@@ -47,15 +32,9 @@ export default {
     }
   },
   created: function () {
-    appState.addLogEventHandler(this);
     this.log = appState.getSelectedLog();
   },
   methods: {
-    onSelectLog: function (log) {
-      console.log("LogDetail.onSelectLog");
-      this.log = log;
-      console.log(log)
-    }
   }
 }
 </script>

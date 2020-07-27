@@ -346,8 +346,6 @@ export default {
     }
   },
   created: function () {
-    console.log("TheExperimentMonitor.created");
-    appState.addProtocolEventHandler(this);
   },
   methods: {
     confirmDelete: function (index) {
@@ -391,17 +389,15 @@ export default {
         console.log("(Toast)");
       });
     },
-    onSelectProtocol: function (item) {
-      this.protocol = item.protocol;
+    setProtocol: function (protocol) {
       if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
         this.final_hold_temp = '' + this.protocol.final_hold_temp;
       } else {
         this.final_hold_temp = '';
       }
-      this.id = item.id;
+      this.id = protocol.id;
     },
     openAddStageModal (before) {
-      console.log("openAddStageModal(%d)", before);
       this.$bvModal.show('add-stage-modal')
       this.addStagePosition = before;
     }

@@ -37,7 +37,7 @@ class ExperimentCtrl {
         }
       ]
     };
-    qpcr.start(protocol);
+    qpcr.start(protocol, {});
   }
   /* Callback functions */
   onThermalTransition (data) {

@@ -231,8 +231,8 @@ class NinjaQPCRWebSocketServer {
         break;
     }
   }
-  start () {
-    qpcr.start(this.protocol);
+  start (experimentConf) {
+    qpcr.start(this.protocol, experimentConf);
     this.isRunning = true;
   }
   pause () {

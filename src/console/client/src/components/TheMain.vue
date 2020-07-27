@@ -22,9 +22,8 @@
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
       <BackButton />
-      <ProtocolDetail 
-        :id="selectedProtocolId"
-        :protocol="selectedProtocol"/>
+      <ProtocolDetail
+        ref="protocolDetail" />
     </div>
     <div v-show="selectedPanel==panels.LOG_LIST">
       <BackButton />
@@ -32,15 +31,19 @@
     </div>
     <div v-show="selectedPanel==panels.LOG_DETAIL">
       <BackButton />
-      <LogDetail />
+      <LogDetail ref="logDetail" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
       <BackButton />
-      <TheProtocolEditor />
+      <TheProtocolEditor ref="protocolEditor" />
+    </div>
+    <div v-show="selectedPanel==panels.EXPERIMENT_EDITOR">
+      <BackButton />hogehoge
+      <TheExperimentEditor ref="experimentEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
       <BackButton />
-      <TheExperimentMonitor />
+      <TheExperimentMonitor ref="experimentMonitor" />
     </div>
   </div>
 </template>
@@ -48,6 +51,7 @@
 import TheExperimentMonitor from './TheExperimentMonitor.vue'
 import DeviceSummary from './DeviceSummary.vue'
 import TheProtocolEditor from './TheProtocolEditor.vue'
+import TheExperimentEditor from './TheExperimentEditor.vue'
 import ProtocolDetail from './ProtocolDetail.vue'
 import ProtocolList from './ProtocolList.vue'
 import LogList from './LogList.vue'
@@ -68,6 +72,7 @@ export default {
     LogDetail,
     DeviceSummary,
     TheExperimentMonitor,
+    TheExperimentEditor,
     TheProtocolEditor,
     ProtocolDetail,
     BackButton
@@ -77,9 +82,7 @@ export default {
       isIdle:true,
       status:DEVICE_STATUS_IDLE,
       panels:appState.PANELS,
-      selectedPanel:appState.PANELS.DASHBOARD,
-      selectedProtocolId:"",
-      selectedProtocol:null
+      selectedPanel:appState.PANELS.DASHBOARD
     }
   },
   created: function () {
@@ -101,6 +104,8 @@ export default {
         console.log(obj);
       }
     });
+    appState.views = this.$refs;
+    
   },
   methods: {
     presentPanel(panel) {
@@ -111,11 +116,6 @@ export default {
     },
     viewLogList () {
       appState.pushPanel(this.panels.LOG_LIST);
-    },
-    onSelectProtocol (item) {
-      this.selectedProtocol = item.protocol;
-      this.selectedProtocolId = item.id;
-      
     },
     popToast () {
       this.$bvToast.toast('This is a toast.', {

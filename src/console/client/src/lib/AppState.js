@@ -7,7 +7,6 @@ class AppState {
     this.protocols = [];
     this.logSummaries = [];
     this.selectedProtocol = null;
-    this.selectedLog = null;
     
     /* Event handlers */
     this.protocolEventHandlers = [];
@@ -20,9 +19,17 @@ class AppState {
       PROTOCOL_LIST:2,
       PROTOCOL_DETAIL:3,
       PROTOCOL_EDITOR:4,
-      LOG_LIST:5,
-      LOG_DETAIL:6,
-      EXPERIMENT_MONITOR:7
+      EXPERIMENT_EDITOR:5,
+      LOG_LIST:6,
+      LOG_DETAIL:7,
+      EXPERIMENT_MONITOR:8
+    };
+    this.views = {
+      protocolDetail: null,
+      protocolEditor: null,
+      logDetail: null,
+      experimentEditor: null,
+      experimentMonitor: null
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
@@ -69,23 +76,29 @@ class AppState {
       this.panelContainer.presentPanel(this.panelStack[this.panelStack.length-1]);
     }
   }
-  runProtocol (id) {
-    console.log("AppState.runProtocol");
-    this._selectProtocol(id, (protocol)=>{
-      device.registerProtocol(protocol.protocol);
-      device.start();
-      this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
+  prepareExperiment (id) {
+    console.log("AppState.prepareExperiment");
+    this._loadProtocol(id, (data)=>{
+      this.views.experimentEditor.setProtocol(data.protocol);
+      this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
+  }
+  run (protocol, config) {
+    device.registerProtocol(protocol);
+    device.start(config);
+    this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
   }
   editProtocol (id) {
     console.log("AppState.editProtocol");
-    this._selectProtocol(id, (protocol)=>{
+    this._loadProtocol(id, (data)=>{
+      this.views.protocolEditor.setProtocol(data.protocol);
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
   revealDetailProtocol (id) {
-    console.log("AppState.revealDetailProtocol");
-    this._selectProtocol(id, (protocol)=>{
+    console.log("AppState.revealDetailProtocol id=%s", id);
+    this._loadProtocol(id, (item)=>{
+      this.views.protocolDetail.setProtocol(item.protocol);
       this.pushPanel(this.PANELS.PROTOCOL_DETAIL);
     });
   }
@@ -141,27 +154,19 @@ class AppState {
   
   revealDetailLog (id) {
     console.log("AppState.revealDetailLog.");
-    this._selectLog(id, ()=>{
+    this._loadLog(id, (log)=>{
       this.pushPanel(this.PANELS.LOG_DETAIL);
+      this.views.logDetail.log = log;
     });
   }
   
-  getSelectedLog() {
-    this.selectedLog;
-  }
-  _selectLog (id, callback) {
+  _loadLog (id, callback) {
     console.log("AppState.selectLog id=%s", id);
     Util.requestData("logs/" + id, null, "GET", 
       (data)=>{
         this.selectedLog = data;
         console.log("AppState.selectLog id=%s data received.", id);
-        console.log("AppState.selectLog calling %d handlers", this.logEventHandlers.length);
-        this.logEventHandlers.forEach((handler)=>{
-          if (handler.onSelectLog) {
-            handler.onSelectLog(data);
-          }
-        });
-        callback();
+        callback(data);
       }, (error)=>{
         console.log(error);
       }
@@ -169,23 +174,17 @@ class AppState {
     
   }
   
-  // Get protocol from server
-  _selectProtocol (id, callback) {
+  // Select protocol for running
+  _loadProtocol (id, callback) {
     Util.requestData("protocols/" + id, null, "GET", 
       (data)=>{
-        this.selectedProtocol = data;
-        console.log("AppState._selectProtocol selected. calling %d handlers.", this.protocolEventHandlers.length);
-        this.protocolEventHandlers.forEach((handler)=>{
-          if (handler.onSelectProtocol) {
-            handler.onSelectProtocol(this.selectedProtocol);
-          }
-        });
         callback(this.selectedProtocol);
       }, (error)=>{
         console.log(error);
       }
     );
   }
+  
   saveProtocol (obj, onSave) {
     console.log("AppState.saveProtocol");
     const path = "protocols/" + obj.id + "/update";
@@ -197,6 +196,7 @@ class AppState {
     }, ()=>{
     });
   }
+  
   /* Event handler registration */
   addProtocolEventHandler (handler) {
     this.protocolEventHandlers.push(handler);

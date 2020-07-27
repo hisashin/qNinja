@@ -1,5 +1,5 @@
 <template>
-  <div class="log-cell-content">
+  <div class="log-cell-content" @click="revealDetail">
     <div class="p-1">
       <div class="row">
         <div class="col-12"><strong>{{summary.protocol_name}}</strong></div>
@@ -28,6 +28,12 @@ export default {
     },
     duration: function() {
       return Util.humanTime((this.summary.end-this.summary.start)/1000);
+    }
+  },
+  methods: {
+    revealDetail: function () {
+      console.log(this.summary.id);
+      appState.revealDetailLog(this.summary.id);
     }
   }
 }

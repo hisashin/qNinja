@@ -99,9 +99,12 @@ class Device {
   }
   
   /* Experiment Control */
-  start () {
+  start (experimentConf) {
     const obj = {
-      "category":"experiment.start"
+      "category":"experiment.start",
+      "data": {
+        "experimentConf": experimentConf
+      }
     };
     this.ws.send(JSON.stringify(obj));
   }

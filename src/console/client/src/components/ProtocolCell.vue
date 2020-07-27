@@ -50,11 +50,9 @@ export default {
   },
   methods: {
     run: function(id) {
-      console.log("TheMain.runProtocol");
-      appState.runProtocol(this.pid);
+      appState.prepareExperiment(this.pid);
     },
     revealDetail: function() {
-      console.log("ProtocolCell.revealDetail");
       appState.revealDetailProtocol(this.pid);
     },
     edit: function() {

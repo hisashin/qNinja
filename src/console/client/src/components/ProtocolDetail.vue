@@ -139,25 +139,23 @@ export default {
   components:{},
   data() {
     return {
+      id:"",
+      protocol:{}
     }
   },
   props: {
-    id: { type:String },
-    protocol: { type:Object },
   },
   created: function () {
-    console.log("ProtocolDetail.created");
-    // appState.addProtocolEventHandler(this);
   },
   methods: {
     back: function () {
       appState.backPanel();
-    } /*,
-    onSelectProtocol: function (item) {
-      this.protocol = item.protocol;
-      this.id = item.id;
+    },
+    setProtocol: function (protocol) {
+      console.log("setProtocol");
+      console.log(protocol)
+      this.protocol = protocol;
     }
-    */
   }
 }
 </script>
