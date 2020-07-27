@@ -25,7 +25,7 @@ const Util = {
   requestData (path, data, method, onSuccess, onError) {
     const xmlhttp = new XMLHttpRequest();
     const url = API_ENDPOINT + path;
-    console.log("AppState._requestData Requesting %s", url);
+    console.log("AppState._requestData %s %s", method, url);
     xmlhttp.onreadystatechange = ()=>{
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         console.log("AppState._requestData Success %s", url);

@@ -91,7 +91,7 @@ class AppState {
   editProtocol (id) {
     console.log("AppState.editProtocol");
     this._loadProtocol(id, (data)=>{
-      this.views.protocolEditor.setProtocol(data.protocol);
+      this.views.protocolEditor.setProtocol(data);
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
@@ -115,7 +115,6 @@ class AppState {
   sortProtocols () {
     console.log("AppState.sortProtocols");
   }
-  
   
   reloadProtocols () {
     console.log("AppState.reloadProtocols");
@@ -178,7 +177,7 @@ class AppState {
   _loadProtocol (id, callback) {
     Util.requestData("protocols/" + id, null, "GET", 
       (data)=>{
-        callback(this.selectedProtocol);
+        callback(data);
       }, (error)=>{
         console.log(error);
       }
@@ -187,8 +186,8 @@ class AppState {
   
   saveProtocol (obj, onSave) {
     console.log("AppState.saveProtocol");
-    const path = "protocols/" + obj.id + "/update";
-    Util.requestData(path, obj, "POST", ()=>{
+    const path = "protocols/" + obj.id;
+    Util.requestData(path, obj, "PUT", ()=>{
       if (onSave) {
         onSave();
       }

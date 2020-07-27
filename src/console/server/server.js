@@ -7,8 +7,10 @@ const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const LogManager = require(QPCR_PATH + "log_manager");
+
 const pm = new ProtocolManager();
 const lm = new LogManager();
+
 const Router = require("./router");
 
 const http = require('http');
@@ -24,23 +26,37 @@ class NinjaQPCRHTTPServer {
     const router = new Router();
     this.router = router;
     
-    router.addPath("/", this.root());
-    router.addPath("/protocols", this.protocols());
-    router.addPath("/protocols/{pid}", this.protocolGet());
-    router.addPath("/protocols/{pid}/update", this.protocolUpdate());
-    router.addPath("/logs", this.logs());
-    router.addPath("/logs/latest", this.logLatest());
-    router.addPath("/logs/{lid}", this.logGet());
-    router.addPath("/device", this.device());
-    router.addPath("/device/protocol", this.deviceProtocol());
-    router.addPath("/device/progress", this.deviceProgress());
-    router.addPath("/device/baseline", this.deviceBaseline());
+    router.addPath("/", "GET", this.root());
+    router.addPath("/protocols", "GET", this.protocols());
+    router.addPath("/protocols/{pid}", "GET", this.protocolGet());
+    router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
+    router.addPath("/protocols/{pid}", "POST", this.protocolUpdate());
+    router.addPath("/logs", "GET", this.logs());
+    router.addPath("/logs/latest", "GET", this.logLatest());
+    router.addPath("/logs/{lid}", "GET", this.logGet());
+    
+    // TODO: Reconsinder paths.
+    router.addPath("/device", "GET", this.device());
+    router.addPath("/device/protocol", "GET", this.deviceProtocol());
+    router.addPath("/device/progress", "GET", this.deviceProgress());
+    router.addPath("/device/baseline", "GET", this.deviceBaseline());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
       // CORS
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      router.route(req, res);
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      if (req.method == "OPTIONS") {
+        // Handle preflight request.
+        res.end();
+        return;
+      }
+      try {
+        router.route(req, res);
+      } catch (ex) {
+        console.error(ex);
+      }
     });
   }
   root () {

@@ -92,7 +92,6 @@ class ProtocolManager {
   }
   
   getProtocol (id, callback, onError) {
-    console.log("getProtocol %s", id)
     this._getProtocol (id, callback, onError);
   }
   

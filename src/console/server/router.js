@@ -4,10 +4,11 @@ var URL = require('url');
 const PARTS_FIXED = 1;
 const PARTS_PARAM = 2;
 class Path {
-  constructor (str, handler) {
+  constructor (str, method, handler) {
     const tokens = str.split("/");
     this.expression = str;
     this.handler = handler;
+    this.method = method;
     this.parts = tokens.map((token)=>{
       if (token.match(/\{(.+)\}/g)) {
         return {type:PARTS_PARAM, str:RegExp.$1};
@@ -16,7 +17,11 @@ class Path {
       }
     });
   }
-  matches (url) {
+  matches (url, method) {
+    console.log("Method %s<=>%s", this.method, method);
+    if (this.method != method) {
+      return null;
+    }
     const urlParts = url.split("/");
     if (urlParts.length != this.parts.length) {
       return null;
@@ -46,16 +51,17 @@ class Router {
   constructor () {
     this.paths = [];
   }
-  addPath (expression, handler) {
-    this.paths.push(new Path(expression, handler));
+  addPath (expression, method, handler) {
+    this.paths.push(new Path(expression, method, handler));
   }
   add404 (handler) {
     this.handler404 = handler;
   }
   route (req, res) {
+    // console.log(req);
     const url = URL.parse(req.url).pathname;
     for (let i=0; i<this.paths.length; i++) {
-      let match = this.paths[i].matches(url);
+      let match = this.paths[i].matches(url, req.method);
       if (match != null) {
         return this.paths[i].handler(req, res, match);
       }
@@ -77,9 +83,9 @@ class Router {
 
 Router.test = ()=>{
   const router = new Router();
-  router.addPath("/protocols", (req, res, map)=>{ console.log("List protocols") });
-  router.addPath("/protocols/{pid}", (req, res, map)=>{ console.log("Get protocol:%s", map.pid) });
-  router.addPath("/protocols/{pid}/run", (req, res, map)=>{ console.log("Run protocol:%s", map.pid) });
+  router.addPath("/protocols", "GET", (req, res, map)=>{ console.log("List protocols") });
+  router.addPath("/protocols/{pid}", "GET", (req, res, map)=>{ console.log("Get protocol:%s", map.pid) });
+  router.addPath("/protocols/{pid}/run", "GET", (req, res, map)=>{ console.log("Run protocol:%s", map.pid) });
   router.add404((req, res)=>{ console.log("404 not found"); })
   
   let res = [];
@@ -91,7 +97,7 @@ Router.test = ()=>{
   ];
 
   tests.forEach((url)=>{
-    router.route({url:url}, res, url);
+    router.route({url:url, method:"GET"}, res, url);
   });
 }
 // Router.test();

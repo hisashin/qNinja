@@ -390,6 +390,7 @@ export default {
       });
     },
     setProtocol: function (protocol) {
+      this.protocol = protocol.protocol;
       if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
         this.final_hold_temp = '' + this.protocol.final_hold_temp;
       } else {
