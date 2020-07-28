@@ -163,7 +163,7 @@ class Device {
   }
   _fetchBaseline () {
     // onSuccess, onError
-    Util.requestData("device/baseline", null, "GET", 
+    Util.requestData("device/experiment/baseline", null, "GET", 
       (data)=>{
         console.log("Device._fetchBaseline callback");
         console.log(data);

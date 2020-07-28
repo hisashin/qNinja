@@ -42,10 +42,10 @@ class AppState {
         console.log("AppState.init received device state");
         console.log(data);
         if (data.hasExperiment) {
-          console.log("AppState.init Getting protocol");
-          Util.requestData("device/protocol", null, "GET", 
-            (protocol)=>{
-              device.setProtocol(protocol);
+          console.log("AppState.init Getting experiment data");
+          Util.requestData("device/experiment", null, "GET", 
+            (data)=>{
+              device.setProtocol(data.protocol);
             }, 
             ()=>{});
         }

@@ -16,16 +16,22 @@ Exceptionally, paths beginning with "/device" return information about ongoing e
 ### REST API:
 
 
-* /protocols : Get list of protocols
-* /protocols/{protocol_id} : Get single protocol
-* /protocols/{protocol_id}/update : Update protocol
+* /protocols : 
+  * GET: Get list of protocols
+  * POST: Add new protocol
+* /protocols/{protocol_id} : 
+  * GET: Get single protocol
+  * PUT: Update single protocol
+  * DELETE: Delete single protocol
 * /logs : Get list of experiment logs
 * /logs/latest : Get latest log
 * /logs/{log_id} : Get single log
 * /device : Get device status
-* /device/protocol : Get current protocol (Empty if the device is idle)
-* /device/progress : Get progress of current protocol
-* /device/baseline" : Get fluorescence baseline & threshold values
+* /device/experiment : Get current experiment
+* /device/experiment/protocol : Get current protocol (Empty if the device is idle)
+* /device/experiment/config : Get current protocol (Empty if the device is idle)
+* /device/experiment/progress : Get progress of current protocol
+* /device/experiment/baseline" : Get fluorescence baseline & threshold values
 
 ### WebSocket API:
 

@@ -30,16 +30,17 @@ class NinjaQPCRHTTPServer {
     router.addPath("/protocols", "GET", this.protocols());
     router.addPath("/protocols/{pid}", "GET", this.protocolGet());
     router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
-    router.addPath("/protocols/{pid}", "POST", this.protocolUpdate());
+    router.addPath("/protocols/{pid}", "DELETE", this.protocolDelete());
     router.addPath("/logs", "GET", this.logs());
     router.addPath("/logs/latest", "GET", this.logLatest());
     router.addPath("/logs/{lid}", "GET", this.logGet());
     
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
-    router.addPath("/device/protocol", "GET", this.deviceProtocol());
-    router.addPath("/device/progress", "GET", this.deviceProgress());
-    router.addPath("/device/baseline", "GET", this.deviceBaseline());
+    router.addPath("/device/experiment", "GET", this.deviceExperiment());
+    router.addPath("/device/experiment/protocol", "GET", this.deviceProtocol());
+    router.addPath("/device/experiment/progress", "GET", this.deviceProgress());
+    router.addPath("/device/experiment/baseline", "GET", this.deviceBaseline());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
@@ -72,6 +73,18 @@ class NinjaQPCRHTTPServer {
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
       const obj = qpcr.getDeviceState();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  deviceExperiment () {
+    return (req, res, map)=>{
+      // Device state and experiment status
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = {
+        protocol: qpcr.getProtocol(),
+        conf: qpcr.getExperimentConf()
+      };
       res.write(JSON.stringify(obj));
       res.end();
     };
@@ -124,6 +137,18 @@ class NinjaQPCRHTTPServer {
         }
       });
     }
+  }
+  
+  // TODO
+  protocolDelete () {
+    return (req, res, map)=>{
+      console.log("TODO protocolDelete");
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      const obj = {};
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+    
   }
   
   logs () {

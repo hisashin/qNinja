@@ -18,7 +18,6 @@ class Path {
     });
   }
   matches (url, method) {
-    console.log("Method %s<=>%s", this.method, method);
     if (this.method != method) {
       return null;
     }

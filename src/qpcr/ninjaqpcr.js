@@ -140,6 +140,9 @@ class NinjaQPCR {
   getProtocol () {
     return this.protocol || {};
   }
+  getExperimentConf () {
+    return this.experimentConf || {};
+  }
   getDeviceState () {
     return this.deviceState;
   }
