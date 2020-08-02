@@ -360,6 +360,7 @@ class NinjaQPCRServer {
     this.server.listen(WEBSOCKET_PORT);
     this.httpServer = new NinjaQPCRHTTPServer(this.server);
     this.webSocketSErver = new NinjaQPCRWebSocketServer(this.server);
+    console.log("Ninja qPCR server started.");
     
   }
 }
