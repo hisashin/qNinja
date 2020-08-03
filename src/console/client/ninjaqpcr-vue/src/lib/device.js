@@ -156,7 +156,7 @@ class Device {
   }
   
   getBaseline () {
-    return this.baseline();
+    return this.baseline;
   }
   _fetchBaseline () {
     // onSuccess, onError

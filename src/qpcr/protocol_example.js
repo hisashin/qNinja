@@ -1,7 +1,6 @@
 "use strict";
-const STAGE_TYPE_HOLD = 1;
-const STAGE_TYPE_PCR = 2;
-const STAGE_TYPE_MELT_CURVE = 3;
+
+const Consts = require("./constants");
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
@@ -10,16 +9,16 @@ const MEASUREMENT_HOLD_END = 4;
 
 /* Initial extension */
 const example_hold_stage = {
-  type: STAGE_TYPE_HOLD,
+  type: Constants.StageType.HOLD,
   repeat: 1,
   steps: [
     { label:"initial", temp:94.0, duration:15.0, data_collection:[] }
   ]
 };
 
-/* PCR */
+/* qPCR */
 const example_pcr_stage = {
-  type: STAGE_TYPE_PCR,
+  type: Constants.StageType.QPCR,
   repeat: 35,
   steps: [
     { label:"denature", temp:94.0, duration:15.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
@@ -29,7 +28,7 @@ const example_pcr_stage = {
 };
 
 const example_melt_curve_stage = {
-  type: STAGE_TYPE_MELT_CURVE,
+  type: Constants.StageType.MELT_CURVE,
   repeat: 1,
   steps: [
     { label:"denature", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[] },

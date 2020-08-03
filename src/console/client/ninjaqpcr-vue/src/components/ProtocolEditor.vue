@@ -24,7 +24,15 @@
           class="mr-1"
           @click="addPCR()"
         >
-          + PCR
+          + Normal PCR (Without fluorescence)
+        </b-button>
+        <b-button
+          variant="primary"
+          block
+          class="mr-1"
+          @click="addQPCR()"
+        >
+          + qPCR
         </b-button>
         <b-button
           variant="primary"
@@ -107,9 +115,14 @@
                   </li>
                 </ul>
               </template>
-              <template v-if="stage.type==2">
+              <template v-if="stage.type==2 || stage.type==4">
                 <h3 class="protocol-stage-label">
-                  PCR Stage
+                  <span v-if="stage.type==2">
+                    qPCR Stage
+                  </span>
+                  <span v-if="stage.type==4">
+                    Normal PCR Stage
+                  </span>
                   <b-button
                     size="sm"
                     variant="outline-danger"
@@ -283,34 +296,37 @@
 <script>
 import network from "../lib/Device.js";
 import appState from "../lib/AppState.js";
-
-const STAGE_TYPE_HOLD = 1;
-const STAGE_TYPE_PCR = 2;
-const STAGE_TYPE_MELT_CURVE = 3;
+import Constants from "../lib/constants.js";
 
 let LABEL_MAP = {};
-LABEL_MAP[STAGE_TYPE_HOLD] = "Hold";
-LABEL_MAP[STAGE_TYPE_PCR] = "PCR";
-LABEL_MAP[STAGE_TYPE_MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.HOLD] = "Hold";
+LABEL_MAP[Constants.StageType.QPCR] = "qPCR";
+LABEL_MAP[Constants.StageType.MELT_CURVE] = "Melt Curve";
+LABEL_MAP[Constants.StageType.PCR] = "Normal PCR";
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
 
-const DEFAULT_STAGE_HOLD = { type: STAGE_TYPE_HOLD, 
+const DEFAULT_STAGE_HOLD = { type: Constants.StageType.HOLD, 
   repeat:1, 
   steps:[ {label:"hold", temp:94, duration:15, data_collection:[]} ] };
-const DEFAULT_STAGE_PCR = { type: STAGE_TYPE_PCR, 
+const DEFAULT_STAGE_QPCR = { type: Constants.StageType.QPCR, 
   repeat:30, 
   steps:[ {label:"denature", temp:94, duration:15, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
   {label:"anneal", temp:55, duration:12, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
   {label:"extend", temp:72, duration:18, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]} ] };
-const DEFAULT_STAGE_MELT_CURVE = { type: STAGE_TYPE_MELT_CURVE, 
+const DEFAULT_STAGE_MELT_CURVE = { type: Constants.StageType.MELT_CURVE, 
   repeat:1, 
   steps:[ {label:"denature", temp:94, duration:10, speed:4, data_collection:[]}, 
   {label:"cool", temp:55, duration:5, speed:4, data_collection:[]}, 
   {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
+const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR, 
+  repeat:30, 
+  steps:[ {label:"denature", temp:94, duration:15, data_collection:[]}, 
+  {label:"anneal", temp:55, duration:12, data_collection:[]}, 
+  {label:"extend", temp:72, duration:18, data_collection:[]} ] };
   
 export default {
   name: 'ProtocolEditor',
@@ -349,6 +365,11 @@ export default {
     addPCR: function () {
       console.log("addPCR");
       this.addStage(DEFAULT_STAGE_PCR);
+      this.$bvModal.hide('add-stage-modal');
+    },
+    addQPCR: function () {
+      console.log("addPCR");
+      this.addStage(DEFAULT_STAGE_QPCR);
       this.$bvModal.hide('add-stage-modal');
     },
     addMeltCurve: function () {
