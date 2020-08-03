@@ -74,16 +74,16 @@ class OpticsAnalysis {
     }
     const data = this.log.fluorescence.qpcr;
     for (let i=this.ctIndex; i<data.length; i++) {
-      console.log("Repeat %d %s", data[i].repeat, JSON.stringify(data[i].v));
+      //console.log("Repeat %d %s", data[i].repeat, JSON.stringify(data[i].v));
       for (let ch=0; ch<this.ct.length; ch++) {
         if (this.ct[ch] < 0 && this.thresholds[ch] < data[i].v[ch]) {
-          console.log("Ch[%d] OK at %d", ch, data[i].repeat);
+          //console.log("Ch[%d] OK at %d", ch, data[i].repeat);
           this.ct[ch] = data[i].repeat;
         } 
       }
       this.ctIndex = i;
     }
-    console.log("Ct=" + JSON.stringify(this.ct));
+    //console.log("Ct=" + JSON.stringify(this.ct));
   }
   calcMeltCurve () {
     
