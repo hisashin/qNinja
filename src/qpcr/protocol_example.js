@@ -1,6 +1,6 @@
 "use strict";
 
-const Consts = require("./constants");
+const Constants = require("./constants");
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;

@@ -217,7 +217,7 @@
                       step="1"
                     >sec
                     <input
-                      v-model.number="stage.steps[0].speed"
+                      v-model.number="stage.steps[0].ramp_speed"
                       class="input-speed"
                       type="number"
                       step="1"
@@ -239,7 +239,7 @@
                       step="1"
                     >sec
                     <input
-                      v-model.number="stage.steps[1].speed"
+                      v-model.number="stage.steps[1].ramp_speed"
                       class="input-speed"
                       type="number"
                       step="1"
@@ -261,7 +261,7 @@
                       step="1"
                     >sec
                     <input
-                      v-model.number="stage.steps[2].speed"
+                      v-model.number="stage.steps[2].ramp_speed"
                       class="input-speed"
                       type="number"
                       step="1"
@@ -319,9 +319,9 @@ const DEFAULT_STAGE_QPCR = { type: Constants.StageType.QPCR,
   {label:"extend", temp:72, duration:18, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]} ] };
 const DEFAULT_STAGE_MELT_CURVE = { type: Constants.StageType.MELT_CURVE, 
   repeat:1, 
-  steps:[ {label:"denature", temp:94, duration:10, speed:4, data_collection:[]}, 
-  {label:"cool", temp:55, duration:5, speed:4, data_collection:[]}, 
-  {label:"melt", temp:94, duration:15, speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
+  steps:[ {label:"denature", temp:94, duration:10, ramp_speed:4, data_collection:[]}, 
+  {label:"cool", temp:55, duration:5, ramp_speed:4, data_collection:[]}, 
+  {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
 const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR, 
   repeat:30, 
   steps:[ {label:"denature", temp:94, duration:15, data_collection:[]}, 
@@ -386,7 +386,7 @@ export default {
         delete this.protocol.final_hold_temp;
       }
       appState.saveProtocol(this.$data, ()=>{
-        console.log("(Toast)");
+        appState.toast("Save", "Saved.");
       });
     },
     setProtocol: function (protocol) {

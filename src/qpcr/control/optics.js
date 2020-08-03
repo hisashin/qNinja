@@ -18,6 +18,7 @@ class Optics {
     this.continuousCallback = null;
     this.continuous = false;
     this.shouldResumeContinuous = false;
+    this.devugValue = null;
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;

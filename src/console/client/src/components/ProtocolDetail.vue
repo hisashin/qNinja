@@ -63,7 +63,7 @@
                   </div>
                   {{ stage.steps[0].temp }}℃
                   {{ stage.steps[0].duration }}s
-                  {{ stage.steps[0].speed }}℃/s
+                  {{ stage.steps[0].ramp_speed }}℃/s
                 </li>
                 <li class="protocol-step">
                   <div class="protocol-step-label">
@@ -71,7 +71,7 @@
                   </div>
                   {{ stage.steps[1].temp }}℃
                   {{ stage.steps[1].duration }}s
-                  {{ stage.steps[1].speed }}℃/s
+                  {{ stage.steps[1].ramp_speed }}℃/s
                 </li>
                 <li class="protocol-step">
                   <div class="protocol-step-label">
@@ -79,7 +79,7 @@
                   </div>
                   {{ stage.steps[2].temp }}℃
                   {{ stage.steps[2].duration }}s
-                  {{ stage.steps[2].speed }}℃/s
+                  {{ stage.steps[2].ramp_speed }}℃/s
                 </li>
               </ul>
             </template>

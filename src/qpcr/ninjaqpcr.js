@@ -1,5 +1,6 @@
 "use strict";
 
+const Constants = require("./constants");
 const fs = require('fs');
 
 const ThermalCycler = require("./control/thermal_cycler");
@@ -182,102 +183,41 @@ class NinjaQPCR {
         // transition
       ],
       baseline:[], 
-      fluorescence: [
-        /*
-        {
-          stage: 1,
-          label: "qPCR",
-          steps: [
-            {
-              step:1,
-              measurements: [
-                {
-                  type:MEASUREMENT_HOLD_END,
-                  values:[]
-                },
-                {
-                  type:MEASUREMENT_RAMP_END,
-                  values:[]
-                },
-                {
-                  type:MEASUREMENT_RAMP_CONTINUOUS,
-                  values:[
-                    { repeat:0, timestamp:0, values: [0, 0, 0, 0, 0]},
-                    { repeat:1, timestamp:500, values: [0, 0, 0, 0, 0]},
-                  ]
-                }
-              ]
-            }
-          ]
-          
-        },
-        {
-          stage: 2,
-          label: "Melt curve",
-          steps: [
-            {
-              step: 2
-            }
-          ]
-          
-        }
-        */
-      ]
-    };
-    for (let stageIndex = 0; stageIndex < protocol.stages.length; stageIndex++) {
-      let stageObj = {
-        stage:stageIndex,
-        steps:[]
-      };
-      for (let stepIndex = 0; stepIndex < protocol.stages[stageIndex].steps.length; stepIndex ++) {
-        const step = protocol.stages[stageIndex].steps[stepIndex];
-        let stepObj = {
-          step:stepIndex,
-          measurements:[]
-        };
-        if (step.data_collection != null) {
-          step.data_collection.forEach((collectionType)=>{
-            stepObj.measurements.push({
-              type:collectionType,
-              values:[]
-            });
-          });
-        }
-        stageObj.steps.push(stepObj);
-        
+      fluorescence: {
+        baseline: [],
+        qpcr: [],
+        melt_curve: []
       }
-      experimentLog.fluorescence.push(stageObj);
-    }
+    };
     return experimentLog;
   }
-  _addFluorescenceMeasurementLog (step, measurementType, values) {
-    if (measurementType == MEASUREMENT_HOLD_BASELINE) {
-      this.experimentLog.baseline.push(
-        {
-          repeat: step.repeat,
-          timestamp:this.getExperimentElapsedTime(),
-          values:values
-        }
-      );
-      return;
-    }
-    const stepObj = this.experimentLog.fluorescence[step.stage].steps[step.step];
-    let added = false;
-    stepObj.measurements.forEach((measurement)=>{
-      if (measurement.type == measurementType) {
-        measurement.values.push(
-          {
-            repeat: step.repeat,
-            timestamp:this.getExperimentElapsedTime(),
-            values:values
-          }
-        );
-        added = true;
-      }
-    });
-    if (!added ) {
-      console.log("Something went wrong????");
-    }
+  _addFluorescenceBaselineLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values
+    };
+    // console.log("_addFluorescenceBaselineLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence.baseline.push(data);
+  }
+  _addFluorescenceQPCRLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values,
+        stage:step.stage,
+        repeat:step.repeat,
+        step:step.step
+    };
+    // console.log("_addFluorescenceQPCRLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence.qpcr.push(data);
+  }
+  _addFluorescenceMeltCurveLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values,
+        temp:this.progress.well
+    };
+    // console.log("_addFluorescenceMeltCurveLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence.melt_curve.push(data);
   }
   _getStep (state) {
     if (!(state.stage >= 0) || !(state.step >= 0) ) {
@@ -398,7 +338,27 @@ class NinjaQPCR {
   
   /* Handling ThermalCycler's events */
   onFluorescenceDataUpdate (step, measurementType, values) {
-    this._addFluorescenceMeasurementLog(step, measurementType, values);
+    // New
+    if (measurementType == MEASUREMENT_HOLD_BASELINE) {
+      this._addFluorescenceBaselineLog(step, values);
+    } else {
+      const stage = this.protocol.stages[step.stage];
+      if (stage == null) {
+        console.warn("_addFluorescence* stage is null." + JSON.stringify(step));
+      } else if (stage.type == Constants.StageType.QPCR) {
+        this._addFluorescenceQPCRLog(step, values);
+        this.analysis.calcCt();
+      } else if (stage.type == Constants.StageType.MELT_CURVE) {
+        // For debug
+        const debug = {
+          current:this.progress.well,
+          low:stage.steps[1].temp,
+          high:stage.steps[2].temp
+        };
+        this.optics.fluorescenceSensingUnit.debugValue = debug;
+        this._addFluorescenceMeltCurveLog(step, values);
+      }
+    }
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
       this.receiver.onFluorescenceDataUpdate(values);
     }
