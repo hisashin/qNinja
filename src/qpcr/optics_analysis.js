@@ -29,26 +29,31 @@ class OpticsAnalysis {
     this.log = log;
     this.baselines = [];
     this.thresholds = [];
+    this.ct = null;
+    this.ctIndex = 0;
+    this.meltCurve = [];
   }
   calcBaseline () {
     let index = 0;
-    if (this.log.baseline==null || this.log.baseline.length == 0) {
+    const data = this.log.fluorescence.baseline;
+    if (data==null || data.length == 0) {
       console.warn("OpticsAnalysis.calcBaseline baseline empty.");
       return;
     }
-    const channelsCount = this.log.baseline[0].values.length;
+    const channelsCount = data[0].v.length;
     // {"repeat":0,"timestamp":22655,"values":[0.10839931087059657,0.14320391221901324,0.12286425068855174,0.14246562122693912,0.11768404832484902,0.11755829662844186,0.10416033499631905,0.12868933895027088]}
     let values = [];
     for (let i=0; i<channelsCount; i++) {
       values.push([]);
     }
-    this.log.baseline.forEach((data)=>{
-      data.values.forEach((value, index)=>{
+    data.forEach((line)=>{
+      line.v.forEach((value, index)=>{
         values[index].push(value);
       });
     });
     this.baselines = [];
     this.thresholds = [];
+    this.melt_curve = null;
     values.forEach((channel, index)=>{
       const baseline = Stat.average(channel);
       const sd = Stat.standardDeviation(channel);
@@ -57,6 +62,31 @@ class OpticsAnalysis {
       this.thresholds.push(threshold);
       console.log("Channel %d avg=%f, sd=%f, threshold=%f", index, baseline, sd, threshold);
     });
+  }
+  calcCt () {
+    if (this.thresholds.length == 0) {
+      console.warn("this.thresholds is empty.");
+      return;
+    }
+    if (this.ct == null) {
+      this.ct = this.thresholds.map((v)=>{return -1;});
+      this.ctIndex = 0;
+    }
+    const data = this.log.fluorescence.qpcr;
+    for (let i=this.ctIndex; i<data.length; i++) {
+      console.log("Repeat %d %s", data[i].repeat, JSON.stringify(data[i].v));
+      for (let ch=0; ch<this.ct.length; ch++) {
+        if (this.ct[ch] < 0 && this.thresholds[ch] < data[i].v[ch]) {
+          console.log("Ch[%d] OK at %d", ch, data[i].repeat);
+          this.ct[ch] = data[i].repeat;
+        } 
+      }
+      this.ctIndex = i;
+    }
+    console.log("Ct=" + JSON.stringify(this.ct));
+  }
+  calcMeltCurve () {
+    
   }
   getBaselines () {
     return this.baselines;

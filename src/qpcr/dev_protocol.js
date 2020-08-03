@@ -24,7 +24,7 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  repeat: 3,
+  repeat: 8,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
     { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
