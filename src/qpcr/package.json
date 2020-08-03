@@ -1,0 +1,16 @@
+{
+  "name": "qpcr",
+  "version": "1.0.0",
+  "description": "Ninja qPCR core module",
+  "main": "constants.js",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

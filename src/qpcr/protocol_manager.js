@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
-const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
+const DATA_DIR_ROOT = __dirname + "/user_data"; // TODO: use user's home dir
 
 class ProtocolManager {
   constructor () {
@@ -92,10 +92,10 @@ class ProtocolManager {
   }
   
   getProtocol (id, callback, onError) {
-    console.log("getProtocol %s", id)
     this._getProtocol (id, callback, onError);
   }
   
+  /* Private */
   _createProtocol () {
     const now = new Date().getTime();
     return {

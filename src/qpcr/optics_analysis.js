@@ -61,7 +61,7 @@ class OpticsAnalysis {
   getBaselines () {
     return this.baselines;
   }
-  getThresholdw () {
+  getThresholds () {
     return this.thresholds;
   }
   standardCurve () {

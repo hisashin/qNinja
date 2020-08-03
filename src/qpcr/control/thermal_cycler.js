@@ -35,14 +35,12 @@ class RemainingTimeCalculator {
     if (fromTemp < toTemp) {
       let heatingSpeed = WELL_TEMP_HEATING_SPEED;
       if (rampSpeed != null && rampSpeed > 0) {
-        console.log("Remaining:ramp specified: %f", rampSpeed);
         heatingSpeed = Math.min(heatingSpeed, rampSpeed);
       }
       return (toTemp - fromTemp) / heatingSpeed;
     }
     let coolingSpeed = WELL_TEMP_COOLING_SPEED;
     if (rampSpeed != null && rampSpeed > 0) {
-      console.log("Remaining:ramp specified: %f", rampSpeed);
       coolingSpeed = Math.min(coolingSpeed, rampSpeed);
     }
     return (fromTemp - toTemp) / coolingSpeed;
@@ -82,13 +80,11 @@ class RemainingTimeCalculator {
         if (currentRepeatIndex == 0) {
           stageDuration -= (cycleDuration - firstCycleDuration);
         }
-        console.log("Remaining stage=%f first=%f remainingRepeats=%d", cycleDuration, firstCycleDuration, (stage.repeat - targetRepeat));
         remaining += stageDuration;
         // console.log("Remaining: stage=%d duration=%f repeat=%d", stageIndex, stageDuration, stage.repeat);
       }
     });
     const total = (this.timestamp.getTime() - this.start.getTime())/1000;
-    console.log("Remaining.update stage=%d repeat=%d remaining=%f (Total=%f)", currentStageIndex, currentRepeatIndex, remaining, total);
     this.remainingMsec = remaining * 1000;
   }
 }
@@ -160,7 +156,6 @@ class ThermalCycler {
       this.state.start(now);
       const from = this.stateFrom.getStatus();
       const to = this.state.getStatus();
-      console.log("Remaining demo " + JSON.stringify(to));
       if (!(from.stage == to.stage && from.repeat == to.repeat)) {
         this.remainingTimeCalculator.update(to.stage, to.repeat);
         

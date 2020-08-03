@@ -37,7 +37,7 @@ class ExperimentCtrl {
         }
       ]
     };
-    qpcr.start(protocol);
+    qpcr.start(protocol, {});
   }
   /* Callback functions */
   onThermalTransition (data) {
@@ -47,7 +47,7 @@ class ExperimentCtrl {
     console.log(data);
     websocket_server.broadcast('experiment', data);
   }
-  onThermalDataUpdate (data) {
+  onProgress (data) {
     data.topic = 'ThermalDataUpdate';
     data.code = 200;
     console.log("onThermalDataUpdate");
