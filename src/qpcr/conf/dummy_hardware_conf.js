@@ -137,6 +137,8 @@ class DummyFluorescenceSensingUnit {
   }
   start () {
     this.startTimestamp = new Date();
+    this.debugValue = null;
+    this.dummyValues = [];
   }
   select (well) {
     // Do nothing
@@ -152,9 +154,30 @@ class DummyFluorescenceSensingUnit {
   getDummyBaseline (value) {
     return 0.1 + Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
   }
+  _getDummyMeltCurve (start, current, high, low) {
+    const range = 12;
+    const offset =1-1/(1+Math.exp(range/2));
+    const normalized = 
+        range*((current-low)/(high-low)-0.5);
+    const sigmoid =1/(1+Math.exp(normalized));
+    const value = start * sigmoid/offset;
+    return value;
+  }
   measure(well, callback) {
-    let value = this.getDummySigmoid(well.index);
-    value += this.getDummyBaseline(value);
+    let value = 0;
+    if (this.debugValue == null) {
+      value = this.getDummySigmoid(well.index);
+      value += this.getDummyBaseline(value);
+      while (this.dummyValues.length <= well) {
+        this.dummyValues.push(0);
+      }
+      this.dummyValues[well] = value;
+    } else {
+      // TODO simulate melt curve
+      const high = this.debugValue.high;
+      const temperature = this.debugValue.currentTemp;
+      value = this._getDummyMeltCurve(this.dummyValues[well], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+    }
     setTimeout(()=>{ callback(value); }, 10);
   }
 }

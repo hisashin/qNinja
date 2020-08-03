@@ -349,6 +349,13 @@ class NinjaQPCR {
         this._addFluorescenceQPCRLog(step, values);
         this.analysis.calcCt();
       } else if (stage.type == Constants.StageType.MELT_CURVE) {
+        // For debug
+        const debug = {
+          current:this.progress.well,
+          low:stage.steps[1].temp,
+          high:stage.steps[2].temp
+        };
+        this.optics.fluorescenceSensingUnit.debugValue = debug;
         this._addFluorescenceMeltCurveLog(step, values);
       }
     }
