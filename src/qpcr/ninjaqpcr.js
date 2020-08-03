@@ -1,5 +1,6 @@
 "use strict";
 
+const Constants = require("./constants");
 const fs = require('fs');
 
 const ThermalCycler = require("./control/thermal_cycler");
@@ -182,6 +183,11 @@ class NinjaQPCR {
         // transition
       ],
       baseline:[], 
+      fluorescence2: {
+        baseline: [],
+        qpcr: [],
+        melt_curve: []
+      },
       fluorescence: [
         /*
         {
@@ -249,6 +255,34 @@ class NinjaQPCR {
       experimentLog.fluorescence.push(stageObj);
     }
     return experimentLog;
+  }
+  _addFluorescenceBaselineLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values
+    };
+    console.log("_addFluorescenceBaselineLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence2.baseline.push(data);
+  }
+  _addFluorescenceQPCRLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values,
+        stage:step.stage,
+        repeat:step.repeat,
+        step:step.step
+    };
+    console.log("_addFluorescenceQPCRLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence2.qpcr.push(data);
+  }
+  _addFluorescenceMeltCurveLog (step, values) {
+    let data = {
+        t:this.getExperimentElapsedTime(),
+        v:values,
+        temp:this.progress.well
+    };
+    console.log("_addFluorescenceMeltCurveLog " + JSON.stringify(data));
+    this.experimentLog.fluorescence2.melt_curve.push(data);
   }
   _addFluorescenceMeasurementLog (step, measurementType, values) {
     if (measurementType == MEASUREMENT_HOLD_BASELINE) {
@@ -398,7 +432,22 @@ class NinjaQPCR {
   
   /* Handling ThermalCycler's events */
   onFluorescenceDataUpdate (step, measurementType, values) {
+    // New
+    if (measurementType == MEASUREMENT_HOLD_BASELINE) {
+      this._addFluorescenceBaselineLog(step, values);
+    } else {
+      const stage = this.protocol.stages[step.stage];
+      if (stage == null) {
+        console.warn("_addFluorescence* stage is null." + JSON.stringify(step));
+      } else if (stage.type == Constants.StageType.QPCR) {
+        this._addFluorescenceQPCRLog(step, values);
+      } else if (stage.type == Constants.StageType.MELT_CURVE) {
+        this._addFluorescenceMeltCurveLog(step, values);
+      }
+    }
+    // Old
     this._addFluorescenceMeasurementLog(step, measurementType, values);
+    
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
       this.receiver.onFluorescenceDataUpdate(values);
     }
