@@ -161,6 +161,7 @@ class DummyFluorescenceSensingUnit {
         range*((current-low)/(high-low)-0.5);
     const sigmoid =1/(1+Math.exp(normalized));
     const value = start * sigmoid/offset;
+    console.log("_getDummyMeltCurve %f %f %f %f", start, current, high, low, value);
     return value;
   }
   measure(well, callback) {
@@ -168,15 +169,15 @@ class DummyFluorescenceSensingUnit {
     if (this.debugValue == null) {
       value = this.getDummySigmoid(well.index);
       value += this.getDummyBaseline(value);
-      while (this.dummyValues.length <= well) {
+      while (this.dummyValues.length <= well.index) {
         this.dummyValues.push(0);
       }
-      this.dummyValues[well] = value;
+      this.dummyValues[well.index] = value;
     } else {
       // TODO simulate melt curve
       const high = this.debugValue.high;
       const temperature = this.debugValue.currentTemp;
-      value = this._getDummyMeltCurve(this.dummyValues[well], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+      value = this._getDummyMeltCurve(this.dummyValues[well.index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
     }
     setTimeout(()=>{ callback(value); }, 10);
   }
