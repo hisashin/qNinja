@@ -167,6 +167,14 @@ class NinjaQPCR {
   getExperimentElapsedTime () {
     return new Date().getTime() - this.startTimestamp.getTime();
   }
+  getMeltCurve () {
+    console.log("getMeltCurve");
+    if (this.analysis == null) {
+      return [];
+    }
+    this.analysis.calcMeltCurve();
+    return this.analysis.getMeltCurve();
+  }
   
   /* Private */
   _createExperimentLog (protocol) {

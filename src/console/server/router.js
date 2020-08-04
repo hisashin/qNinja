@@ -57,11 +57,11 @@ class Router {
     this.handler404 = handler;
   }
   route (req, res) {
-    // console.log(req);
     const url = URL.parse(req.url).pathname;
     for (let i=0; i<this.paths.length; i++) {
       let match = this.paths[i].matches(url, req.method);
       if (match != null) {
+        console.warn("Router.route matched: %s", this.paths[i].expression);
         return this.paths[i].handler(req, res, match);
       }
     }

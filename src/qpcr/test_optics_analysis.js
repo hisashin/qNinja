@@ -1,11 +1,16 @@
 'use strict' ;
 const OpticsAnalysis = require("./optics_analysis");
 
-const id = "9c958213-73a5-4583-a793-9fb29ef020f4";
+const id = "882c49ec-6e24-4b5c-bde7-57055301e332";
 OpticsAnalysis.fromLogFile(id,(analysis)=>{
     analysis.calcBaseline();
     analysis.calcCt();
-    analysis.calcMeltCurve();
+    let hasNext = true;
+    do {
+      hasNext = analysis.calcMeltCurve(10);
+      console.log(hasNext)
+    } while (hasNext);
+    console.log(analysis.getMeltCurve());
   }, (error)=>{
   console.error(error);
 });

@@ -386,7 +386,7 @@ export default {
         delete this.protocol.final_hold_temp;
       }
       appState.saveProtocol(this.$data, ()=>{
-        appState.toast("Save", "Saved.");
+        appState.toast(this, "Save", "Saved.");
       });
     },
     setProtocol: function (protocol) {

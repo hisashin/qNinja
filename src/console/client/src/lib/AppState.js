@@ -206,9 +206,9 @@ class AppState {
   setPanelContainer (container) {
     this.panelContainer = container;
   }
-  toast (title, message) {
+  toast (context, title, message) {
     console.log("AppState.toast %s %s", title, message);
-    this.$bvToast.toast(message, {
+    context.$bvToast.toast(message, {
       title: title
     })
   }

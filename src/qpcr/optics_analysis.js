@@ -85,29 +85,38 @@ class OpticsAnalysis {
     }
     console.log("Ct=" + JSON.stringify(this.ct));
   }
-  calcMeltCurve () {
+  calcMeltCurve (limitCount) {
     // this.meltCurve = [];
     // this.meltCurveIndex = 0;
     const rawData = this.log.fluorescence.melt_curve;
     if (rawData == null || rawData.length == 0) {
       console.warn("Melt curve data is empty.");
-      return;
+      return false;
     }
-    for (let i=this.meltCurveIndex; i<rawData.length; i++) {
+    let updated = false;
+    let toIndex = (limitCount!=null && limitCount>0)?
+      Math.min(this.meltCurveIndex+limitCount,rawData.length)
+      :
+      rawData.length;
+    for (let i=this.meltCurveIndex; i < toIndex; i++) {
       // TODO use moving average
       this.meltCurve[i] = rawData[i];
       let derivatives = [];
+      updated = true;
       if (i > 0) {
         const prevTemp = rawData[i-1].temp;
         const temp = rawData[i].temp;
         for (let ch=0; ch<this.ct.length; ch++) {
             // Calc derivative
-            derivatives[ch] = (rawData[i].v[ch] - rawData[i-1].v[ch])/(temp-prevTemp);
+            derivatives[ch] = -(rawData[i].v[ch] - rawData[i-1].v[ch])/(temp-prevTemp);
         }
       }
       this.meltCurve[i].d = derivatives;
-      console.log(this.meltCurve[i]);
+      // console.log(this.meltCurve[i]);
     }
+    // console.log(this.meltCurve.length);
+    this.meltCurveIndex = toIndex;
+    return updated;
   }
   getBaselines () {
     return this.baselines;
@@ -118,8 +127,8 @@ class OpticsAnalysis {
   standardCurve () {
     // TODO
   }
-  meltCurve () {
-    // TODO
+  getMeltCurve () {
+    return this.meltCurve;
   }
 }
 OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{

@@ -38,7 +38,7 @@
       <TheProtocolEditor ref="protocolEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_EDITOR">
-      <BackButton />hogehoge
+      <BackButton />
       <TheExperimentEditor ref="experimentEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">

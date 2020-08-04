@@ -161,7 +161,6 @@ class DummyFluorescenceSensingUnit {
         range*((current-low)/(high-low)-0.5);
     const sigmoid =1/(1+Math.exp(normalized));
     const value = start * sigmoid/offset;
-    console.log("_getDummyMeltCurve %f %f %f %f", start, current, high, low, value);
     return value;
   }
   measure(well, callback) {
