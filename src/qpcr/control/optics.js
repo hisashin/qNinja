@@ -4,6 +4,7 @@
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
 const MEASUREMENT_PER_CH_MSEC = 60;
 const EXCITATION_DURATION_MSEC = 30;
+const MEASUREMENT_MIN_INTERVAL_MSEC = 2000;
 class Optics {
   constructor (hardwareConf) {
     this.ledUnit = hardwareConf.getLEDUnit();
@@ -19,6 +20,7 @@ class Optics {
     this.continuous = false;
     this.shouldResumeContinuous = false;
     this.devugValue = null;
+    this.lastMeasurementTimestamp = new Date();
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
@@ -62,6 +64,7 @@ class Optics {
       this.oneShotCallbacks.push(callback);
     }
     if (!this.isMeasuring) {
+      this.lastMeasurementTimestamp = new Date();
       this.values = [];
       this.wells.forEach((well)=>{
         setTimeout(()=>{ this.selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
@@ -91,7 +94,10 @@ class Optics {
         }
         this.isMeasuring = false;
         if (this.continuous) {
-          this.measureAll(null);
+          // Next time
+          const elapsed = new Date().getTime() - this.lastMeasurementTimestamp.getTime();
+          const next = Math.max(0, MEASUREMENT_MIN_INTERVAL_MSEC-elapsed);
+          setTimeout(()=>{ this.measureAll(null) }, next);
         }
       }
     });
