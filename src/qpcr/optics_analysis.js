@@ -32,6 +32,7 @@ class OpticsAnalysis {
     this.ct = null;
     this.ctIndex = 0;
     this.meltCurve = [];
+    this.meltCurveIndex = 0;
   }
   calcBaseline () {
     let index = 0;
@@ -53,7 +54,6 @@ class OpticsAnalysis {
     });
     this.baselines = [];
     this.thresholds = [];
-    this.melt_curve = null;
     values.forEach((channel, index)=>{
       const baseline = Stat.average(channel);
       const sd = Stat.standardDeviation(channel);
@@ -83,10 +83,31 @@ class OpticsAnalysis {
       }
       this.ctIndex = i;
     }
-    //console.log("Ct=" + JSON.stringify(this.ct));
+    console.log("Ct=" + JSON.stringify(this.ct));
   }
   calcMeltCurve () {
-    
+    // this.meltCurve = [];
+    // this.meltCurveIndex = 0;
+    const rawData = this.log.fluorescence.melt_curve;
+    if (rawData == null || rawData.length == 0) {
+      console.warn("Melt curve data is empty.");
+      return;
+    }
+    for (let i=this.meltCurveIndex; i<rawData.length; i++) {
+      // TODO use moving average
+      this.meltCurve[i] = rawData[i];
+      let derivatives = [];
+      if (i > 0) {
+        const prevTemp = rawData[i-1].temp;
+        const temp = rawData[i].temp;
+        for (let ch=0; ch<this.ct.length; ch++) {
+            // Calc derivative
+            derivatives[ch] = (rawData[i].v[ch] - rawData[i-1].v[ch])/(temp-prevTemp);
+        }
+      }
+      this.meltCurve[i].d = derivatives;
+      console.log(this.meltCurve[i]);
+    }
   }
   getBaselines () {
     return this.baselines;
