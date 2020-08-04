@@ -134,6 +134,20 @@ class AppState {
   getLogSummaries () {
     return this.logSummaries;
   }
+  
+  fetchMeltCurve (onSuccess, onFail) {
+    Util.requestData("device/experiment/melt_curve", null, "GET", 
+      (data)=>{
+        console.log("Device.fetchMeltCurve callback");
+        onSuccess(data);
+      }, (error)=>{
+        console.log("Error %s", error);
+        onFail(error);
+      }
+    );
+    
+  }
+  
   reloadLogs () {
     console.log("AppState.reloadLogs");
     Util.requestData("logs", null, "GET", 

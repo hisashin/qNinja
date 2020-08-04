@@ -88,6 +88,11 @@ class Graph {
       }
     }
   }
+  clearData () {
+    for (let i=0; i<this.data.length; i++) {
+        this.data[i] = [];
+    }
+  }
   update () {
     for (let i=0; i<this.data.length; i++) {
       if (this.conversionFunction != null) {

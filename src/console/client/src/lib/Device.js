@@ -179,19 +179,6 @@ class Device {
     );
   }
   
-  fetchMeltCurve (onSuccess, onFail) {
-    Util.requestData("device/experiment/baseline", null, "GET", 
-      (data)=>{
-        console.log("Device.fetchMeltCurve callback");
-        onSuccess(data);
-      }, (error)=>{
-        console.log("Error %s", error);
-        onFail(error);
-      }
-    );
-    
-  }
-  
   /* Event handler registration */
   addConnectionEventHandler (obj) {
     if (this.connectionEventHandlers.indexOf(obj) > -1) {
