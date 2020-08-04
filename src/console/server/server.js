@@ -150,7 +150,7 @@ class NinjaQPCRHTTPServer {
     }
   }
   
-  // TODO
+  // TODO 
   protocolDelete () {
     return (req, res, map)=>{
       console.log("TODO protocolDelete");
@@ -189,7 +189,7 @@ class NinjaQPCRHTTPServer {
   }
   logGet () {
     return (req, res, map)=>{
-      lm.getLog(map.lid, (log)=>{
+      lm.getAnalyzedLog(map.lid, (log)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(log));
         res.end();

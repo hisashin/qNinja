@@ -1,7 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-const LogManager = require("./log_manager");
 
 /* Statistics util */
 const Stat = {
@@ -124,13 +123,14 @@ class OpticsAnalysis {
   getThresholds () {
     return this.thresholds;
   }
-  standardCurve () {
-    // TODO
+  getCt () {
+    return this.ct;
   }
   getMeltCurve () {
     return this.meltCurve;
   }
 }
+/*
 OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{
   console.log("OpticsAnalycic.fromLogFile path=%s",id);
   const logManager = new LogManager();
@@ -138,5 +138,5 @@ OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{
     onCreate(new OpticsAnalysis(log));
   }, onError);
 };
-
+*/
 module.exports = OpticsAnalysis;

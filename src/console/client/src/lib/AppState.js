@@ -169,7 +169,7 @@ class AppState {
     console.log("AppState.revealDetailLog.");
     this._loadLog(id, (log)=>{
       this.pushPanel(this.PANELS.LOG_DETAIL);
-      this.views.logDetail.log = log;
+      this.views.logDetail.setLog(log);
     });
   }
   
