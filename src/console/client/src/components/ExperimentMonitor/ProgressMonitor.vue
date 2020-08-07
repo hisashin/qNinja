@@ -160,7 +160,7 @@ export default {
       onUpdateProtocol: (protocol)=>{
         this.protocol = protocol;
         console.log("ProgressMonitor.onUpdateProtocol");
-        console.log(protocol)
+        // console.log(protocol)
       }
     });
   },

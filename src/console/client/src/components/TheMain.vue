@@ -101,7 +101,6 @@ export default {
         this.status = DEVICE_STATUS_FINISHED;
       },
       onTransition:(obj)=>{
-        console.log(obj);
       }
     });
     appState.views = this.$refs;

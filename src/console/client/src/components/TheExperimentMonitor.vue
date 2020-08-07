@@ -11,10 +11,10 @@
           </p>
         </b-tab>
         <b-tab title="Fluorescence">
-          <div>one-shot={{ oneShot }}</div>
-          <div>continuous={{ continuous }}</div>
-          <div>baseline={{ baselineExists }}</div>
           <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
+            <div>one-shot={{ oneShot }}</div>
+            <div>continuous={{ continuous }}</div>
+            <div>baseline={{ baselineExists }}</div>
         </b-tab>
         <b-tab
           title="Melt Curve">

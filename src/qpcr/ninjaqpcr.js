@@ -14,9 +14,7 @@ const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
-const MEASUREMENT_HOLD_BASELINE = 5;
 
-const DEFAULT_BASELINE_CYCLES = 1;
 
 const DEVICE_STATE = {
   IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
@@ -34,7 +32,6 @@ class NinjaQPCR {
     this.optics.setEventReceiver(this);
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
-    this.measuringBaseline = false;
     this.analysis = null;
   }
   
@@ -90,7 +87,6 @@ class NinjaQPCR {
     this._setDeviceState(DEVICE_STATE.RUNNING);
     this.protocol = protocol;
     this.startTimestamp = new Date();
-    this.baselineStageIndex = -1;
     this.experimentLog = this._createExperimentLog(protocol);
     this.thermalCycler.start(protocol);
     this.optics.start();
@@ -200,14 +196,6 @@ class NinjaQPCR {
     };
     return experimentLog;
   }
-  _addFluorescenceBaselineLog (step, values) {
-    let data = {
-        t:this.getExperimentElapsedTime(),
-        v:values
-    };
-    // console.log("_addFluorescenceBaselineLog " + JSON.stringify(data));
-    this.experimentLog.fluorescence.baseline.push(data);
-  }
   _addFluorescenceQPCRLog (step, values) {
     let data = {
         t:this.getExperimentElapsedTime(),
@@ -218,6 +206,7 @@ class NinjaQPCR {
     };
     // console.log("_addFluorescenceQPCRLog " + JSON.stringify(data));
     this.experimentLog.fluorescence.qpcr.push(data);
+    return data;
   }
   _addFluorescenceMeltCurveLog (step, values) {
     let data = {
@@ -227,6 +216,7 @@ class NinjaQPCR {
     };
     // console.log("_addFluorescenceMeltCurveLog " + JSON.stringify(data));
     this.experimentLog.fluorescence.melt_curve.push(data);
+    return data;
   }
   _getStep (state) {
     if (!(state.stage >= 0) || !(state.step >= 0) ) {
@@ -286,34 +276,24 @@ class NinjaQPCR {
           (values)=>{
             console.log("Hold continuous.");
             this.onFluorescenceDataUpdate(data.to, MEASUREMENT_HOLD_CONTINUOUS, values);
-            
           });
       }
     }
-    // Baseline
     const toStage = this.protocol.stages[data.to.stage];
     
-    this.baselineStageIndex = -1;
-    for (let i=0; i<this.protocol.stages.length; i++) {
-      if (this.protocol.stages[i].type == 2) {
-        this.baselineStageIndex = i;
-        break;
-      }
-    }
     
-    
-    if (data.to.stage == this.baselineStageIndex && data.to.repeat < DEFAULT_BASELINE_CYCLES) {
-      this.optics.startContinuousDataCollection(
-        (values)=>{
-          this.onFluorescenceDataUpdate(data.to, MEASUREMENT_HOLD_BASELINE, values);
-        }
-      );
-      this.measuringBaseline = true;
-    } else if (this.measuringBaseline) {
-      this.analysis.calcBaseline();
-      this.notifyFluorescenceEvent("baseline");
-      this.measuringBaseline = false;
+    let debug = {
+      type: (toStage!=null)?toStage.type:0,
+      current:this.progress.well,
+      repeat:this.progress.state.repeat
+    };
+    if (toStage && toStage.steps.length == 3) {
+      debug.low = toStage.steps[1].temp;
+      debug.high = toStage.steps[2].temp;
     }
+    // For debug
+    // console.log("Setting debugValue " + JSON.stringify(debug) + "," + JSON.stringify(this.progress));
+    this.optics.fluorescenceSensingUnit.debugValue = debug;
     
     if (this.receiver != null && this.receiver.onThermalTransition != null) {
       this.receiver.onThermalTransition(data);
@@ -347,28 +327,18 @@ class NinjaQPCR {
   /* Handling ThermalCycler's events */
   onFluorescenceDataUpdate (step, measurementType, values) {
     // New
-    if (measurementType == MEASUREMENT_HOLD_BASELINE) {
-      this._addFluorescenceBaselineLog(step, values);
-    } else {
-      const stage = this.protocol.stages[step.stage];
-      if (stage == null) {
-        console.warn("_addFluorescence* stage is null." + JSON.stringify(step));
-      } else if (stage.type == Constants.StageType.QPCR) {
-        this._addFluorescenceQPCRLog(step, values);
-        this.analysis.calcCt();
-      } else if (stage.type == Constants.StageType.MELT_CURVE) {
-        // For debug
-        const debug = {
-          current:this.progress.well,
-          low:stage.steps[1].temp,
-          high:stage.steps[2].temp
-        };
-        this.optics.fluorescenceSensingUnit.debugValue = debug;
-        this._addFluorescenceMeltCurveLog(step, values);
-      }
+    const stage = this.protocol.stages[step.stage];
+    let data = {};
+    if (stage == null) {
+      console.warn("_addFluorescence* stage is null." + JSON.stringify(step));
+    } else if (stage.type == Constants.StageType.QPCR) {
+      data = this._addFluorescenceQPCRLog(step, values);
+      // this.analysis.calcCt();
+    } else if (stage.type == Constants.StageType.MELT_CURVE) {
+      data = this._addFluorescenceMeltCurveLog(step, values);
     }
     if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
-      this.receiver.onFluorescenceDataUpdate(values);
+      this.receiver.onFluorescenceDataUpdate(data);
     }
   }
   getBaseline () {

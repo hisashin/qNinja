@@ -47,7 +47,7 @@ export default {
     }
     this.graph.addSeries(labels);
     this.graph.setConversionFunction(
-      (obj) =>{return { "x":obj.t, "y":obj.v }}
+      (obj) =>{return { "x":Math.log10(obj.t), "y":obj.v }}
     );
     this.graph.setMinMaxX(40, 100);
     this.graph.setMinMaxY(0, 1);
@@ -72,9 +72,9 @@ export default {
     },
     showRaw: function () {
       this.graph.setConversionFunction(
-        (obj) =>{return { "x":obj.t, "y":obj.v }}
+        (obj) =>{return { "x":Math.log10(obj.t), "y":obj.v }}
       );
-      this.graph.setMinMaxY(0, 1);
+      this.graph.setMinMaxY(0, 5);
       this.graph.update();
     },
     showDerivative: function () {
