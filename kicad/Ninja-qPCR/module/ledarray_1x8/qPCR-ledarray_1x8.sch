@@ -244,63 +244,55 @@ $EndComp
 Connection ~ 2900 2450
 Wire Wire Line
 	2900 2450 2900 2500
+Text GLabel 4050 3200 0    50   Input ~ 0
+VCC
+Text GLabel 4050 3100 0    50   Input ~ 0
+GND
+Text GLabel 4050 3800 0    50   Input ~ 0
+OUT1
+Text GLabel 4050 3900 0    50   Input ~ 0
+OUT2
+Text GLabel 4050 3600 0    50   Input ~ 0
+OUT3
+Text GLabel 4050 3700 0    50   Input ~ 0
+OUT4
+Text GLabel 4050 3000 0    50   Input ~ 0
+OUT5
+Text GLabel 4050 3300 0    50   Input ~ 0
+OUT6
+Text GLabel 4050 3500 0    50   Input ~ 0
+OUT7
+Text GLabel 4050 3400 0    50   Input ~ 0
+OUT8
 $Comp
-L Ninja-qPCR:7-5530843-6 J2
-U 1 1 5F0AB97E
-P 4600 3400
-F 0 "J2" H 4600 4065 50  0000 C CNN
-F 1 "7-5530843-6" H 4600 3974 50  0000 C CNN
-F 2 "Ninja-qPCR:TE_7-5530843-6-MALE" H 4600 3400 50  0001 C CNN
-F 3 "" H 4600 3400 50  0001 C CNN
-	1    4600 3400
+L Ninja-qPCR:Conn_02x05 U1
+U 1 1 5F22415F
+P 4450 3000
+F 0 "U1" H 4769 2611 50  0000 L CNN
+F 1 "Conn_02x05" H 4769 2520 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 4250 3100 50  0001 C CNN
+F 3 "" H 4250 3100 50  0001 C CNN
+	1    4450 3000
 	1    0    0    -1  
 $EndComp
-Text GLabel 3950 3100 0    50   Input ~ 0
-OUT1
-Text GLabel 5300 3100 2    50   Input ~ 0
-OUT2
-Text GLabel 3950 3200 0    50   Input ~ 0
-OUT3
-Text GLabel 3950 3300 0    50   Input ~ 0
-OUT5
-Text GLabel 3950 3400 0    50   Input ~ 0
-OUT7
-Text GLabel 5300 3200 2    50   Input ~ 0
-OUT4
-Text GLabel 5300 3300 2    50   Input ~ 0
-OUT6
-Text GLabel 5300 3400 2    50   Input ~ 0
-OUT8
-Text GLabel 3950 3000 0    50   Input ~ 0
-VCC
-Text GLabel 5300 3000 2    50   Input ~ 0
-GND
 Wire Wire Line
-	3950 3000 4200 3000
+	4050 3000 4250 3000
 Wire Wire Line
-	3950 3100 4200 3100
+	4050 3100 4250 3100
 Wire Wire Line
-	3950 3200 4200 3200
+	4050 3300 4250 3300
 Wire Wire Line
-	5000 3000 5300 3000
+	4050 3600 4250 3600
 Wire Wire Line
-	5000 3100 5300 3100
+	4050 3700 4250 3700
 Wire Wire Line
-	5000 3200 5300 3200
-Text GLabel 3950 3500 0    50   Input ~ 0
-GND
-Text GLabel 5300 3500 2    50   Input ~ 0
-GND
+	4050 3800 4250 3800
 Wire Wire Line
-	5300 3300 5000 3300
+	4050 3900 4250 3900
 Wire Wire Line
-	5300 3400 5000 3400
+	4250 3400 4050 3400
 Wire Wire Line
-	5300 3500 5000 3500
+	4250 3200 4050 3200
 Wire Wire Line
-	4200 3300 3950 3300
-Wire Wire Line
-	4200 3400 3950 3400
-Wire Wire Line
-	4200 3500 3950 3500
+	4250 3500 4050 3500
 $EndSCHEMATC
