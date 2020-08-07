@@ -55,7 +55,6 @@ export default {
     setLog: function (log) {
       this.log = log;
       this.$refs.meltCurveMonitor.set(this.log.melt_curve);
-    
     }
   }
 }
