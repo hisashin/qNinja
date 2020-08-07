@@ -134,6 +134,20 @@ class AppState {
   getLogSummaries () {
     return this.logSummaries;
   }
+  
+  fetchMeltCurve (onSuccess, onFail) {
+    Util.requestData("device/experiment/melt_curve", null, "GET", 
+      (data)=>{
+        console.log("Device.fetchMeltCurve callback");
+        onSuccess(data);
+      }, (error)=>{
+        console.log("Error %s", error);
+        onFail(error);
+      }
+    );
+    
+  }
+  
   reloadLogs () {
     console.log("AppState.reloadLogs");
     Util.requestData("logs", null, "GET", 
@@ -155,7 +169,7 @@ class AppState {
     console.log("AppState.revealDetailLog.");
     this._loadLog(id, (log)=>{
       this.pushPanel(this.PANELS.LOG_DETAIL);
-      this.views.logDetail.log = log;
+      this.views.logDetail.setLog(log);
     });
   }
   
@@ -206,8 +220,9 @@ class AppState {
   setPanelContainer (container) {
     this.panelContainer = container;
   }
-  toast (title, message) {
-    this.$bvToast.toast(message, {
+  toast (context, title, message) {
+    console.log("AppState.toast %s %s", title, message);
+    context.$bvToast.toast(message, {
       title: title
     })
   }

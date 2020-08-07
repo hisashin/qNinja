@@ -137,6 +137,8 @@ class DummyFluorescenceSensingUnit {
   }
   start () {
     this.startTimestamp = new Date();
+    this.debugValue = null;
+    this.dummyValues = [];
   }
   select (well) {
     // Do nothing
@@ -152,9 +154,51 @@ class DummyFluorescenceSensingUnit {
   getDummyBaseline (value) {
     return 0.1 + Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
   }
+  _getDummyMeltCurve (start, current, high, low) {
+    const range = 12;
+    const offset =1-1/(1+Math.exp(range/2));
+    const normalized = 
+        range*((current-low)/(high-low)-0.5);
+    const sigmoid =1/(1+Math.exp(normalized));
+    const value = start * sigmoid/offset;
+    return value;
+  }
+  _getDummyAmplification (wellIndex, cycle) {
+    const AMP_F_START = 1.0;
+    const AMP_F_MAX = 20000; // Plateau height
+    const AMP_BETA = 0.6;
+    const AMP_LAMBDA_DEFAULT = 20;
+    const AMP_LAMBDA_STEP = 1.1;
+    const AMP_BACKGROUND_COEFF = 40;
+    const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * wellIndex;
+    const background = Math.random() * AMP_BACKGROUND_COEFF;
+    const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
+    return amplification + background;
+  }
   measure(well, callback) {
-    let value = this.getDummySigmoid(well.index);
-    value += this.getDummyBaseline(value);
+    let value = 0;
+    if (this.debugValue != null) {
+      if (this.debugValue.type == 3) {
+        // Melt curve
+        // TODO simulate melt curve
+        const high = this.debugValue.high;
+        const temperature = this.debugValue.currentTemp;
+        value = this._getDummyMeltCurve(this.dummyValues[well.index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+      } else {
+        /*
+        value = this.getDummySigmoid(well.index);
+        value += this.getDummyBaseline(value);
+        */
+        value = this._getDummyAmplification(well.index, this.debugValue.repeat);
+        while (this.dummyValues.length <= well.index) {
+          this.dummyValues.push(0);
+        }
+        this.dummyValues[well.index] = value;
+        
+      }
+    } else {
+      console.warn("debugValue is null.");
+    }
     setTimeout(()=>{ callback(value); }, 10);
   }
 }

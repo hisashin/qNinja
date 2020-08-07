@@ -1,7 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-const LogManager = require("./log_manager");
 
 /* Statistics util */
 const Stat = {
@@ -29,21 +28,26 @@ class OpticsAnalysis {
     this.log = log;
     this.baselines = [];
     this.thresholds = [];
+    this.ct = null;
+    this.ctIndex = 0;
+    this.meltCurve = [];
+    this.meltCurveIndex = 0;
   }
   calcBaseline () {
     let index = 0;
-    if (this.log.baseline==null || this.log.baseline.length == 0) {
+    const data = this.log.fluorescence.baseline;
+    if (data==null || data.length == 0) {
       console.warn("OpticsAnalysis.calcBaseline baseline empty.");
       return;
     }
-    const channelsCount = this.log.baseline[0].values.length;
+    const channelsCount = data[0].v.length;
     // {"repeat":0,"timestamp":22655,"values":[0.10839931087059657,0.14320391221901324,0.12286425068855174,0.14246562122693912,0.11768404832484902,0.11755829662844186,0.10416033499631905,0.12868933895027088]}
     let values = [];
     for (let i=0; i<channelsCount; i++) {
       values.push([]);
     }
-    this.log.baseline.forEach((data)=>{
-      data.values.forEach((value, index)=>{
+    data.forEach((line)=>{
+      line.v.forEach((value, index)=>{
         values[index].push(value);
       });
     });
@@ -58,19 +62,75 @@ class OpticsAnalysis {
       console.log("Channel %d avg=%f, sd=%f, threshold=%f", index, baseline, sd, threshold);
     });
   }
+  calcCt () {
+    if (this.thresholds.length == 0) {
+      console.warn("this.thresholds is empty.");
+      return;
+    }
+    if (this.ct == null) {
+      this.ct = this.thresholds.map((v)=>{return -1;});
+      this.ctIndex = 0;
+    }
+    const data = this.log.fluorescence.qpcr;
+    for (let i=this.ctIndex; i<data.length; i++) {
+      //console.log("Repeat %d %s", data[i].repeat, JSON.stringify(data[i].v));
+      for (let ch=0; ch<this.ct.length; ch++) {
+        if (this.ct[ch] < 0 && this.thresholds[ch] < data[i].v[ch]) {
+          //console.log("Ch[%d] OK at %d", ch, data[i].repeat);
+          this.ct[ch] = data[i].repeat;
+        } 
+      }
+      this.ctIndex = i;
+    }
+    console.log("Ct=" + JSON.stringify(this.ct));
+  }
+  calcMeltCurve (limitCount) {
+    // this.meltCurve = [];
+    // this.meltCurveIndex = 0;
+    const rawData = this.log.fluorescence.melt_curve;
+    if (rawData == null || rawData.length == 0) {
+      console.warn("Melt curve data is empty.");
+      return false;
+    }
+    let updated = false;
+    let toIndex = (limitCount!=null && limitCount>0)?
+      Math.min(this.meltCurveIndex+limitCount,rawData.length)
+      :
+      rawData.length;
+    for (let i=this.meltCurveIndex; i < toIndex; i++) {
+      // TODO use moving average
+      this.meltCurve[i] = rawData[i];
+      let derivatives = [];
+      updated = true;
+      if (i > 0) {
+        const prevTemp = rawData[i-1].temp;
+        const temp = rawData[i].temp;
+        for (let ch=0; ch<this.ct.length; ch++) {
+            // Calc derivative
+            derivatives[ch] = -(rawData[i].v[ch] - rawData[i-1].v[ch])/(temp-prevTemp);
+        }
+      }
+      this.meltCurve[i].d = derivatives;
+      // console.log(this.meltCurve[i]);
+    }
+    // console.log(this.meltCurve.length);
+    this.meltCurveIndex = toIndex;
+    return updated;
+  }
   getBaselines () {
     return this.baselines;
   }
   getThresholds () {
     return this.thresholds;
   }
-  standardCurve () {
-    // TODO
+  getCt () {
+    return this.ct;
   }
-  meltCurve () {
-    // TODO
+  getMeltCurve () {
+    return this.meltCurve;
   }
 }
+/*
 OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{
   console.log("OpticsAnalycic.fromLogFile path=%s",id);
   const logManager = new LogManager();
@@ -78,5 +138,5 @@ OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{
     onCreate(new OpticsAnalysis(log));
   }, onError);
 };
-
+*/
 module.exports = OpticsAnalysis;

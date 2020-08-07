@@ -14,7 +14,14 @@
     <h2>(TODO) Temperature Chart</h2>
     <h2>(TODO) qPCR Fluorescence Chart</h2>
     <h2>(TODO) Melt Curve Chart</h2>
+    <div>
+      <MeltCurveMonitor ref="meltCurveMonitor" />
+    </div>
     <h2>(TODO) Standard Curve</h2>
+    <h2> Ct</h2>
+    <div>
+    {{ log.ct }}
+    </div>
   </div>
 </template>
 
@@ -22,9 +29,20 @@
 import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
 
+import ProtocolDetail from './ProtocolDetail.vue';
+import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
+import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
+import MeltCurveMonitor from './ExperimentMonitor/MeltCurveMonitor.vue';
+
 export default {
   name: 'LogDetail',
   components:{
+  /*
+    ProtocolDetail,
+    TemperatureMonitor,
+    FluorescenceMonitor,
+    */
+    MeltCurveMonitor
   },
   data() {
     return {
@@ -32,9 +50,12 @@ export default {
     }
   },
   created: function () {
-    this.log = appState.getSelectedLog();
   },
   methods: {
+    setLog: function (log) {
+      this.log = log;
+      this.$refs.meltCurveMonitor.set(this.log.melt_curve);
+    }
   }
 }
 </script>

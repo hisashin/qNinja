@@ -41,6 +41,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/device/experiment/protocol", "GET", this.deviceProtocol());
     router.addPath("/device/experiment/progress", "GET", this.deviceProgress());
     router.addPath("/device/experiment/baseline", "GET", this.deviceBaseline());
+    router.addPath("/device/experiment/melt_curve", "GET", this.deviceMeltCurve());
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
@@ -116,6 +117,16 @@ class NinjaQPCRHTTPServer {
     };
   }
   
+  deviceMeltCurve () {
+    return (req, res, map)=>{
+      res.writeHead(200,{'Content-Type': 'application/json'});
+      console.log("server.deviceMeltCurve");
+      const obj = qpcr.getMeltCurve();
+      res.write(JSON.stringify(obj));
+      res.end();
+    };
+  }
+  
   protocolUpdate () {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
@@ -139,7 +150,7 @@ class NinjaQPCRHTTPServer {
     }
   }
   
-  // TODO
+  // TODO 
   protocolDelete () {
     return (req, res, map)=>{
       console.log("TODO protocolDelete");
@@ -178,7 +189,7 @@ class NinjaQPCRHTTPServer {
   }
   logGet () {
     return (req, res, map)=>{
-      lm.getLog(map.lid, (log)=>{
+      lm.getAnalyzedLog(map.lid, (log)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(log));
         res.end();

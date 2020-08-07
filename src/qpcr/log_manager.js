@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const OpticsAnalysis = require("./optics_analysis");
 const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
 
 class LogManager {
@@ -42,6 +43,21 @@ class LogManager {
       }
     });
   }
+  getAnalyzedLog (id, onLoad, onError) {
+    this.getLog(id, (log)=>{
+      const analysis = new OpticsAnalysis(log);
+      analysis.calcBaseline();
+      analysis.calcCt();
+      analysis.calcMeltCurve();
+      log.baselines = analysis.getBaselines();
+      log.thresholds = analysis.getThresholds();
+      log.ct = analysis.getCt();
+      log.melt_curve = analysis.getMeltCurve();
+      onLoad(log);
+    },
+    onError);
+  }
+  
   generateExperimentSummary (experimentLog) {
     /*
       {

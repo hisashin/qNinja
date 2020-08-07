@@ -38,7 +38,7 @@
       <TheProtocolEditor ref="protocolEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_EDITOR">
-      <BackButton />hogehoge
+      <BackButton />
       <TheExperimentEditor ref="experimentEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
@@ -101,7 +101,6 @@ export default {
         this.status = DEVICE_STATUS_FINISHED;
       },
       onTransition:(obj)=>{
-        console.log(obj);
       }
     });
     appState.views = this.$refs;

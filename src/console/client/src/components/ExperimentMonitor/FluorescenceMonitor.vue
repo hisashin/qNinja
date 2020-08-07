@@ -61,11 +61,12 @@ export default {
     }
     this.graph.addSeries(labels);
     this.graph.setConversionFunction(
-      (obj) =>{return { "x":obj.t/1000.0, "y":obj.v }}
+      (obj) =>{return { "x":obj.c, "y":Math.log10(obj.v) }}
     );
     this.baseline = device.getBaseline();
     this.applyBaseline();
-    this.graph.setMinMaxY(0, 1);
+    this.graph.setMinMaxX(0, 50);
+    this.graph.setMinMaxY(0, 5);
   },
   methods: {
     applyBaseline: function () {
@@ -84,17 +85,18 @@ export default {
       // TODO add all data (to display experiment log)
     },
     add: function (timestamp, data) {
+      console.log(data);
       for (let i=0; i<TUBE_COUNT; i++) {
-        this.graph.addData(i, {t:timestamp, v:data[i]});
-        this.channels[i].fluorescence = data[i];
+        this.graph.addData(i, {t:timestamp, v:data.v[i], c:data.repeat});
+        this.channels[i].fluorescence = data.v[i];
       }
+      /*
       if (this.hasBaseline()) {
         for (let i=0; i<TUBE_COUNT; i++) {
-          this.channels[i].exceeded = this.channels[i].exceeded || (data[i] > this.baseline.thresholds[i]);
+          this.channels[i].exceeded = this.channels[i].exceeded || (data.v[i] > this.baseline.thresholds[i]);
         }
       }
-      const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
-      this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
+      */
       this.graph.update();
     
     }

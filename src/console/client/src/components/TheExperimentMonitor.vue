@@ -3,17 +3,29 @@
     <ProgressMonitor />
     <div class="card p-3">
       <b-tabs content-class="mt-3">
-        <b-tab title="Fluorescence">
-          <div>one-shot={{ oneShot }}</div>
-          <div>continuous={{ continuous }}</div>
-          <div>baseline={{ baselineExists }}</div>
-          <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
-        </b-tab>
         <b-tab
           title="Temperature"
           active>
           <p>
             <TemperatureMonitor ref="temperatureMonitor" />
+          </p>
+        </b-tab>
+        <b-tab title="Fluorescence">
+          <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
+            <div>one-shot={{ oneShot }}</div>
+            <div>continuous={{ continuous }}</div>
+            <div>baseline={{ baselineExists }}</div>
+        </b-tab>
+        <b-tab
+          title="Melt Curve">
+          <p>
+          
+            <b-button
+              class="ml-1"
+              @click.stop="updateMeltCurve">
+              Update (debug)
+            </b-button>
+            <MeltCurveMonitor ref="meltCurveMonitor" />
           </p>
         </b-tab>
         <b-tab
@@ -33,6 +45,7 @@ import ProtocolDetail from './ProtocolDetail.vue';
 import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
 import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
 import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
+import MeltCurveMonitor from './ExperimentMonitor/MeltCurveMonitor.vue';
 
 let startTime = new Date();
 
@@ -40,9 +53,10 @@ export default {
   name: 'TheExperimentMonitor',
   components: {
     ProgressMonitor,
-    FluorescenceMonitor,
     ProtocolDetail,
-    TemperatureMonitor
+    TemperatureMonitor,
+    FluorescenceMonitor,
+    MeltCurveMonitor
   },
   props: {
   },
@@ -74,6 +88,14 @@ export default {
     device.addBaselineHandler(this);
   },
   methods: {
+    updateMeltCurve:  function () {
+      console.log("updateMeltCurve");
+      appState.fetchMeltCurve((data)=>{
+        this.$refs.meltCurveMonitor.set(data);
+      }, ()=>{
+        // TODO error
+      });
+    },
     onSelectProtocol: function (item) {
       this.protocol = item.protocol;
       this.id = item.id;
