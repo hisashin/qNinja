@@ -6,14 +6,14 @@
 class HeatWorkbench {
   constructor (conf) {
     this.well = conf.getWell();
-    this.heatLid = conf.getHeatLid();
+    // this.heatLid = conf.getHeatLid();
     
   }
   run () {
     console.log("HeatWorkbench.run");
-    this.well.setTargetTemperature(35.0);
     this.well.start();
-    this.heatLid.start();
+    this.well.setTargetTemperature(35.0);
+    // this.heatLid.start();
     setInterval(()=>{
       console.log("Well Temp=%f",this.well.temperature);
       this.well.control();
