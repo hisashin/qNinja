@@ -1,3 +1,7 @@
+/*
+  Ninja-qPCR core module
+  */
+
 "use strict";
 
 const Constants = require("./constants");

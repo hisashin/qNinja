@@ -3,9 +3,9 @@
 
   Test thermistor connection
   
-  GND --[] 47kOhm ]--+--[Thermistor]-- 3.3V
-                     |
-                    ADC
+  GND --[ 47kOhm ]--+--[Thermistor]-- 3.3V
+                    |
+                   ADC
 */
 
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
@@ -31,7 +31,8 @@ setInterval(()=>{
   setTimeout(()=>{
     adc.readConversionData((val)=>{
       const temp = thermistor.getTemp(val);
-      console.log("Ch:%d %f %f", targetCh, val, temp);
+      if (targetCh == 0)
+        console.log("Ch:%d %f %f", targetCh, val, temp);
     });
   }, 250);
   ch = (ch + 1)  % 2;

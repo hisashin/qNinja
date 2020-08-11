@@ -11,7 +11,7 @@ const voltageToTemp = (voltageRatio, resistance, b_constant, r0, baseTemp) => {
 const tempToVoltageRatio  = (tempCelsius, resistance, 
   bConst, r0, baseTemp) => {
   const thermistorR = r0 * Math.exp(bConst * (1 / (tempCelsius + KELVIN) - 1 / (baseTemp + KELVIN)));
-    bConst, r0, baseTemp);
+    // bConst, r0, baseTemp);
   return thermistorR / (thermistorR + resistance);
 }
 class Thermistor {

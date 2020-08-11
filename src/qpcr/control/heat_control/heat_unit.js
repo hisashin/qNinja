@@ -1,5 +1,8 @@
 "use strict";
 
+/*
+  Heat output, sensing and logic
+  */
 class SampleSensing {
   constructor () {
   }
@@ -38,7 +41,7 @@ class HeatUnit {
   }
   control () {
     this.sensing.getTemperature ((temperature)=>{
-      this.pid.setTemperature(temperature);
+      this.pid.setValue(temperature);
       this.output.setOutput(this.pid.getOutput());
     });
   }

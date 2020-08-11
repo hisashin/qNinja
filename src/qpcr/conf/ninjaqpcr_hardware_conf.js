@@ -2,10 +2,10 @@
 
 const PID = require("../control/heat_control/pid.js");
 const Thermistor = require("../hardware/thermistor.js");
+const HeatUnit = require("../control/heat_control/heat_unit.js");
 
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
-const Thermistor = require("../hardware/thermistor.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 
 // For well PID
@@ -19,17 +19,15 @@ const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
 const SPI_CHANNEL = "/dev/spidev0.0";
 const PIN_MUX_SYNC = 40; // Pin number
 
-const PIN_LATCH = 15; // Pin number // TODO rename (whose latch?)
-const PIN_LED_PWM = 23; // GPIO{n} num
-const PIN_WELL_PWM = 33;
+const PIN_LED_LATCH = 15; // Pin number
+const PIN_LED_PWM = 26; // GPIO{n} num
+const PIN_WELL_PWM = 23; // GPIO{n} num
 const FREQ_WELL_PWM = 1000; // Hz
 
 
-const PIN_PWM_LID = 13;
-const PIN_LED_PWM = 32;
+const PIN_PWM_LID = 2;//13;
 const FREQ_LED_PWM = 1000;
-const PIN_PWM_FAN = 37; // TODO これ適当にきめただけ
-
+const PIN_PWM_FAN = 25;//37;
 
 // Example pin assignment 
 // https://docs.google.com/spreadsheets/d/1iU2gII_kSwVGeW8FTEcDqT59ksJSpKEOyM9GNM40jL0/edit#gid=1350445105
@@ -76,6 +74,7 @@ class TempSensingUnit  {
   getTemperature (callback) {
     adcManager.readChannelValue(this.adcChannel, (val)=>{
       const temp = this.thermistor.getTemp(val);
+      console.log("getTemperature %f %f", val, temp);
       callback(temp);
     });
   }
@@ -95,7 +94,9 @@ class WellOutput {
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
-    outputValue = Math.min(1.0, Math.max(0, outputValue));
+    // outputValue = Math.min(1.0, Math.max(0, outputValue));
+    console.log("setOutput %f (returning)", outputValue*1.0);
+    return; //TODO
     if (outputValue > 0) {
       this.wellPWM.write(outputValue);
       this.fanPWM.write(0);
@@ -129,7 +130,7 @@ class HeatLidOutput {
 }
 
 
-const ledDriver = new TLC59281DBQR(SPI_CHANNEL, PIN_LATCH, PIN_BLANK, FREQ_WELL_PWM);
+const ledDriver = new TLC59281DBQR(SPI_CHANNEL, PIN_LED_LATCH, PIN_LED_PWM, FREQ_WELL_PWM);
 
 // TODO potentiometer
 class LEDUnit {
@@ -178,7 +179,7 @@ class NinjaQPCRHardwareConf {
     const WELL_KP = 1.0;
     const WELL_KI = 1.0;
     const WELL_KD = 1.0;
-    const pid = new PID(LID_KP, LID_KI, LID_KD);
+    const pid = new PID(WELL_KP, WELL_KI, WELL_KD);
     pid.setOutputRange(-1, 1.0);
     const output = new WellOutput();
     return new HeatUnit(pid, wellSensing, output);
