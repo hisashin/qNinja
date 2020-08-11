@@ -38,9 +38,11 @@ class HeatUnit {
   }
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
+    this.pid.setSetpoint(this.targetTemperature);
   }
   control () {
     this.sensing.getTemperature ((temperature)=>{
+      this.temperature = temperature;
       this.pid.setValue(temperature);
       this.output.setOutput(this.pid.getOutput());
     });
