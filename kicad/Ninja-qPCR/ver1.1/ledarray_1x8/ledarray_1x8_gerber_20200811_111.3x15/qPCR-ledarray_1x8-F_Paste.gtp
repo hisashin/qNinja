@@ -1,0 +1,21 @@
+G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,(5.1.6-0-10_14)*
+G04 #@! TF.CreationDate,2020-08-11T10:22:26+09:00*
+G04 #@! TF.ProjectId,qPCR-ledarray_1x8,71504352-2d6c-4656-9461-727261795f31,rev?*
+G04 #@! TF.SameCoordinates,Original*
+G04 #@! TF.FileFunction,Paste,Top*
+G04 #@! TF.FilePolarity,Positive*
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW (5.1.6-0-10_14)) date 2020-08-11 10:22:26*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%ADD10R,1.200000X0.750000*%
+G04 APERTURE END LIST*
+D10*
+G04 #@! TO.C,C1*
+X82303200Y-119905400D03*
+X84203200Y-119905400D03*
+G04 #@! TD*
+M02*
