@@ -40,8 +40,9 @@ class PID {
     this.i += (value - this.setpoint) * this.intervalSec;
     this.value = value;
   }
-  output () {
+  getOutput () {
     let output = - (this.p * this.kp + this.i * this.ki * this.d * this.kd);
+    console.log("Getting output: %f<=>%f", this.value, this.setpoint);
     output = Math.min(this.upper, Math.max(this.lower, output));
     return output;
   }
