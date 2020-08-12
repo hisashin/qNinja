@@ -6,7 +6,7 @@
 class HeatWorkbench {
   constructor (conf) {
     this.well = conf.getWell();
-    // this.heatLid = conf.getHeatLid();
+    this.heatLid = conf.getHeatLid();
     
   }
   run () {
@@ -19,6 +19,10 @@ class HeatWorkbench {
       this.well.control();
       
     }, 1000);
+  }
+  shutdown () {
+    this.well.shutdown();
+    this.heatLid.shutdown();
   }
 }
 module.exports = HeatWorkbench;

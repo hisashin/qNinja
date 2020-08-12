@@ -82,6 +82,10 @@ class TempSensingUnit  {
     });
   }
   off () {}
+  shutdown () {
+    console.log("Shutting down TempSensingUnit.");
+    this.off();
+  }
 }
 const wellSensing = new TempSensingUnit(ADC_CHANNEL_WELL_THERMISTOR);
 // const lidSensing = new TempSensingUnit(ADC_CHANNEL_LID_THERMISTOR);
@@ -109,6 +113,10 @@ class WellOutput {
     this.wellPWM.write(0);
     this.fanPWM.write(0);
   }
+  shutdown () {
+    console.log("Shutting down HeatLidOutput.");
+    this.off();
+  }
 }
 
 class HeatLidOutput {
@@ -126,6 +134,10 @@ class HeatLidOutput {
   }
   off () {
     this.pwm.write(0);
+  }
+  shutdown () {
+    console.log("Shutting down HeatLidOutput.");
+    this.off();
   }
 }
 
@@ -147,6 +159,9 @@ class LEDUnit {
   }
   off () {
     this.ledDriver.setDuty(0);
+  }
+  shutdown () {
+    console.log("Shutting down LED unit.");
   }
 }
 

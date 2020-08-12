@@ -53,6 +53,11 @@ class HeatUnit {
   off() {
     this.output.off();
   }
+  shutdown () {
+    console.log("Shutting down HeatUnit.");
+    this.sensing.shutdown();
+    this.output.shutdown();
+  }
 }
 
 module.exports = HeatUnit;

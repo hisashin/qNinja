@@ -66,3 +66,8 @@ class NinjaQPCRDemo {
   }
 }
 new NinjaQPCRDemo().start();
+process.on('SIGINT', () => {
+    console.log('Received SIGINT');
+    qpcr.shutdown();
+    process.exit(1);
+});

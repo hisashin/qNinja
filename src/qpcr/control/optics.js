@@ -128,6 +128,10 @@ class Optics {
     });
     return data;
   }
+  shutdown () {
+    console.log("Optics.shutdown()");
+    this.ledUnit.shutdown();
+  }
 }
 
 module.exports = Optics;

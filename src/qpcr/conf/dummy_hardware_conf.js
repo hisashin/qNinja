@@ -34,6 +34,10 @@ class Well {
   off () {
     // Do nothing
   }
+  shutdown () {
+    console.log("Shutting down dummy well.");
+    this.off();
+  }
 }
 
 // instance of HeatUnit
@@ -53,6 +57,10 @@ class HeatLid {
   }
   off () {
     // Do nothing
+  }
+  shutdown () {
+    console.log("Shutting down dummy heat lid.");
+    this.off();
   }
   
 }
@@ -130,6 +138,9 @@ class LEDUnit {
   }
   off () {
     // Nothing to do
+  }
+  shutdown () {
+    console.log("Shutting down dummy LED unit.");
   }
 }
 class DummyFluorescenceSensingUnit {

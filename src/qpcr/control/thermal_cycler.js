@@ -188,6 +188,11 @@ class ThermalCycler {
       remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
   }
+  shutdown () {
+    console.log("ThermalCycler.shutdown()");
+    this.well.shutdown();
+    this.heatLid.shutdown();
+  }
 }
 
 /* State classes */
@@ -321,6 +326,7 @@ class StateStepRamp {
     }
   }
   isFinished () { return false; }
+  
 }
 
 class StateStepHold {
@@ -420,7 +426,9 @@ class StateFinalHold {
       state: "complete"
     }
   }
-  isFinished () { return true; }
+  isFinished () { 
+    return true; 
+  }
 }
 
 module.exports = ThermalCycler;

@@ -375,4 +375,9 @@ class NinjaQPCRServer {
     
   }
 }
+process.on('SIGINT', () => {
+    console.log('Received SIGINT');
+    qpcr.shutdown();
+    process.exit(1);
+});
 new NinjaQPCRServer().init();
