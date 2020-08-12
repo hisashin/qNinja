@@ -36,14 +36,23 @@ class PID {
   }
   setValue (value) {
     this.p = value - this.setpoint;
-    this.d = (value - this.value) /  this.intervalSec;
+    if (this.p > this.upper || this.p < this.lower) {
+      // Reset I if running in max power
+      this.i = 0;
+    }
     this.i += (value - this.setpoint) * this.intervalSec;
+    this.d = (value - this.value) /  this.intervalSec;
     this.value = value;
   }
   getOutput () {
-    let output = - (this.p * this.kp + this.i * this.ki * this.d * this.kd);
-    console.log("Getting output: %f<=>%f", this.value, this.setpoint);
+    let output = - (this.p * this.kp + this.i * this.ki + this.d * this.kd);
     output = Math.min(this.upper, Math.max(this.lower, output));
+    console.log("v=%f/%f, (%f*%f, %f*%f, %f*%f)=>%f", 
+      this.value, this.setpoint,
+      this.p, this.kp, 
+      this.i, this.ki, 
+      this.d, this.kd, 
+      output);
     return output;
   }
 }

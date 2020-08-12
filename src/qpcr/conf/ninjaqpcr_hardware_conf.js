@@ -96,19 +96,18 @@ class WellOutput {
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
-    // outputValue = Math.min(1.0, Math.max(0, outputValue));
-    outputValue = 0.5;
+    outputValue = Math.min(1.0, Math.max(-1, outputValue));
     if (outputValue > 0) {
       this.wellPWM.write(outputValue);
-      this.fanPWM.write(0);
+      //this.fanPWM.write(0);
     } else {
       this.wellPWM.write(0);
-      this.fanPwm.write(-outputValue);
+      //this.fanPwm.write(-outputValue);
     }
   }
   off () {
     this.wellPWM.write(0);
-    // this.fanPWM.write(0);
+    this.fanPWM.write(0);
   }
 }
 
@@ -176,9 +175,9 @@ class NinjaQPCRHardwareConf {
   }
   start () {}
   getWell () {
-    // TODO
-    const WELL_KP = 1.0;
-    const WELL_KI = 1.0;
+    // TODO tuning
+    const WELL_KP = 0.3;
+    const WELL_KI = 0.0;
     const WELL_KD = 1.0;
     const pid = new PID(WELL_KP, WELL_KI, WELL_KD);
     pid.setOutputRange(-1, 1.0);
@@ -186,7 +185,7 @@ class NinjaQPCRHardwareConf {
     return new HeatUnit(pid, wellSensing, output);
   }
   getHeatLid () {
-    // TODO
+    // TODO tunig
     const HEATER_KP = 1.0;
     const HEATER_KI = 1.0;
     const HEATER_KD = 1.0;

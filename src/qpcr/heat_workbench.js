@@ -12,7 +12,7 @@ class HeatWorkbench {
   run () {
     console.log("HeatWorkbench.run");
     this.well.start();
-    this.well.setTargetTemperature(35.0);
+    this.well.setTargetTemperature(42.0);
     // this.heatLid.start();
     setInterval(()=>{
       console.log("Well Temp=%f",this.well.temperature);

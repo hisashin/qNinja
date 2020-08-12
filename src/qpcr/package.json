@@ -5,6 +5,7 @@
   "main": "constants.js",
   "dependencies": {
     "fs": "^0.0.1-security",
+    "i2c-bus": "^5.2.0",
     "uuid": "^8.3.0"
   },
   "devDependencies": {},
