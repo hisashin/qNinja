@@ -1,5 +1,6 @@
 "use strict";
 const API_ENDPOINT = "http://localhost:2222/";
+const API_PORT = "2222";
 const Util = {
   humanTime: (timeSec)=>{
     let tokens = [];
@@ -22,9 +23,12 @@ const Util = {
     tokens.push(sec + "s");
     return tokens.join(" ");
   },
+  apiEndpoint () {
+    return "http://" + location.hostname + ":" + API_PORT + "/";
+  },
   requestData (path, data, method, onSuccess, onError) {
     const xmlhttp = new XMLHttpRequest();
-    const url = API_ENDPOINT + path;
+    const url = Util.apiEndpoint() + path;
     console.log("AppState._requestData %s %s", method, url);
     xmlhttp.onreadystatechange = ()=>{
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

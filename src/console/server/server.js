@@ -8,6 +8,7 @@ const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const LogManager = require(QPCR_PATH + "log_manager");
 
+
 const pm = new ProtocolManager();
 const lm = new LogManager();
 
@@ -17,10 +18,12 @@ const http = require('http');
 var URL = require('url');
 const WebSocketServer = require('websocket').server;
 
-const WEBSOCKET_PORT = 2222;
+const WEBSOCKET_PORT = "2222";
+const CLIENT_HOST_DEFAULT = "localhost";
+const CLIENT_PORT_DEFAULT = "8080";
 
 class NinjaQPCRHTTPServer {
-  constructor (server) {
+  constructor (server, clientHost, clientPort) {
     this.server = server;
     
     const router = new Router();
@@ -46,7 +49,8 @@ class NinjaQPCRHTTPServer {
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{
       // CORS
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+      const corsAllow = 'http://' + clientHost + ":" + clientPort;
+      res.setHeader('Access-Control-Allow-Origin', corsAllow);
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
       if (req.method == "OPTIONS") {
@@ -366,10 +370,34 @@ class NinjaQPCRWebSocketServer {
 class NinjaQPCRServer {
   constructor  () {
   }
+  getArgMap () {
+    let name = null;
+    let map = {};
+    process.argv.forEach((str)=>{
+      if (str.indexOf("--")==0) {
+        name = str.replace("--","");
+        map[name] = "";
+      } else {
+       if (name != null) {
+         map[name] = str;
+       }
+        name = null;
+      }
+    });
+    return map;
+  }
   init () {
+    
+    // Commandline options
+    const options = this.getArgMap();
+    console.log(JSON.stringify(options));
+    
+    const clientHost = (options.clientHost) ? options.clientHost:CLIENT_HOST_DEFAULT;
+    const clientPort = (options.clientPort) ? options.clientPort:CLIENT_PORT_DEFAULT;
+    
     this.server = http.createServer();
     this.server.listen(WEBSOCKET_PORT);
-    this.httpServer = new NinjaQPCRHTTPServer(this.server);
+    this.httpServer = new NinjaQPCRHTTPServer(this.server, clientHost, clientPort);
     this.webSocketSErver = new NinjaQPCRWebSocketServer(this.server);
     console.log("Ninja qPCR server started.");
     

@@ -27,6 +27,7 @@
           </b-button>
           <b-button
             class="ml-1"
+            v-bind:disabled="deviceState==null || !deviceState.startAvailable"
             @click.stop="run"
           >
             Run
@@ -38,6 +39,7 @@
 </template>
 <script>
 import appState from "../lib/AppState.js";
+import device from "../lib/Device.js";
 export default {
   name: 'ProtocolCell',
   props: {
@@ -47,6 +49,10 @@ export default {
   data() {
     return {
     }
+  },
+  created: function () {
+    this.deviceState = device.getDeviceState();
+    device.addDeviceStateHandler(this);
   },
   methods: {
     run: function(id) {
@@ -65,6 +71,10 @@ export default {
     },
     duplicate: function() {
       console.log("ProtocolCell.duplicate");
+    },
+    onDeviceStateChange: function (deviceState) {
+      this.deviceState = deviceState;
+      console.log("DeviceState=" + JSON.stringify(this.deviceState));
     }
   }
 }

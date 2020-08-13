@@ -1,6 +1,6 @@
 "use strict";
 const Util = require("../lib/Util.js");
-
+const WS_API_PORT = "2222";
 class Device {
   constructor () {
     this.ws = null; // WebSocket object
@@ -19,11 +19,18 @@ class Device {
     this.baseline = [];
   }
   
+  apiEndpoint () {
+    return "ws://" + location.hostname + ":" + WS_API_PORT + "/";
+  }
+  
   /* API */
   connect () {
     try {
-      console.log("Connecting...");
-      this.ws = new WebSocket('ws://localhost:2222/');
+      console.log("WS Connect...");
+      console.log(location.hostname)
+      const endpoint = ("ws://" + location.hostname + ":" + WS_API_PORT + "/");
+      console.log("Connecting to " + endpoint);
+      this.ws = new WebSocket(this.apiEndpoint());
     } catch (ex) {
       return;
     }

@@ -40,7 +40,6 @@ class AppState {
     Util.requestData("device", null, "GET", 
       (data)=>{
         console.log("AppState.init received device state");
-        console.log(data);
         if (data.hasExperiment) {
           console.log("AppState.init Getting experiment data");
           Util.requestData("device/experiment", null, "GET", 
