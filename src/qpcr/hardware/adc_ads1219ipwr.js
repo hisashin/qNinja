@@ -109,12 +109,17 @@ class ADS1219IPWR {
   readConversionData (callback) {
     let buff = Buffer.alloc(3, 0x00);
     this.i2c.readI2cBlock(this.slaveAddress, COMMAND_RDATA, 3, buff, ()=>{
-      let val = (buff[0] << 16) | (buff[0] << 16) | buff[2];
+      let val = (buff[0] << 16) | (buff[1] << 8) | buff[2];
+      let origVal = val;
       if(val & 0x00800000){
         val = ~val + 1;
         val = -(val & 0xFFFFFF);
       }
-      callback(val / (1.0 * 0x00800000));
+      if (val < 0) {
+        val = 0;
+      }
+      
+      callback( Math.max(0, val / (1.0 * 0x00800000))); // For single-ended
     });
   }
   

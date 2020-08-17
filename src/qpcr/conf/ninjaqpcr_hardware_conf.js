@@ -88,7 +88,7 @@ class TempSensingUnit  {
   }
 }
 const wellSensing = new TempSensingUnit(ADC_CHANNEL_WELL_THERMISTOR);
-// const lidSensing = new TempSensingUnit(ADC_CHANNEL_LID_THERMISTOR);
+const lidSensing = new TempSensingUnit(ADC_CHANNEL_LID_THERMISTOR);
 
 // PWM
 class WellOutput {
@@ -96,6 +96,8 @@ class WellOutput {
   constructor () {
     this.fanPWM = fanPWM;
     this.wellPWM = wellPWM;
+    console.log("this.fanPWM = " + this.fanPWM);
+    console.log("this.wellPWM = " + this.wellPWM);
   }
   start () {
   }
@@ -103,10 +105,10 @@ class WellOutput {
     outputValue = Math.min(1.0, Math.max(-1, outputValue));
     if (outputValue > 0) {
       this.wellPWM.write(outputValue);
-      //this.fanPWM.write(0);
+      this.fanPWM.write(0);
     } else {
       this.wellPWM.write(0);
-      //this.fanPwm.write(-outputValue);
+      this.fanPWM.write(-outputValue);
     }
   }
   off () {
@@ -192,8 +194,8 @@ class NinjaQPCRHardwareConf {
   getWell () {
     // TODO tuning
     const WELL_KP = 0.3;
-    const WELL_KI = 0.0;
-    const WELL_KD = 1.0;
+    const WELL_KI = 0.1;
+    const WELL_KD = 0.1;
     const pid = new PID(WELL_KP, WELL_KI, WELL_KD);
     pid.setOutputRange(-1, 1.0);
     const output = new WellOutput();
@@ -207,7 +209,7 @@ class NinjaQPCRHardwareConf {
     const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
     pid.setOutputRange(0, 1.0);
     const output = new HeatLidOutput();
-    return new HeatUnit(pid, wellSensing, output);
+    return new HeatUnit(pid, lidSensing, output);
   }
   getLEDUnit () {
     return new LEDUnit(ledDriver);

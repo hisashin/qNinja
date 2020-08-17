@@ -13,4 +13,4 @@ const startBlink = (pin /* J8 pin number (not GPIO ID) */, interval /* msec */) 
   }, interval);
   
 }
-startBlink(40, 10);
+startBlink(37, 1000);

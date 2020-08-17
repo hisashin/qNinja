@@ -2,7 +2,8 @@
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
-const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf"); // Use simulator
+// const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf"); // Use simulator
+const hardwareConf = require(QPCR_PATH + "conf/ninjaqpcr_heat_only_conf"); // For thermal cycler test
 const qpcr = new NinjaQPCR(hardwareConf);
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");

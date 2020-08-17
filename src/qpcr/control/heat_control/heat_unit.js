@@ -37,6 +37,10 @@ class HeatUnit {
     this.output.start();
   }
   setTargetTemperature (targetTemperature) {
+    if (this.targetTemperature == targetTemperature) {
+      return;
+    }
+    console.log("setTargetTemperature %f", targetTemperature);
     this.targetTemperature = targetTemperature;
     this.pid.setSetpoint(this.targetTemperature);
   }
@@ -44,7 +48,9 @@ class HeatUnit {
     this.sensing.getTemperature ((temperature)=>{
       this.temperature = temperature;
       this.pid.setValue(temperature);
-      this.output.setOutput(this.pid.getOutput());
+      if (this.targetTemperature > 0) {
+        this.output.setOutput(this.pid.getOutput());
+      }
     });
   }
   temperature () {

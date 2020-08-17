@@ -31,9 +31,9 @@ const example_melt_curve_stage = {
   type: Constants.StageType.MELT_CURVE,
   repeat: 1,
   steps: [
-    { label:"denature", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[] },
-    { label:"cool", ramp_speed: 1.0, hold_duration:15, temp:55.0, data_collection:[] },
-    { label:"melt", ramp_speed: 1.0, hold_duration:15, temp:95.0, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
+    { label:"denature", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:[] },
+    { label:"cool", ramp_speed: 1.0, duration:15, temp:55.0, data_collection:[] },
+    { label:"melt", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
   ]
 };
 

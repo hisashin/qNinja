@@ -23,7 +23,7 @@ class ADCManager {
       this.currentChannel = channel;
     }
   }
-  _readNext (t) {
+  _readNext (t /* Debug param */) {
     if (this._isReading) {
       return;
     }

@@ -33,7 +33,11 @@ class Thermistor {
     if (this.highSide) {
       val = 1.0 - val;
     }
-    return voltageToTemp(val, this.r, this.bConstantForVoltage(val), this.r0, this.baseTemp);
+    const temp =  voltageToTemp(val, this.r, this.bConstantForVoltage(val), this.r0, this.baseTemp);
+    if (isNaN(temp)) {
+      console.log("getTemp NaN val=" + val);
+    }
+    return temp;
   }
   bConstantForVoltage (voltageRatio) {
     let bConstant = this.bConstRanges[0].bConst;

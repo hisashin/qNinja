@@ -99,14 +99,22 @@ class ThermalCycler {
     this.eventReceiver = receiver;
   }
   start (protocol) {
+    this.protocol = protocol;
     this.well.start();
     this.heatLid.start();
-    this.protocol = protocol;
+    if (protocol.lid_temp > 0) {
+      this.heatLid.setTargetTemperature(protocol.lid_temp);
+    } else {
+      this.heatLid.off();
+    }
     this.state = new StatePreheat(protocol);
+    if (!(this.protocol.lid_temp > 0)) {
+      // Skip preheat if lid is disabled
+      this.state = this.state.next(this.well.temperature);
+    }
     this.startTime = new Date();
     this.state.start(this.startTime);
     console.log(this.protocol);
-    this.heatLid.setTargetTemperature(protocol.lid_temp);
     this._startTimer();
     this.remainingTimeCalculator = new RemainingTimeCalculator(protocol);
   }
@@ -141,7 +149,9 @@ class ThermalCycler {
   control () {
     // TODO: different intervals for different units!
     this.well.control();
-    this.heatLid.control();
+    if (this.protocol.lid_temp > 0) {
+      this.heatLid.control();
+    }
     const now = new Date();
     this.state.updateTime(now);
     if (this.state.complete(this.well.temperature, this.heatLid.temperature, now)) {
@@ -225,7 +235,11 @@ class StatePreheat {
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "Preheat"; }
   complete (wellTemp, lid_temp, timestamp) { 
-    return Math.abs(lid_temp - this.protocol.lid_temp) <= TEMP_TOLERANCE_LID;
+    if (this.protocol.lid_temp > 0) {
+      return Math.abs(lid_temp - this.protocol.lid_temp) <= TEMP_TOLERANCE_LID;
+    } else {
+      return true;
+    }
   }
   updateTime (timestamp) {
     // Do nothing
@@ -249,7 +263,6 @@ class StatePreheat {
     }
   }
   getStatus() {
-    // TODO define data format
     return {
       state: "preheat",
       stepElapsed: new Date().getTime() - this.startTimestamp
@@ -344,6 +357,7 @@ class StateStepHold {
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepHold"; }
   complete (wellTemp, lid_temp, timestamp) {
+    console.log(JSON.stringify(this.step));
     return this.elapsedMsec/1000 > this.step.duration;
   }
   updateTime (timestamp) {

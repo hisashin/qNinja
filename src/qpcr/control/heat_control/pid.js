@@ -47,12 +47,14 @@ class PID {
   getOutput () {
     let output = - (this.p * this.kp + this.i * this.ki + this.d * this.kd);
     output = Math.min(this.upper, Math.max(this.lower, output));
+    
     console.log("v=%f/%f, (%f*%f, %f*%f, %f*%f)=>%f", 
       this.value, this.setpoint,
       this.p, this.kp, 
       this.i, this.ki, 
       this.d, this.kd, 
       output);
+    
     return output;
   }
 }
