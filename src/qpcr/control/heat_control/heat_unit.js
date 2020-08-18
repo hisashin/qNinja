@@ -49,7 +49,7 @@ class HeatUnit {
       this.temperature = temperature;
       this.pid.setValue(temperature);
       if (this.targetTemperature > 0) {
-        this.output.setOutput(this.pid.getOutput());
+        this.output.setOutput(this.pid.gaetOutput());
       }
     });
   }

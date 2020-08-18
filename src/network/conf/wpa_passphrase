@@ -1,0 +1,5 @@
+# Dummy script to simulate wpa_passphrase command on dev env
+echo 'network={'
+echo '    ssid="hogehoge"'
+echo '    psk=fugafugamogemogefugafugamogemoge'
+echo '}'

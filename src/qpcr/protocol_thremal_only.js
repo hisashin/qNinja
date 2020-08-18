@@ -1,0 +1,28 @@
+"use strict";
+
+const Constants = require("./constants");
+
+const MEASUREMENT_RAMP_CONTINUOUS = 1;
+const MEASUREMENT_HOLD_CONTINUOUS = 2;
+const MEASUREMENT_RAMP_END = 3;
+const MEASUREMENT_HOLD_END = 4;
+
+
+const protocol = {
+  name: "Thermal Protocol",
+  id:"457DE8E9-604D-4CE6-9E7A-4E10CD9D9160",
+  lid_temp: 24, // Celsius
+  stages: [
+    {
+      type: Constants.StageType.MELT_CURVE,
+      repeat: 1,
+      steps: [
+        { label:"denature", duration:10, temp:55.0, data_collection:[] },
+        { label:"cool", duration:10, temp:35.0, data_collection:[] },
+        { label:"melt", duration:10, temp:45.0, data_collection:[] }
+      ]
+    }
+  ]
+};
+
+module.exports = protocol;
