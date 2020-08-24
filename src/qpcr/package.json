@@ -10,6 +10,7 @@
     "pi-spi":"*",
     "async":"*",
     "raspi":"*",
+    "rpio":"*",
     "raspi-pwm":"*",
     "raspi-soft-pwm":"*"
   },
