@@ -31,7 +31,7 @@ setInterval(()=>{
   setTimeout(()=>{
     adc.readConversionData((val)=>{
       const temp = thermistor.getTemp(val);
-      console.log("Ch:%d %f %f", targetCha, val, temp);
+      console.log("Ch:%d %f %f", targetCh, val, temp);
     });
   }, 250);
   ch = (ch + 1)  % 2;

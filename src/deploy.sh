@@ -12,6 +12,6 @@ $RSYNC ./console/server/ $RASPI:/home/pi/ninjaqpcr/console/server --exclude='nod
 echo "Syncing console/client/dist"
 $RSYNC ./console/client/dist/ $RASPI:/home/pi/ninjaqpcr/console/client/dist --exclude='.DS_Store'
 echo "Syncing startup"
-$RSYNC ./startup/ $RASPI:/home/pi/ninjaqpcr/startup
+$RSYNC ./startup/ $RASPI:/homde/pi/ninjaqpcr/startup
 echo "Syncing network_conf_app"
 $RSYNC ./network_conf_app/ $RASPI:/home/pi/ninjaqpcr/network_conf_app
