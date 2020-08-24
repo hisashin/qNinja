@@ -6,7 +6,12 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "i2c-bus": "^5.2.0",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.0",
+    "pi-spi":"*",
+    "async":"*",
+    "raspi":"*",
+    "raspi-pwm":"*",
+    "raspi-soft-pwm":"*"
   },
   "devDependencies": {},
   "scripts": {

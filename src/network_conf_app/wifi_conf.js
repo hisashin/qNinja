@@ -1,4 +1,9 @@
 "use strict";
+
+/*
+  Network configuration server
+  It provides Wi-Fi configuration.
+  */
 const { exec } = require("child_process");
 const http = require('http');
 var URL = require('url');
@@ -18,8 +23,7 @@ const CMD_WPA = "wpa_passphrase";
 const PATH_WPA_HEADER = "./wpa_supplicant_header.txt";
 const PATH_WPA_CONF = "/etc/wpa_supplicant/wpa_supplicant.conf";
 const SUDO = "sudo";
-const PORT = 8080;
-
+const PORT = 80;
 
 class WifiConfServer {
   constructor () {
