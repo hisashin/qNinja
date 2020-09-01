@@ -12,7 +12,7 @@ const example_hold_stage = {
   type: Constants.StageType.HOLD,
   repeat: 1,
   steps: [
-    { label:"initial", temp:94.0, duration:15.0, data_collection:[] }
+    { label:"initial", temp:94.0, duration:15.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
   ]
 };
 
@@ -21,9 +21,9 @@ const example_pcr_stage = {
   type: Constants.StageType.QPCR,
   repeat: 35,
   steps: [
-    { label:"denature", temp:94.0, duration:15.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
-    { label:"anneal", temp:55.0, duration:15.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] },
-    { label:"extend", temp:72.0, duration:15.0, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END] }
+    { label:"denature", temp:94.0, duration:15.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"anneal", temp:55.0, duration:15.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"extend", temp:72.0, duration:15.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
   ]
 };
 
@@ -31,9 +31,9 @@ const example_melt_curve_stage = {
   type: Constants.StageType.MELT_CURVE,
   repeat: 1,
   steps: [
-    { label:"denature", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:[] },
-    { label:"cool", ramp_speed: 1.0, duration:15, temp:55.0, data_collection:[] },
-    { label:"melt", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:[MEASUREMENT_RAMP_CONTINUOUS] }
+    { label:"denature", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"cool", ramp_speed: 1.0, duration:15, temp:55.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"melt", ramp_speed: 1.0, duration:15, temp:95.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:true, hold_continuous:false} }
   ]
 };
 

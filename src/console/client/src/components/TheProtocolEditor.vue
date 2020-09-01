@@ -153,6 +153,13 @@
                       type="number"
                       step="1"
                     >sec
+                    <div v-if="stage.type==2">
+                      Data Collection : 
+                      <input type="checkbox" v-model="stage.steps[0].data_collection.ramp_end">
+                      Ramp End
+                      <input type="checkbox" v-model="stage.steps[0].data_collection.hold_end">
+                      Hold End
+                    </div>
                   </li>
                   <li class="protocol-step">
                     <div class="protocol-step-label">
@@ -169,6 +176,13 @@
                       type="number"
                       step="1"
                     >sec
+                    <div v-if="stage.type==2">
+                      Data Collection : 
+                      <input type="checkbox" v-model="stage.steps[1].data_collection.ramp_end">
+                      Ramp End
+                      <input type="checkbox" v-model="stage.steps[1].data_collection.hold_end">
+                      Hold End
+                    </div>
                   </li>
                   <li class="protocol-step">
                     <div class="protocol-step-label">
@@ -185,6 +199,13 @@
                       type="number"
                       step="1"
                     >sec
+                    <div v-if="stage.type==2">
+                      Data Collection : 
+                      <input type="checkbox" v-model="stage.steps[2].data_collection.ramp_end">
+                      Ramp End
+                      <input type="checkbox" v-model="stage.steps[2].data_collection.hold_end">
+                      Hold End
+                    </div>
                   </li>
                 </ul>
               </template>
@@ -311,22 +332,22 @@ const MEASUREMENT_HOLD_END = 4;
 
 const DEFAULT_STAGE_HOLD = { type: Constants.StageType.HOLD, 
   repeat:1, 
-  steps:[ {label:"hold", temp:94, duration:15, data_collection:[]} ] };
+  steps:[ {label:"hold", temp:94, duration:15, data_collection:{}} ] };
 const DEFAULT_STAGE_QPCR = { type: Constants.StageType.QPCR, 
   repeat:30, 
-  steps:[ {label:"denature", temp:94, duration:15, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
-  {label:"anneal", temp:55, duration:12, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]}, 
-  {label:"extend", temp:72, duration:18, data_collection:[MEASUREMENT_RAMP_END, MEASUREMENT_HOLD_END]} ] };
+  steps:[ {label:"denature", temp:94, duration:15, data_collection:{"ramp_end":true, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}}, 
+  {label:"anneal", temp:55, duration:12, data_collection:{}}, 
+  {label:"extend", temp:72, duration:18, data_collection:{}} ] };
 const DEFAULT_STAGE_MELT_CURVE = { type: Constants.StageType.MELT_CURVE, 
   repeat:1, 
-  steps:[ {label:"denature", temp:94, duration:10, ramp_speed:4, data_collection:[]}, 
+  steps:[ {label:"denature", temp:94, duration:10, ramp_speed:4, data_collection:{}}, 
   {label:"cool", temp:55, duration:5, ramp_speed:4, data_collection:[]}, 
-  {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:[MEASUREMENT_RAMP_CONTINUOUS]} ] };
+  {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:{"ramp_end":false, "hold_end":false, "ramp_continuous":true, "hold_continuous":false}} ] };
 const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR, 
   repeat:30, 
-  steps:[ {label:"denature", temp:94, duration:15, data_collection:[]}, 
-  {label:"anneal", temp:55, duration:12, data_collection:[]}, 
-  {label:"extend", temp:72, duration:18, data_collection:[]} ] };
+  steps:[ {label:"denature", temp:94, duration:15, data_collection:{}}, 
+  {label:"anneal", temp:55, duration:12, data_collection:{}}, 
+  {label:"extend", temp:72, duration:18, data_collection:{}} ] };
   
 export default {
   name: 'TheProtocolEditor',
@@ -390,6 +411,7 @@ export default {
       });
     },
     setProtocol: function (protocol) {
+      
       this.protocol = protocol.protocol;
       if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
         this.final_hold_temp = '' + this.protocol.final_hold_temp;

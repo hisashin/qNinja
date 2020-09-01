@@ -240,7 +240,7 @@ class NinjaQPCR {
     this.experimentLog.events.push(data.to);
     this.optics.stopContinuousDataCollection();
     if (data.from.state == 'ramp') {
-      if (from != null && from.data_collection != null && from.data_collection.indexOf(MEASUREMENT_RAMP_END) > -1) {
+      if (from != null && from.data_collection != null && from.data_collection.ramp_end==true) {
         console.log("RAMP FINISH. Measure fluorescence.")
         this.optics.measureAll(
           (values)=>{
@@ -252,7 +252,7 @@ class NinjaQPCR {
       }
     }
     if (data.from.state == 'hold') {
-      if (from != null && from.data_collection != null && from.data_collection.indexOf(MEASUREMENT_HOLD_END) > -1) {
+      if (from != null && from.data_collection != null && from.data_collection.hold_end==true) {
         console.log("HOLD FINISH. Measure fluorescence.")
         this.optics.measureAll(
           (values)=>{
@@ -266,7 +266,7 @@ class NinjaQPCR {
     }
     const _data = data;
     if (data.to.state == 'ramp') {
-      if (to != null && to.data_collection != null && to.data_collection.indexOf(MEASUREMENT_RAMP_CONTINUOUS) > -1) {
+      if (to != null && to.data_collection != null && to.data_collection.ramp_continuous==true) {
         this.optics.startContinuousDataCollection(
           (values)=>{
             this.onFluorescenceDataUpdate(data.to, MEASUREMENT_RAMP_CONTINUOUS, values);
@@ -275,7 +275,7 @@ class NinjaQPCR {
       }
     }
     if (data.to.state == 'Hold continuous') {
-      if (to != null && to.data_collection != null && to.data_collection.indexOf(MEASUREMENT_HOLD_CONTINUOUS) > -1) {
+      if (to != null && to.data_collection != null && to.data_collection.hold_continuous==true) {
         this.optics.startContinuousDataCollection(
           (values)=>{
             console.log("Hold continuous.");
