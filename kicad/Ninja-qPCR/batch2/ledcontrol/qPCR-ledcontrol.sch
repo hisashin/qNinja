@@ -90,17 +90,15 @@ S_LED_OUT7
 Text GLabel 8150 4850 2    50   Input ~ 0
 S_LED_OUT8
 Text GLabel 8150 4950 2    50   Input ~ 0
-RPI_SPI_MISO
+LED_SPI_MISO
 Text GLabel 5950 3650 0    50   Input ~ 0
-RPI_SPI_MOSI
+LED_SPI_MOSI
 Text GLabel 5950 3550 0    50   Input ~ 0
-RPI_SPI_SCLK
+LED_SPI_SCLK
 Text GLabel 5950 3450 0    50   Input ~ 0
 LED_LAT
 Text GLabel 5950 3350 0    50   Input ~ 0
 LED_BLANK
-Text GLabel 5950 3850 0    50   Input ~ 0
-LED_IREF
 Wire Wire Line
 	6150 3350 5950 3350
 Wire Wire Line
@@ -160,9 +158,9 @@ Wire Wire Line
 Text GLabel 2800 4400 0    50   Input ~ 0
 VCC
 Text GLabel 2800 4100 0    50   Input ~ 0
-RPI_I2C_SDA
+I2C_SDA
 Text GLabel 2800 3600 0    50   Input ~ 0
-RPI_I2C_SCL
+I2C_SCL
 Text GLabel 2800 3500 0    50   Input ~ 0
 VCC
 Wire Wire Line
@@ -173,8 +171,6 @@ Wire Wire Line
 	2800 4100 3050 4100
 Wire Wire Line
 	3050 4400 2800 4400
-Text GLabel 2800 4000 0    50   Input ~ 0
-LED_IREF
 Text GLabel 2800 3800 0    50   Input ~ 0
 VCC
 Wire Wire Line
@@ -288,9 +284,9 @@ GND
 Text GLabel 1300 3550 0    50   Input ~ 0
 VCC
 Text GLabel 1300 3650 0    50   Input ~ 0
-RPI_I2C_SCL
+I2C_SCL
 Text GLabel 1300 3750 0    50   Input ~ 0
-RPI_I2C_SDA
+I2C_SDA
 $Comp
 L Connector:Conn_01x05_Male J?
 U 1 1 5F48F29A
@@ -311,11 +307,11 @@ Wire Wire Line
 Wire Wire Line
 	1300 3750 1500 3750
 Text GLabel 1300 4400 0    50   Input ~ 0
-RPI_SPI_SCLK
+LED_SPI_SCLK
 Text GLabel 1300 4500 0    50   Input ~ 0
-RPI_SPI_MOSI
+LED_SPI_MOSI
 Text GLabel 1300 4600 0    50   Input ~ 0
-RPI_SPI_MISO
+LED_SPI_MISO
 Wire Wire Line
 	1300 4600 1500 4600
 Wire Wire Line
@@ -333,4 +329,8 @@ Wire Wire Line
 	1300 4300 1500 4300
 Wire Wire Line
 	1500 4200 1300 4200
+Text HLabel 5950 3850 0    50   Input ~ 0
+LED_IREF
+Text HLabel 2800 4000 0    50   Input ~ 0
+LED_IREF
 $EndSCHEMATC

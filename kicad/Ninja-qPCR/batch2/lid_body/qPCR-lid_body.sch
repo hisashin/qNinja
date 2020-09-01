@@ -42,13 +42,13 @@ BODY_HEATER1B
 Text GLabel 9300 1200 0    50   Input ~ 0
 BODY_THERM1
 Text GLabel 9300 1300 0    50   Input ~ 0
-FAN1
+FAN_BLUE_FREQ
 Text GLabel 9300 1400 0    50   Input ~ 0
-FAN_VCC
+FAN_RED_VCC
 Text GLabel 9300 1500 0    50   Input ~ 0
 THERM_GND
 Text GLabel 9300 1600 0    50   Input ~ 0
-FAN2
+FAN_BLACK_GND
 Text GLabel 9300 1700 0    50   Input ~ 0
 BODY_THERM2
 Text GLabel 9300 1800 0    50   Input ~ 0
@@ -121,12 +121,6 @@ Text GLabel 1350 2450 2    50   Input ~ 0
 BODY_HEATER1B
 Text GLabel 7000 1400 2    50   Input ~ 0
 BODY_THERM1
-Text GLabel 1350 2650 2    50   Input ~ 0
-FAN1
-Text GLabel 1350 2550 2    50   Input ~ 0
-FAN_VCC
-Text GLabel 1350 2750 2    50   Input ~ 0
-FAN2
 Text GLabel 7000 1500 2    50   Input ~ 0
 BODY_THERM2
 Text GLabel 1350 2850 2    50   Input ~ 0
@@ -344,4 +338,10 @@ Wire Wire Line
 	1350 3250 1100 3250
 Wire Wire Line
 	1100 3350 1350 3350
+Text GLabel 1350 2550 2    50   Input ~ 0
+FAN_BLUE_FREQ
+Text GLabel 1350 2650 2    50   Input ~ 0
+FAN_RED_VCC
+Text GLabel 1350 2750 2    50   Input ~ 0
+FAN_BLACK_GND
 $EndSCHEMATC
