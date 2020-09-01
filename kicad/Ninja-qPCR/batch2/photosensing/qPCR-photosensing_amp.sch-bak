@@ -1,0 +1,235 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 1750 3650 3    50   Input ~ 0
+GND
+Connection ~ 2450 1000
+Wire Wire Line
+	950  1000 2450 1000
+Wire Wire Line
+	950  2550 950  1000
+Wire Wire Line
+	1900 2550 950  2550
+Wire Wire Line
+	2450 1000 2600 1000
+Wire Wire Line
+	2450 1300 2450 1000
+Wire Wire Line
+	4550 1300 2450 1300
+Wire Wire Line
+	4850 1000 5100 1000
+Connection ~ 4850 1000
+Wire Wire Line
+	4850 1300 4850 1000
+Wire Wire Line
+	4850 1700 4850 2050
+Connection ~ 4850 1700
+Wire Wire Line
+	4550 1700 4850 1700
+Wire Wire Line
+	4550 1600 4550 1700
+Connection ~ 4850 2050
+Wire Wire Line
+	4850 1600 4850 1700
+$Comp
+L Device:C C?
+U 1 1 5F53AECF
+P 4850 1450
+F 0 "C?" H 4965 1496 50  0000 L CNN
+F 1 "0.22uF" H 4965 1405 50  0000 L CNN
+F 2 "" H 4888 1300 50  0001 C CNN
+F 3 "~" H 4850 1450 50  0001 C CNN
+	1    4850 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F53AED5
+P 4550 1450
+F 0 "C?" H 4665 1496 50  0000 L CNN
+F 1 "0.22uF" H 4665 1405 50  0000 L CNN
+F 2 "" H 4588 1300 50  0001 C CNN
+F 3 "~" H 4550 1450 50  0001 C CNN
+	1    4550 1450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 2050 4850 2350
+Wire Wire Line
+	4700 2050 4850 2050
+Wire Wire Line
+	4850 2850 4850 2650
+Text GLabel 4850 2850 3    50   Input ~ 0
+GND
+$Comp
+L Device:R R?
+U 1 1 5F53AEDF
+P 4850 2500
+F 0 "R?" H 4920 2546 50  0000 L CNN
+F 1 "560" H 4920 2455 50  0000 L CNN
+F 2 "" V 4780 2500 50  0001 C CNN
+F 3 "~" H 4850 2500 50  0001 C CNN
+	1    4850 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2150 3700 2150
+Wire Wire Line
+	5100 1000 5100 2150
+Wire Wire Line
+	2900 1000 4850 1000
+$Comp
+L Device:R R?
+U 1 1 5F53AEE8
+P 2750 1000
+F 0 "R?" V 2543 1000 50  0000 C CNN
+F 1 "1800" V 2634 1000 50  0000 C CNN
+F 2 "" V 2680 1000 50  0001 C CNN
+F 3 "~" H 2750 1000 50  0001 C CNN
+	1    2750 1000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1600 2150 1900 2150
+Connection ~ 1600 2150
+Wire Wire Line
+	1600 2250 1600 2150
+Wire Wire Line
+	1900 2250 1600 2250
+Wire Wire Line
+	3900 1400 4250 1400
+Connection ~ 3900 1400
+Wire Wire Line
+	3900 1600 3900 1400
+Wire Wire Line
+	4250 1400 4250 1600
+Wire Wire Line
+	3650 1400 3900 1400
+Wire Wire Line
+	3900 2050 3700 2050
+Connection ~ 3900 2050
+Wire Wire Line
+	3900 1900 3900 2050
+Wire Wire Line
+	4250 2050 3900 2050
+Connection ~ 4250 2050
+Wire Wire Line
+	4250 1900 4250 2050
+$Comp
+L Device:C C?
+U 1 1 5F53AEFD
+P 4250 1750
+F 0 "C?" H 4365 1796 50  0000 L CNN
+F 1 "10pF" H 4365 1705 50  0000 L CNN
+F 2 "" H 4288 1600 50  0001 C CNN
+F 3 "~" H 4250 1750 50  0001 C CNN
+	1    4250 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F53AF03
+P 3900 1750
+F 0 "R?" H 3970 1796 50  0000 L CNN
+F 1 "1.1M" H 3970 1705 50  0000 L CNN
+F 2 "" V 3830 1750 50  0001 C CNN
+F 3 "~" H 3900 1750 50  0001 C CNN
+	1    3900 1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 2050 4250 2050
+$Comp
+L Device:R R?
+U 1 1 5F53AF0A
+P 4550 2050
+F 0 "R?" V 4343 2050 50  0000 C CNN
+F 1 "560" V 4434 2050 50  0000 C CNN
+F 2 "" V 4480 2050 50  0001 C CNN
+F 3 "~" H 4550 2050 50  0001 C CNN
+	1    4550 2050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3800 3150 3800 2950
+Text GLabel 3800 3150 3    50   Input ~ 0
+GND
+Wire Wire Line
+	3800 2550 3700 2550
+Connection ~ 3800 2550
+Wire Wire Line
+	3800 2650 3800 2550
+$Comp
+L Device:C C?
+U 1 1 5F53AF16
+P 3800 2800
+F 0 "C?" H 3915 2846 50  0000 L CNN
+F 1 "0.1uF" H 3915 2755 50  0000 L CNN
+F 2 "" H 3838 2650 50  0001 C CNN
+F 3 "~" H 3800 2800 50  0001 C CNN
+	1    3800 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 2150 1600 2150
+Text GLabel 1350 2150 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1750 2950 1900 2950
+Connection ~ 1750 2950
+Wire Wire Line
+	1750 3050 1750 2950
+$Comp
+L Device:C C?
+U 1 1 5F53AF21
+P 1750 3200
+F 0 "C?" H 1865 3246 50  0000 L CNN
+F 1 "0.1uF" H 1865 3155 50  0000 L CNN
+F 2 "" H 1788 3050 50  0001 C CNN
+F 3 "~" H 1750 3200 50  0001 C CNN
+	1    1750 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 2950 1750 2950
+Wire Wire Line
+	3900 2550 3800 2550
+Text GLabel 3900 2550 2    50   Input ~ 0
+-10V
+Text GLabel 1550 2950 0    50   Input ~ 0
++10V
+$Comp
+L Ninja-qPCR:LME49721MAX_NOPB U?
+U 1 1 5F53AF2B
+P 1900 2150
+F 0 "U?" H 2800 2637 60  0000 C CNN
+F 1 "LME49721MAX_NOPB" H 2800 2531 60  0000 C CNN
+F 2 "M08A_TEX" H 2800 2490 60  0001 C CNN
+F 3 "" H 1900 2150 60  0000 C CNN
+	1    1900 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 3650 1750 3350
+Text HLabel 5300 2150 2    50   Input ~ 0
+AMP_OUT
+Wire Wire Line
+	5300 2150 5100 2150
+Connection ~ 5100 2150
+Text HLabel 1550 2450 0    50   Input ~ 0
+PD_MUX_OUT
+Wire Wire Line
+	1550 2450 1900 2450
+$EndSCHEMATC
