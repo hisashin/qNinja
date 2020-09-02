@@ -284,9 +284,9 @@ GND
 Text GLabel 1300 3550 0    50   Input ~ 0
 VCC
 Text GLabel 1300 3650 0    50   Input ~ 0
-RPI_I2C_SCL
+I2C_SCL
 Text GLabel 1300 3750 0    50   Input ~ 0
-RPI_I2C_SDA
+I2C_SDA
 $Comp
 L Connector:Conn_01x05_Male J?
 U 1 1 5F48F29A

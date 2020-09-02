@@ -46,17 +46,6 @@ F 3 "" H 7000 5800 60  0000 C CNN
 	2    7000 5800
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:Conn_01x05_Male J?
-U 1 1 5F46A4C1
-P 1700 3650
-F 0 "J?" H 1672 3674 50  0000 R CNN
-F 1 "Conn_01x05_Male" H 1672 3583 50  0000 R CNN
-F 2 "" H 1700 3650 50  0001 C CNN
-F 3 "~" H 1700 3650 50  0001 C CNN
-	1    1700 3650
-	-1   0    0    -1  
-$EndComp
 Text GLabel 8150 3350 2    50   Input ~ 0
 N_LED_OUT1
 Text GLabel 8150 3450 2    50   Input ~ 0
@@ -146,7 +135,7 @@ Wire Wire Line
 Text GLabel 6650 5800 0    50   Input ~ 0
 GND
 Text GLabel 6650 6300 0    50   Input ~ 0
-VCC
+VCC_LOGIC
 Wire Wire Line
 	6650 6300 7000 6300
 Wire Wire Line
@@ -155,28 +144,16 @@ Text GLabel 4800 3800 2    50   Input ~ 0
 GND
 Wire Wire Line
 	4800 3800 4650 3800
-Text GLabel 2800 4400 0    50   Input ~ 0
+Text GLabel 2900 4400 0    50   Input ~ 0
 VCC
-Text GLabel 2800 4100 0    50   Input ~ 0
+Text GLabel 2900 4100 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 2800 3600 0    50   Input ~ 0
+Text GLabel 2900 3600 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 2800 3500 0    50   Input ~ 0
-VCC
-Wire Wire Line
-	2800 3500 3050 3500
-Wire Wire Line
-	3050 3600 2800 3600
-Wire Wire Line
-	2800 4100 3050 4100
-Wire Wire Line
-	3050 4400 2800 4400
-Text GLabel 2800 3800 0    50   Input ~ 0
-VCC
-Wire Wire Line
-	2800 3800 3050 3800
-Wire Wire Line
-	3050 4000 2800 4000
+Text GLabel 2900 3500 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 2900 3800 0    50   Input ~ 0
+VCC_LOGIC
 Wire Wire Line
 	9950 4150 9750 4150
 Wire Wire Line
@@ -210,7 +187,7 @@ N_LED_OUT8
 Text GLabel 9750 3550 0    50   Input ~ 0
 N_LED_OUT6
 Text GLabel 9750 3450 0    50   Input ~ 0
-VCC
+VCC_LED
 Text GLabel 9750 3350 0    50   Input ~ 0
 GND
 Wire Wire Line
@@ -279,58 +256,75 @@ F 3 "" H 9950 4750 50  0001 C CNN
 	1    10150 4650
 	1    0    0    -1  
 $EndComp
-Text GLabel 1300 3450 0    50   Input ~ 0
+Text GLabel 1300 3600 0    50   Input ~ 0
 GND
-Text GLabel 1300 3550 0    50   Input ~ 0
-VCC
-Text GLabel 1300 3650 0    50   Input ~ 0
+Text GLabel 1300 3500 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 1300 4200 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 1300 3750 0    50   Input ~ 0
+Text GLabel 1300 4300 0    50   Input ~ 0
 I2C_SDA
+Text GLabel 1300 3900 0    50   Input ~ 0
+LED_SPI_SCLK
+Text GLabel 1300 4000 0    50   Input ~ 0
+LED_SPI_MOSI
+Text GLabel 1300 4100 0    50   Input ~ 0
+LED_SPI_MISO
+Text GLabel 1300 3700 0    50   Input ~ 0
+LED_BLANK
+Text GLabel 1300 3800 0    50   Input ~ 0
+LED_LAT
+Text HLabel 5950 3850 0    50   Input ~ 0
+LED_IREF
+Text HLabel 2900 4000 0    50   Input ~ 0
+LED_IREF
+Text GLabel 1300 3400 0    50   Input ~ 0
+VCC_LED
 $Comp
-L Connector:Conn_01x05_Male J?
-U 1 1 5F48F29A
-P 1700 4400
-F 0 "J?" H 1672 4424 50  0000 R CNN
-F 1 "Conn_01x05_Male" H 1672 4333 50  0000 R CNN
-F 2 "" H 1700 4400 50  0001 C CNN
-F 3 "~" H 1700 4400 50  0001 C CNN
-	1    1700 4400
+L Connector:Conn_01x10_Male J?
+U 1 1 5F4F935F
+P 1700 3800
+F 0 "J?" H 1672 3774 50  0000 R CNN
+F 1 "Conn_01x10_Male" H 1672 3683 50  0000 R CNN
+F 2 "" H 1700 3800 50  0001 C CNN
+F 3 "~" H 1700 3800 50  0001 C CNN
+	1    1700 3800
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	1500 3450 1300 3450
-Wire Wire Line
-	1300 3550 1500 3550
-Wire Wire Line
-	1500 3650 1300 3650
-Wire Wire Line
-	1300 3750 1500 3750
-Text GLabel 1300 4400 0    50   Input ~ 0
-LED_SPI_SCLK
-Text GLabel 1300 4500 0    50   Input ~ 0
-LED_SPI_MOSI
-Text GLabel 1300 4600 0    50   Input ~ 0
-LED_SPI_MISO
-Wire Wire Line
-	1300 4600 1500 4600
-Wire Wire Line
-	1500 4500 1300 4500
-Wire Wire Line
-	1300 4400 1500 4400
-NoConn ~ 2800 3900
-Wire Wire Line
-	2800 3900 3050 3900
-Text GLabel 1300 4200 0    50   Input ~ 0
-LED_BLANK
-Text GLabel 1300 4300 0    50   Input ~ 0
-LED_LAT
-Wire Wire Line
-	1300 4300 1500 4300
+	1500 4300 1300 4300
 Wire Wire Line
 	1500 4200 1300 4200
-Text HLabel 5950 3850 0    50   Input ~ 0
-LED_IREF
-Text HLabel 2800 4000 0    50   Input ~ 0
-LED_IREF
+Wire Wire Line
+	1500 4100 1300 4100
+Wire Wire Line
+	1500 4000 1300 4000
+Wire Wire Line
+	1500 3900 1300 3900
+Wire Wire Line
+	1500 3800 1300 3800
+Wire Wire Line
+	1500 3700 1300 3700
+Wire Wire Line
+	1500 3600 1300 3600
+Wire Wire Line
+	1500 3500 1300 3500
+Wire Wire Line
+	1500 3400 1300 3400
+Text GLabel 2900 3900 0    50   Input ~ 0
+GND
+Wire Wire Line
+	3050 3500 2900 3500
+Wire Wire Line
+	3050 3600 2900 3600
+Wire Wire Line
+	3050 3800 2900 3800
+Wire Wire Line
+	3050 3900 2900 3900
+Wire Wire Line
+	3050 4000 2900 4000
+Wire Wire Line
+	3050 4100 2900 4100
+Wire Wire Line
+	3050 4400 2900 4400
 $EndSCHEMATC
