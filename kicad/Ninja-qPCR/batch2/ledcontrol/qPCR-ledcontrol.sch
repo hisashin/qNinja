@@ -14,17 +14,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Ninja-qPCR:MCP4551T-502E_MS U?
-U 1 1 5F45FB9E
-P 3050 3500
-F 0 "U?" H 3850 3887 60  0000 C CNN
-F 1 "MCP4551T-502E_MS" H 3850 3781 60  0000 C CNN
-F 2 "MSOP8_MC_MCH" H 3850 3740 60  0001 C CNN
-F 3 "" H 3050 3500 60  0000 C CNN
-	1    3050 3500
-	1    0    0    -1  
-$EndComp
-$Comp
 L Ninja-qPCR:TLC59281DBQR U?
 U 1 1 5F4603C2
 P 6150 3350
@@ -140,20 +129,6 @@ Wire Wire Line
 	6650 6300 7000 6300
 Wire Wire Line
 	6650 5800 7000 5800
-Text GLabel 4800 3800 2    50   Input ~ 0
-GND
-Wire Wire Line
-	4800 3800 4650 3800
-Text GLabel 2900 4400 0    50   Input ~ 0
-VCC
-Text GLabel 2900 4100 0    50   Input ~ 0
-I2C_SDA
-Text GLabel 2900 3600 0    50   Input ~ 0
-I2C_SCL
-Text GLabel 2900 3500 0    50   Input ~ 0
-VCC_LOGIC
-Text GLabel 2900 3800 0    50   Input ~ 0
-VCC_LOGIC
 Wire Wire Line
 	9950 4150 9750 4150
 Wire Wire Line
@@ -256,75 +231,153 @@ F 3 "" H 9950 4750 50  0001 C CNN
 	1    10150 4650
 	1    0    0    -1  
 $EndComp
-Text GLabel 1300 3600 0    50   Input ~ 0
+Text GLabel 1200 3650 0    50   Input ~ 0
 GND
-Text GLabel 1300 3500 0    50   Input ~ 0
+Text GLabel 1200 3550 0    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 1300 4200 0    50   Input ~ 0
+Text GLabel 1200 4250 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 1300 4300 0    50   Input ~ 0
+Text GLabel 1200 4350 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 1300 3900 0    50   Input ~ 0
+Text GLabel 1200 3950 0    50   Input ~ 0
 LED_SPI_SCLK
-Text GLabel 1300 4000 0    50   Input ~ 0
+Text GLabel 1200 4050 0    50   Input ~ 0
 LED_SPI_MOSI
-Text GLabel 1300 4100 0    50   Input ~ 0
+Text GLabel 1200 4150 0    50   Input ~ 0
 LED_SPI_MISO
-Text GLabel 1300 3700 0    50   Input ~ 0
-LED_BLANK
-Text GLabel 1300 3800 0    50   Input ~ 0
+Text GLabel 1200 3750 0    50   Input ~ 0
+LED_PWM
+Text GLabel 1200 3850 0    50   Input ~ 0
 LED_LAT
 Text HLabel 5950 3850 0    50   Input ~ 0
 LED_IREF
-Text HLabel 2900 4000 0    50   Input ~ 0
-LED_IREF
-Text GLabel 1300 3400 0    50   Input ~ 0
+Text GLabel 1200 3450 0    50   Input ~ 0
 VCC_LED
+Wire Wire Line
+	1400 4350 1200 4350
+Wire Wire Line
+	1400 4250 1200 4250
+Wire Wire Line
+	1400 4150 1200 4150
+Wire Wire Line
+	1400 4050 1200 4050
+Wire Wire Line
+	1400 3950 1200 3950
+Wire Wire Line
+	1400 3850 1200 3850
+Wire Wire Line
+	1400 3750 1200 3750
+Wire Wire Line
+	1400 3650 1200 3650
+Wire Wire Line
+	1400 3550 1200 3550
+Wire Wire Line
+	1400 3450 1200 3450
 $Comp
-L Connector:Conn_01x10_Male J?
-U 1 1 5F4F935F
-P 1700 3800
-F 0 "J?" H 1672 3774 50  0000 R CNN
-F 1 "Conn_01x10_Male" H 1672 3683 50  0000 R CNN
-F 2 "" H 1700 3800 50  0001 C CNN
-F 3 "~" H 1700 3800 50  0001 C CNN
-	1    1700 3800
-	-1   0    0    -1  
+L Ninja-qPCR:Conn_02x05 U?
+U 1 1 5F50BB06
+P 1600 3450
+F 0 "U?" H 1919 3061 50  0000 L CNN
+F 1 "Conn_02x05" H 1919 2970 50  0000 L CNN
+F 2 "" H 1400 3550 50  0001 C CNN
+F 3 "" H 1400 3550 50  0001 C CNN
+	1    1600 3450
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1500 4300 1300 4300
-Wire Wire Line
-	1500 4200 1300 4200
-Wire Wire Line
-	1500 4100 1300 4100
-Wire Wire Line
-	1500 4000 1300 4000
-Wire Wire Line
-	1500 3900 1300 3900
-Wire Wire Line
-	1500 3800 1300 3800
-Wire Wire Line
-	1500 3700 1300 3700
-Wire Wire Line
-	1500 3600 1300 3600
-Wire Wire Line
-	1500 3500 1300 3500
-Wire Wire Line
-	1500 3400 1300 3400
-Text GLabel 2900 3900 0    50   Input ~ 0
-GND
-Wire Wire Line
-	3050 3500 2900 3500
-Wire Wire Line
-	3050 3600 2900 3600
-Wire Wire Line
-	3050 3800 2900 3800
-Wire Wire Line
-	3050 3900 2900 3900
-Wire Wire Line
-	3050 4000 2900 4000
+	3050 4400 2900 4400
 Wire Wire Line
 	3050 4100 2900 4100
 Wire Wire Line
-	3050 4400 2900 4400
+	3050 4000 2900 4000
+Wire Wire Line
+	3050 3900 2900 3900
+Wire Wire Line
+	3050 3800 2900 3800
+Wire Wire Line
+	3050 3600 2900 3600
+Wire Wire Line
+	3050 3500 2900 3500
+Text GLabel 2900 3900 0    50   Input ~ 0
+GND
+Text HLabel 2900 4000 0    50   Input ~ 0
+LED_IREF
+Text GLabel 2900 3800 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 2900 3500 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 2900 3600 0    50   Input ~ 0
+I2C_SCL
+Text GLabel 2900 4100 0    50   Input ~ 0
+I2C_SDA
+Text GLabel 2900 4400 0    50   Input ~ 0
+VCC
+Wire Wire Line
+	4800 3800 4650 3800
+Text GLabel 4800 3800 2    50   Input ~ 0
+GND
+$Comp
+L Ninja-qPCR:MCP4551T-502E_MS U?
+U 1 1 5F45FB9E
+P 3050 3500
+F 0 "U?" H 3850 3887 60  0000 C CNN
+F 1 "MCP4551T-502E_MS" H 3850 3781 60  0000 C CNN
+F 2 "MSOP8_MC_MCH" H 3850 3740 60  0001 C CNN
+F 3 "" H 3050 3500 60  0000 C CNN
+	1    3050 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3100 6100 3300 6100
+Wire Wire Line
+	3300 5700 3100 5700
+Wire Wire Line
+	3750 5900 3100 5900
+Wire Wire Line
+	4100 6150 3900 6150
+Wire Wire Line
+	2250 5900 2300 5900
+Connection ~ 2250 5900
+Wire Wire Line
+	2250 6400 2250 5900
+Wire Wire Line
+	3750 6400 2250 6400
+Wire Wire Line
+	2150 5900 2250 5900
+Wire Wire Line
+	2150 5700 2300 5700
+$Comp
+L Jumper:Jumper_3_Open JP?
+U 1 1 5F52B7EC
+P 3750 6150
+F 0 "JP?" V 3796 6237 50  0000 L CNN
+F 1 "Jumper_3_Open" V 3705 6237 50  0000 L CNN
+F 2 "" H 3750 6150 50  0001 C CNN
+F 3 "~" H 3750 6150 50  0001 C CNN
+	1    3750 6150
+	0    -1   -1   0   
+$EndComp
+Text GLabel 2150 5700 0    50   Input ~ 0
+VCC_LOGIC
+NoConn ~ 3300 5700
+Text GLabel 3300 6100 2    50   Input ~ 0
+GND
+Text GLabel 4100 6150 2    50   Input ~ 0
+LED_BLANK
+Text GLabel 2150 5900 0    50   Input ~ 0
+LED_PWM
+$Comp
+L Ninja-qPCR:SN74LVC1G04DBVR U?
+U 1 1 5F51ACBA
+P 2700 5900
+F 0 "U?" H 2700 6367 50  0000 C CNN
+F 1 "SN74LVC1G04DBVR" H 2700 6276 50  0000 C CNN
+F 2 "SOT95P280X145-5N" H 2700 5900 50  0001 L BNN
+F 3 "IPC-7351B" H 2700 5900 50  0001 L BNN
+F 4 "1.45mm" H 2700 5900 50  0001 L BNN "Field4"
+F 5 "AD" H 2700 5900 50  0001 L BNN "Field5"
+F 6 "Texas Instruments" H 2700 5900 50  0001 L BNN "Field6"
+	1    2700 5900
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

@@ -1,0 +1,125 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 4
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 7000 2250 2    50   Input ~ 0
+BODY_THERM1
+Text GLabel 7000 2350 2    50   Input ~ 0
+BODY_THERM2
+Text GLabel 7000 2450 2    50   Input ~ 0
+AIR
+Text GLabel 7000 2550 2    50   Input ~ 0
+LID_THERM1
+Text GLabel 7000 2650 2    50   Input ~ 0
+LID_THERM2
+Text GLabel 7000 2750 2    50   Input ~ 0
+LID_THERM3
+Text GLabel 7000 2850 2    50   Input ~ 0
+LID_THERM4
+$Comp
+L Ninja-qPCR:CD74HC4067M96 U?
+U 1 1 5F53AD3B
+P 6800 2050
+F 0 "U?" H 8100 2437 60  0000 C CNN
+F 1 "CD74HC4067M96" H 8100 2331 60  0000 C CNN
+F 2 "DW24_TEX" H 8100 2290 60  0001 C CNN
+F 3 "" H 6800 2050 60  0000 C CNN
+	1    6800 2050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Ninja-qPCR:CD74HC4067M96 U?
+U 2 1 5F53AD41
+P 4500 4950
+F 0 "U?" H 5800 5337 60  0000 C CNN
+F 1 "CD74HC4067M96" H 5800 5231 60  0000 C CNN
+F 2 "DW24_TEX" H 5800 5190 60  0001 C CNN
+F 3 "" H 4500 4950 60  0000 C CNN
+	2    4500 4950
+	1    0    0    -1  
+$EndComp
+Text GLabel 4250 5950 0    50   Input ~ 0
+VCC_LOGIC
+Wire Wire Line
+	7350 5050 7100 5050
+Wire Wire Line
+	4500 5950 4250 5950
+Wire Wire Line
+	7000 2250 6800 2250
+Wire Wire Line
+	6800 2350 7000 2350
+Wire Wire Line
+	7000 2450 6800 2450
+Wire Wire Line
+	6800 2550 7000 2550
+Wire Wire Line
+	7000 2650 6800 2650
+Wire Wire Line
+	6800 2750 7000 2750
+Wire Wire Line
+	7000 2850 6800 2850
+Wire Wire Line
+	6800 2950 7000 2950
+NoConn ~ 7000 3050
+NoConn ~ 7000 3150
+NoConn ~ 7000 3250
+NoConn ~ 7000 3350
+NoConn ~ 7000 3450
+NoConn ~ 7000 3550
+NoConn ~ 7000 3650
+NoConn ~ 7000 3750
+Wire Wire Line
+	7000 3750 6800 3750
+Wire Wire Line
+	6800 3650 7000 3650
+Wire Wire Line
+	7000 3550 6800 3550
+Wire Wire Line
+	6800 3450 7000 3450
+Wire Wire Line
+	7000 3350 6800 3350
+Wire Wire Line
+	6800 3250 7000 3250
+Wire Wire Line
+	7000 3150 6800 3150
+Wire Wire Line
+	6800 3050 7000 3050
+Text GLabel 3950 2050 0    50   Input ~ 0
+THERM_MUX_S0
+Text GLabel 3950 2150 0    50   Input ~ 0
+THERM_MUX_S1
+Text GLabel 3950 2250 0    50   Input ~ 0
+THERM_MUX_S2
+Text GLabel 3950 2350 0    50   Input ~ 0
+THERM_MUX_S3
+Wire Wire Line
+	3950 2050 4200 2050
+Wire Wire Line
+	4200 2150 3950 2150
+Wire Wire Line
+	3950 2250 4200 2250
+Wire Wire Line
+	4200 2350 3950 2350
+Wire Wire Line
+	6800 3950 6900 3950
+Text GLabel 6900 3950 2    50   Input ~ 0
+THERM_OUT
+NoConn ~ 7000 2950
+Wire Wire Line
+	7000 2050 6800 2050
+Text GLabel 7350 5050 2    50   Input ~ 0
+GND
+Text GLabel 7000 2050 2    50   Input ~ 0
+GND
+$EndSCHEMATC

@@ -232,4 +232,6 @@ Text HLabel 1550 2450 0    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
 	1550 2450 1900 2450
+Text HLabel 3650 1400 0    50   Input ~ 0
+PD_MUX_OUT
 $EndSCHEMATC

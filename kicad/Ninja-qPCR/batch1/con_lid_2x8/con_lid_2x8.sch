@@ -25,10 +25,10 @@ F 3 "~" H 3300 2800 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x02_Male T1
+L Connector:Conn_01x02_Male TEXT1
 U 1 1 5F2B7778
 P 3300 3900
-F 0 "T1" H 3200 3900 50  0000 C CNN
+F 0 "TEXT1" H 3200 3900 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 2900 3800 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3300 3900 50  0001 C CNN
 F 3 "~" H 3300 3900 50  0001 C CNN
@@ -36,10 +36,10 @@ F 3 "~" H 3300 3900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x02_Male T2
+L Connector:Conn_01x02_Male TL1
 U 1 1 5F2BA46F
 P 3300 4250
-F 0 "T2" H 3200 4250 50  0000 C CNN
+F 0 "TL1" H 3200 4250 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 2900 4150 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3300 4250 50  0001 C CNN
 F 3 "~" H 3300 4250 50  0001 C CNN
@@ -47,10 +47,10 @@ F 3 "~" H 3300 4250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x02_Male T3
+L Connector:Conn_01x02_Male TL2
 U 1 1 5F2BA479
 P 3300 4600
-F 0 "T3" H 3200 4600 50  0000 C CNN
+F 0 "TL2" H 3200 4600 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 2900 4500 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3300 4600 50  0001 C CNN
 F 3 "~" H 3300 4600 50  0001 C CNN
@@ -58,10 +58,10 @@ F 3 "~" H 3300 4600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x02_Male T4
+L Connector:Conn_01x02_Male TEXT2
 U 1 1 5F2BC0F4
 P 3300 4950
-F 0 "T4" H 3200 4950 50  0000 C CNN
+F 0 "TEXT2" H 3200 4950 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 2900 4850 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3300 4950 50  0001 C CNN
 F 3 "~" H 3300 4950 50  0001 C CNN
@@ -88,17 +88,17 @@ HEATER2A
 Text GLabel 3750 3200 2    50   Input ~ 0
 HEATER2B
 Text GLabel 3750 3900 2    50   Input ~ 0
-THERM1
+THERM_EXT1
 Text GLabel 3750 4250 2    50   Input ~ 0
-THERM2
+THERM_LID1
 Text GLabel 3750 3550 2    50   Input ~ 0
-AIR
+THERM_AIR
 Text GLabel 3750 4600 2    50   Input ~ 0
-THERM3
+THERM_LID2
 Text GLabel 3750 4950 2    50   Input ~ 0
-THERM4
+THERM_EXT2
 Text GLabel 3750 5050 2    50   Input ~ 0
-THERM_GND
+GND_THERM
 Wire Wire Line
 	3500 3550 3750 3550
 Wire Wire Line
@@ -120,13 +120,13 @@ Wire Wire Line
 Wire Wire Line
 	3750 5050 3500 5050
 Text GLabel 3750 4700 2    50   Input ~ 0
-THERM_GND
+GND
 Text GLabel 3750 4350 2    50   Input ~ 0
-THERM_GND
+GND
 Text GLabel 3750 4000 2    50   Input ~ 0
-THERM_GND
+GND
 Text GLabel 3750 3650 2    50   Input ~ 0
-THERM_GND
+GND
 Wire Wire Line
 	3500 3650 3750 3650
 Wire Wire Line
@@ -144,17 +144,17 @@ HEATER2A
 Text GLabel 5100 4300 0    50   Input ~ 0
 HEATER2B
 Text GLabel 5100 3900 0    50   Input ~ 0
-THERM_GND
+GND
 Text GLabel 5100 3600 0    50   Input ~ 0
-AIR
+THERM_AIR
 Text GLabel 5100 3700 0    50   Input ~ 0
-THERM1
+THERM_EXT1
 Text GLabel 5100 3800 0    50   Input ~ 0
-THERM2
+THERM_LID1
 Text GLabel 5100 4000 0    50   Input ~ 0
-THERM3
+THERM_LID2
 Text GLabel 5100 4100 0    50   Input ~ 0
-THERM4
+THERM_EXT2
 Wire Wire Line
 	5100 3400 5300 3400
 Wire Wire Line

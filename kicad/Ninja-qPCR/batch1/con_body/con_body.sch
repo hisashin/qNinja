@@ -60,12 +60,12 @@ $EndComp
 $Comp
 L Ninja-qPCR:Conn_02x05 U1
 U 1 1 5F2BB8F2
-P 5950 2800
-F 0 "U1" H 6269 2411 50  0000 L CNN
-F 1 "Conn_02x05" H 6269 2320 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 5750 2900 50  0001 C CNN
-F 3 "" H 5750 2900 50  0001 C CNN
-	1    5950 2800
+P 6650 2950
+F 0 "U1" H 6969 2561 50  0000 L CNN
+F 1 "Conn_02x05" H 6969 2470 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 6450 3050 50  0001 C CNN
+F 3 "" H 6450 3050 50  0001 C CNN
+	1    6650 2950
 	1    0    0    -1  
 $EndComp
 Text GLabel 4400 2350 2    50   Input ~ 0
@@ -77,21 +77,19 @@ HEATER2A
 Text GLabel 4400 2900 2    50   Input ~ 0
 HEATER2B
 Text GLabel 4400 3250 2    50   Input ~ 0
-FAN_VCC
-Text GLabel 4400 3350 2    50   Input ~ 0
-FAN1
+FAN_RED_VCC
 Text GLabel 4400 3700 2    50   Input ~ 0
-FAN_VCC
+FAN_RED_VCC
 Text GLabel 4400 3800 2    50   Input ~ 0
-FAN2
+FAN_BLACK_GND2
 Text GLabel 4400 4100 2    50   Input ~ 0
-THERM1
+THERM_WELL
 Text GLabel 4400 4300 2    50   Input ~ 0
-THERM2
+THERM_EXT3
 Text GLabel 4400 4200 2    50   Input ~ 0
-THERM_GND
+GND
 Text GLabel 4400 4400 2    50   Input ~ 0
-THERM_GND
+GND
 Wire Wire Line
 	4400 4400 4150 4400
 Wire Wire Line
@@ -116,34 +114,30 @@ Wire Wire Line
 	4400 3250 4150 3250
 Wire Wire Line
 	4400 3350 4150 3350
-Text GLabel 5550 2800 0    50   Input ~ 0
+Text GLabel 6250 2950 0    50   Input ~ 0
 HEATER1A
-Text GLabel 5550 2900 0    50   Input ~ 0
+Text GLabel 6250 3050 0    50   Input ~ 0
 HEATER1B
-Text GLabel 5550 3600 0    50   Input ~ 0
+Text GLabel 6250 3750 0    50   Input ~ 0
 HEATER2A
-Text GLabel 5550 3700 0    50   Input ~ 0
+Text GLabel 6250 3850 0    50   Input ~ 0
 HEATER2B
-Text GLabel 5550 3200 0    50   Input ~ 0
-FAN_VCC
-Text GLabel 5550 3100 0    50   Input ~ 0
-FAN1
-Text GLabel 5550 3400 0    50   Input ~ 0
-FAN2
-Text GLabel 5550 3300 0    50   Input ~ 0
-THERM_GND
-Text GLabel 5550 3500 0    50   Input ~ 0
-THERM2
-Text GLabel 5550 3000 0    50   Input ~ 0
-THERM1
+Text GLabel 6250 3350 0    50   Input ~ 0
+FAN_RED_VCC
+Text GLabel 6250 3450 0    50   Input ~ 0
+GND
+Text GLabel 6250 3650 0    50   Input ~ 0
+THERM_EXT3
+Text GLabel 6250 3150 0    50   Input ~ 0
+THERM_WELL
 Wire Wire Line
-	5750 2800 5550 2800
+	6450 2950 6250 2950
 Wire Wire Line
-	5550 2900 5750 2900
+	6250 3050 6450 3050
 Wire Wire Line
-	5550 3600 5750 3600
+	6250 3750 6450 3750
 Wire Wire Line
-	5550 3700 5750 3700
+	6250 3850 6450 3850
 $Comp
 L Connector:Conn_01x04_Male J1
 U 1 1 5F2C3C94
@@ -156,15 +150,21 @@ F 3 "~" H 3950 4200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5750 3500 5550 3500
+	6450 3650 6250 3650
 Wire Wire Line
-	5750 3400 5550 3400
+	6450 3550 6250 3550
 Wire Wire Line
-	5750 3300 5550 3300
+	6450 3450 6250 3450
 Wire Wire Line
-	5750 3200 5550 3200
+	6450 3350 6250 3350
 Wire Wire Line
-	5750 3100 5550 3100
+	6450 3250 6250 3250
 Wire Wire Line
-	5750 3000 5550 3000
+	6450 3150 6250 3150
+Text GLabel 6250 3550 0    50   Input ~ 0
+FAN_BLACK_GND2
+Text GLabel 4400 3350 2    50   Input ~ 0
+FAN_BLACK_GND1
+Text GLabel 6250 3250 0    50   Input ~ 0
+FAN_BLACK_GND1
 $EndSCHEMATC
