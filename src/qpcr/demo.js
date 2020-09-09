@@ -1,9 +1,7 @@
 "use strict";
 const NinjaQPCR = require("./ninjaqpcr");
-//const hardwareConf = require("./conf/ninjaqpcr_hardware_conf.js");
-const hardwareConf = require("./conf/dummy_hardware_conf.js");
 
-const qpcr = new NinjaQPCR(hardwareConf);
+const qpcr = new NinjaQPCR("hardware.json");
 // const protocol = require("./protocol_example");
 const protocol = require("./dev_protocol");
 

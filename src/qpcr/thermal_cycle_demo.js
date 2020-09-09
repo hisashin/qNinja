@@ -1,10 +1,7 @@
 "use strict";
 // Requires sudo
 const NinjaQPCR = require("./ninjaqpcr");
-const hardwareConf = require("./conf/ninjaqpcr_heat_only_conf.js");
-// const hardwareConf = require("./conf/dummy_hardware_conf.js");
-
-const qpcr = new NinjaQPCR(hardwareConf);
+const qpcr = new NinjaQPCR("hardware.json");
 //const protocol = require("./protocol_example");
 const protocol = require("./protocol_thremal_only.js");
 

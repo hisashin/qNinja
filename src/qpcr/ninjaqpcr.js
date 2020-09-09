@@ -29,7 +29,14 @@ const DEVICE_STATE = {
 
 /* QPCR Interface */
 class NinjaQPCR {
-  constructor (hardwareConf) {
+  constructor (confFileName) {
+    const confPath = __dirname + "/conf/" + confFileName;
+    const confFile = fs.readFileSync(confPath); // Returns Buffer
+    const conf = JSON.parse(confFile.toString());
+    const boardConfFile = __dirname + "/conf/" + conf.hardware_conf;
+    console.log(boardConfFile)
+    const hardwareConf = require(boardConfFile);
+    
     this.thermalCycler = new ThermalCycler(hardwareConf);
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(hardwareConf);
@@ -391,13 +398,9 @@ class NinjaQPCR {
   // Set device state and notify the event
   _setDeviceState (state) {
     this.deviceState = state;
-    console.log("_setDeviceState 1");
     setTimeout(()=>{
       if (this.receiver != null && this.receiver.onDeviceStateChange) {
-        console.log("_setDeviceState 2");
         this.receiver.onDeviceStateChange(this.deviceState);
-      } else {
-        console.log("_setDeviceState 3");
       }
     }, 1);
   }
