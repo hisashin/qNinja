@@ -13,196 +13,150 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 5550 2650 1    50   Input ~ 0
-SPI_MOSI
-Text GLabel 4750 3000 0    50   Input ~ 0
-MOSI1
-Text GLabel 4800 3750 0    50   Input ~ 0
-MOSI2
-Text GLabel 7000 2850 2    50   Input ~ 0
-SPI_MOSI_SWITCH
 $Comp
-L 74xGxx:74LVC2G66 U?
-U 1 1 5F51F0AF
-P 5950 2850
-F 0 "U?" H 5950 3166 50  0000 C CNN
-F 1 "74LVC2G66" H 5950 3075 50  0000 C CNN
-F 2 "" H 5950 2850 50  0001 C CNN
-F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5950 2850 50  0001 C CNN
-	1    5950 2850
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74xGxx:74LVC2G66 U?
-U 2 1 5F5201B9
-P 5950 3600
-F 0 "U?" H 5950 3916 50  0000 C CNN
-F 1 "74LVC2G66" H 5950 3825 50  0000 C CNN
-F 2 "" H 5950 3600 50  0001 C CNN
-F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5950 3600 50  0001 C CNN
-	2    5950 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74xGxx:SN74LVC1G14DBV U?
-U 1 1 5F526BC8
-P 6600 3600
-F 0 "U?" H 6356 3554 50  0000 R CNN
-F 1 "SN74LVC1G14DBV" H 6356 3645 50  0000 R CNN
-F 2 "Package_TO_SOT_SMD:SOT-23-5" H 6600 3350 50  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf" H 6600 3600 50  0001 C CNN
-	1    6600 3600
-	-1   0    0    1   
-$EndComp
-Text GLabel 6200 2600 2    50   Input ~ 0
-VCC
-Text GLabel 6200 3050 2    50   Input ~ 0
-GND
-Text GLabel 6200 3350 2    50   Input ~ 0
-VCC
-Wire Wire Line
-	6200 3350 6000 3350
-Wire Wire Line
-	6000 3350 6000 3450
-Wire Wire Line
-	6200 2600 6000 2600
-Wire Wire Line
-	6000 2600 6000 2700
-Wire Wire Line
-	6200 3050 6000 3050
-Wire Wire Line
-	6000 3050 6000 3000
-Text GLabel 6200 3800 2    50   Input ~ 0
-GND
-Wire Wire Line
-	6200 3800 6000 3800
-Wire Wire Line
-	6000 3800 6000 3750
-Wire Wire Line
-	6300 3600 6200 3600
-Wire Wire Line
-	6200 2850 6900 2850
-Wire Wire Line
-	6900 2850 6900 3600
-Wire Wire Line
-	6900 3600 6800 3600
-Connection ~ 6900 2850
-Wire Wire Line
-	6900 2850 7000 2850
-Wire Wire Line
-	5550 2650 5550 2850
-Wire Wire Line
-	5550 3600 5700 3600
-Wire Wire Line
-	5700 2850 5550 2850
-Connection ~ 5550 2850
-Wire Wire Line
-	5550 2850 5550 3600
-Wire Wire Line
-	5700 3750 4800 3750
-Wire Wire Line
-	5700 3000 4750 3000
-$Comp
-L Connector:Conn_01x06_Male J?
+L Connector:Conn_01x06_Male J1
 U 1 1 5F534D6C
-P 2500 1450
-F 0 "J?" H 2608 1831 50  0000 C CNN
-F 1 "Conn_01x06_Male" H 2608 1740 50  0000 C CNN
-F 2 "" H 2500 1450 50  0001 C CNN
-F 3 "~" H 2500 1450 50  0001 C CNN
-	1    2500 1450
+P 4800 2650
+F 0 "J1" H 4908 3031 50  0000 C CNN
+F 1 "Conn_01x06_Male" H 4908 2940 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x06_Pitch2.54mm" H 4800 2650 50  0001 C CNN
+F 3 "~" H 4800 2650 50  0001 C CNN
+	1    4800 2650
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x06_Male J?
+L Connector:Conn_01x06_Male J2
 U 1 1 5F535D28
-P 4450 1450
-F 0 "J?" H 4422 1424 50  0000 R CNN
-F 1 "Conn_01x06_Male" H 4422 1333 50  0000 R CNN
-F 2 "" H 4450 1450 50  0001 C CNN
-F 3 "~" H 4450 1450 50  0001 C CNN
-	1    4450 1450
+P 6750 2650
+F 0 "J2" H 6722 2624 50  0000 R CNN
+F 1 "Conn_01x06_Male" H 6722 2533 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x06_Pitch2.54mm" H 6750 2650 50  0001 C CNN
+F 3 "~" H 6750 2650 50  0001 C CNN
+	1    6750 2650
 	-1   0    0    -1  
 $EndComp
-Text GLabel 2900 1350 2    50   Input ~ 0
+Text GLabel 5200 2550 2    50   Input ~ 0
 VCC
-Text GLabel 2900 1250 2    50   Input ~ 0
+Text GLabel 5200 2450 2    50   Input ~ 0
 GND
-Text GLabel 2900 1450 2    50   Input ~ 0
+Text GLabel 5200 2650 2    50   Input ~ 0
 SPI_MOSI_SWITCH
-Text GLabel 2900 1750 2    50   Input ~ 0
+Text GLabel 5200 2950 2    50   Input ~ 0
 SCK
-Text GLabel 2900 1650 2    50   Input ~ 0
+Text GLabel 5200 2850 2    50   Input ~ 0
 MISO
-Text GLabel 2900 1550 2    50   Input ~ 0
+Text GLabel 5200 2750 2    50   Input ~ 0
 MOSI
 Wire Wire Line
-	2900 1250 2700 1250
+	5200 2450 5000 2450
 Wire Wire Line
-	2900 1350 2700 1350
+	5200 2550 5000 2550
 Wire Wire Line
-	2900 1450 2700 1450
+	5200 2650 5000 2650
 Wire Wire Line
-	2900 1550 2700 1550
+	5200 2750 5000 2750
 Wire Wire Line
-	2900 1650 2700 1650
+	5200 2850 5000 2850
 Wire Wire Line
-	2900 1750 2700 1750
-Text GLabel 4100 1450 0    50   Input ~ 0
+	5200 2950 5000 2950
+Text GLabel 6400 2650 0    50   Input ~ 0
 SCK
-Text GLabel 4100 1350 0    50   Input ~ 0
+Text GLabel 6400 2550 0    50   Input ~ 0
 MISO
-Text GLabel 4100 1750 0    50   Input ~ 0
+Text GLabel 6400 2950 0    50   Input ~ 0
 SCK
-Text GLabel 4100 1650 0    50   Input ~ 0
+Text GLabel 6400 2850 0    50   Input ~ 0
 MISO
-Text GLabel 4100 1250 0    50   Input ~ 0
+Text GLabel 6400 2450 0    50   Input ~ 0
 MOSI1
-Text GLabel 4100 1550 0    50   Input ~ 0
+Text GLabel 6400 2750 0    50   Input ~ 0
 MOSI2
 Wire Wire Line
-	4250 1250 4100 1250
+	6550 2450 6400 2450
 Wire Wire Line
-	4250 1350 4100 1350
+	6550 2550 6400 2550
 Wire Wire Line
-	4250 1450 4100 1450
+	6550 2650 6400 2650
 Wire Wire Line
-	4250 1550 4100 1550
+	6550 2750 6400 2750
 Wire Wire Line
-	4250 1650 4100 1650
+	6550 2850 6400 2850
 Wire Wire Line
-	4250 1750 4100 1750
+	6550 2950 6400 2950
 $Comp
-L Ninja-qPCR:SN74LVC1G04DBVR U?
+L Ninja-qPCR:SN74LVC1G04DBVR U1
 U 1 1 5F541971
-P 5450 4950
-F 0 "U?" H 5450 5417 50  0000 C CNN
-F 1 "SN74LVC1G04DBVR" H 5450 5326 50  0000 C CNN
-F 2 "SOT95P280X145-5N" H 5450 4950 50  0001 L BNN
-F 3 "IPC-7351B" H 5450 4950 50  0001 L BNN
-F 4 "1.45mm" H 5450 4950 50  0001 L BNN "Field4"
-F 5 "AD" H 5450 4950 50  0001 L BNN "Field5"
-F 6 "Texas Instruments" H 5450 4950 50  0001 L BNN "Field6"
-	1    5450 4950
+P 4550 4250
+F 0 "U1" H 4550 4717 50  0000 C CNN
+F 1 "SN74LVC1G04DBVR" H 4550 4626 50  0000 C CNN
+F 2 "SOT95P280X145-5N" H 4550 4250 50  0001 L BNN
+F 3 "IPC-7351B" H 4550 4250 50  0001 L BNN
+F 4 "1.45mm" H 4550 4250 50  0001 L BNN "Field4"
+F 5 "AD" H 4550 4250 50  0001 L BNN "Field5"
+F 6 "Texas Instruments" H 4550 4250 50  0001 L BNN "Field6"
+	1    4550 4250
 	1    0    0    -1  
 $EndComp
-Text GLabel 4850 4950 0    50   Input ~ 0
+Text GLabel 3950 4250 0    50   Input ~ 0
 SPI_MOSI_SWITCH
-Text GLabel 4850 4750 0    50   Input ~ 0
+Text GLabel 3950 4050 0    50   Input ~ 0
 VCC
-Text GLabel 6050 5150 2    50   Input ~ 0
+Text GLabel 5150 4450 2    50   Input ~ 0
 GND
-NoConn ~ 6050 4750
-Text HLabel 6050 4950 2    50   Input ~ 0
+NoConn ~ 5150 4050
+Text HLabel 5150 4250 2    50   Input ~ 0
 INV
 Wire Wire Line
-	5850 4950 6050 4950
+	4950 4250 5150 4250
 Wire Wire Line
-	5850 5150 6050 5150
+	4950 4450 5150 4450
 Wire Wire Line
-	6050 4750 5850 4750
+	5150 4050 4950 4050
 Wire Wire Line
-	5050 4750 4850 4750
+	4150 4050 3950 4050
 Wire Wire Line
-	5050 4950 4850 4950
+	4150 4250 3950 4250
+$Comp
+L Ninja-qPCR:SN74LVC2G66DCUR U2
+U 1 1 5F51B522
+P 7200 4400
+F 0 "U2" H 7200 5270 50  0000 C CNN
+F 1 "SN74LVC2G66DCUR" H 7200 5179 50  0000 C CNN
+F 2 "SOP50P310X90-8N" H 7200 4400 50  0001 L BNN
+F 3 "" H 7200 4400 50  0001 C CNN
+	1    7200 4400
+	1    0    0    -1  
+$EndComp
+Text GLabel 6300 4000 0    50   Input ~ 0
+SPI_MOSI_SWITCH
+Text HLabel 6300 4100 0    50   Input ~ 0
+INV
+Text GLabel 6300 4300 0    50   Input ~ 0
+MOSI
+Text GLabel 6300 4600 0    50   Input ~ 0
+MOSI
+Text GLabel 6300 4400 0    50   Input ~ 0
+MOSI1
+Text GLabel 6300 4700 0    50   Input ~ 0
+MOSI2
+Text GLabel 8100 3800 2    50   Input ~ 0
+VCC
+Text GLabel 8100 4900 2    50   Input ~ 0
+GND
+Wire Wire Line
+	8100 3800 7900 3800
+Wire Wire Line
+	8100 4900 7900 4900
+Wire Wire Line
+	6500 4000 6300 4000
+Wire Wire Line
+	6500 4100 6300 4100
+Wire Wire Line
+	6500 4300 6300 4300
+Wire Wire Line
+	6500 4400 6300 4400
+Wire Wire Line
+	6500 4600 6300 4600
+Wire Wire Line
+	6500 4700 6300 4700
 $EndSCHEMATC

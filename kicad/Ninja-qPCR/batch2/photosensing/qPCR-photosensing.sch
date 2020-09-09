@@ -13,56 +13,45 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 10000 5300 2    50   Input ~ 0
+Text GLabel 8800 4650 2    50   Input ~ 0
 GND
-Text GLabel 10000 5400 2    50   Input ~ 0
+Text GLabel 8800 4750 2    50   Input ~ 0
 +10V
-Text GLabel 10000 5500 2    50   Input ~ 0
+Text GLabel 8800 4850 2    50   Input ~ 0
 -10V
 Wire Wire Line
-	9800 5300 10000 5300
+	8600 4650 8800 4650
 Wire Wire Line
-	10000 5400 9800 5400
+	8800 4750 8600 4750
 Wire Wire Line
-	9800 5500 10000 5500
+	8600 4850 8800 4850
 Wire Wire Line
-	10000 5600 9800 5600
+	8800 4950 8600 4950
 Wire Wire Line
-	9800 5700 10000 5700
+	8600 5050 8800 5050
 Wire Wire Line
-	10000 5800 9800 5800
+	8800 5350 8600 5350
 Wire Wire Line
-	9800 5900 10000 5900
+	8600 5450 8800 5450
 Wire Wire Line
-	10000 6000 9800 6000
+	8800 5550 8600 5550
 Wire Wire Line
-	9800 6100 10000 6100
-$Comp
-L Ninja-qPCR:Conn_02x05 U?
-U 1 1 5F51FB4B
-P 9600 5300
-F 0 "U?" H 9919 4911 50  0000 L CNN
-F 1 "Conn_02x05" H 9919 4820 50  0000 L CNN
-F 2 "" H 9400 5400 50  0001 C CNN
-F 3 "" H 9400 5400 50  0001 C CNN
-	1    9600 5300
-	-1   0    0    -1  
-$EndComp
+	8600 5650 8800 5650
 Wire Wire Line
-	10000 6200 9800 6200
-Text GLabel 10000 5600 2    50   Input ~ 0
+	8800 5750 8600 5750
+Text GLabel 8800 4950 2    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 10000 5700 2    50   Input ~ 0
+Text GLabel 8800 5050 2    50   Input ~ 0
 PD_MUX_OUT
-Text GLabel 10000 6200 2    50   Input ~ 0
+Text GLabel 8800 5750 2    50   Input ~ 0
 PD_MUX_GPIO1
-Text GLabel 10000 6100 2    50   Input ~ 0
+Text GLabel 8800 5650 2    50   Input ~ 0
 PD_MUX_GPIO2
-Text GLabel 10000 6000 2    50   Input ~ 0
+Text GLabel 8800 5550 2    50   Input ~ 0
 PD_MUX_GPIO3
-Text GLabel 10000 5900 2    50   Input ~ 0
+Text GLabel 8800 5450 2    50   Input ~ 0
 PD_MUX_GPIO4
-Text GLabel 10000 5800 2    50   Input ~ 0
+Text GLabel 8800 5350 2    50   Input ~ 0
 PD_MUX_GPIO5
 Text GLabel 1350 850  2    50   Input ~ 0
 GND
@@ -731,4 +720,26 @@ Wire Wire Line
 	7200 4650 7200 4750
 Text HLabel 7400 4250 2    50   Input ~ 0
 PHOTO_OUT
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F591AD7
+P 8400 4850
+F 0 "J?" H 8508 5231 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 8508 5140 50  0000 C CNN
+F 2 "" H 8400 4850 50  0001 C CNN
+F 3 "~" H 8400 4850 50  0001 C CNN
+	1    8400 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F59281D
+P 8400 5550
+F 0 "J?" H 8508 5931 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 8508 5840 50  0000 C CNN
+F 2 "" H 8400 5550 50  0001 C CNN
+F 3 "~" H 8400 5550 50  0001 C CNN
+	1    8400 5550
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

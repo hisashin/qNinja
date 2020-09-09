@@ -290,7 +290,7 @@ Text GLabel 1900 2250 0    50   Input ~ 0
 Text GLabel 1900 2350 0    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 1900 2450 0    50   Input ~ 0
-PHOTO_OUT
+PD_MUX_OUT
 Wire Wire Line
 	2100 2050 1900 2050
 Wire Wire Line
@@ -345,7 +345,7 @@ F 3 "" H 8550 5100 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 Text GLabel 6800 1050 0    50   Input ~ 0
-PHOTO_OUT
+PD_MUX_OUT
 Wire Wire Line
 	8700 1050 8550 1050
 Wire Wire Line

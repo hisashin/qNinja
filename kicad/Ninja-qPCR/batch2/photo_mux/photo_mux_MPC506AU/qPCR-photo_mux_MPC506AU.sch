@@ -281,47 +281,36 @@ F 3 "" H 10500 3850 50  0001 C CNN
 	1    10700 3750
 	1    0    0    -1  
 $EndComp
-Text GLabel 1900 2050 0    50   Input ~ 0
+Text GLabel 1350 1100 2    50   Input ~ 0
 GND
-Text GLabel 1900 2150 0    50   Input ~ 0
+Text GLabel 1350 1200 2    50   Input ~ 0
 +10V
-Text GLabel 1900 2250 0    50   Input ~ 0
+Text GLabel 1350 1300 2    50   Input ~ 0
 -10V
-Text GLabel 1900 2350 0    50   Input ~ 0
+Text GLabel 1350 1400 2    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 1900 2450 0    50   Input ~ 0
+Text GLabel 1350 1500 2    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
-	2100 2050 1900 2050
+	1150 1100 1350 1100
 Wire Wire Line
-	1900 2150 2100 2150
+	1350 1200 1150 1200
 Wire Wire Line
-	2100 2250 1900 2250
+	1150 1300 1350 1300
 Wire Wire Line
-	1900 2350 2100 2350
+	1350 1400 1150 1400
 Wire Wire Line
-	2100 2450 1900 2450
+	1150 1500 1350 1500
 Wire Wire Line
-	1900 2550 2100 2550
+	1350 1850 1150 1850
 Wire Wire Line
-	2100 2650 1900 2650
+	1150 1950 1350 1950
 Wire Wire Line
-	1900 2750 2100 2750
+	1350 2050 1150 2050
 Wire Wire Line
-	2100 2850 1900 2850
-$Comp
-L Ninja-qPCR:Conn_02x05 U?
-U 1 1 5F51FB4B
-P 2300 2050
-F 0 "U?" H 2619 1661 50  0000 L CNN
-F 1 "Conn_02x05" H 2619 1570 50  0000 L CNN
-F 2 "" H 2100 2150 50  0001 C CNN
-F 3 "" H 2100 2150 50  0001 C CNN
-	1    2300 2050
-	1    0    0    -1  
-$EndComp
+	1150 2150 1350 2150
 Wire Wire Line
-	1900 2950 2100 2950
+	1350 2250 1150 2250
 $Comp
 L Ninja-qPCR:MPC506AU U?
 U 1 1 5F56CE6D
@@ -442,13 +431,13 @@ Wire Wire Line
 NoConn ~ 3750 6800
 Wire Wire Line
 	3750 6800 3900 6800
-Text GLabel 1900 2550 0    50   Input ~ 0
+Text GLabel 1350 1850 2    50   Input ~ 0
 ADDRESSA3
-Text GLabel 1900 2650 0    50   Input ~ 0
+Text GLabel 1350 1950 2    50   Input ~ 0
 ADDRESSA2
-Text GLabel 1900 2750 0    50   Input ~ 0
+Text GLabel 1350 2050 2    50   Input ~ 0
 ADDRESSA1
-Text GLabel 1900 2850 0    50   Input ~ 0
+Text GLabel 1350 2150 2    50   Input ~ 0
 ADDRESSA0
 Text GLabel 6200 1600 0    50   Input ~ 0
 ADDRESSA3
@@ -635,7 +624,7 @@ F 6 "Texas Instruments" H 3200 4150 50  0001 L BNN "Field6"
 $EndComp
 Text GLabel 2650 3950 0    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 1900 2950 0    50   Input ~ 0
+Text GLabel 1350 2250 2    50   Input ~ 0
 MUX_SELECT
 Text GLabel 2650 4150 0    50   Input ~ 0
 MUX_SELECT
@@ -670,4 +659,26 @@ Text HLabel 6200 1400 0    50   Input ~ 0
 PD_MUX_OUT1
 Text HLabel 6200 3850 0    50   Input ~ 0
 PD_MUX_OUT2
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F594BC9
+P 950 1300
+F 0 "J?" H 1058 1681 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 1058 1590 50  0000 C CNN
+F 2 "" H 950 1300 50  0001 C CNN
+F 3 "~" H 950 1300 50  0001 C CNN
+	1    950  1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F5954AA
+P 950 2050
+F 0 "J?" H 1058 2431 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 1058 2340 50  0000 C CNN
+F 2 "" H 950 2050 50  0001 C CNN
+F 3 "~" H 950 2050 50  0001 C CNN
+	1    950  2050
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

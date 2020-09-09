@@ -281,47 +281,36 @@ F 3 "" H 10500 3850 50  0001 C CNN
 	1    10700 3750
 	1    0    0    -1  
 $EndComp
-Text GLabel 1900 2050 0    50   Input ~ 0
+Text GLabel 1250 1200 2    50   Input ~ 0
 GND
-Text GLabel 1900 2150 0    50   Input ~ 0
+Text GLabel 1250 1300 2    50   Input ~ 0
 +10V
-Text GLabel 1900 2250 0    50   Input ~ 0
+Text GLabel 1250 1400 2    50   Input ~ 0
 -10V
-Text GLabel 1900 2350 0    50   Input ~ 0
+Text GLabel 1250 1500 2    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 1900 2450 0    50   Input ~ 0
+Text GLabel 1250 1600 2    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
-	2100 2050 1900 2050
+	1050 1200 1250 1200
 Wire Wire Line
-	1900 2150 2100 2150
+	1250 1300 1050 1300
 Wire Wire Line
-	2100 2250 1900 2250
+	1050 1400 1250 1400
 Wire Wire Line
-	1900 2350 2100 2350
+	1250 1500 1050 1500
 Wire Wire Line
-	2100 2450 1900 2450
+	1050 1600 1250 1600
 Wire Wire Line
-	1900 2550 2100 2550
+	1250 1950 1050 1950
 Wire Wire Line
-	2100 2650 1900 2650
+	1050 2050 1250 2050
 Wire Wire Line
-	1900 2750 2100 2750
+	1250 2150 1050 2150
 Wire Wire Line
-	2100 2850 1900 2850
-$Comp
-L Ninja-qPCR:Conn_02x05 U?
-U 1 1 5F51FB4B
-P 2300 2050
-F 0 "U?" H 2619 1661 50  0000 L CNN
-F 1 "Conn_02x05" H 2619 1570 50  0000 L CNN
-F 2 "" H 2100 2150 50  0001 C CNN
-F 3 "" H 2100 2150 50  0001 C CNN
-	1    2300 2050
-	1    0    0    -1  
-$EndComp
+	1050 2250 1250 2250
 Wire Wire Line
-	1900 2950 2100 2950
+	1250 2350 1050 2350
 $Comp
 L Ninja-qPCR:ADG731BSUZ U?
 U 1 1 5F54A8CC
@@ -447,13 +436,13 @@ Text GLabel 6750 5000 0    50   Input ~ 0
 GND
 Wire Wire Line
 	6950 1050 6800 1050
-Text GLabel 1900 2750 0    50   Input ~ 0
+Text GLabel 1250 2150 2    50   Input ~ 0
 PD_MUX_SPL_SCLK
-Text GLabel 1900 2850 0    50   Input ~ 0
+Text GLabel 1250 2250 2    50   Input ~ 0
 PD_MUX_SPI_MOSI
-Text GLabel 1900 2950 0    50   Input ~ 0
+Text GLabel 1250 2350 2    50   Input ~ 0
 PD_MUX_SYNC
-NoConn ~ 1900 2550
+NoConn ~ 1250 1950
 Text GLabel 6800 1150 0    50   Input ~ 0
 PD_MUX_SPI_MOSI
 Wire Wire Line
@@ -466,7 +455,7 @@ Wire Wire Line
 	8550 4250 8700 4250
 Wire Wire Line
 	8550 4350 8700 4350
-NoConn ~ 1900 2650
+NoConn ~ 1250 2050
 Text GLabel 1750 4600 0    50   Input ~ 0
 +10V
 Text GLabel 2600 4600 0    50   Input ~ 0
@@ -683,4 +672,26 @@ Text HLabel 8700 6000 2    50   Input ~ 0
 VDD
 Wire Wire Line
 	6950 5100 6750 5100
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F5948A2
+P 850 1400
+F 0 "J?" H 958 1781 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 958 1690 50  0000 C CNN
+F 2 "" H 850 1400 50  0001 C CNN
+F 3 "~" H 850 1400 50  0001 C CNN
+	1    850  1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J?
+U 1 1 5F5950CF
+P 850 2150
+F 0 "J?" H 958 2531 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 958 2440 50  0000 C CNN
+F 2 "" H 850 2150 50  0001 C CNN
+F 3 "~" H 850 2150 50  0001 C CNN
+	1    850  2150
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
