@@ -46,13 +46,17 @@ class LogManager {
   getAnalyzedLog (id, onLoad, onError) {
     this.getLog(id, (log)=>{
       const analysis = new OpticsAnalysis(log);
-      analysis.calcBaseline();
-      analysis.calcCt();
-      analysis.calcMeltCurve();
-      log.baselines = analysis.getBaselines();
-      log.thresholds = analysis.getThresholds();
-      log.ct = analysis.getCt();
-      log.melt_curve = analysis.getMeltCurve();
+      try {
+        analysis.calcBaseline();
+        analysis.calcCt();
+        analysis.calcMeltCurve();
+        log.baselines = analysis.getBaselines();
+        log.thresholds = analysis.getThresholds();
+        log.ct = analysis.getCt();
+        log.melt_curve = analysis.getMeltCurve();
+      } catch (e) {
+        console.log(e);
+      }
       onLoad(log);
     },
     onError);

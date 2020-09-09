@@ -1,49 +1,10 @@
 {
-  well_thremistor: {
-    r0: 100.0,
-    base_temp: 25.0,
-    b_const: [
-      { b: 4250.0,
-        max_temp: 50.0 },
-      { b: 4250.0,
-        min_temp: 50.0,
-        max_temp: 80.0 },
-      { b: 4250.0,
-        min_temp: 80.0 }
-    ],
-    resistor: [
-      { r: 30,
-        max_tem:54
-      },
-      { r: 10,
-        max_tem:54
-      }
+  tubes: {
+    count:16,
+    layout: [
+      [0,1,2,3,4,5,6,7],
+      [8,9,10,11,12,13,14,15]
     ]
   },
-  heater_thremistor: {
-    r0: 100.0,
-    base_temp: 25.0,
-    b_const: [
-      { b: 4250.0,
-        max_temp: 50.0 },
-      { b: 4250.0,
-        min_temp: 50.0,
-        max_temp: 80.0 },
-      { b: 4250.0,
-        min_temp: 80.0 }
-    ],
-    resistor: [
-      { r: 30,
-        max_tem:54
-      },
-      { r: 10,
-        max_tem:54
-      }
-    ]
-  }
-  well_count: 8,
-  gpio: {
-    
-  }
-  
+  hardware_conf:"dummy_hardware_conf"
 }

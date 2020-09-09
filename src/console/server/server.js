@@ -20,7 +20,7 @@ const WebSocketServer = require('websocket').server;
 
 const WEBSOCKET_PORT = "2222";
 const CLIENT_HOST_DEFAULT = "localhost";
-const CLIENT_PORT_DEFAULT = "8080";
+const CLIENT_PORT_DEFAULT = "8888";
 
 class NinjaQPCRHTTPServer {
   constructor (server, clientHost, clientPort) {
