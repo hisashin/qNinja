@@ -1,4 +1,4 @@
-172498678565481
+177303800138481
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19250,6 +19250,20 @@ NF-Transformer_P3356_ETAL
 0
 0
 Ninja-qPCR
+AD630ARZ
+
+
+0
+20
+20
+Ninja-qPCR
+ADS1219IPWR
+
+
+0
+16
+16
+Ninja-qPCR
 Con_2x05
 Through hole straight pin header, 2x05, 2.54mm pitch, double rows
 Through hole pin header THT 2x05 2.54mm double row
@@ -19263,6 +19277,13 @@ EAST1616RGBB4
 0
 4
 4
+Ninja-qPCR
+LME49721MAX&slash_NOPB
+
+
+0
+8
+8
 Ninja-qPCR
 SN74LVC1G66DBVR
 
