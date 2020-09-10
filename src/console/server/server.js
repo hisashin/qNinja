@@ -2,9 +2,7 @@
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
-const hardwareConf = require(QPCR_PATH + "conf/dummy_hardware_conf"); // Use simulator
-// const hardwareConf = require(QPCR_PATH + "conf/ninjaqpcr_heat_only_conf"); // For thermal cycler test
-const qpcr = new NinjaQPCR(hardwareConf);
+const qpcr = new NinjaQPCR("hardware.json");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const LogManager = require(QPCR_PATH + "log_manager");
@@ -20,7 +18,7 @@ const WebSocketServer = require('websocket').server;
 
 const WEBSOCKET_PORT = "2222";
 const CLIENT_HOST_DEFAULT = "localhost";
-const CLIENT_PORT_DEFAULT = "8080";
+const CLIENT_PORT_DEFAULT = "8888";
 
 class NinjaQPCRHTTPServer {
   constructor (server, clientHost, clientPort) {

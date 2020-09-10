@@ -2,6 +2,7 @@
 
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
+const BoxMuller = require("../util/box_muller.js");
 
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
@@ -143,6 +144,8 @@ class LEDUnit {
     console.log("Shutting down dummy LED unit.");
   }
 }
+const DUMMY_BASELINE_MULTIPLIER = 10;
+const DUMMY_BASELINE_OFFSET = 30;
 class DummyFluorescenceSensingUnit {
   constructor () {
   }
@@ -163,7 +166,7 @@ class DummyFluorescenceSensingUnit {
     return sigmoid;
   }
   getDummyBaseline (value) {
-    return 0.1 + Math.random() * DUMMY_BASELINE_RATIO *  (MAX_ABSOLUTE_FLUORESCENCE-value)/MAX_ABSOLUTE_FLUORESCENCE;
+    return Math.max(0, BoxMuller() * DUMMY_BASELINE_MULTIPLIER);
   }
   _getDummyMeltCurve (start, current, high, low) {
     const range = 12;
@@ -180,9 +183,8 @@ class DummyFluorescenceSensingUnit {
     const AMP_BETA = 0.6;
     const AMP_LAMBDA_DEFAULT = 20;
     const AMP_LAMBDA_STEP = 1.1;
-    const AMP_BACKGROUND_COEFF = 40;
     const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * wellIndex;
-    const background = Math.random() * AMP_BACKGROUND_COEFF;
+    const background = getDumyBaseline();
     const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
     return amplification + background;
   }
@@ -196,10 +198,6 @@ class DummyFluorescenceSensingUnit {
         const temperature = this.debugValue.currentTemp;
         value = this._getDummyMeltCurve(this.dummyValues[well.index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
       } else {
-        /*
-        value = this.getDummySigmoid(well.index);
-        value += this.getDummyBaseline(value);
-        */
         value = this._getDummyAmplification(well.index, this.debugValue.repeat);
         while (this.dummyValues.length <= well.index) {
           this.dummyValues.push(0);
