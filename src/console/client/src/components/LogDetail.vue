@@ -31,53 +31,29 @@
       <h3>Tubes</h3>
       <div>
         <table class="tubes_layout">
-          <tr>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-          </tr>
-          <tr>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
-            <td>S</td>
+          <tr v-for="(row, row_index) in tubes_layout" v-bind:key="row_index">
+            <td v-for="(tube, tube_index) in row" v-bind:key="tube_index">
+              {{ tube.name }}
+            </td>
           </tr>
         </table>
       </div>
       <div>
+        {{ device_conf_raw }}
         <table class="tubes_conf">
           <tr>
             <th>ID</th>
+            <th>Name</th>
             <th>Type</th>
             <th>Quantity</th>
             <th>Label</th>
           </tr>
-          <tr v-for="(item, index) in tubes" v-bind:key="index">
+          <tr v-for="(item, index) in log.analysis_config.tubes" v-bind:key="index">
             <td>{{ item.id }}</td>
-            <td>
-              <select>
-                <option>----</option>
-                <option>Standard</option>
-                <option>Negative control</option>
-                <option>Unknown sample</option>
-                <option>Empty</option>
-              </select>
-            </td>
-            <td>
-              <input type="text" disabled="true" />
-            </td>
-            <td>
-              <input type="text" />
-            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.label }}</td>
           </tr>
         </table>
       </div>
@@ -118,33 +94,40 @@ export default {
   },
   data() {
     return {
-      log:{},
-      tubes: [
-        {id:0},
-        {id:1},
-        {id:2},
-        {id:3},
-        {id:4},
-        {id:5},
-        {id:6},
-        {id:7},
-        {id:0},
-        {id:1},
-        {id:2},
-        {id:3},
-        {id:4},
-        {id:5},
-        {id:6},
-        {id:7}
-      ]
+      log:null,
+      device_conf:device.config,
+      device_conf_raw:JSON.stringify(device.config),
+      tubes_layout:[[]]
     }
+  },
+  computed: {
   },
   created: function () {
   },
   methods: {
+    updateTubesLayout: function () {
+      const layout = device.config.tubes.layout;
+      /*
+      {
+        "id": 1,
+        "type": "standard",
+        "quantity": 8,
+        "label": "x2"
+      }
+      */
+      this.tubes_layout = layout.map((row)=>{
+        return row.map((tubeId)=>{
+          let tube = this.log.analysis_config.tubes[tubeId];
+          tube.name = device.config.tubes.names[tubeId];
+          return tube;
+        });
+      });
+    },
     setLog: function (log) {
+      console.log("setLog");
       this.log = log;
-      this.$refs.meltCurveMonitor.set(this.log.melt_curve);
+      this.updateTubesLayout();
+      // this.$refs.meltCurveMonitor.set(this.log.melt_curve);
     }
   }
 }

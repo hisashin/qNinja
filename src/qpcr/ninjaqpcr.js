@@ -33,6 +33,7 @@ class NinjaQPCR {
     const confPath = __dirname + "/conf/" + confFileName;
     const confFile = fs.readFileSync(confPath); // Returns Buffer
     const conf = JSON.parse(confFile.toString());
+    this.config = conf;
     const boardConfFile = __dirname + "/conf/" + conf.hardware_conf;
     console.log(boardConfFile)
     const hardwareConf = require(boardConfFile);
@@ -352,6 +353,12 @@ class NinjaQPCR {
       this.receiver.onFluorescenceDataUpdate(data);
     }
   }
+  
+  getConfig () {
+    return this.config;
+  }
+  
+  // TODO: deprecate (Move to  analysis class)
   getBaseline () {
     if (this.analysis == null) {
       return {};
