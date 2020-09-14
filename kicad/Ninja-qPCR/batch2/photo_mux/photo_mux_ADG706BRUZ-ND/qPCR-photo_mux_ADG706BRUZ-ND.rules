@@ -1,0 +1,83 @@
+
+(rules PCB qPCR-photo_mux_ADG706BRUZ-ND
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 2703)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clear 200.2)
+    (clear 125.0 (type smd_to_turn_gap))
+    (clear 50.0 (type smd_smd))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    GND +10V "-10V" "PD_MUX_OUT" "VCC_LOGIC" ADDRESSA3 ADDRESSA2 ADDRESSA1
+    ADDRESSA0 "MUX_SELECT" "/PD_MUX_OUT1" "/PD_MUX_OUT2" /+3.33V /VDD /VSS "/-3.33V"
+    "N_PD1_OUT1" "N_PD1_OUT2" "N_PD1_OUT3" "N_PD1_OUT4" "N_PD1_OUT5" "N_PD1_OUT6" "N_PD1_OUT7" "N_PD1_OUT8"
+    "N_PD1_OUT16" "N_PD1_OUT15" "N_PD1_OUT14" "N_PD1_OUT13" "N_PD1_OUT12" "N_PD1_OUT10" "N_PD1_OUT11" "N_PD1_OUT9"
+    "Net-(R1-Pad2)" "Net-(R4-Pad2)" "S_PD1_OUT8" "S_PD1_OUT7" "S_PD1_OUT6" "S_PD1_OUT5" "S_PD1_OUT4" "S_PD1_OUT3"
+    "S_PD1_OUT2" "S_PD1_OUT1" "S_PD1_OUT9" "S_PD1_OUT11" "S_PD1_OUT10" "S_PD1_OUT12" "S_PD1_OUT13" "S_PD1_OUT14"
+    "S_PD1_OUT15" "S_PD1_OUT16" "Net-(U1-Pad2)" "Net-(U1-Pad3)" "Net-(U1-Pad13)" "/MUX_SELECT_INV" "Net-(U3-Pad1)" "Net-(U4-Pad13)"
+    "Net-(U4-Pad3)" "Net-(U4-Pad2)"
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)

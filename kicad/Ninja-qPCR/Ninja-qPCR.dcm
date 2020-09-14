@@ -1,3 +1,9 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP TACTILE_4
+D MEC 5G single pole normally-open tactile switch
+K switch normally-open pushbutton push-button
+F http://www.apem.com/int/index.php?controller=attachment&id_attachment=488
+$ENDCMP
+#
 #End Doc Library
