@@ -108,14 +108,12 @@ Text GLabel 2900 1050 0    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 2900 1250 0    50   Input ~ 0
 GND
-Text GLabel 2900 1550 0    50   Input ~ 0
-THERM_AIR
 Text HLabel 2900 1450 0    50   Input ~ 0
 PHOTO_OUT
-Text GLabel 2900 1650 0    50   Input ~ 0
+Text GLabel 2900 1550 0    50   Input ~ 0
 THERM_WELL
-Text GLabel 2900 1750 0    50   Input ~ 0
-THERM_TEST
+Text GLabel 2900 1650 0    50   Input ~ 0
+THERM_TEST1
 Text GLabel 2900 1950 0    50   Input ~ 0
 GND
 Text GLabel 2900 2050 0    50   Input ~ 0
@@ -177,8 +175,8 @@ Wire Wire Line
 Connection ~ 5000 1450
 Wire Wire Line
 	5000 1450 4900 1450
-Text GLabel 1150 2500 2    50   Input ~ 0
-THERM_TEST
+Text GLabel 1350 2550 2    50   Input ~ 0
+THERM_TEST1
 Text GLabel 1350 1850 2    50   Input ~ 0
 ADC_DRDY
 Text GLabel 1350 1950 2    50   Input ~ 0
@@ -192,35 +190,9 @@ Wire Wire Line
 Wire Wire Line
 	1350 2050 1150 2050
 Text GLabel 1350 2150 2    50   Input ~ 0
-THERM_AIR
-Text GLabel 1350 2250 2    50   Input ~ 0
 THERM_WELL
-$Comp
-L Connector:Conn_01x15_Male J1
-U 1 1 5F575969
-P 950 1550
-F 0 "J1" H 1058 2431 50  0000 C CNN
-F 1 "Conn_01x15_Male" H 1058 2340 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x15_Pitch2.54mm" H 950 1550 50  0001 C CNN
-F 3 "~" H 950 1550 50  0001 C CNN
-	1    950  1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1350 2150 1150 2150
-Wire Wire Line
-	1350 2250 1150 2250
-$Comp
-L Connector:Conn_01x01_Male J2
-U 1 1 5F577405
-P 950 2500
-F 0 "J2" H 1058 2681 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 1058 2590 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 950 2500 50  0001 C CNN
-F 3 "~" H 950 2500 50  0001 C CNN
-	1    950  2500
-	1    0    0    -1  
-$EndComp
 Text GLabel 7100 3500 3    50   Input ~ 0
 GND
 Connection ~ 7800 850 
@@ -811,4 +783,34 @@ Wire Wire Line
 	2100 4000 2250 4000
 Wire Wire Line
 	2250 3900 2250 4000
+$Comp
+L Connector:Conn_01x14_Male J?
+U 1 1 5F5FEB48
+P 950 1450
+F 0 "J?" H 1058 2231 50  0000 C CNN
+F 1 "Conn_01x14_Male" H 1058 2140 50  0000 C CNN
+F 2 "" H 950 1450 50  0001 C CNN
+F 3 "~" H 950 1450 50  0001 C CNN
+	1    950  1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J?
+U 1 1 5F602441
+P 950 2550
+F 0 "J?" H 1058 2731 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 1058 2640 50  0000 C CNN
+F 2 "" H 950 2550 50  0001 C CNN
+F 3 "~" H 950 2550 50  0001 C CNN
+	1    950  2550
+	1    0    0    -1  
+$EndComp
+Text GLabel 1350 2650 2    50   Input ~ 0
+THERM_TEST2
+Wire Wire Line
+	1350 2550 1150 2550
+Wire Wire Line
+	1350 2650 1150 2650
+Text GLabel 2900 1750 0    50   Input ~ 0
+THERM_TEST2
 $EndSCHEMATC

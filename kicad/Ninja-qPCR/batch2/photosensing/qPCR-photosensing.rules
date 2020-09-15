@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 1497)
+    (start_pass_no 2887)
     (layer_rule F.Cu
       (active on)
       (preferred_direction vertical)
@@ -63,11 +63,11 @@
     )
   )
   (class "kicad_default"
-    GND +10V "-10V" "Net-(C3-Pad1)" "/PHOTO_OUT" "Net-(C7-Pad2)" "PD_MUX_OUT" "Net-(C8-Pad1)"
-    "Net-(C8-Pad2)" "/AMP_OUT" "THERM_WELL" "THERM_AIR" "I2C_SDA" "I2C_SCL" "ADC_DRDY" "PD_REF_PWM"
-    "PD_MUX_GPIO1" "PD_MUX_GPIO2" "PD_MUX_GPIO3" "PD_MUX_GPIO4" "PD_MUX_GPIO5" "VCC_LOGIC" "THERM_TEST" "Net-(R1-Pad2)"
-    "Net-(R3-Pad2)" "Net-(U1-Pad15)" "Net-(U1-Pad18)" "Net-(U1-Pad7)" "Net-(U1-Pad6)" "Net-(U1-Pad5)" "Net-(U1-Pad4)" "Net-(U1-Pad3)"
-    "Net-(U1-Pad2)"
+    GND +10V "-10V" "/PHOTO_OUT" "PD_MUX_OUT" "/AMP_OUT" "THERM_WELL" "I2C_SDA"
+    "I2C_SCL" "ADC_DRDY" "PD_REF_PWM" "PD_MUX_GPIO1" "PD_MUX_GPIO2" "PD_MUX_GPIO3" "PD_MUX_GPIO4" "PD_MUX_GPIO5"
+    "VCC_LOGIC" "Net-(R1-Pad2)" "Net-(R3-Pad2)" "Net-(U1-Pad15)" "Net-(U1-Pad18)" "Net-(U1-Pad7)" "Net-(U1-Pad6)" "Net-(U1-Pad5)"
+    "Net-(U1-Pad4)" "Net-(U1-Pad3)" "Net-(U1-Pad2)" "Net-(C6-Pad1)" "Net-(C10-Pad2)" "Net-(C11-Pad1)" "Net-(C11-Pad2)" "THERM_TEST2"
+    "THERM_TEST1"
     (clearance_class "kicad_default")
     (via_rule kicad_default)
     (rule
