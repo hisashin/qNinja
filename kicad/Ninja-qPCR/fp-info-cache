@@ -1,4 +1,4 @@
-210860110463492
+214067918289492
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19327,6 +19327,13 @@ ADS1219IPWR
 16
 16
 Ninja-qPCR
+BD9D320EFJ-E2
+
+
+0
+9
+9
+Ninja-qPCR
 CD74HC4067M96
 
 
@@ -19382,6 +19389,13 @@ MPC506AU
 0
 28
 28
+Ninja-qPCR
+NCP3170BDR2G
+
+
+0
+8
+8
 Ninja-qPCR
 Raspberry_Pi_3A+_Run_PEN_Socketed_THT_FaceDown_MountingHoles
 Raspberry Pi 3A+ with Run and PEN using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
