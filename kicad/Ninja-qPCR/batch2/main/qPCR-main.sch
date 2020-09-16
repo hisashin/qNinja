@@ -424,7 +424,7 @@ U 1 1 5F89D7B6
 P 10350 5300
 F 0 "PHOTO1" H 10200 5300 50  0000 R CNN
 F 1 "Conn_01x14_Male" H 10200 5200 50  0000 R CNN
-F 2 "" H 10350 5300 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x14_Pitch2.54mm" H 10350 5300 50  0001 C CNN
 F 3 "~" H 10350 5300 50  0001 C CNN
 	1    10350 5300
 	-1   0    0    -1  
@@ -441,7 +441,7 @@ U 1 1 5F8E207F
 P 7750 3250
 F 0 "J2" H 7858 3531 50  0000 C CNN
 F 1 "Conn_01x03_Male" H 7858 3440 50  0000 C CNN
-F 2 "" H 7750 3250 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7750 3250 50  0001 C CNN
 F 3 "~" H 7750 3250 50  0001 C CNN
 	1    7750 3250
 	1    0    0    -1  
@@ -622,7 +622,7 @@ U 1 1 5F91FDBE
 P 7750 3700
 F 0 "J3" H 7858 3881 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 7858 3790 50  0000 C CNN
-F 2 "" H 7750 3700 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7750 3700 50  0001 C CNN
 F 3 "~" H 7750 3700 50  0001 C CNN
 	1    7750 3700
 	1    0    0    -1  
@@ -633,7 +633,7 @@ U 1 1 5F920692
 P 7750 3950
 F 0 "J4" H 7858 4131 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 7858 4040 50  0000 C CNN
-F 2 "" H 7750 3950 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 7750 3950 50  0001 C CNN
 F 3 "~" H 7750 3950 50  0001 C CNN
 	1    7750 3950
 	1    0    0    -1  
@@ -1161,25 +1161,13 @@ Text HLabel 9950 5000 0    50   Input ~ 0
 VCC_LOGIC_PHOTO
 Text HLabel 9750 3500 0    50   Input ~ 0
 VCC_LOGIC_LED
-Text HLabel 3700 1450 2    50   Input ~ 0
-5V
-Text HLabel 9750 3400 0    50   Input ~ 0
-5V
-Text HLabel 7750 5400 0    50   Input ~ 0
-3V3_REG
-Text HLabel 7750 6000 0    50   Input ~ 0
-3V3_REG
-Text HLabel 7750 5900 0    50   Input ~ 0
-3V3_SENSE
-Text HLabel 7750 5300 0    50   Input ~ 0
-3V3_SENSE
 $Comp
 L Connector_Generic:Conn_02x03_Odd_Even J6
 U 1 1 5FBFD18F
 P 8100 5400
 F 0 "J6" H 8150 5717 50  0000 C CNN
 F 1 "Conn_02x03_Odd_Even" H 8150 5626 50  0000 C CNN
-F 2 "" H 8100 5400 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm" H 8100 5400 50  0001 C CNN
 F 3 "~" H 8100 5400 50  0001 C CNN
 	1    8100 5400
 	1    0    0    -1  
@@ -1190,7 +1178,7 @@ U 1 1 5FC0C671
 P 8100 6000
 F 0 "J7" H 8150 6317 50  0000 C CNN
 F 1 "Conn_02x03_Odd_Even" H 8150 6226 50  0000 C CNN
-F 2 "" H 8100 6000 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm" H 8100 6000 50  0001 C CNN
 F 3 "~" H 8100 6000 50  0001 C CNN
 	1    8100 6000
 	1    0    0    -1  
@@ -1233,20 +1221,6 @@ Wire Wire Line
 	7900 5400 7750 5400
 Wire Wire Line
 	7900 5300 7750 5300
-Text HLabel 9950 4800 0    50   Input ~ 0
-+10V
-Text HLabel 9950 4900 0    50   Input ~ 0
--10V
-Text HLabel 9850 950  0    50   Input ~ 0
-12V
-Text HLabel 9850 2150 0    50   Input ~ 0
-12V
-Text HLabel 9850 2950 0    50   Input ~ 0
-12V
-Text HLabel 9850 1350 0    50   Input ~ 0
-12V
-Text HLabel 9850 1750 0    50   Input ~ 0
-12V
 Text HLabel 7850 1000 0    50   Input ~ 0
 VCC_THERM
 Text HLabel 8600 4850 2    50   Input ~ 0
@@ -1257,7 +1231,7 @@ U 1 1 5FDB8CAC
 P 8100 4850
 F 0 "J5" H 8150 5167 50  0000 C CNN
 F 1 "Conn_02x03_Odd_Even" H 8150 5076 50  0000 C CNN
-F 2 "" H 8100 4850 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm" H 8100 4850 50  0001 C CNN
 F 3 "~" H 8100 4850 50  0001 C CNN
 	1    8100 4850
 	1    0    0    -1  
@@ -1277,10 +1251,6 @@ Wire Wire Line
 	8600 4850 8500 4850
 Text HLabel 7750 4950 0    50   Input ~ 0
 3V3_RASP
-Text HLabel 7750 4850 0    50   Input ~ 0
-3V3_REG
-Text HLabel 7750 4750 0    50   Input ~ 0
-3V3_SENSE
 Wire Wire Line
 	7900 4950 7750 4950
 Wire Wire Line
@@ -1294,4 +1264,34 @@ Wire Wire Line
 	4150 2900 4400 2900
 Text HLabel 4850 2900 2    50   Input ~ 0
 3V3_RASP
+Text GLabel 3700 1450 2    50   Input ~ 0
+5V
+Text GLabel 9750 3400 0    50   Input ~ 0
+5V
+Text GLabel 9950 4800 0    50   Input ~ 0
++10V
+Text GLabel 9950 4900 0    50   Input ~ 0
+-10V
+Text GLabel 7750 4750 0    50   Input ~ 0
+3V3_SENSE
+Text GLabel 7750 4850 0    50   Input ~ 0
+3V3_REG
+Text GLabel 7750 5300 0    50   Input ~ 0
+3V3_SENSE
+Text GLabel 7750 5400 0    50   Input ~ 0
+3V3_REG
+Text GLabel 7750 5900 0    50   Input ~ 0
+3V3_SENSE
+Text GLabel 7750 6000 0    50   Input ~ 0
+3V3_REG
+Text GLabel 9850 950  0    50   Input ~ 0
+12V
+Text GLabel 9850 1350 0    50   Input ~ 0
+12V
+Text GLabel 9850 1750 0    50   Input ~ 0
+12V
+Text GLabel 9850 2150 0    50   Input ~ 0
+12V
+Text GLabel 9850 2950 0    50   Input ~ 0
+12V
 $EndSCHEMATC
