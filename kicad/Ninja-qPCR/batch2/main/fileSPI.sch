@@ -83,7 +83,7 @@ Text GLabel 4000 2800 0    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 4000 3000 0    50   Input ~ 0
 SPI_SWITCH
-NoConn ~ 5100 2800
+NoConn ~ 4950 2800
 Text HLabel 5100 3000 2    50   Input ~ 0
 SPI_SWITCH_INV
 Text GLabel 5100 3200 2    50   Input ~ 0
@@ -92,8 +92,6 @@ Wire Wire Line
 	5100 3200 4950 3200
 Wire Wire Line
 	5100 3000 4950 3000
-Wire Wire Line
-	5100 2800 4950 2800
 Wire Wire Line
 	4150 2800 4000 2800
 Wire Wire Line

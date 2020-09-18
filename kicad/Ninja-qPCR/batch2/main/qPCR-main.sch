@@ -103,7 +103,7 @@ ADC_DRDY
 Wire Wire Line
 	3700 2450 3550 2450
 Text GLabel 3700 2950 2    50   Input ~ 0
-LED_PWM
+PD_REF_PWM
 Wire Wire Line
 	3700 2950 3550 2950
 Text GLabel 2000 3250 0    50   Input ~ 0
@@ -242,7 +242,7 @@ $EndComp
 Text GLabel 9750 3600 0    50   Input ~ 0
 GND
 Text GLabel 9750 3700 0    50   Input ~ 0
-LED_PWM
+PD_REF_PWM
 Text GLabel 9750 3800 0    50   Input ~ 0
 LED_LAT
 Text GLabel 9750 4000 0    50   Input ~ 0
