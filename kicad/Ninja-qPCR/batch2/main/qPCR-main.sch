@@ -153,8 +153,6 @@ Wire Wire Line
 Wire Wire Line
 	3550 3350 3700 3350
 Wire Wire Line
-	4150 2900 4150 2650
-Wire Wire Line
 	4850 2900 4700 2900
 Wire Wire Line
 	4850 2650 4800 2650
@@ -171,8 +169,6 @@ F 3 "~" H 4550 2900 50  0001 C CNN
 	1    4550 2900
 	0    -1   1    0   
 $EndComp
-Wire Wire Line
-	3550 2650 4150 2650
 $Comp
 L Ninja-qPCR:TACTILE_4 SW1
 U 1 1 5F5F3483
@@ -1257,11 +1253,6 @@ Wire Wire Line
 	7900 4850 7750 4850
 Wire Wire Line
 	7900 4750 7750 4750
-Wire Wire Line
-	4150 2650 4300 2650
-Connection ~ 4150 2650
-Wire Wire Line
-	4150 2900 4400 2900
 Text HLabel 4850 2900 2    50   Input ~ 0
 3V3_RASP
 Text GLabel 3700 1450 2    50   Input ~ 0
@@ -1294,4 +1285,13 @@ Text GLabel 9850 2150 0    50   Input ~ 0
 12V
 Text GLabel 9850 2950 0    50   Input ~ 0
 12V
+Wire Wire Line
+	4250 2900 4400 2900
+Wire Wire Line
+	3550 2650 4250 2650
+Wire Wire Line
+	4250 2650 4300 2650
+Connection ~ 4250 2650
+Wire Wire Line
+	4250 2900 4250 2650
 $EndSCHEMATC
