@@ -37,8 +37,14 @@ export default {
       this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
       this.graph.update();
     },
-    set: function () {
-      // TODO add all data (to display experiment log)
+    set: function (timeSeries, wellSeries, lidSeries) {
+      for (let i=0; i<timeSeries.length; i++) {
+        this.graph.addData(0, {t:timeSeries[i], v:wellSeries[i]});
+        this.graph.addData(1, {t:timeSeries[i], v:lidSeries[i]});
+      }
+      let minTime = timeSeries[0];
+      this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
+      this.graph.update();
     }
   }
 }

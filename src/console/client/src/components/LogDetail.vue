@@ -14,7 +14,10 @@
       <h3>Baseline</h3>
       <ul class="radio_list">
         <li class="radio_list__item"><input type="radio" name="baseline_alg" value="auto"/>Automatic</li>
-        <li class="radio_list__item"><input type="radio" name="baseline_alg" value="manual_cycles" />Manual cycles</li>
+        <li class="radio_list__item"><input type="radio" name="baseline_alg" value="manual_cycles" />
+          Manual cycles
+          <div>From <input type="number" step="1"/> - To <input type="number" step="1"/></div>
+        </li>
         <li class="radio_list__item"><input type="radio" name="baseline_alg" value="manual_baseline" />Manual baseline</li>
       </ul>
     </section>
@@ -59,8 +62,17 @@
       </div>
     </section>
     <h2>(TODO) Protocol Detail</h2>
-    <h2>(TODO) Temperature Chart</h2>
-    <h2>(TODO) qPCR Fluorescence Chart</h2>
+    <div>
+      <ProtocolDetail ref="protocolDetail" />
+    </div>
+    <h2>qPCR Fluorescence Chart</h2>
+    <div>
+      <FluorescenceMonitor ref="fluorescenceMonitor" />
+    </div>
+    <h2>Temperature Chart</h2>
+    <div>
+      <TemperatureMonitor ref="temperatureMonitor" />
+    </div>
     <h2>(TODO) Melt Curve Chart</h2>
     <div>
       <MeltCurveMonitor ref="meltCurveMonitor" />
@@ -85,11 +97,9 @@ import MeltCurveMonitor from './ExperimentMonitor/MeltCurveMonitor.vue';
 export default {
   name: 'LogDetail',
   components:{
-  /*
     ProtocolDetail,
-    TemperatureMonitor,
     FluorescenceMonitor,
-    */
+    TemperatureMonitor,
     MeltCurveMonitor
   },
   data() {
@@ -107,14 +117,6 @@ export default {
   methods: {
     updateTubesLayout: function () {
       const layout = device.config.tubes.layout;
-      /*
-      {
-        "id": 1,
-        "type": "standard",
-        "quantity": 8,
-        "label": "x2"
-      }
-      */
       this.tubes_layout = layout.map((row)=>{
         return row.map((tubeId)=>{
           let tube = this.log.analysis_config.tubes[tubeId];
@@ -125,7 +127,14 @@ export default {
     },
     setLog: function (log) {
       console.log("setLog");
+      console.log(this.$refs);
+      setTimeout(()=>{
+        this.$refs.temperatureMonitor.set(log.temp.time, log.temp.well, log.temp.lid);
+        this.$refs.fluorescenceMonitor.set(log.fluorescence.qpcr);
+        this.$refs.protocolDetail.setProtocol(log.protocol);
+        }, 1000);
       this.log = log;
+      // this.$refs.temperatureMonitor.set(log.temp.time, log.temp.well, log.temp.lid);
       this.updateTubesLayout();
       // this.$refs.meltCurveMonitor.set(this.log.melt_curve);
     }
