@@ -1,4 +1,4 @@
-215688069780492
+218893397001492
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19418,6 +19418,13 @@ raspberry pi 3a+ through hole
 40
 40
 Ninja-qPCR
+Raspberry_Pi_3A+_Socketed_THT_FaceDown_MountingHoles_minimum
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
 SN74LVC1G04DBVR
 
 
@@ -19452,6 +19459,13 @@ SPI_SWITCHER
 0
 12
 12
+Ninja-qPCR
+SW_TH_Tactile_Omron_B3F-10xx
+SW_TH_Tactile_Omron_B3F-10xx_https://www.omron.com/ecb/products/pdf/en-b3f.pdf
+Omron B3F-10xx
+0
+4
+4
 Ninja-qPCR
 TACTILE_4
 SW_TH_Tactile_Omron_B3F-10xx_https://www.omron.com/ecb/products/pdf/en-b3f.pdf

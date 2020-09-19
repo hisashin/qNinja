@@ -169,31 +169,12 @@ F 3 "~" H 4550 2900 50  0001 C CNN
 	1    4550 2900
 	0    -1   1    0   
 $EndComp
-$Comp
-L Ninja-qPCR:TACTILE_4 SW1
-U 1 1 5F5F3483
-P 4550 2650
-F 0 "SW1" H 4550 2935 50  0000 C CNN
-F 1 "TACTILE_4" H 4550 2844 50  0000 C CNN
-F 2 "Ninja-qPCR:TACTILE_4" H 4550 2850 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 4550 2850 50  0001 C CNN
-	1    4550 2650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4350 2700 4300 2700
 Wire Wire Line
 	4300 2700 4300 2650
 Connection ~ 4300 2650
 Wire Wire Line
-	4300 2650 4350 2650
-Wire Wire Line
-	4750 2700 4800 2700
-Wire Wire Line
 	4800 2700 4800 2650
 Connection ~ 4800 2650
-Wire Wire Line
-	4800 2650 4750 2650
 $Sheet
 S 5850 1850 850  250 
 U 5F7093B5
@@ -1294,4 +1275,23 @@ Wire Wire Line
 Connection ~ 4250 2650
 Wire Wire Line
 	4250 2900 4250 2650
+$Comp
+L Ninja-qPCR:TACTILE_4 SW1
+U 1 1 5F67E494
+P 4550 2650
+F 0 "SW1" H 4744 2723 50  0000 L CNN
+F 1 "TACTILE_4" H 4744 2632 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 4550 2850 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 4550 2850 50  0001 C CNN
+	1    4550 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 2650 4800 2650
+Wire Wire Line
+	4700 2700 4800 2700
+Wire Wire Line
+	4300 2650 4400 2650
+Wire Wire Line
+	4300 2700 4400 2700
 $EndSCHEMATC
