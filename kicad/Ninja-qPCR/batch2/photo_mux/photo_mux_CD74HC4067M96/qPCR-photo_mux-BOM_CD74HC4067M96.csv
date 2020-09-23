@@ -1,0 +1,6 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"J1,J2";"Pin_Header_Straight_1x05_Pitch2.54mm";2;"Conn_01x05_Male";;;
+2;"JP1";"SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm";1;"Jumper_3_Open";;;
+3;"N_PD1,N_PD2,S_PD1,S_PD2";"Con_2x05";4;"Conn_02x05";;;
+4;"U1,U3";"CD74HC4067M96";2;"CD74HC4067M96";;;
+5;"U2";"SN74LVC1G04DBVR";1;"SN74LVC1G04DBVR";;;

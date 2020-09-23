@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 7)
+    (drawings 8)
     (tracks 491)
     (zones 0)
     (modules 14)
@@ -21,7 +21,7 @@
     (37 F.SilkS user)
     (38 B.Mask user)
     (39 F.Mask user)
-    (40 Dwgs.User user hide)
+    (40 Dwgs.User user)
     (41 Cmts.User user)
     (42 Eco1.User user)
     (43 Eco2.User user)
@@ -30,7 +30,7 @@
     (46 B.CrtYd user)
     (47 F.CrtYd user)
     (48 B.Fab user)
-    (49 F.Fab user hide)
+    (49 F.Fab user)
   )
 
   (setup
@@ -1256,6 +1256,9 @@
       (net 2 +10V))
   )
 
+  (gr_text 42x49.56mm (at 88 58) (layer Dwgs.User)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
   (gr_text MUX_MPC506AU (at 116 64) (layer F.SilkS)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )

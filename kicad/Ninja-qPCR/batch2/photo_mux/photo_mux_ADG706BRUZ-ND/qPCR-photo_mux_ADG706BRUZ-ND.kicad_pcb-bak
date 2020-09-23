@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 11)
+    (drawings 12)
     (tracks 474)
     (zones 0)
     (modules 20)
@@ -12,7 +12,7 @@
   (page A4)
   (layers
     (0 F.Cu signal)
-    (31 B.Cu signal)
+    (31 B.Cu signal hide)
     (32 B.Adhes user)
     (33 F.Adhes user)
     (34 B.Paste user)
@@ -339,7 +339,7 @@
     (descr "Through hole straight pin header, 1x05, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x05 2.54mm single row")
     (path /5F5A8B7D)
-    (fp_text reference J2 (at 0.0125 -3.0518 180) (layer F.SilkS)
+    (fp_text reference J2 (at -0.59456 12.61492 180) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text value Conn_01x05_Male (at 0 12.49 90) (layer F.Fab)
@@ -1536,6 +1536,9 @@
       (net 14 /VDD))
   )
 
+  (gr_text MUX_ADG706 (at 108.16082 67.1576) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
   (gr_text 33x49.56mm (at 87.83066 56.60136) (layer Dwgs.User)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
@@ -2037,7 +2040,7 @@
   (via (at 93.3273 88.67) (size 0.8) (layers F.Cu B.Cu) (net 54))
   (via (at 89.3425 68.7299) (size 0.8) (layers F.Cu B.Cu) (net 54))
 
-  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5F59B68C) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5F59C94B) (hatch edge 0.508)
     (connect_pads (clearance 0.508))
     (min_thickness 0.254)
     (fill yes (arc_segments 32) (thermal_gap 0.508) (thermal_bridge_width 0.508))
@@ -2217,7 +2220,7 @@
       )
     )
   )
-  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5F59B689) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5F59C948) (hatch edge 0.508)
     (connect_pads (clearance 0.508))
     (min_thickness 0.254)
     (fill yes (arc_segments 32) (thermal_gap 0.508) (thermal_bridge_width 0.508))
