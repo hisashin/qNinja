@@ -90,9 +90,9 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (conf) {
-    this.well = conf.getWell();
-    this.heatLid = conf.getHeatLid();
+  constructor (well, heatLid) {
+    this.well = well;
+    this.heatLid = heatLid;
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {

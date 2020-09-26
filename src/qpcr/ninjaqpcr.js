@@ -38,9 +38,9 @@ class NinjaQPCR {
     console.log(boardConfFile)
     const hardwareConf = require(boardConfFile);
     
-    this.thermalCycler = new ThermalCycler(hardwareConf);
+    this.thermalCycler = new ThermalCycler(conf.getWell(), conf.getHeatLid());
     this.thermalCycler.setEventReceiver(this);
-    this.optics = new Optics(hardwareConf);
+    this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount());
     this.optics.setEventReceiver(this);
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;

@@ -1,7 +1,7 @@
 "use strict";
-// This dummy hardware conf uses legacy Well implementation. Use "dummy_hardware_multi_conf.js" instead.
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
+const Well = require("../control/well_multi.js");
 const BoxMuller = require("../util/box_muller.js");
 
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
@@ -16,30 +16,6 @@ const getDummyTemp = (current, target, interval) => {
     return Math.max(target, current - DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
   }
 };
-
-// instance of HeatUnit
-class Well {
-  constructor () {
-    this.temperature = 25;
-    this.targetTemperature = 25;
-  }
-  start () {
-    // Initialize hardware. This function is called once at the first run.
-  }
-  setTargetTemperature (targetTemperature) {
-    this.targetTemperature = targetTemperature;
-  }
-  control () {
-    this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
-  }
-  off () {
-    // Do nothing
-  }
-  shutdown () {
-    console.log("Shutting down dummy well.");
-    this.off();
-  }
-}
 
 // instance of HeatUnit
 class HeatLid {
