@@ -94,12 +94,12 @@ PD_MUX_GPIO5
 Text GLabel 1350 1750 2    50   Input ~ 0
 PD_REF_PWM
 $Comp
-L Ninja-qPCR:ADS1219IPWR U?
+L Ninja-qPCR:ADS1219IPWR U2
 U 1 1 5F63A689
 P 3100 1050
-F 0 "U?" H 4000 1437 60  0000 C CNN
+F 0 "U2" H 4000 1437 60  0000 C CNN
 F 1 "ADS1219IPWR" H 4000 1331 60  0000 C CNN
-F 2 "PW16_TEX" H 4000 1290 60  0001 C CNN
+F 2 "Ninja-qPCR:ADS1219IPWR" H 4000 1290 60  0001 C CNN
 F 3 "" H 3100 1050 60  0000 C CNN
 	1    3100 1050
 	1    0    0    -1  
@@ -108,14 +108,12 @@ Text GLabel 2900 1050 0    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 2900 1250 0    50   Input ~ 0
 GND
-Text GLabel 2900 1550 0    50   Input ~ 0
-THERM_AIR
 Text HLabel 2900 1450 0    50   Input ~ 0
 PHOTO_OUT
-Text GLabel 2900 1650 0    50   Input ~ 0
+Text GLabel 2900 1550 0    50   Input ~ 0
 THERM_WELL
-Text GLabel 2900 1750 0    50   Input ~ 0
-THERM_TEST
+Text GLabel 2900 1650 0    50   Input ~ 0
+THERM_TEST1
 Text GLabel 2900 1950 0    50   Input ~ 0
 GND
 Text GLabel 2900 2050 0    50   Input ~ 0
@@ -177,8 +175,8 @@ Wire Wire Line
 Connection ~ 5000 1450
 Wire Wire Line
 	5000 1450 4900 1450
-Text GLabel 1150 2500 2    50   Input ~ 0
-THERM_TEST
+Text GLabel 1350 2550 2    50   Input ~ 0
+THERM_TEST1
 Text GLabel 1350 1850 2    50   Input ~ 0
 ADC_DRDY
 Text GLabel 1350 1950 2    50   Input ~ 0
@@ -192,35 +190,9 @@ Wire Wire Line
 Wire Wire Line
 	1350 2050 1150 2050
 Text GLabel 1350 2150 2    50   Input ~ 0
-THERM_AIR
-Text GLabel 1350 2250 2    50   Input ~ 0
 THERM_WELL
-$Comp
-L Connector:Conn_01x15_Male J?
-U 1 1 5F575969
-P 950 1550
-F 0 "J?" H 1058 2431 50  0000 C CNN
-F 1 "Conn_01x15_Male" H 1058 2340 50  0000 C CNN
-F 2 "" H 950 1550 50  0001 C CNN
-F 3 "~" H 950 1550 50  0001 C CNN
-	1    950  1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1350 2150 1150 2150
-Wire Wire Line
-	1350 2250 1150 2250
-$Comp
-L Connector:Conn_01x01_Male J?
-U 1 1 5F577405
-P 950 2500
-F 0 "J?" H 1058 2681 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 1058 2590 50  0000 C CNN
-F 2 "" H 950 2500 50  0001 C CNN
-F 3 "~" H 950 2500 50  0001 C CNN
-	1    950  2500
-	1    0    0    -1  
-$EndComp
 Text GLabel 7100 3500 3    50   Input ~ 0
 GND
 Connection ~ 7800 850 
@@ -256,11 +228,11 @@ L Device:C C?
 U 1 1 5F581541
 P 10200 1300
 AR Path="/5F4A628B/5F581541" Ref="C?"  Part="1" 
-AR Path="/5F581541" Ref="C?"  Part="1" 
+AR Path="/5F581541" Ref="C12"  Part="1" 
 AR Path="/5F620C27/5F581541" Ref="C?"  Part="1" 
-F 0 "C?" H 10315 1346 50  0000 L CNN
+F 0 "C12" H 10315 1346 50  0000 L CNN
 F 1 "0.22uF" H 10315 1255 50  0000 L CNN
-F 2 "" H 10238 1150 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1206_HandSoldering" H 10238 1150 50  0001 C CNN
 F 3 "~" H 10200 1300 50  0001 C CNN
 	1    10200 1300
 	1    0    0    -1  
@@ -270,11 +242,11 @@ L Device:C C?
 U 1 1 5F581547
 P 9900 1300
 AR Path="/5F4A628B/5F581547" Ref="C?"  Part="1" 
-AR Path="/5F581547" Ref="C?"  Part="1" 
+AR Path="/5F581547" Ref="C11"  Part="1" 
 AR Path="/5F620C27/5F581547" Ref="C?"  Part="1" 
-F 0 "C?" H 10015 1346 50  0000 L CNN
+F 0 "C11" H 10015 1346 50  0000 L CNN
 F 1 "0.22uF" H 10015 1255 50  0000 L CNN
-F 2 "" H 9938 1150 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1206_HandSoldering" H 9938 1150 50  0001 C CNN
 F 3 "~" H 9900 1300 50  0001 C CNN
 	1    9900 1300
 	1    0    0    -1  
@@ -292,11 +264,11 @@ L Device:R R?
 U 1 1 5F581551
 P 10200 2350
 AR Path="/5F4A628B/5F581551" Ref="R?"  Part="1" 
-AR Path="/5F581551" Ref="R?"  Part="1" 
+AR Path="/5F581551" Ref="R8"  Part="1" 
 AR Path="/5F620C27/5F581551" Ref="R?"  Part="1" 
-F 0 "R?" H 10270 2396 50  0000 L CNN
+F 0 "R8" H 10270 2396 50  0000 L CNN
 F 1 "560" H 10270 2305 50  0000 L CNN
-F 2 "" V 10130 2350 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 10130 2350 50  0001 C CNN
 F 3 "~" H 10200 2350 50  0001 C CNN
 	1    10200 2350
 	1    0    0    -1  
@@ -312,11 +284,11 @@ L Device:R R?
 U 1 1 5F58155A
 P 8100 850
 AR Path="/5F4A628B/5F58155A" Ref="R?"  Part="1" 
-AR Path="/5F58155A" Ref="R?"  Part="1" 
+AR Path="/5F58155A" Ref="R5"  Part="1" 
 AR Path="/5F620C27/5F58155A" Ref="R?"  Part="1" 
-F 0 "R?" V 7893 850 50  0000 C CNN
+F 0 "R5" V 7893 850 50  0000 C CNN
 F 1 "1800" V 7984 850 50  0000 C CNN
-F 2 "" V 8030 850 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 8030 850 50  0001 C CNN
 F 3 "~" H 8100 850 50  0001 C CNN
 	1    8100 850 
 	0    1    1    0   
@@ -352,11 +324,11 @@ L Device:C C?
 U 1 1 5F58156F
 P 9600 1600
 AR Path="/5F4A628B/5F58156F" Ref="C?"  Part="1" 
-AR Path="/5F58156F" Ref="C?"  Part="1" 
+AR Path="/5F58156F" Ref="C10"  Part="1" 
 AR Path="/5F620C27/5F58156F" Ref="C?"  Part="1" 
-F 0 "C?" H 9715 1646 50  0000 L CNN
+F 0 "C10" H 9715 1646 50  0000 L CNN
 F 1 "10pF" H 9715 1555 50  0000 L CNN
-F 2 "" H 9638 1450 50  0001 C CNN
+F 2 "Capacitors_ThroughHole:C_Disc_D3.0mm_W2.0mm_P2.50mm" H 9638 1450 50  0001 C CNN
 F 3 "~" H 9600 1600 50  0001 C CNN
 	1    9600 1600
 	1    0    0    -1  
@@ -366,11 +338,11 @@ L Device:R R?
 U 1 1 5F581575
 P 9250 1600
 AR Path="/5F4A628B/5F581575" Ref="R?"  Part="1" 
-AR Path="/5F581575" Ref="R?"  Part="1" 
+AR Path="/5F581575" Ref="R6"  Part="1" 
 AR Path="/5F620C27/5F581575" Ref="R?"  Part="1" 
-F 0 "R?" H 9320 1646 50  0000 L CNN
+F 0 "R6" H 9320 1646 50  0000 L CNN
 F 1 "1.1M" H 9320 1555 50  0000 L CNN
-F 2 "" V 9180 1600 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9180 1600 50  0001 C CNN
 F 3 "~" H 9250 1600 50  0001 C CNN
 	1    9250 1600
 	1    0    0    -1  
@@ -382,11 +354,11 @@ L Device:R R?
 U 1 1 5F58157C
 P 9900 1900
 AR Path="/5F4A628B/5F58157C" Ref="R?"  Part="1" 
-AR Path="/5F58157C" Ref="R?"  Part="1" 
+AR Path="/5F58157C" Ref="R7"  Part="1" 
 AR Path="/5F620C27/5F58157C" Ref="R?"  Part="1" 
-F 0 "R?" V 9693 1900 50  0000 C CNN
+F 0 "R7" V 9693 1900 50  0000 C CNN
 F 1 "560" V 9784 1900 50  0000 C CNN
-F 2 "" V 9830 1900 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9830 1900 50  0001 C CNN
 F 3 "~" H 9900 1900 50  0001 C CNN
 	1    9900 1900
 	0    1    1    0   
@@ -405,11 +377,11 @@ L Device:C C?
 U 1 1 5F581587
 P 9150 2650
 AR Path="/5F4A628B/5F581587" Ref="C?"  Part="1" 
-AR Path="/5F581587" Ref="C?"  Part="1" 
+AR Path="/5F581587" Ref="C9"  Part="1" 
 AR Path="/5F620C27/5F581587" Ref="C?"  Part="1" 
-F 0 "C?" H 9265 2696 50  0000 L CNN
+F 0 "C9" H 9265 2696 50  0000 L CNN
 F 1 "0.1uF" H 9265 2605 50  0000 L CNN
-F 2 "" H 9188 2500 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9188 2500 50  0001 C CNN
 F 3 "~" H 9150 2650 50  0001 C CNN
 	1    9150 2650
 	1    0    0    -1  
@@ -428,11 +400,11 @@ L Device:C C?
 U 1 1 5F581592
 P 7100 3050
 AR Path="/5F4A628B/5F581592" Ref="C?"  Part="1" 
-AR Path="/5F581592" Ref="C?"  Part="1" 
+AR Path="/5F581592" Ref="C7"  Part="1" 
 AR Path="/5F620C27/5F581592" Ref="C?"  Part="1" 
-F 0 "C?" H 7215 3096 50  0000 L CNN
+F 0 "C7" H 7215 3096 50  0000 L CNN
 F 1 "0.1uF" H 7215 3005 50  0000 L CNN
-F 2 "" H 7138 2900 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7138 2900 50  0001 C CNN
 F 3 "~" H 7100 3050 50  0001 C CNN
 	1    7100 3050
 	1    0    0    -1  
@@ -450,11 +422,11 @@ L Ninja-qPCR:LME49721MAX_NOPB U?
 U 1 1 5F58159C
 P 7250 2000
 AR Path="/5F4A628B/5F58159C" Ref="U?"  Part="1" 
-AR Path="/5F58159C" Ref="U?"  Part="1" 
+AR Path="/5F58159C" Ref="U3"  Part="1" 
 AR Path="/5F620C27/5F58159C" Ref="U?"  Part="1" 
-F 0 "U?" H 8150 2487 60  0000 C CNN
+F 0 "U3" H 8150 2487 60  0000 C CNN
 F 1 "LME49721MAX_NOPB" H 8150 2381 60  0000 C CNN
-F 2 "M08A_TEX" H 8150 2340 60  0001 C CNN
+F 2 "Ninja-qPCR:LME49721MAX&slash_NOPB" H 8150 2340 60  0001 C CNN
 F 3 "" H 7250 2000 60  0000 C CNN
 	1    7250 2000
 	1    0    0    -1  
@@ -473,12 +445,12 @@ Wire Wire Line
 Text HLabel 9000 1250 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
-L Ninja-qPCR:AD630ARZ U?
+L Ninja-qPCR:AD630ARZ U1
 U 1 1 5F58E32E
 P 2650 5050
-F 0 "U?" H 4350 5537 60  0000 C CNN
+F 0 "U1" H 4350 5537 60  0000 C CNN
 F 1 "AD630ARZ" H 4350 5431 60  0000 C CNN
-F 2 "RW_20_ADI" H 4350 5390 60  0001 C CNN
+F 2 "Ninja-qPCR:AD630ARZ" H 4350 5390 60  0001 C CNN
 F 3 "" H 2650 5050 60  0000 C CNN
 	1    2650 5050
 	1    0    0    -1  
@@ -508,12 +480,12 @@ Wire Wire Line
 Wire Wire Line
 	2100 5750 2100 6050
 $Comp
-L Device:R R?
+L Device:R R3
 U 1 1 5F58E343
 P 6350 4250
-F 0 "R?" V 6143 4250 50  0000 C CNN
+F 0 "R3" V 6143 4250 50  0000 C CNN
 F 1 "10k" V 6234 4250 50  0000 C CNN
-F 2 "" V 6280 4250 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6280 4250 50  0001 C CNN
 F 3 "~" H 6350 4250 50  0001 C CNN
 	1    6350 4250
 	0    1    1    0   
@@ -562,12 +534,12 @@ Text GLabel 2100 6550 0    50   Input ~ 0
 Wire Wire Line
 	2650 6550 2400 6550
 $Comp
-L Device:C C?
+L Device:C C3
 U 1 1 5F58E360
 P 2400 6800
-F 0 "C?" H 2515 6846 50  0000 L CNN
+F 0 "C3" H 2515 6846 50  0000 L CNN
 F 1 "0.1uF" H 2515 6755 50  0000 L CNN
-F 2 "" H 2438 6650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 2438 6650 50  0001 C CNN
 F 3 "~" H 2400 6800 50  0001 C CNN
 	1    2400 6800
 	1    0    0    -1  
@@ -582,12 +554,12 @@ Wire Wire Line
 Wire Wire Line
 	2400 6950 2400 7100
 $Comp
-L Device:C C?
+L Device:C C1
 U 1 1 5F58E36B
 P 1500 6800
-F 0 "C?" H 1615 6846 50  0000 L CNN
+F 0 "C1" H 1615 6846 50  0000 L CNN
 F 1 "0.1uF" H 1615 6755 50  0000 L CNN
-F 2 "" H 1538 6650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 1538 6650 50  0001 C CNN
 F 3 "~" H 1500 6800 50  0001 C CNN
 	1    1500 6800
 	1    0    0    -1  
@@ -608,12 +580,12 @@ Wire Wire Line
 	1500 6450 1500 6550
 Connection ~ 1500 6550
 $Comp
-L Device:R R?
+L Device:R R2
 U 1 1 5F58E379
 P 1500 6200
-F 0 "R?" H 1570 6246 50  0000 L CNN
+F 0 "R2" H 1570 6246 50  0000 L CNN
 F 1 "6.2k" H 1570 6155 50  0000 L CNN
-F 2 "" V 1430 6200 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 1430 6200 50  0001 C CNN
 F 3 "~" H 1500 6200 50  0001 C CNN
 	1    1500 6200
 	1    0    0    -1  
@@ -622,12 +594,12 @@ Wire Wire Line
 	1500 6350 1500 6450
 Connection ~ 1500 6450
 $Comp
-L Device:R R?
+L Device:R R1
 U 1 1 5F58E381
 P 1500 5700
-F 0 "R?" H 1570 5746 50  0000 L CNN
+F 0 "R1" H 1570 5746 50  0000 L CNN
 F 1 "1k" H 1570 5655 50  0000 L CNN
-F 2 "" V 1430 5700 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 1430 5700 50  0001 C CNN
 F 3 "~" H 1500 5700 50  0001 C CNN
 	1    1500 5700
 	1    0    0    -1  
@@ -659,12 +631,12 @@ Wire Wire Line
 	1500 5400 1400 5400
 Connection ~ 1500 5400
 $Comp
-L Device:C C?
+L Device:C C6
 U 1 1 5F58E395
 P 6600 4500
-F 0 "C?" H 6715 4546 50  0000 L CNN
+F 0 "C6" H 6715 4546 50  0000 L CNN
 F 1 "0.47uF" H 6715 4455 50  0000 L CNN
-F 2 "" H 6638 4350 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1206_HandSoldering" H 6638 4350 50  0001 C CNN
 F 3 "~" H 6600 4500 50  0001 C CNN
 	1    6600 4500
 	1    0    0    -1  
@@ -678,23 +650,23 @@ Wire Wire Line
 Wire Wire Line
 	6600 4250 6600 4350
 $Comp
-L Device:R R?
+L Device:R R4
 U 1 1 5F58E39F
 P 6900 4250
-F 0 "R?" H 6970 4296 50  0000 L CNN
+F 0 "R4" H 6970 4296 50  0000 L CNN
 F 1 "10k" H 6970 4205 50  0000 L CNN
-F 2 "" V 6830 4250 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6830 4250 50  0001 C CNN
 F 3 "~" H 6900 4250 50  0001 C CNN
 	1    6900 4250
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:C C?
+L Device:C C8
 U 1 1 5F58E3A5
 P 7200 4500
-F 0 "C?" V 6948 4500 50  0000 C CNN
+F 0 "C8" V 6948 4500 50  0000 C CNN
 F 1 "0.47uF" V 7039 4500 50  0000 C CNN
-F 2 "" H 7238 4350 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1206_HandSoldering" H 7238 4350 50  0001 C CNN
 F 3 "~" H 7200 4500 50  0001 C CNN
 	1    7200 4500
 	-1   0    0    1   
@@ -721,25 +693,124 @@ Wire Wire Line
 Text HLabel 7400 4250 2    50   Input ~ 0
 PHOTO_OUT
 $Comp
-L Connector:Conn_01x05_Male J?
+L Connector:Conn_01x05_Male J3
 U 1 1 5F591AD7
 P 8400 4850
-F 0 "J?" H 8508 5231 50  0000 C CNN
+F 0 "J3" H 8508 5231 50  0000 C CNN
 F 1 "Conn_01x05_Male" H 8508 5140 50  0000 C CNN
-F 2 "" H 8400 4850 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 8400 4850 50  0001 C CNN
 F 3 "~" H 8400 4850 50  0001 C CNN
 	1    8400 4850
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x05_Male J?
+L Connector:Conn_01x05_Male J4
 U 1 1 5F59281D
 P 8400 5550
-F 0 "J?" H 8508 5931 50  0000 C CNN
+F 0 "J4" H 8508 5931 50  0000 C CNN
 F 1 "Conn_01x05_Male" H 8508 5840 50  0000 C CNN
-F 2 "" H 8400 5550 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 8400 5550 50  0001 C CNN
 F 3 "~" H 8400 5550 50  0001 C CNN
 	1    8400 5550
 	1    0    0    -1  
 $EndComp
+Text GLabel 2100 3500 0    50   Input ~ 0
++10V
+Text GLabel 2850 3500 0    50   Input ~ 0
+-10V
+Text GLabel 2100 4000 0    50   Input ~ 0
+GND
+Text GLabel 2850 4000 0    50   Input ~ 0
+GND
+Text GLabel 3850 3500 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 3850 4000 0    50   Input ~ 0
+GND
+$Comp
+L Device:C C2
+U 1 1 5F5B08B9
+P 2250 3750
+F 0 "C2" H 2365 3796 50  0000 L CNN
+F 1 "0.1uF?" H 2365 3705 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 2288 3600 50  0001 C CNN
+F 3 "~" H 2250 3750 50  0001 C CNN
+	1    2250 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C4
+U 1 1 5F5B10F8
+P 3000 3750
+F 0 "C4" H 3115 3796 50  0000 L CNN
+F 1 "0.1uF?" H 3115 3705 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 3038 3600 50  0001 C CNN
+F 3 "~" H 3000 3750 50  0001 C CNN
+	1    3000 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C5
+U 1 1 5F5B161D
+P 4000 3750
+F 0 "C5" H 4115 3796 50  0000 L CNN
+F 1 "0.1uF?" H 4115 3705 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 4038 3600 50  0001 C CNN
+F 3 "~" H 4000 3750 50  0001 C CNN
+	1    4000 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 4000 4000 4000
+Wire Wire Line
+	4000 4000 4000 3900
+Wire Wire Line
+	4000 3600 4000 3500
+Wire Wire Line
+	4000 3500 3850 3500
+Wire Wire Line
+	2850 4000 3000 4000
+Wire Wire Line
+	3000 4000 3000 3900
+Wire Wire Line
+	3000 3600 3000 3500
+Wire Wire Line
+	3000 3500 2850 3500
+Wire Wire Line
+	2250 3600 2250 3500
+Wire Wire Line
+	2250 3500 2100 3500
+Wire Wire Line
+	2100 4000 2250 4000
+Wire Wire Line
+	2250 3900 2250 4000
+$Comp
+L Connector:Conn_01x14_Male J1
+U 1 1 5F5FEB48
+P 950 1450
+F 0 "J1" H 1058 2231 50  0000 C CNN
+F 1 "Conn_01x14_Male" H 1058 2140 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x14_Pitch2.54mm" H 950 1450 50  0001 C CNN
+F 3 "~" H 950 1450 50  0001 C CNN
+	1    950  1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J2
+U 1 1 5F602441
+P 950 2550
+F 0 "J2" H 1058 2731 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 1058 2640 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 950 2550 50  0001 C CNN
+F 3 "~" H 950 2550 50  0001 C CNN
+	1    950  2550
+	1    0    0    -1  
+$EndComp
+Text GLabel 1350 2650 2    50   Input ~ 0
+THERM_TEST2
+Wire Wire Line
+	1350 2550 1150 2550
+Wire Wire Line
+	1350 2650 1150 2650
+Text GLabel 2900 1750 0    50   Input ~ 0
+THERM_TEST2
 $EndSCHEMATC

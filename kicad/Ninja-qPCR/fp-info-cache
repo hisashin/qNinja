@@ -1,4 +1,4 @@
-172498678565481
+218919535794492
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -5669,6 +5669,55 @@ microSD_Card_Receptacle_Wuerth_693072010801
 0
 0
 0
+Connector_BarrelJack
+BarrelJack_CLIFF_FC681465S_SMT_Horizontal
+Surface-mount DC Barrel Jack, https://www.cliffuk.co.uk/products/dcconnectors/FC681465S.pdf
+Power Jack SMT
+0
+4
+3
+Connector_BarrelJack
+BarrelJack_CUI_PJ-036AH-SMT_Horizontal
+Surface-mount DC Barrel Jack, http://www.cui.com/product/resource/pj-036ah-smt.pdf
+Power Jack SMT
+0
+3
+3
+Connector_BarrelJack
+BarrelJack_CUI_PJ-063AH_Horizontal
+Barrel Jack, 2.0mm ID, 5.5mm OD, 24V, 8A, no switch, https://www.cui.com/product/resource/pj-063ah.pdf
+barrel jack cui dc power
+0
+4
+3
+Connector_BarrelJack
+BarrelJack_CUI_PJ-063AH_Horizontal_CircularHoles
+Barrel Jack, 2.0mm ID, 5.5mm OD, 24V, 8A, no switch, https://www.cui.com/product/resource/pj-063ah.pdf
+barrel jack cui dc power
+0
+4
+3
+Connector_BarrelJack
+BarrelJack_CUI_PJ-102AH_Horizontal
+Thin-pin DC Barrel Jack, https://cdn-shop.adafruit.com/datasheets/21mmdcjackDatasheet.pdf
+Power Jack
+0
+3
+3
+Connector_BarrelJack
+BarrelJack_Horizontal
+DC Barrel Jack
+Power Jack
+0
+3
+3
+Connector_BarrelJack
+BarrelJack_Wuerth_6941xx301002
+Wuerth electronics barrel jack connector (5.5mm outher diameter, inner diameter 2.05mm or 2.55mm depending on exact order number), See: http://katalog.we-online.de/em/datasheet/6941xx301002.pdf
+connector barrel jack
+0
+3
+3
 Connectors_Molex
 Molex_FFC-502244-1530
 
@@ -19250,6 +19299,48 @@ NF-Transformer_P3356_ETAL
 0
 0
 Ninja-qPCR
+AD630ARZ
+
+
+0
+20
+20
+Ninja-qPCR
+ADG706BRUZ
+
+
+0
+28
+28
+Ninja-qPCR
+ADG731BSUZ
+
+
+0
+48
+48
+Ninja-qPCR
+ADS1219IPWR
+
+
+0
+16
+16
+Ninja-qPCR
+BD9D320EFJ-E2
+
+
+0
+9
+9
+Ninja-qPCR
+CD74HC4067M96
+
+
+0
+24
+24
+Ninja-qPCR
 Con_2x05
 Through hole straight pin header, 2x05, 2.54mm pitch, double rows
 Through hole pin header THT 2x05 2.54mm double row
@@ -19257,12 +19348,89 @@ Through hole pin header THT 2x05 2.54mm double row
 10
 10
 Ninja-qPCR
+DN4_PWR
+
+
+0
+9
+9
+Ninja-qPCR
 EAST1616RGBB4
 
 
 0
 4
 4
+Ninja-qPCR
+IND_VLS5045EX-4R7M
+
+
+0
+2
+2
+Ninja-qPCR
+LME49721MAX&slash_NOPB
+
+
+0
+8
+8
+Ninja-qPCR
+LTC3260EMSE-TRPBF
+
+
+0
+17
+17
+Ninja-qPCR
+MCP4551T-502E&slash_MS
+
+
+0
+8
+8
+Ninja-qPCR
+MPC506AU
+
+
+0
+28
+28
+Ninja-qPCR
+NCP3170BDR2G
+
+
+0
+8
+8
+Ninja-qPCR
+Raspberry_Pi_3A+_Run_PEN_Socketed_THT_FaceDown_MountingHoles
+Raspberry Pi 3A+ with Run and PEN using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+42
+40
+Ninja-qPCR
+Raspberry_Pi_3A+_Socketed_THT_FaceDown_MountingHoles
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
+Raspberry_Pi_3A+_Socketed_THT_FaceDown_MountingHoles_minimum
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
+SN74LVC1G04DBVR
+
+
+0
+5
+5
 Ninja-qPCR
 SN74LVC1G66DBVR
 
@@ -19277,6 +19445,34 @@ SN74LVC2G66DCUR
 0
 8
 8
+Ninja-qPCR
+SOT95P240X112-3N
+
+
+0
+3
+3
+Ninja-qPCR
+SPI_SWITCHER
+
+
+0
+12
+12
+Ninja-qPCR
+SW_TH_Tactile_Omron_B3F-10xx
+SW_TH_Tactile_Omron_B3F-10xx_https://www.omron.com/ecb/products/pdf/en-b3f.pdf
+Omron B3F-10xx
+0
+4
+4
+Ninja-qPCR
+TACTILE_4
+SW_TH_Tactile_Omron_B3F-10xx_https://www.omron.com/ecb/products/pdf/en-b3f.pdf
+Omron B3F-10xx
+0
+4
+4
 Ninja-qPCR
 TB_SeeedOPL_320110028
 
@@ -19340,6 +19536,13 @@ TF31-30S-0.5SH(800)
 0
 32
 32
+Ninja-qPCR
+TLC59281DBQR
+
+
+0
+24
+24
 Oddities
 Dummy_Empty
 

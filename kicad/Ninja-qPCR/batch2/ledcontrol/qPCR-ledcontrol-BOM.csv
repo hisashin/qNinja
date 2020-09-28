@@ -1,0 +1,7 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"JP1";"SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm";1;"Jumper_3_Open";;;
+2;"N_CONN1,S_CONN1,U1";"Con_2x05";3;"Conn_02x05";;;
+3;"U2";"SN74LVC1G04DBVR";1;"SN74LVC1G04DBVR";;;
+4;"U3";"MCP4551T-502E&slash_MS";1;"MCP4551T-502E_MS";;;
+5;"U4";"TLC59281DBQR";1;"TLC59281DBQR";;;
+6;"C1,C2";"C_0805_HandSoldering";2;"C";;;

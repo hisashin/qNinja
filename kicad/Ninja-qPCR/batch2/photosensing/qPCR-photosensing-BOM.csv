@@ -1,0 +1,18 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C1,C3,C7,C9";"R_0603_HandSoldering";4;"0.1uF";;;
+2;"C8,C6";"R_1206_HandSoldering";2;"0.47uF";;;
+3;"J3,J4";"Pin_Header_Straight_1x05_Pitch2.54mm";2;"Conn_01x05_Male";;;
+4;"R1";"R_0603_HandSoldering";1;"1k";;;
+5;"R2";"R_0603_HandSoldering";1;"6.2k";;;
+6;"R3,R4";"R_0603_HandSoldering";2;"10k";;;
+7;"R5";"R_0603_HandSoldering";1;"1800";;;
+8;"R6";"R_0603_HandSoldering";1;"1.1M";;;
+9;"R7,R8";"R_0603_HandSoldering";2;"560";;;
+10;"U1";"AD630ARZ";1;"AD630ARZ";;;
+11;"U2";"ADS1219IPWR";1;"ADS1219IPWR";;;
+12;"U3";"LME49721MAX&slash_NOPB";1;"LME49721MAX_NOPB";;;
+13;"C2,C4,C5";"C_0805_HandSoldering";3;"C";;;
+14;"C10";"C_Disc_D3.0mm_W2.0mm_P2.50mm";1;"10pF";;;
+15;"C11,C12";"R_1206_HandSoldering";2;"0.22uF";;;
+16;"J1";"Pin_Header_Angled_1x14_Pitch2.54mm";1;"Conn_01x14_Male";;;
+17;"J2";"Pin_Header_Straight_1x02_Pitch2.54mm";1;"Conn_01x02_Male";;;
