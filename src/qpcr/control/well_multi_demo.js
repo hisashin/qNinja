@@ -1,3 +1,5 @@
+"use strict";
+
 const Well = require('./well_multi.js');
 const HeatModel = require('./heat_model.js');
 const WellBlock = require('./well_block.js');
@@ -13,7 +15,6 @@ class DummyAir {
     return new Promise ((resolve)=>{
       // TODO call thermistor & mux implementation.
       setTimeout(()=>{
-        // console.log("Air temp measured.");
         resolve()
       }, 50);
     });
@@ -25,7 +26,6 @@ class DummyFan {
     this.models = models;
   }
   setOutput (value) {
-    console.log("Fan " + value);
     this.models.forEach((model)=>{
       model.setNegativeInflux(value);
     });
@@ -90,7 +90,9 @@ function initWellInstance () {
   return well;
 }
 
-const well = initWellInstance ();
+const well = initWellInstance();
+
+/*
 well.start();
 well.setTargetTemperature(70);
 let flg = false;
@@ -107,3 +109,5 @@ setInterval(
   },
   500
 );
+*/
+module.exports = well;

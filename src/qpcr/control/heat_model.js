@@ -19,11 +19,12 @@ class HeatModel {
     this.startTemp = 25 + 2  * Math.random();
     
     for (let i=0; i<this.meshCount; i++) {
-      this.elements.push(25);
+      this.elements.push(this.startTemp + Math.random() * 1.0);
     }
     this.positiveInflux = 0;
     this.negativeInflux = 0;
     this.influx = 0;
+    
     this.interval = 0.5;
     this.count = 1;
    }
@@ -33,12 +34,13 @@ class HeatModel {
   }
   setNegativeInflux (v) {
     this.negativeInflux = Math.abs(v);
-    this.influx = this.positiveInflux + this.negativeInflux;
+    this.influx = this.positiveInflux - this.negativeInflux;
   }
   update () {
     this.count++;
     let next = this.elements.map(()=>{return 0;});
-    next[0] = this.elements[0] + this.deltaT*(this.influx-(this.elements[0]-this.elements[1])/this.resBlock)/this.capacitySingle;
+    next[0] = this.elements[0] + 
+      this.deltaT * (this.influx-(this.elements[0]-this.elements[1])/this.resBlock)/this.capacitySingle;
     for (let i=1; i<this.meshCount - 1; i++) {
       next[i] = this.elements[i] + this.deltaT*(this.elements[i-1] + this.elements[i+1] - this.elements[i]*2)/(this.resBlock*this.capacitySingle);
     }

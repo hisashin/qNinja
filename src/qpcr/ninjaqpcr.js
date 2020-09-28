@@ -7,7 +7,8 @@
 const Constants = require("./constants");
 const fs = require('fs');
 
-const ThermalCycler = require("./control/thermal_cycler");
+// const ThermalCycler = require("./control/thermal_cycler");
+const ThermalCycler = require("./control/thermal_cycler_multi");
 const Optics = require("./control/optics");
 const OpticsAnalysis = require("./optics_analysis");
 const LogManager = require("./log_manager");
@@ -38,7 +39,7 @@ class NinjaQPCR {
     console.log(boardConfFile)
     const hardwareConf = require(boardConfFile);
     
-    this.thermalCycler = new ThermalCycler(conf.getWell(), conf.getHeatLid());
+    this.thermalCycler = new ThermalCycler(hardwareConf.getWell(), hardwareConf.getHeatLid());
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount());
     this.optics.setEventReceiver(this);

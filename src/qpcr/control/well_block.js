@@ -69,7 +69,6 @@ class TempLog {
       targetTemperature:targetTemperature,
       estimatedTime:estimatedTime
     };
-    // console.log(this.fitConstants);
     return estimatedTime;
   }
   getEstimatedTime () {
@@ -100,7 +99,6 @@ function linearFit (plot) {
   plot.forEach((p)=>{
     const x = p[0];
     const y = p[1];
-    // console.log("%f\t%f", x, y);
     n += 1;
     sumX += x;
     sumY += y;
@@ -119,7 +117,6 @@ function linearFit (plot) {
 const TOLERANCE_TEMP = 0.5;
 class WellBlock {
   constructor (pid, sensing, output) {
-    
     this.pid = pid;
     this.sensing = sensing;
     this.output = output;
@@ -140,7 +137,6 @@ class WellBlock {
         if (!this.targetAchieved  && (this.temperature > this.targetTemperature != this.transitionStartTemperature > this.targetTemperature
           || Math.abs(this.temperature - this.targetTemperature) <= TOLERANCE_TEMP)) {
             // Target is between start & current or current temp is within the "tolerance" range
-            console.log("Achieved. %f", this.temperature);
             this.targetAchieved = true;
           }
         const output = this.maxDriveRatio;
@@ -150,6 +146,7 @@ class WellBlock {
     });
   }
   setTargetTemperature (targetTemperature) {
+    this.tempLog.reset();
     this.targetTemperature = targetTemperature;
     this.transitionStartTemperature = this.temperature;
   }
@@ -169,8 +166,16 @@ class WellBlock {
     this.sensing.dummyMaxDriveRatio = this.maxDriveRatio;
   }
   calcDesiredOutput () {
-    this.desiredOutput = Math.max(-this.maxDriveRatio, Math.min(this.maxDriveRatio, this.pid.getOutput()));
+    const pidOutput = this.pid.getOutput();
+    if (Math.abs(pidOutput) < 0.8 && !this.targetAchieved) {
+      console.log("TargetAchieved!");
+      this.targetAchieved = true;
+    }
+    this.desiredOutput = Math.max(-this.maxDriveRatio, Math.min(this.maxDriveRatio, pidOutput));
     return this.desiredOutput;
+  }
+  off () {
+    this.setOutput(0);
   }
 }
 

@@ -184,7 +184,7 @@ class DummyFluorescenceSensingUnit {
     const AMP_LAMBDA_DEFAULT = 20;
     const AMP_LAMBDA_STEP = 1.1;
     const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * wellIndex;
-    const background = getDumyBaseline();
+    const background = this.getDummyBaseline();
     const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
     return amplification + background;
   }
