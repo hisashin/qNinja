@@ -11,8 +11,8 @@
 
   (page A4)
   (layers
-    (0 F.Cu signal hide)
-    (31 B.Cu signal hide)
+    (0 F.Cu signal)
+    (31 B.Cu signal)
     (32 B.Adhes user)
     (33 F.Adhes user)
     (34 B.Paste user)
@@ -21,7 +21,7 @@
     (37 F.SilkS user)
     (38 B.Mask user)
     (39 F.Mask user)
-    (40 Dwgs.User user)
+    (40 Dwgs.User user hide)
     (41 Cmts.User user)
     (42 Eco1.User user)
     (43 Eco2.User user)
@@ -4724,7 +4724,7 @@
   (gr_circle (center 152.02 128.984) (end 153.62 128.984) (layer Edge.Cuts) (width 0.1) (tstamp 5F64E130))
   (gr_circle (center 58.02 128.984) (end 59.62 128.984) (layer Edge.Cuts) (width 0.1) (tstamp 5F64E121))
   (gr_circle (center 58.02 40.18) (end 59.62 40.18) (layer Edge.Cuts) (width 0.1))
-  (gr_text "memo for prod :  1. place main plug to center" (at 106.8832 141.0716) (layer Dwgs.User)
+  (gr_text "memo for prod :  1. place main plug to center 2. use bigger pol cap with 50V max abs 3. add high/low temperature mode" (at 106.8832 141.0716) (layer Dwgs.User)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
   (gr_poly (pts (xy 136.8044 125.5014) (xy 99.7712 125.5522) (xy 99.2378 123.2154) (xy 106.553 122.4788) (xy 108.6612 120.8024) (xy 118.7704 120.8024) (xy 121.0056 118.5418) (xy 127.2032 118.5418) (xy 128.3208 117.4242) (xy 131.318 117.4242) (xy 132.8674 115.8748) (xy 132.8674 100.838) (xy 134.6962 99.0092) (xy 136.779 99.0092)) (layer F.Cu) (width 0.1))

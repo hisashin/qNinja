@@ -1,4 +1,4 @@
-update=2020 September 15, Tuesday 16:25:01
+update=2020 September 26, Saturday 04:12:10
 version=1
 last_client=eeschema
 [general]
