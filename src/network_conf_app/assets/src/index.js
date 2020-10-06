@@ -1,86 +1,10 @@
-var app = new Vue({
-  el: '#app',
-  data: {
-    networks:[],
-    errors:[],
-    errorMessage:null,
-    saved:false,
-  },
-  methods: {
-    remove: function (id) {
-      console.log(id);
-      this.networks.splice(this.findNetworkIndexForId(id), 1);
-    },
-    findNetworkIndexForId (id) {
-      for (let i=0; i<this.networks.length; i++) {
-        if (id == this.networks[i].id) {
-          return i;
-        }
-      }
-      
-    },
-    startEditPassphrase: function (id) {
-      const network = this.networks[this.findNetworkIndexForId(id)];
-      console.log(network)
-      network.passphraseUpdated = true;
-      network.passphrase_dummy = false;
-    },
-    add: function () {
-      const network = createNewNetwork();
-      this.networks.push(network)
-    },
-    clearErrors: function () {
-      this.errorMessage = null;
-      this.networks.forEach((network)=>{
-        network.errors = null;
-      });
-    },
-    reboot: function () {
-      console.log("reboot");
-      requestData("/reboot", null, "GET", (responseData)=>{
-        console.log(responseData);
-        if (responseData.success) {
-          console.log("success")
-          document.getElementById("app").style.display = "none";
-          document.getElementById("rebooting").style.display = "block";
-        }
-      });
-    },
-    save:function () {
-      const data = JSON.parse(JSON.stringify(this.networks));
-      console.log(data);
-      requestData("/update", data, "POST", (responseData)=>{
-        console.log(JSON.stringify(responseData));
-        this.clearErrors();
-        if (responseData.isValid) {
-          this.saved = true;
-        } else {
-          this.errorMessage = responseData.message;
-          if (responseData.errors) {
-            for (let error of responseData.errors) {
-              const network = this.networks[this.findNetworkIndexForId(error.id)];
-              if (network == null) {
-                console.log("network is null ???");
-              } else {
-                network.errors = error.errors;
-              }
-            }
-          }
-        }
-      }, ()=>{
-        alert("Error");
-      });
-      
-    }
-  }
-});
+
 function createNewNetwork () {
-  return { id: maxId++, isNew: true };
+  return { id: maxId++, isNew: true, passphraseUpdated: false };
 }
 function requestData (path, data, method, onSuccess, onError) {
   const xmlhttp = new XMLHttpRequest();
   const url = path;
-  console.log("AppState._requestData %s %s", method, url);
   xmlhttp.onreadystatechange = ()=>{
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       try {
@@ -104,8 +28,10 @@ function requestData (path, data, method, onSuccess, onError) {
 let maxId = 0;
 function loadConf () {
   requestData("/list", null, "get", (responseData)=>{
-    console.log(responseData);
     let networks = [];
+    if (responseData != null && responseData.country != null) {
+      app.country = responseData.country;
+    }
     if (responseData!=null && Array.isArray(responseData.networks)) {
       networks = responseData.networks;
     }
@@ -121,7 +47,98 @@ function loadConf () {
     console.log(error)
   });
 }
-
+var COUNTRY_OPTIONS = [];
+function initCountries () {
+  let sel = document.getElementById("country");
+  for (let country of COUNTRIES) {
+    const option = document.createElement("option");
+    option.value = country[0];
+    option.innerHTML = country[1] + " (" + country[0] + ")";
+    sel.appendChild(option);
+  }
+}
 window.onload = ()=>{
+  initCountries();
+  initApp();
   loadConf();
 };
+let app = null;
+function initApp() {
+  app = new Vue({
+    el: '#app',
+    data: {
+      networks:[],
+      errorMessages:null,
+      saved:false,
+      changed:0,
+      country:"",
+      countries:COUNTRIES
+    },
+    methods: {
+      remove: function (id) {
+        this.networks.splice(this.findNetworkIndexForId(id), 1);
+      },
+      findNetworkIndexForId (id) {
+        for (let i=0; i<this.networks.length; i++) {
+          if (id == this.networks[i].id) {
+            return i;
+          }
+        }
+        
+      },
+      startEditPassphrase: function (id) {
+        const network = this.networks[this.findNetworkIndexForId(id)];
+        network.passphraseUpdated = true;
+        network.passphrase_dummy = "....";
+        network.version ++;
+      },
+      add: function () {
+        const network = createNewNetwork();
+        this.networks.push(network)
+      },
+      clearErrors: function () {
+        this.errorMessage = null;
+        this.networks.forEach((network)=>{
+          network.errors = null;
+        });
+      },
+      reboot: function () {
+        requestData("/reboot", null, "GET", (responseData)=>{
+          if (responseData.success) {
+            document.getElementById("app").style.display = "none";
+            document.getElementById("rebooting").style.display = "block";
+          }
+        });
+      },
+      save:function () {
+        const dataObj = {
+          country: this.country,
+          networks: this.networks
+        };
+        const data = JSON.parse(JSON.stringify(dataObj));
+        requestData("/update", data, "POST", (responseData)=>{
+          this.clearErrors();
+          if (responseData.isValid) {
+            this.saved = true;
+            this.errorMessages = null;
+          } else {
+            this.errorMessages = responseData.messages;
+            if (responseData.errors) {
+              for (let error of responseData.errors) {
+                const network = this.networks[this.findNetworkIndexForId(error.id)];
+                if (network == null) {
+                  console.log("network is null ???");
+                } else {
+                  network.errors = error.errors;
+                }
+              }
+            }
+          }
+        }, ()=>{
+          alert("Error");
+        });
+        
+      }
+    }
+  });
+}

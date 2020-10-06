@@ -14,8 +14,21 @@
       <h1>Ninja-qPCR Network Configuration</h1>
     </header>
     <div id="app">
-      <div v-if="errorMessage" class="alert alert-danger">
-        {{errorMessage}}
+      <div class="row">
+        <div class="col-12  py-2">
+          Country
+          <select id="country" v-model="country">
+            <option value="">----</option>
+            <option v-for="c in countries" :value="c[0]">{{c[1]}} ({{c[0]}})</option>
+          </select>
+        </div>
+      </div>
+      <div v-if="errorMessages" class="alert alert-danger">
+        <ul>
+          <li v-for="message in errorMessages">
+            {{ message }}
+          </li>
+        </ul>
       </div>
       <div class="row">
         <!-- Networks -->
@@ -27,7 +40,7 @@
                   <li v-for="error in network.errors">
                     {{ error.message }}
                   </li>
-              </ul>
+                </ul>
               </div>
               <!-- Conf -->
               <div class="float-right">
@@ -42,6 +55,7 @@
                   <template v-if="network.passphraseUpdated">
                     <!-- Updating passphrase -->
                     <input v-model="network.passphrase" type="password">
+                    <span class="small text-secondary py-2">Edited</span>
                   </template>
                   <template v-else>
                     <!-- Dummy Field -->
@@ -89,6 +103,7 @@
         </p>
     </div>
     <script type="text/javascript" src="/src/vue.min.js"></script>
+    <script type="text/javascript" src="/src/countries.js"></script>
     <script type="text/javascript" src="/src/index.js"></script>
     <ul id="errors">
     </ul>
