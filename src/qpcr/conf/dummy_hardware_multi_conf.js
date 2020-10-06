@@ -1,8 +1,10 @@
 "use strict";
 const PID = require("../control/heat_control/pid.js");
+
 const HeatUnit = require("../control/heat_control/heat_unit.js");
-const Well = require("../control/well_multi.js");
+const demoWell = require("../control/well_multi_demo.js");
 const BoxMuller = require("../util/box_muller.js");
+
 
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
@@ -48,8 +50,10 @@ class HeatLid {
   (Without any hardware control.
   This config is for development.)
   */
-  
 class DummyHardwareConf {
+  start () {
+    
+  }
   /*
     Return number of wells
     */
@@ -60,31 +64,13 @@ class DummyHardwareConf {
     Return HeatUnit object as implementation of the well.
     */
   getWell () {
-    return new Well ();
-    /*
-    const WELL_P = 1.0;
-    const WELL_I = 1.0;
-    const WELL_D = 1.0;
-    const pid = new PID(LID_P, LID_I, LID_D);
-    const sensing = new Sensing (); // TODO replace with concrete thermistor unit or dummy
-    const output = new DummyOutput(); // TODO replace with concrete thermistor unit or dummy 
-    return new HeatUnit(pid, sensing, output);
-    */
+    return demoWell;
   }
   /*
     Return HeatUnit object as implementation of the heater lid.
     */
   getHeatLid () {
     return new HeatLid ();
-    /*
-    const HEATER_P = 1.0;
-    const HEATER_I = 1.0;
-    const HEATER_D = 1.0;
-    const pid = new PID(HEATER_P, HEATER_I, HEATER_D);
-    const sensing = new Sensing (); // TODO replace with concrete thermistor unit or dummy
-    const output = new DummyOutput(); // TODO replace with concrete thermistor unit or dummy 
-    return new HeatUnit(pid, sensing, output);
-    */
   }
   // TODO support ambient temp sensor
   /*

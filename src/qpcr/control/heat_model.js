@@ -53,7 +53,7 @@ class HeatModel {
         /this.capacitySingle;
     this.elements = next;
   }
-  getTemperature () {
+  getTemperature () {6
     return this.elements[this.sensorIndex];
   }
   debug () {

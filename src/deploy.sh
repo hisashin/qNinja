@@ -4,14 +4,14 @@ RSYNC="rsync -auvz" # Deploy
 # RSYNC="rsync -auvzn" # Dry run
 HOME=""
 # startup
-ssh $RASPI "mkdir -p /home/pi/ninjaqpcr /home/pi/ninjaqpcr/console /home/pi/ninjaqpcr/client";
+ssh $RASPI "mkdir -p /usr/local/ninjaqpcr /usr/local/ninjaqpcr/console /usr/local/ninjaqpcr/client";
 echo "Syncing qpcr"
-$RSYNC ./qpcr/ $RASPI:/home/pi/ninjaqpcr/qpcr --exclude='node_modules/' --exclude='package-lock.json' --exclude='.DS_Store'
+$RSYNC ./qpcr/ $RASPI:/usr/local/ninjaqpcr/qpcr --exclude='node_modules/' --exclude='package-lock.json' --exclude='.DS_Store'
 echo "Syncing console/server"
-$RSYNC ./console/server/ $RASPI:/home/pi/ninjaqpcr/console/server --exclude='node_modules/' --exclude='package-lock.json' --exclude='.DS_Store'
+$RSYNC ./console/server/ $RASPI:/usr/local/ninjaqpcr/console/server --exclude='node_modules/' --exclude='package-lock.json' --exclude='.DS_Store'
 echo "Syncing console/client/dist"
-$RSYNC ./console/client/dist/ $RASPI:/home/pi/ninjaqpcr/console/client/dist --exclude='.DS_Store'
+$RSYNC ./console/client/dist/ $RASPI:/usr/local/ninjaqpcr/console/client/dist --exclude='.DS_Store'
 echo "Syncing startup"
 $RSYNC ./startup/ $RASPI:/homde/pi/ninjaqpcr/startup
 echo "Syncing network_conf_app"
-$RSYNC ./network_conf_app/ $RASPI:/home/pi/ninjaqpcr/network_conf_app
+$RSYNC ./network_conf_app/ $RASPI:/usr/local/ninjaqpcr/network_conf_app

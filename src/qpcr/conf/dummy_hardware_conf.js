@@ -74,6 +74,9 @@ class HeatLid {
   */
   
 class DummyHardwareConf {
+  start () {
+    
+  }
   /*
     Return number of wells
     */

@@ -207,6 +207,9 @@ class FluorescenceSensingUnit {
 
 class NinjaQPCRHardwareConf {
   // TODO
+  start () {
+    
+  }
   wellsCount () {
     return 8;
   }

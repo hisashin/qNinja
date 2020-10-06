@@ -1,7 +1,5 @@
 "use strict";
 
-const dummyWell = require("./well_multi_demo");
-
 const START_TEMP = 25.0;
 
 class Thermistor {
@@ -88,7 +86,7 @@ class RemainingTimeCalculator {
 
 class ThermalCycler {
   constructor (well, heatLid) {
-    this.well = dummyWell; //well;
+    this.well = well;
     this.heatLid = heatLid;
     this.state = new StateIdle(null);
   }

@@ -8,15 +8,51 @@
 
 <body>
   <h1>Ninja-qPCR</h1>
-  <div>
-    SSID: <input type="text" id="ssid" name="ssid"/>
+  <div id="app">
+    <div>
+      {{errorMessage}}
+    </div>
+    <li v-for="network in networks">
+      
+      <ul v-if="network.errors">
+        <li v-for="error in network.errors">
+          {{ error.message }}
+        </li>
+      </ul>
+      
+      <div>
+        SSID: <input v-model="network.ssid">
+      </div>
+      <div>
+        Passphrase:
+          <template v-if="network.passphraseUpdated">
+            <!-- Updating passphrase -->
+            <input v-model="network.passphrase" type="password">
+          </template>
+          <template v-else>
+            <!-- Dummy Field -->
+            <input v-model="network.passphrase_dummy" v-on:focus="startEditPassphrase(network.id)" type="password">
+          </template>
+          
+      </div>
+      <div>
+        Priority: <input v-model="network.priority" type="number" size="2"> (Higher number for higher priority)
+      </div>
+      <div>
+         <input type="checkbox" v-model="network.hidden"> Hidden network
+      </div>
+      <div>
+        <button v-on:click="remove(network.id)">Remove</button>
+      </div>
+    </li>
+    <div>
+      <button v-on:click="add()">Add</button>
+    </div>
+    <div>
+      <button v-on:click="save()">Save</button>
+    </div>
   </div>
-  <div>
-    Passphrase: <input type="password" id="pass" name="pass"/>
-  </div>
-  <div>
-    <input type="button" id="submit" value="Update"/>
-  </div>
+  <script type="text/javascript" src="/src/vue.min.js"></script>
   <script type="text/javascript" src="/src/index.js"></script>
   <ul id="errors">
   </ul>
