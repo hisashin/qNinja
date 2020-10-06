@@ -1,7 +1,9 @@
 "use strict";
 
 /*
-  Network configuration server
+
+  Ninja-qPCR Network configuration server
+  
   It provides Wi-Fi configuration service.
   User interface files are stored in assets directory.
   URLs:
@@ -26,6 +28,7 @@ const PATH_WPA_CONF = "./wpa_supplicant.conf";
 const PATH_WPA_CONF_TMP = "./wpa_supplicant_temp";
 const PATH_CONF = "./network.json";
 const SUDO = "";
+const REBOOT = "true";
 const PORT = 8080;
 
 
@@ -38,6 +41,7 @@ const PATH_CONF = "~/ninjaqpcr/network.json";
 const PATH_WPA_CONF_TMP = "./ninjaqpcr/wpa_supplicant_temp";
 const SUDO = "sudo";
 const PORT = 80;
+const REBOOT = "sudo reboot";
 */
 
 class WifiConfServer {
@@ -73,6 +77,8 @@ class WifiConfServer {
             this.list(req, res);
           } else if (url == "/update") {
             this.update(req, res);
+          } else if (url == "/reboot") {
+            this.reboot(req, res);
           } else {
             this.responseStatic(url, res);
             
@@ -90,7 +96,11 @@ class WifiConfServer {
     }
     fs.readFile("assets" + url, (err, rawData)=>{
       if (!err) {
-        res.writeHead(200,{'Content-Type': 'text/html; charset=UTF-8'});
+        let contentType = 'text/html; charset=UTF-8';
+        if (url.match(/\.css$/)) {
+          contentType = 'text/css; charset=UTF-8';
+        }
+        res.writeHead(200,{'Content-Type': contentType});
         res.write(rawData);
       } else {
         res.writeHead(404,{'Content-Type': 'application/json'});
@@ -98,32 +108,6 @@ class WifiConfServer {
       }
       res.end();
     });
-  }
-  /*
-  validate(ssid, pass) {
-    let errors = [];
-    if (ssid == null || ssid.length ==0) {
-      errors.push("SSID is empty.");
-    }
-    if (pass != null && pass.length > 0 && (pass.length < 8 || pass.length > 63)) {
-      errors.push("Passphrase must be 8..63 characters");
-    }
-    return errors;
-  }
-  */
-  execCmd (command, callback) {
-    console.log(command);
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        callback(error.message);
-      }
-      else if (stderr) {
-        callback(stderr);
-      } else {
-        callback(null);
-      }
-    });
-    
   }
   list (req, res) {
     let resConf = JSON.parse(JSON.stringify(this.conf));
@@ -139,94 +123,15 @@ class WifiConfServer {
     res.write(JSON.stringify(resConf));
     res.end();
   }
-  isEmpty (network) {
-    return network.ssid == null || network.ssid.length == 0;
-  }
-  validate(network) {
-    let errors = [];
-    if (network.passphraseUpdated) {
-      const pass = network.passphrase;
-      if (pass != null && pass.length > 0 && (pass.length < 8 || pass.length > 63)) {
-        errors.push({
-          field:"passphrase",
-          message:"Passphrase must be 8..63 characters."
-        });
-      }
-    }
-    if (network.priority && network.priority.length > 0) {
-      const parsed = parseInt(network.priority);
-      if (parsed < 0) {
-        errors.push({
-          networkId:network.id,
-          field:"priority",
-          message:"Priority should be a valid integer."
-        });
-      }
-    }
-    return errors;
-  }
-  escape (str) {
-    return str.replace(new RegExp("\"", "g"), "\\\"");
-  }
-  saveNetworks (networks, callback) {
-    const commandCopy = SUDO + " cp -f " + PATH_WPA_HEADER + " " + PATH_WPA_CONF + ";";
-    // Copy fields (Other fields are deleted before saving)
-    const fieldsToKeep = [
-      "ssid" , "passphrase", "priority", "hidden"
-    ];
-    let saveData = {
-      networks:[]
+  
+  reboot (req, res) {
+    const content = {
+      success:true
     };
-    let wpaConfElements = [WPA_CONF_HEADER];
-    for (let network of networks) {
-      let lines = [];
-      lines.push("network={");
-      lines.push('ssid="' + this.escape(network.ssid) + '"');
-      if (!network.isNew && !network.passphraseUpdated) {
-        // Keep existing password
-        const oldConf = this.conf.networks[network.id];
-        network.passphrase = oldConf.passphrase;
-      }
-      lines.push('psk="' + this.escape(network.passphrase) + '"');
-      if (network.priority) {
-        lines.push("priority=" + network.priority)
-      }
-      if (network.hidden) {
-        // Stealth
-        lines.push("scan_ssid=1");
-      }
-      lines.push("}");
-      wpaConfElements.push(lines.join("\n"));
-      let obj = {};
-      for (let field of fieldsToKeep) {
-        if (network[field] != null) {
-          obj[field] = network[field];
-        }
-      }
-      saveData.networks.push(obj);
-    }
-    const wpaConfContent = wpaConfElements.join("\n");
-    console.log(wpaConfContent)
-    console.log(JSON.stringify(saveData));
+    res.write(JSON.stringify(content));
+    res.end();
+    this.execCmd (REBOOT, ()=>{});
     
-    fs.writeFile(PATH_CONF, JSON.stringify(saveData), (err)=>{
-      console.error(err);
-      if (err != null) {
-        callback(err);
-        return;
-      }
-      fs.writeFile(PATH_WPA_CONF_TMP, wpaConfContent, (err)=>{
-        console.error(err);
-        if (err != null) {
-          callback(err);
-          return;
-        }
-        const command = SUDO + " cp -f " + PATH_WPA_CONF_TMP + " " + PATH_WPA_CONF + ";"
-        this.execCmd(command, (err)=>{
-          callback(err);
-        });
-      });
-    });
   }
   
   update (req, res) {
@@ -293,6 +198,110 @@ class WifiConfServer {
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(response));
         res.end();
+      }
+    });
+    
+  }
+  isEmpty (network) {
+    return network.ssid == null || network.ssid.length == 0;
+  }
+  validate(network) {
+    let errors = [];
+    if (network.passphraseUpdated) {
+      const pass = network.passphrase;
+      if (pass != null && pass.length > 0 && (pass.length < 8 || pass.length > 63)) {
+        errors.push({
+          field:"passphrase",
+          message:"Passphrase must be 8..63 characters."
+        });
+      }
+    }
+    if (network.priority && network.priority.length > 0) {
+      const parsed = parseInt(network.priority);
+      if (parsed < 0) {
+        errors.push({
+          networkId:network.id,
+          field:"priority",
+          message:"Priority should be a valid integer."
+        });
+      }
+    }
+    return errors;
+  }
+  saveNetworks (networks, callback) {
+    const commandCopy = SUDO + " cp -f " + PATH_WPA_HEADER + " " + PATH_WPA_CONF + ";";
+    // Copy fields (Other fields are deleted before saving)
+    const fieldsToKeep = [
+      "ssid" , "passphrase", "priority", "hidden"
+    ];
+    let saveData = {
+      networks:[]
+    };
+    let wpaConfElements = [WPA_CONF_HEADER];
+    for (let network of networks) {
+      let lines = [];
+      lines.push("network={");
+      lines.push('ssid="' + this.escape(network.ssid) + '"');
+      if (!network.isNew && !network.passphraseUpdated) {
+        // Keep existing password
+        const oldConf = this.conf.networks[network.id];
+        network.passphrase = oldConf.passphrase;
+      }
+      lines.push('psk="' + this.escape(network.passphrase) + '"');
+      if (network.priority) {
+        lines.push("priority=" + network.priority)
+      }
+      if (network.hidden) {
+        // Stealth
+        lines.push("scan_ssid=1");
+      }
+      lines.push("}");
+      wpaConfElements.push(lines.join("\n"));
+      let obj = {};
+      for (let field of fieldsToKeep) {
+        if (network[field] != null) {
+          obj[field] = network[field];
+        }
+      }
+      saveData.networks.push(obj);
+    }
+    const wpaConfContent = wpaConfElements.join("\n");
+    console.log(wpaConfContent)
+    console.log(JSON.stringify(saveData));
+    
+    fs.writeFile(PATH_CONF, JSON.stringify(saveData), (err)=>{
+      console.error(err);
+      if (err != null) {
+        callback(err);
+        return;
+      }
+      fs.writeFile(PATH_WPA_CONF_TMP, wpaConfContent, (err)=>{
+        console.error(err);
+        if (err != null) {
+          callback(err);
+          return;
+        }
+        const command = SUDO + " cp -f " + PATH_WPA_CONF_TMP + " " + PATH_WPA_CONF + ";"
+        this.execCmd(command, (err)=>{
+          callback(err);
+        });
+      });
+    });
+  }
+  escape (str) {
+    if (str == null) return null;
+    return str.replace(new RegExp("\"", "g"), "\\\"");
+  }
+  execCmd (command, callback) {
+    console.log("Exec cmd: " + command);
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        callback(error.message);
+      }
+      else if (stderr) {
+        callback(stderr);
+      } else {
+        callback(null);
       }
     });
     

@@ -1,51 +1,10 @@
-/*
-{
-  networks [
-    {
-      ssid:
-      psk:
-      priority:
-      scan_ssid:
-    }
-  ]
-
-}
-*/
-class NetworkConfigurator {
-  constructor () {
-    this.fields = [];
-    this.conf = {};
-    document.getElementById("submit").addEventListener("click", ()=>{
-      console.log("submit");
-      let ssid = document.getElementById("ssid").value;
-      let pass = document.getElementById("pass").value;
-      console.log("ssid=%s, pass=%s", ssid, pass);
-      const data = {
-        ssid:ssid,
-        pass:pass
-      };
-      const ul = document.getElementById("errors");
-      ul.innerHTML = "";
-      requestData("/update", data, "POST", (responseData)=>{
-        console.log(JSON.stringify(responseData));
-        this.clearErrors();
-        if (responseData.isValid) {
-          alert("Valid data");
-        } else {
-        }
-      }, ()=>{
-        alert("Error");
-      });
-    });
-  }
-  
-}
 var app = new Vue({
   el: '#app',
   data: {
     networks:[],
     errors:[],
-    errorMessage:null
+    errorMessage:null,
+    saved:false,
   },
   methods: {
     remove: function (id) {
@@ -61,14 +20,12 @@ var app = new Vue({
       
     },
     startEditPassphrase: function (id) {
-      console.log("Focus %d", id)
       const network = this.networks[this.findNetworkIndexForId(id)];
       console.log(network)
       network.passphraseUpdated = true;
       network.passphrase_dummy = false;
     },
     add: function () {
-      console.log("add")
       const network = createNewNetwork();
       this.networks.push(network)
     },
@@ -78,15 +35,25 @@ var app = new Vue({
         network.errors = null;
       });
     },
+    reboot: function () {
+      console.log("reboot");
+      requestData("/reboot", null, "GET", (responseData)=>{
+        console.log(responseData);
+        if (responseData.success) {
+          console.log("success")
+          document.getElementById("app").style.display = "none";
+          document.getElementById("rebooting").style.display = "block";
+        }
+      });
+    },
     save:function () {
-      console.log("save");
       const data = JSON.parse(JSON.stringify(this.networks));
       console.log(data);
       requestData("/update", data, "POST", (responseData)=>{
         console.log(JSON.stringify(responseData));
         this.clearErrors();
         if (responseData.isValid) {
-          alert("Valid data");
+          this.saved = true;
         } else {
           this.errorMessage = responseData.message;
           if (responseData.errors) {
