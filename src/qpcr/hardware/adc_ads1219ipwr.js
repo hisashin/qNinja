@@ -2,7 +2,7 @@
 "use strict";
 
 const i2c = require('i2c-bus');
-const DEFAULT_DEVICE_NUMBER = 1;
+const DEFAULT_BUS_NUMBER = 1;
 // Datasheet: https://www.ti.com/store/ti/en/p/product/?p=ADS1219IPWR
 // PDF: https://www.ti.com/lit/ds/symlink/ads1219.pdf?&ts=1589885438370
 // Voltage->Value -FS->800000h, 0->000000h, FS->7FFFFFh
@@ -31,19 +31,23 @@ const COMMAND_RREG = 0b00100000;
 const COMMAND_WREG = 0b01000000;
 
 class ADS1219IPWR {
-  constructor (i2cBusNumber, slaveAddress) {
-    this.slaveAddress = slaveAddress;
-    this.i2c = null;
-    if (i2cBusNumber == null) {
-      i2cBusNumber = DEFAULT_DEVICE_NUMBER;
+  constructor (i2c, address) {
+    if (typeof(i2c)=="number") {
+      if ( !(i2c == 1 || i2c == 2)) {
+        throw new Error("i2cBusNumber should be 1 or 2.");
+      }
+      this.i2cBusNumber = i2cBusNumber;
+    } else if (i2c != null) {
+      this.i2c = i2c;
+    } else {
+      this.i2cBusNumber = DEFAULT_BUS_NUMBER;
     }
-    if ( !(i2cBusNumber == 1 || i2cBusNumber == 2)) {
-      throw new Error("i2cBusNumber should be 1 or 2.");
-    }
-    this.i2cBusNumber = i2cBusNumber;
+    this.address = address;
   }
   initialize () {
-    this.i2c = i2c.openSync(this.i2cBusNumber);  //i2c1 or i2c2
+    if (this.i2c == null) {
+      this.i2c = i2c.openSync(this.i2cBusNumber);  //i2c1 or i2c2
+    }
   }
   /*
     Command
@@ -56,8 +60,8 @@ class ADS1219IPWR {
   */
   readConfigurationRegister () {
     // RREG: Read register at addr r 0010 0rxx
-      this.i2c.sendByteSync(this.slaveAddress, COMMAND_RREG);
-      return this.i2c.receiveByteSync(this.slaveAddress);
+      this.i2c.sendByteSync(this.address, COMMAND_RREG);
+      return this.i2c.receiveByteSync(this.address);
   }
   selectDataRate (rate) {
     console.log("SelectDataRate %d", rate);
@@ -75,8 +79,8 @@ class ADS1219IPWR {
     }
     const currentVal = this.readConfigurationRegister();
     const val = (0b11110011 & currentVal) | (rateBits << 2)
-    this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
-    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
+    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
@@ -84,21 +88,21 @@ class ADS1219IPWR {
     const muxBits = MUX_SINGLE_END_VALS[channel];
     // Note: By default, it uses internal ref voltage (2.048V)
     const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
-    this.i2c.i2cWriteSync(this.slaveAddress, 2, new Buffer([COMMAND_WREG, val]));
-    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
+    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   sync () {
-    this.i2c.sendByteSync(this.slaveAddress, COMMAND_SSYNC);
+    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   /* Returns raw ADC value */
   readConversionDataSync () {
-    this.i2c.sendByteSync(this.slaveAddress, COMMAND_RDATA);
+    this.i2c.sendByteSync(this.address, COMMAND_RDATA);
     // Read 3 bytes
-    let val = this.i2c.receiveByteSync(this.slaveAddress);
+    let val = this.i2c.receiveByteSync(this.address);
     val <<= 8;
-    val |= this.i2c.receiveByteSync(this.slaveAddress);
+    val |= this.i2c.receiveByteSync(this.address);
     val <<= 8;
-    val |= this.i2c.receiveByteSync(this.slaveAddress);
+    val |= this.i2c.receiveByteSync(this.address);
     if(val & 0x00800000){
       val = ~val + 1;
       val = -(val & 0xFFFFFF);
@@ -108,7 +112,7 @@ class ADS1219IPWR {
   
   readConversionData (callback) {
     let buff = Buffer.alloc(3, 0x00);
-    this.i2c.readI2cBlock(this.slaveAddress, COMMAND_RDATA, 3, buff, ()=>{
+    this.i2c.readI2cBlock(this.address, COMMAND_RDATA, 3, buff, ()=>{
       let val = (buff[0] << 16) | (buff[1] << 8) | buff[2];
       let origVal = val;
       if(val & 0x00800000){
