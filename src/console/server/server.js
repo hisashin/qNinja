@@ -76,6 +76,7 @@ class NinjaQPCRHTTPServer {
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
       const obj = qpcr.getDeviceState();
+      obj.config = qpcr.getConfig();
       res.write(JSON.stringify(obj));
       res.end();
     };

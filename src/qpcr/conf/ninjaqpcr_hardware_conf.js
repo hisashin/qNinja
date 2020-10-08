@@ -9,6 +9,26 @@ const ADCManager = require("../hardware/adc_manager.js");
 const adcManager = new ADCManager(new ADS1219IPWR(1, 0x40), 90);
 // const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 
+/* 1st testing board */
+
+/*
+  TODOs
+  Thermistor
+  
+  Optics
+    LED
+      Driver (OK)
+      Potentiometer (TODO)
+    Photodiode circuit (OK)
+      MUX (OK)
+      ADC (OK)
+  Thermal cycler
+    TODO: multiple output/input
+  
+  Common
+    SPI MOSI Switching
+*/
+
 // For well PID
 const raspi = require('raspi');
 // const pwm = require('raspi-pwm');
@@ -187,6 +207,9 @@ class FluorescenceSensingUnit {
 
 class NinjaQPCRHardwareConf {
   // TODO
+  start () {
+    
+  }
   wellsCount () {
     return 8;
   }

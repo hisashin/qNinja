@@ -1,10 +1,5 @@
 "use strict";
 
-/*
-const Well = require("./well");
-const HeatLid = require("./heat_lid");
-*/
-
 const START_TEMP = 25.0;
 
 class Thermistor {

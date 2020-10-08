@@ -44,7 +44,7 @@ const example_melt_curve_stage = {
 
 const protocol = {
   id: "2B93DB54-E14D-444F-BAEE-5B595F3FB917",
-  lid_temp: 40.0, // Celsius
+  lid_temp: 80.0, // Celsius
   final_hold_temp:20,
   name: "Dev Protocol",
   stages: [

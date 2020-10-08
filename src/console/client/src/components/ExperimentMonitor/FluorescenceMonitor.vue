@@ -81,8 +81,19 @@ export default {
       this.baseline = data;
       this.applyBaseline();
     },
-    set: function () {
-      // TODO add all data (to display experiment log)
+    set: function (data) {
+      console.log(data);
+      let lastRepeat = 0;
+      data.forEach((measurement)=>{
+        const repeat = measurement.repeat;
+        if (repeat == lastRepeat) return;
+        lastRepeat = repeat;
+        for (let channel = 0; channel < measurement.v.length; channel++) {
+          this.graph.addData(channel, {t:measurement.t, v:measurement.v[channel], c:measurement.repeat});
+        
+        }
+      });
+      this.graph.update();
     },
     add: function (timestamp, data) {
       console.log(data);
@@ -90,13 +101,6 @@ export default {
         this.graph.addData(i, {t:timestamp, v:data.v[i], c:data.repeat});
         this.channels[i].fluorescence = data.v[i];
       }
-      /*
-      if (this.hasBaseline()) {
-        for (let i=0; i<TUBE_COUNT; i++) {
-          this.channels[i].exceeded = this.channels[i].exceeded || (data.v[i] > this.baseline.thresholds[i]);
-        }
-      }
-      */
       this.graph.update();
     
     }

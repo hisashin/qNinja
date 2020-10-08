@@ -4,21 +4,109 @@
 <head>
   <meta charset="utf-8">
   <title>Ninja-qPCR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
-
 <body>
-  <h1>Ninja-qPCR</h1>
-  <div>
-    SSID: <input type="text" id="ssid" name="ssid"/>
-  </div>
-  <div>
-    Passphrase: <input type="password" id="pass" name="pass"/>
-  </div>
-  <div>
-    <input type="button" id="submit" value="Update"/>
-  </div>
-  <script type="text/javascript" src="/src/index.js"></script>
-  <ul id="errors">
-  </ul>
+  <main class="container" style="max-width:800px">
+    <header class="header py-5">
+      <h1>Ninja-qPCR Network Configuration</h1>
+    </header>
+    <div id="app">
+      <div class="row">
+        <div class="col-12  py-2">
+          Country
+          <select id="country" v-model="country">
+            <option value="">----</option>
+            <option v-for="c in countries" :value="c[0]">{{c[1]}} ({{c[0]}})</option>
+          </select>
+        </div>
+      </div>
+      <div v-if="errorMessages" class="alert alert-danger">
+        <ul>
+          <li v-for="message in errorMessages">
+            {{ message }}
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <!-- Networks -->
+        <div v-for="network in networks" class="col-12 py-1">
+          <div class="card">
+            <div class="card-body">
+              <div v-if="network.errors" class="alert alert-danger">
+                <ul>
+                  <li v-for="error in network.errors">
+                    {{ error.message }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Conf -->
+              <div class="float-right">
+                <button v-on:click="remove(network.id)" class="btn btn-sm btn-outline-secondary">Remove</button>
+              </div>
+              <div class="row">
+                <div class="col-3 text-right">SSID</div>
+                <div class="col-9"><input v-model="network.ssid"></div>
+                
+                <div class="col-3 text-right">Passphrase</div>
+                <div class="col-9">
+                  <template v-if="network.passphraseUpdated">
+                    <!-- Updating passphrase -->
+                    <input v-model="network.passphrase" type="password">
+                    <span class="small text-secondary py-2">Edited</span>
+                  </template>
+                  <template v-else>
+                    <!-- Dummy Field -->
+                    <input v-model="network.passphrase_dummy" v-on:focus="startEditPassphrase(network.id)" type="password">
+                  </template>
+                </div>
+                <div class="col-3 text-right">Priority</div>
+                <div class="col-9">
+                  <input v-model="network.priority" type="number" size="2" style="width:4em">
+                  <span class="small text-secondary py-2">Larger number for higher priority
+                </div>
+                <div class="col-3 text-right"> </div>
+                <div class="col-9">
+                  <input type="checkbox" v-model="network.hidden"/> 
+                  Hidden network
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- UIs -->
+        <div class="col-12 py-1">
+          <button v-on:click="add()" class="btn btn-outline-primary">Add</button>
+        </div>
+        <div class="col-8 py-1">
+          <button v-on:click="save()" class="btn btn-primary btn-block">Save</button>
+        </div>
+        <div class="col-12 py-1" v-if="saved">
+          <div class="alert alert-primary">
+            Your settings are successfully saved. Do you want to restart the device now?
+            <div>
+              <a href="#javascript:void(0)" id="reboot" v-on:click="reboot">Restart now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="rebooting" class="alert alert-primary" style="display:none">
+        <h2>
+          The Device is Restarting. 
+        </h2>
+        <p>
+          After restarting, it will become accessible from the same network. <br/>
+          Please join the network and access <a href="http://ninjaqpcr.local">http://ninjaqpcr.local</a>.
+        </p>
+    </div>
+    <script type="text/javascript" src="/src/vue.min.js"></script>
+    <script type="text/javascript" src="/src/countries.js"></script>
+    <script type="text/javascript" src="/src/index.js"></script>
+    <ul id="errors">
+    </ul>
+  </main>
 </body>
 </html>

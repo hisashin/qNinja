@@ -7,7 +7,8 @@
 const Constants = require("./constants");
 const fs = require('fs');
 
-const ThermalCycler = require("./control/thermal_cycler");
+// const ThermalCycler = require("./control/thermal_cycler");
+const ThermalCycler = require("./control/thermal_cycler_multi");
 const Optics = require("./control/optics");
 const OpticsAnalysis = require("./optics_analysis");
 const LogManager = require("./log_manager");
@@ -33,13 +34,14 @@ class NinjaQPCR {
     const confPath = __dirname + "/conf/" + confFileName;
     const confFile = fs.readFileSync(confPath); // Returns Buffer
     const conf = JSON.parse(confFile.toString());
+    this.config = conf;
     const boardConfFile = __dirname + "/conf/" + conf.hardware_conf;
     console.log(boardConfFile)
     const hardwareConf = require(boardConfFile);
     
-    this.thermalCycler = new ThermalCycler(hardwareConf);
+    this.thermalCycler = new ThermalCycler(hardwareConf.getWell(), hardwareConf.getHeatLid());
     this.thermalCycler.setEventReceiver(this);
-    this.optics = new Optics(hardwareConf);
+    this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount());
     this.optics.setEventReceiver(this);
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
@@ -352,6 +354,12 @@ class NinjaQPCR {
       this.receiver.onFluorescenceDataUpdate(data);
     }
   }
+  
+  getConfig () {
+    return this.config;
+  }
+  
+  // TODO: deprecate (Move to  analysis class)
   getBaseline () {
     if (this.analysis == null) {
       return {};

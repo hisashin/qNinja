@@ -7,14 +7,22 @@ const raspi = require('raspi');
 const pwm = require('raspi-pwm');
 
 class ADG731BSUZ {
-  constructor (spiCh, sync) {
+  constructor (spi /* Channel name (string) or pi-spi object */ , sync) {
     this.spi = null;
-    this.spiCh = spiCh;
+    if (typeof(spi)=='string') {
+      this.spiCh = spi;
+    } else if (spi != null) {
+      this.spi = spi;
+    } else {
+      console.error("ADG731BSUZ.consrturcot spi is not specified. Please pass a SPI obect or channel name.");
+    }
     this.sync = sync;
     rpio.open(this.sync, rpio.OUTPUT, rpio.LOW);
   }
   initialize () {
-    this.spi = SPI.initialize(this.spiCh);
+    if (this.spi == null) {
+      this.spi = SPI.initialize(this.spiCh);
+    }
   }
   selectChannel (channel) {
     const val = 0xFF & channel;
