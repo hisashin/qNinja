@@ -187,8 +187,8 @@ class ThermalCycler {
   getStatus () {
     // TODO: define data format
     return {
-      well: this.well.temperature,
-      lid: this.heatLid.temperature,
+      well: round(this.well.temperature, 2),
+      lid: round(this.heatLid.temperature, 2),
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
@@ -198,6 +198,10 @@ class ThermalCycler {
     this.well.shutdown();
     this.heatLid.shutdown();
   }
+}
+function round (value, position) {
+  let pow = Math.pow(10, position);
+  return Math.round(value * pow) / pow;
 }
 
 /* State classes */

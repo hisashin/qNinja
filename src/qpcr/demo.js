@@ -47,7 +47,7 @@ class NinjaQPCRDemo {
     // console.log(data);
   }
   onProgress (data) {
-    // console.log(data);
+    console.log(data);
   }
   onFluorescenceDataUpdate (data) {
     // console.log(data);

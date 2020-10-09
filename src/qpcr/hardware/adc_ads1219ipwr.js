@@ -36,7 +36,7 @@ class ADS1219IPWR {
       if ( !(i2c == 1 || i2c == 2)) {
         throw new Error("i2cBusNumber should be 1 or 2.");
       }
-      this.i2cBusNumber = i2cBusNumber;
+      this.i2cBusNumber = i2c;
     } else if (i2c != null) {
       this.i2c = i2c;
     } else {
