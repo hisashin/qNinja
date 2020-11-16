@@ -18,6 +18,22 @@ const CONTROL_TYPE = {
 
 const WELL_SYNC_INTERVAL = 5000;
 
+
+/*
+
+// Interface
+
+class Air {
+  measureTemperature();
+}
+class Fan {
+  setOutput (value);
+}
+
+For WellBlock, see well_block.js
+
+*/
+
 class Well  {
   // API
   constructor (blocks, fan, air) {
