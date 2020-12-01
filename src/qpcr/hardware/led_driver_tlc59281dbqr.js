@@ -30,7 +30,9 @@ class TLC59281DBQR {
     rpio.open(this.pinLatch, rpio.OUTPUT, rpio.LOW);
   }
   start () {
-    this.spi = SPI.initialize(this.spiCh);
+    if (this.spi == null) {
+      this.spi = SPI.initialize(this.spiCh);
+    }
     this.blank = new pwm.PWM({pin:this.pinBlank, frequency:this.blankFrequency}); // Use GPIO{n} number
   }
   selectChannel (ch) {
