@@ -11,6 +11,7 @@ class Optics {
     this.ledUnit = ledUnit;
     this.fluorescenceSensingUnit = fluorescenceSensingUnit;
     this.wellsCount = wellsCount;
+    this.ROUND_POSITION = Math.pow(10, 5);
     
     this.fluorescence = [
       // Channel array?
@@ -115,6 +116,9 @@ class Optics {
     this.continuous = false;
     
   }
+  roundFluorescence (value) {
+    return Math.round(value * this.ROUND_POSITION) / this.ROUND_POSITION;
+  }
   // Start one-shot fluorescence measurement
   getStatus () {
     let data = [];
@@ -124,7 +128,7 @@ class Optics {
         fluorescence:[]
       };
       if (well.fluorescence.length > 0) {
-        wellData.fluorescence.push(well.fluorescence[well.fluorescence.length-1]);
+        wellData.fluorescence.push(roundFluorescence(well.fluorescence[well.fluorescence.length-1]));
       }
       data.push(wellData);
     });

@@ -90,9 +90,9 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (well, heatLid) {
+  constructor (well, heatLids) {
     this.well = well;
-    this.heatLid = heatLid;
+    this.heatLids = heatLids;
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {
@@ -101,11 +101,14 @@ class ThermalCycler {
   start (protocol) {
     this.protocol = protocol;
     this.well.start();
-    this.heatLid.start();
-    if (protocol.lid_temp > 0) {
-      this.heatLid.setTargetTemperature(protocol.lid_temp);
-    } else {
-      this.heatLid.off();
+    for (let lid of this.heatLids) {
+      lid.start();
+      if (protocol.lid_temp > 0) {
+        lid.setTargetTemperature(protocol.lid_temp);
+      } else {
+        lid.off();
+      }
+      
     }
     this.state = new StatePreheat(protocol);
     if (!(this.protocol.lid_temp > 0)) {
@@ -130,7 +133,9 @@ class ThermalCycler {
   finish () {
     this._stopTimer();
     this.well.off();
-    this.heatLid.off();
+    for (let lid of this.heatLids) {
+      lid.off();
+    }
   }
   _startTimer () {
     if (this.controlTempInterval != null){
@@ -150,18 +155,23 @@ class ThermalCycler {
     // TODO: different intervals for different units!
     this.well.control();
     if (this.protocol.lid_temp > 0) {
-      this.heatLid.control();
+      for (let lid of this.heatLids) {
+        lid.control();
+      }
     }
     const now = new Date();
     this.state.updateTime(now);
-    if (this.state.complete(this.well.temperature, this.heatLid.temperature, now)) {
+    let lidMaxTemperature = Math.max(...this.heatLids.map(lid=>lid.temperature));
+    if (this.state.complete(this.well.temperature, updateTime.temperature, now)) {
       // Transition
       this.stateFrom = this.state;
       this.state = this.state.next(this.well.temperature);
       
       let lidTargetTemp = this.state.lidTargetTemp();
       if (lidTargetTemp != null) {
-        this.heatLid.setTargetTemperature(lidTargetTemp);
+        for (let lid of this.heatLids) {
+          lid.setTargetTemperature(lidTargetTemp);
+        }
       }
       this.state.start(now);
       const from = this.stateFrom.getStatus();

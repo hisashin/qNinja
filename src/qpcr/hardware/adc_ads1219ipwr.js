@@ -12,10 +12,15 @@ const MUX_SINGLE_END_A1 = 0b100;
 const MUX_SINGLE_END_A2 = 0b101;
 const MUX_SINGLE_END_A3 = 0b110;
 
+
 const DATA_RATE_20SPS = 0b00;
 const DATA_RATE_90SPS = 0b01;
 const DATA_RATE_330SPS = 0b10;
 const DATA_RATE_1000SPS = 0b11;
+
+const MUX_DIFF_PA0_NA1 = 0b000;
+const MUX_DIFF_PA2_NA3 = 0b001;
+const MUX_DIFF_PA1_NA2 = 0b010;
 
 const MUX_SINGLE_END_VALS = [
   MUX_SINGLE_END_A0,
@@ -33,10 +38,11 @@ const COMMAND_WREG = 0b01000000;
 class ADS1219IPWR {
   constructor (i2c, address) {
     if (typeof(i2c)=="number") {
+      console.log("ADC channel is specified by bus number.");
       if ( !(i2c == 1 || i2c == 2)) {
         throw new Error("i2cBusNumber should be 1 or 2.");
       }
-      this.i2cBusNumber = i2cBusNumber;
+      this.i2cBusNumber = i2c;
     } else if (i2c != null) {
       this.i2c = i2c;
     } else {
@@ -46,7 +52,9 @@ class ADS1219IPWR {
   }
   initialize () {
     if (this.i2c == null) {
+      console.log("ADC channel opening: %d", this.i2cBusNumber);
       this.i2c = i2c.openSync(this.i2cBusNumber);  //i2c1 or i2c2
+        console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
   /*
@@ -82,6 +90,26 @@ class ADS1219IPWR {
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
+  
+  // Measure diff signals
+  selectDiff (pChannel, nChannel) {
+    let muxBits = null;
+    if (pChannel == 0 && nChannel == 1) {
+      muxBits = MUX_DIFF_PA0_NA1;
+    } else if (pChannel == 2 && nChannel == 3) {
+      muxBits = MUX_DIFF_PA2_NA3;
+    } else if (pChannel == 1 && nChannel == 2) {
+      muxBits = MUX_DIFF_PA1_NA2;
+    }
+    if (muxBits == null) {
+      console.error("Wrong combination of P and N. Valid combinations are (0, 1), (2, 3) and (1, 2).");
+    }
+    const currentVal = this.readConfigurationRegister();
+    const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
+    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
+  }
+  // Measure single-ended signals
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
     // console.log(currentVal);

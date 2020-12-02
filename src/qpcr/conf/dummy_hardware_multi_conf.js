@@ -12,10 +12,11 @@ const TEMP_CONTROL_INTERVAL_MSEC = 500;
 /* Constants and dependencies for testing */
 
 const getDummyTemp = (current, target, interval) => {
+  let transition = DUMMY_TEMP_TRANSITION_PER_SEC * (0.9 + 0.2 * Math.random());
   if (current < target) {
-    return Math.min(target, current + DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
+    return Math.min(target, current + transition * interval / 1000.0);
   } else {
-    return Math.max(target, current - DUMMY_TEMP_TRANSITION_PER_SEC * interval / 1000.0);
+    return Math.max(target, current - transition * interval / 1000.0);
   }
 };
 
@@ -69,8 +70,8 @@ class DummyHardwareConf {
   /*
     Return HeatUnit object as implementation of the heater lid.
     */
-  getHeatLid () {
-    return new HeatLid ();
+  getHeatLids () {
+    return [new HeatLid(), new HeatLid()];
   }
   // TODO support ambient temp sensor
   /*

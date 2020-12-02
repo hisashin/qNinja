@@ -18,6 +18,22 @@ const CONTROL_TYPE = {
 
 const WELL_SYNC_INTERVAL = 5000;
 
+
+/*
+
+// Interface
+
+class Air {
+  measureTemperature();
+}
+class Fan {
+  setOutput (value);
+}
+
+For WellBlock, see well_block.js
+
+*/
+
 class Well  {
   // API
   constructor (blocks, fan, air) {
@@ -108,8 +124,8 @@ class Well  {
       });
     }
     
-    console.log("TEMPLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.temperature}).join("\t"));
-    console.log("OUTLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.outputValue}).join("\t"));
+    // console.log("TEMPLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.temperature}).join("\t"));
+    // console.log("OUTLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.outputValue}).join("\t"));
   }
   // Private
   resetSyncTime () {

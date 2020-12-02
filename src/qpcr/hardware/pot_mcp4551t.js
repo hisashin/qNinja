@@ -7,11 +7,13 @@ class MCP4551T {
   constructor (i2c, deviceAddress) {
     this.deviceAddress = deviceAddress;
     if (typeof(i2c)=="number") {
+      console.log("I2C bus is specified by bus number.");
       if ( !(i2c == 1 || i2c == 2)) {
         throw new Error("i2cBusNumber should be 1 or 2.");
       }
-      this.i2cBusNumber = i2cBusNumber;
+      this.i2cBusNumber = i2c;
     } else if (i2c != null) {
+      console.log("Setting I2C object");
       this.i2c = i2c;
     } else {
       this.i2cBusNumber = DEFAULT_BUS_NUMBER;
