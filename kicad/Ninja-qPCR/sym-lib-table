@@ -2,4 +2,5 @@
   (lib (name 2020-08-26_05-53-37)(type Legacy)(uri /Users/maripo/Desktop/ul_ADG731BSUZ/KiCAD/2020-08-26_05-53-37/2020-08-26_05-53-37.lib)(options "")(descr "")(disabled))
   (lib (name 2020-08-27_03-11-57)(type Legacy)(uri /Users/maripo/Desktop/ul_CD74HC4067M96/KiCAD/2020-08-27_03-11-57/2020-08-27_03-11-57.lib)(options "")(descr "")(disabled))
   (lib (name Raspberry_Pi_3A_Plus_wpi)(type Legacy)(uri ${KIPRJMOD}/Raspberry_Pi_3A_Plus_wpi.lib)(options "")(descr "")(disabled))
+  (lib (name 2020-12-17_04-24-35)(type Legacy)(uri /Users/maripo/Desktop/ul_LT1006S8TRPBF/KiCAD/2020-12-17_04-24-35/2020-12-17_04-24-35.lib)(options "")(descr ""))
 )
