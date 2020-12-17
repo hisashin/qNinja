@@ -1,0 +1,169 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:Crystal Y
+U 1 1 5FDACDF0
+P 4700 3600
+F 0 "Y" H 4700 3868 50  0000 C CNN
+F 1 "Crystal" H 4700 3777 50  0000 C CNN
+F 2 "" H 4700 3600 50  0001 C CNN
+F 3 "~" H 4700 3600 50  0001 C CNN
+	1    4700 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 5FDAF060
+P 4200 3950
+F 0 "C1" H 4315 3996 50  0000 L CNN
+F 1 "C" H 4315 3905 50  0000 L CNN
+F 2 "" H 4238 3800 50  0001 C CNN
+F 3 "~" H 4200 3950 50  0001 C CNN
+	1    4200 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 5FDAF9F8
+P 5200 3950
+F 0 "C2" H 5315 3996 50  0000 L CNN
+F 1 "C" H 5315 3905 50  0000 L CNN
+F 2 "" H 5238 3800 50  0001 C CNN
+F 3 "~" H 5200 3950 50  0001 C CNN
+	1    5200 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 4100 4200 4200
+Wire Wire Line
+	5200 4100 5200 4200
+Wire Wire Line
+	4200 3800 4200 3600
+Wire Wire Line
+	4200 3600 4550 3600
+Wire Wire Line
+	5200 3600 5200 3800
+Wire Wire Line
+	4850 3600 5200 3600
+$Comp
+L Device:R RD
+U 1 1 5FDB0E24
+P 5200 3300
+F 0 "RD" H 5270 3346 50  0000 L CNN
+F 1 "R" H 5270 3255 50  0000 L CNN
+F 2 "" V 5130 3300 50  0001 C CNN
+F 3 "~" H 5200 3300 50  0001 C CNN
+	1    5200 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 3450 5200 3600
+Connection ~ 5200 3600
+$Comp
+L Device:R RF
+U 1 1 5FDB181C
+P 4700 3050
+F 0 "RF" V 4493 3050 50  0000 C CNN
+F 1 "R" V 4584 3050 50  0000 C CNN
+F 2 "" V 4630 3050 50  0001 C CNN
+F 3 "~" H 4700 3050 50  0001 C CNN
+	1    4700 3050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4850 3050 5200 3050
+Wire Wire Line
+	5200 3050 5200 3150
+Wire Wire Line
+	4550 3050 4200 3050
+Wire Wire Line
+	4200 3050 4200 3600
+Connection ~ 4200 3600
+$Comp
+L 74xGxx:74LVC1GU04DRL INV
+U 1 1 5FDB3E3A
+P 4700 2550
+F 0 "INV" H 5044 2596 50  0000 L CNN
+F 1 "74LVC1GU04DRL" H 5044 2505 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-553" H 4700 2300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74lvc1gu04.pdf" H 4625 2550 50  0001 C CNN
+	1    4700 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4500 2550 4200 2550
+Wire Wire Line
+	4200 2550 4200 3050
+Connection ~ 4200 3050
+Wire Wire Line
+	5000 2550 5200 2550
+Wire Wire Line
+	5200 2550 5200 3050
+Connection ~ 5200 3050
+$Comp
+L power:GND #PWR?
+U 1 1 5FDB5122
+P 4950 2750
+F 0 "#PWR?" H 4950 2500 50  0001 C CNN
+F 1 "GND" H 4955 2577 50  0000 C CNN
+F 2 "" H 4950 2750 50  0001 C CNN
+F 3 "" H 4950 2750 50  0001 C CNN
+	1    4950 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 2750 4700 2750
+$Comp
+L power:GND #PWR?
+U 1 1 5FDB661B
+P 5200 4200
+F 0 "#PWR?" H 5200 3950 50  0001 C CNN
+F 1 "GND" H 5205 4027 50  0000 C CNN
+F 2 "" H 5200 4200 50  0001 C CNN
+F 3 "" H 5200 4200 50  0001 C CNN
+	1    5200 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5FDB6B82
+P 4200 4200
+F 0 "#PWR?" H 4200 3950 50  0001 C CNN
+F 1 "GND" H 4205 4027 50  0000 C CNN
+F 2 "" H 4200 4200 50  0001 C CNN
+F 3 "" H 4200 4200 50  0001 C CNN
+	1    4200 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR?
+U 1 1 5FDB71EA
+P 4700 2250
+F 0 "#PWR?" H 4700 2100 50  0001 C CNN
+F 1 "+3V3" H 4715 2423 50  0000 C CNN
+F 2 "" H 4700 2250 50  0001 C CNN
+F 3 "" H 4700 2250 50  0001 C CNN
+	1    4700 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 2250 4700 2350
+Text GLabel 5750 2550 2    50   Input ~ 0
+OUT
+Wire Wire Line
+	5750 2550 5200 2550
+Connection ~ 5200 2550
+$EndSCHEMATC
