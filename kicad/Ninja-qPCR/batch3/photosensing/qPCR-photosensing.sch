@@ -63,8 +63,6 @@ Text GLabel 1300 1450 2    50   Input ~ 0
 PD_MUX_GPIO4
 Text GLabel 1300 1350 2    50   Input ~ 0
 PD_MUX_GPIO5
-Text GLabel 1300 1850 2    50   Input ~ 0
-PD_REF_PWM
 $Comp
 L Ninja-qPCR:ADS1219IPWR U2
 U 1 1 5F63A689
@@ -294,8 +292,6 @@ Wire Wire Line
 	3100 4550 2300 4550
 Wire Wire Line
 	5100 4350 5550 4350
-Wire Wire Line
-	5550 4350 5550 6000
 $Comp
 L Device:R R?
 U 1 1 5FE4E4E3
@@ -325,8 +321,6 @@ $EndComp
 Wire Wire Line
 	5050 6100 5050 6000
 Connection ~ 5050 6000
-Wire Wire Line
-	5050 6000 5550 6000
 $Comp
 L Device:Crystal Y?
 U 1 1 5FE652B7
@@ -386,9 +380,7 @@ Wire Wire Line
 	4300 7000 4300 6900
 Connection ~ 5050 7000
 Text GLabel 1750 4950 0    50   Input ~ 0
-SPI_SCLK
-Text GLabel 1300 1050 2    50   Input ~ 0
-SPI_SCLK
+DEMOD_SPI_SCLK
 Text HLabel 10550 2050 2    50   Input ~ 0
 AMP_OUT
 $Comp
@@ -452,17 +444,6 @@ Wire Wire Line
 Connection ~ 7400 2150
 Wire Wire Line
 	7400 2150 6900 2150
-$Comp
-L Connector:Conn_01x16_Male J?
-U 1 1 5FE0497C
-P 950 1650
-F 0 "J?" H 1058 2531 50  0000 C CNN
-F 1 "Conn_01x16_Male" H 1058 2440 50  0000 C CNN
-F 2 "" H 950 1650 50  0001 C CNN
-F 3 "~" H 950 1650 50  0001 C CNN
-	1    950  1650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1300 950  1150 950 
 Wire Wire Line
@@ -497,14 +478,8 @@ Text GLabel 2600 4350 0    50   Input ~ 0
 DEMOD_SPI_CS
 Text GLabel 2900 5050 0    50   Input ~ 0
 DEMOD_SPI_SDIO
-Text GLabel 1300 1150 2    50   Input ~ 0
-DEMOD_SPI_SDIO
-Text GLabel 1300 2350 2    50   Input ~ 0
-DEMOD_SPI_CS
 Wire Wire Line
 	1300 1150 1150 1150
-Wire Wire Line
-	1150 2350 1300 2350
 Wire Wire Line
 	3100 5150 2900 5150
 NoConn ~ 2900 5150
@@ -579,46 +554,94 @@ Text GLabel 10600 2200 2    50   Input ~ 0
 GND
 Wire Wire Line
 	10600 2200 10500 2200
-$Comp
-L Connector:Conn_01x02_Male J?
-U 1 1 5FDF4083
-P 2100 6250
-F 0 "J?" H 2208 6431 50  0000 C CNN
-F 1 "Conn_01x02_Male" H 2208 6340 50  0000 C CNN
-F 2 "" H 2100 6250 50  0001 C CNN
-F 3 "~" H 2100 6250 50  0001 C CNN
-	1    2100 6250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2300 6350 2550 6350
-Text GLabel 2550 6350 2    50   Input ~ 0
+Text GLabel 3800 6400 2    50   Input ~ 0
 GND
 Wire Wire Line
 	2300 4550 2300 6000
-$Comp
-L Connector:Conn_01x02_Male J?
-U 1 1 5FE0ACB3
-P 3550 6200
-F 0 "J?" V 3704 6012 50  0000 R CNN
-F 1 "Conn_01x02_Male" V 3613 6012 50  0000 R CNN
-F 2 "" H 3550 6200 50  0001 C CNN
-F 3 "~" H 3550 6200 50  0001 C CNN
-	1    3550 6200
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	3650 6000 4300 6000
 Connection ~ 4300 6000
 Wire Wire Line
 	3550 6000 2300 6000
-Connection ~ 2300 6000
-Wire Wire Line
-	2300 6000 2300 6250
-Text Notes 3150 6400 0    50   ~ 0
-Place jumper to\nuse on-board clock source
-Text Notes 800  6300 0    50   ~ 0
-Input external clock (If needed)
 Text Notes 4300 7200 0    50   ~ 0
 X’tal circuit should be\nplaced next to ADA2200
+$Comp
+L Connector:Conn_01x14_Male J?
+U 1 1 5FDCE564
+P 950 1550
+F 0 "J?" H 1058 2331 50  0000 C CNN
+F 1 "Conn_01x14_Male" H 1058 2240 50  0000 C CNN
+F 2 "" H 950 1550 50  0001 C CNN
+F 3 "~" H 950 1550 50  0001 C CNN
+	1    950  1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 5FDD1B56
+P 6450 5550
+F 0 "J?" H 6558 5831 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 6558 5740 50  0000 C CNN
+F 2 "" H 6450 5550 50  0001 C CNN
+F 3 "~" H 6450 5550 50  0001 C CNN
+	1    6450 5550
+	1    0    0    -1  
+$EndComp
+Text GLabel 6900 5750 2    50   Input ~ 0
+DEMOD_SPI_CS
+Text GLabel 6900 5450 2    50   Input ~ 0
+GND
+Text GLabel 6900 5650 2    50   Input ~ 0
+DEMOD_SPI_SDIO
+Text GLabel 6900 5550 2    50   Input ~ 0
+DEMOD_SPI_SCLK
+Wire Wire Line
+	6900 5450 6650 5450
+Wire Wire Line
+	6650 5550 6900 5550
+Wire Wire Line
+	6900 5650 6650 5650
+Wire Wire Line
+	6650 5750 6900 5750
+NoConn ~ 1300 1050
+NoConn ~ 1300 1150
+NoConn ~ 5000 4650
+$Comp
+L Connector:Conn_01x03_Male J?
+U 1 1 5FDD8186
+P 3350 6300
+F 0 "J?" H 3458 6581 50  0000 C CNN
+F 1 "Conn_01x03_Male" H 3458 6490 50  0000 C CNN
+F 2 "" H 3350 6300 50  0001 C CNN
+F 3 "~" H 3350 6300 50  0001 C CNN
+	1    3350 6300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 6200 3550 6000
+Wire Wire Line
+	3650 6000 3650 6300
+Wire Wire Line
+	3650 6300 3550 6300
+Wire Wire Line
+	3800 6400 3550 6400
+$Comp
+L Connector:Conn_01x02_Male J?
+U 1 1 5FDECF86
+P 5950 6000
+F 0 "J?" H 6012 6044 50  0000 L CNN
+F 1 "Conn_01x02_Male" V 6103 6044 50  0000 L CNN
+F 2 "" H 5950 6000 50  0001 C CNN
+F 3 "~" H 5950 6000 50  0001 C CNN
+	1    5950 6000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5050 6000 5750 6000
+Wire Wire Line
+	5750 5900 5550 5900
+Wire Wire Line
+	5550 5900 5550 4350
+Text GLabel 1300 1850 2    50   Input ~ 0
+PD_REF_PWM
 $EndSCHEMATC
