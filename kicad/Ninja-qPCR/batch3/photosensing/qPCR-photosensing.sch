@@ -605,7 +605,6 @@ Wire Wire Line
 	6650 5750 6900 5750
 NoConn ~ 1300 1050
 NoConn ~ 1300 1150
-NoConn ~ 5000 4650
 $Comp
 L Connector:Conn_01x03_Male J?
 U 1 1 5FDD8186
@@ -644,4 +643,10 @@ Wire Wire Line
 	5550 5900 5550 4350
 Text GLabel 1300 1850 2    50   Input ~ 0
 PD_REF_PWM
+Text Notes 5900 6300 0    50   ~ 0
+Place a jumper to use the\non-board X’tal or\nconnect an external circuit
+Text Notes 2750 6700 0    50   ~ 0
+Connect 1-2 to use the\non-board X’tal or\nconnect an external clock source\n
+Text Notes 4300 7500 0    50   ~ 0
+ADA2200 has an interlal inverter\nbetween CLKIN and XOUT
 $EndSCHEMATC
