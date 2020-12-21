@@ -102,6 +102,8 @@ Text HLabel 3700 2550 2    50   Input ~ 0
 ADC_DRDY
 Wire Wire Line
 	3700 2450 3550 2450
+Text GLabel 3700 2950 2    50   Input ~ 0
+PD_REF_PWM
 Wire Wire Line
 	3700 2950 3550 2950
 Text GLabel 2000 3250 0    50   Input ~ 0
@@ -393,6 +395,17 @@ Wire Wire Line
 Connection ~ 3650 1450
 Wire Wire Line
 	3650 1450 3700 1450
+$Comp
+L Connector:Conn_01x14_Male PHOTO1
+U 1 1 5F89D7B6
+P 10350 5300
+F 0 "PHOTO1" H 10200 5300 50  0000 R CNN
+F 1 "Conn_01x14_Male" H 10200 5200 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x14_Pitch2.54mm" H 10350 5300 50  0001 C CNN
+F 3 "~" H 10350 5300 50  0001 C CNN
+	1    10350 5300
+	-1   0    0    -1  
+$EndComp
 Wire Wire Line
 	8100 3350 7950 3350
 Wire Wire Line
@@ -1227,6 +1240,10 @@ Text GLabel 3700 1450 2    50   Input ~ 0
 5V
 Text GLabel 9750 3400 0    50   Input ~ 0
 5V
+Text GLabel 9950 4800 0    50   Input ~ 0
++10V
+Text GLabel 9950 4900 0    50   Input ~ 0
+-10V
 Text GLabel 7750 4750 0    50   Input ~ 0
 3V3_SENSE
 Text GLabel 7750 4850 0    50   Input ~ 0
@@ -1277,25 +1294,4 @@ Wire Wire Line
 	4300 2650 4400 2650
 Wire Wire Line
 	4300 2700 4400 2700
-Text GLabel 9950 4800 0    50   Input ~ 0
-SPI_SCLK
-$Comp
-L Connector:Conn_01x16_Male J?
-U 1 1 5FDE64DA
-P 10350 5400
-F 0 "J?" H 10322 5374 50  0000 R CNN
-F 1 "Conn_01x16_Male" H 10322 5283 50  0000 R CNN
-F 2 "" H 10350 5400 50  0001 C CNN
-F 3 "~" H 10350 5400 50  0001 C CNN
-	1    10350 5400
-	-1   0    0    -1  
-$EndComp
-Text GLabel 9950 4900 0    50   Input ~ 0
-SPI_MOSI
-Text GLabel 9950 6100 0    50   Input ~ 0
-DEMOD_SPI_CS
-Wire Wire Line
-	10150 6100 9950 6100
-Text GLabel 3700 2950 2    50   Input ~ 0
-DEMOD_SPI_CS
 $EndSCHEMATC
