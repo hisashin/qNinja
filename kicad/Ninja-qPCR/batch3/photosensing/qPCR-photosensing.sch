@@ -155,8 +155,6 @@ Text GLabel 1300 2150 2    50   Input ~ 0
 I2C_SDA
 Text GLabel 1300 2250 2    50   Input ~ 0
 THERM_WELL
-Text HLabel 6900 2150 0    50   Input ~ 0
-PD_MUX_OUT
 Text GLabel 2900 4850 0    50   Input ~ 0
 PD_REF_PWM
 Text HLabel 2900 4750 0    50   Input ~ 0
@@ -649,4 +647,6 @@ Text Notes 2750 6700 0    50   ~ 0
 Connect 1-2 to use the\non-board X’tal or\nconnect an external clock source\n
 Text Notes 4300 7500 0    50   ~ 0
 ADA2200 has an interlal inverter\nbetween CLKIN and XOUT
+Text GLabel 6900 2150 0    50   Input ~ 0
+PD_MUX_OUT
 $EndSCHEMATC
