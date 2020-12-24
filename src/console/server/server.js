@@ -41,8 +41,8 @@ class NinjaQPCRHTTPServer {
     router.addPath("/device/experiment", "GET", this.deviceExperiment());
     router.addPath("/device/experiment/protocol", "GET", this.deviceProtocol());
     router.addPath("/device/experiment/progress", "GET", this.deviceProgress());
-    router.addPath("/device/experiment/baseline", "GET", this.deviceBaseline());
-    router.addPath("/device/experiment/melt_curve", "GET", this.deviceMeltCurve());
+    router.addPath("/device/experiment/baseline", "GET", this.deviceBaseline()); // To deprecate
+    router.addPath("/device/experiment/melt_curve", "GET", this.deviceMeltCurve()); // To deprecate
     
     router.add404(this.error404);
     this.server.on('request', (req, res)=>{

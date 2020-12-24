@@ -1,0 +1,305 @@
+swagger: '2.0'
+info:
+  description: Ninja-qPCR API
+  version: 1.0.0
+  title: Ninja-qPCR Console
+  termsOfService: 'https://github.com/hisashin/Ninja-qPCR'
+  contact:
+    email: goda.mariko@gmail.com
+  license:
+    name: GNU General Public License v3.0
+    url: 'https://github.com/hisashin/Ninja-qPCR/blob/master/LICENSE'
+host: ninjaqpcr.local
+basePath: /
+tags:
+  - name: protocols
+    description: qPCR Protocols
+    externalDocs:
+      description: Details
+      url: 'https://github.com/hisashin/Ninja-qPCR'
+  - name: logs
+    description: Experiment logs
+  - name: device
+    description: Control Ninja-qPCR Device
+    externalDocs:
+      description: Details
+      url: 'https://github.com/hisashin/Ninja-qPCR'
+schemes:
+  - https
+  - http
+paths:
+  /protocols:
+    put:
+      tags:
+        - protocols
+      summary: Adds a new protocol
+      description: ''
+      operationId: addProtocol
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/Protocol'
+      responses:
+        '405':
+          description: Invalid input
+    get:
+      tags:
+        - protocols
+      summary: Lists protocols
+      description: ''
+      operationId: listProtocols
+      produces:
+        - application/json
+      parameters:
+        - name: tags
+          in: query
+          description: Tags to filter by
+          required: true
+          type: array
+          items:
+            type: string
+          collectionFormat: multi
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Protocol'
+        '400':
+          description: Invalid tag value
+  '/protocols/{protocol_id}':
+    get:
+      tags:
+        - protocols
+      summary: Find a protocol by ID
+      description: Returns a single protocol
+      operationId: getProtocolById
+      produces:
+        - application/json
+      parameters:
+        - name: protocol_id
+          in: path
+          description: ID of protocol to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Protocol'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Protocol not found
+    post:
+      tags:
+        - protocols
+      summary: Updates a protocol
+      description: ''
+      operationId: updateProtocol
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: protocol_id
+          in: path
+          description: ID of protocol that needs to be updated
+          required: true
+          type: string
+        - name: name
+          in: formData
+          required: false
+          type: string
+        - name: status
+          in: formData
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Protocol'
+        '405':
+          description: Invalid input
+    delete:
+      tags:
+        - protocols
+      summary: Deletes a protocol
+      description: ''
+      operationId: deleteProtocol
+      produces:
+        - application/json
+      parameters:
+        - name: protocol_id
+          in: path
+          description: Protocol id to delete
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Protocol not found
+  /logs:
+    get:
+      tags:
+        - logs
+      summary: Returns experiment logs
+      description: Returns a map of status codes to quantities
+      operationId: getLogs
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+  '/logs/{log_id}':
+    get:
+      tags:
+        - logs
+      summary: Returns experiment logs
+      description: Returns a map of status codes to quantities
+      operationId: findLogById
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Log'
+  /device:
+    get:
+      tags:
+        - device
+      summary: Get device summary
+      operationId: getDevice
+      produces:
+        - application/json
+      responses:
+        default:
+          description: successful operation
+  /device/experiment:
+    get:
+      tags:
+        - device
+      summary: Returns ongoing experiment
+      description: ''
+      operationId: getDeviceExperiment
+      produces:
+        - application/json
+      responses:
+        default:
+          description: successful operation
+  /device/experiment/protocol:
+    get:
+      tags:
+        - device
+      summary: Returns ongoing experiment
+      description: ''
+      operationId: getDeviceExperimentProtocol
+      produces:
+        - application/json
+      responses:
+        default:
+          description: successful operation
+  /device/experiment/progress:
+    get:
+      tags:
+        - device
+      summary: Returns ongoing experiment
+      description: ''
+      operationId: getDeviceExperimentProgress
+      produces:
+        - application/json
+      responses:
+        default:
+          description: successful operation
+definitions:
+  Log:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 15644F61-CBFC-4876-8DD4-1325269AB2DA
+      name:
+        type: string
+  Progress:
+    type: object
+  Protocol:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: Demo Protocol
+      protocol_id:
+        type: string
+        example: 15644F61-CBFC-4876-8DD4-1325269AB2DA
+      lid_temp:
+        type: integer
+        format: int32
+        example: 110
+      final_hold_temp:
+        type: integer
+        format: int32
+        example: 30
+      stages:
+        type: array
+        items:
+          $ref: '#/definitions/Stage'
+    xml:
+      name: Protocol
+  Stage:
+    type: object
+    properties:
+      type:
+        type: integer
+        format: int32
+        example: 1
+      repeat:
+        type: integer
+        format: int32
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/Step'
+  Step:
+    type: object
+    properties:
+      label:
+        type: string
+        enum: [hold, denature, anneal, extend, cool, melt]
+        example: anneal
+      temp:
+        type: number
+        format: float
+        description: Hold temperature in Celsius
+      duration:
+        type: number
+        format: float
+        example: 20000
+        description: Hold temperature in milliseconds
+      data_collection:
+        type: array
+        items:
+          type: integer
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
