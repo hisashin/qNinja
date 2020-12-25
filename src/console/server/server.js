@@ -29,6 +29,7 @@ class NinjaQPCRHTTPServer {
     
     router.addPath("/", "GET", this.root());
     router.addPath("/protocols", "GET", this.protocols());
+    router.addPath("/protocols", "POST", this.protocolCreate());
     router.addPath("/protocols/{pid}", "GET", this.protocolGet());
     router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
     router.addPath("/protocols/{pid}", "DELETE", this.protocolDelete());
@@ -130,6 +131,45 @@ class NinjaQPCRHTTPServer {
     };
   }
   
+  /* Protocols */
+  protocols () {
+    return (req, res, map)=>{
+      pm.getProtocols((protocols)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(protocols));
+        res.end();
+      },
+      (err)=>{
+        this.error500(req, res, err);
+      });
+    };
+  }
+  
+  protocolCreate () {
+    // TODO
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("protocolCreate received data.");
+        // TODO format?
+        const item = JSON.parse(rawData);
+        console.log("name=%s", item.protocol.name);
+        console.log("id=%s", item.id);
+        if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
+          
+          pm.update(item, ()=>{
+            res.writeHead(200,{'Content-Type': 'application/json'});
+            const obj = {success:true}
+            res.write(JSON.stringify(obj));
+            res.end();
+          }, (err)=>{
+            this.error500(req, res, err);
+            
+          });
+        }
+      });
+    }
+  }
+  
   protocolUpdate () {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
@@ -151,6 +191,18 @@ class NinjaQPCRHTTPServer {
         }
       });
     }
+  }
+  protocolGet () {
+    return (req, res, map)=>{
+      pm.getProtocol(map.pid, (item)=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(item));
+        res.end();
+      },
+      (err)=>{
+        this.error500(req, res, err);
+      });
+    };
   }
   
   // TODO 
@@ -195,30 +247,6 @@ class NinjaQPCRHTTPServer {
       lm.getAnalyzedLog(map.lid, (log)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(log));
-        res.end();
-      },
-      (err)=>{
-        this.error500(req, res, err);
-      });
-    };
-  }
-  protocolGet () {
-    return (req, res, map)=>{
-      pm.getProtocol(map.pid, (item)=>{
-        res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(item));
-        res.end();
-      },
-      (err)=>{
-        this.error500(req, res, err);
-      });
-    };
-  }
-  protocols () {
-    return (req, res, map)=>{
-      pm.getProtocols((protocols)=>{
-        res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(protocols));
         res.end();
       },
       (err)=>{
