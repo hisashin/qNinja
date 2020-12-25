@@ -203,10 +203,14 @@ class NinjaQPCRHTTPServer {
   protocolDelete () {
     return (req, res, map)=>{
       console.log("TODO protocolDelete");
-      res.writeHead(200,{'Content-Type': 'application/json'});
-      const obj = {};
-      res.write(JSON.stringify(obj));
-      res.end();
+      pm.delete(map.pid, ()=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify({}));
+        res.end();
+      },
+      (err)=>{
+        this.error500(req, res, err);
+      });
     };
     
   }

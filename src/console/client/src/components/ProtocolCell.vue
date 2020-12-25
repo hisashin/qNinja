@@ -22,6 +22,9 @@
           </li>
         </ul>
         <div class="col-3">
+          <b-button @click.stop="deleteIt">
+            Delete
+          </b-button>
           <b-button @click.stop="edit">
             Edit
           </b-button>
@@ -65,9 +68,11 @@ export default {
       console.log("ProtocolCell.edit");
       appState.startEditProtocol(this.pid);
     },
-    delete: function() {
+    deleteIt: function() {
       console.log("ProtocolCell.delete");
-      appState.deleteProtocol(this.pid);
+      appState.submitDeleteProtocol(this.pid, ()=>{
+        console.log("Deleted.");
+      });
     },
     duplicate: function() {
       console.log("ProtocolCell.duplicate");

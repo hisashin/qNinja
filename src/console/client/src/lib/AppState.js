@@ -109,9 +109,6 @@ class AppState {
       this.pushPanel(this.PANELS.PROTOCOL_DETAIL);
     });
   }
-  deleteProtocol (id) {
-    console.log("AppState.deleteProtocol (TODO)");
-  }
   duplicateProtocol (id) {
     console.log("AppState.duplicateProtocol (TODO)");
   }
@@ -220,6 +217,18 @@ class AppState {
     console.log("AppState.saveProtocol");
     const path = "protocols";
     Util.requestData(path, obj, "POST", ()=>{
+      if (onSave) {
+        onSave();
+      }
+      this.reloadProtocols();
+    }, ()=>{
+    });
+  }
+  
+  submitDeleteProtocol (id, onSave) {
+    console.log("AppState.submitDeleteProtocol %s", id);
+    const path = "protocols/" + id;
+    Util.requestData(path, null, "DELETE", ()=>{
       if (onSave) {
         onSave();
       }
