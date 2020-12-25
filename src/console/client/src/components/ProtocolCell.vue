@@ -63,7 +63,7 @@ export default {
     },
     edit: function() {
       console.log("ProtocolCell.edit");
-      appState.editProtocol(this.pid);
+      appState.startEditProtocol(this.pid);
     },
     delete: function() {
       console.log("ProtocolCell.delete");

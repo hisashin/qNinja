@@ -304,7 +304,15 @@
         <div class="protocol-footer">
           <b-button
             variant="primary"
-            @click="save"
+            @click="submitUpdateProtocol"
+            v-show="!isNew"
+          >
+            Save
+          </b-button>
+          <b-button
+            variant="primary"
+            @click="submitCreateProtocol"
+            v-show="isNew"
           >
             Save
           </b-button>
@@ -348,22 +356,23 @@ const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR,
   steps:[ {label:"denature", temp:94, duration:15, data_collection:{}}, 
   {label:"anneal", temp:55, duration:12, data_collection:{}}, 
   {label:"extend", temp:72, duration:18, data_collection:{}} ] };
-  
+const NEW_PROTOCOL = {
+  name: "New Protocol",
+  lid_temp: 110,
+  stages: [
+  ]
+};
 export default {
   name: 'TheProtocolEditor',
   components:{},
   data() {
     return {
       id:"",
-      protocol: {
-        name: "New Protocol",
-        lid_temp: 110,
-        stages: [
-        ]
-      },
+      protocol: NEW_PROTOCOL,
       /* Form management (Do not send them) */
       final_hold_temp: '', // Optional string
-      addStagePosition:0
+      addStagePosition:0,
+      isNew: true
     }
   },
   created: function () {
@@ -398,7 +407,7 @@ export default {
     back: function () {
       appState.backPanel();
     },
-    save: function () {
+    submitUpdateProtocol: function () {
       // TODO validation
       const finalHoldTemp = parseFloat(this.final_hold_temp);
       if (finalHoldTemp > 0) {
@@ -406,12 +415,28 @@ export default {
       } else {
         delete this.protocol.final_hold_temp;
       }
-      appState.saveProtocol(this.$data, ()=>{
+      appState.submitUpdateProtocol(this.$data, ()=>{
         appState.toast(this, "Save", "Saved.");
       });
     },
-    setProtocol: function (protocol) {
-      
+    submitCreateProtocol: function () {
+      // TODO validation
+      const finalHoldTemp = parseFloat(this.final_hold_temp);
+      if (finalHoldTemp > 0) {
+        this.protocol.final_hold_temp = finalHoldTemp;
+      } else {
+        delete this.protocol.final_hold_temp;
+      }
+      appState.submitCreateProtocol(this.$data.protocol, ()=>{
+        appState.toast(this, "Save", "Saved.");
+      });
+    },
+    startCreateProtocol: function () {
+      this.protocol = NEW_PROTOCOL;
+      this.id = null;
+      this.isNew = true;
+    },
+    startEditProtocol: function (protocol) {
       this.protocol = protocol.protocol;
       if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
         this.final_hold_temp = '' + this.protocol.final_hold_temp;
@@ -419,6 +444,7 @@ export default {
         this.final_hold_temp = '';
       }
       this.id = protocol.id;
+      this.isNew = false;
     },
     openAddStageModal (before) {
       this.$bvModal.show('add-stage-modal')

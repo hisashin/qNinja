@@ -150,7 +150,7 @@ class Device {
     this.ws.send(JSON.stringify(obj));
   }
   
-  setProtocol (protocol) {
+  startEditProtocol (protocol) {
     console.log("Device.setProtocol calling %d handlers", this.deviceStateHandlers.length);
     console.log(protocol);
     this.protocol = protocol;

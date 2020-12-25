@@ -77,7 +77,7 @@ class AppState {
   prepareExperiment (id) {
     console.log("AppState.prepareExperiment");
     this._loadProtocol(id, (data)=>{
-      this.views.experimentEditor.setProtocol(data.protocol);
+      this.views.experimentEditor.startEditProtocol(data.protocol);
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
   }
@@ -86,12 +86,21 @@ class AppState {
     device.start(config);
     this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
   }
-  editProtocol (id) {
-    console.log("AppState.editProtocol");
+  startEditProtocol (id) {
+    console.log("AppState.startEditProtocol");
     this._loadProtocol(id, (data)=>{
-      this.views.protocolEditor.setProtocol(data);
+      this.views.protocolEditor.startEditProtocol(data);
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
+  }
+  startCreateProtocol (id) {
+    console.log("AppState.editProtocol");
+    this.views.protocolEditor.startCreateProtocol();
+    this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
+  }
+  newProtocol () {
+    console.log("AppState.newProtocol");
+    
   }
   revealDetailProtocol (id) {
     console.log("AppState.revealDetailProtocol id=%s", id);
@@ -150,7 +159,6 @@ class AppState {
     console.log("AppState.reloadLogs");
     Util.requestData("logs", null, "GET", 
       (data)=>{
-        console.log("AppState.reloadLogs callback");
         this.logSummaries = data;
         this.logEventHandlers.forEach((handler)=>{
           if (handler.onLogSummariesUpdate) {
@@ -196,10 +204,22 @@ class AppState {
     );
   }
   
-  saveProtocol (obj, onSave) {
-    console.log("AppState.saveProtocol");
+  submitUpdateProtocol (obj, onSave) {
+    console.log("AppState.submitUpdateProtocol");
     const path = "protocols/" + obj.id;
     Util.requestData(path, obj, "PUT", ()=>{
+      if (onSave) {
+        onSave();
+      }
+      this.reloadProtocols();
+    }, ()=>{
+    });
+  }
+  
+  submitCreateProtocol (obj, onSave) {
+    console.log("AppState.saveProtocol");
+    const path = "protocols";
+    Util.requestData(path, obj, "POST", ()=>{
       if (onSave) {
         onSave();
       }

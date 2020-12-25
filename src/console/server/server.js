@@ -146,26 +146,20 @@ class NinjaQPCRHTTPServer {
   }
   
   protocolCreate () {
-    // TODO
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
         console.log("protocolCreate received data.");
-        // TODO format?
-        const item = JSON.parse(rawData);
-        console.log("name=%s", item.protocol.name);
-        console.log("id=%s", item.id);
-        if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
+        const protocol = JSON.parse(rawData); // Protocol body
+        console.log("name=%s", protocol.name);
+        pm.create(protocol, ()=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          const obj = {success:true}
+          res.write(JSON.stringify(obj));
+          res.end();
+        }, (err)=>{
+          this.error500(req, res, err);
           
-          pm.update(item, ()=>{
-            res.writeHead(200,{'Content-Type': 'application/json'});
-            const obj = {success:true}
-            res.write(JSON.stringify(obj));
-            res.end();
-          }, (err)=>{
-            this.error500(req, res, err);
-            
-          });
-        }
+        });
       });
     }
   }

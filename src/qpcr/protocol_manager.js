@@ -22,9 +22,11 @@ class ProtocolManager {
       }
     }, onError);
   }
-  // TODO
-  insert () {
-    
+  create (protocol, onSuccess, onError) {
+    // Assign ID
+    const item = this._createProtocol();
+    item.protocol = protocol;
+    this.update(item, onSuccess, onError);
   }
   update (content, onUpdate /* (content)=>{} */, onError) {
     const dateStr = new Date().getTime();

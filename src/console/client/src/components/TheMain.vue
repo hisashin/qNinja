@@ -15,7 +15,7 @@
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_LIST">
       <BackButton />
-      <ProtocolList :limit="16" />
+      <TheProtocolList ref="protocolList" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
       <BackButton />
@@ -51,6 +51,7 @@ import TheProtocolEditor from './TheProtocolEditor.vue'
 import TheExperimentEditor from './TheExperimentEditor.vue'
 import ProtocolDetail from './ProtocolDetail.vue'
 import ProtocolList from './ProtocolList.vue'
+import TheProtocolList from './TheProtocolList.vue'
 import LogList from './LogList.vue'
 import LogDetail from './LogDetail.vue'
 import network from "../lib/Device.js";
@@ -65,6 +66,7 @@ export default {
   name: 'TheMain',
   components: {
     ProtocolList,
+    TheProtocolList,
     LogList,
     LogDetail,
     DeviceSummary,
