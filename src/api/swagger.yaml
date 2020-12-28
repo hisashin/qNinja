@@ -9,7 +9,7 @@ info:
   license:
     name: GNU General Public License v3.0
     url: 'https://github.com/hisashin/Ninja-qPCR/blob/master/LICENSE'
-host: ninjaqpcr.local
+host: localhost:2222
 basePath: /
 tags:
   - name: protocols
@@ -25,11 +25,61 @@ tags:
       description: Details
       url: 'https://github.com/hisashin/Ninja-qPCR'
 schemes:
-  - https
   - http
+  - https
 paths:
   /protocols:
-    put:
+    get:
+      tags:
+        - protocols
+      summary: Retrieves protocols
+      description: ''
+      operationId: listProtocols
+      produces:
+        - application/json
+      parameters:
+        - name: offset
+          in: query
+          description: The number of items to skip before starting to collect the result set
+          required: false
+          type: integer
+        - name: limit
+          in: query
+          description:  The numbers of items to return
+          required: false
+          type: integer
+        - name: sort
+          in: query
+          description: Sort order
+          required: false
+          type: string
+        - name: order
+          in: query
+          description: Sort order
+          required: false
+          type: string
+          enum: [asc,desc]
+        - name: keyword
+          in: query
+          description: Free keyword
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            allOf:
+              - $ref: '#/definitions/Pagination'
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/definitions/ProtocolFile'
+        '500':
+          description: Server-side error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
       tags:
         - protocols
       summary: Adds a new protocol
@@ -42,39 +92,21 @@ paths:
       parameters:
         - in: body
           name: body
-          description: ''
+          description: 'Protocol content'
           required: true
           schema:
             $ref: '#/definitions/ProtocolFile'
       responses:
-        '405':
-          description: Invalid input
-    get:
-      tags:
-        - protocols
-      summary: Lists protocols
-      description: ''
-      operationId: listProtocols
-      produces:
-        - application/json
-      parameters:
-        - name: tags
-          in: query
-          description: Tags to filter by
-          required: true
-          type: array
-          items:
-            type: string
-          collectionFormat: multi
-      responses:
         '200':
-          description: successful operation
+          description: Successful operation. Protocol was created.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/ProtocolFile'
-        '400':
-          description: Invalid tag value
+            $ref: '#/definitions/ProtocolFile'
+        '500':
+          description: Server-side error
+          schema:
+            $ref: '#/definitions/Error'
+        '422':
+          description: Invalid content
   '/protocols/{protocol_id}':
     get:
       tags:
@@ -89,18 +121,26 @@ paths:
           in: path
           description: ID of protocol to return
           required: true
-          type: integer
-          format: int64
+          type: string
+          default: 704D8607-5040-4B07-8401-7F90E8B855C4
       responses:
         '200':
           description: successful operation
           schema:
             $ref: '#/definitions/ProtocolFile'
         '400':
-          description: Invalid ID supplied
+          description: Invalid ID
+          schema:
+            $ref: '#/definitions/Error'
         '404':
           description: Protocol not found
-    post:
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server-side error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
       tags:
         - protocols
       summary: Updates a protocol
@@ -116,21 +156,33 @@ paths:
           description: ID of protocol that needs to be updated
           required: true
           type: string
-        - name: name
-          in: formData
-          required: false
-          type: string
-        - name: status
-          in: formData
-          required: false
-          type: string
+        - in: body
+          name: body
+          description: 'Protocol content'
+          required: true
+          schema:
+            $ref: '#/definitions/ProtocolFile'
       responses:
         '200':
           description: successful operation
           schema:
             $ref: '#/definitions/ProtocolFile'
-        '405':
-          description: Invalid input
+        '422':
+          description: Invalid content
+          schema:
+            $ref: '#/definitions/Error'
+        '400':
+          description: Invalid ID
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Protocol not found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server-side error
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       tags:
         - protocols
@@ -146,10 +198,41 @@ paths:
           required: true
           type: string
       responses:
+        '200':
+          description: successful operation
         '400':
-          description: Invalid ID supplied
+          description: Invalid ID
+          schema:
+            $ref: '#/definitions/Error'
         '404':
           description: Protocol not found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server-side error
+          schema:
+            $ref: '#/definitions/Error'
+  /protocols/validate:
+    put:
+      tags:
+        - protocols
+      summary: Validate a protocol (for testing validator)
+      description: ''
+      operationId: validateProtocol
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 'Protocol content'
+          required: true
+          schema:
+            $ref: '#/definitions/ProtocolFile'
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid data
   /logs:
     get:
       tags:
@@ -186,7 +269,7 @@ paths:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/LogFile'
+            $ref: '#/definitions/ExperimentFile'
   /device:
     get:
       tags:
@@ -235,14 +318,33 @@ paths:
         default:
           description: successful operation
 definitions:
-  LogFile:
+  Pagination:
+    type: object
+    properties:
+      offset:
+        type: integer
+        format: int32
+      limit:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          type: object
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+        example: something wrong
+  ExperimentFile:
     type: object
     properties:
       id:
         type: string
         example: 15644F61-CBFC-4876-8DD4-1325269AB2DA
       log:
-        $ref: '#/definitions/Log'
+        $ref: '#/definitions/Experiment'
   ProtocolFile:
     type: object
     properties:
@@ -251,7 +353,7 @@ definitions:
         example: 15644F61-CBFC-4876-8DD4-1325269AB2DA
       protocol:
         $ref: '#/definitions/Protocol'
-  Log:
+  Experiment:
     type: object
     properties:
       name:

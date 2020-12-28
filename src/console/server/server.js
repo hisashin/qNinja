@@ -5,6 +5,7 @@ const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
+const ErrorCode = require(QPCR_PATH + "error_code");
 const LogManager = require(QPCR_PATH + "log_manager");
 
 const pm = new ProtocolManager();
@@ -33,6 +34,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/protocols/{pid}", "GET", this.protocolGet());
     router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
     router.addPath("/protocols/{pid}", "DELETE", this.protocolDelete());
+    router.addPath("/protocols/validate", "PUT", this.protocolValidate());
     router.addPath("/logs", "GET", this.logs());
     router.addPath("/logs/latest", "GET", this.logLatest());
     router.addPath("/logs/{lid}", "GET", this.logGet());
@@ -46,9 +48,12 @@ class NinjaQPCRHTTPServer {
     router.addPath("/device/experiment/melt_curve", "GET", this.deviceMeltCurve()); // To deprecate
     
     router.add404(this.error404);
+    router.start();
+    
     this.server.on('request', (req, res)=>{
       // CORS
-      const corsAllow = 'http://' + clientHost + ":" + clientPort;
+      let corsAllow = 'http://' + clientHost;
+      if (clientPort != "80")  corsAllow += (":" + clientPort);
       res.setHeader('Access-Control-Allow-Origin', corsAllow);
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -64,6 +69,7 @@ class NinjaQPCRHTTPServer {
       }
     });
   }
+  
   root () {
     return (req, res, map)=>{
       res.writeHead(200,{'Content-Type': 'application/json'});
@@ -82,6 +88,7 @@ class NinjaQPCRHTTPServer {
       res.end();
     };
   }
+  
   deviceExperiment () {
     return (req, res, map)=>{
       // Device state and experiment status
@@ -104,6 +111,7 @@ class NinjaQPCRHTTPServer {
       res.end();
     };
   }
+  
   deviceProgress () {
     return (req, res, map)=>{
       res.writeHead(200,{'Content-Type': 'application/json'});
@@ -112,6 +120,7 @@ class NinjaQPCRHTTPServer {
       res.end();
     };
   }
+  
   deviceBaseline () {
     return (req, res, map)=>{
       res.writeHead(200,{'Content-Type': 'application/json'});
@@ -132,15 +141,36 @@ class NinjaQPCRHTTPServer {
   }
   
   /* Protocols */
+  _handlePmError (req, res, pmErr) {
+    let errorCode = 500;
+    if (pmErr.code == ErrorCode.NotFound) {
+      errorCode = 404
+    }
+    if (pmErr.code == ErrorCode.DataError) {
+      errorCode = 400
+    }
+    if (pmErr.code == ErrorCode.BadRequest) {
+      errorCode = 500
+    }
+    res.writeHead(errorCode, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify({message:pmErr.message}));
+    res.end();
+  }
   protocols () {
     return (req, res, map)=>{
       pm.getProtocols((protocols)=>{
-        res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(protocols));
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        const obj = {
+          offset:0,
+          limit:20,
+          data: protocols
+        };
+        // Page, sort, filter
+        res.write(JSON.stringify(obj));
         res.end();
       },
-      (err)=>{
-        this.error500(req, res, err);
+      (pmErr)=>{
+        this._handlePmError(req, res, pmErr);
       });
     };
   }
@@ -151,14 +181,12 @@ class NinjaQPCRHTTPServer {
         console.log("protocolCreate received data.");
         const protocol = JSON.parse(rawData); // Protocol body
         console.log("name=%s", protocol.name);
-        pm.create(protocol, ()=>{
+        pm.create(item, ()=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
-          const obj = {success:true}
-          res.write(JSON.stringify(obj));
+          res.write(JSON.stringify(item));
           res.end();
-        }, (err)=>{
-          this.error500(req, res, err);
-          
+        }, (pmErr)=>{
+          this._handlePmError(req, res, pmErr);
         });
       });
     }
@@ -168,24 +196,35 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
         console.log("protocolUpdate received data.");
-        const item = JSON.parse(rawData);
-        console.log("name=%s", item.protocol.name);
-        console.log("id=%s", item.id);
-        if (item.protocol!=null && item.protocol.name!=null && item.id!=null) {
-          
-          pm.update(item, ()=>{
-            res.writeHead(200,{'Content-Type': 'application/json'});
-            const obj = {success:true}
-            res.write(JSON.stringify(obj));
-            res.end();
-          }, (err)=>{
-            this.error500(req, res, err);
-            
-          });
-        }
+        const protocolBody = JSON.parse(rawData);
+        pm.validate(protocolBody, ()=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.write(JSON.stringify(item));
+          res.end();
+        }, (pmErr)=>{
+          this._handlePmError(req, res, pmErr);
+        });
       });
     }
   }
+  
+  protocolValidate () {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("protocolValidate received data.");
+        const protocol = JSON.parse(rawData); // Protocol body
+        console.log("name=%s", protocol.name);
+        pm.validate(protocol, (result)=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.write(JSON.stringify(result));
+          res.end();
+        }, (pmErr)=>{
+          this._handlePmError(req, res, pmErr);
+        });
+      });
+    }
+  }
+  
   protocolGet () {
     return (req, res, map)=>{
       pm.getProtocol(map.pid, (item)=>{
@@ -193,28 +232,27 @@ class NinjaQPCRHTTPServer {
         res.write(JSON.stringify(item));
         res.end();
       },
-      (err)=>{
-        this.error500(req, res, err);
+      (pmErr)=>{
+        this._handlePmError(req, res, pmErr);
       });
     };
   }
   
-  // TODO 
   protocolDelete () {
     return (req, res, map)=>{
-      console.log("TODO protocolDelete");
       pm.delete(map.pid, ()=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify({}));
+        // Empty response.
         res.end();
       },
-      (err)=>{
-        this.error500(req, res, err);
+      (pmErr)=>{
+        this._handlePmError(req, res, pmErr);
       });
     };
     
   }
   
+  // TODO 
   logs () {
     return (req, res, map)=>{
       lm.getSummaries({}, {}, (summaries)=>{

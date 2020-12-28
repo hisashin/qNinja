@@ -3,12 +3,15 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const DATA_DIR_ROOT = __dirname + "/user_data";
+const ErrorCode = require("./error_code");
+const ProtocolValidator = require("./protocol_validator");
 
 class ProtocolManager {
   constructor () {
     this.items = null;
   }
   /* API */
+  // Returns all protocols
   getProtocols (onLoad, onError) {
     if (this.items != null) {
       if (onLoad) {
@@ -22,6 +25,12 @@ class ProtocolManager {
       }
     }, onError);
   }
+  
+  // Returns single protocol
+  getProtocol (id, callback, onError) {
+    this._getProtocol (id, callback, onError);
+  }
+  
   create (protocol, onSuccess, onError) {
     // Assign ID
     const item = this._createProtocol();
@@ -32,69 +41,72 @@ class ProtocolManager {
     const dateStr = new Date().getTime();
     content.modified = dateStr;
     const filePath = this._protocolDir() + "/" + content.id;
-    console.log("Writing the protocol to %s", filePath);
-    fs.writeFile(filePath, JSON.stringify(content), (err)=>{
-      if (err) {
-        console.log(err);
-        if (onError) {
-          onError(err);
-        }
-      } else {
-        // Reload
-        this._loadProtocols(
-          ()=>{
-            if (onUpdate) {
-              onUpdate(content);
-            }
-          },
-          (err)=>{
-            if (onError) {
-              onError(err);
-            }
+    
+    this._getProtocol(id, ()=>{
+      fs.writeFile(filePath, JSON.stringify(content), (err)=>{
+        if (err) {
+          // File system error
+          console.log(err);
+          if (onError) {
+            onError({
+              code: ErrorCode.DataError,
+              message:err.message
+            });
           }
-        );
-      }
-    });
+        } else {
+          // Reload
+          this._loadProtocols(
+            ()=>{
+              if (onUpdate) {
+                // Updated protocol file
+                onUpdate(content);
+              }
+            },
+            onError
+          );
+        }
+      });
+    }, onError);
   }
   delete (id, onDelete, onError) {
     const filePath = this._protocolDir() + "/" + id;
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.error(err);
-        if (onError) {
-          onError(err);
-        }
-        return
-      }
-      // Reload
-      this._loadProtocols(
-        (items)=>{
-          if (onDelete) {
-            onDelete();
+    // TODO check file existence
+    this._getProtocol(id, ()=>{
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error(err);
+          if (onError) {
+            onError({
+              code:ErrorCode.DataError,
+              message: "Database error."
+            });
           }
-        },
-        onError
-      );
-      
-    });
+          return
+        }
+        // Reload
+        this._loadProtocols(
+          (items)=>{
+            if (onDelete) {
+              onDelete();
+            }
+          },
+          onError
+        );
+      });
+    }, onError);
   }
+  validate (protocol, onSuccess, onError) {
+    const errors = new ProtocolValidator(protocol).validate();
+    onSuccess(errors);
+  }
+  // Not supported by server.js
   duplicate (id, onSuccess/* (id, content)=>{}*/, onError) {
     this._getProtocol(id, (fromItem)=>{
-      if (fromItem == null) {
-        if (onError) {
-          onError("Protocol not found id:" + id);
-        }
-        return;
-      }
       const toItem = this._createProtocol();
       toItem.protocol = fromItem.protocol;
       toItem.protocol.name = "Copy of " + fromItem.protocol.name;
       this.update(toItem, onSuccess, onError);
     }, onError);
-  }
-  
-  getProtocol (id, callback, onError) {
-    this._getProtocol (id, callback, onError);
   }
   
   /* Private */
@@ -108,19 +120,35 @@ class ProtocolManager {
     }
   }
   
+  // onError is called if no protocol found.
   _getProtocol (id, callback, onError) {
+    if (id == null || id.length == 0) {
+      onError({
+        code: ErrorCode.BadRequest,
+        message: "Protocol ID not specified."
+      });
+      return;
+    }
     this.getProtocols(
       (items)=>{
         for (let i=0; i<items.length; i++) {
           if (items[i].id == id) {
             console.log(items[i].id);
+            // Item found.
             callback(items[i]);
             return;
           }
         }
-        callback(null);
+        // Not found
+        if (onError) {
+          onError({
+            code: ErrorCode.NotFound,
+            message:"Protocol not found"
+          });
+          
+        }
       },
-      onError
+      onError // Other error
     );
   }
   
@@ -165,7 +193,10 @@ class ProtocolManager {
       }).catch((err)=>{
         console.log(err);
         if (onError) {
-          onError(err);
+          onError({
+            code:ErrorCode.DataError,
+            message:err.message
+          });
         }
       });
     });

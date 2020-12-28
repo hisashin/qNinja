@@ -58,6 +58,7 @@ class Router {
   }
   route (req, res) {
     const url = URL.parse(req.url).pathname;
+    console.log(url)
     for (let i=0; i<this.paths.length; i++) {
       let match = this.paths[i].matches(url, req.method);
       if (match != null) {
@@ -77,6 +78,36 @@ class Router {
       items.push(path.document());
     });
     return items;
+  }
+  start () {
+    // Sort (TODO: it's better to build path & method tree)
+    this.paths.sort((a, b)=>{
+    let count = Math.min(a.parts.length, b.parts.length);
+    for (let i=0; i<count; i++) {
+      let aPart = a.parts[i];
+      let bPart = b.parts[i];
+      if (aPart.type == PARTS_FIXED && bPart.type == PARTS_PARAM) {
+        // A is prior
+        return -1;
+      }
+      if (aPart.type == PARTS_PARAM && bPart.type == PARTS_FIXED) {
+        // B is prior
+        return 1;
+      }
+    }
+    if (b.parts.length > a.parts.length) {
+      // B is prior
+      return 1;
+    }
+    if (a.parts.length > b.parts.length) {
+      // B is prior
+      return -1;
+    }
+    return 1;
+    });
+    for (let path of this.paths) {
+      console.log(path.expression);
+    }
   }
 }
 

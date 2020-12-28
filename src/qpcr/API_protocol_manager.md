@@ -3,7 +3,8 @@
 (TODO)
 
 ## getProtocols (onLoad, onError)
+## getProtocol (id, callback, onError)
 ## update (content, onUpdate, onError)
 ## delete (id, onDelete, onError)
 ## duplicate (id, onSuccess, onError)
-## getProtocol (id, callback, onError)
+## validate (id, callback, onError)
