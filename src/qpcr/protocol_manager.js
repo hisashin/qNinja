@@ -34,6 +34,11 @@ class ProtocolManager {
   
   create (protocol, onSuccess, onError) {
     // Assign ID
+    const errors = this.validator.validate(protocol);
+    if (errors.length > 0) {
+      onError({code:ErrorCode.InvalidData, message:"Invalid data.", data:errors});
+      return;
+    }
     const item = this._createProtocol();
     item.protocol = protocol;
     this.update(item, onSuccess, onError);
@@ -42,6 +47,11 @@ class ProtocolManager {
     const dateStr = new Date().getTime();
     content.modified = dateStr;
     const filePath = this._protocolDir() + "/" + content.id;
+    const errors = this.validator.validate(content.protocol);
+    if (errors.length > 0) {
+      onError({code:ErrorCode.InvalidData, message:"Invalid data.", data:errors});
+      return;
+    }
     
     this._getProtocol(id, ()=>{
       fs.writeFile(filePath, JSON.stringify(content), (err)=>{
@@ -71,7 +81,6 @@ class ProtocolManager {
   }
   delete (id, onDelete, onError) {
     const filePath = this._protocolDir() + "/" + id;
-    // TODO check file existence
     this._getProtocol(id, ()=>{
       fs.unlink(filePath, (err) => {
         if (err) {

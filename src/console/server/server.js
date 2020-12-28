@@ -143,17 +143,22 @@ class NinjaQPCRHTTPServer {
   /* Protocols */
   _handlePmError (req, res, pmErr) {
     let errorCode = 500;
+    let obj = {message:pmErr.message};
     if (pmErr.code == ErrorCode.NotFound) {
-      errorCode = 404
+      errorCode = 404;
     }
     if (pmErr.code == ErrorCode.DataError) {
-      errorCode = 400
+      errorCode = 400;
     }
     if (pmErr.code == ErrorCode.BadRequest) {
-      errorCode = 500
+      errorCode = 500;
+    }
+    if (pmErr.code == ErrorCode.InvalidData) {
+      errorCode = 422;
+      obj.data = pmErr.data;
     }
     res.writeHead(errorCode, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify({message:pmErr.message}));
+    res.write(JSON.stringify(obj));
     res.end();
   }
   protocols () {
@@ -181,7 +186,7 @@ class NinjaQPCRHTTPServer {
         console.log("protocolCreate received data.");
         const protocol = JSON.parse(rawData); // Protocol body
         console.log("name=%s", protocol.name);
-        pm.create(item, ()=>{
+        pm.create(protocol, (item)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(item));
           res.end();
@@ -196,8 +201,8 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
         console.log("protocolUpdate received data.");
-        const protocolBody = JSON.parse(rawData);
-        pm.validate(protocolBody, ()=>{
+        const content = JSON.parse(rawData);
+        pm.update(content, (item)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(item));
           res.end();
