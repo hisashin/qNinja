@@ -31,14 +31,23 @@ export default {
     }
   },
   created: function () {
+  /*
     this.protocols = appState.getProtocols();
     appState.addProtocolEventHandler({
       onProtocolListUpdate:(protocols)=>{
         this.protocols = protocols;
       }
     });
+    */
   },
   methods: {
+    load: function () {
+      console.log("LogList.load");
+      appState.reloadProtocols((protocols)=>{
+        this.protocols = protocols;
+      });
+    
+    }
   }
 }
 </script>

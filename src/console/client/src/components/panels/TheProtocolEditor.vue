@@ -323,9 +323,9 @@
 </template>
 
 <script>
-import network from "../lib/Device.js";
-import appState from "../lib/AppState.js";
-import Constants from "../lib/constants.js";
+import network from "../../lib/Device.js";
+import appState from "../../lib/AppState.js";
+import Constants from "../../lib/constants.js";
 
 let LABEL_MAP = {};
 LABEL_MAP[Constants.StageType.HOLD] = "Hold";
@@ -449,6 +449,9 @@ export default {
     openAddStageModal (before) {
       this.$bvModal.show('add-stage-modal')
       this.addStagePosition = before;
+    },
+    onAppear () {
+      console.log("TheProtocolEditor.onAppear()");
     }
   }
 }

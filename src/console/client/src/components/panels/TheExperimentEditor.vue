@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import appState from "../lib/AppState.js";
+import appState from "../../lib/AppState.js";
 
 // TODO Prepare UI for experiment conf
 const experimentConf = 
@@ -52,6 +52,9 @@ export default {
     },
     setProtocol (protocol) {
       this.protocol = protocol;
+    },
+    onAppear () {
+      console.log("TheExperimentEditor.onAppear()");
     }
   }
 }

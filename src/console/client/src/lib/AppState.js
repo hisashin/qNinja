@@ -33,6 +33,9 @@ class AppState {
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
+  getPanel (panel) {
+    return this.viewsMap[panel];
+  }
   
   init () {
     console.log("AppState.init");
@@ -53,10 +56,30 @@ class AppState {
       }
     );
   }
+  setViews (views) {
+    this.views = views;
+    this.viewsMap = [];
+    this.viewsMap[this.PANELS.DASHBOARD] = this.views.panelDashboard;
+    this.viewsMap[this.PANELS.PROTOCOL_LIST] = this.views.panelProtocolList;
+    this.viewsMap[this.PANELS.PROTOCOL_DETAIL] = this.views.panelProtocolDetail;
+    this.viewsMap[this.PANELS.LOG_LIST] = this.views.panelLogList;
+    this.viewsMap[this.PANELS.LOG_DETAIL] = this.views.panelLogDetail;
+    this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
+    this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
+    this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
+    this.views.panelDashboard.onAppear();
+
+  }
   
   /* Public methods */
   pushPanel (panel) {
-    console.log("AppState.pushPanel %d",panel);
+    const toPanel = this.getPanel(panel);
+    location.href=("#" + Math.random())
+    if (toPanel && toPanel.onAppear) {
+      toPanel.onAppear();
+    } else {
+      console.log("onAppear not defined.");
+    }
     this.panelStack.push(panel);
     if (this.panelContainer) {
       this.panelContainer.presentPanel(panel);
@@ -65,19 +88,26 @@ class AppState {
     }
   }
   backPanel () {
-    console.log("backPanel Stack=" + this.panelStack);
     if (this.panelStack.length < 2) {
       return;
     }
     this.panelStack.pop();
+    console.log(this.panelStack)
     if (this.panelContainer) {
-      this.panelContainer.presentPanel(this.panelStack[this.panelStack.length-1]);
+      const panel = this.panelStack[this.panelStack.length-1];
+      const toPanel = this.getPanel(panel);
+      if (toPanel && toPanel.onAppear) {
+        toPanel.onAppear();
+      } else {
+        console.log("onAppear not defined.");
+      }
+      this.panelContainer.presentPanel(panel);
     }
   }
   prepareExperiment (id) {
     console.log("AppState.prepareExperiment");
     this._loadProtocol(id, (data)=>{
-      this.views.experimentEditor.startEditProtocol(data.protocol);
+      this.views.panelExperimentEditor.startEditProtocol(data.protocol);
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
   }
@@ -89,13 +119,13 @@ class AppState {
   startEditProtocol (id) {
     console.log("AppState.startEditProtocol");
     this._loadProtocol(id, (data)=>{
-      this.views.protocolEditor.startEditProtocol(data);
+      this.views.panelProtocolEditor.startEditProtocol(data);
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
   startCreateProtocol (id) {
     console.log("AppState.editProtocol");
-    this.views.protocolEditor.startCreateProtocol();
+    this.views.panelProtocolEditor.startCreateProtocol();
     this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
   }
   newProtocol () {
@@ -105,7 +135,7 @@ class AppState {
   revealDetailProtocol (id) {
     console.log("AppState.revealDetailProtocol id=%s", id);
     this._loadProtocol(id, (item)=>{
-      this.views.protocolDetail.setProtocol(item.protocol);
+      this.views.panelProtocolDetail.setProtocol(item.protocol);
       this.pushPanel(this.PANELS.PROTOCOL_DETAIL);
     });
   }
@@ -113,23 +143,29 @@ class AppState {
     console.log("AppState.duplicateProtocol (TODO)");
   }
   
+  // Deprecated
   getProtocols () {
     return this.protocols;
   }
+  // Deprecated
   sortProtocols () {
     console.log("AppState.sortProtocols");
   }
   
-  reloadProtocols () {
+  reloadProtocols (callback) {
     console.log("AppState.reloadProtocols");
     Util.requestData("protocols", null, "GET", 
       (data)=>{
-        this.protocols = data;
+        // TODO pagination
+        this.protocols = data.data;
+        /*
         this.protocolEventHandlers.forEach((handler)=>{
           if (handler.onProtocolListUpdate) {
             handler.onProtocolListUpdate(this.protocols);
           }
         });
+        */
+        callback(data.data);
       }, ()=>{
         console.log("Error");
       }
@@ -172,7 +208,7 @@ class AppState {
     console.log("AppState.revealDetailLog.");
     this._loadLog(id, (log)=>{
       this.pushPanel(this.PANELS.LOG_DETAIL);
-      this.views.logDetail.setLog(log);
+      this.views.panelLogDetail.setLog(log);
     });
   }
   
@@ -208,7 +244,7 @@ class AppState {
       if (onSave) {
         onSave();
       }
-      this.reloadProtocols();
+      // this.reloadProtocols();
     }, ()=>{
     });
   }
@@ -220,7 +256,7 @@ class AppState {
       if (onSave) {
         onSave();
       }
-      this.reloadProtocols();
+      // this.reloadProtocols();
     }, ()=>{
     });
   }

@@ -39,13 +39,13 @@
   </div>
 </template>
 <script>
-import device from "../lib/Device.js";
-import appState from "../lib/AppState.js";
-import ProtocolDetail from './ProtocolDetail.vue';
-import ProgressMonitor from './ExperimentMonitor/ProgressMonitor.vue';
-import TemperatureMonitor from './ExperimentMonitor/TemperatureMonitor.vue';
-import FluorescenceMonitor from './ExperimentMonitor/FluorescenceMonitor.vue';
-import MeltCurveMonitor from './ExperimentMonitor/MeltCurveMonitor.vue';
+import device from "../../lib/Device.js";
+import appState from "../../lib/AppState.js";
+import ProtocolDetail from '../ProtocolDetail.vue';
+import ProgressMonitor from '../ExperimentMonitor/ProgressMonitor.vue';
+import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
+import FluorescenceMonitor from '../ExperimentMonitor/FluorescenceMonitor.vue';
+import MeltCurveMonitor from '../ExperimentMonitor/MeltCurveMonitor.vue';
 
 let startTime = new Date();
 
@@ -125,6 +125,9 @@ export default {
         default:
         break;
       }
+    },
+    onAppear () {
+      console.log("TheExperimentMonitor.onAppear()");
     }
   }
 }

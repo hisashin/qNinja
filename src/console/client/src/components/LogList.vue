@@ -40,7 +40,9 @@ export default {
     });
   },
   methods: {
-    revealDetail: function(id) {
+    load: function () {
+    },
+    revealDetail: function (id) {
       console.log("LogList.revealDetail %s", id);
       appState.revealDetailLog(id);
     }

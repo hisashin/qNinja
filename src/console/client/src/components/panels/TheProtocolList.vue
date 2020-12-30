@@ -1,0 +1,37 @@
+<template>
+  <div>
+    <h2>Protocols</h2>
+    <div>
+      <input type="text" placeholder="Search"/>
+    </div>
+    <ProtocolList :limit="16" ref="protocolList"/>
+    <b-button @click="startCreateProtocol">
+      New Protocol
+    </b-button>
+  </div>
+</template>
+<script>
+import ProtocolList from '../ProtocolList.vue'
+import appState from "../../lib/AppState.js";
+export default {
+  name: 'TheProtocolList',
+  components: {
+    ProtocolList
+  },
+  props: {
+  },
+  created: function () {
+  console.log("TheProtocolList.created")
+    appState.reloadLogs();
+  },
+  methods: {
+    startCreateProtocol () {
+      appState.startCreateProtocol();
+    },
+    onAppear () {
+      console.log("TheProtocolList.onAppear()");
+      this.$refs.protocolList.load();
+    }
+  }
+}
+</script>

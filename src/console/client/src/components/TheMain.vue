@@ -2,61 +2,55 @@
   <div class="device-monitor">
     <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     <div v-show="selectedPanel==panels.DASHBOARD">
-      <h2>Recent protocols</h2>
-      <ProtocolList :limit="2" />
-      <b-button @click="viewProtocolList">
-        More
-      </b-button>
-      <h2>Recent experiments</h2>
-      <LogList :limit="3" />
-      <b-button @click="viewLogList">
-        More
-      </b-button>
+      <TheDashboard ref="panelDashboard" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_LIST">
       <BackButton />
-      <TheProtocolList ref="protocolList" />
+      <TheProtocolList ref="panelProtocolList" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
       <BackButton />
-      <ProtocolDetail
-        ref="protocolDetail" />
+      <TheProtocolDetail ref="panelProtocolDetail" />
     </div>
     <div v-show="selectedPanel==panels.LOG_LIST">
       <BackButton />
-      <LogList :limit="16" />
+      <TheLogList ref="panelLogList" />
     </div>
     <div v-show="selectedPanel==panels.LOG_DETAIL">
       <BackButton />
-      <LogDetail ref="logDetail" />
+      <TheLogDetail ref="panelLogDetail" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
       <BackButton />
-      <TheProtocolEditor ref="protocolEditor" />
+      <TheProtocolEditor ref="panelProtocolEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_EDITOR">
       <BackButton />
-      <TheExperimentEditor ref="experimentEditor" />
+      <TheExperimentEditor ref="panelExperimentEditor" />
     </div>
     <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
       <BackButton />
-      <TheExperimentMonitor ref="experimentMonitor" />
+      <TheExperimentMonitor ref="panelExperimentMonitor" />
     </div>
   </div>
 </template>
 <script>
-import TheExperimentMonitor from './TheExperimentMonitor.vue'
+
 import DeviceSummary from './DeviceSummary.vue'
-import TheProtocolEditor from './TheProtocolEditor.vue'
-import TheExperimentEditor from './TheExperimentEditor.vue'
-import ProtocolDetail from './ProtocolDetail.vue'
-import ProtocolList from './ProtocolList.vue'
-import TheProtocolList from './TheProtocolList.vue'
-import LogList from './LogList.vue'
-import LogDetail from './LogDetail.vue'
+
+import TheDashboard from './panels/TheDashboard.vue'
+import TheExperimentEditor from './panels/TheExperimentEditor.vue'
+import TheExperimentMonitor from './panels/TheExperimentMonitor.vue'
+import TheLogDetail from './panels/TheLogDetail.vue'
+import TheLogList from './panels/TheLogList.vue'
+import TheProtocolDetail from './panels/TheProtocolDetail.vue'
+import TheProtocolEditor from './panels/TheProtocolEditor.vue'
+import TheProtocolList from './panels/TheProtocolList.vue'
+
+import BackButton from './BackButton.vue';
+
 import network from "../lib/Device.js";
 import appState from "../lib/AppState.js";
-import BackButton from './BackButton.vue';
 
 const DEVICE_STATUS_IDLE = 1;
 const DEVICE_STATUS_RUNNING = 2;
@@ -65,15 +59,15 @@ const DEVICE_STATUS_FINISHED = 3;
 export default {
   name: 'TheMain',
   components: {
-    ProtocolList,
+  TheDashboard,
+    TheLogDetail,
+    TheLogList,
+    TheProtocolDetail,
     TheProtocolList,
-    LogList,
-    LogDetail,
-    DeviceSummary,
     TheExperimentMonitor,
     TheExperimentEditor,
     TheProtocolEditor,
-    ProtocolDetail,
+    DeviceSummary,
     BackButton
   },
   data() {
@@ -86,10 +80,10 @@ export default {
   },
   created: function () {
     this.network = network;
-    appState.reloadProtocols();
+    // appState.reloadProtocols();
     appState.reloadLogs();
     appState.setPanelContainer(this);
-    appState.addProtocolEventHandler(this);
+    // appState.addProtocolEventHandler(this);
     this.network.addTransitionHandler({
       onStart: (obj)=>{
         console.log("Experiment started.");
@@ -102,18 +96,15 @@ export default {
       onTransition:(obj)=>{
       }
     });
-    appState.views = this.$refs;
     
+  },
+  mounted: function () {
+    appState.setViews(this.$refs);
+  
   },
   methods: {
     presentPanel(panel) {
       this.selectedPanel = panel;
-    },
-    viewProtocolList () {
-      appState.pushPanel(this.panels.PROTOCOL_LIST);
-    },
-    viewLogList () {
-      appState.pushPanel(this.panels.LOG_LIST);
     }
   }
 }
