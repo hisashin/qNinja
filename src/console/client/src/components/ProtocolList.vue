@@ -43,6 +43,9 @@ export default {
   methods: {
     load: function () {
       console.log("LogList.load");
+      /*
+        offset, limit, sort, order, keyword
+      */
       appState.reloadProtocols((protocols)=>{
         this.protocols = protocols;
       });

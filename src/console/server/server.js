@@ -21,6 +21,88 @@ const WEBSOCKET_PORT = "2222";
 const CLIENT_HOST_DEFAULT = "localhost";
 const CLIENT_PORT_DEFAULT = "8888";
 
+class Pager {
+  constructor (defaults, sortFunc) {
+    this.defaults  = defaults;
+    this.sortFunc = sortFunc;
+  }
+  _createPagination (all, query) {
+    let offset = this._parseInt(query.offset, this.defaults.offset);
+    let limit = this._parseInt(query.limit, this.defaults.limit);
+    let list = all.slice(offset, offset + limit);
+    const obj = {
+      offset: offset,
+      limit: limit,
+      count: list.length,
+      total: all.length,
+      data: list
+    };
+    return obj;  
+  }
+  _parseInt (expression, defaultValue) {
+    if (typeof(expression) != "string") {
+      return defaultValue;
+    }
+    const intValue = parseInt(expression);
+    if (isNaN(intValue)) return defaultValue;
+    return intValue;
+  }
+  _filter (all, query) {
+    // TODO: Call custom filter
+    let array = all;
+    let keyword = query.keyword;
+    if (keyword != null && keyword.length > 0) {
+      array = array.filter((obj)=>{ console.log(obj.name);return (obj.protocol.name!=null && obj.protocol.name.indexOf(keyword) >= 0) });
+    }
+    return array;
+  }
+  _sort(all, query) {
+    let sortFunction = this.sortFunc[query.sort];
+    if (sortFunction == null) {
+      sortFunction = this.sortFunc[this.defaults.sort];
+    }
+    let isAsc = "asc" == query.order;
+    return all.sort(
+      (_a, _b)=>{
+        let a = (isAsc)? _a:_b;
+        let b = (isAsc)? _b:_a;
+        return sortFunction(a, b);
+      }
+    );
+  }
+  getPagination (all, query) {
+    let filtered = this._filter(all, query);
+    let sorted = this._sort(filtered, query);
+    return this._createPagination(sorted, query);
+    
+  }
+}
+const protocolPager = new Pager(
+  // Defaults
+  {
+    offset: 0,
+    limit: 2,
+    order: "desc",
+    sort: "updated"
+  },
+  // Sort functions
+  {
+    "updated": (a, b) =>{
+      return (a.modified < b.modified) ? -1: 1;
+    },
+    "created": (a, b) =>{
+      return (a.created < b.created) ? -1: 1;
+    },
+    "used": (a, b) =>{
+      return (a.used < b.used) ? -1: 1;
+    },
+    "name": (a, b) =>{
+      return (a.protocol.name < b.protocol.name) ? -1: 1;
+    } 
+  }
+  );
+
+
 class NinjaQPCRHTTPServer {
   constructor (server, clientHost, clientPort) {
     this.server = server;
@@ -163,14 +245,11 @@ class NinjaQPCRHTTPServer {
   }
   protocols () {
     return (req, res, map)=>{
-      pm.getProtocols((protocols)=>{
+      pm.getProtocols((all)=>{
+        const query = URL.parse(req.url, true).query;
         res.writeHead(200, {'Content-Type': 'application/json'});
-        const obj = {
-          offset:0,
-          limit:20,
-          data: protocols
-        };
-        // Page, sort, filter
+        all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
+        const obj = protocolPager.getPagination(all, query);
         res.write(JSON.stringify(obj));
         res.end();
       },
@@ -185,7 +264,6 @@ class NinjaQPCRHTTPServer {
       req.on("data", (rawData)=>{
         console.log("protocolCreate received data.");
         const protocol = JSON.parse(rawData); // Protocol body
-        console.log("name=%s", protocol.name);
         pm.create(protocol, (item)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(item));
