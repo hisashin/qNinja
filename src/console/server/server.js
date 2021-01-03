@@ -27,14 +27,34 @@ class Pager {
     this.sortFunc = sortFunc;
   }
   _createPagination (all, query) {
-    let offset = this._parseInt(query.offset, this.defaults.offset);
     let limit = this._parseInt(query.limit, this.defaults.limit);
+    if (limit <= 0) {
+      // Zero or negative
+      limit = this.defaults.limit;
+    }
+    let offset = this.defaults.offset; // Items to skip
+    let page = 0;
+    if (query.page) {
+      // pages to skip
+      page = this._parseInt(query.page, page);
+      if (page < 0) page = 0;
+      offset = limit * page;
+    } else {
+      offset = this._parseInt(query.offset, this.defaults.offset);
+      if (offset < 0) offset = 0;
+      page = Math.floor(offset / page);
+    }
     let list = all.slice(offset, offset + limit);
+    let pages = Math.ceil(all.length/limit);
     const obj = {
-      offset: offset,
-      limit: limit,
-      count: list.length,
-      total: all.length,
+      paging: {
+        offset: offset,
+        limit: limit,
+        page: page,
+        size: list.length, // Included item
+        total: all.length, // Total items
+        pages: pages
+      },
       data: list
     };
     return obj;  

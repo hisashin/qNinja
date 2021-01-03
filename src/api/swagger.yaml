@@ -43,6 +43,11 @@ paths:
           description: The number of items to skip before starting to collect the result set
           required: false
           type: integer
+        - name: page
+          in: query
+          description: page index
+          required: false
+          type: integer
         - name: limit
           in: query
           description:  The numbers of items to return
@@ -52,6 +57,7 @@ paths:
           in: query
           description: Sort order
           required: false
+          enum: [created, updated, used, name]
           type: string
         - name: order
           in: query
@@ -95,7 +101,7 @@ paths:
           description: 'Protocol content'
           required: true
           schema:
-            $ref: '#/definitions/ProtocolFile'
+            $ref: '#/definitions/Protocol'
       responses:
         '200':
           description: Successful operation. Protocol was created.
@@ -227,7 +233,7 @@ paths:
           description: 'Protocol content'
           required: true
           schema:
-            $ref: '#/definitions/ProtocolFile'
+            $ref: '#/definitions/Protocol'
       responses:
         '200':
           description: successful operation
@@ -321,12 +327,33 @@ definitions:
   Pagination:
     type: object
     properties:
-      offset:
-        type: integer
-        format: int32
-      limit:
-        type: integer
-        format: int32
+      paging:
+        type: object
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: Number of skipped items
+          page:
+            type: integer
+            format: int32
+            description: Page index
+          limit:
+            type: integer
+            format: int32
+            description: Max items per page
+          size:
+            type: integer
+            format: int32
+            description: Number of included items
+          total:
+            type: integer
+            format: int32
+            description: Number of total items
+          pages:
+            type: integer
+            format: int32
+            description: Number of pages
       data:
         type: array
         items:
