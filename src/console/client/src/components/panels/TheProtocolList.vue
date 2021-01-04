@@ -21,8 +21,6 @@ export default {
   props: {
   },
   created: function () {
-  console.log("TheProtocolList.created")
-    appState.reloadLogs();
   },
   methods: {
     startCreateProtocol () {

@@ -80,7 +80,6 @@ export default {
   },
   created: function () {
     this.network = network;
-    appState.reloadLogs();
     appState.setPanelContainer(this);
     this.network.addTransitionHandler({
       onStart: (obj)=>{

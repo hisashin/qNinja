@@ -41,6 +41,7 @@ export default {
     onAppear () {
       console.log("TheDashboard.onAppear()");
       this.$refs.protocolList.load();
+      this.$refs.logList.load();
     }
   }
 }

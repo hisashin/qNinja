@@ -25,6 +25,7 @@ export default {
     exampleMethod () {},
     onAppear () {
       console.log("TheLogList.onAppear()");
+      this.$refs.logList.load();
     }
   }
 }

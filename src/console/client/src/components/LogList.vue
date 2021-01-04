@@ -26,7 +26,8 @@ export default {
   },
   props: {
     limit: { type:Number },
-    pagination: { type:Boolean }
+    pagination: { type:Boolean },
+    params:{}
   },
   data() {
     return {
@@ -34,17 +35,12 @@ export default {
     }
   },
   created: function () {
-    this.summaries = appState.getLogSummaries();
-    console.log("LogList.created. Adding handler...");
-    appState.addLogEventHandler({
-      onLogSummariesUpdate:(summaries)=>{
-        console.log("LogList.onLogSummariesUpdate %d", summaries.length);
-        this.summaries = summaries;
-      }
-    });
   },
   methods: {
     load: function () {
+      appState.fetchLogs({}, (data)=>{
+        this.summaries = data;
+      });
     },
     revealDetail: function (id) {
       console.log("LogList.revealDetail %s", id);

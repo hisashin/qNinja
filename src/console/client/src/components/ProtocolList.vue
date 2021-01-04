@@ -47,6 +47,7 @@ export default {
     }
   },
   created: function () {
+    this.params.limit = this.limit;
   },
   methods: {
     load: function () {

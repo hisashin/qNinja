@@ -9,7 +9,6 @@ class AppState {
     this.selectedProtocol = null;
     
     /* Event handlers */
-    this.logEventHandlers = [];
     this.panelContainer = null;
     this.panelStack = [];
     
@@ -174,6 +173,20 @@ class AppState {
       }
     );
   }
+  // TODO use callback
+  fetchLogs (params, callback) {
+    console.log("AppState.fetchLogs");
+    Util.requestData(this._createURL("logs", params), null, "GET", 
+      (data)=>{
+        this.logSummaries = data;
+        if (callback) {
+          callback(data);
+        }
+      }, (error)=>{
+        console.log("Error %s", error);
+      }
+    );
+  }
   getLogSummaries () {
     return this.logSummaries;
   }
@@ -189,22 +202,6 @@ class AppState {
       }
     );
     
-  }
-  
-  reloadLogs () {
-    console.log("AppState.reloadLogs");
-    Util.requestData("logs", null, "GET", 
-      (data)=>{
-        this.logSummaries = data;
-        this.logEventHandlers.forEach((handler)=>{
-          if (handler.onLogSummariesUpdate) {
-            handler.onLogSummariesUpdate(this.logSummaries);
-          }
-        });
-      }, (error)=>{
-        console.log("Error %s", error);
-      }
-    );
   }
   
   revealDetailLog (id) {
@@ -275,9 +272,6 @@ class AppState {
   }
   
   /* Event handler registration */
-  addLogEventHandler (handler) {
-    this.logEventHandlers.push(handler);
-  }
   setPanelContainer (container) {
     this.panelContainer = container;
   }

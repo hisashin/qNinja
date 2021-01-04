@@ -71,8 +71,6 @@ export default {
   },
   created: function () {
     console.log("TheExperimentMonitor.created");
-    appState.addProtocolEventHandler(this);
-  
     device.addTransitionHandler({
       onStart: (obj)=>{
         startTime = new Date();
