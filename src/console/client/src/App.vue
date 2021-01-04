@@ -142,4 +142,29 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-conten
 .input-speed {
   width:80px;
 }
+/* List pagination */
+.paging {
+  padding: 1em 0;
+  text-align:center;
+}
+.paging__pages {
+  padding:0;
+  margin:0;
+}
+.paging__pages__page {
+  display:inline-block;
+
+}
+.paging__pages__page__label {
+  margin: 0 0.2em;
+  border: 1px solid #aaa;
+  padding: 0.2em 1em;
+  border-radius: 0.2em;
+}
+.paging__pages__page__label--linked{
+
+}
+.paging__pages__page__label--current{
+  background-color: #007bff;
+}
 </style>
