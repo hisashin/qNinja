@@ -66,6 +66,7 @@ export default {
       let params = this.$data.params;
       appState.fetchProtocols(params, 
       (res)=>{
+        console.log("fetchProtocols callback");
         this.protocols = res.data;
         this.paging = res.paging;
       },
@@ -77,6 +78,21 @@ export default {
     },
     reload: function(index) {
       this.params.page = index;
+      this.load();
+    },
+    setOrder: function(order) {
+      this.params.order = order;
+      this.params.page = 0;
+      this.load();
+    },
+    setSort: function(sort) {
+      this.params.sort = sort;
+      this.params.page = 0;
+      this.load();
+    },
+    setKeyword: function(keyword) {
+      this.params.keyword = keyword;
+      this.params.page = 0;
       this.load();
     }
   }

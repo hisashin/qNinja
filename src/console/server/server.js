@@ -22,9 +22,10 @@ const CLIENT_HOST_DEFAULT = "localhost";
 const CLIENT_PORT_DEFAULT = "8888";
 
 class Pager {
-  constructor (defaults, sortFunc) {
+  constructor (defaults, sortFunc, filterFunc) {
     this.defaults  = defaults;
     this.sortFunc = sortFunc;
+    this.filterFunc = filterFunc;
   }
   _createPagination (all, query) {
     let limit = this._parseInt(query.limit, this.defaults.limit);
@@ -68,13 +69,10 @@ class Pager {
     return intValue;
   }
   _filter (all, query) {
-    // TODO: Call custom filter
-    let array = all;
-    let keyword = query.keyword;
-    if (keyword != null && keyword.length > 0) {
-      array = array.filter((obj)=>{ console.log(obj.name);return (obj.protocol.name!=null && obj.protocol.name.indexOf(keyword) >= 0) });
+    if (this.filterFunc) {
+      return (this.filterFunc(all, query));
     }
-    return array;
+    return all;
   }
   _sort(all, query) {
     let sortFunction = this.sortFunc[query.sort];
@@ -119,9 +117,18 @@ const protocolPager = new Pager(
     "name": (a, b) =>{
       return (a.protocol.name < b.protocol.name) ? -1: 1;
     } 
+  },
+  (all, query) => {
+    let array = all;
+    let keyword = query.keyword;
+    if (keyword != null && keyword.length > 0) {
+      array = array.filter((obj)=>{ 
+          return (obj.protocol.name!=null && obj.protocol.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0) 
+        });
+    }
+    return array;
   }
 );
-// TODO
 const logPager = new Pager(
   // Defaults
   {
@@ -144,7 +151,9 @@ const logPager = new Pager(
     "name": (a, b) =>{
       return (a.protocol.name < b.protocol.name) ? -1: 1;
     } 
-  }
+  },
+  // Filter func
+  null
 );
 
 

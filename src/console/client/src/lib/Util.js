@@ -31,7 +31,6 @@ const Util = {
     const url = Util.apiEndpoint() + path;
     console.log("AppState._requestData %s %s", method, url);
     xmlhttp.onreadystatechange = ()=>{
-      console.log(xmlhttp.status)
       if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
           try {
