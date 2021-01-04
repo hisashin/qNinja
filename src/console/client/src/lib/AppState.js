@@ -162,7 +162,7 @@ class AppState {
       return baseURL + "?" + a.join("&");
   }
   
-  fetchProtocols (params, callback) {
+  fetchProtocols (params, callback, onError) {
     console.log("AppState.fetchProtocols");
     Util.requestData(this._createURL("protocols", params), null, "GET", 
       (data)=>{
@@ -170,11 +170,14 @@ class AppState {
         callback(data);
       }, ()=>{
         console.log("Error");
+        if (onError) {
+          onError();
+        }
       }
     );
   }
   // TODO use callback
-  fetchLogs (params, callback) {
+  fetchLogs (params, callback, onError) {
     console.log("AppState.fetchLogs");
     Util.requestData(this._createURL("logs", params), null, "GET", 
       (data)=>{
@@ -184,6 +187,9 @@ class AppState {
         }
       }, (error)=>{
         console.log("Error %s", error);
+        if (onError) {
+          onError();
+        }
       }
     );
   }
@@ -275,13 +281,13 @@ class AppState {
   setPanelContainer (container) {
     this.panelContainer = container;
   }
+  
   toast (context, title, message) {
     console.log("AppState.toast %s %s", title, message);
     context.$bvToast.toast(message, {
       title: title
     })
   }
-  
   
 }
 const appState = new AppState();

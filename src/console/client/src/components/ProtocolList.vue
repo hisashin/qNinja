@@ -2,6 +2,12 @@
   <div>
     <div class="card">
       <div class="row">
+        <div v-if="error" class="col-12 error">
+          <h2 class="error__title">Failed to load protocols.</h2>
+          <div class="error__retry">
+            <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+          </div>
+        </div>
         <ul
           class="col-12 row protocol-list">
           <template v-for="(item, index) in protocols"
@@ -16,7 +22,7 @@
         </ul>
       </div>
     </div>
-    <nav class="paging col-12" v-if="pagination">
+    <nav class="paging col-12" v-if="pagination && !error">
       <ul class="paging__pages">
         <li class="paging__pages__page" v-for="index in paging.pages" v-bind:key="index">
           <a class="paging__pages__page__label paging__pages__page__label--linked" v-if="index-1!=paging.page" href="javascript:void(0)" @click="reload(index-1)">{{ index }}</a>
@@ -43,7 +49,8 @@ export default {
     return {
       protocols:[],
       paging:{},
-      params:{}
+      params:{},
+      error: false
     }
   },
   created: function () {
@@ -52,13 +59,20 @@ export default {
   methods: {
     load: function () {
       console.log("LogList.load");
+      this.error = false;
       /*
         offset, page, limit, sort, order, keyword
       */
       let params = this.$data.params;
-      appState.fetchProtocols(params, (res)=>{
+      appState.fetchProtocols(params, 
+      (res)=>{
         this.protocols = res.data;
         this.paging = res.paging;
+      },
+      ()=>{
+        // Error
+        this.error = true;
+        this.protocols = [];
       });
     },
     reload: function(index) {

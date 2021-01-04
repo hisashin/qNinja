@@ -31,24 +31,32 @@ const Util = {
     const url = Util.apiEndpoint() + path;
     console.log("AppState._requestData %s %s", method, url);
     xmlhttp.onreadystatechange = ()=>{
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        console.log("AppState._requestData Success %s", url);
-        try {
-          onSuccess(JSON.parse(xmlhttp.responseText));
-        } catch (e) {
-          if (onError != null) {
-            onError(e);
+      console.log(xmlhttp.status)
+      if (xmlhttp.readyState == 4) {
+        if (xmlhttp.status == 200) {
+          try {
+            onSuccess(JSON.parse(xmlhttp.responseText));
+          } catch (e) {
+            if (onError != null) {
+              onError(e);
+            }
           }
+        } else {
+          onError();
         }
       }
     };
-    xmlhttp.open(method, url, true);
-    if (data == null) {
-      xmlhttp.send();
-    } else if (typeof(data)=='string') {
-      xmlhttp.send(data);
-    } else {
-      xmlhttp.send(JSON.stringify(data));
+    try {
+      xmlhttp.open(method, url, true);
+      if (data == null) {
+        xmlhttp.send();
+      } else if (typeof(data)=='string') {
+        xmlhttp.send(data);
+      } else {
+        xmlhttp.send(JSON.stringify(data));
+      }
+    } catch (ex) {
+      onError(e);
     }
   }
 }

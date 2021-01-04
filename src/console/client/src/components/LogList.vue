@@ -2,6 +2,12 @@
   <div class="card">
     <ul
       class="row log-list">
+      <div v-if="error" class="col-12 error">
+        <h2 class="error__title">Failed to load experiment logs.</h2>
+        <div class="error__retry">
+          <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+        </div>
+      </div>
       <template v-for="(summary, index) in summaries">
         <li 
           class="col-12 log-cell"
@@ -31,15 +37,21 @@ export default {
   },
   data() {
     return {
-      summaries:[]
+      summaries:[],
+      error: false
     }
   },
   created: function () {
   },
   methods: {
     load: function () {
-      appState.fetchLogs({}, (data)=>{
+      this.error = false;
+      appState.fetchLogs({}, 
+      (data)=>{
         this.summaries = data;
+      },
+      ()=>{
+        this.error = true;
       });
     },
     revealDetail: function (id) {

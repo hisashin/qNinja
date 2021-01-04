@@ -167,4 +167,19 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-conten
 .paging__pages__page__label--current{
   background-color: #007bff;
 }
+/* Error in card view */
+.error {
+  text-align:center;
+  padding:2em 0;
+}
+.error__title {
+  color: #666;
+  font-weight: normal;
+}
+.error__retry {
+
+}
+.error__retry__link {
+
+}
 </style>
