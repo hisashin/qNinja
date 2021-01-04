@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LogList :limit="16" ref="logList" />
+    <LogList :limit="16" ref="logList" :pagination="true" />
   </div>
 </template>
 

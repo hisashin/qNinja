@@ -42,7 +42,7 @@ class Pager {
     } else {
       offset = this._parseInt(query.offset, this.defaults.offset);
       if (offset < 0) offset = 0;
-      page = Math.floor(offset / page);
+      page = Math.floor(offset / limit);
     }
     let list = all.slice(offset, offset + limit);
     let pages = Math.ceil(all.length/limit);
@@ -120,7 +120,32 @@ const protocolPager = new Pager(
       return (a.protocol.name < b.protocol.name) ? -1: 1;
     } 
   }
-  );
+);
+// TODO
+const logPager = new Pager(
+  // Defaults
+  {
+    offset: 0,
+    limit: 2,
+    order: "desc",
+    sort: "updated"
+  },
+  // Sort functions
+  {
+    "updated": (a, b) =>{
+      return (a.modified < b.modified) ? -1: 1;
+    },
+    "created": (a, b) =>{
+      return (a.created < b.created) ? -1: 1;
+    },
+    "used": (a, b) =>{
+      return (a.used < b.used) ? -1: 1;
+    },
+    "name": (a, b) =>{
+      return (a.protocol.name < b.protocol.name) ? -1: 1;
+    } 
+  }
+);
 
 
 class NinjaQPCRHTTPServer {
@@ -268,7 +293,7 @@ class NinjaQPCRHTTPServer {
       pm.getProtocols((all)=>{
         const query = URL.parse(req.url, true).query;
         res.writeHead(200, {'Content-Type': 'application/json'});
-        all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
+        // all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
         const obj = protocolPager.getPagination(all, query);
         res.write(JSON.stringify(obj));
         res.end();

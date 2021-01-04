@@ -4,7 +4,7 @@
     <div>
       <input type="text" placeholder="Search"/>
     </div>
-    <ProtocolList :limit="16" ref="protocolList"/>
+    <ProtocolList :limit="2" :pagination="true" ref="protocolList"/>
     <b-button @click="startCreateProtocol">
       New Protocol
     </b-button>

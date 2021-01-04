@@ -9,7 +9,6 @@ class AppState {
     this.selectedProtocol = null;
     
     /* Event handlers */
-    this.protocolEventHandlers = [];
     this.logEventHandlers = [];
     this.panelContainer = null;
     this.panelStack = [];
@@ -152,20 +151,24 @@ class AppState {
     console.log("AppState.sortProtocols");
   }
   
-  reloadProtocols (callback) {
-    console.log("AppState.reloadProtocols");
-    Util.requestData("protocols", null, "GET", 
+  _createURL (baseURL, params) {
+      let a = [];
+      if (params == null || Object.keys(params).length === 0) {
+        // No params
+        return baseURL;
+      }
+      for (let key in params) {
+        a.push(key + "=" + params[key]);
+      }
+      return baseURL + "?" + a.join("&");
+  }
+  
+  fetchProtocols (params, callback) {
+    console.log("AppState.fetchProtocols");
+    Util.requestData(this._createURL("protocols", params), null, "GET", 
       (data)=>{
-        // TODO pagination
         this.protocols = data.data;
-        /*
-        this.protocolEventHandlers.forEach((handler)=>{
-          if (handler.onProtocolListUpdate) {
-            handler.onProtocolListUpdate(this.protocols);
-          }
-        });
-        */
-        callback(data.data);
+        callback(data);
       }, ()=>{
         console.log("Error");
       }
@@ -244,7 +247,6 @@ class AppState {
       if (onSave) {
         onSave();
       }
-      // this.reloadProtocols();
     }, ()=>{
     });
   }
@@ -256,7 +258,6 @@ class AppState {
       if (onSave) {
         onSave();
       }
-      // this.reloadProtocols();
     }, ()=>{
     });
   }
@@ -268,15 +269,12 @@ class AppState {
       if (onSave) {
         onSave();
       }
-      this.reloadProtocols();
+      this.fetchProtocols();
     }, ()=>{
     });
   }
   
   /* Event handler registration */
-  addProtocolEventHandler (handler) {
-    this.protocolEventHandlers.push(handler);
-  }
   addLogEventHandler (handler) {
     this.logEventHandlers.push(handler);
   }

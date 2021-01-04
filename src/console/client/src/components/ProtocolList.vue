@@ -12,6 +12,15 @@
         />
       </template>
     </ul>
+    <div v-if="pagination" class="row pagination">
+      Paging
+      offset: {{ paging.offset }} /
+      limit: {{ paging.limit }} /
+      page: {{ paging.page }} /
+      size: {{ paging.size }} /
+      total: {{ paging.total }} /
+      pages: {{ paging.pages }} /
+    </div>
   </div>
 </template>
 <script>
@@ -23,31 +32,30 @@ export default {
     ProtocolCell
   },
   props: {
-    limit: { type:Number }
+    limit: { type:Number },
+    pagination: { type:Boolean }
   },
   data() {
     return {
-      protocols:[]
+      protocols:[],
+      paging:{}
     }
   },
   created: function () {
-  /*
-    this.protocols = appState.getProtocols();
-    appState.addProtocolEventHandler({
-      onProtocolListUpdate:(protocols)=>{
-        this.protocols = protocols;
-      }
-    });
-    */
   },
   methods: {
     load: function () {
       console.log("LogList.load");
       /*
-        offset, limit, sort, order, keyword
+        offset, page, limit, sort, order, keyword
       */
-      appState.reloadProtocols((protocols)=>{
-        this.protocols = protocols;
+      let params = {
+        page:0,
+        limit:this.limit
+      };
+      appState.fetchProtocols(params, (res)=>{
+        this.protocols = res.data;
+        this.paging = res.paging;
       });
     
     }

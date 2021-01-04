@@ -11,6 +11,9 @@
         </li>
       </template>
     </ul>
+    <div v-if="pagination" class="row pagination">
+      TODO pagination
+    </div>
   </div>
 </template>
 <script>
@@ -22,7 +25,8 @@ export default {
     LogCell
   },
   props: {
-    limit: { type:Number }
+    limit: { type:Number },
+    pagination: { type:Boolean }
   },
   data() {
     return {
