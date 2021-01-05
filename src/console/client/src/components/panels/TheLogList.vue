@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LogList :limit="16" ref="logList" />
+    <LogList :limit="16" ref="logList" :pagination="true" />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ export default {
     exampleMethod () {},
     onAppear () {
       console.log("TheLogList.onAppear()");
+      this.$refs.logList.load();
     }
   }
 }

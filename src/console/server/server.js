@@ -22,19 +22,40 @@ const CLIENT_HOST_DEFAULT = "localhost";
 const CLIENT_PORT_DEFAULT = "8888";
 
 class Pager {
-  constructor (defaults, sortFunc) {
+  constructor (defaults, sortFunc, filterFunc) {
     this.defaults  = defaults;
     this.sortFunc = sortFunc;
+    this.filterFunc = filterFunc;
   }
   _createPagination (all, query) {
-    let offset = this._parseInt(query.offset, this.defaults.offset);
     let limit = this._parseInt(query.limit, this.defaults.limit);
+    if (limit <= 0) {
+      // Zero or negative
+      limit = this.defaults.limit;
+    }
+    let offset = this.defaults.offset; // Items to skip
+    let page = 0;
+    if (query.page) {
+      // pages to skip
+      page = this._parseInt(query.page, page);
+      if (page < 0) page = 0;
+      offset = limit * page;
+    } else {
+      offset = this._parseInt(query.offset, this.defaults.offset);
+      if (offset < 0) offset = 0;
+      page = Math.floor(offset / limit);
+    }
     let list = all.slice(offset, offset + limit);
+    let pages = Math.ceil(all.length/limit);
     const obj = {
-      offset: offset,
-      limit: limit,
-      count: list.length,
-      total: all.length,
+      paging: {
+        offset: offset,
+        limit: limit,
+        page: page,
+        size: list.length, // Included item
+        total: all.length, // Total items
+        pages: pages
+      },
       data: list
     };
     return obj;  
@@ -48,13 +69,10 @@ class Pager {
     return intValue;
   }
   _filter (all, query) {
-    // TODO: Call custom filter
-    let array = all;
-    let keyword = query.keyword;
-    if (keyword != null && keyword.length > 0) {
-      array = array.filter((obj)=>{ console.log(obj.name);return (obj.protocol.name!=null && obj.protocol.name.indexOf(keyword) >= 0) });
+    if (this.filterFunc) {
+      return (this.filterFunc(all, query));
     }
-    return array;
+    return all;
   }
   _sort(all, query) {
     let sortFunction = this.sortFunc[query.sort];
@@ -99,8 +117,44 @@ const protocolPager = new Pager(
     "name": (a, b) =>{
       return (a.protocol.name < b.protocol.name) ? -1: 1;
     } 
+  },
+  (all, query) => {
+    let array = all;
+    let keyword = query.keyword;
+    if (keyword != null && keyword.length > 0) {
+      array = array.filter((obj)=>{ 
+          return (obj.protocol.name!=null && obj.protocol.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0) 
+        });
+    }
+    return array;
   }
-  );
+);
+const logPager = new Pager(
+  // Defaults
+  {
+    offset: 0,
+    limit: 2,
+    order: "desc",
+    sort: "updated"
+  },
+  // Sort functions
+  {
+    "updated": (a, b) =>{
+      return (a.modified < b.modified) ? -1: 1;
+    },
+    "created": (a, b) =>{
+      return (a.created < b.created) ? -1: 1;
+    },
+    "used": (a, b) =>{
+      return (a.used < b.used) ? -1: 1;
+    },
+    "name": (a, b) =>{
+      return (a.protocol.name < b.protocol.name) ? -1: 1;
+    } 
+  },
+  // Filter func
+  null
+);
 
 
 class NinjaQPCRHTTPServer {
@@ -248,7 +302,7 @@ class NinjaQPCRHTTPServer {
       pm.getProtocols((all)=>{
         const query = URL.parse(req.url, true).query;
         res.writeHead(200, {'Content-Type': 'application/json'});
-        all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
+        // all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
         const obj = protocolPager.getPagination(all, query);
         res.write(JSON.stringify(obj));
         res.end();

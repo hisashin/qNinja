@@ -2,6 +2,12 @@
   <div class="card">
     <ul
       class="row log-list">
+      <div v-if="error" class="col-12 error">
+        <h2 class="error__title">Failed to load experiment logs.</h2>
+        <div class="error__retry">
+          <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+        </div>
+      </div>
       <template v-for="(summary, index) in summaries">
         <li 
           class="col-12 log-cell"
@@ -11,6 +17,9 @@
         </li>
       </template>
     </ul>
+    <div v-if="pagination" class="row pagination">
+      TODO pagination
+    </div>
   </div>
 </template>
 <script>
@@ -22,25 +31,28 @@ export default {
     LogCell
   },
   props: {
-    limit: { type:Number }
+    limit: { type:Number },
+    pagination: { type:Boolean },
+    params:{}
   },
   data() {
     return {
-      summaries:[]
+      summaries:[],
+      error: false
     }
   },
   created: function () {
-    this.summaries = appState.getLogSummaries();
-    console.log("LogList.created. Adding handler...");
-    appState.addLogEventHandler({
-      onLogSummariesUpdate:(summaries)=>{
-        console.log("LogList.onLogSummariesUpdate %d", summaries.length);
-        this.summaries = summaries;
-      }
-    });
   },
   methods: {
     load: function () {
+      this.error = false;
+      appState.fetchLogs({}, 
+      (data)=>{
+        this.summaries = data;
+      },
+      ()=>{
+        this.error = true;
+      });
     },
     revealDetail: function (id) {
       console.log("LogList.revealDetail %s", id);

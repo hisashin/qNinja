@@ -80,10 +80,7 @@ export default {
   },
   created: function () {
     this.network = network;
-    // appState.reloadProtocols();
-    appState.reloadLogs();
     appState.setPanelContainer(this);
-    // appState.addProtocolEventHandler(this);
     this.network.addTransitionHandler({
       onStart: (obj)=>{
         console.log("Experiment started.");

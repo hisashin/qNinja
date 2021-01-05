@@ -1,12 +1,12 @@
 <template>
   <div>
     <h2>Recent protocols</h2>
-    <ProtocolList :limit="2" ref="protocolList" />
+    <ProtocolList :limit="2" ref="protocolList" :pagination="false" />
     <b-button @click="viewProtocolList">
       More
     </b-button>
     <h2>Recent experiments</h2>
-    <LogList :limit="3" ref="logList" />
+    <LogList :limit="3" ref="logList" :pagination="false" />
     <b-button @click="viewLogList">
       More
     </b-button>
@@ -41,6 +41,7 @@ export default {
     onAppear () {
       console.log("TheDashboard.onAppear()");
       this.$refs.protocolList.load();
+      this.$refs.logList.load();
     }
   }
 }
