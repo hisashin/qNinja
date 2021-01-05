@@ -37,11 +37,21 @@ const Util = {
             onSuccess(JSON.parse(xmlhttp.responseText));
           } catch (e) {
             if (onError != null) {
-              onError(e);
+              onError({exception:e});
             }
           }
         } else {
-          onError();
+          let response = {};
+          if (xmlhttp.responseText) {
+            try {
+              response = JSON.parse(xmlhttp.responseText);
+            } catch (e) {
+              console.warn("Unable to parse response.");
+            }
+          }
+          onError(
+            {status:xmlhttp.status, content:response}
+          );
         }
       }
     };
@@ -55,7 +65,7 @@ const Util = {
         xmlhttp.send(JSON.stringify(data));
       }
     } catch (ex) {
-      onError(e);
+      onError({exception:e});
     }
   }
 }

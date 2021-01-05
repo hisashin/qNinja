@@ -168,10 +168,10 @@ class AppState {
       (data)=>{
         this.protocols = data.data;
         callback(data);
-      }, ()=>{
+      }, (error)=>{
         console.log("Error");
         if (onError) {
-          onError();
+          onError(error);
         }
       }
     );
@@ -188,7 +188,7 @@ class AppState {
       }, (error)=>{
         console.log("Error %s", error);
         if (onError) {
-          onError();
+          onError(error);
         }
       }
     );
@@ -243,29 +243,35 @@ class AppState {
     );
   }
   
-  submitUpdateProtocol (obj, onSave) {
+  submitUpdateProtocol (obj, onSave, onError) {
     console.log("AppState.submitUpdateProtocol");
     const path = "protocols/" + obj.id;
     Util.requestData(path, obj, "PUT", ()=>{
       if (onSave) {
         onSave();
       }
-    }, ()=>{
+    }, (error)=>{
+      if (onError) {
+        onError(error);
+      }
     });
   }
   
-  submitCreateProtocol (obj, onSave) {
+  submitCreateProtocol (obj, onSave, onError) {
     console.log("AppState.saveProtocol");
     const path = "protocols";
     Util.requestData(path, obj, "POST", ()=>{
       if (onSave) {
         onSave();
       }
-    }, ()=>{
+    }, (error)=>{
+      if (onError) {
+        onError(error);
+      }
     });
   }
   
-  submitDeleteProtocol (id, onSave) {
+  submitDeleteProtocol (id, onSave, onError) {
     console.log("AppState.submitDeleteProtocol %s", id);
     const path = "protocols/" + id;
     Util.requestData(path, null, "DELETE", ()=>{
@@ -273,7 +279,10 @@ class AppState {
         onSave();
       }
       this.fetchProtocols();
-    }, ()=>{
+    }, (error)=>{
+      if (onError) {
+        onError(error);
+      }
     });
   }
   

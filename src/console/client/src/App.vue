@@ -182,4 +182,21 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-conten
 .error__retry__link {
 
 }
+.validation-label {
+  position:relative;
+  font-size:1rem;
+  font-weight:normal;
+}
+.validation-label__content {
+position: absolute;
+  background-color: pink;
+  border-radius: 0.3em;
+  font-size: 0.75em;
+  padding: 0.2em 1em;
+  line-height:120%;
+  white-space: nowrap;
+  left:0;
+  top:100%;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.2)
+}
 </style>
