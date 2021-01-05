@@ -5,7 +5,7 @@ const Util = require("../lib/Util.js");
 class AppState {
   constructor () {
     this.protocols = [];
-    this.logSummaries = [];
+    this.experimentSummaries = [];
     this.selectedProtocol = null;
     
     /* Event handlers */
@@ -18,14 +18,14 @@ class AppState {
       PROTOCOL_DETAIL:3,
       PROTOCOL_EDITOR:4,
       EXPERIMENT_EDITOR:5,
-      LOG_LIST:6,
-      LOG_DETAIL:7,
+      EXPERIMENT_LIST:6,
+      EXPERIMENT_DETAIL:7,
       EXPERIMENT_MONITOR:8
     };
     this.views = {
       protocolDetail: null,
       protocolEditor: null,
-      logDetail: null,
+      experimentDetail: null,
       experimentEditor: null,
       experimentMonitor: null
     };
@@ -60,8 +60,8 @@ class AppState {
     this.viewsMap[this.PANELS.DASHBOARD] = this.views.panelDashboard;
     this.viewsMap[this.PANELS.PROTOCOL_LIST] = this.views.panelProtocolList;
     this.viewsMap[this.PANELS.PROTOCOL_DETAIL] = this.views.panelProtocolDetail;
-    this.viewsMap[this.PANELS.LOG_LIST] = this.views.panelLogList;
-    this.viewsMap[this.PANELS.LOG_DETAIL] = this.views.panelLogDetail;
+    this.viewsMap[this.PANELS.EXPERIMENT_LIST] = this.views.panelExperimentList;
+    this.viewsMap[this.PANELS.EXPERIMENT_DETAIL] = this.views.panelExperimentDetail;
     this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
@@ -177,11 +177,11 @@ class AppState {
     );
   }
   // TODO use callback
-  fetchLogs (params, callback, onError) {
-    console.log("AppState.fetchLogs");
-    Util.requestData(this._createURL("logs", params), null, "GET", 
+  fetchExperiments (params, callback, onError) {
+    console.log("AppState.fetchExperiments");
+    Util.requestData(this._createURL("experiments", params), null, "GET", 
       (data)=>{
-        this.logSummaries = data;
+        this.experimentSummaries = data;
         if (callback) {
           callback(data);
         }
@@ -192,9 +192,6 @@ class AppState {
         }
       }
     );
-  }
-  getLogSummaries () {
-    return this.logSummaries;
   }
   
   fetchMeltCurve (onSuccess, onFail) {
@@ -210,20 +207,17 @@ class AppState {
     
   }
   
-  revealDetailLog (id) {
-    console.log("AppState.revealDetailLog.");
-    this._loadLog(id, (log)=>{
-      this.pushPanel(this.PANELS.LOG_DETAIL);
-      this.views.panelLogDetail.setLog(log);
+  revealDetailExperiment (id) {
+    console.log("AppState.revealDetailExperiment.");
+    this._loadExperiment(id, (experiment)=>{
+      this.pushPanel(this.PANELS.EXPERIMENT_DETAIL);
+      this.views.panelExperimentDetail.setExperiment(experiment);
     });
   }
   
-  _loadLog (id, callback) {
-    console.log("AppState.selectLog id=%s", id);
-    Util.requestData("logs/" + id, null, "GET", 
+  _loadExperiment (id, callback) {
+    Util.requestData("experiments/" + id, null, "GET", 
       (data)=>{
-        this.selectedLog = data;
-        console.log("AppState.selectLog id=%s data received.", id);
         callback(data);
       }, (error)=>{
         console.log(error);

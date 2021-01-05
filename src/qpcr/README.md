@@ -3,7 +3,7 @@
 This directory contain the core application of Ninja-qPCR.
 
 * ninjaqpcr.js : Core functionalities for running experiments and control devices. [More...](./API_ninjaqpcr.md)
-* log_manager.js : Manager of experiment logs [More...](./API_log_manager.md)
+* experiment_manager.js : Manager of experiment logs [More...](./API_log_manager.md)
 * protocol_manager.js : Manager of experiment logs [More...](./API_protocol_manager.md)
 * optics_analysis.js : Fluorescence analyzer class providing mathematical functionalities
   * Basic qPCR analysis

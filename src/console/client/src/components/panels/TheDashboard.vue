@@ -6,8 +6,8 @@
       More
     </b-button>
     <h2>Recent experiments</h2>
-    <LogList :limit="3" ref="logList" :pagination="false" />
-    <b-button @click="viewLogList">
+    <ExperimentList :limit="3" ref="experimentList" :pagination="false" />
+    <b-button @click="viewExperimentList">
       More
     </b-button>
   </div>
@@ -15,13 +15,13 @@
 <script>
 import appState from "../../lib/AppState.js";
 import ProtocolList from '../ProtocolList.vue'
-import LogList from '../LogList.vue'
+import ExperimentList from '../ExperimentList.vue'
 
 export default {
   name: 'TheDashboard',
   components: {
     ProtocolList,
-    LogList
+    ExperimentList
   },
   props: {
   },
@@ -35,13 +35,13 @@ export default {
     viewProtocolList () {
       appState.pushPanel(appState.PANELS.PROTOCOL_LIST);
     },
-    viewLogList () {
-      appState.pushPanel(appState.PANELS.LOG_LIST);
+    viewExperimentList () {
+      appState.pushPanel(appState.PANELS.EXPERIMENT_LIST);
     },
     onAppear () {
       console.log("TheDashboard.onAppear()");
       this.$refs.protocolList.load();
-      this.$refs.logList.load();
+      this.$refs.experimentList.load();
     }
   }
 }

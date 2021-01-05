@@ -12,13 +12,13 @@
       <BackButton />
       <TheProtocolDetail ref="panelProtocolDetail" />
     </div>
-    <div v-show="selectedPanel==panels.LOG_LIST">
+    <div v-show="selectedPanel==panels.EXPERIMENT_LIST">
       <BackButton />
-      <TheLogList ref="panelLogList" />
+      <TheExperimentList ref="panelExperimentList" />
     </div>
-    <div v-show="selectedPanel==panels.LOG_DETAIL">
+    <div v-show="selectedPanel==panels.EXPERIMENT_DETAIL">
       <BackButton />
-      <TheLogDetail ref="panelLogDetail" />
+      <TheExperimentDetail ref="panelExperimentDetail" />
     </div>
     <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
       <BackButton />
@@ -41,8 +41,8 @@ import DeviceSummary from './DeviceSummary.vue'
 import TheDashboard from './panels/TheDashboard.vue'
 import TheExperimentEditor from './panels/TheExperimentEditor.vue'
 import TheExperimentMonitor from './panels/TheExperimentMonitor.vue'
-import TheLogDetail from './panels/TheLogDetail.vue'
-import TheLogList from './panels/TheLogList.vue'
+import TheExperimentDetail from './panels/TheExperimentDetail.vue'
+import TheExperimentList from './panels/TheExperimentList.vue'
 import TheProtocolDetail from './panels/TheProtocolDetail.vue'
 import TheProtocolEditor from './panels/TheProtocolEditor.vue'
 import TheProtocolList from './panels/TheProtocolList.vue'
@@ -60,8 +60,8 @@ export default {
   name: 'TheMain',
   components: {
   TheDashboard,
-    TheLogDetail,
-    TheLogList,
+    TheExperimentDetail,
+    TheExperimentList,
     TheProtocolDetail,
     TheProtocolList,
     TheExperimentMonitor,

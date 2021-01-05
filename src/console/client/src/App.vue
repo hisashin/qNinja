@@ -53,15 +53,15 @@ a {
 }
 
 /* Common list view */
-.protocol-list, .log-list {
+.protocol-list, .experiment-list {
   margin-bottom:0;
 }
-.protocol-cell, .log-cell {
+.protocol-cell, .experiment-cell {
 }
-.protocol-cell-content, .log-cell-content {
+.protocol-cell-content, .experiment-cell-content {
   padding:1em;
 }
-li:not(:last-child) .protocol-cell-content, li:not(:last-child) .log-cell-content {
+li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell-content {
   border-bottom:1px solid rgba(0, 0, 0, 0.125);
 
 }

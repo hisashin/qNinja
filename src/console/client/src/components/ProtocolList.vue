@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     load: function () {
-      console.log("LogList.load");
+      console.log("ExperimentList.load");
       this.error = false;
       /*
         offset, page, limit, sort, order, keyword

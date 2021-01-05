@@ -11,9 +11,9 @@ const fs = require('fs');
 const ThermalCycler = require("./control/thermal_cycler_multi");
 const Optics = require("./control/optics");
 const OpticsAnalysis = require("./optics_analysis");
-const LogManager = require("./log_manager");
+const ExperimentManager = require("./experiment_manager");
 
-const logManager = new LogManager();
+const experimentManager = new ExperimentManager();
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
@@ -189,7 +189,7 @@ class NinjaQPCR {
   /* Private */
   _createExperimentLog (protocol) {
     let experimentLog = {
-      id: logManager.generateExperimentId(),
+      id: experimentManager.generateExperimentId(),
       protocol_id: protocol.id,
       protocol: protocol,
       temp: {
@@ -389,7 +389,7 @@ class NinjaQPCR {
     // Experiment is finished. Note that the thermal cycler is still keeping temp.
     this._setDeviceState(DEVICE_STATE.COMPLETE);
     this.experimentLog.end = new Date().getTime();
-    logManager.saveExperimentLog(this.experimentLog, ()=>{}, 
+    experimentManager.saveExperimentLog(this.experimentLog, ()=>{}, 
     (error)=>{
       console.error(error);
     });

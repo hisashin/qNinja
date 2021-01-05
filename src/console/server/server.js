@@ -6,10 +6,10 @@ const qpcr = new NinjaQPCR("hardware.json");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const ErrorCode = require(QPCR_PATH + "error_code");
-const LogManager = require(QPCR_PATH + "log_manager");
+const ExperimentManager = require(QPCR_PATH + "experiment_manager");
 
 const pm = new ProtocolManager();
-const lm = new LogManager();
+const em = new ExperimentManager();
 
 const Router = require("./router");
 
@@ -171,9 +171,9 @@ class NinjaQPCRHTTPServer {
     router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
     router.addPath("/protocols/{pid}", "DELETE", this.protocolDelete());
     router.addPath("/protocols/validate", "PUT", this.protocolValidate());
-    router.addPath("/logs", "GET", this.logs());
-    router.addPath("/logs/latest", "GET", this.logLatest());
-    router.addPath("/logs/{lid}", "GET", this.logGet());
+    router.addPath("/experiments", "GET", this.experiments());
+    router.addPath("/experiments/latest", "GET", this.experimentLatest());
+    router.addPath("/experiments/{lid}", "GET", this.experimentGet());
     
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
@@ -390,24 +390,25 @@ class NinjaQPCRHTTPServer {
   }
   
   // TODO 
-  logs () {
+  experiments () {
     return (req, res, map)=>{
-      lm.getSummaries({}, {}, (summaries)=>{
+      em.getSummaries({}, {}, (summaries)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(summaries));
         res.end();
       },
       (err)=>{
+        console.log(err)
         this.error500(req, res, err);
       });
     };
   }
   
-  logLatest () {
+  experimentLatest () {
     return (req, res, map)=>{
-      lm.getLatestLog((log)=>{
+      em.getLatestExperiment((experiment)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(log));
+        res.write(JSON.stringify(experiment));
         res.end();
       },
       (err)=>{
@@ -415,11 +416,11 @@ class NinjaQPCRHTTPServer {
       });
     };
   }
-  logGet () {
+  experimentGet () {
     return (req, res, map)=>{
-      lm.getAnalyzedLog(map.lid, (log)=>{
+      em.getAnalyzedExperimentLog(map.lid, (experiment)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(log));
+        res.write(JSON.stringify(experiment));
         res.end();
       },
       (err)=>{
