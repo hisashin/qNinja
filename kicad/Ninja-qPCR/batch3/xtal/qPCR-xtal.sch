@@ -75,29 +75,15 @@ Connection ~ 5200 3600
 $Comp
 L Device:R RF1
 U 1 1 5FDB181C
-P 4700 3050
-F 0 "RF1" V 4493 3050 50  0000 C CNN
-F 1 "20mOhm" V 4584 3050 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4630 3050 50  0001 C CNN
-F 3 "~" H 4700 3050 50  0001 C CNN
-	1    4700 3050
+P 4450 3050
+F 0 "RF1" V 4243 3050 50  0000 C CNN
+F 1 "10M" V 4334 3050 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 4380 3050 50  0001 C CNN
+F 3 "~" H 4450 3050 50  0001 C CNN
+	1    4450 3050
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	4850 3050 5200 3050
-Wire Wire Line
-	5200 3050 5200 3150
-Wire Wire Line
-	4550 3050 4200 3050
-Wire Wire Line
-	4200 3050 4200 3600
 Connection ~ 4200 3600
-Wire Wire Line
-	4200 2550 4200 3050
-Connection ~ 4200 3050
-Wire Wire Line
-	5200 2550 5200 3050
-Connection ~ 5200 3050
 $Comp
 L power:GND #PWR0101
 U 1 1 5FDB6B82
@@ -220,4 +206,31 @@ Wire Wire Line
 	6850 2550 7450 2550
 Wire Wire Line
 	6850 2650 7450 2650
+Wire Wire Line
+	4200 2550 4200 3050
+Wire Wire Line
+	5200 2550 5200 3050
+$Comp
+L Device:R RF2
+U 1 1 5FF55082
+P 4900 3050
+F 0 "RF2" V 4693 3050 50  0000 C CNN
+F 1 "10M" V 4784 3050 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 4830 3050 50  0001 C CNN
+F 3 "~" H 4900 3050 50  0001 C CNN
+	1    4900 3050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5050 3050 5200 3050
+Connection ~ 5200 3050
+Wire Wire Line
+	5200 3050 5200 3150
+Wire Wire Line
+	4750 3050 4600 3050
+Wire Wire Line
+	4300 3050 4200 3050
+Connection ~ 4200 3050
+Wire Wire Line
+	4200 3050 4200 3600
 $EndSCHEMATC
