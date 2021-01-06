@@ -1,4 +1,4 @@
-// 32ch MUX ADG731BSUZ
+// 32ch MUX ADG731BSUZ (SPI control)
 "use strict";
 
 const SPI = require('pi-spi');
