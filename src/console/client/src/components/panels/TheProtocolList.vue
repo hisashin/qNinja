@@ -1,25 +1,33 @@
 <template>
-  <div>
-    <h2>Protocols</h2>
-    <div>
-      <select v-model="sort" @change="onSortChanged">
-        <option value="updated">Last edited</option>
-        <option value="created">Last created</option>
-        <option value="used">Last used</option>
-        <option value="name">Name</option>
-      </select>
-      <label>
-        <input type="radio" v-model="order" value="asc" @change="onOrderChanged"/> A-Z
-      </label>
-      <label>
-        <input type="radio" v-model="order" value="desc" @change="onOrderChanged"/> Z-A
-      </label>
-      <input type="text" placeholder="Search" v-model="keyword" @keyup="onKeywordChanged"/>
-    </div>
-    <ProtocolList :limit="2" :pagination="true" ref="protocolList"/>
-    <b-button @click="startCreateProtocol">
-      New Protocol
-    </b-button>
+  <div class="panel">
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Protocols</h2>
+        <div class="section__header__menu">
+          <b-button @click="startCreateProtocol">
+            New Protocol
+          </b-button>
+        </div>
+      </header>
+      <!-- Search & sort -->
+      <nav class="section__nav section__nav--top">
+        <select v-model="sort" @change="onSortChanged">
+          <option value="updated">Last edited</option>
+          <option value="created">Last created</option>
+          <option value="used">Last used</option>
+          <option value="name">Name</option>
+        </select>
+        <label>
+          <input type="radio" v-model="order" value="asc" @change="onOrderChanged"/> A-Z
+        </label>
+        <label>
+          <input type="radio" v-model="order" value="desc" @change="onOrderChanged"/> Z-A
+        </label>
+        <input type="text" placeholder="Search" v-model="keyword" @keyup="onKeywordChanged"/>
+        
+      </nav>
+      <ProtocolList :limit="2" :pagination="true" ref="protocolList"/>
+    </section>
   </div>
 </template>
 <script>

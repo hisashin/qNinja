@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <div class="card">
-      <div class="row">
-        <div v-if="error" class="col-12 error">
-          <h2 class="error__title">Failed to load protocols.</h2>
-          <div class="error__retry">
-            <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
-          </div>
-        </div>
-        <ul
-          class="col-12 row protocol-list">
-          <template v-for="(item, index) in protocols"
-          >
+  <div><!-- Container -->
+    <div class="section__body">
+      <!-- List card -->
+      <ul class="item item--list-card">
+        <template v-for="(item, index) in protocols"
+        >
+          <li class="item--list-card__cell item--list-card__cell--item"
+            :key="index">
             <ProtocolCell
-              :key="index"
               v-if="index < limit"
               :pid="item.id"
               :protocol="item.protocol"
             />
-          </template>
-        </ul>
-      </div>
+          </li>
+        </template>
+        <li v-if="error" class="item--list-card__cell item--list-card__cell--error">
+          <h2 class="error__title">Failed to load protocols.</h2>
+          <div class="error__retry">
+            <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <nav class="paging col-12" v-if="pagination && !error">
+    <nav class="section__nav section__nav--bottom" v-if="pagination && !error">
       <ul class="paging__pages">
         <li class="paging__pages__page" v-for="index in paging.pages" v-bind:key="index">
           <a class="paging__pages__page__label paging__pages__page__label--linked" v-if="index-1!=paging.page" href="javascript:void(0)" @click="reload(index-1)">{{ index }}</a>

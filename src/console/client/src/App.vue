@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <header class="header">
-      <h1>Ninja qPCR</h1>
+      <h1 class="header__title">Ninja qPCR</h1>
     </header>
-    <main class="main">
-      <TheMain />
-    </main>
+    <TheMain />
+    <footer class="footer">
+    </footer>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   max-width: 800px;
+  margin:auto;
 }
 /* Reset */
 ul {
@@ -48,16 +49,92 @@ a {
   color: #42b983;
 }
 
+/* Frame */
+.header {
+}
+.header__title {
+  margin:0;
+  padding:0;
+  font-size:1.5rem;
+}
 .main {
-  padding:2em;
+}
+.footer {
+}
+/* Layout params of top-level blocks */
+.header,.device-monitor,.panel-nav,.section {
+  margin-bottom:1.5rem;
+}
+/* Layout params of secondary-level blocks */
+.section__header:not(:last-child),
+.section__nav:not(:last-child),
+.section__body:not(:last-child),
+.section__body__item:not(:last-child) {
+  margin-bottom:0.75rem;
+  padding:0;
+}
+
+.device-monitor {
+}
+.panel {
+}
+.panel-nav {
+}
+.section {
+}
+
+.section__header {
+
+}
+.section__header__title {
+  font-size: 1.5rem;
+}
+.section__header__menu {
+
+}
+.section__nav {
+
+}
+.section__nav--top {
+
+}
+.section__nav--bottom {
+
+}
+.section__body__item {
+
+}
+/* Inside section__body */
+.item {
+
+}
+/* Item variants */
+/* Item variant: List card */
+.item--list-card {
+}
+.item--list-card__cell--header {
+
+}
+.item--list-card__cell--item {
+
+}
+.item--list-card__cell--footer {
+
+}
+/* Item variant: Detail card */
+.item--detail-card {
+}
+/* Item variant: Text paragraph */
+.item--paragraph {
+
+}
+/* Card styles */
+.item--list-card, .item--detail-card {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
 }
 
 /* Common list view */
-.protocol-list, .experiment-list {
-  margin-bottom:0;
-}
-.protocol-cell, .experiment-cell {
-}
 .protocol-cell-content, .experiment-cell-content {
   padding:1em;
 }

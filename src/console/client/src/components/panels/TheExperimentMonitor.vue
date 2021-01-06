@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="panel">
     <ProgressMonitor />
     <div class="card p-3">
       <b-tabs content-class="mt-3">

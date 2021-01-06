@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="panel">
     <ProtocolDetail ref="protocolDetail" />
   </div>
 </template>
+
 <script>
 import appState from "../../lib/AppState.js";
 import ProtocolDetail from '../ProtocolDetail.vue';

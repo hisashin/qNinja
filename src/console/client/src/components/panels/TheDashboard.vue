@@ -1,15 +1,29 @@
 <template>
-  <div>
-    <h2>Recent protocols</h2>
-    <ProtocolList :limit="2" ref="protocolList" :pagination="false" />
-    <b-button @click="viewProtocolList">
-      More
-    </b-button>
-    <h2>Recent experiments</h2>
-    <ExperimentList :limit="3" ref="experimentList" :pagination="false" />
-    <b-button @click="viewExperimentList">
-      More
-    </b-button>
+  <div class="panel">
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Recent Protocols</h2>
+        <div class="section__header__menu"></div>
+      </header>
+      <ProtocolList :limit="2" ref="protocolList" :pagination="false" />
+      <nav class="section__nav section__nav--bottom">
+        <b-button @click="viewProtocolList">
+          More
+        </b-button>
+      </nav>
+    </section>
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Recent Experiments</h2>
+        <div class="section__header__menu"></div>
+      </header>
+      <ExperimentList :limit="3" ref="experimentList" :pagination="false" />
+      <nav class="section__nav section__nav--bottom">
+        <b-button @click="viewExperimentList">
+          More
+        </b-button>
+      </nav>
+    </section>
   </div>
 </template>
 <script>

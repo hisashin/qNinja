@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="panel">
     <ExperimentList :limit="16" ref="experimentList" :pagination="true" />
   </div>
 </template>

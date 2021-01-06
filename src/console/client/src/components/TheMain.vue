@@ -1,38 +1,22 @@
 <template>
-  <div class="device-monitor">
-    <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
-    <div v-show="selectedPanel==panels.DASHBOARD">
-      <TheDashboard ref="panelDashboard" />
+  <main class="main">
+    <!-- Device monitor -->
+    <div class="device-monitor">
+      <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     </div>
-    <div v-show="selectedPanel==panels.PROTOCOL_LIST">
+    <nav class="panel-nav">
       <BackButton />
-      <TheProtocolList ref="panelProtocolList" />
-    </div>
-    <div v-show="selectedPanel==panels.PROTOCOL_DETAIL">
-      <BackButton />
-      <TheProtocolDetail ref="panelProtocolDetail" />
-    </div>
-    <div v-show="selectedPanel==panels.EXPERIMENT_LIST">
-      <BackButton />
-      <TheExperimentList ref="panelExperimentList" />
-    </div>
-    <div v-show="selectedPanel==panels.EXPERIMENT_DETAIL">
-      <BackButton />
-      <TheExperimentDetail ref="panelExperimentDetail" />
-    </div>
-    <div v-show="selectedPanel==panels.PROTOCOL_EDITOR">
-      <BackButton />
-      <TheProtocolEditor ref="panelProtocolEditor" />
-    </div>
-    <div v-show="selectedPanel==panels.EXPERIMENT_EDITOR">
-      <BackButton />
-      <TheExperimentEditor ref="panelExperimentEditor" />
-    </div>
-    <div v-show="selectedPanel==panels.EXPERIMENT_MONITOR">
-      <BackButton />
-      <TheExperimentMonitor ref="panelExperimentMonitor" />
-    </div>
-  </div>
+    </nav>
+    <!-- Panels -->
+    <TheDashboard ref="panelDashboard" v-show="selectedPanel==panels.DASHBOARD" />
+    <TheProtocolList ref="panelProtocolList" v-show="selectedPanel==panels.PROTOCOL_LIST" />
+    <TheProtocolDetail ref="panelProtocolDetail" v-show="selectedPanel==panels.PROTOCOL_DETAIL" />
+    <TheExperimentList ref="panelExperimentList" v-show="selectedPanel==panels.EXPERIMENT_LIST" />
+    <TheExperimentDetail ref="panelExperimentDetail" v-show="selectedPanel==panels.EXPERIMENT_DETAIL" />
+    <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
+    <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
+    <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
+  </main>
 </template>
 <script>
 

@@ -1,6 +1,6 @@
 <template>
   <li
-    class="col-12 protocol-cell"
+    class="item--list-card__cell item--list-card__cell--item"
     @click="revealDetail">
     <div class="protocol-cell-content">
       <div class="row">

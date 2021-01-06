@@ -1,25 +1,27 @@
 <template>
-  <div class="card">
-    <ul
-      class="row experiment-list">
-      <div v-if="error" class="col-12 error">
-        <h2 class="error__title">Failed to load experiment list.</h2>
-        <div class="error__retry">
-          <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
-        </div>
-      </div>
-      <template v-for="(summary, index) in summaries">
-        <li 
-          class="col-12 experiment-cell"
-          :key="index" v-if="index < limit">
-          <ExperimentCell
-          :summary="summary"/>
+  <div><!-- Container -->
+    <div class="section__body">
+      <!-- List card -->
+      <ul class="item item--list-card">
+        <template v-for="(summary, index) in summaries">
+          <li class="item--list-card__cell item--list-card__cell--item"
+            :key="index">
+            <ExperimentCell
+              v-if="index < limit"
+              :summary="summary"/>
+          </li>
+        </template>
+        <li v-if="error" class="item--list-card__cell item--list-card__cell--error">
+          <h2 class="error__title">Failed to load experiment list.</h2>
+          <div class="error__retry">
+            <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+          </div>
         </li>
-      </template>
-    </ul>
-    <div v-if="pagination" class="row pagination">
-      TODO pagination
+      </ul>
     </div>
+    <nav v-if="pagination && !error" class="section__nav section__nav--bottom">
+      TODO pagination
+    </nav>
   </div>
 </template>
 <script>

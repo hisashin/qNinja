@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="panel">
     <ExperimentDetail ref="experimentDetail" />
   </div>
 </template>

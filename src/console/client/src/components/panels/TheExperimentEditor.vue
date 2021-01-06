@@ -1,6 +1,9 @@
 <template>
-  <div>
+  <div class="panel">
+  
     <p>Protocol detail here.</p>
+    <h2>(TODO) Protocol detail or protocol picker</h2>
+    
     <h2>(TODO) Experiment Name</h2>
     <h2>(TODO) Tubes conf</h2>
     <div>
