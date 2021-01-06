@@ -170,7 +170,7 @@ U 1 1 5FDC7727
 P 6650 2650
 F 0 "J1" H 6758 2931 50  0000 C CNN
 F 1 "Conn_01x04_Male" H 6758 2840 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x04_Pitch2.54mm" H 6650 2650 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 6650 2650 50  0001 C CNN
 F 3 "~" H 6650 2650 50  0001 C CNN
 	1    6650 2650
 	1    0    0    -1  
