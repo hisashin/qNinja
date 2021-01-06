@@ -13,4 +13,118 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
+$Comp
+L Connector:Conn_01x04_Male J3
+U 1 1 5FF267E8
+P 6600 3450
+F 0 "J3" H 6572 3424 50  0000 R CNN
+F 1 "Conn_01x04_Male" H 6572 3333 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 6600 3450 50  0001 C CNN
+F 3 "~" H 6600 3450 50  0001 C CNN
+	1    6600 3450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0101
+U 1 1 5FF26FD6
+P 6250 3200
+F 0 "#PWR0101" H 6250 3050 50  0001 C CNN
+F 1 "+3V3" H 6265 3373 50  0000 C CNN
+F 2 "" H 6250 3200 50  0001 C CNN
+F 3 "" H 6250 3200 50  0001 C CNN
+	1    6250 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0102
+U 1 1 5FF2785E
+P 6250 3800
+F 0 "#PWR0102" H 6250 3550 50  0001 C CNN
+F 1 "GND" H 6255 3627 50  0000 C CNN
+F 2 "" H 6250 3800 50  0001 C CNN
+F 3 "" H 6250 3800 50  0001 C CNN
+	1    6250 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6400 3650 6250 3650
+Wire Wire Line
+	6250 3650 6250 3800
+Wire Wire Line
+	6400 3350 6250 3350
+Wire Wire Line
+	6250 3350 6250 3200
+NoConn ~ 6250 3550
+Wire Wire Line
+	6250 3550 6400 3550
+$Comp
+L Device:R R1
+U 1 1 5FF28601
+P 6000 3350
+F 0 "R1" V 5793 3350 50  0000 C CNN
+F 1 "10K" V 5884 3350 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5930 3350 50  0001 C CNN
+F 3 "~" H 6000 3350 50  0001 C CNN
+	1    6000 3350
+	0    1    1    0   
+$EndComp
+Text HLabel 5650 3450 0    50   Input ~ 0
+SCA
+Wire Wire Line
+	6400 3450 5750 3450
+Wire Wire Line
+	6150 3350 6250 3350
+Connection ~ 6250 3350
+Wire Wire Line
+	5850 3350 5750 3350
+Wire Wire Line
+	5750 3350 5750 3450
+Connection ~ 5750 3450
+Wire Wire Line
+	5750 3450 5650 3450
+$Comp
+L Connector:Conn_01x05_Male J1
+U 1 1 5FF2C56E
+P 4250 3600
+F 0 "J1" H 4358 3981 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 4358 3890 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 4250 3600 50  0001 C CNN
+F 3 "~" H 4250 3600 50  0001 C CNN
+	1    4250 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0105
+U 1 1 5FF2EDCF
+P 4600 3250
+F 0 "#PWR0105" H 4600 3100 50  0001 C CNN
+F 1 "+3V3" H 4615 3423 50  0000 C CNN
+F 2 "" H 4600 3250 50  0001 C CNN
+F 3 "" H 4600 3250 50  0001 C CNN
+	1    4600 3250
+	1    0    0    -1  
+$EndComp
+Text HLabel 4600 3700 2    50   Input ~ 0
+SCA
+$Comp
+L power:GND #PWR0106
+U 1 1 5FF2F10D
+P 4600 3900
+F 0 "#PWR0106" H 4600 3650 50  0001 C CNN
+F 1 "GND" H 4605 3727 50  0000 C CNN
+F 2 "" H 4600 3900 50  0001 C CNN
+F 3 "" H 4600 3900 50  0001 C CNN
+	1    4600 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 3400 4600 3400
+Wire Wire Line
+	4600 3400 4600 3250
+Wire Wire Line
+	4450 3800 4600 3800
+Wire Wire Line
+	4600 3800 4600 3900
+Wire Wire Line
+	4600 3700 4450 3700
 $EndSCHEMATC

@@ -7,20 +7,20 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.6-0-10_14)"
     },
-    "CreationDate":  "2020-09-19T09:16:03+09:00"
+    "CreationDate":  "2021-01-06T09:57:28+09:00"
   },
   "GeneralSpecs":
   {
     "ProjectId":
     {
-      "Name": "qPCR-main",
-      "GUID": "71504352-2d6d-4616-996e-2e6b69636164",
+      "Name": "qPCR-xtal",
+      "GUID": "71504352-2d78-4746-916c-2e6b69636164",
       "Revision": "rev?"
     },
     "Size":
     {
-      "X": 100.100,
-      "Y": 94.904
+      "X": 15.600,
+      "Y": 11.100
     },
     "LayerNumber": 2,
     "BoardThickness":  1.600
@@ -40,47 +40,47 @@
   "FilesAttributes":
   [
     {
-      "Path":  "qPCR-main-F_Cu.gtl",
+      "Path":  "qPCR-xtal-F_Cu.gtl",
       "FileFunction":  "Copper,L1,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-B_Cu.gbl",
+      "Path":  "qPCR-xtal-B_Cu.gbl",
       "FileFunction":  "Copper,L2,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-F_Paste.gtp",
+      "Path":  "qPCR-xtal-F_Paste.gtp",
       "FileFunction":  "SolderPaste,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-B_Paste.gbp",
+      "Path":  "qPCR-xtal-B_Paste.gbp",
       "FileFunction":  "SolderPaste,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-F_SilkS.gto",
+      "Path":  "qPCR-xtal-F_SilkS.gto",
       "FileFunction":  "Legend,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-B_SilkS.gbo",
+      "Path":  "qPCR-xtal-B_SilkS.gbo",
       "FileFunction":  "Legend,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "qPCR-main-F_Mask.gts",
+      "Path":  "qPCR-xtal-F_Mask.gts",
       "FileFunction":  "SolderMask,Top",
       "FilePolarity":  "Negative"
     },
     {
-      "Path":  "qPCR-main-B_Mask.gbs",
+      "Path":  "qPCR-xtal-B_Mask.gbs",
       "FileFunction":  "SolderMask,Bot",
       "FilePolarity":  "Negative"
     },
     {
-      "Path":  "qPCR-main-Edge_Cuts.gm1",
+      "Path":  "qPCR-xtal-Edge_Cuts.gm1",
       "FileFunction":  "Profile",
       "FilePolarity":  "Positive"
     }
