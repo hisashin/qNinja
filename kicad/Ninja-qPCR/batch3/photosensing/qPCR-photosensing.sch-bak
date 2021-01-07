@@ -754,14 +754,4 @@ Connection ~ 7600 1350
 Wire Wire Line
 	7000 1350 7150 1350
 Connection ~ 7000 1350
-Text HLabel 2200 6000 0    50   Input ~ 0
-CLKIN
-Wire Wire Line
-	2200 6000 2300 6000
-Connection ~ 2300 6000
-Text HLabel 5650 4350 2    50   Input ~ 0
-XOUT
-Wire Wire Line
-	5550 4350 5650 4350
-Connection ~ 5550 4350
 $EndSCHEMATC
