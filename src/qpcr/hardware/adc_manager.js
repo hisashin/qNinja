@@ -7,8 +7,14 @@ class ADCManager {
     this.currentChannel = -1;
     this._isReaing = false;
     this.readQueue = [];
+    this.started = false;
   }
   start () {
+    if (this.started) {
+      console.warn("ADCManager is already started");
+      return;
+    }
+    this.started = true;
     this.adc.initialize();
     this.adc.selectDataRate(this.dataRate);
   }
