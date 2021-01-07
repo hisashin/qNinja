@@ -81,15 +81,20 @@
                 </li>
                 <li class="protocol-stage" :key="index + '_stage'">
                   <template v-if="stage.type==1">
-                    <b-button
-                      size="sm"
-                      variant="outline-danger" class="ml-2" @click="confirmDeleteStage(index)"
-                    >
-                      Delete
-                    </b-button>
                     <h3 class="protocol-stage-label">
                       Hold Stage
                       <span class="'validation-label validation__stages__' + index"/>
+                      <b-button
+                        size="sm"
+                        variant="outline-danger" class="ml-2" @click="confirmDeleteStage(index)"
+                      >
+                        Delete
+                      </b-button>
+                      <input
+                        v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
+                        type="hidden"
+                        class="input-repeat"
+                      > 
                     </h3>
                     <ul class="protocol-steps">
                       <li class="protocol-step">
@@ -111,12 +116,6 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==2 || stage.type==4">
-                    <b-button
-                      size="sm"
-                      variant="outline-danger" class="ml-2" @click="confirmDeleteStage(index)"
-                    >
-                      Delete
-                    </b-button>
                     <h3 class="protocol-stage-label">
                       <span v-if="stage.type==2">
                         qPCR Stage
@@ -126,6 +125,12 @@
                         Normal PCR Stage
                         <span :class="'validation-label validation__stages__'+index"/>
                       </span>
+                      <b-button
+                        size="sm"
+                        variant="outline-danger" class="ml-2" @click="confirmDeleteStage(index)"
+                      >
+                        Delete
+                      </b-button>
                     </h3>
                     Repeat <span :class="'validation-label validation__stages__'+index+'__repeat'"/><input
                       v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
@@ -146,6 +151,11 @@
                           v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
                           class="input-duration" type="number" step="1"
                         >sec
+                        <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
+                        <input
+                          v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
+                          class="input-speed" type="number" step="1"
+                        >℃/sec
                         
                         <div v-if="stage.type==2">
                           Data Collection : 
@@ -170,6 +180,12 @@
                           v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
                           class="input-duration" type="number" step="1"
                         >sec
+                        <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
+                        <input
+                          v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
+                          class="input-speed" type="number" step="1"
+                        >℃/sec
+                        
                         <div v-if="stage.type==2">
                           Data Collection : 
                           <span :class="'validation-label validation__stages__'+index+'__steps__1__data_collection'"/>
@@ -193,6 +209,11 @@
                           v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
                           class="input-duration" type="number" step="1"
                         >sec
+                        <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
+                        <input
+                          v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
+                          class="input-speed" type="number" step="1"
+                        >℃/sec
                         <div v-if="stage.type==2">
                           Data Collection : 
                           <span :class="'validation-label validation__stages__'+index+'__steps__2__data_collection'"/>
@@ -206,16 +227,21 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==3">
-                    <b-button
-                      size="sm"
-                      variant="outline-danger" class="ml-2"
-                      @click="confirmDeleteStage(index)"
-                    >
-                      Delete
-                    </b-button>
                     <h3 class="protocol-stage-label">
                       Melt Curve Stage
                       <span :class="'validation-label validation__stages__'+index"/>
+                      <b-button
+                        size="sm"
+                        variant="outline-danger" class="ml-2"
+                        @click="confirmDeleteStage(index)"
+                      >
+                        Delete
+                      </b-button>
+                      <input
+                        v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
+                        type="hidden"
+                        class="input-repeat"
+                      > 
                     </h3>
                     <ul class="protocol-steps">
                       <li class="protocol-step">

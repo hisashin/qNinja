@@ -12,9 +12,11 @@
           </li>
         </template>
         <li v-if="error" class="item--list-card__cell item--list-card__cell--error">
-          <h2 class="error__title">Failed to load experiment list.</h2>
-          <div class="error__retry">
-            <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+          <div class="error">
+            <h2 class="error__title">Failed to load experiment list.</h2>
+            <div class="error__retry">
+              <a class="error__retry__link btn btn-secondary rounded-pill" href="javascript:void(0)" @click="load">Retry</a>
+            </div>
           </div>
         </li>
       </ul>

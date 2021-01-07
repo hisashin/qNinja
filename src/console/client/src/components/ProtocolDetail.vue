@@ -153,7 +153,7 @@ export default {
     },
     setProtocol: function (protocol) {
       console.log("setProtocol");
-      console.log(protocol)
+      console.log(protocol);
       this.protocol = protocol;
     }
   }

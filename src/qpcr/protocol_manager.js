@@ -53,31 +53,29 @@ class ProtocolManager {
       return;
     }
     
-    this._getProtocol(id, ()=>{
-      fs.writeFile(filePath, JSON.stringify(content), (err)=>{
-        if (err) {
-          // File system error
-          console.log(err);
-          if (onError) {
-            onError({
-              code: ErrorCode.DataError,
-              message:err.message
-            });
-          }
-        } else {
-          // Reload
-          this._loadProtocols(
-            ()=>{
-              if (onUpdate) {
-                // Updated protocol file
-                onUpdate(content);
-              }
-            },
-            onError
-          );
+    fs.writeFile(filePath, JSON.stringify(content), (err)=>{
+      if (err) {
+        // File system error
+        console.log(err);
+        if (onError) {
+          onError({
+            code: ErrorCode.DataError,
+            message:err.message
+          });
         }
-      });
-    }, onError);
+      } else {
+        // Reload
+        this._loadProtocols(
+          ()=>{
+            if (onUpdate) {
+              // Updated protocol file
+              onUpdate(content);
+            }
+          },
+          onError
+        );
+      }
+    });
   }
   delete (id, onDelete, onError) {
     const filePath = this._protocolDir() + "/" + id;

@@ -147,7 +147,7 @@ class HardwareConf {
   
     this.lids = [];
     {
-      const lisThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
+      const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
         this.adcManager, 
         ADC_CHANNEL_WELL_THERMISTOR
       const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_LID_THERMISTOR);
@@ -156,7 +156,7 @@ class HardwareConf {
       const output = new HeatLidOutput(this.pwmLid1);
       this.lids.push(new HeatUnit(pid, lidSensing, output));
     }
-    shutwodn () {
+    shutdown () {
       // TODO
       // Shutdown all
     }

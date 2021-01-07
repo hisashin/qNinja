@@ -25,7 +25,7 @@ export default {
   methods: {
     exampleMethod () {},
     setProtocol (protocol) {
-      this.$refs.protocolDetail.setProtocol(log);
+      this.$refs.protocolDetail.setProtocol(protocol);
     },
     onAppear () {
       console.log("TheProtocolDetail.onAppear()");

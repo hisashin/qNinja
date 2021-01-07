@@ -65,8 +65,8 @@ class Well  {
     // TODO
   }
   shutdown () {
-    console.log("Well.shutdown()")
-    // TODO
+    console.log("Well.shutdown()");
+    this.off();
   }
   setTargetTemperature (targetTemperature) {
     if (this.targetTemperature == targetTemperature && !this.isOff) {

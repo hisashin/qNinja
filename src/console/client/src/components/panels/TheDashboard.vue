@@ -2,27 +2,27 @@
   <div class="panel">
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Recent Protocols</h2>
+        <h2 class="section__header__title" >
+          Recent Protocols
+          <b-button @click="viewProtocolList" class="float-right">
+            More
+          </b-button>
+        </h2>
         <div class="section__header__menu"></div>
       </header>
       <ProtocolList :limit="2" ref="protocolList" :pagination="false" />
-      <nav class="section__nav section__nav--bottom">
-        <b-button @click="viewProtocolList">
-          More
-        </b-button>
-      </nav>
     </section>
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Recent Experiments</h2>
+        <h2 class="section__header__title">
+          Recent Experiments
+          <b-button @click="viewExperimentList" class="float-right">
+            More
+          </b-button>
+        </h2>
         <div class="section__header__menu"></div>
       </header>
       <ExperimentList :limit="3" ref="experimentList" :pagination="false" />
-      <nav class="section__nav section__nav--bottom">
-        <b-button @click="viewExperimentList">
-          More
-        </b-button>
-      </nav>
     </section>
   </div>
 </template>
