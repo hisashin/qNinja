@@ -7,7 +7,7 @@
         <div class="col-12">
           <strong>{{ protocol.name }}</strong>
         </div>
-        <ul class="col-9">
+        <ul class="col-8">
           <li
             v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
             <span v-if="stage.type==1">Hold</span>
@@ -21,11 +21,12 @@
             <span v-if="stage.type==2">x{{ stage.repeat }}</span>
           </li>
         </ul>
-        <div class="col-3">
+        <div class="col-4 text-right">
           <b-button @click.stop="deleteIt">
             Delete
           </b-button>
-          <b-button @click.stop="edit">
+          <b-button
+            class="ml-1" @click.stop="edit">
             Edit
           </b-button>
           <b-button
@@ -62,6 +63,7 @@ export default {
       appState.prepareExperiment(this.pid);
     },
     revealDetail: function() {
+      console.log("revealDetail %s",this.pid)
       appState.revealDetailProtocol(this.pid);
     },
     edit: function() {

@@ -156,7 +156,7 @@ class HardwareConf {
       const output = new HeatLidOutput(this.pwmLid1);
       this.lids.push(new HeatUnit(pid, lidSensing, output));
     }
-    shutwodn () {
+    shutdown () {
       // TODO
       // Shutdown all
     }

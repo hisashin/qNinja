@@ -90,7 +90,7 @@ a {
   font-size: 1.5rem;
 }
 .section__header__menu {
-
+  float:right;
 }
 .section__nav {
 
@@ -121,6 +121,9 @@ a {
 .item--list-card__cell--footer {
 
 }
+.item--list-card__cell--error {
+
+}
 /* Item variant: Detail card */
 .item--detail-card {
 }
@@ -143,7 +146,6 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
 
 }
 
-/* Protocol list */
 
 /* Log list */
 
@@ -230,19 +232,22 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
 }
 .paging__pages__page {
   display:inline-block;
-
 }
 .paging__pages__page__label {
   margin: 0 0.2em;
   border: 1px solid #aaa;
-  padding: 0.2em 1em;
+  padding: 0.2em 0.6em;
   border-radius: 0.2em;
 }
-.paging__pages__page__label--linked{
-
+.paging__pages__page__label--linked {
+  background-color: #fff;
+  border-color: #007bff;
+  color: #007bff;
 }
-.paging__pages__page__label--current{
+.paging__pages__page__label--current {
   background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
 }
 /* Error in card view */
 .error {
@@ -265,7 +270,7 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   font-weight:normal;
 }
 .validation-label__content {
-position: absolute;
+  position: absolute;
   background-color: pink;
   border-radius: 0.3em;
   font-size: 0.75em;

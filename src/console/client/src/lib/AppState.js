@@ -7,6 +7,7 @@ class AppState {
     this.protocols = [];
     this.experimentSummaries = [];
     this.selectedProtocol = null;
+    this.navigationHandler = null;
     
     /* Event handlers */
     this.panelContainer = null;
@@ -30,6 +31,9 @@ class AppState {
       experimentMonitor: null
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
+  }
+  setNavigationHandler (handler) {
+    this.navigationHandler = handler;
   }
   getPanel (panel) {
     return this.viewsMap[panel];
@@ -81,6 +85,7 @@ class AppState {
     this.panelStack.push(panel);
     if (this.panelContainer) {
       this.panelContainer.presentPanel(panel);
+      this._didNavigate();
     } else {
       console.log("PushPanel panelContainer is null.");
     }
@@ -100,6 +105,13 @@ class AppState {
         console.log("onAppear not defined.");
       }
       this.panelContainer.presentPanel(panel);
+      this._didNavigate();
+    }
+  }
+  _didNavigate () {
+    console.log("didNavigate")
+    if (this.navigationHandler) {
+      this.navigationHandler(this.panelStack);
     }
   }
   prepareExperiment (id) {
@@ -114,6 +126,7 @@ class AppState {
     device.start(config);
     this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
   }
+  
   startEditProtocol (id) {
     console.log("AppState.startEditProtocol");
     this._loadProtocol(id, (data)=>{
@@ -121,15 +134,18 @@ class AppState {
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
+  
   startCreateProtocol (id) {
     console.log("AppState.editProtocol");
     this.views.panelProtocolEditor.startCreateProtocol();
     this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
   }
+  
   newProtocol () {
     console.log("AppState.newProtocol");
     
   }
+  
   revealDetailProtocol (id) {
     console.log("AppState.revealDetailProtocol id=%s", id);
     this._loadProtocol(id, (item)=>{
@@ -176,6 +192,7 @@ class AppState {
       }
     );
   }
+  
   // TODO use callback
   fetchExperiments (params, callback, onError) {
     console.log("AppState.fetchExperiments");
@@ -223,7 +240,6 @@ class AppState {
         console.log(error);
       }
     );
-    
   }
   
   // Select protocol for running
@@ -232,7 +248,7 @@ class AppState {
       (data)=>{
         callback(data);
       }, (error)=>{
-        console.log(error);
+        console.error(error);
       }
     );
   }

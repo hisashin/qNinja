@@ -146,19 +146,17 @@ class HardwareConf {
   
     this.lids = [];
     {
-      const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
-        this.adcManager, 
-        ADC_CHANNEL_WELL_THERMISTOR
+      const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES)
       const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_LID_THERMISTOR);
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid1);
       this.lids.push(new HeatUnit(pid, lidSensing, output));
     }
-    shutwodn () {
+  }
+  shutdown () {
       // TODO
       // Shutdown all
-    }
   }
   createPID () {
     return new PID(WELL_KP, WELL_KI, WELL_KD);

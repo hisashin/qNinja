@@ -5,7 +5,7 @@
       <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     </div>
     <nav class="panel-nav">
-      <BackButton />
+      <BackButton v-show="backEnabled" />
     </nav>
     <!-- Panels -->
     <TheDashboard ref="panelDashboard" v-show="selectedPanel==panels.DASHBOARD" />
@@ -59,7 +59,8 @@ export default {
       isIdle:true,
       status:DEVICE_STATUS_IDLE,
       panels:appState.PANELS,
-      selectedPanel:appState.PANELS.DASHBOARD
+      selectedPanel:appState.PANELS.DASHBOARD,
+      backEnabled: false
     }
   },
   created: function () {
@@ -77,7 +78,10 @@ export default {
       onTransition:(obj)=>{
       }
     });
+    appState.setNavigationHandler((panelStack)=>{
+      this.backEnabled = (panelStack.length > 1);
     
+    });
   },
   mounted: function () {
     appState.setViews(this.$refs);
