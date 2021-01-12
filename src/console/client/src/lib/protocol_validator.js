@@ -26,7 +26,6 @@ const RULE_STAGE = {
   repeat: { type:"integer", required:true, min:1, max:255 },
   steps: { type:"array", required:true, min_length:1, max_length:8, rule:RULE_STEP },
   _func: ()=>{}
-  
 };
 const RULE_PROTOCOL = {
   name: { type:"string", required:true, min_length:1, max_length:255 },

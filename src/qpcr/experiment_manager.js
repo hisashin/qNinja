@@ -62,7 +62,7 @@ class ExperimentManager {
     onError);
   }
   
-  generateExperimentSummary (experimentLog) {
+  generateExperimentSummary (experiment) {
     /*
       {
         "id":"037B8ACD-C29E-47FA-A59F-8CDFA3B1D0C8",
@@ -73,28 +73,32 @@ class ExperimentManager {
       }
       */
     return {
-      "id":experimentLog.id,
-      "start":experimentLog.start,
-      "end":experimentLog.end,
+      "id":experiment.id,
+      "start":experiment.start,
+      "end":experiment.end,
       "result_type":1,
-      "protocol_name":experimentLog.protocol.name
+      "protocol_name":experiment.protocol.name
     };
   }
   
   /* Save log */
-  saveExperimentLog (experimentLog, onSuccess, onError) {
-    console.log("ExperimentManager.saveExperimentLog 1");
+  saveExperiment (experiment, onSuccess, onError) {
+    const dateStr = new Date().getTime();
+    experiment.modified = dateStr;
+    experiment.created = dateStr;
+    console.log("ExperimentManager.saveExperiment 1");
     this.getSummaries (null, null, (summaries)=>{
-      console.log("ExperimentManager.saveExperimentLog 2 summaries.length=%d", summaries);
-      summaries.push(this.generateExperimentSummary(experimentLog));
+      console.log("ExperimentManager.saveExperiment 2 summaries.length=%d", summaries);
+      summaries.push(this.generateExperimentSummary(experiment));
       this._saveSummaries(summaries, ()=>{
-        console.log("ExperimentManager.saveExperimentLog 3");
-        const path = this._logPath(experimentLog.id);
-        console.log("ExperimentManager.saveExperimentLog path=%s", path);
-        fs.writeFile(path, JSON.stringify(experimentLog), (err)=>{
-          console.log("ExperimentManager.saveExperimentLog 4");
+        const path = this._logPath(experiment.id);
+        console.log("ExperimentManager.saveExperiment path=%s", path);
+        fs.writeFile(path, JSON.stringify(experiment), (err)=>{
           if (err) {
             console.log(err);
+            onError(err);
+          } else if (onSuccess) {
+            onSuccess();
           }
         });
       }, onError);

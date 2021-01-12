@@ -389,7 +389,9 @@ class NinjaQPCR {
     // Experiment is finished. Note that the thermal cycler is still keeping temp.
     this._setDeviceState(DEVICE_STATE.COMPLETE);
     this.experimentLog.end = new Date().getTime();
-    experimentManager.saveExperimentLog(this.experimentLog, ()=>{}, 
+    experimentManager.saveExperiment(this.experimentLog, ()=>{
+      console.log("Saved.");
+    }, 
     (error)=>{
       console.error(error);
     });

@@ -74,8 +74,10 @@ class Validator {
       }
       let path = this._addPath(parentPath, key);
       const field = rule[key];
-      if (data[key] == null || data[key] == "") {
+      if (data[key] === null || data[key] === "") {
         if (field.required) {
+          console.log("REQUIRED");
+          console.log(data[key])
           errors.push(this._createError("This field is required.", path));
         }
         continue;
