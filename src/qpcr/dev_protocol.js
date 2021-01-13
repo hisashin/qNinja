@@ -24,7 +24,7 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  repeat: 3,
+  repeat: 1,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
     { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
@@ -38,7 +38,7 @@ const example_melt_curve_stage = {
   steps: [
     { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
     { label:"cool", duration:5, temp:DEMO_TEMP_MEDIUM, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"melt", ramp_speed: 0.4, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:true, hold_continuous:false} }
+    { label:"melt", ramp_speed: 1.6, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:true, hold_continuous:false} }
   ]
 };
 

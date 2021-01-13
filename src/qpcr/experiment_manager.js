@@ -5,11 +5,44 @@ const { v4: uuidv4 } = require('uuid');
 const OpticsAnalysis = require("./optics_analysis");
 const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
 
+const DEFAULT_CONF = {
+};
+const DEFAULT_STATUS = {
+  status:"ready"
+  
+};
 class ExperimentManager {
   constructor () {
     this.summaries = null;
   }
   /* API */
+  _createExperiment (option) {
+    const timestamp = new Date().getTime();
+    let experiment = {
+      protocol_id: option.protocol.id,
+      protocol: option.protocol,
+      log: {
+        temp: {
+          time:[],
+          well:[],
+          lid:[]
+        },
+        events: [
+          // transition
+        ],
+        baseline:[], 
+        fluorescence: {
+          baseline: [],
+          qpcr: [],
+          melt_curve: []
+        }
+      },
+      conf: (option.conf)? option.conf : DEFAULT_CONF,
+      status: (option.status)? option.status : DEFAULT_STATUS
+    };
+    experiment.created = timestamp;
+    return experiment;
+  }
   generateExperimentId () {
     return uuidv4();
   }
@@ -32,6 +65,7 @@ class ExperimentManager {
       this.getExperiment(id, onLoad, onError);
     }, onError);
   }
+  // Returns single experiment
   getExperiment (id, onLoad, onError) {
     fs.readFile(this._logPath(id), (err, rawData)=>{
       try {
@@ -43,6 +77,88 @@ class ExperimentManager {
       }
     });
   }
+  // Insert new experiment
+  create (options, callback, onError) {
+    const experiment = this._createExperiment(options);
+    experiment.id = this.generateExperimentId();
+    const filePath = this._experimentDir() + "/" + experiment.id;
+    fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{
+      if (err) {
+        // File system error
+        console.log(err);
+        if (onError) {
+          onError({
+            code: ErrorCode.DataError,
+            message:err.message
+          });
+        }
+      } else {
+        this._updateSummaries(experiment, ()=>{
+          callback(experiment);
+        }, onError);
+      }
+    });
+  }
+  update (experiment, callback, onError) {
+    if (!experiment.id) {
+      console.log("This object is not managed as a database item.");
+      return callback(Experiment);
+    }
+    const filePath = this._experimentDir() + "/" + experiment.id;
+    fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{
+      if (err) {
+        // File system error
+        console.log(err);
+        if (onError) {
+          onError({
+            code: ErrorCode.DataError,
+            message:err.message
+          });
+        }
+      } else {
+        // Add to summary
+        this._updateSummaries(experiment, callback, onError);
+      }
+    });
+  }
+  
+  delete (id, onDelete, onError) {
+  }
+  
+  _updateSummaries (experiment, onSuccess, onError) {
+    this.getSummaries (null, null, (summaries)=>{
+      console.log("ExperimentManager.saveExperiment summaries.length=%d", summaries);
+      // Update
+      let found = false;
+      for (let i=0; i<summaries.length; i++) {
+        let summary = summaries[i];
+        if (summary.id == experiment.id) {
+          console.log("Replace summary. index=%d", i);
+          summaries[i] = this.generateExperimentSummary(experiment);
+          found = true;
+          break;  
+        }
+      }
+      if (!found) {
+        console.log("Adding new item to summaries.");
+        summaries.push(this.generateExperimentSummary(experiment));
+      }
+      console.log("ExperimentManager.saveExperiment summaries.length=%d", summaries);
+      this._saveSummaries(summaries, ()=>{
+        const path = this._logPath(experiment.id);
+        console.log("ExperimentManager.saveExperiment path=%s", path);
+        fs.writeFile(path, JSON.stringify(experiment), (err)=>{
+          if (err) {
+            console.log(err);
+            onError(err);
+          } else if (onSuccess) {
+            onSuccess();
+          }
+        });
+      }, onError);
+    }, onError);
+  }
+  
   getAnalyzedExperimentLog (id, onLoad, onError) {
     this.getExperiment(id, (log)=>{
       const analysis = new OpticsAnalysis(log);
@@ -74,35 +190,11 @@ class ExperimentManager {
       */
     return {
       "id":experiment.id,
-      "start":experiment.start,
-      "end":experiment.end,
+      "start":experiment.status.start,
+      "end":experiment.status.end,
       "result_type":1,
       "protocol_name":experiment.protocol.name
     };
-  }
-  
-  /* Save log */
-  saveExperiment (experiment, onSuccess, onError) {
-    const dateStr = new Date().getTime();
-    experiment.modified = dateStr;
-    experiment.created = dateStr;
-    console.log("ExperimentManager.saveExperiment 1");
-    this.getSummaries (null, null, (summaries)=>{
-      console.log("ExperimentManager.saveExperiment 2 summaries.length=%d", summaries);
-      summaries.push(this.generateExperimentSummary(experiment));
-      this._saveSummaries(summaries, ()=>{
-        const path = this._logPath(experiment.id);
-        console.log("ExperimentManager.saveExperiment path=%s", path);
-        fs.writeFile(path, JSON.stringify(experiment), (err)=>{
-          if (err) {
-            console.log(err);
-            onError(err);
-          } else if (onSuccess) {
-            onSuccess();
-          }
-        });
-      }, onError);
-    }, onError) ;
   }
   
   /* Private */
@@ -122,6 +214,12 @@ class ExperimentManager {
   }
   
   _loadSummaries (onLoad, onError) {
+    if (!fs.existsSync(this._summariesPath())) {
+      // New summary file
+      this.summaries = [];
+      onLoad(this.summaries);
+      return;
+    }
     fs.readFile(this._summariesPath(), (err, rawData)=>{
       try {
         console.log(this._summariesPath())

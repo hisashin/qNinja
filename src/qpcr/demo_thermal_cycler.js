@@ -4,6 +4,8 @@ const NinjaQPCR = require("./ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
 //const protocol = require("./protocol_example");
 const protocol = require("./protocol_thremal_only.js");
+const ExperimentManager = require("./experiment_manager");
+const em = new ExperimentManager();
 
 qpcr.setEventReceiver({
   onProgress:function (data) {
@@ -11,7 +13,8 @@ qpcr.setEventReceiver({
     console.log("%f\t%f", data.well, data.lid);
   }
 });
-qpcr.start(protocol, {});
+const experiment = em._createExperiment({protocol:protocol});
+qpcr.start(experiment);
 
 process.on('SIGINT', () => {
     console.log('Received SIGINT');

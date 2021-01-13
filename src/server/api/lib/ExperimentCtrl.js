@@ -36,7 +36,10 @@ class ExperimentCtrl {
         }
       ]
     };
-    qpcr.start(protocol, {});
+    let experiment = {
+      protocol: protocol
+    };
+    qpcr.start(experiment);
   }
   /* Callback functions */
   onThermalTransition (data) {

@@ -46,8 +46,8 @@ class ProtocolManager {
   }
   // Update existing protocol
   update (content, onUpdate /* (content)=>{} */, onError) {
-    const dateStr = new Date().getTime();
-    content.modified = dateStr;
+    const timestamp = new Date().getTime();
+    content.modified = timestamp;
     const filePath = this._protocolDir() + "/" + content.id;
     const errors = this.validator.validate(content.protocol);
     if (errors.length > 0) {

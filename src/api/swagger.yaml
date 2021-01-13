@@ -383,8 +383,18 @@ definitions:
   Experiment:
     type: object
     properties:
+      id:
+        type: string
+        example: 15644F61-CBFC-4876-8DD4-1325269AB2DA
       name:
         type: string
+      protocol:
+        type: object
+        $ref: '#/definitions/Protocol'
+      log:
+        type: object
+      status:
+        type: object
   Progress:
     type: object
   Protocol:

@@ -171,9 +171,13 @@ class NinjaQPCRHTTPServer {
     router.addPath("/protocols/{pid}", "PUT", this.protocolUpdate());
     router.addPath("/protocols/{pid}", "DELETE", this.protocolDelete());
     router.addPath("/protocols/validate", "PUT", this.protocolValidate());
+    
     router.addPath("/experiments", "GET", this.experiments());
+    router.addPath("/experiments", "POST", this.experimentCreate());
     router.addPath("/experiments/latest", "GET", this.experimentLatest());
-    router.addPath("/experiments/{lid}", "GET", this.experimentGet());
+    router.addPath("/experiments/{eid}", "GET", this.experimentGet());
+    router.addPath("/experiments/{eid}", "PUT", this.experimentUpdate());
+    router.addPath("/experiments/{eid}", "DELETE", this.experimentDelete());
     
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
@@ -276,22 +280,26 @@ class NinjaQPCRHTTPServer {
     };
   }
   
-  /* Protocols */
-  _handlePmError (req, res, pmErr) {
+  /* 
+    Handle errors
+    - Response with error code
+    - Add error message or error detail object
+   */
+  _handleError (req, res, err) {
     let errorCode = 500;
-    let obj = {message:pmErr.message};
-    if (pmErr.code == ErrorCode.NotFound) {
+    let obj = {message:err.message};
+    if (err.code == ErrorCode.NotFound) {
       errorCode = 404;
     }
-    if (pmErr.code == ErrorCode.DataError) {
+    if (err.code == ErrorCode.DataError) {
       errorCode = 400;
     }
-    if (pmErr.code == ErrorCode.BadRequest) {
+    if (err.code == ErrorCode.BadRequest) {
       errorCode = 500;
     }
-    if (pmErr.code == ErrorCode.InvalidData) {
+    if (err.code == ErrorCode.InvalidData) {
       errorCode = 422;
-      obj.data = pmErr.data;
+      obj.data = err.data;
     }
     res.writeHead(errorCode, {'Content-Type': 'application/json'});
     res.write(JSON.stringify(obj));
@@ -308,7 +316,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (pmErr)=>{
-        this._handlePmError(req, res, pmErr);
+        this._handleError(req, res, pmErr);
       });
     };
   }
@@ -323,7 +331,7 @@ class NinjaQPCRHTTPServer {
           res.write(JSON.stringify(item));
           res.end();
         }, (pmErr)=>{
-          this._handlePmError(req, res, pmErr);
+          this._handleError(req, res, pmErr);
         });
       });
     }
@@ -339,7 +347,7 @@ class NinjaQPCRHTTPServer {
           res.write(JSON.stringify(item));
           res.end();
         }, (pmErr)=>{
-          this._handlePmError(req, res, pmErr);
+          this._handleError(req, res, pmErr);
         });
       });
     }
@@ -356,7 +364,7 @@ class NinjaQPCRHTTPServer {
           res.write(JSON.stringify(result));
           res.end();
         }, (pmErr)=>{
-          this._handlePmError(req, res, pmErr);
+          this._handleError(req, res, pmErr);
         });
       });
     }
@@ -370,7 +378,7 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (pmErr)=>{
-        this._handlePmError(req, res, pmErr);
+        this._handleError(req, res, pmErr);
       });
     };
   }
@@ -383,13 +391,12 @@ class NinjaQPCRHTTPServer {
         res.end();
       },
       (pmErr)=>{
-        this._handlePmError(req, res, pmErr);
+        this._handleError(req, res, pmErr);
       });
     };
     
   }
   
-  // TODO 
   experiments () {
     return (req, res, map)=>{
       em.getSummaries({}, {}, (summaries)=>{
@@ -416,9 +423,10 @@ class NinjaQPCRHTTPServer {
       });
     };
   }
+  
   experimentGet () {
     return (req, res, map)=>{
-      em.getAnalyzedExperimentLog(map.lid, (experiment)=>{
+      em.getAnalyzedExperimentLog(map.eid, (experiment)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(experiment));
         res.end();
@@ -427,6 +435,52 @@ class NinjaQPCRHTTPServer {
         this.error500(req, res, err);
       });
     };
+  }
+  
+  experimentCreate () {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("experimentCreate received data.");
+        const experiment = JSON.parse(rawData); // Experiment body
+        em.create(experiment, (createdItem)=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.write(JSON.stringify(createdItem));
+          res.end();
+        }, (err)=>{
+          this._handleError(req, res, err);
+        });
+      });
+    }
+    
+  }
+  experimentUpdate () {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("protocolUpdate received data.");
+        const content = JSON.parse(rawData);
+        em.update(content, (updatedItem)=>{
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.write(JSON.stringify(updatedItem));
+          res.end();
+        }, (err)=>{
+          this._handleError(req, res, err);
+        });
+      });
+    }
+    
+  }
+  experimentDelete () {
+    return (req, res, map)=>{
+      em.delete(map.eid, ()=>{
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        // Empty response.
+        res.end();
+      },
+      (err)=>{
+        this._handleError(req, res, err);
+      });
+    };
+    
   }
   error404 (req, res) {
     res.writeHead(404,{'Content-Type': 'application/json'});
@@ -489,7 +543,11 @@ class NinjaQPCRWebSocketServer {
     }
   }
   start (experimentConf) {
-    qpcr.start(this.protocol, experimentConf);
+    const experiment = em._createExperiment({
+      protocol: this.protocol,
+      conf: experimentConf
+    });
+    qpcr.start(experiment);
     this.isRunning = true;
   }
   pause () {

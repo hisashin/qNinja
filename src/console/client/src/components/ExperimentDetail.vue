@@ -129,14 +129,12 @@ export default {
       console.log("setExperiment");
       console.log(this.$refs);
       setTimeout(()=>{
-        this.$refs.temperatureMonitor.set(experiment.temp.time, experiment.temp.well, experiment.temp.lid);
-        this.$refs.fluorescenceMonitor.set(experiment.fluorescence.qpcr);
+        this.$refs.temperatureMonitor.set(experiment.log.temp.time, experiment.temp.well, experiment.log.temp.lid);
+        this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
         this.$refs.protocolDetail.setProtocol(experiment.protocol);
         }, 1000);
       this.experiment = experiment;
-      // this.$refs.temperatureMonitor.set(experiment.temp.time, experiment.temp.well, experiment.temp.lid);
       this.updateTubesLayout();
-      // this.$refs.meltCurveMonitor.set(this.experiment.melt_curve);
     }
   }
 }
