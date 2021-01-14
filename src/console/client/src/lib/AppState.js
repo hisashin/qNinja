@@ -21,7 +21,8 @@ class AppState {
       EXPERIMENT_EDITOR:5,
       EXPERIMENT_LIST:6,
       EXPERIMENT_DETAIL:7,
-      EXPERIMENT_MONITOR:8
+      EXPERIMENT_MONITOR:8,
+      TEMPLATE:9
     };
     this.views = {
       protocolDetail: null,
@@ -69,6 +70,7 @@ class AppState {
     this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
+    this.viewsMap[this.PANELS.TEMPLATE] = this.views.panelTemplate;
     this.views.panelDashboard.onAppear();
 
   }
@@ -117,7 +119,9 @@ class AppState {
   prepareExperiment (id) {
     console.log("AppState.prepareExperiment");
     this._loadProtocol(id, (data)=>{
-      this.views.panelExperimentEditor.startEditProtocol(data.protocol);
+      console.log("loadProtocol  callback");
+      console.log(data)
+      this.views.panelExperimentEditor.startCreateExperiment(data);
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
   }
