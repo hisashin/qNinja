@@ -5,6 +5,9 @@ const qpcr = new NinjaQPCR("hardware.json");
 // const protocol = require("./protocol_example");
 const protocol = require("./dev_protocol");
 
+const ExperimentManager = require("./experiment_manager");
+const em = new ExperimentManager();
+
 const experimentConf = 
 {
   name: "Example Name",
@@ -20,14 +23,30 @@ const experimentConf =
   ]
 };
 
+const NO_SAVE = false;
+
 /* Implementation example */
 class NinjaQPCRDemo {
   constructor  () {
   }
   start () {
     qpcr.setEventReceiver(this);
-    qpcr.start(protocol, experimentConf);
-    this.isRunning = true;
+    const option = {
+      protocol: protocol,
+      conf: experimentConf
+    };
+    if (NO_SAVE) {
+      const experiment = em._createExperiment(option);
+      qpcr.start(experiment);
+      this.isRunning = true;
+    } else {
+      em.create(option, (experiment)=>{
+        qpcr.start(experiment);
+        this.isRunning = true;
+      }, (err)=>{
+        console.error(err);
+      })
+    }
     /*
     // Polling
      setInterval(()=>{ console.log(qpcr.getDeviceState()); }, 1000);

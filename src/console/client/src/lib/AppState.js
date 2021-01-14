@@ -21,7 +21,8 @@ class AppState {
       EXPERIMENT_EDITOR:5,
       EXPERIMENT_LIST:6,
       EXPERIMENT_DETAIL:7,
-      EXPERIMENT_MONITOR:8
+      EXPERIMENT_MONITOR:8,
+      TEMPLATE:9
     };
     this.views = {
       protocolDetail: null,
@@ -40,7 +41,6 @@ class AppState {
   }
   
   init () {
-    console.log("AppState.init");
     /* HTTP request methods */
     Util.requestData("device", null, "GET", 
       (data)=>{
@@ -69,44 +69,61 @@ class AppState {
     this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
+    this.viewsMap[this.PANELS.TEMPLATE] = this.views.panelTemplate;
     this.views.panelDashboard.onAppear();
 
   }
   
   /* Public methods */
+  
+  // Returns current panel component
   pushPanel (panel) {
-    const toPanel = this.getPanel(panel);
-    location.href=("#" + Math.random())
-    if (toPanel && toPanel.onAppear) {
-      toPanel.onAppear();
-    } else {
-      console.log("onAppear not defined.");
-    }
-    this.panelStack.push(panel);
-    if (this.panelContainer) {
-      this.panelContainer.presentPanel(panel);
-      this._didNavigate();
-    } else {
-      console.log("PushPanel panelContainer is null.");
-    }
-  }
-  backPanel () {
-    if (this.panelStack.length < 2) {
-      return;
-    }
-    this.panelStack.pop();
-    console.log(this.panelStack)
-    if (this.panelContainer) {
-      const panel = this.panelStack[this.panelStack.length-1];
+    this._confirmLeavePanel(()=>{
       const toPanel = this.getPanel(panel);
       if (toPanel && toPanel.onAppear) {
         toPanel.onAppear();
       } else {
         console.log("onAppear not defined.");
       }
-      this.panelContainer.presentPanel(panel);
-      this._didNavigate();
+      this.panelStack.push(panel);
+      if (this.panelContainer) {
+        this.panelContainer.presentPanel(panel);
+        this._didNavigate();
+      } else {
+        console.log("PushPanel panelContainer is null.");
+      }
+    });
+  }
+  backPanel () {
+    if (this.panelStack.length < 2) {
+      return;
     }
+    this._confirmLeavePanel(()=>{
+      this.panelStack.pop();
+      if (this.panelContainer) {
+        const panel = this.panelStack[this.panelStack.length-1];
+        const toPanel = this.getPanel(panel);
+        if (toPanel && toPanel.onAppear) {
+          toPanel.onAppear();
+        } else {
+          console.log("onAppear not defined.");
+        }
+        this.panelContainer.presentPanel(panel);
+        this._didNavigate();
+      }
+    });
+  }
+  // Call custom confirmation handler and wait for its result.
+  _confirmLeavePanel (callback) {
+    const fromPanel = this._currentPanel();
+    if (fromPanel.confirmLeave) {
+      fromPanel.confirmLeave(callback);
+    } else {
+      callback();
+    }
+  }
+  _currentPanel () {
+    return this.getPanel(this.panelStack[this.panelStack.length-1]);
   }
   _didNavigate () {
     console.log("didNavigate")
@@ -117,7 +134,9 @@ class AppState {
   prepareExperiment (id) {
     console.log("AppState.prepareExperiment");
     this._loadProtocol(id, (data)=>{
-      this.views.panelExperimentEditor.startEditProtocol(data.protocol);
+      console.log("loadProtocol  callback");
+      console.log(data)
+      this.views.panelExperimentEditor.startCreateExperiment(data);
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
   }

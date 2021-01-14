@@ -31,7 +31,7 @@ class ProtocolManager {
   getProtocol (id, callback, onError) {
     this._getProtocol (id, callback, onError);
   }
-  
+  // Insert new protocol
   create (protocol, onSuccess, onError) {
     // Assign ID
     const errors = this.validator.validate(protocol);
@@ -41,11 +41,13 @@ class ProtocolManager {
     }
     const item = this._createProtocol();
     item.protocol = protocol;
+    item.created = new Date().getTime();
     this.update(item, onSuccess, onError);
   }
+  // Update existing protocol
   update (content, onUpdate /* (content)=>{} */, onError) {
-    const dateStr = new Date().getTime();
-    content.modified = dateStr;
+    const timestamp = new Date().getTime();
+    content.modified = timestamp;
     const filePath = this._protocolDir() + "/" + content.id;
     const errors = this.validator.validate(content.protocol);
     if (errors.length > 0) {

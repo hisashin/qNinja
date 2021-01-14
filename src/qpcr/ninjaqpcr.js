@@ -91,17 +91,17 @@ class NinjaQPCR {
     }
   }
   */
-  start (protocol, experimentConf) {
+  start (experiment) {
     if (!this.deviceState.startAvailable) {
       console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
       return false;
     }
-    this.experimentConf = experimentConf;
+    this.experimentLog = experiment;
+    this.experimentConf = experiment.conf;
     this._setDeviceState(DEVICE_STATE.RUNNING);
-    this.protocol = protocol;
+    this.protocol = experiment.protocol;
     this.startTimestamp = new Date();
-    this.experimentLog = this._createExperimentLog(protocol);
-    this.thermalCycler.start(protocol);
+    this.thermalCycler.start(this.protocol);
     this.optics.start();
     this.onStart();
     this.analysis = new OpticsAnalysis(this.experimentLog);
@@ -187,28 +187,6 @@ class NinjaQPCR {
   }
   
   /* Private */
-  _createExperimentLog (protocol) {
-    let experimentLog = {
-      id: experimentManager.generateExperimentId(),
-      protocol_id: protocol.id,
-      protocol: protocol,
-      temp: {
-        time:[],
-        well:[],
-        lid:[]
-      },
-      events: [
-        // transition
-      ],
-      baseline:[], 
-      fluorescence: {
-        baseline: [],
-        qpcr: [],
-        melt_curve: []
-      }
-    };
-    return experimentLog;
-  }
   _addFluorescenceQPCRLog (step, values) {
     let data = {
         t:this.getExperimentElapsedTime(),
@@ -218,7 +196,7 @@ class NinjaQPCR {
         step:step.step
     };
     // console.log("_addFluorescenceQPCRLog " + JSON.stringify(data));
-    this.experimentLog.fluorescence.qpcr.push(data);
+    this.experimentLog.log.fluorescence.qpcr.push(data);
     return data;
   }
   _addFluorescenceMeltCurveLog (step, values) {
@@ -228,7 +206,7 @@ class NinjaQPCR {
         temp:this.progress.well
     };
     // console.log("_addFluorescenceMeltCurveLog " + JSON.stringify(data));
-    this.experimentLog.fluorescence.melt_curve.push(data);
+    this.experimentLog.log.fluorescence.melt_curve.push(data);
     return data;
   }
   _getStep (state) {
@@ -246,7 +224,7 @@ class NinjaQPCR {
   onThermalTransition (data) {
     const from = this._getStep(data.from);
     const to = this._getStep(data.to);
-    this.experimentLog.events.push(data.to);
+    this.experimentLog.log.events.push(data.to);
     this.optics.stopContinuousDataCollection();
     if (data.from.state == 'ramp') {
       if (from != null && from.data_collection != null && from.data_collection.ramp_end==true) {
@@ -324,9 +302,9 @@ class NinjaQPCR {
   }
   
   onProgress (data) {
-    this.experimentLog.temp.time.push(this.getExperimentElapsedTime());
-    this.experimentLog.temp.well.push(data.well);
-    this.experimentLog.temp.lid.push(data.lid);
+    this.experimentLog.log.temp.time.push(this.getExperimentElapsedTime());
+    this.experimentLog.log.temp.well.push(data.well);
+    this.experimentLog.log.temp.lid.push(data.lid);
     this.progress = data;
     data.elapsed = this.getExperimentElapsedTime();
     if (this.receiver != null && this.receiver.onProgress) {
@@ -372,7 +350,7 @@ class NinjaQPCR {
   
   /* Misc */
   onStart () {
-    this.experimentLog.start = new Date().getTime();
+    this.experimentLog.status.start = new Date().getTime();
     const data = {
       id:this.experimentLog.id,
       protocol:this.protocol
@@ -388,8 +366,11 @@ class NinjaQPCR {
   onComplete () {
     // Experiment is finished. Note that the thermal cycler is still keeping temp.
     this._setDeviceState(DEVICE_STATE.COMPLETE);
-    this.experimentLog.end = new Date().getTime();
-    experimentManager.saveExperimentLog(this.experimentLog, ()=>{}, 
+    this.experimentLog.status.status = "finished";
+    this.experimentLog.status.end = new Date().getTime();
+    experimentManager.update(this.experimentLog, ()=>{
+      console.log("Saved.");
+    }, 
     (error)=>{
       console.error(error);
     });

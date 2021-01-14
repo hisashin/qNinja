@@ -319,6 +319,9 @@
                   Add
                 </b-button>
               </li>
+              <li class="protocol-stage">
+                <!-- Footer empty cell -->
+              </li>
             </ul>
           </div>
           <!-- Protocol End -->
@@ -362,8 +365,8 @@ import appState from "../../lib/AppState.js";
 import Constants from "../../lib/constants.js";
 
 // const PROJ_ROOT_DIR = "../../../../../../";
-// import validator from "../../../../../qpcr/protocol_validator.js";
-import validator from "../../lib/protocol_validator.js";
+import validator from "qpcr/protocol_validator.js";
+// import validator from "../../lib/protocol_validator.js";
 
 let LABEL_MAP = {};
 LABEL_MAP[Constants.StageType.HOLD] = "Hold";
@@ -420,7 +423,6 @@ export default {
   },
   watch: {
     protocol: function (val) {
-      console.log("Protocol changed.");
     }
   },
   methods: {
@@ -544,6 +546,11 @@ export default {
           this.validateProtocol();
         }
       }, 350);
+    },
+    confirmLeave (callback) {
+      if (window.confirm("Are you sure you want to discard the changes?")) {
+        callback();
+      }
     }
   }
 }

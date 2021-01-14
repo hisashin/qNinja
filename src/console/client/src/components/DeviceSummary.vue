@@ -41,7 +41,6 @@ export default {
     }
   },
   created: function () {
-    console.log("DeviceSummary.created");
     this.device = device;
     this.device.addConnectionEventHandler(this);
     this.deviceState = this.device.getDeviceState();

@@ -16,6 +16,14 @@
     <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
     <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
     <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
+    <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
+    <div>
+    (Dev)
+      <b-button
+        @click.stop="showTemplate">
+        Panel Template
+      </b-button>
+    </div>
   </main>
 </template>
 <script>
@@ -30,6 +38,7 @@ import TheExperimentList from './panels/TheExperimentList.vue'
 import TheProtocolDetail from './panels/TheProtocolDetail.vue'
 import TheProtocolEditor from './panels/TheProtocolEditor.vue'
 import TheProtocolList from './panels/TheProtocolList.vue'
+import PanelTemplate from './panels/PanelTemplate.vue'
 
 import BackButton from './BackButton.vue';
 
@@ -51,6 +60,7 @@ export default {
     TheExperimentMonitor,
     TheExperimentEditor,
     TheProtocolEditor,
+    PanelTemplate,
     DeviceSummary,
     BackButton
   },
@@ -90,6 +100,10 @@ export default {
   methods: {
     presentPanel(panel) {
       this.selectedPanel = panel;
+    },
+    showTemplate () {
+      appState.pushPanel(appState.PANELS.TEMPLATE);
+      
     }
   }
 }

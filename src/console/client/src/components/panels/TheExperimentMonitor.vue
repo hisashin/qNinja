@@ -70,7 +70,6 @@ export default {
     };
   },
   created: function () {
-    console.log("TheExperimentMonitor.created");
     device.addTransitionHandler({
       onStart: (obj)=>{
         startTime = new Date();

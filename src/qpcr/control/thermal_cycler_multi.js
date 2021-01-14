@@ -128,7 +128,7 @@ class ThermalCycler {
   finish () {
     this._stopTimer();
     this.well.off();
-    for (let lid of this.headLids) {
+    for (let lid of this.heatLids) {
       lid.off();
     }
     
@@ -151,7 +151,7 @@ class ThermalCycler {
     // TODO: different intervals for different units!
     this.well.control();
     if (this.protocol.lid_temp > 0) {
-      for (let lid of this.headLids) {
+      for (let lid of this.heatLids) {
         lid.control();
       }
     }
@@ -165,7 +165,9 @@ class ThermalCycler {
       
       let lidTargetTemp = this.state.lidTargetTemp();
       if (lidTargetTemp != null) {
-        this.heatLid.setTargetTemperature(lidTargetTemp);
+        for (let lid of this.heatLids) {
+          lid.setTargetTemperature(lidTargetTemp);
+        }
       }
       this.state.start(now);
       const from = this.stateFrom.getStatus();
@@ -197,15 +199,24 @@ class ThermalCycler {
     // TODO: define data format
     return {
       well: round(this.well.temperature, 2),
-      lid: round(this.heatLid.temperature, 2),
+      lid: round(this.getLidTemp(), 2),
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
   }
+  getLidTemp () {
+    let sum = 0;
+    for (let lid of this.heatLids) {
+      sum += lid.temperature;
+    }
+    return sum / this.heatLids.length;
+  }
   shutdown () {
     console.log("ThermalCycler.shutdown()");
     this.well.shutdown();
-    this.heatLid.shutdown();
+    for (let lid of this.heatLids) {
+      lid.shutdown();
+    }
   }
 }
 function round (value, position) {
