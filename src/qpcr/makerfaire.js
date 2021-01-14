@@ -15,6 +15,6 @@ const CHANNELS = [
 
 let channelIndex = 0;
 setInterval(()=>{
-  led.selectChannel(CHANNELS[channelIndex]);
+  led.select(CHANNELS[channelIndex]);
   channelIndex = (channelIndex + 1) % CHANNELS.length;
 }, INTERVAL);

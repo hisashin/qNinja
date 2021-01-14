@@ -97,7 +97,7 @@ class LEDUnit {
     // Nothing to do
     
   }
-  selectChannel (channel) {
+  select (well) {
     // Nothing to do
   }
   off () {
@@ -151,7 +151,7 @@ class DummyFluorescenceSensingUnit {
     const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
     return amplification + background;
   }
-  measure(well, callback) {
+  measure(wellIndex, callback) {
     let value = 0;
     if (this.debugValue != null) {
       if (this.debugValue.type == 3) {
@@ -159,13 +159,13 @@ class DummyFluorescenceSensingUnit {
         // TODO simulate melt curve
         const high = this.debugValue.high;
         const temperature = this.debugValue.currentTemp;
-        value = this._getDummyMeltCurve(this.dummyValues[well.index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+        value = this._getDummyMeltCurve(this.dummyValues[wellIndex], this.debugValue.current, this.debugValue.high, this.debugValue.low);
       } else {
-        value = this._getDummyAmplification(well.index, this.debugValue.repeat);
-        while (this.dummyValues.length <= well.index) {
+        value = this._getDummyAmplification(wellIndex, this.debugValue.repeat);
+        while (this.dummyValues.length <= wellIndex) {
           this.dummyValues.push(0);
         }
-        this.dummyValues[well.index] = value;
+        this.dummyValues[wellIndex] = value;
         
       }
     } else {

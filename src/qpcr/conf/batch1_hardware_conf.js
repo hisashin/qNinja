@@ -175,9 +175,9 @@ class LEDUnit {
   start () {
     this.ledDriver.start();
   }
-  selectChannel (channel) {
+  select (wellIndex) {
     this.ledDriver.setDuty(0.5);
-    this.ledDriver.selectChannel(channel);
+    this.ledDriver.selectChannel(wellIndex);
   }
   off () {
     this.ledDriver.setDuty(0);
@@ -195,8 +195,8 @@ class FluorescenceSensingUnit {
     mux.initialize();
   }
   off () {}
-  select (well) {
-    mux.selectChannel(well.index);
+  select (wellIndex) {
+    mux.selectChannel(wellIndex);
   }
   measure(well, callback) {
     adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{

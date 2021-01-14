@@ -210,11 +210,11 @@ class LEDUnit {
     console.log("LEDUnit.start()");
     this.pot.initialize();
   }
-  selectChannel (channel) {
+  select (wellIndex) {
     rpio.write(PIN_NUM_SPI_SWITCH, rpio.LOW);
     this.pot.setWiper(0);
     this.flg = !this.flg;
-    this.ledDriver.selectChannel(channel);
+    this.ledDriver.selectChannel(wellIndex);
     // Nothing to do
   }
   off () {
@@ -235,9 +235,9 @@ class FluorescenceSensingUnit {
   start () {
     // Do nothing. Assume that adc and mux are already up.
   }
-  select (well) {
+  select (wellIndex) {
     // TODO: use channel mapping
-    this.mux.selectChannel(well.index);
+    this.mux.selectChannel(wellIndex);
   }
   measure(well, callback) {
     adcManager.readChannelValue(adcChannel, (val)=>{

@@ -75,14 +75,14 @@ class Optics {
     }
     this.isMeasuring = true;
   }
-  selectWell (well) {
-    this.ledUnit.selectChannel(well);
-    this.fluorescenceSensingUnit.select(well);
+  selectWell (/* Well object */well) {
+    this.ledUnit.select(well.index);
+    this.fluorescenceSensingUnit.select(well.index);
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
-  measureFluorescence (well) {
+  measureFluorescence (/* Well object */well) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
-    this.fluorescenceSensingUnit.measure(well, (measurement)=>{
+    this.fluorescenceSensingUnit.measure(well.index, (measurement)=>{
       this.values.push(measurement);
       if (well.index == this.wellsCount - 1) {
         // Last well
