@@ -319,6 +319,9 @@
                   Add
                 </b-button>
               </li>
+              <li class="protocol-stage">
+                <!-- Footer empty cell -->
+              </li>
             </ul>
           </div>
           <!-- Protocol End -->
