@@ -41,7 +41,6 @@ class AppState {
   }
   
   init () {
-    console.log("AppState.init");
     /* HTTP request methods */
     Util.requestData("device", null, "GET", 
       (data)=>{

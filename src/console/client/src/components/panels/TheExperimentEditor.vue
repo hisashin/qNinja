@@ -7,7 +7,11 @@
         <div class="section__header__menu"></div>
       </header>
       <div class="section__body">
-        <ProtocolDetail ref="protocolDetail" />
+        <div class="item item--detail-card">
+          <div class="item--detail-card__body">
+            <ProtocolDetail ref="protocolDetail" />
+          </div>
+        </div>
       </div>
     </section>
     <section class="section">
@@ -35,6 +39,16 @@ import ProtocolDetail from '../ProtocolDetail.vue';
 
 
 const DEFAULT_CONF = {
+  tubes: [
+    { id:0, label:"Sample A", quantity:0.1 },
+    { id:1, label:"Sample B", quantity:0.2 },
+    { id:2, label:"Sample C", quantity:0.3 },
+    { id:3, label:"Sample D", quantity:0.4 },
+    { id:4, label:"Sample E", quantity:0.5 },
+    { id:5, label:"Sample F", quantity:0.6 },
+    { id:6, label:"Sample G", quantity:0.7 },
+    { id:7, label:"Sample H", quantity:0.8 }
+  ]
 };
 const DEFAULT_STATUS = {
   status:"ready"

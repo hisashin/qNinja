@@ -6,16 +6,7 @@ const OpticsAnalysis = require("./optics_analysis");
 const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
 
 const DEFAULT_CONF = {
-};
-const DEFAULT_STATUS = {
-  status:"ready"
-  
-};
-/*
-const experimentConf = 
-{
-  name: "Example Name",
-  wells: [
+  tubes: [
     { id:0, label:"Sample A", quantity:0.1 },
     { id:1, label:"Sample B", quantity:0.2 },
     { id:2, label:"Sample C", quantity:0.3 },
@@ -26,7 +17,10 @@ const experimentConf =
     { id:7, label:"Sample H", quantity:0.8 }
   ]
 };
-*/
+const DEFAULT_STATUS = {
+  status:"ready"
+  
+};
 class ExperimentManager {
   constructor () {
     this.summaries = null;

@@ -1,13 +1,74 @@
 <template>
   <div v-if="experiment!=null">
-    <div class="card">
-      <div class="card-header">
-        Experiment Detail
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Experiment Detail</h2>
+      </header>
+      <div class="section__body">
+        <p class="item item--paragraph">
+          ID={{experiment.id}}
+        </p>
       </div>
-      <div class="p-3">
-        {{experiment.id}}
+    </section>
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Protocol</h2>
+      </header>
+      <div class="section__body">
+        <div class="item item--detail-card">
+          <div class="item--detail-card__body">
+            <ProtocolDetail ref="protocolDetail" />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Plate layout</h2>
+      </header>
+      <div class="section__body">
+        <div class="item item--detail-card">
+          <div class="item--detail-card__body">
+            <table class="tubes_layout">
+              <tr v-for="(row, row_index) in tubes_layout" v-bind:key="row_index">
+                <td v-for="(tube, tube_index) in row" v-bind:key="tube_index">
+                  {{ tube.name }}
+                </td>
+              </tr>
+            </table>
+            
+            <table class="tubes_conf">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Label</th>
+              </tr>
+              <tr v-for="(item, index) in experiment.conf.tubes" v-bind:key="index">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.label }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Log</h2>
+      </header>
+      <div class="section__body">
+        <FluorescenceMonitor ref="fluorescenceMonitor" />
+        <TemperatureMonitor ref="temperatureMonitor" />
+        <MeltCurveMonitor ref="meltCurveMonitor" />
+      </div>
+    </section>
+    
     <h2>Analysis config</h2>
     <!-- mockup -->
     <section>
@@ -30,58 +91,6 @@
         <li class="radio_list__item"><input type="radio" name="threshold_alg" value="manual"/>Manual</li>
       </ul>
     </section>
-    <section>
-      <h3>Tubes</h3>
-      <div>
-        <table class="tubes_layout">
-          <tr v-for="(row, row_index) in tubes_layout" v-bind:key="row_index">
-            <td v-for="(tube, tube_index) in row" v-bind:key="tube_index">
-              {{ tube.name }}
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        {{ device_conf_raw }}
-        <table class="tubes_conf">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Label</th>
-          </tr>
-          <tr v-for="(item, index) in experiment.analysis_config.tubes" v-bind:key="index">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.label }}</td>
-          </tr>
-        </table>
-      </div>
-    </section>
-    <h2>(TODO) Protocol Detail</h2>
-    <div>
-      <ProtocolDetail ref="protocolDetail" />
-    </div>
-    <h2>qPCR Fluorescence Chart</h2>
-    <div>
-      <FluorescenceMonitor ref="fluorescenceMonitor" />
-    </div>
-    <h2>Temperature Chart</h2>
-    <div>
-      <TemperatureMonitor ref="temperatureMonitor" />
-    </div>
-    <h2>(TODO) Melt Curve Chart</h2>
-    <div>
-      <MeltCurveMonitor ref="meltCurveMonitor" />
-    </div>
-    <h2>(TODO) Standard Curve</h2>
-    <h2> Ct</h2>
-    <div>
-    {{ experiment.ct }}
-    </div>
   </div>
 </template>
 
@@ -104,9 +113,11 @@ export default {
   },
   data() {
     return {
-      experiment:null,
+      experiment:{
+        protocol:{}
+      },
       device_conf:device.config,
-      device_conf_raw:JSON.stringify(device.config),
+      device_conf_raw:JSON.stringify(device.conf),
       tubes_layout:[[]]
     }
   },
@@ -116,22 +127,22 @@ export default {
   },
   methods: {
     updateTubesLayout: function () {
-      const layout = device.config.tubes.layout;
+      const layout = device.conf.tubes.layout;
       this.tubes_layout = layout.map((row)=>{
         return row.map((tubeId)=>{
           let tube = this.experiment.analysis_config.tubes[tubeId];
-          tube.name = device.config.tubes.names[tubeId];
+          tube.name = device.conf.tubes.names[tubeId];
           return tube;
         });
       });
     },
     setExperiment: function (experiment) {
-      console.log("setExperiment");
-      console.log(this.$refs);
+      console.log("ExperimentDetail.setExperiment");
       setTimeout(()=>{
+        console.log("timeout.")
+        this.$refs.protocolDetail.setProtocol(experiment.protocol);
         this.$refs.temperatureMonitor.set(experiment.log.temp.time, experiment.temp.well, experiment.log.temp.lid);
         this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
-        this.$refs.protocolDetail.setProtocol(experiment.protocol);
         }, 1000);
       this.experiment = experiment;
       this.updateTubesLayout();

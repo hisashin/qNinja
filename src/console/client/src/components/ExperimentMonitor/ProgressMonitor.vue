@@ -120,7 +120,6 @@ export default {
   },
   created: function () {
     this.protocol = device.getProtocol();
-    console.log("ProgressMonitor.created");
     console.log(this.protocol)
     device.addTransitionHandler({
       onStart:(obj)=>{
