@@ -107,6 +107,11 @@ export default {
     },
     submitUpdateExperiment () {
     
+    },
+    confirmLeave (callback) {
+      if (window.confirm("Are you sure you want to discard the changes?")) {
+        callback();
+      }
     }
   }
 }

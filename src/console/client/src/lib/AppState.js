@@ -76,39 +76,55 @@ class AppState {
   }
   
   /* Public methods */
+  
+  // Returns current panel component
   pushPanel (panel) {
-    const toPanel = this.getPanel(panel);
-    location.href=("#" + Math.random())
-    if (toPanel && toPanel.onAppear) {
-      toPanel.onAppear();
-    } else {
-      console.log("onAppear not defined.");
-    }
-    this.panelStack.push(panel);
-    if (this.panelContainer) {
-      this.panelContainer.presentPanel(panel);
-      this._didNavigate();
-    } else {
-      console.log("PushPanel panelContainer is null.");
-    }
-  }
-  backPanel () {
-    if (this.panelStack.length < 2) {
-      return;
-    }
-    this.panelStack.pop();
-    console.log(this.panelStack)
-    if (this.panelContainer) {
-      const panel = this.panelStack[this.panelStack.length-1];
+    this._confirmLeavePanel(()=>{
       const toPanel = this.getPanel(panel);
       if (toPanel && toPanel.onAppear) {
         toPanel.onAppear();
       } else {
         console.log("onAppear not defined.");
       }
-      this.panelContainer.presentPanel(panel);
-      this._didNavigate();
+      this.panelStack.push(panel);
+      if (this.panelContainer) {
+        this.panelContainer.presentPanel(panel);
+        this._didNavigate();
+      } else {
+        console.log("PushPanel panelContainer is null.");
+      }
+    });
+  }
+  backPanel () {
+    if (this.panelStack.length < 2) {
+      return;
     }
+    this._confirmLeavePanel(()=>{
+      this.panelStack.pop();
+      if (this.panelContainer) {
+        const panel = this.panelStack[this.panelStack.length-1];
+        const toPanel = this.getPanel(panel);
+        if (toPanel && toPanel.onAppear) {
+          toPanel.onAppear();
+        } else {
+          console.log("onAppear not defined.");
+        }
+        this.panelContainer.presentPanel(panel);
+        this._didNavigate();
+      }
+    });
+  }
+  // Call custom confirmation handler and wait for its result.
+  _confirmLeavePanel (callback) {
+    const fromPanel = this._currentPanel();
+    if (fromPanel.confirmLeave) {
+      fromPanel.confirmLeave(callback);
+    } else {
+      callback();
+    }
+  }
+  _currentPanel () {
+    return this.getPanel(this.panelStack[this.panelStack.length-1]);
   }
   _didNavigate () {
     console.log("didNavigate")

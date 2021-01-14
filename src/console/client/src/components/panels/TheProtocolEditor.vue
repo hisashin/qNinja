@@ -420,7 +420,6 @@ export default {
   },
   watch: {
     protocol: function (val) {
-      console.log("Protocol changed.");
     }
   },
   methods: {
@@ -544,6 +543,11 @@ export default {
           this.validateProtocol();
         }
       }, 350);
+    },
+    confirmLeave (callback) {
+      if (window.confirm("Are you sure you want to discard the changes?")) {
+        callback();
+      }
     }
   }
 }
