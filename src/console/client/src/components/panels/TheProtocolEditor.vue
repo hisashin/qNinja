@@ -365,8 +365,8 @@ import appState from "../../lib/AppState.js";
 import Constants from "../../lib/constants.js";
 
 // const PROJ_ROOT_DIR = "../../../../../../";
-// import validator from "../../../../../qpcr/protocol_validator.js";
-import validator from "../../lib/protocol_validator.js";
+import validator from "qpcr/protocol_validator.js";
+// import validator from "../../lib/protocol_validator.js";
 
 let LABEL_MAP = {};
 LABEL_MAP[Constants.StageType.HOLD] = "Hold";
