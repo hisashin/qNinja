@@ -44,6 +44,28 @@
         <p class="item item--paragraph">
           Paragraph
         </p>
+        <!-- Variant: Tabbed -->
+        <div class="item item--tabbed">
+          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
+            <b-tab
+              title="Tab 0"
+              active>
+              <div>
+                Tab 0 content
+              </div>
+            </b-tab>
+            <b-tab title="Tab 1">
+              <div>
+                Tab 1 content
+              </div>
+            </b-tab>
+            <b-tab title="Tab 2">
+              <div>
+                Tab 2 content
+              </div>
+            </b-tab>
+          </b-tabs>
+        </div>
       </div>
       <nav class="section__nav section__nav--bottom">
         Bottom Navigation

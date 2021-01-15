@@ -132,9 +132,19 @@ a {
 
 }
 /* Card styles */
-.item--list-card, .item--detail-card {
+.item--list-card, .item--detail-card, .item--tabbed {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
+}
+
+/* Tabbed section */
+.item--tabbed {
+}
+.item--tabbed__tabs {
+  padding:0.5em;
+}
+.item--tabbed__content {
+  padding: 0.5em
 }
 
 /* Common list view */
