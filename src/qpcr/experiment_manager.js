@@ -213,6 +213,8 @@ class ExperimentManager {
         "id":"037B8ACD-C29E-47FA-A59F-8CDFA3B1D0C8",
         "start": 1593661111711,
         "end": 1593661111711,
+        "created": 1593661111711,
+        "modified": 1593661111711,
         "result_type":1,
         "protocol_name":"DemoProtocol B"
       }
@@ -221,8 +223,10 @@ class ExperimentManager {
       "id":experiment.id,
       "start":experiment.status.start,
       "end":experiment.status.end,
-      "result_type":1,
-      "protocol_name":experiment.protocol.name
+      "protocol_name":experiment.protocol.name,
+      "created":experiment.created,
+      "modified":experiment.modified,
+      "status":experiment.status.status
     };
   }
   

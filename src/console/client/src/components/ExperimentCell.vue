@@ -3,8 +3,9 @@
     <div class="p-1">
       <div class="row">
         <div class="col-12"><strong>{{summary.protocol_name}}</strong></div>
-        <div class="col-6">{{start}}</div>
-        <div class="col-6">{{duration}}</div>
+        <div class="col-4">{{start}}</div>
+        <div class="col-4">{{duration}}</div>
+        <div class="col-4">{{summary.status}}</div>
       </div>
     </div>
   </div>
@@ -21,13 +22,22 @@ export default {
   },
   computed: {
     start: function() {
-      return new Date(this.summary.start).toDateString();
+      if (this.summary.start > 0) {
+        return new Date(this.summary.start).toDateString();
+      }
+      return "";
     },
     end: function() {
-      return new Date(this.summary.end).toDateString();
+      if (this.summary.end > 0) {
+        return new Date(this.summary.end).toDateString();
+      }
+      return "";
     },
     duration: function() {
-      return Util.humanTime((this.summary.end-this.summary.start)/1000);
+      if (this.summary.start > 0 && this.summary.end > 0) {
+        return Util.humanTime((this.summary.end-this.summary.start)/1000);
+      }
+      return "";
     }
   },
   methods: {

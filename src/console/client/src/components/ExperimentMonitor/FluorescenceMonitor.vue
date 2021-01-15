@@ -82,7 +82,6 @@ export default {
       this.applyBaseline();
     },
     set: function (data) {
-      console.log(data);
       let lastRepeat = 0;
       data.forEach((measurement)=>{
         const repeat = measurement.repeat;

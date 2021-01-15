@@ -7,10 +7,11 @@
         >
           <li class="item--list-card__cell item--list-card__cell--item"
             :key="index">
-            <ProtocolCell
+            <ProtocolPickerCell
               v-if="index < limit"
               :pid="item.id"
               :protocol="item.protocol"
+              @select="select"
             />
           </li>
         </template>
@@ -36,12 +37,12 @@
   </div>
 </template>
 <script>
-import ProtocolCell from './ProtocolCell.vue'
+import ProtocolPickerCell from './ProtocolPickerCell.vue'
 import appState from "../lib/AppState.js";
 export default {
-  name: 'ProtocolList',
+  name: 'ProtocolPicker',
   components: {
-    ProtocolCell
+    ProtocolPickerCell
   },
   props: {
     limit: { type:Number },
@@ -93,6 +94,9 @@ export default {
       this.params.keyword = keyword;
       this.params.page = 0;
       this.load();
+    },
+    select: function (id, protocol) {
+      this.$emit('select', id, protocol)
     }
   }
 }

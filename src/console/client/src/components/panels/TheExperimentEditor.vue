@@ -3,16 +3,31 @@
   
     <section class="section">
       <header class="section__header">
+        <div class="section__header__menu">
+          <b-button v-show="!pickingProtocol"
+            class="ml-1"
+            @click.stop="pickProtocol">
+            Select protocol
+          </b-button>
+          
+          <b-button v-show="pickingProtocol"
+            class="ml-1"
+            @click.stop="cancelPickProtocol">
+            Cancel
+          </b-button>
+        </div>
         <h2 class="section__header__title" >Protocol</h2>
-        <div class="section__header__menu"></div>
       </header>
-      <div class="section__body">
+      <div class="section__body" v-show="!pickingProtocol">
         <div class="item item--detail-card">
           <div class="item--detail-card__body">
             <ProtocolDetail ref="protocolDetail" />
           </div>
         </div>
       </div>
+      <!-- Protocol Picker -->
+      
+      <ProtocolPicker v-show="pickingProtocol" ref="protocolPicker" :limit="2" :pagination="true" @select="onPickProtocol" />
     </section>
     <section class="section">
       <header class="section__header">
@@ -34,6 +49,7 @@
 <script>
 import appState from "../../lib/AppState.js";
 import ProtocolDetail from '../ProtocolDetail.vue';
+import ProtocolPicker from '../ProtocolPicker.vue';
 
 // TODO Prepare UI for experiment conf
 
@@ -58,14 +74,16 @@ const DEFAULT_STATUS = {
 export default {
   name: 'TheExperimentEditor',
   components: {
-    ProtocolDetail
+    ProtocolDetail,
+    ProtocolPicker
   },
   props: {
     limit: { type:Number }
   },
   data() {
     return {
-      experiment: {}
+      experiment: {},
+      pickingProtocol: false
     }
   },
   created: function () {
@@ -126,6 +144,23 @@ export default {
       if (window.confirm("Are you sure you want to discard the changes?")) {
         callback();
       }
+    },
+    pickProtocol () {
+      console.log("pickProtocol");
+      this.pickingProtocol = true;
+      this.$refs.protocolPicker.load();
+      
+    },
+    onPickProtocol (id, protocol) {
+      this.pickingProtocol = false;
+      console.log("onPickProtocol");
+      this.experiment.protocol = protocol;
+      this.experiment.protocol_id = id;
+      this.pickingProtocol = false;
+      this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+    },
+    cancelPickProtocol () {
+      this.pickingProtocol = false;
     }
   }
 }
