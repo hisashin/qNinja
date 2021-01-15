@@ -8,8 +8,8 @@
 */
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
-const demoWell = require("../control/well_multi_demo.js");
-const Well = require("../control/well_multi.js");
+const demoPlate = require("../control/plate_multi_demo.js");
+const Plate = require("../control/plate_multi.js");
 const i2c = require('i2c-bus');
 const Thermistor = require("../hardware/thermistor.js");
 
@@ -49,7 +49,7 @@ const B_CONST = [
   { minTemp:85.0, bConst:4334, voltageLimit:0.0 } // 4334 for 85-100 deg 
 ];
 
-const WELL_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
+const PLATE_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
 const LID_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
 const AIR_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
 
@@ -58,8 +58,8 @@ const AIR_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
   PIN_NAME_* means pin's GPIO name
 */
 
-const PIN_NAME_PWM_WELL_HEATER1 = 23;
-const PIN_NAME_PWM_WELL_HEATER2 = 0;
+const PIN_NAME_PWM_PLATE_HEATER1 = 23;
+const PIN_NAME_PWM_PLATE_HEATER2 = 0;
 const PIN_NAME_PWM_LID_HEATER1 = 2;
 const PIN_NAME_PWM_LID_HEATER2 = 24;
 
@@ -74,9 +74,9 @@ const PIN_NUM_LED_DRIVER_LATCH = 15;
 
 const PIN_NUM_PD_SYNC = 22 //GPIO6
 
-const WELL_KP = 0.25;
-const WELL_KI = 0.1;
-const WELL_KD = 0.1;
+const PLATE_KP = 0.25;
+const PLATE_KI = 0.1;
+const PLATE_KD = 0.1;
 
 const HEATER_KP = 1.0;
 const HEATER_KI = 1.0;
@@ -112,8 +112,8 @@ class HardwareConf {
     const adc = new ADS1219IPWR(this.i2c, ADC_DEVICE_ADDR);
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
     
-    this.pwmWell1 = new pwm.SoftPWM(PIN_NAME_PWM_WELL_HEATER1);
-    this.pwmWell2 = new pwm.SoftPWM(PIN_NAME_PWM_WELL_HEATER2);
+    this.pwmPlate1 = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER1);
+    this.pwmPlate2 = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER2);
     
     this.pwmLid1 = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER1);
     this.pwmLid2 = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER2);
@@ -122,34 +122,34 @@ class HardwareConf {
     this.pwmFan2 = new pwm.SoftPWM(PIN_NAME_PWM_FAN2);
     
     const blocks = [];
-    // WELL_THERMISTOR_POS TODO: switch mux
+    // PLATE_THERMISTOR_POS TODO: switch mux
     {
-      const sensing = new WellSensing(new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
+      const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_WELL_THERMISTOR);
-      const output = new WellHeater(this.pwmWell1);
-      const block = new WellBlock(this.createPID(), sensing, output);
+        ADC_CHANNEL_PLATE_THERMISTOR);
+      const output = new PlateHeater(this.pwmPlate1);
+      const block = new PlateBlock(this.createPID(), sensing, output);
       blocks.push(block);
     }
     {
-      const sensing = new WellSensing(new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
+      const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_WELL_THERMISTOR);
-      const output = new WellHeater(this.pwmWell2);
-      const block = new WellBlock(this.createPID(), sensing, output);
+        ADC_CHANNEL_PLATE_THERMISTOR);
+      const output = new PlateHeater(this.pwmPlate2);
+      const block = new PlateBlock(this.createPID(), sensing, output);
       blocks.push(block);
     }
     
     const fan = new Fan([this.pwmFan1, this.pwmFan2]);
     const airThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, AIR_THERMISTOR_POS , RES);
     const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_AIR_THERMISTOR);
-    this.well = new Well (blocks, fan, air);
+    this.plate = new Plate (blocks, fan, air);
   
     this.lids = [];
     {
-      const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES), 
+      const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_WELL_THERMISTOR
+        ADC_CHANNEL_PLATE_THERMISTOR
       const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_LID_THERMISTOR);
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
       pid.setOutputRange(0, 1.0);
@@ -162,15 +162,15 @@ class HardwareConf {
     }
   }
   createPID () {
-    return new PID(WELL_KP, WELL_KI, WELL_KD);
+    return new PID(PLATE_KP, PLATE_KI, PLATE_KD);
   }
   start () {
   }
   wellsCount () {
     return 16;
   }
-  getWell () {
-    return this.well;
+  getPlate () {
+    return this.plate;
   }
   getHeatLids () {
     return this.lids;
@@ -301,7 +301,7 @@ class AirSensing {
     
   }
 }
-class WellSensing {
+class PlateSensing {
   // TODO mux?
   constructor (thermistor, adcManager, adcChannel) {
     this.thermistor = thermistor;
@@ -330,7 +330,7 @@ class Fan {
   }
 }
 
-class WellHeater  {
+class PlateHeater  {
   constructor (pwm) {
     this.pwm = pwm;
   }

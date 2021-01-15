@@ -5,23 +5,23 @@
 "use strict";
 class HeatWorkbench {
   constructor (conf) {
-    this.well = conf.getWell();
+    this.plate = conf.getPlate();
     this.heatLid = conf.getHeatLid();
     
   }
   run () {
     console.log("HeatWorkbench.run");
-    this.well.start();
+    this.plate.start();
     console.log("SettingTargetTemperature...");
-    this.well.setTargetTemperature(55.0);
+    this.plate.setTargetTemperature(55.0);
     setInterval(()=>{
-      console.log("Well\t",this.well.temperature);
-      this.well.control();
+      console.log("Plate\t",this.plate.temperature);
+      this.plate.control();
       
     }, 500);
   }
   shutdown () {
-    this.well.shutdown();
+    this.plate.shutdown();
     this.heatLid.shutdown();
   }
 }

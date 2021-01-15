@@ -247,6 +247,7 @@ class ExperimentManager {
   }
   
   _loadSummaries (onLoad, onError) {
+      
     if (!fs.existsSync(this._summariesPath())) {
       // New summary file
       this.summaries = [];
@@ -255,11 +256,22 @@ class ExperimentManager {
     }
     fs.readFile(this._summariesPath(), (err, rawData)=>{
       try {
-        console.log(this._summariesPath())
-        let summaries = JSON.parse(rawData);
-        summaries.sort((a,b)=>{return b.end - a.end})
-        this.summaries = summaries;
-        onLoad(this.summaries);
+        console.log(this._summariesPath());
+        
+        fs.readdir(this._experimentDir(), (err, allFiles) => {
+            let summaries = JSON.parse(rawData);
+            summaries.sort((a,b)=>{return b.modified - a.modified})
+            this.summaries = summaries.filter(
+              (summary)=>{ 
+                if (allFiles.indexOf(summary.id) < 0) {
+                  console.warn("Inconsistency found insummaries.json %s", summary.id);
+                  return false;
+                }
+                return true;
+              }
+            );
+            onLoad(this.summaries);
+          });
       } catch (ex) {
         if (onError != null) {
           onError(ex);

@@ -1,7 +1,7 @@
 "use strict";
 
 /*
-const Well = require("./well");
+const Plate = require("./plate");
 const HeatLid = require("./heat_lid");
 */
 
@@ -13,14 +13,14 @@ class Thermistor {
   }
 }
 const TEMP_TOLERANCE_LID = 1.0;
-const TEMP_TOLERANCE_WELL = 1.0;
+const TEMP_TOLERANCE_PLATE = 1.0;
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
 
 
 // TODO: use measured > saved > default values.
-const WELL_TEMP_HEATING_SPEED = 5.0;
-const WELL_TEMP_COOLING_SPEED = 5.0;
+const PLATE_TEMP_HEATING_SPEED = 5.0;
+const PLATE_TEMP_COOLING_SPEED = 5.0;
 class RemainingTimeCalculator {
   constructor (protocol) {
     this.start = new Date();
@@ -33,13 +33,13 @@ class RemainingTimeCalculator {
   }
   getEstimatedTransitionTime (fromTemp, toTemp, rampSpeed) {
     if (fromTemp < toTemp) {
-      let heatingSpeed = WELL_TEMP_HEATING_SPEED;
+      let heatingSpeed = PLATE_TEMP_HEATING_SPEED;
       if (rampSpeed != null && rampSpeed > 0) {
         heatingSpeed = Math.min(heatingSpeed, rampSpeed);
       }
       return (toTemp - fromTemp) / heatingSpeed;
     }
-    let coolingSpeed = WELL_TEMP_COOLING_SPEED;
+    let coolingSpeed = PLATE_TEMP_COOLING_SPEED;
     if (rampSpeed != null && rampSpeed > 0) {
       coolingSpeed = Math.min(coolingSpeed, rampSpeed);
     }
@@ -90,8 +90,8 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (well, heatLids) {
-    this.well = well;
+  constructor (plate, heatLids) {
+    this.plate = plate;
     this.heatLids = heatLids;
     this.state = new StateIdle(null);
   }
@@ -100,7 +100,7 @@ class ThermalCycler {
   }
   start (protocol) {
     this.protocol = protocol;
-    this.well.start();
+    this.plate.start();
     for (let lid of this.heatLids) {
       lid.start();
       if (protocol.lid_temp > 0) {
@@ -113,7 +113,7 @@ class ThermalCycler {
     this.state = new StatePreheat(protocol);
     if (!(this.protocol.lid_temp > 0)) {
       // Skip preheat if lid is disabled
-      this.state = this.state.next(this.well.temperature);
+      this.state = this.state.next(this.plate.temperature);
     }
     this.startTime = new Date();
     this.state.start(this.startTime);
@@ -132,7 +132,7 @@ class ThermalCycler {
   }
   finish () {
     this._stopTimer();
-    this.well.off();
+    this.plate.off();
     for (let lid of this.heatLids) {
       lid.off();
     }
@@ -153,7 +153,7 @@ class ThermalCycler {
   }
   control () {
     // TODO: different intervals for different units!
-    this.well.control();
+    this.plate.control();
     if (this.protocol.lid_temp > 0) {
       for (let lid of this.heatLids) {
         lid.control();
@@ -162,10 +162,10 @@ class ThermalCycler {
     const now = new Date();
     this.state.updateTime(now);
     let lidMaxTemperature = Math.max(...this.heatLids.map(lid=>lid.temperature));
-    if (this.state.complete(this.well.temperature, updateTime.temperature, now)) {
+    if (this.state.complete(this.plate.temperature, updateTime.temperature, now)) {
       // Transition
       this.stateFrom = this.state;
-      this.state = this.state.next(this.well.temperature);
+      this.state = this.state.next(this.plate.temperature);
       
       let lidTargetTemp = this.state.lidTargetTemp();
       if (lidTargetTemp != null) {
@@ -192,17 +192,17 @@ class ThermalCycler {
     if (this.eventReceiver != null && this.eventReceiver.onProgress != null) {
       this.eventReceiver.onProgress(this.getStatus());
     }
-    let wellTargetTemp = this.state.wellTargetTemp();
-    if (wellTargetTemp != null) {
-      this.well.setTargetTemperature(wellTargetTemp);
+    let plateTargetTemp = this.state.plateTargetTemp();
+    if (plateTargetTemp != null) {
+      this.plate.setTargetTemperature(plateTargetTemp);
     } else {
-      this.well.off();
+      this.plate.off();
     }
   }
   getStatus () {
     // TODO: define data format
     return {
-      well: this.well.temperature,
+      plate: this.plate.temperature,
       lid: this.heatLid.temperature,
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()
@@ -210,7 +210,7 @@ class ThermalCycler {
   }
   shutdown () {
     console.log("ThermalCycler.shutdown()");
-    this.well.shutdown();
+    this.plate.shutdown();
     this.heatLid.shutdown();
   }
 }
@@ -221,7 +221,7 @@ class StateIdle {
   constructor (protocol) {}
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "Idle"; }
-  complete (wellTemp, lid_temp, timestamp) { 
+  complete (plateTemp, lid_temp, timestamp) { 
     return false; 
   }
   updateTime (timestamp) {
@@ -244,7 +244,7 @@ class StatePreheat {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "Preheat"; }
-  complete (wellTemp, lid_temp, timestamp) { 
+  complete (plateTemp, lid_temp, timestamp) { 
     if (this.protocol.lid_temp > 0) {
       return Math.abs(lid_temp - this.protocol.lid_temp) <= TEMP_TOLERANCE_LID;
     } else {
@@ -254,7 +254,7 @@ class StatePreheat {
   updateTime (timestamp) {
     // Do nothing
   }
-  wellTargetTemp () {
+  plateTargetTemp () {
     return null;
   }
   lidTargetTemp () {
@@ -303,8 +303,8 @@ class StateStepRamp {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepFastRamp"; };
-  complete (wellTemp, lid_temp, timestamp) { 
-    return Math.abs(wellTemp - this.step.temp) <= TEMP_TOLERANCE_WELL;
+  complete (plateTemp, lid_temp, timestamp) { 
+    return Math.abs(plateTemp - this.step.temp) <= TEMP_TOLERANCE_PLATE;
   }
   updateTime (timestamp) {
     const interval = timestamp.getTime() - this.prevTimestamp.getTime();
@@ -315,7 +315,7 @@ class StateStepRamp {
     } 
     this.elapsedMsec += interval;
   }
-  wellTargetTemp () {
+  plateTargetTemp () {
     if (this.isFastRamp) {
       return this.step.temp;
     } else {
@@ -366,7 +366,7 @@ class StateStepHold {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepHold"; }
-  complete (wellTemp, lid_temp, timestamp) {
+  complete (plateTemp, lid_temp, timestamp) {
     console.log(JSON.stringify(this.step));
     return this.elapsedMsec/1000 > this.step.duration;
   }
@@ -379,7 +379,7 @@ class StateStepHold {
     } 
     this.elapsedMsec += interval;
   }
-  wellTargetTemp () {
+  plateTargetTemp () {
     return this.step.temp;
   }
   lidTargetTemp () {
@@ -425,14 +425,14 @@ class StateFinalHold {
   }
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "FinalHold"; }
-  complete (wellTemp, lid_temp, timestamp) { 
+  complete (plateTemp, lid_temp, timestamp) { 
     // Never finishes.
     return false; 
   }
   updateTime (timestamp) {
     // Nothing to do.
   }
-  wellTargetTemp () {
+  plateTargetTemp () {
     if (this.protocol.final_hold_temp) {
       return this.protocol.final_hold_temp;
     }

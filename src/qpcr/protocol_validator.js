@@ -4,8 +4,8 @@ const Validator = require("./validator");
 
 const LID_TEMP_MAX = 120;
 const LID_TEMP_MIN = 25;
-const WELL_TEMP_MAX = 100;
-const WELL_TEMP_MIN = 25;
+const PLATE_TEMP_MAX = 100;
+const PLATE_TEMP_MIN = 25;
 
 const RULE_DATA_COLLECTION = {
   ramp_end: { type:"boolean", required:false },
@@ -15,7 +15,7 @@ const RULE_DATA_COLLECTION = {
 };
 const RULE_STEP = {
   label: { type:"string", required:true, min_length:1, max_length:255 },
-  temp: { type:"number", required:true, min:WELL_TEMP_MIN, max:WELL_TEMP_MAX },
+  temp: { type:"number", required:true, min:PLATE_TEMP_MIN, max:PLATE_TEMP_MAX },
   duration: { type:"number", required:true, min:0, max: 24 * 60 * 60 * 1000 },
   ramp_speed: { type:"number", required:false, min:0, max:20 },
   data_collection: { type:"object", required:false, rule:RULE_DATA_COLLECTION },
@@ -31,7 +31,7 @@ const RULE_STAGE = {
 const RULE_PROTOCOL = {
   name: { type:"string", required:true, min_length:1, max_length:255 },
   lid_temp: { type:"number", required:false, min:LID_TEMP_MIN, max:LID_TEMP_MAX },
-  final_hold_temp: { type:"number", required:false, min:WELL_TEMP_MIN, max:WELL_TEMP_MAX },
+  final_hold_temp: { type:"number", required:false, min:PLATE_TEMP_MIN, max:PLATE_TEMP_MAX },
   stages: { type:"array",required:true,  min_length:1, max_length:8, rule:RULE_STAGE },
   _func: ()=>{}
 };

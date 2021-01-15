@@ -33,7 +33,7 @@ class Optics {
     this.ledUnit.start();
     this.fluorescenceSensingUnit.start();
     // Set dummy timeout
-    // Well ID <=> Channel ID (MUX)
+    // well ID <=> Channel ID (MUX)
     this.wells = [];
     for (let i=0; i<this.wellsCount; i++) {
       this.wells.push({
@@ -75,12 +75,12 @@ class Optics {
     }
     this.isMeasuring = true;
   }
-  selectWell (/* Well object */well) {
+  selectWell (/* well object */well) {
     this.ledUnit.select(well.index);
     this.fluorescenceSensingUnit.select(well.index);
     setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
   }
-  measureFluorescence (/* Well object */well) {
+  measureFluorescence (/* well object */well) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
     this.fluorescenceSensingUnit.measure(well.index, (measurement)=>{
       this.values.push(measurement);

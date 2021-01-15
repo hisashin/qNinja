@@ -2,7 +2,7 @@
 const PID = require("../control/heat_control/pid.js");
 
 const HeatUnit = require("../control/heat_control/heat_unit.js");
-const demoWell = require("../control/well_multi_demo.js");
+const demoPlate = require("../control/plate_multi_demo.js");
 const BoxMuller = require("../util/box_muller.js");
 
 
@@ -64,8 +64,8 @@ class DummyHardwareConf {
   /*
     Return HeatUnit object as implementation of the well.
     */
-  getWell () {
-    return demoWell;
+  getPlate () {
+    return demoPlate;
   }
   /*
     Return HeatUnit object as implementation of the heater lid.

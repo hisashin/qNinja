@@ -1,12 +1,12 @@
 /* 
-  Well class represents a total system of the PCR well.
+  Plate class represents a total system of the PCR plate.
   It consists of
    * One or more metal blocks
    * 
   */
 
   
-const WellBlock = require('./well_block.js');
+const PlateBlock = require('./plate_block.js');
 // const PID = require("./heat_control/pid.js");
 
 const DEFAULT_TEMP = 25.0;
@@ -30,42 +30,39 @@ class Fan {
   setOutput (value);
 }
 
-For WellBlock, see well_block.js
+For PlateBlock, see plate_block.js
 
 */
 
-class Well  {
+class Plate  {
   // API
   constructor (blocks, fan, air) {
-    console.log("Well.constructor()")
     this.blocks = blocks;
     this.fan = fan;
     this.air = air;
     this.targetTemperature = DEFAULT_TEMP;
     this.controlType = CONTROL_TYPE.HOLDING;
     
-    // If true, all wells' output settings are syncronyzed with the most slow one.
-    // If false, all wells are controlled individually to keep the target temperature.
+    // If true, all blocks' output settings are syncronyzed with the most slow one.
+    // If false, all blocks are controlled individually to keep the target temperature.
     this.needSync = false;
     this.isOff = true;
   
   }
   async start () {
-    console.log("Well.start()")
     this.startTime = new Date().getTime();
     this.resetSyncTime();
     await this.air.measureTemperature();
     this.isOff = false;
   }
   off () {
-    console.log("Well.off()")
     this.isOff = true;
     this.blocks.forEach((block)=>{ block.off(); });
     this.fan.setOutput(0);
     // TODO
   }
   shutdown () {
-    console.log("Well.shutdown()");
+    console.log("Plate.shutdown()");
     this.off();
   }
   setTargetTemperature (targetTemperature) {
@@ -73,7 +70,7 @@ class Well  {
       return;
     }
     this.isOff = false;
-    console.log("Well.setTargetTemperature(%f)", targetTemperature);
+    console.log("Plate.setTargetTemperature(%f)", targetTemperature);
     this.resetSyncTime();
     if (targetTemperature > this.targetTemperature) {
       this.controlType = CONTROL_TYPE.HEATING;
@@ -105,7 +102,7 @@ class Well  {
     
     if (!this.isOff) {
       if (this.needSync & new Date().getTime () - this.lastSync >= WELL_SYNC_INTERVAL) {
-        this.synchronizeWells();
+        this.synchronizeBlocks();
       }
       this.blocks.forEach((block)=>{block.calcDesiredOutput()});
       
@@ -131,12 +128,12 @@ class Well  {
   resetSyncTime () {
     this.lastSync = new Date().getTime();
   }
-  synchronizeWells () {
-    // Find "rear" (skip wells which already achieved the target)
+  synchronizeBlocks () {
+    // Find "rear" (skip blocks which already achieved the target)
     this.resetSyncTime();
     // Calculate estimated time
     this.blocks.filter((block)=>{ return !block.targetAchieved }).forEach((block)=>{block.estimate()});
-    // Find "rear" well
+    // Find "rear" block
     let tmpTime = 0;
     let tmpIndex = null;
     let count = 0;
@@ -164,7 +161,7 @@ class Well  {
       return;
     }
     const rear = this.blocks[tmpIndex];
-    // TODO find the "rear" well by estimated time instead of current temperature.
+    // TODO find the "rear" block by estimated time instead of current temperature.
     const toSync = this.blocks.filter((block, index)=>{ return !block.targetAchieved && index != tmpIndex});
     rear.estimate();
     toSync.forEach((block)=>{
@@ -173,15 +170,15 @@ class Well  {
   }
 }
 
-module.exports = Well;
+module.exports = Plate;
 
 /*
-Well.api
-    this.well.temperature
-    this.well.start(); // OK (TODO: "cycle start" and "hardware start" are ambiguous)
-    this.well.off(); // Stub OK
-    this.well.control(); // OK (TODO: insert yield)
-    this.well.shutdown(); // OK
-    this.well.setTargetTemperature(wellTargetTemp); //OK
+Plate.api
+    this.plate.temperature
+    this.plate.start(); // OK (TODO: "cycle start" and "hardware start" are ambiguous)
+    this.plate.off(); // Stub OK
+    this.plate.control(); // OK (TODO: insert yield)
+    this.plate.shutdown(); // OK
+    this.plate.setTargetTemperature(plateTargetTemp); //OK
 */
 

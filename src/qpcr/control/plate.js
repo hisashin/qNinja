@@ -1,6 +1,6 @@
 "use strict";
 
-class Well {
+class Plate {
   constructor () {
     this.temperature = 25;
     this.targetTemperature = 25;
@@ -22,4 +22,4 @@ const getDummyTemp = (current, target, interval) => {
   }
 };
 
-module.exports = Well;
+module.exports = Plate;

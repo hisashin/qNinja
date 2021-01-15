@@ -1,8 +1,8 @@
 "use strict";
 
 /*
-  WellBlock class represents a single metal block.
-  A device's well consists of one or more blocks.
+  PlateBlock class represents a single metal block.
+  A device's plate consists of one or more blocks.
 */
 const DEFAULT_TEMP = 25.0;
 const LOG_BUFF_CAPACITY = 10;
@@ -18,15 +18,15 @@ class TempLog {
     this.prev = null;
     this.fitConstants = null;
   }
-  add (output, wellTemp, airTemp, timestampMsec) {
+  add (output, plateTemp, airTemp, timestampMsec) {
     const timestamp = timestampMsec / 1000.0;
     let slope = null;
     if (this.prev != null) {
-      slope = (wellTemp - this.prev.w) / (timestamp - this.prev.t)
+      slope = (plateTemp - this.prev.w) / (timestamp - this.prev.t)
     }
     const obj = {
       p: output,
-      w: wellTemp,
+      w: plateTemp,
       a: airTemp,
       t: timestamp,
       slope: slope
@@ -115,7 +115,7 @@ function linearFit (plot) {
 }
 
 const TOLERANCE_TEMP = 0.5;
-class WellBlock {
+class PlateBlock {
   constructor (pid, sensing, output) {
     this.pid = pid;
     this.sensing = sensing;
@@ -179,4 +179,4 @@ class WellBlock {
   }
 }
 
-module.exports = WellBlock;
+module.exports = PlateBlock;

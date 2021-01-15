@@ -1,5 +1,5 @@
 "use strict";
-// This dummy hardware conf uses legacy Well implementation. Use "dummy_hardware_multi_conf.js" instead.
+// This dummy hardware conf uses legacy Plate implementation. Use "dummy_hardware_multi_conf.js" instead.
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const BoxMuller = require("../util/box_muller.js");
@@ -18,7 +18,7 @@ const getDummyTemp = (current, target, interval) => {
 };
 
 // instance of HeatUnit
-class Well {
+class Plate {
   constructor () {
     this.temperature = 25;
     this.targetTemperature = 25;
@@ -36,7 +36,7 @@ class Well {
     // Do nothing
   }
   shutdown () {
-    console.log("Shutting down dummy well.");
+    console.log("Shutting down dummy plate.");
     this.off();
   }
 }
@@ -84,10 +84,10 @@ class DummyHardwareConf {
     return 8;
   }
   /*
-    Return HeatUnit object as implementation of the well.
+    Return HeatUnit object as implementation of the plate.
     */
-  getWell () {
-    return new Well ();
+  getPlate () {
+    return new Plate ();
     /*
     const WELL_P = 1.0;
     const WELL_I = 1.0;

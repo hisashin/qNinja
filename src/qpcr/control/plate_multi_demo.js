@@ -1,8 +1,8 @@
 "use strict";
 
-const Well = require('./well_multi.js');
+const Plate = require('./plate_multi.js');
 const HeatModel = require('./heat_model.js');
-const WellBlock = require('./well_block.js');
+const PlateBlock = require('./plate_block.js');
 const PID = require("./heat_control/pid.js");
 
 const DEFAULT_TEMP = 25.0;
@@ -32,9 +32,9 @@ class DummyFan {
   }
 }
 
-const WELL_KP = 0.25;
-const WELL_KI = 0.1;
-const WELL_KD = 0.1;
+const PLATE_KP = 0.25;
+const PLATE_KI = 0.1;
+const PLATE_KD = 0.1;
 
 const BLOCKS_COUNT = 4;
 
@@ -48,9 +48,9 @@ class DummyHeater {
     this.model.setPositiveInflux(value);
   }
 }
-// Heating rate when wellTemp-airTemp=0 & full drive
+// Heating rate when plateTemp-airTemp=0 & full drive
 const Y_INTERCEPT = 2.0; // deg/sec
-const X_INTERCEPT = 110; // wellTemp - airTemp at the equilibrium
+const X_INTERCEPT = 110; // plateTemp - airTemp at the equilibrium
 const MEASUREMENT_INTERVAL = 0.5;
 class DummySensing {
   constructor (model) {
@@ -66,48 +66,47 @@ class DummySensing {
   }
 }
 
-// TODO: separate dummy well sensing and dummy heater output
-function initWellInstance () {
+// TODO: separate dummy plate sensing and dummy heater output
+function initPlateInstance () {
   // TODO replace with real items
   const blocks = [];
   const models = [];
 
   for (let i=0; i<BLOCKS_COUNT; i++) {
-    const pid = new PID(WELL_KP, WELL_KI, WELL_KD);
+    const pid = new PID(PLATE_KP, PLATE_KI, PLATE_KD);
     pid.setOutputRange(-1, 1.0);
     let model = new HeatModel();
-    const wellSensing = new DummySensing(model);
+    const plateSensing = new DummySensing(model);
     const output = new DummyHeater(model);
     models.push(model);
-    const block = new WellBlock(pid, wellSensing, output);
+    const block = new PlateBlock(pid, plateSensing, output);
     block.tmpId = i;
-    // Dummy well
+    // Dummy Plate
     blocks.push(block);
   }
   const fan = new DummyFan(models);
   const air = new DummyAir();
-  const well = new Well(blocks, fan, air);
-  return well;
+  return new Plate(blocks, fan, air);
 }
 
-const well = initWellInstance();
+const plate = initPlateInstance();
 
 /*
-well.start();
-well.setTargetTemperature(70);
+plate.start();
+plate.setTargetTemperature(70);
 let flg = false;
 setInterval(
   ()=>{
-    const temp = well.blocks[0].temperature;
+    const temp = plate.blocks[0].temperature;
     
     if (temp > 70 && !flg) {
       console.log("TEMPLOG SWITCH!")
-      well.setTargetTemperature(30);
+      plate.setTargetTemperature(30);
       flg = true;
     }
-    well.control();
+    plate.control();
   },
   500
 );
 */
-module.exports = well;
+module.exports = plate;

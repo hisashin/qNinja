@@ -342,6 +342,14 @@ class NinjaQPCRHTTPServer {
       req.on("data", (rawData)=>{
         console.log("protocolUpdate received data.");
         const content = JSON.parse(rawData);
+        if (map.pid != content.id) {
+          const err = {
+            code: 400,
+            message: "Protocol ID does not match."
+          };
+          this._handleError(req, res, err);
+          return;
+        }
         pm.update(content, (item)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(item));
@@ -458,6 +466,14 @@ class NinjaQPCRHTTPServer {
       req.on("data", (rawData)=>{
         console.log("protocolUpdate received data.");
         const content = JSON.parse(rawData);
+        if (map.eid != content.id) {
+          const err = {
+            code: 400,
+            message: "Experiment ID does not match."
+          };
+          this._handleError(req, res, err);
+          return;
+        }
         em.update(content, (updatedItem)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(updatedItem));

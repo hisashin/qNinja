@@ -9,7 +9,7 @@ const ADCManager = require("../hardware/adc_manager.js");
 const adcManager = new ADCManager(new ADS1219IPWR(1, 0x40), 90);
 // const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 
-// For well PID
+// For plate PID
 const raspi = require('raspi');
 // const pwm = require('raspi-pwm');
 const softPwm = require('raspi-soft-pwm');
@@ -20,8 +20,8 @@ const PIN_MUX_SYNC = 40; // Pin number
 
 const PIN_LED_LATCH = 15; // Pin number
 const PIN_LED_PWM = 26; // GPIO{n} num
-const PIN_WELL_PWM = 23; // GPIO{n} num
-const FREQ_WELL_PWM = 1000; // Hz
+const PIN_PLATE_PWM = 23; // GPIO{n} num
+const FREQ_PLATE_PWM = 1000; // Hz
 
 const PIN_PWM_LID = 2;//13;
 
@@ -32,13 +32,13 @@ const PIN_PWM_FAN = 25;//37;
 // https://docs.google.com/spreadsheets/d/1iU2gII_kSwVGeW8FTEcDqT59ksJSpKEOyM9GNM40jL0/edit#gid=1350445105
 
 const fanPWM = new softPwm.SoftPWM(PIN_PWM_FAN);
-const wellPWM = new softPwm.SoftPWM(PIN_WELL_PWM);
+const platePWM = new softPwm.SoftPWM(PIN_PLATE_PWM);
 const lidPWM = new softPwm.SoftPWM(PIN_PWM_LID);
 // const mux = new ADG731BSUZ(SPI_CHANNEL, PIN_MUX_SYNC);
 const mux = null;
 
 /* Hardware constants */
-const ADC_CHANNEL_WELL_THERMISTOR = 0;
+const ADC_CHANNEL_PLATE_THERMISTOR = 0;
 const ADC_CHANNEL_LID_THERMISTOR = 1;
 // const ADC_CHANNEL_AIR_THERMISTOR = 2;
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 3;
@@ -54,9 +54,9 @@ const B_CONST = [
   { minTemp:85.0, bConst:4334, voltageLimit:0.0 } // 4334 for 85-100 deg 
 ];
 
-const WELL_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
+const PLATE_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
 const LID_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
-const wellThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, WELL_THERMISTOR_POS , RES);
+const plateThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES);
 /*
 const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, LID_THERMISTOR_POS, RES);
 */
@@ -65,7 +65,7 @@ const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, LID_THERMISTOR_POS,
 // TODO: make it independent from concrete ADC.
 class TempSensingUnit  {
   constructor (adcChannel) {
-    this.thermistor = wellThermistor;
+    this.thermistor = plateThermistor;
     this.adcChannel = adcChannel;
   }
   start () {
@@ -84,7 +84,7 @@ class TempSensingUnit  {
     this.off();
   }
 }
-const wellSensing = new TempSensingUnit(ADC_CHANNEL_WELL_THERMISTOR);
+const plateSensing = new TempSensingUnit(ADC_CHANNEL_PLATE_THERMISTOR);
 const lidSensing = new TempSensingUnit(ADC_CHANNEL_LID_THERMISTOR);
 
 // PWM
@@ -92,24 +92,24 @@ class WellOutput {
   // Combination of heater (PWM) and fan (PWM)
   constructor () {
     this.fanPWM = fanPWM;
-    this.wellPWM = wellPWM;
+    this.platePWM = platePWM;
     console.log("this.fanPWM = " + this.fanPWM);
-    console.log("this.wellPWM = " + this.wellPWM);
+    console.log("this.platePWM = " + this.platePWM);
   }
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
     outputValue = Math.min(1.0, Math.max(-1, outputValue));
     if (outputValue > 0) {
-      this.wellPWM.write(outputValue);
+      this.platePWM.write(outputValue);
       this.fanPWM.write(0);
     } else {
-      this.wellPWM.write(0);
+      this.platePWM.write(0);
       this.fanPWM.write(-outputValue);
     }
   }
   off () {
-    this.wellPWM.write(0);
+    this.platePWM.write(0);
     this.fanPWM.write(0);
   }
   shutdown () {
@@ -240,15 +240,15 @@ class NinjaQPCRHardwareConf {
     return 8;
   }
   start () {}
-  getWell () {
+  getPlate () {
     // TODO tuning
-    const WELL_KP = 0.3;
-    const WELL_KI = 0.1;
-    const WELL_KD = 0.1;
-    const pid = new PID(WELL_KP, WELL_KI, WELL_KD);
+    const PLATE_KP = 0.3;
+    const PLATE_KI = 0.1;
+    const PLATE_KD = 0.1;
+    const pid = new PID(PLATE_KP, PLATE_KI, PLATE_KD);
     pid.setOutputRange(-1, 1.0);
     const output = new WellOutput();
-    return new HeatUnit(pid, wellSensing, output);
+    return new HeatUnit(pid, plateSensing, output);
   }
   getHeatLid () {
     // TODO tunig

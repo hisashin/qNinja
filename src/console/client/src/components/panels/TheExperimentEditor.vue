@@ -31,7 +31,7 @@
     </section>
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Well Layout</h2>
+        <h2 class="section__header__title" >Plate Layout</h2>
         <div class="section__header__menu"></div>
       </header>
       <div class="section__body">

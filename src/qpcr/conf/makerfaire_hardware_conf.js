@@ -1,7 +1,7 @@
 "use strict";
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
-const demoWell = require("../control/well_multi_demo.js");
+const demoPlate = require("../control/plate_multi_demo.js");
 const BoxMuller = require("../util/box_muller.js");
 
 
@@ -38,9 +38,9 @@ class DummyHardwareConf {
   /*
     Return HeatUnit object as implementation of the well.
     */
-  getWell () {
+  getPlate () {
     // Dummy well with heat simulation
-    return demoWell;
+    return demoPlate;
   }
   /*
     Return HeatUnit object as implementation of the heater lid.
@@ -77,8 +77,8 @@ const DUMMY_BASELINE_RATIO = 0.05;
   PIN_NAME_* means pin's GPIO name
 */
 
-const PIN_NAME_PWM_WELL_HEATER1 = 23;
-const PIN_NAME_PWM_WELL_HEATER2 = 0;
+const PIN_NAME_PWM_PLATE_HEATER1 = 23;
+const PIN_NAME_PWM_PLATE_HEATER2 = 0;
 const PIN_NAME_PWM_LID_HEATER1 = 2;
 const PIN_NAME_PWM_LID_HEATER2 = 24;
 

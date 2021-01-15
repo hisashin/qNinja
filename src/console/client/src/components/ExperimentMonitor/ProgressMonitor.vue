@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-6">
         <div>
-          Well {{ progress.well }}℃ 
+          Plate {{ progress.well }}℃ 
           <template 
             v-if="step!=null && step.temp!=null">/{{step.temp}}℃</template>
         </div>
