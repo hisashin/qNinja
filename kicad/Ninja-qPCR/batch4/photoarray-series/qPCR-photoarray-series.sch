@@ -1,0 +1,358 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:D_Photo D1
+U 1 1 5ECF4E8C
+P 3000 2000
+F 0 "D1" H 2950 1783 50  0000 C CNN
+F 1 "D_Photo" H 2950 1874 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 2000 50  0001 C CNN
+F 3 "~" H 2950 2000 50  0001 C CNN
+	1    3000 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D2
+U 1 1 5ECF5E77
+P 3000 2400
+F 0 "D2" H 2950 2183 50  0000 C CNN
+F 1 "D_Photo" H 2950 2274 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 2400 50  0001 C CNN
+F 3 "~" H 2950 2400 50  0001 C CNN
+	1    3000 2400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D3
+U 1 1 5ECF6ED6
+P 3000 2800
+F 0 "D3" H 2950 2583 50  0000 C CNN
+F 1 "D_Photo" H 2950 2674 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 2800 50  0001 C CNN
+F 3 "~" H 2950 2800 50  0001 C CNN
+	1    3000 2800
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D4
+U 1 1 5ECF7221
+P 3000 3200
+F 0 "D4" H 2950 2983 50  0000 C CNN
+F 1 "D_Photo" H 2950 3074 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 3200 50  0001 C CNN
+F 3 "~" H 2950 3200 50  0001 C CNN
+	1    3000 3200
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D5
+U 1 1 5ECFB7FC
+P 3000 3600
+F 0 "D5" H 2950 3383 50  0000 C CNN
+F 1 "D_Photo" H 2950 3474 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 3600 50  0001 C CNN
+F 3 "~" H 2950 3600 50  0001 C CNN
+	1    3000 3600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D6
+U 1 1 5ECFB806
+P 3000 4000
+F 0 "D6" H 2950 3783 50  0000 C CNN
+F 1 "D_Photo" H 2950 3874 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 4000 50  0001 C CNN
+F 3 "~" H 2950 4000 50  0001 C CNN
+	1    3000 4000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D7
+U 1 1 5ECFB810
+P 3000 4400
+F 0 "D7" H 2950 4183 50  0000 C CNN
+F 1 "D_Photo" H 2950 4274 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 4400 50  0001 C CNN
+F 3 "~" H 2950 4400 50  0001 C CNN
+	1    3000 4400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D8
+U 1 1 5ECFB81A
+P 3000 4800
+F 0 "D8" H 2950 4583 50  0000 C CNN
+F 1 "D_Photo" H 2950 4674 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 2950 4800 50  0001 C CNN
+F 3 "~" H 2950 4800 50  0001 C CNN
+	1    3000 4800
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 5ED1274A
+P 2750 5200
+F 0 "#PWR01" H 2750 4950 50  0001 C CNN
+F 1 "GND" H 2755 5027 50  0000 C CNN
+F 2 "" H 2750 5200 50  0001 C CNN
+F 3 "" H 2750 5200 50  0001 C CNN
+	1    2750 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 2000 2750 2000
+Wire Wire Line
+	2750 2000 2750 2400
+Wire Wire Line
+	2900 4800 2750 4800
+Connection ~ 2750 4800
+Wire Wire Line
+	2750 4800 2750 5200
+Wire Wire Line
+	2900 4400 2750 4400
+Connection ~ 2750 4400
+Wire Wire Line
+	2750 4400 2750 4800
+Wire Wire Line
+	2900 4000 2750 4000
+Connection ~ 2750 4000
+Wire Wire Line
+	2750 4000 2750 4400
+Wire Wire Line
+	2900 2400 2750 2400
+Connection ~ 2750 2400
+Wire Wire Line
+	2750 2400 2750 2800
+Wire Wire Line
+	2900 2800 2750 2800
+Connection ~ 2750 2800
+Wire Wire Line
+	2750 2800 2750 3200
+Wire Wire Line
+	2900 3200 2750 3200
+Connection ~ 2750 3200
+Wire Wire Line
+	2750 3200 2750 3600
+Wire Wire Line
+	2900 3600 2750 3600
+Connection ~ 2750 3600
+Wire Wire Line
+	2750 3600 2750 4000
+$Comp
+L Device:D_Photo D9
+U 1 1 5ED19353
+P 3500 2000
+F 0 "D9" H 3450 1783 50  0000 C CNN
+F 1 "D_Photo" H 3450 1874 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 2000 50  0001 C CNN
+F 3 "~" H 3450 2000 50  0001 C CNN
+	1    3500 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D10
+U 1 1 5ED1935D
+P 3500 2400
+F 0 "D10" H 3450 2183 50  0000 C CNN
+F 1 "D_Photo" H 3450 2274 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 2400 50  0001 C CNN
+F 3 "~" H 3450 2400 50  0001 C CNN
+	1    3500 2400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D11
+U 1 1 5ED19367
+P 3500 2800
+F 0 "D11" H 3450 2583 50  0000 C CNN
+F 1 "D_Photo" H 3450 2674 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 2800 50  0001 C CNN
+F 3 "~" H 3450 2800 50  0001 C CNN
+	1    3500 2800
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D12
+U 1 1 5ED19371
+P 3500 3200
+F 0 "D12" H 3450 2983 50  0000 C CNN
+F 1 "D_Photo" H 3450 3074 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 3200 50  0001 C CNN
+F 3 "~" H 3450 3200 50  0001 C CNN
+	1    3500 3200
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D13
+U 1 1 5ED1937B
+P 3500 3600
+F 0 "D13" H 3450 3383 50  0000 C CNN
+F 1 "D_Photo" H 3450 3474 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 3600 50  0001 C CNN
+F 3 "~" H 3450 3600 50  0001 C CNN
+	1    3500 3600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D14
+U 1 1 5ED19385
+P 3500 4000
+F 0 "D14" H 3450 3783 50  0000 C CNN
+F 1 "D_Photo" H 3450 3874 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 4000 50  0001 C CNN
+F 3 "~" H 3450 4000 50  0001 C CNN
+	1    3500 4000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D15
+U 1 1 5ED1938F
+P 3500 4400
+F 0 "D15" H 3450 4183 50  0000 C CNN
+F 1 "D_Photo" H 3450 4274 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 4400 50  0001 C CNN
+F 3 "~" H 3450 4400 50  0001 C CNN
+	1    3500 4400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D16
+U 1 1 5ED19399
+P 3500 4800
+F 0 "D16" H 3450 4583 50  0000 C CNN
+F 1 "D_Photo" H 3450 4674 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3450 4800 50  0001 C CNN
+F 3 "~" H 3450 4800 50  0001 C CNN
+	1    3500 4800
+	-1   0    0    1   
+$EndComp
+Text GLabel 3950 2000 2    50   Input ~ 0
+OUT1
+Text GLabel 3950 2400 2    50   Input ~ 0
+OUT2
+Text GLabel 3950 2800 2    50   Input ~ 0
+OUT3
+Text GLabel 3950 3200 2    50   Input ~ 0
+OUT4
+Text GLabel 3950 3600 2    50   Input ~ 0
+OUT5
+Text GLabel 3950 4000 2    50   Input ~ 0
+OUT6
+Text GLabel 3950 4400 2    50   Input ~ 0
+OUT7
+Text GLabel 3950 4800 2    50   Input ~ 0
+OUT8
+Wire Wire Line
+	3950 2000 3700 2000
+Wire Wire Line
+	3950 2400 3700 2400
+Wire Wire Line
+	3950 2800 3700 2800
+Wire Wire Line
+	3950 3200 3700 3200
+Wire Wire Line
+	3950 3600 3700 3600
+Wire Wire Line
+	3950 4000 3700 4000
+Wire Wire Line
+	3950 4400 3700 4400
+Wire Wire Line
+	3950 4800 3700 4800
+Text GLabel 6700 3350 0    50   Input ~ 0
+OUT1
+Text GLabel 6700 3250 0    50   Input ~ 0
+OUT2
+Text GLabel 6700 3150 0    50   Input ~ 0
+OUT3
+Text GLabel 6700 3050 0    50   Input ~ 0
+OUT4
+Text GLabel 6700 2950 0    50   Input ~ 0
+OUT5
+Text GLabel 6700 2850 0    50   Input ~ 0
+OUT6
+Text GLabel 6700 2750 0    50   Input ~ 0
+OUT7
+Text GLabel 6700 2650 0    50   Input ~ 0
+OUT8
+Text GLabel 6700 2450 0    50   Input ~ 0
+GND
+$Comp
+L power:PWR_FLAG #FLG01
+U 1 1 5EDD0829
+P 2750 1900
+F 0 "#FLG01" H 2750 1975 50  0001 C CNN
+F 1 "PWR_FLAG" H 2750 2073 50  0000 C CNN
+F 2 "" H 2750 1900 50  0001 C CNN
+F 3 "~" H 2750 1900 50  0001 C CNN
+	1    2750 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2750 1900 2750 2000
+Connection ~ 2750 2000
+$Comp
+L Ninja-qPCR:Conn_02x05 U1
+U 1 1 5F200BF7
+P 7100 2450
+F 0 "U1" H 7419 2061 50  0000 L CNN
+F 1 "Conn_02x05" H 7419 1970 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 6900 2550 50  0001 C CNN
+F 3 "" H 6900 2550 50  0001 C CNN
+	1    7100 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 2450 6800 2450
+Wire Wire Line
+	6900 2550 6800 2550
+Wire Wire Line
+	6800 2550 6800 2450
+Connection ~ 6800 2450
+Wire Wire Line
+	6800 2450 6700 2450
+Wire Wire Line
+	6900 2650 6700 2650
+Wire Wire Line
+	6900 2750 6700 2750
+Wire Wire Line
+	6700 2850 6900 2850
+Wire Wire Line
+	6900 2950 6700 2950
+Wire Wire Line
+	6900 3050 6700 3050
+Wire Wire Line
+	6900 3150 6700 3150
+Wire Wire Line
+	6900 3250 6700 3250
+Wire Wire Line
+	6900 3350 6700 3350
+Wire Wire Line
+	3200 2000 3400 2000
+Wire Wire Line
+	3200 2400 3400 2400
+Wire Wire Line
+	3200 2800 3400 2800
+Wire Wire Line
+	3200 3200 3400 3200
+Wire Wire Line
+	3200 3600 3400 3600
+Wire Wire Line
+	3200 4000 3400 4000
+Wire Wire Line
+	3250 4400 3400 4400
+Wire Wire Line
+	3200 4800 3400 4800
+$EndSCHEMATC
