@@ -33,7 +33,7 @@ class NinjaQPCRDemo {
     qpcr.setEventReceiver(this);
     const option = {
       protocol: protocol,
-      conf: experimentConf
+      config: experimentConf
     };
     if (NO_SAVE) {
       const experiment = em._createExperiment(option);

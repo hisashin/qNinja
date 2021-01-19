@@ -21,6 +21,9 @@ const DEFAULT_STATUS = {
   status:"ready"
   
 };
+const DEFAULT_INFO = {};
+const DEFAULT_ANALYSIS_CONFIG = {};
+const DEFAULT_ANALYSIS = {};
 class ExperimentManager {
   constructor () {
     this.summaries = null;
@@ -47,7 +50,10 @@ class ExperimentManager {
           melt_curve: []
         }
       },
-      conf: (option.conf)? option.conf : DEFAULT_CONF,
+      config: (option.config)? option.config : DEFAULT_CONF,
+      info: (option.info)? option.info : DEFAULT_INFO,
+      analysis: (option.analysis)? option.analysis : DEFAULT_ANALYSIS,
+      analysis_config: (option.analysis_config)? option.analysis_config : DEFAULT_ANALYSIS_CONFIG,
       status: (option.status)? option.status : DEFAULT_STATUS
     };
     experiment.created = timestamp;

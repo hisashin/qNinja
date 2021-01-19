@@ -126,7 +126,7 @@ class AppState {
     return this.getPanel(this.panelStack[this.panelStack.length-1]);
   }
   _didNavigate () {
-    console.log("didNavigate")
+    //console.log("didNavigate")
     if (this.navigationHandler) {
       this.navigationHandler(this.panelStack);
     }
@@ -140,14 +140,12 @@ class AppState {
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
     });
   }
-  run (protocol, config) {
-    device.registerProtocol(protocol);
-    device.start(config);
+  run (experimentId) {
+    device.runExperiment(experimentId);
     this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
   }
   
   startEditProtocol (id) {
-    console.log("AppState.startEditProtocol");
     this._loadProtocol(id, (data)=>{
       this.views.panelProtocolEditor.startEditProtocol(data);
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
@@ -287,11 +285,11 @@ class AppState {
   }
   
   submitCreateProtocol (obj, onSave, onError) {
-    console.log("AppState.saveProtocol");
+    console.log("AppState.submitCreateProtocol");
     const path = "protocols";
-    Util.requestData(path, obj, "POST", ()=>{
+    Util.requestData(path, obj, "POST", (res)=>{
       if (onSave) {
-        onSave();
+        onSave(res);
       }
     }, (error)=>{
       if (onError) {
@@ -308,6 +306,20 @@ class AppState {
         onSave();
       }
       this.fetchProtocols();
+    }, (error)=>{
+      if (onError) {
+        onError(error);
+      }
+    });
+  }
+  
+  submitCreateExperiment (obj, onSave, onError) {
+    console.log("AppState.submitCreateExperiment");
+    const path = "experiments";
+    Util.requestData(path, obj, "POST", (res)=>{
+      if (onSave) {
+        onSave(res);
+      }
     }, (error)=>{
       if (onError) {
         onError(error);

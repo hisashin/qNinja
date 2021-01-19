@@ -97,7 +97,7 @@ class NinjaQPCR {
       return false;
     }
     this.experimentLog = experiment;
-    this.experimentConf = experiment.conf;
+    this.experimentConf = experiment.config;
     this._setDeviceState(DEVICE_STATE.RUNNING);
     this.protocol = experiment.protocol;
     this.startTimestamp = new Date();

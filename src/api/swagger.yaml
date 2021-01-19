@@ -395,6 +395,34 @@ definitions:
         type: object
       status:
         type: object
+  DilutionSeries:
+    type: object
+    properties:
+      label:
+        type: string
+      type:
+        type: string
+        enum: [standard, unknown]
+        example: standard
+      start_quantity:
+        type: number
+      dilution_factor:
+        type: number
+      wells:
+        type: array
+        items:
+          type: integer
+  WellConfig:
+    type: object
+    properties:
+      label:
+        type: string
+      type:
+        type: string
+        enum: [standard, unknown,positive_control,negative_control,empty]
+        example: unknown
+      quantity:
+        type: number
   Progress:
     type: object
   Protocol:

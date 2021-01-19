@@ -45,7 +45,7 @@
                 <th>Quantity</th>
                 <th>Label</th>
               </tr>
-              <tr v-for="(item, index) in experiment.conf.tubes" v-bind:key="index">
+              <tr v-for="(item, index) in experiment.config.tubes" v-bind:key="index">
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.type }}</td>

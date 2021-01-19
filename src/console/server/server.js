@@ -175,9 +175,23 @@ class NinjaQPCRHTTPServer {
     router.addPath("/experiments", "GET", this.experiments());
     router.addPath("/experiments", "POST", this.experimentCreate());
     router.addPath("/experiments/latest", "GET", this.experimentLatest());
+    
+    // Single experiment and fields
     router.addPath("/experiments/{eid}", "GET", this.experimentGet());
     router.addPath("/experiments/{eid}", "PUT", this.experimentUpdate());
     router.addPath("/experiments/{eid}", "DELETE", this.experimentDelete());
+    router.addPath("/experiments/{eid}/protocol", "GET", this.experimentProtocolGet());
+    router.addPath("/experiments/{eid}/protocol", "PUT", this.experimentProtocolUpdate());
+    router.addPath("/experiments/{eid}/protocol", "DELETE", this.experimentProtocolDelete());
+    router.addPath("/experiments/{eid}/info", "GET", this.experimentInfoGet());
+    router.addPath("/experiments/{eid}/info", "PUT", this.experimentInfoUpdate());
+    router.addPath("/experiments/{eid}/config", "GET", this.experimentConfigGet());
+    router.addPath("/experiments/{eid}/config", "PUT", this.experimentConfigUpdate());
+    router.addPath("/experiments/{eid}/log", "GET", this.experimentLogGet());
+    router.addPath("/experiments/{eid}/analysis_config", "GET", this.experimentAnalysisConfigGet());
+    router.addPath("/experiments/{eid}/analysis_config", "PUT", this.experimentAnalysisConfigUpdate());
+    router.addPath("/experiments/{eid}/analysis", "GET", this.experimentAnalysisGet());
+    router.addPath("/experiments/{eid}/analysis", "PUT", this.experimentAnalysisUpdate());
     
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
@@ -434,7 +448,7 @@ class NinjaQPCRHTTPServer {
   
   experimentGet () {
     return (req, res, map)=>{
-      em.getAnalyzedExperimentLog(map.eid, (experiment)=>{
+      em.getExperiment(map.eid, (experiment)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         res.write(JSON.stringify(experiment));
         res.end();
@@ -461,7 +475,7 @@ class NinjaQPCRHTTPServer {
     }
     
   }
-  experimentUpdate () {
+  experimentUpdate () { //Deprecated
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
         console.log("protocolUpdate received data.");
@@ -498,6 +512,37 @@ class NinjaQPCRHTTPServer {
     };
     
   }
+  // Return partial
+  _experimentGetProperty (key) {
+    return (req, res, map)=>{
+      em.getExperiment(map.eid, (experiment)=>{
+        console.log("experimentGet OK. " + key);
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify(experiment[key]));
+        res.end();
+      },
+      (err)=>{
+        console.log("experimentGet ERROR. " + err);
+        console.log(err)
+        this.error500(req, res, err);
+      });
+    };
+  }
+  
+  experimentProtocolGet () { return this._experimentGetProperty("protocol"); }
+  experimentProtocolUpdate () { /* TODO */ }
+  experimentProtocolDelete () { /* TODO */ }
+  experimentInfoGet () { return this._experimentGetProperty("info"); }
+  experimentInfoUpdate () { /* TODO */ }
+  experimentConfigGet () { return this._experimentGetProperty("config"); }
+  experimentConfigUpdate () { /* TODO */ }
+  experimentAnalysisConfigGet () { return this._experimentGetProperty("analysis_config"); }
+  experimentAnalysisConfigUpdate () { /* TODO */ }
+  experimentLogGet () { return this._experimentGetProperty("log"); }
+  experimentAnalysisGet () { return this._experimentGetProperty("analysis"); }
+  experimentAnalysisUpdate () { /* TODO */ }
+  
+  
   error404 (req, res) {
     res.writeHead(404,{'Content-Type': 'application/json'});
     res.write("Not found.");
@@ -538,8 +583,6 @@ class NinjaQPCRWebSocketServer {
   }
   handleMessage (obj) {
     switch (obj.category) {
-      case "experiment.start":
-        this.start(); break;
       case "experiment.pause":
         this.pause(); break;
       case "experiment.resume":
@@ -548,24 +591,33 @@ class NinjaQPCRWebSocketServer {
         this.abort(); break;
       case "experiment.finish":
         this.finish(); break;
-      case "experiment.registerProtocol": {
-        console.log("Protocol updated.");
-        this.protocol = obj.data;
-        console.log(this.protocol);
+      case "experiment.runExperiment": {
+        console.log("Run experiment.");
+        const experimentId = obj.data.id;
+        this.start(experimentId);
         break;
       }
       default:
         break;
     }
   }
+  start (experimentId) {
+    em.getExperiment(experimentId, (experiment)=>{
+      this.protocol = experiment.protocol;
+      qpcr.start(experiment);
+      this.isRunning = true;
+    });
+  }
+  /*
   start (experimentConf) {
     const experiment = em._createExperiment({
       protocol: this.protocol,
-      conf: experimentConf
+      config: experimentConf
     });
     qpcr.start(experiment);
     this.isRunning = true;
   }
+  */
   pause () {
     qpcr.pause(this.protocol);
   }

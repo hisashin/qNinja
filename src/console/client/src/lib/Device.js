@@ -106,15 +106,6 @@ class Device {
   }
   
   /* Experiment Control */
-  start (experimentConf) {
-    const obj = {
-      "category":"experiment.start",
-      "data": {
-        "experimentConf": experimentConf
-      }
-    };
-    this.ws.send(JSON.stringify(obj));
-  }
   pause () {
     const obj = {
       "category":"experiment.pause"
@@ -141,24 +132,12 @@ class Device {
     this.ws.send(JSON.stringify(obj));
   }
   
-  registerProtocol (protocol) {
-    this.setProtocol(protocol);
+  runExperiment (experimentId) {
     const obj = {
-      "category":"experiment.registerProtocol",
-      data:protocol
+      "category":"experiment.runExperiment",
+      data:{id:experimentId}
     };
     this.ws.send(JSON.stringify(obj));
-  }
-  
-  startEditProtocol (protocol) {
-    console.log("Device.setProtocol calling %d handlers", this.deviceStateHandlers.length);
-    console.log(protocol);
-    this.protocol = protocol;
-    this.deviceStateHandlers.forEach((handler)=>{
-      if (handler.onUpdateProtocol) {
-        handler.onUpdateProtocol(this.protocol);
-      }
-    });
   }
   
   getProtocol () {

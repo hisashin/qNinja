@@ -70,6 +70,9 @@ const DEFAULT_STATUS = {
   status:"ready"
   
 };
+const DEFAULT_INFO = {};
+const DEFAULT_ANALYSIS_CONFIG = {};
+const DEFAULT_ANALYSIS = {};
 
 export default {
   name: 'TheExperimentEditor',
@@ -83,7 +86,8 @@ export default {
   data() {
     return {
       experiment: {},
-      pickingProtocol: false
+      pickingProtocol: false,
+      isEditing: false
     }
   },
   created: function () {
@@ -110,14 +114,23 @@ export default {
             melt_curve: []
           }
         },
-        conf: (option.conf)? option.conf : DEFAULT_CONF,
+        config: (option.config)? option.config : DEFAULT_CONF,
+        info: (option.info)? option.info : DEFAULT_INFO,
+        analysis: (option.analysis)? option.analysis : DEFAULT_ANALYSIS,
+        analysis_config: (option.analysis_config)? option.analysis_config : DEFAULT_ANALYSIS_CONFIG,
         status: (option.status)? option.status : DEFAULT_STATUS
       };
       experiment.created = timestamp;
       return experiment;
     },
     run () {
-      appState.run(this.protocol, this.experimentConf);
+      console.log("TheExperimentEditor.run");
+      this.isEditing = false;
+      appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+        console.log(createdItem)
+        console.log(createdItem.id)
+        appState.run(createdItem.id);
+      });
     },
     setProtocol (protocol) {
       this.protocol = protocol;
@@ -141,7 +154,11 @@ export default {
     
     },
     confirmLeave (callback) {
-      if (window.confirm("Are you sure you want to discard the changes?")) {
+      if (this.isEditing) {
+        if (window.confirm("Are you sure you want to discard the changes?")) {
+          callback();
+        }
+      } else {
         callback();
       }
     },

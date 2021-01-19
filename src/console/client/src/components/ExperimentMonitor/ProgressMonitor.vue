@@ -177,7 +177,6 @@ export default {
       }
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
     },
-    start : ()=>{ device.start(); },
     pause : ()=>{ device.pause(); },
     resume : ()=>{ device.resume(); },
     abort : ()=>{ device.abort(); },
