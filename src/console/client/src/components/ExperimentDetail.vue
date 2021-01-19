@@ -10,6 +10,35 @@
         </p>
       </div>
     </section>
+    <!-- Info section -->
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Summary</h2>
+      </header>
+      <div class="section__body">
+        <div class="item item--detail-card">
+          <div class="item--detail-card__body">
+            <div>
+              Name: <input
+                v-model.number="experiment.info.name" type="text"
+              >
+            </div>
+            <div>
+              Comment: <input
+                v-model.number="experiment.info.comment" type="text"
+              >
+            </div>
+            <b-button
+              pill
+              @click="updateInfo"
+            >
+              Update
+            </b-button>
+            
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="section">
       <header class="section__header">
         <h2 class="section__header__title" >Protocol</h2>
@@ -146,6 +175,14 @@ export default {
         }, 1000);
       this.experiment = experiment;
       this.updateTubesLayout();
+    },
+    updateInfo: function () {
+      console.log(this.$data.experiment.id)
+      console.log(this.$data.experiment.info)
+      appState.submitUpdateExperimentProperty (this.$data.experiment.id, "info",
+       this.$data.experiment.info, (resObj)=>{
+        console.log(resObj)
+       }, ()=>{});
     }
   }
 }

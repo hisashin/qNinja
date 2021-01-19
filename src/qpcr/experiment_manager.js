@@ -133,7 +133,11 @@ class ExperimentManager {
         }
       } else {
         // Add to summary
-        this._updateSummaries(experiment, callback, onError);
+        this._updateSummaries(experiment, ()=>{
+          if (callback) {
+            callback(experiment);
+          }
+        }, onError);
       }
     });
   }

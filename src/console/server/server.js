@@ -528,19 +528,44 @@ class NinjaQPCRHTTPServer {
       });
     };
   }
+  // TODO validator
+  _experimentUpdateProperty (key) {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        console.log("protocolUpdate received data.");
+        const propertyValue = JSON.parse(rawData);
+        em.getExperiment(map.eid, (experiment)=>{
+          console.log("Experiment Found. Updating %s of experiment %s.", key, experiment.id);
+          experiment[key] = propertyValue;
+          em.update(experiment, (updatedItem)=>{
+            res.writeHead(200,{'Content-Type': 'application/json'});
+            res.write(JSON.stringify(updatedItem));
+            res.end();
+          }, (err)=>{
+            this._handleError(req, res, err);
+          });
+        },
+        (err)=>{
+          console.log("experimentGet ERROR. " + err);
+          console.log(err)
+          this.error500(req, res, err);
+        });
+      });
+    }
+  }
   
   experimentProtocolGet () { return this._experimentGetProperty("protocol"); }
-  experimentProtocolUpdate () { /* TODO */ }
+  experimentProtocolUpdate () { return this._experimentUpdateProperty("protocol"); }
   experimentProtocolDelete () { /* TODO */ }
   experimentInfoGet () { return this._experimentGetProperty("info"); }
-  experimentInfoUpdate () { /* TODO */ }
+  experimentInfoUpdate () { return this._experimentUpdateProperty("info"); }
   experimentConfigGet () { return this._experimentGetProperty("config"); }
-  experimentConfigUpdate () { /* TODO */ }
+  experimentConfigUpdate () { return this._experimentUpdateProperty("config"); }
   experimentAnalysisConfigGet () { return this._experimentGetProperty("analysis_config"); }
-  experimentAnalysisConfigUpdate () { /* TODO */ }
+  experimentAnalysisConfigUpdate () { return this._experimentUpdateProperty("analysis_config"); }
   experimentLogGet () { return this._experimentGetProperty("log"); }
   experimentAnalysisGet () { return this._experimentGetProperty("analysis"); }
-  experimentAnalysisUpdate () { /* TODO */ }
+  experimentAnalysisUpdate () { /* TODO run calculation */ }
   
   
   error404 (req, res) {

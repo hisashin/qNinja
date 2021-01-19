@@ -313,6 +313,21 @@ class AppState {
     });
   }
   
+  submitUpdateExperimentProperty (id, key, valueObj, onSave, onError) {
+    console.log("AppState.submitCreateExperiment %s %s", key, id);
+    const path = "experiments/" + id + "/" + key;
+    console.log("path=%s", path);
+    Util.requestData(path, valueObj, "PUT", (res)=>{
+      if (onSave) {
+        onSave(res);
+      }
+    }, (error)=>{
+      if (onError) {
+        onError(error);
+      }
+    });
+  }
+  
   submitCreateExperiment (obj, onSave, onError) {
     console.log("AppState.submitCreateExperiment");
     const path = "experiments";
