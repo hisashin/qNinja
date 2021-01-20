@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     run: function(id) {
-      appState.prepareExperiment(this.pid);
+      appState.draftExperimentWithProtocol(this.pid);
     },
     revealDetail: function() {
       console.log("revealDetail %s",this.pid)

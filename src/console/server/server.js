@@ -213,6 +213,7 @@ class NinjaQPCRHTTPServer {
     router.addPath("/experiments/{eid}/analysis_config", "PUT", this.experimentAnalysisConfigUpdate());
     router.addPath("/experiments/{eid}/analysis", "GET", this.experimentAnalysisGet());
     router.addPath("/experiments/{eid}/analysis", "PUT", this.experimentAnalysisUpdate());
+    router.addPath("/experiments/draft", "POST", this.experimentDraft());
     
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
@@ -532,6 +533,18 @@ class NinjaQPCRHTTPServer {
         this._handleError(req, res, err);
       });
     };
+    
+  }
+  experimentDraft () {
+    return (req, res, map)=>{
+      req.on("data", (rawData)=>{
+        const content = JSON.parse(rawData);
+        res.writeHead(200,{'Content-Type': 'application/json'});
+        const draft = em._createExperimentDraft(content);
+        res.write(JSON.stringify(draft));
+        res.end();
+      });
+    }
     
   }
   // Return partial

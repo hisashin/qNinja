@@ -31,7 +31,7 @@ class ExperimentManager {
   _createExperimentDraft (option) {
     const timestamp = new Date().getTime();
     let experiment = {
-      protocol_id: option.protocol.id,
+      protocol_id: (option.protocol) ? option.protocol.id : null,
       protocol: option.protocol, // nullable
       log: {
         temp: {

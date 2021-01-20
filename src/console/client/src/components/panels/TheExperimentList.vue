@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     startCreateExperiment () {
-      appState.startCreateExperiment();
+      appState.draftExperiment();
     },
     onAppear () {
       console.log("TheExperimentList.onAppear()");

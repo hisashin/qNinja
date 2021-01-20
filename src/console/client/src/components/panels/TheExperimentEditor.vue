@@ -1,6 +1,35 @@
 <template>
   <div class="panel">
   
+    <!-- Info section -->
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Summary</h2>
+      </header>
+      <div class="section__body">
+        <div class="item item--detail-card">
+          <div class="item--detail-card__body">
+            <div>
+              Name: <input
+                v-model.number="experiment.info.name" type="text"
+              >
+            </div>
+            <div>
+              Comment: <input
+                v-model.number="experiment.info.comment" type="text"
+              >
+            </div>
+            <b-button
+              pill
+              @click="updateInfo"
+            >
+              Update
+            </b-button>
+            
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="section">
       <header class="section__header">
         <div class="section__header__menu">
@@ -51,29 +80,6 @@ import appState from "../../lib/AppState.js";
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProtocolPicker from '../ProtocolPicker.vue';
 
-// TODO Prepare UI for experiment conf
-
-
-const DEFAULT_CONF = {
-  tubes: [
-    { id:0, label:"Sample A", quantity:0.1 },
-    { id:1, label:"Sample B", quantity:0.2 },
-    { id:2, label:"Sample C", quantity:0.3 },
-    { id:3, label:"Sample D", quantity:0.4 },
-    { id:4, label:"Sample E", quantity:0.5 },
-    { id:5, label:"Sample F", quantity:0.6 },
-    { id:6, label:"Sample G", quantity:0.7 },
-    { id:7, label:"Sample H", quantity:0.8 }
-  ]
-};
-const DEFAULT_STATUS = {
-  status:"ready"
-  
-};
-const DEFAULT_INFO = {};
-const DEFAULT_ANALYSIS_CONFIG = {};
-const DEFAULT_ANALYSIS = {};
-
 export default {
   name: 'TheExperimentEditor',
   components: {
@@ -93,36 +99,6 @@ export default {
   created: function () {
   },
   methods: {
-    _createExperimentDraft (option) {
-      const timestamp = new Date().getTime();
-      let experiment = {
-        protocol_id: option.protocol.id || option.protocol_id,
-        protocol: option.protocol,
-        log: {
-          temp: {
-            time:[],
-            well:[],
-            lid:[]
-          },
-          events: [
-            // transition
-          ],
-          baseline:[], 
-          fluorescence: {
-            baseline: [],
-            qpcr: [],
-            melt_curve: []
-          }
-        },
-        config: (option.config)? option.config : DEFAULT_CONF,
-        info: (option.info)? option.info : DEFAULT_INFO,
-        analysis: (option.analysis)? option.analysis : DEFAULT_ANALYSIS,
-        analysis_config: (option.analysis_config)? option.analysis_config : DEFAULT_ANALYSIS_CONFIG,
-        status: (option.status)? option.status : DEFAULT_STATUS
-      };
-      experiment.created = timestamp;
-      return experiment;
-    },
     run () {
       console.log("TheExperimentEditor.run");
       this.isEditing = false;
@@ -138,13 +114,14 @@ export default {
     onAppear () {
       console.log("TheExperimentEditor.onAppear()");
     },
-    startUpdateExperiment () {
-    
+    /* Panel transition */
+    setExperiment (experiment) {
+      this.experiment = experiment;
+      this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
     },
-    startCreateExperiment (item) {
-      console.log("startCreateExperiment");
-      console.log(item)
-      this.experiment = this._createExperimentDraft({protocol:item.protocol,protocol_id:item.id});
+    startCreateExperiment (draft) {
+      console.log(draft)
+      this.experiment = draft;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
     },
     submitCreateExperiment () {
@@ -178,6 +155,14 @@ export default {
     },
     cancelPickProtocol () {
       this.pickingProtocol = false;
+    },
+    updateInfo: function () {
+      console.log(this.$data.experiment.id)
+      console.log(this.$data.experiment.info)
+      appState.submitUpdateExperimentProperty (this.$data.experiment.id, "info",
+       this.$data.experiment.info, (resObj)=>{
+        console.log(resObj)
+       }, ()=>{});
     }
   }
 }

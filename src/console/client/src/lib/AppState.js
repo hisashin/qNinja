@@ -131,14 +131,28 @@ class AppState {
       this.navigationHandler(this.panelStack);
     }
   }
-  prepareExperiment (id) {
-    console.log("AppState.prepareExperiment");
+  draftExperimentWithProtocol (id) {
     this._loadProtocol(id, (data)=>{
-      console.log("loadProtocol  callback");
-      console.log(data)
-      this.views.panelExperimentEditor.startCreateExperiment(data);
-      this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
+      const option = { protocol: data.protocol };
+      // Draft.
+      Util.requestData("experiments/draft", option, "POST", 
+        (data)=>{
+          this.views.panelExperimentEditor.startCreateExperiment(data);
+          this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
+        }, 
+        ()=>{}
+      );
     });
+  }
+  draftExperiment () {
+    Util.requestData("experiments/draft", {}, "POST", 
+      (data)=>{
+        this.views.panelExperimentEditor.startCreateExperiment(data);
+        this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
+      }, 
+      ()=>{}
+    );
+      
   }
   run (experimentId) {
     device.runExperiment(experimentId);
@@ -156,10 +170,6 @@ class AppState {
     this.views.panelProtocolEditor.startCreateProtocol();
     this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
   }
-  startCreateExperiment () {
-    alert("TODO");
-  }
-  
   newProtocol () {
     console.log("AppState.newProtocol");
     
@@ -246,8 +256,12 @@ class AppState {
   revealDetailExperiment (id) {
     console.log("AppState.revealDetailExperiment.");
     this._loadExperiment(id, (experiment)=>{
+      /*
       this.pushPanel(this.PANELS.EXPERIMENT_DETAIL);
       this.views.panelExperimentDetail.setExperiment(experiment);
+      */
+      this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
+      this.views.panelExperimentEditor.setExperiment(experiment);
     });
   }
   
