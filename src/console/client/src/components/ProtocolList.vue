@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     load: function () {
-      console.log("ExperimentList.load");
+      console.log("ProtocolList.load");
       this.error = false;
       let params = this.$data.params;
       appState.fetchProtocols(params, 

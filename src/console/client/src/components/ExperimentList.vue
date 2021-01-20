@@ -42,12 +42,13 @@ export default {
   },
   props: {
     limit: { type:Number },
-    pagination: { type:Boolean },
-    params:{}
+    pagination: { type:Boolean }
   },
   data() {
     return {
       summaries:[],
+      paging:{},
+      params:{},
       error: false
     }
   },
@@ -56,12 +57,16 @@ export default {
   methods: {
     load: function () {
       this.error = false;
-      appState.fetchExperiments({}, 
-      (data)=>{
-        this.summaries = data;
+      let params = this.$data.params;
+      appState.fetchExperiments(params, 
+      (res)=>{
+        this.summaries = res.data;
+        this.paging = res.paging;
       },
       ()=>{
+        // Error
         this.error = true;
+        this.protocols = [];
       });
     },
     revealDetail: function (id) {
@@ -84,6 +89,11 @@ export default {
     },
     setKeyword: function(keyword) {
       this.params.keyword = keyword;
+      this.params.page = 0;
+      this.load();
+    },
+    setStatus: function (status) {
+      this.params.status = status;
       this.params.page = 0;
       this.load();
     }

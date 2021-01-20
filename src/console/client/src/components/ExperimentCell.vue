@@ -2,7 +2,7 @@
   <div class="experiment-cell-content" @click="revealDetail">
     <div class="p-1">
       <div class="row">
-        <div class="col-12"><strong>{{summary.protocol_name}}</strong></div>
+        <div class="col-12"><strong>{{summary.name}}</strong></div>
         <div class="col-4">{{start}}</div>
         <div class="col-4">{{duration}}</div>
         <div class="col-4">{{summary.status}}</div>

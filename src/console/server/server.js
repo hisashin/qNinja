@@ -1,4 +1,4 @@
-modified"use strict";
+"use strict";
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
@@ -153,7 +153,7 @@ const experimentPager = new Pager(
     },
     "name": (a, b) =>{
       return (a.name < b.name) ? -1: 1;
-    } 
+    }, 
     "protocol_name": (a, b) =>{
       return (a.protocol_name < b.protocol_name) ? -1: 1;
     } 
@@ -161,11 +161,17 @@ const experimentPager = new Pager(
   (all, query) => {
     let array = all;
     let keyword = query.keyword;
+    let status = query.status;
     if (keyword != null && keyword.length > 0) {
       array = array.filter((obj)=>{ 
           return (obj.name!=null && obj.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0)
             || (obj.protocol_name!=null && obj.protocol_name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0)
         });
+    }
+    if (status) {
+      array = array.filter((obj)=>{
+        return obj.status == status;
+      });
     }
     return array;
   }

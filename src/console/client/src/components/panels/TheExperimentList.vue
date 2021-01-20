@@ -2,7 +2,7 @@
   <div class="panel">
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Protocols</h2>
+        <h2 class="section__header__title" >Experiments</h2>
         <div class="section__header__menu">
           <b-button @click="startCreateExperiment">
             New Experiment
@@ -16,6 +16,13 @@
           <option value="created">Created</option>
           <option value="started">Last used</option>
           <option value="name">Name</option>
+        </select>
+        <select v-model="status" @change="onStatusChanged">
+          <option value="">Filter by status</option>
+          <option value="finished">Finished</option>
+          <option value="running">Running</option>
+          <option value="aborted">Aborted</option>
+          <option value="ready">Ready</option>
         </select>
         <label>
           <input type="radio" v-model="order" value="asc" @change="onOrderChanged"/> A-Z
@@ -47,7 +54,8 @@ export default {
       sort: "modified",
       keyword: "",
       keywordPrev: "",
-      keywordLastUpdate: 0
+      keywordLastUpdate: 0,
+      status: ""
     }
   },
   created: function () {
@@ -61,10 +69,13 @@ export default {
       this.$refs.experimentList.load();
     },
     onOrderChanged () {
-      this.$refs.experimentlList.setOrder(this.order);
+      this.$refs.experimentList.setOrder(this.order);
     },
     onSortChanged () {
-      this.$refs.experimentlList.setSort(this.sort);
+      this.$refs.experimentList.setSort(this.sort);
+    },
+    onStatusChanged () {
+      this.$refs.experimentList.setStatus(this.status);
     },
     onKeywordChanged () {
       let now = new Date().getTime();
@@ -72,7 +83,7 @@ export default {
       setTimeout(()=>{
         if (now == this.keywordLastUpdate && this.keyword != this.keywordPrev) {
           this.keywordPrev = this.keyword;
-          this.$refs.experimentlList.setKeyword(this.keyword);
+          this.$refs.experimentList.setKeyword(this.keyword);
         }
       }, 350)
     
