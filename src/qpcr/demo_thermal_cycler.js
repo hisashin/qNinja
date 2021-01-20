@@ -13,7 +13,7 @@ qpcr.setEventReceiver({
     console.log("%f\t%f", data.well, data.lid);
   }
 });
-const experiment = em._createExperiment({protocol:protocol});
+const experiment = em._createExperimentDraft({protocol:protocol});
 qpcr.start(experiment);
 
 process.on('SIGINT', () => {

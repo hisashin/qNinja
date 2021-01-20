@@ -151,11 +151,13 @@ class AppState {
       this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
     });
   }
-  
-  startCreateProtocol (id) {
+  startCreateProtocol () {
     console.log("AppState.editProtocol");
     this.views.panelProtocolEditor.startCreateProtocol();
     this.pushPanel(this.PANELS.PROTOCOL_EDITOR);
+  }
+  startCreateExperiment () {
+    alert("TODO");
   }
   
   newProtocol () {

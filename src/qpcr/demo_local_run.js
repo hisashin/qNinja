@@ -36,7 +36,7 @@ class NinjaQPCRDemo {
       config: experimentConf
     };
     if (NO_SAVE) {
-      const experiment = em._createExperiment(option);
+      const experiment = em._createExperimentDraft(option);
       qpcr.start(experiment);
       this.isRunning = true;
     } else {

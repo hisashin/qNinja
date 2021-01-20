@@ -12,10 +12,12 @@
       <!-- Search & sort -->
       <nav class="section__nav section__nav--top">
         <select v-model="sort" @change="onSortChanged">
-          <option value="updated">Last edited</option>
-          <option value="created">Last created</option>
-          <option value="used">Last used</option>
+          <option value="modified">Last edited</option>
+          <option value="created">Created</option>
+          <option value="start">Start time</option>
+          <option value="end">End time</option>
           <option value="name">Name</option>
+          <option value="protocol_name">Protocol</option>
         </select>
         <label>
           <input type="radio" v-model="order" value="asc" @change="onOrderChanged"/> A-Z
@@ -24,7 +26,6 @@
           <input type="radio" v-model="order" value="desc" @change="onOrderChanged"/> Z-A
         </label>
         <input type="text" placeholder="Search" v-model="keyword" @keyup="onKeywordChanged"/>
-        
       </nav>
       <ProtocolList :limit="2" :pagination="true" ref="protocolList"/>
     </section>
@@ -41,7 +42,7 @@ export default {
   data() {
     return {
       order: "asc",
-      sort: "updated",
+      sort: "modified",
       keyword: "",
       keywordPrev: "",
       keywordLastUpdate: 0

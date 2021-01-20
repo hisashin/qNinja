@@ -22,7 +22,13 @@
       </ul>
     </div>
     <nav v-if="pagination && !error" class="section__nav section__nav--bottom">
-      TODO pagination
+      <ul class="paging__pages">
+        <li class="paging__pages__page" v-for="index in paging.pages" v-bind:key="index">
+          <a class="paging__pages__page__label paging__pages__page__label--linked" v-if="index-1!=paging.page" href="javascript:void(0)" @click="reload(index-1)">{{ index }}</a>
+          <span class="paging__pages__page__label paging__pages__page__label--current" v-if="index-1==paging.page">{{ index }}</span>
+        </li>
+      </ul>
+      (Total experiments: {{ paging.total }})
     </nav>
   </div>
 </template>
@@ -61,6 +67,25 @@ export default {
     revealDetail: function (id) {
       console.log("ExperimentList.revealDetail %s", id);
       appState.revealDetailExperiment(id);
+    },
+    reload: function(index) {
+      this.params.page = index;
+      this.load();
+    },
+    setOrder: function(order) {
+      this.params.order = order;
+      this.params.page = 0;
+      this.load();
+    },
+    setSort: function(sort) {
+      this.params.sort = sort;
+      this.params.page = 0;
+      this.load();
+    },
+    setKeyword: function(keyword) {
+      this.params.keyword = keyword;
+      this.params.page = 0;
+      this.load();
     }
   }
 }

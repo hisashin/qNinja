@@ -1,4 +1,4 @@
-"use strict";
+modified"use strict";
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
@@ -101,11 +101,11 @@ const protocolPager = new Pager(
     offset: 0,
     limit: 2,
     order: "desc",
-    sort: "updated"
+    sort: "modified"
   },
   // Sort functions
   {
-    "updated": (a, b) =>{
+    "modified": (a, b) =>{
       return (a.modified < b.modified) ? -1: 1;
     },
     "created": (a, b) =>{
@@ -129,31 +129,46 @@ const protocolPager = new Pager(
     return array;
   }
 );
-const logPager = new Pager(
+const experimentPager = new Pager(
   // Defaults
   {
     offset: 0,
     limit: 2,
     order: "desc",
-    sort: "updated"
+    sort: "modified"
   },
   // Sort functions
   {
-    "updated": (a, b) =>{
+    "modified": (a, b) =>{
       return (a.modified < b.modified) ? -1: 1;
     },
     "created": (a, b) =>{
       return (a.created < b.created) ? -1: 1;
     },
-    "used": (a, b) =>{
-      return (a.used < b.used) ? -1: 1;
+    "start": (a, b) =>{
+      return (a.start < b.start) ? -1: 1;
+    },
+    "end": (a, b) =>{
+      return (a.end < b.end) ? -1: 1;
     },
     "name": (a, b) =>{
-      return (a.protocol.name < b.protocol.name) ? -1: 1;
+      return (a.name < b.name) ? -1: 1;
+    } 
+    "protocol_name": (a, b) =>{
+      return (a.protocol_name < b.protocol_name) ? -1: 1;
     } 
   },
-  // Filter func
-  null
+  (all, query) => {
+    let array = all;
+    let keyword = query.keyword;
+    if (keyword != null && keyword.length > 0) {
+      array = array.filter((obj)=>{ 
+          return (obj.name!=null && obj.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0)
+            || (obj.protocol_name!=null && obj.protocol_name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0)
+        });
+    }
+    return array;
+  }
 );
 
 
@@ -324,7 +339,6 @@ class NinjaQPCRHTTPServer {
       pm.getProtocols((all)=>{
         const query = URL.parse(req.url, true).query;
         res.writeHead(200, {'Content-Type': 'application/json'});
-        // all.forEach((obj)=>{delete(obj.protocol.stages);delete(obj.protocol.lid_temp)});
         const obj = protocolPager.getPagination(all, query);
         res.write(JSON.stringify(obj));
         res.end();
@@ -421,9 +435,11 @@ class NinjaQPCRHTTPServer {
   
   experiments () {
     return (req, res, map)=>{
-      em.getSummaries({}, {}, (summaries)=>{
-        res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(summaries));
+      em.getSummaries({}, {}, (all)=>{
+        const query = URL.parse(req.url, true).query;
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        const obj = experimentPager.getPagination(all, query);
+        res.write(JSON.stringify(obj));
         res.end();
       },
       (err)=>{
@@ -635,7 +651,7 @@ class NinjaQPCRWebSocketServer {
   }
   /*
   start (experimentConf) {
-    const experiment = em._createExperiment({
+    const experiment = em._createExperimentDraft({
       protocol: this.protocol,
       config: experimentConf
     });

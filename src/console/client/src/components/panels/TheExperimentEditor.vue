@@ -93,7 +93,7 @@ export default {
   created: function () {
   },
   methods: {
-    _createExperiment (option) {
+    _createExperimentDraft (option) {
       const timestamp = new Date().getTime();
       let experiment = {
         protocol_id: option.protocol.id || option.protocol_id,
@@ -144,7 +144,7 @@ export default {
     startCreateExperiment (item) {
       console.log("startCreateExperiment");
       console.log(item)
-      this.experiment = this._createExperiment({protocol:item.protocol,protocol_id:item.id});
+      this.experiment = this._createExperimentDraft({protocol:item.protocol,protocol_id:item.id});
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
     },
     submitCreateExperiment () {

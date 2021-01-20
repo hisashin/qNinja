@@ -28,12 +28,11 @@ class ExperimentManager {
   constructor () {
     this.summaries = null;
   }
-  /* API */
-  _createExperiment (option) {
+  _createExperimentDraft (option) {
     const timestamp = new Date().getTime();
     let experiment = {
       protocol_id: option.protocol.id,
-      protocol: option.protocol,
+      protocol: option.protocol, // nullable
       log: {
         temp: {
           time:[],
@@ -56,10 +55,21 @@ class ExperimentManager {
       analysis_config: (option.analysis_config)? option.analysis_config : DEFAULT_ANALYSIS_CONFIG,
       status: (option.status)? option.status : DEFAULT_STATUS
     };
+    experiment.info.name = this._generateDefaultName(experiment);
     experiment.created = timestamp;
+    experiment.modified = timestamp;
     return experiment;
   }
-  generateExperimentId () {
+  _generateDefaultName (experiment) {
+    let dateStr = new Date().toLocaleString();
+    if (experiment.protocol && experiment.protocol.name) {
+      return experiment.protocol.name + " " + dateStr;
+    } else {
+      return "Experiment " + dateStr;
+    }
+  }
+  /* API */
+  _generateExperimentId () {
     return uuidv4();
   }
   getSummaries (filter, order, onLoad, onError) {
@@ -95,8 +105,8 @@ class ExperimentManager {
   }
   // Insert new experiment
   create (options, callback, onError) {
-    const experiment = this._createExperiment(options);
-    experiment.id = this.generateExperimentId();
+    const experiment = this._createExperimentDraft(options);
+    experiment.id = this._generateExperimentId();
     const filePath = this._experimentDir() + "/" + experiment.id;
     fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{
       if (err) {
@@ -120,6 +130,8 @@ class ExperimentManager {
       console.log("This object is not managed as a database item.");
       return callback(Experiment);
     }
+    const timestamp = new Date().getTime();
+    experiment.modified = timestamp;
     const filePath = this._experimentDir() + "/" + experiment.id;
     fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{
       if (err) {
@@ -173,14 +185,14 @@ class ExperimentManager {
         let summary = summaries[i];
         if (summary.id == experiment.id) {
           console.log("Replace summary. index=%d", i);
-          summaries[i] = this.generateExperimentSummary(experiment);
+          summaries[i] = this._generateExperimentSummary(experiment);
           found = true;
           break;  
         }
       }
       if (!found) {
         console.log("Adding new item to summaries.");
-        summaries.push(this.generateExperimentSummary(experiment));
+        summaries.push(this._generateExperimentSummary(experiment));
       }
       console.log("ExperimentManager.saveExperiment summaries.length=%d", summaries);
       this._saveSummaries(summaries, ()=>{
@@ -217,22 +229,12 @@ class ExperimentManager {
     onError);
   }
   
-  generateExperimentSummary (experiment) {
-    /*
-      {
-        "id":"037B8ACD-C29E-47FA-A59F-8CDFA3B1D0C8",
-        "start": 1593661111711,
-        "end": 1593661111711,
-        "created": 1593661111711,
-        "modified": 1593661111711,
-        "result_type":1,
-        "protocol_name":"DemoProtocol B"
-      }
-      */
+  _generateExperimentSummary (experiment) {
     return {
       "id":experiment.id,
       "start":experiment.status.start,
       "end":experiment.status.end,
+      "name":experiment.info.name,
       "protocol_name":experiment.protocol.name,
       "created":experiment.created,
       "modified":experiment.modified,
