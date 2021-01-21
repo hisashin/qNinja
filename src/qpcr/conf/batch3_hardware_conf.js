@@ -17,6 +17,14 @@ const Thermistor = require("../hardware/thermistor.js");
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
+const  = require("../hardware/mux_16ch.js");
+
+const PIN_NUM_PD_MUX_1 = 22; //GPIO6
+const PIN_NUM_PD_MUX_2 = 16; //GPIO4
+const PIN_NUM_PD_MUX_3 = 12; //GPIO1
+const PIN_NUM_PD_MUX_4 = 10; //GPIO16
+const PIN_NUM_PD_MUX_5 = 8; //GPIO15
+
 
 const raspi = require('raspi'); // For SoftPWM
 const pwm = require('raspi-soft-pwm');
@@ -183,7 +191,13 @@ class HardwareConf {
     return this.ledUnit;
   }
   getFluorescenceSensingUnit() {
+    // ADG731BSUZ (SPI)
     const pdMux = new ADG731BSUZ(this.spi, PIN_NUM_PD_SYNC);
+    /*
+    // Generic 16ch MUX
+    const pdMux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    mux.initialize();
+    */
     return new FluorescenceSensingUnit(pdMux, this.adcManager);
   }
 };
@@ -279,9 +293,9 @@ class LidSensing {
       const temp = this.thermistor.getTemp(val);
       callback(temp);
     });
-    
   }
 }
+
 class AirSensing {
   constructor (thermistor, adcManager, adcChannel) {
     this.thermistor = thermistor;
@@ -296,6 +310,7 @@ class AirSensing {
     
   }
 }
+
 class PlateSensing {
   // TODO mux?
   constructor (thermistor, adcManager, adcChannel) {
