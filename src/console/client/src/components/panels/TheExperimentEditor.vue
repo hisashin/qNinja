@@ -3,6 +3,13 @@
     <!-- Info section -->
     <section class="section" v-if="experiment">
       <header class="section__header">
+        <div class="section__header__menu">
+          <b-button v-show="isStarted"
+            class="ml-1"
+            @click.stop="updateInfo">
+            Save
+          </b-button>
+        </div>
         <h2 class="section__header__title" >Summary</h2>
       </header>
       <div class="section__body">
@@ -18,13 +25,6 @@
                 v-model.number="experiment.info.comment" type="text"
               >
             </div>
-            <b-button
-              pill
-              @click="updateInfo"
-            >
-              Update
-            </b-button>
-            
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
     <section class="section">
       <header class="section__header">
         <div class="section__header__menu">
-          <b-button v-show="!pickingProtocol"
+          <b-button v-show="!pickingProtocol && !isStarted"
             class="ml-1"
             @click.stop="pickProtocol">
             Select protocol
@@ -59,17 +59,31 @@
     </section>
     
     <!-- Config Section  -->
-    <ExperimentConfig ref="experimentConfig" @update="onUpdateConfig" />
+    <section class="section">
+      <header class="section__header">
+        <div class="section__header__menu">
+          <b-button v-show="isStarted"
+            class="ml-1"
+            @click.stop="updateConfig">
+            Save
+          </b-button>
+        </div>
+        <h2 class="section__header__title" >Plate Layout</h2>
+      </header>
+      <ExperimentConfig ref="experimentConfig" />
+    </section>
     
     <!-- Log section -->
     <!-- Analysis section -->
     <div>
       <b-button
+        v-if="!isStarted"
         class="mr-1"
         @click.stop="saveAndRun">
         Save and Run
       </b-button>
       <b-button
+        v-if="!isStarted"
         class="mr-1"
         @click.stop="save">
         Save
@@ -97,7 +111,9 @@ export default {
     return {
       experiment: null,
       pickingProtocol: false,
-      isEditing: false
+      isEditing: false,
+      isNew: false,
+      isStarted: false
     }
   },
   created: function () {
@@ -109,16 +125,37 @@ export default {
   },
   methods: {
     saveAndRun () {
-      console.log("TheExperimentEditor.run");
       this.isEditing = false;
-      appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
-        console.log(createdItem)
-        console.log(createdItem.id)
-        appState.run(createdItem.id);
-      });
+      this.experiment.config = this.$refs.experimentConfig.config;
+      if (this.isNew) {
+        appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+          console.log(createdItem)
+          console.log(createdItem.id)
+          appState.run(createdItem.id);
+        });
+      } else {
+        appState.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
+        ()=>{
+          console.log("Saved.");
+          appState.run(createdItem.id);
+        },
+        ()=>{});
+      
+      }
     },
     save () {
-      alert("TODO")
+      this.experiment.config = this.$refs.experimentConfig.config;
+      if (this.isNew) {
+        appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+          this.experiment = createdItem;
+        });
+      } else {
+        appState.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
+        ()=>{
+          console.log("Saved.");
+        },
+        ()=>{});
+      }
     },
     setProtocol (protocol) {
       this.protocol = protocol;
@@ -129,13 +166,15 @@ export default {
     /* Panel transition */
     setExperiment (experiment) {
       this.experiment = experiment;
-      console.log("setExperiment");
+      this.isStarted = experiment.status.start > 0;
       console.log(this.$refs)
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config);
+      this.isNew = false;
     },
     startCreateExperiment (draft) {
-      console.log("startCreateExperiment");
+      this.isNew = true;
+      this.isStarted = false;
       console.log(this.$refs)
       this.experiment = draft;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
@@ -181,8 +220,12 @@ export default {
         console.log(resObj)
        }, ()=>{});
     },
-    onUpdateConfig: function (config) {
-      console.log("TODO");
+    updateConfig: function () {
+      this.experiment.config = this.$refs.experimentConfig.config;
+      appState.submitUpdateExperimentProperty (this.$data.experiment.id, "config",
+       this.$data.experiment.config, (resObj)=>{
+        console.log(resObj);
+       }, ()=>{});
     }
   }
 }
