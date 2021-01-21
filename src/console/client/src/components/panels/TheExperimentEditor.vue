@@ -1,8 +1,7 @@
 <template>
   <div class="panel">
-  
     <!-- Info section -->
-    <section class="section">
+    <section class="section" v-if="experiment">
       <header class="section__header">
         <h2 class="section__header__title" >Summary</h2>
       </header>
@@ -30,6 +29,7 @@
         </div>
       </div>
     </section>
+    <!-- Protocol Section -->
     <section class="section">
       <header class="section__header">
         <div class="section__header__menu">
@@ -55,22 +55,24 @@
         </div>
       </div>
       <!-- Protocol Picker -->
-      
       <ProtocolPicker v-show="pickingProtocol" ref="protocolPicker" :limit="2" :pagination="true" @select="onPickProtocol" />
     </section>
-    <section class="section">
-      <header class="section__header">
-        <h2 class="section__header__title" >Plate Layout</h2>
-        <div class="section__header__menu"></div>
-      </header>
-      <div class="section__body">
-      </div>
-    </section>
+    
+    <!-- Config Section  -->
+    <ExperimentConfig ref="experimentConfig" @update="onUpdateConfig" />
+    
+    <!-- Log section -->
+    <!-- Analysis section -->
     <div>
       <b-button
-        class="ml-1"
-        @click.stop="run">
-        Run
+        class="mr-1"
+        @click.stop="saveAndRun">
+        Save and Run
+      </b-button>
+      <b-button
+        class="mr-1"
+        @click.stop="save">
+        Save
       </b-button>
     </div>
   </div>
@@ -79,27 +81,34 @@
 import appState from "../../lib/AppState.js";
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProtocolPicker from '../ProtocolPicker.vue';
+import ExperimentConfig from '../ExperimentConfig.vue';
 
 export default {
   name: 'TheExperimentEditor',
   components: {
     ProtocolDetail,
-    ProtocolPicker
+    ProtocolPicker,
+    ExperimentConfig
   },
   props: {
     limit: { type:Number }
   },
   data() {
     return {
-      experiment: {},
+      experiment: null,
       pickingProtocol: false,
       isEditing: false
     }
   },
   created: function () {
+    console.log("TheExperimentEditor.created");
+  },
+  mounted: function () {
+    console.log("TheExperimentEditor.mounted");
+  
   },
   methods: {
-    run () {
+    saveAndRun () {
       console.log("TheExperimentEditor.run");
       this.isEditing = false;
       appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
@@ -107,6 +116,9 @@ export default {
         console.log(createdItem.id)
         appState.run(createdItem.id);
       });
+    },
+    save () {
+      alert("TODO")
     },
     setProtocol (protocol) {
       this.protocol = protocol;
@@ -117,12 +129,17 @@ export default {
     /* Panel transition */
     setExperiment (experiment) {
       this.experiment = experiment;
+      console.log("setExperiment");
+      console.log(this.$refs)
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+      this.$refs.experimentConfig.setConfig(this.experiment.config);
     },
     startCreateExperiment (draft) {
-      console.log(draft)
+      console.log("startCreateExperiment");
+      console.log(this.$refs)
       this.experiment = draft;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+      this.$refs.experimentConfig.setConfig(this.experiment.config);
     },
     submitCreateExperiment () {
     
@@ -163,6 +180,9 @@ export default {
        this.$data.experiment.info, (resObj)=>{
         console.log(resObj)
        }, ()=>{});
+    },
+    onUpdateConfig: function (config) {
+      console.log("TODO");
     }
   }
 }

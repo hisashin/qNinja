@@ -256,10 +256,6 @@ class AppState {
   revealDetailExperiment (id) {
     console.log("AppState.revealDetailExperiment.");
     this._loadExperiment(id, (experiment)=>{
-      /*
-      this.pushPanel(this.PANELS.EXPERIMENT_DETAIL);
-      this.views.panelExperimentDetail.setExperiment(experiment);
-      */
       this.pushPanel(this.PANELS.EXPERIMENT_EDITOR);
       this.views.panelExperimentEditor.setExperiment(experiment);
     });

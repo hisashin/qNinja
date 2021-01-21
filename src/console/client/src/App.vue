@@ -291,4 +291,14 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   top:100%;
   box-shadow: 0px 2px 2px rgba(0,0,0,0.2)
 }
+
+.well_selected {
+  background-color:pink;
+}
+.well_available {
+  background-color:white;
+}
+.well_unavailable {
+  background-color:gray;
+}
 </style>

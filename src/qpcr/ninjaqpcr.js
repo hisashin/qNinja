@@ -73,24 +73,6 @@ class NinjaQPCR {
   }
   
   /* Experiment Control */
-  
-  /*
-    Example experimentConf
-    {
-      name: "Example Name",
-      wells: [
-        { id:0, label:"Sample A", quantity:0.1 },
-        { id:1, label:"Sample B", quantity:0.2 },
-        { id:2, label:"Sample C", quantity:0.3 },
-        { id:3, label:"Sample D", quantity:0.4 },
-        { id:4, label:"Sample E", quantity:0.5 },
-        { id:5, label:"Sample F", quantity:0.6 },
-        { id:6, label:"Sample G", quantity:0.7 },
-        { id:7, label:"Sample H", quantity:0.8 }
-      ]
-    }
-  }
-  */
   start (experiment) {
     if (!this.deviceState.startAvailable) {
       console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);

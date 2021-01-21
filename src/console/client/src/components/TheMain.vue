@@ -12,7 +12,7 @@
     <TheProtocolList ref="panelProtocolList" v-show="selectedPanel==panels.PROTOCOL_LIST" />
     <TheProtocolDetail ref="panelProtocolDetail" v-show="selectedPanel==panels.PROTOCOL_DETAIL" />
     <TheExperimentList ref="panelExperimentList" v-show="selectedPanel==panels.EXPERIMENT_LIST" />
-    <TheExperimentDetail ref="panelExperimentDetail" v-show="selectedPanel==panels.EXPERIMENT_DETAIL" />
+    <!--<TheExperimentDetail ref="panelExperimentDetail" v-show="selectedPanel==panels.EXPERIMENT_DETAIL" />-->
     <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
     <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
     <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
@@ -33,7 +33,7 @@ import DeviceSummary from './DeviceSummary.vue'
 import TheDashboard from './panels/TheDashboard.vue'
 import TheExperimentEditor from './panels/TheExperimentEditor.vue'
 import TheExperimentMonitor from './panels/TheExperimentMonitor.vue'
-import TheExperimentDetail from './panels/TheExperimentDetail.vue'
+// import TheExperimentDetail from './panels/TheExperimentDetail.vue'
 import TheExperimentList from './panels/TheExperimentList.vue'
 import TheProtocolDetail from './panels/TheProtocolDetail.vue'
 import TheProtocolEditor from './panels/TheProtocolEditor.vue'
@@ -53,7 +53,7 @@ export default {
   name: 'TheMain',
   components: {
   TheDashboard,
-    TheExperimentDetail,
+    //TheExperimentDetail,
     TheExperimentList,
     TheProtocolDetail,
     TheProtocolList,
