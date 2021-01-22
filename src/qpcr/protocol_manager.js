@@ -213,5 +213,6 @@ class ProtocolManager {
     });
   }
 }
+const instance = new ProtocolManager();
 
-module.exports = ProtocolManager;
+module.exports = instance;

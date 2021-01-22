@@ -4,10 +4,9 @@ const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
-const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const ErrorCode = require(QPCR_PATH + "error_code");
 
-const pm = new ProtocolManager();
+const pm = require(QPCR_PATH + "protocol_manager");
 const em = require(QPCR_PATH + "experiment_manager");
 
 const Router = require("./router");
