@@ -354,27 +354,41 @@ class NinjaQPCRHTTPServer {
     };
   }
   
-  protocolCreate () {
+  // with request body
+  _getRequestContentHandler (callback) {
     return (req, res, map)=>{
       req.on("data", (rawData)=>{
-        console.log("protocolCreate received data.");
-        const protocol = JSON.parse(rawData); // Protocol body
-        pm.create(protocol, (item)=>{
+        try {
+          const data = JSON.parse(rawData);
+          callback(req, res, map, data);
+        } catch (error) {
+          // Failed to parse JSON
+          let errorObj = {
+            code:ErrorCode.DataError,
+            message:"Malformed JSON"
+          };
+          this._handleError(req, res, errorObj);
+        }
+      });
+    }
+  }
+  protocolCreate () {
+    return this._getRequestContentHandler(
+      (req, res, map, data, error)=>{
+        pm.create(data, (item)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(item));
           res.end();
         }, (pmErr)=>{
           this._handleError(req, res, pmErr);
         });
-      });
-    }
+        
+      }
+    );
   }
-  
   protocolUpdate () {
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        console.log("protocolUpdate received data.");
-        const content = JSON.parse(rawData);
+    return this._getRequestContentHandler(
+      (req, res, map, content)=>{
         if (map.pid != content.id) {
           const err = {
             code: 400,
@@ -390,16 +404,13 @@ class NinjaQPCRHTTPServer {
         }, (pmErr)=>{
           this._handleError(req, res, pmErr);
         });
-      });
-    }
+      }
+    );
   }
   
   protocolValidate () {
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        console.log("protocolValidate received data.");
-        const protocol = JSON.parse(rawData); // Protocol body
-        console.log("name=%s", protocol.name);
+    return this._getRequestContentHandler(
+      (req, res, map, protocol)=>{
         pm.validate(protocol, (result)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(result));
@@ -407,8 +418,8 @@ class NinjaQPCRHTTPServer {
         }, (pmErr)=>{
           this._handleError(req, res, pmErr);
         });
-      });
-    }
+      }
+    );
   }
   
   protocolGet () {
@@ -481,10 +492,8 @@ class NinjaQPCRHTTPServer {
   }
   
   experimentCreate () {
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        console.log("experimentCreate received data.");
-        const experiment = JSON.parse(rawData); // Experiment body
+    return this._getRequestContentHandler(
+      (req, res, map, experiment)=>{
         em.create(experiment, (createdItem)=>{
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.write(JSON.stringify(createdItem));
@@ -492,15 +501,12 @@ class NinjaQPCRHTTPServer {
         }, (err)=>{
           this._handleError(req, res, err);
         });
-      });
-    }
-    
+      }
+    );
   }
-  experimentUpdate () { //Deprecated
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        console.log("protocolUpdate received data.");
-        const content = JSON.parse(rawData);
+  experimentUpdate () { 
+    return this._getRequestContentHandler(
+      (req, res, map, content)=>{
         if (map.eid != content.id) {
           const err = {
             code: 400,
@@ -516,9 +522,8 @@ class NinjaQPCRHTTPServer {
         }, (err)=>{
           this._handleError(req, res, err);
         });
-      });
-    }
-    
+      }
+    );
   }
   experimentDelete () {
     return (req, res, map)=>{
@@ -534,16 +539,14 @@ class NinjaQPCRHTTPServer {
     
   }
   experimentDraft () {
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        const content = JSON.parse(rawData);
+    return this._getRequestContentHandler(
+      (req, res, map, content)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
         const draft = em._createExperimentDraft(content);
         res.write(JSON.stringify(draft));
         res.end();
-      });
-    }
-    
+      }
+    );
   }
   // Return partial
   _experimentGetProperty (key) {
@@ -563,10 +566,8 @@ class NinjaQPCRHTTPServer {
   }
   // TODO validator
   _experimentUpdateProperty (key) {
-    return (req, res, map)=>{
-      req.on("data", (rawData)=>{
-        console.log("protocolUpdate received data.");
-        const propertyValue = JSON.parse(rawData);
+    return this._getRequestContentHandler(
+      (req, res, map, propertyValue)=>{
         em.getExperiment(map.eid, (experiment)=>{
           console.log("Experiment Found. Updating %s of experiment %s.", key, experiment.id);
           experiment[key] = propertyValue;
@@ -583,8 +584,8 @@ class NinjaQPCRHTTPServer {
           console.log(err)
           this.error500(req, res, err);
         });
-      });
-    }
+      }
+    );
   }
   
   experimentProtocolGet () { return this._experimentGetProperty("protocol"); }
