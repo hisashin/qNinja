@@ -31,8 +31,7 @@
         <b-tab
           title="Protocol">
           <p><ProtocolDetail
-            :id="id"
-            :protocol="protocol" /></p>
+            ref="protocolDetail" /></p>
         </b-tab>
       </b-tabs>
     </div> 
@@ -125,6 +124,13 @@ export default {
     },
     onAppear () {
       console.log("TheExperimentMonitor.onAppear()");
+      appState.fetchDeviceExperiment (
+        (experiment)=>{
+          this.protocol = experiment.protocol;
+          this.$refs.protocolDetail.setProtocol(this.protocol);
+        }, 
+        ()=>{}
+      );
     }
   }
 }

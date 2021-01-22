@@ -220,6 +220,10 @@ class Device {
       }
     });
   }
+  setExperiment (experiment) {
+    this.experiment = experiment;
+    this.protocol = this.experiment.protocol;
+  }
 }
 const device = new Device();
 module.exports = device;

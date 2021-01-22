@@ -48,7 +48,7 @@ class AppState {
         if (data.hasExperiment) {
           Util.requestData("device/experiment", null, "GET", 
             (data)=>{
-              device.setProtocol(data.protocol);
+              device.setExperiment(data);
             }, 
             ()=>{});
         }
@@ -222,7 +222,6 @@ class AppState {
     );
   }
   
-  // TODO use callback
   fetchExperiments (params, callback, onError) {
     console.log("AppState.fetchExperiments");
     Util.requestData(this._createURL("experiments", params), null, "GET", 
@@ -244,6 +243,19 @@ class AppState {
     Util.requestData("device/experiment/melt_curve", null, "GET", 
       (data)=>{
         console.log("Device.fetchMeltCurve callback");
+        onSuccess(data);
+      }, (error)=>{
+        console.log("Error %s", error);
+        onFail(error);
+      }
+    );
+    
+  }
+  
+  fetchDeviceExperiment (onSuccess, onFail) {
+    Util.requestData("device/experiment", null, "GET", 
+      (data)=>{
+        console.log("Device.fetchDeviceExperiment callback");
         onSuccess(data);
       }, (error)=>{
         console.log("Error %s", error);

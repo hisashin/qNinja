@@ -216,7 +216,7 @@ class NinjaQPCRHTTPServer {
     // TODO: Reconsinder paths.
     router.addPath("/device", "GET", this.device());
     router.addPath("/device/experiment", "GET", this.deviceExperiment());
-    router.addPath("/device/experiment/protocol", "GET", this.deviceProtocol());
+    router.addPath("/device/experiment/protocol", "GET", this.deviceExperimentProtocol());
     router.addPath("/device/experiment/progress", "GET", this.deviceProgress());
     router.addPath("/device/experiment/baseline", "GET", this.deviceBaseline()); // To deprecate
     router.addPath("/device/experiment/melt_curve", "GET", this.deviceMeltCurve()); // To deprecate
@@ -267,16 +267,12 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
-      const obj = {
-        protocol: qpcr.getProtocol(),
-        conf: qpcr.getExperimentConf()
-      };
-      res.write(JSON.stringify(obj));
+      res.write(JSON.stringify(qpcr.experimentLog));
       res.end();
     };
   }
   
-  deviceProtocol () {
+  deviceExperimentProtocol () {
     return (req, res, map)=>{
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
