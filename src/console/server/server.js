@@ -6,10 +6,9 @@ const qpcr = new NinjaQPCR("hardware.json");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ProtocolManager = require(QPCR_PATH + "protocol_manager");
 const ErrorCode = require(QPCR_PATH + "error_code");
-const ExperimentManager = require(QPCR_PATH + "experiment_manager");
 
 const pm = new ProtocolManager();
-const em = new ExperimentManager();
+const em = require(QPCR_PATH + "experiment_manager");
 
 const Router = require("./router");
 
@@ -652,8 +651,8 @@ class NinjaQPCRWebSocketServer {
       case "experiment.finish":
         this.finish(); break;
       case "experiment.runExperiment": {
-        console.log("Run experiment.");
         const experimentId = obj.data.id;
+        console.log("Run experiment. %s", experimentId);
         this.start(experimentId);
         break;
       }
@@ -668,16 +667,6 @@ class NinjaQPCRWebSocketServer {
       this.isRunning = true;
     });
   }
-  /*
-  start (experimentConf) {
-    const experiment = em._createExperimentDraft({
-      protocol: this.protocol,
-      config: experimentConf
-    });
-    qpcr.start(experiment);
-    this.isRunning = true;
-  }
-  */
   pause () {
     qpcr.pause(this.protocol);
   }

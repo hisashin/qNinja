@@ -128,16 +128,16 @@ export default {
       this.isEditing = false;
       this.experiment.config = this.$refs.experimentConfig.config;
       if (this.isNew) {
+        this.isNew = false;
         appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
-          console.log(createdItem)
-          console.log(createdItem.id)
+          console.log("submitCreateExperiment success. id=%s", createdItem.id);
           appState.run(createdItem.id);
         });
       } else {
         appState.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
         ()=>{
-          console.log("Saved.");
-          appState.run(createdItem.id);
+          console.log("Saved. run...");
+          appState.run(this.experiment.id);
         },
         ()=>{});
       
@@ -145,8 +145,11 @@ export default {
     },
     save () {
       this.experiment.config = this.$refs.experimentConfig.config;
+      console.log(this.$data.experiment)
       if (this.isNew) {
         appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+          this.isNew = false;
+          console.log("submitCreateExperiment success. id=%s", createdItem.id);
           this.experiment = createdItem;
         });
       } else {

@@ -1,10 +1,9 @@
 'use strict' ;
 const OpticsAnalysis = require("./optics_analysis");
-const ExperimentManager = require("./experiment_manager");
 
 const id = "882c49ec-6e24-4b5c-bde7-57055301e332";
 
-const experimentManager = new ExperimentManager();
+const experimentManager = require("./experiment_manager");
 experimentManager.getExperiment(id, (log)=>{
   const analysis = new OpticsAnalysis(log);
   analysis.calcBaseline();

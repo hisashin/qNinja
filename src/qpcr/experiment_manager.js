@@ -28,6 +28,7 @@ const DEFAULT_ANALYSIS = {};
 class ExperimentManager {
   constructor () {
     this.summaries = null;
+    this.id = Math.random();
   }
   _createExperimentDraft (option) {
     const timestamp = new Date().getTime();
@@ -56,7 +57,9 @@ class ExperimentManager {
       analysis_config: (option.analysis_config)? option.analysis_config : DEFAULT_ANALYSIS_CONFIG,
       status: (option.status)? option.status : DEFAULT_STATUS
     };
-    experiment.info.name = this._generateDefaultName(experiment);
+    if (!experiment.info.name) {
+      experiment.info.name = this._generateDefaultName(experiment);
+    }
     experiment.created = timestamp;
     experiment.modified = timestamp;
     return experiment;
@@ -134,6 +137,7 @@ class ExperimentManager {
     const timestamp = new Date().getTime();
     experiment.modified = timestamp;
     const filePath = this._experimentDir() + "/" + experiment.id;
+    console.log("ExperimentManager.update");
     fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{
       if (err) {
         // File system error
@@ -179,7 +183,6 @@ class ExperimentManager {
   
   _updateSummaries (experiment, onSuccess, onError) {
     this.getSummaries (null, null, (summaries)=>{
-      console.log("ExperimentManager.saveExperiment summaries.length=%d", summaries);
       // Update
       let found = false;
       for (let i=0; i<summaries.length; i++) {
@@ -195,19 +198,8 @@ class ExperimentManager {
         console.log("Adding new item to summaries.");
         summaries.push(this._generateExperimentSummary(experiment));
       }
-      console.log("ExperimentManager.saveExperiment summaries.length=%d", summaries);
-      this._saveSummaries(summaries, ()=>{
-        const path = this._logPath(experiment.id);
-        console.log("ExperimentManager.saveExperiment path=%s", path);
-        fs.writeFile(path, JSON.stringify(experiment), (err)=>{
-          if (err) {
-            console.log(err);
-            onError(err);
-          } else if (onSuccess) {
-            onSuccess();
-          }
-        });
-      }, onError);
+      console.log("ExperimentManager._updateSummaries summaries.length=%d", summaries.length);
+      this._saveSummaries(summaries, onSuccess, onError);
     }, onError);
   }
   
@@ -294,14 +286,11 @@ class ExperimentManager {
   }
   _saveSummaries (summaries, onSave, onError) {
     const path = this._summariesPath();
-    console.log("ExperimentManager._saveSummaries path=%s", path);
-    console.log(summaries);
     if (summaries == null) {
-      console.error("Summaries is undefined!");
       return;
     }
     fs.writeFile(path, JSON.stringify(summaries), (err)=>{
-      console.log("ExperimentManager._saveSummaries success");
+      this.summaries = summaries;
       if (err != null) {
         console.log(err);
         onError(onError);
@@ -313,5 +302,5 @@ class ExperimentManager {
     
   }
 }
-
-module.exports = ExperimentManager;
+const instance = new ExperimentManager();
+module.exports = instance;

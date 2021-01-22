@@ -5,8 +5,7 @@ const qpcr = new NinjaQPCR("hardware.json");
 // const protocol = require("./protocol_example");
 const protocol = require("./dev_protocol");
 
-const ExperimentManager = require("./experiment_manager");
-const em = new ExperimentManager();
+const em = require("./experiment_manager");
 
 const NO_SAVE = false;
 

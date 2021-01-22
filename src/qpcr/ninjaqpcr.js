@@ -11,9 +11,8 @@ const fs = require('fs');
 const ThermalCycler = require("./control/thermal_cycler_multi");
 const Optics = require("./control/optics");
 const OpticsAnalysis = require("./optics_analysis");
-const ExperimentManager = require("./experiment_manager");
 
-const experimentManager = new ExperimentManager();
+const experimentManager = require("./experiment_manager");
 
 const MEASUREMENT_RAMP_CONTINUOUS = 1;
 const MEASUREMENT_HOLD_CONTINUOUS = 2;
@@ -97,6 +96,8 @@ class NinjaQPCR {
     }
     this.thermalCycler.pause();
     this.optics.pause();
+    this.experimentLog.status.status = "paused";
+    experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.PAUSED);
   }
   resume () {
@@ -106,6 +107,8 @@ class NinjaQPCR {
     }
     this.thermalCycler.resume();
     this.optics.resume();
+    this.experimentLog.status.status = "running";
+    experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.RUNNING);
     
   }
@@ -116,6 +119,10 @@ class NinjaQPCR {
     }
     this.thermalCycler.abort();
     this.optics.abort();
+    
+    this.experimentLog.status.status = "aborted";
+    this.experimentLog.status.end = new Date().getTime();
+    experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.IDLE);
   }
   finish () {
@@ -340,6 +347,9 @@ class NinjaQPCR {
     if (this.receiver != null && this.receiver.onStart) {
       this.receiver.onStart(data);
     }
+    this.experimentLog.status.status = "running";
+    this.experimentLog.status.start = new Date().getTime();
+    experimentManager.update(this.experimentLog, null, null);
   }
   onCheckpoint () {
     // TODO checkpoint logging (stage end)

@@ -1,7 +1,6 @@
 "use strict";
-const ExperimentManager = require("./experiment_manager");
 
-const em = new ExperimentManager();
+const em = require("./experiment_manager");
 em.getSummaries({}, {}, (summaries)=>{
   summaries.forEach((summary)=>{
     console.log(summary);

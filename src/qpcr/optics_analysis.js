@@ -130,13 +130,4 @@ class OpticsAnalysis {
     return this.meltCurve;
   }
 }
-/*
-OpticsAnalysis.fromLogFile = (id, onCreate, onError)=>{
-  console.log("OpticsAnalycic.fromLogFile path=%s",id);
-  const experimentManager = new ExperimentManager();
-  experimentManager.getExperiment(id, (log)=>{
-    onCreate(new OpticsAnalysis(log));
-  }, onError);
-};
-*/
 module.exports = OpticsAnalysis;

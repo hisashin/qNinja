@@ -4,8 +4,7 @@ const NinjaQPCR = require("./ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
 //const protocol = require("./protocol_example");
 const protocol = require("./protocol_thremal_only.js");
-const ExperimentManager = require("./experiment_manager");
-const em = new ExperimentManager();
+const em = require("./experiment_manager");
 
 qpcr.setEventReceiver({
   onProgress:function (data) {
