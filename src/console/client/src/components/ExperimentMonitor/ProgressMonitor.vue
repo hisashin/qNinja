@@ -1,6 +1,18 @@
 <template>
   <div class="card p-3 mb-3" 
     v-if="protocol!=null && progress!=null && deviceState != null">
+    <b-modal
+      id="finish-modal"
+      title="Completed!"
+      hide-footer
+    >
+      <b-button 
+        variant="primary"
+        block @click="finish"
+      >
+        Stop the device
+      </b-button>
+    </b-modal>
     <ul class="progress-meter">
       <li 
         class="progress-meter-item"
@@ -85,6 +97,7 @@
 
 <script>
 import device from "../../lib/Device.js";
+import appState from "../../lib/AppState.js";
 import Util from "../../lib/Util.js";
 import Constants from "../../lib/constants.js";
 var numeral = require('numeral');
@@ -150,13 +163,15 @@ export default {
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
         console.log("ProgressMonitor.onDeviceStateChange");
-        // console.log(state);
+        if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
+          console.log("Show modal.");
+          this.$bvModal.show('finish-modal');
+        }
         this.deviceState = state;
       },
       onUpdateProtocol: (protocol)=>{
         this.protocol = protocol;
         console.log("ProgressMonitor.onUpdateProtocol");
-        // console.log(protocol)
       }
     });
   },
@@ -177,10 +192,17 @@ export default {
       }
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
     },
-    pause : ()=>{ device.pause(); },
-    resume : ()=>{ device.resume(); },
-    abort : ()=>{ device.abort(); },
-    finish : ()=>{ device.finish(); }
+    reset () {
+      this.$bvModal.hide('finish-modal');
+    },
+    pause () { device.pause(); },
+    resume () { device.resume(); },
+    abort () { device.abort(); },
+    finish () { 
+      device.finish();
+      appState.home();
+      this.$bvModal.hide('finish-modal');
+    }
     
   }
 }

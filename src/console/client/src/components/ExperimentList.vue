@@ -57,6 +57,9 @@ export default {
   methods: {
     load: function () {
       this.error = false;
+      if (this.limit) {
+        this.params.limit = this.limit;
+      }
       let params = this.$data.params;
       appState.fetchExperiments(params, 
       (res)=>{

@@ -313,12 +313,14 @@ class NinjaQPCR {
       console.warn("_addFluorescence* stage is null." + JSON.stringify(step));
     } else if (stage.type == Constants.StageType.QPCR) {
       data = this._addFluorescenceQPCRLog(step, values);
-      // this.analysis.calcCt();
+      if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
+        this.receiver.onFluorescenceDataUpdate(data);
+      }
     } else if (stage.type == Constants.StageType.MELT_CURVE) {
       data = this._addFluorescenceMeltCurveLog(step, values);
-    }
-    if (this.receiver != null && this.receiver.onFluorescenceDataUpdate) {
-      this.receiver.onFluorescenceDataUpdate(data);
+      if (this.receiver != null && this.receiver.onMeltCurveDataUpdate) {
+        this.receiver.onMeltCurveDataUpdate(data);
+      }
     }
   }
   

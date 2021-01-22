@@ -23,6 +23,10 @@
         @click.stop="showTemplate">
         Panel Template
       </b-button>
+      <b-button
+        @click.stop="home">
+        Home
+      </b-button>
     </div>
   </main>
 </template>
@@ -104,6 +108,9 @@ export default {
     showTemplate () {
       appState.pushPanel(appState.PANELS.TEMPLATE);
       
+    },
+    home () {
+      appState.home();
     }
   }
 }

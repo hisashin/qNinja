@@ -69,6 +69,13 @@ class Device {
             }
           });
           break;
+        case "experiment.meltCurve":
+          this.fluorescenceUpdateHandlers.forEach((handler)=>{
+            if (handler.onMeltCurveUpdate) {
+              handler.onMeltCurveUpdate(obj.data);
+            }
+          });
+          break;
         case "experiment.fluorescenceEvent":
           this.fluorescenceUpdateHandlers.forEach((handler)=>{
             if (handler.onFluorescenceEvent) {
@@ -125,9 +132,9 @@ class Device {
     this.ws.send(JSON.stringify(obj));
   }
   
-  resume () {
+  finish () {
     const obj = {
-      "category":"experiment.resume"
+      "category":"experiment.finish"
     };
     this.ws.send(JSON.stringify(obj));
   }

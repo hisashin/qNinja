@@ -32,7 +32,7 @@
         </label>
         <input type="text" placeholder="Search" v-model="keyword" @keyup="onKeywordChanged"/>
       </nav>
-      <ExperimentList :limit="2" ref="experimentList" :pagination="true" />
+      <ExperimentList :limit="10" ref="experimentList" :pagination="true" />
       </section>
   </div>
 </template>

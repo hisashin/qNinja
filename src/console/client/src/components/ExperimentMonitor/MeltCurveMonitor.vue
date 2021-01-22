@@ -69,6 +69,13 @@ export default {
     },
     add: function (timestamp, data) {
       // TODO real-time melt curve
+      console.log(data);
+      for (let i=0; i<TUBE_COUNT; i++) {
+        this.graph.addData(i, {t:timestamp, v:data.v[i], d: 0.5});
+        // Support D
+        // this.maxD = Math.max(this.maxD , data.d[i]);
+      }
+      this.graph.update();
     },
     showRaw: function () {
       this.graph.setConversionFunction(

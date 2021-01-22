@@ -73,6 +73,18 @@
       <ExperimentConfig ref="experimentConfig" />
     </section>
     
+    <!-- Raw Log -->
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >Log</h2>
+      </header>
+      <div class="section__body">
+        <FluorescenceMonitor ref="fluorescenceMonitor" />
+        <TemperatureMonitor ref="temperatureMonitor" />
+        <MeltCurveMonitor ref="meltCurveMonitor" />
+      </div>
+    </section>
+    
     <!-- Log section -->
     <!-- Analysis section -->
     <div>
@@ -96,13 +108,19 @@ import appState from "../../lib/AppState.js";
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProtocolPicker from '../ProtocolPicker.vue';
 import ExperimentConfig from '../ExperimentConfig.vue';
+import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
+import FluorescenceMonitor from '../ExperimentMonitor/FluorescenceMonitor.vue';
+import MeltCurveMonitor from '../ExperimentMonitor/MeltCurveMonitor.vue';
 
 export default {
   name: 'TheExperimentEditor',
   components: {
     ProtocolDetail,
     ProtocolPicker,
-    ExperimentConfig
+    ExperimentConfig,
+    TemperatureMonitor,
+    FluorescenceMonitor,
+    MeltCurveMonitor
   },
   props: {
     limit: { type:Number }
@@ -170,15 +188,21 @@ export default {
     setExperiment (experiment) {
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
-      console.log(this.$refs)
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config);
+      
+      this.$refs.temperatureMonitor.set(
+        experiment.log.temp.time, 
+        experiment.log.temp.well, 
+        experiment.log.temp.lid);
+      console.log(experiment.log.fluorescence.qpcr)
+      this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
+      
       this.isNew = false;
     },
     startCreateExperiment (draft) {
       this.isNew = true;
       this.isStarted = false;
-      console.log(this.$refs)
       this.experiment = draft;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config);

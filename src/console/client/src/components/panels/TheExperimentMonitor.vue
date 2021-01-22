@@ -1,6 +1,6 @@
 <template>
   <div class="panel">
-    <ProgressMonitor />
+    <ProgressMonitor ref="progressMonitor"/>
     <div class="card p-3">
       <b-tabs content-class="mt-3">
         <b-tab
@@ -19,7 +19,6 @@
         <b-tab
           title="Melt Curve">
           <p>
-          
             <b-button
               class="ml-1"
               @click.stop="updateMeltCurve">
@@ -103,6 +102,10 @@ export default {
       let timestamp = new Date().getTime() - startTime.getTime();
       this.$refs.fluorescenceMonitor.add(timestamp, data);
     },
+    onMeltCurveUpdate: function (data) {
+      let timestamp = new Date().getTime() - startTime.getTime();
+      this.$refs.meltCurveMonitor.add(timestamp, data);
+    },
     onFluorescenceEvent (data) {
       switch (data.type) {
         case "start":
@@ -128,6 +131,7 @@ export default {
         (experiment)=>{
           this.protocol = experiment.protocol;
           this.$refs.protocolDetail.setProtocol(this.protocol);
+          this.$refs.progressMonitor.reset();
         }, 
         ()=>{}
       );

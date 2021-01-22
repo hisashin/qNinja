@@ -54,6 +54,9 @@ class NinjaQPCRDemo {
   onFluorescenceDataUpdate (data) {
     // console.log(data);
   }
+  onMeltCurveDataUpdate (data) {
+    // console.log(data);
+  }
   onFluorescenceEvent (data) {
     // optics.start / optics.stop / optics.measure / optics.baseline
     console.log(data);

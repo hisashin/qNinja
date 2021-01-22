@@ -74,12 +74,13 @@ class Validator {
       }
       let path = this._addPath(parentPath, key);
       const field = rule[key];
-      if (data[key] === null || data[key] === "") {
+      if (data[key] == null || data[key] === "") {
         if (field.required) {
           errors.push(this._createError("This field is required.", path));
         }
         continue;
       }
+      //console.log(key, data[key])
       if (field.type == "string") {
         this._validateStringField(key, field, data[key], errors, path);
       } else if (field.type == "number") {

@@ -38,12 +38,23 @@ export default {
       this.graph.update();
     },
     set: function (timeSeries, wellSeries, lidSeries) {
+      let maxTime = 0;
       for (let i=0; i<timeSeries.length; i++) {
-        this.graph.addData(0, {t:timeSeries[i], v:wellSeries[i]});
-        this.graph.addData(1, {t:timeSeries[i], v:lidSeries[i]});
+        const time = timeSeries[i];
+        const well = wellSeries[i];
+        const lid = lidSeries[i];
+        if (time == null || well == null || lid == null) {
+          continue;
+        }
+        this.graph.addData(0, {t:time, v:well});
+        this.graph.addData(1, {t:time, v:lid});
+        maxTime = Math.max(maxTime, time);
       }
-      let minTime = timeSeries[0];
-      this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
+      
+      const minTime = 0;
+      maxTime /= 1000;
+      this.graph.setMinMaxX(minTime, /*minTime + TIME_RANGE_SEC*/ maxTime + 10);
+      console.log("Update graph.");
       this.graph.update();
     }
   }

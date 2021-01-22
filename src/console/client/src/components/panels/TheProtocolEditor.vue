@@ -503,6 +503,7 @@ export default {
     },
     processValidationResult: function (result) {
       this._setMessage(".validation-label", "");
+      console.log(result)
       for (let item of result) {
         console.log("Path=" + this.pathToClassName(item.path));
         this._setMessage(this.pathToClassName(item.path), '<div class="validation-label__content">'+item.message+'</div>')

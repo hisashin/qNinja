@@ -22,7 +22,7 @@
         </h2>
         <div class="section__header__menu"></div>
       </header>
-      <ExperimentList :limit="3" ref="experimentList" :pagination="false" />
+      <ExperimentList :limit="4" ref="experimentList" :pagination="false" />
     </section>
   </div>
 </template>

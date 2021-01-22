@@ -113,6 +113,29 @@ class AppState {
       }
     });
   }
+  home () {
+    if (this.panelStack.length < 2) {
+      return;
+    }
+    this._confirmLeavePanel(()=>{
+      while (this.panelStack.length > 1) {
+        this.panelStack.pop();
+      }
+      if (this.panelContainer) {
+        const panel = this.panelStack[this.panelStack.length-1];
+        const toPanel = this.getPanel(panel);
+        if (toPanel && toPanel.onAppear) {
+          toPanel.onAppear();
+        } else {
+          console.log("onAppear not defined.");
+        }
+        this.panelContainer.presentPanel(panel);
+        this._didNavigate();
+      }
+      
+    });
+    
+  }
   // Call custom confirmation handler and wait for its result.
   _confirmLeavePanel (callback) {
     const fromPanel = this._currentPanel();

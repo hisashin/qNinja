@@ -171,6 +171,7 @@ class DummyFluorescenceSensingUnit {
     } else {
       console.warn("debugValue is null.");
     }
+    if (! (value >= 0)) value = 0.5;
     setTimeout(()=>{ callback(value); }, 10);
   }
 }

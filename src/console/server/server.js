@@ -707,6 +707,14 @@ class NinjaQPCRWebSocketServer {
     };
     this._send(obj);
   }
+  onMeltCurveDataUpdate (data) {
+    const obj = {
+      category:"experiment.meltCurve",
+      data:data
+    };
+    console.log(obj)
+    this._send(obj);
+  }
   onFluorescenceEvent (data) {
     const obj = {
       category:"experiment.fluorescenceEvent",
