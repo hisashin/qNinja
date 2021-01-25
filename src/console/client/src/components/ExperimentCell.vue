@@ -23,7 +23,8 @@ export default {
   computed: {
     start: function() {
       if (this.summary.start > 0) {
-        return new Date(this.summary.start).toDateString();
+        const date = new Date(this.summary.start);
+        return date.toLocaleString();
       }
       return "";
     },
