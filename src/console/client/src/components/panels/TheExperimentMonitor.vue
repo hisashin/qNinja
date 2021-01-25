@@ -14,7 +14,6 @@
           <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
             <div>one-shot={{ oneShot }}</div>
             <div>continuous={{ continuous }}</div>
-            <div>baseline={{ baselineExists }}</div>
         </b-tab>
         <b-tab
           title="Melt Curve">
@@ -60,27 +59,12 @@ export default {
   },
   data() {
     return {
-      protocol:null,
-      id:null,
-      oneShot:false,
-      continuous:false,
-      baselineExists:false
+      experiment: null,
+      oneShot: false,
+      continuous: false
     };
   },
   created: function () {
-    device.addTransitionHandler({
-      onStart: (obj)=>{
-        startTime = new Date();
-      }
-    });
-    device.addProgressHandler({
-      onProgress:(obj)=>{
-        let timestamp = new Date().getTime() - startTime.getTime();
-        this.$refs.temperatureMonitor.add(timestamp, obj.well, obj.lid);
-      }
-    });
-    device.addFluorescenceUpdateHandler(this);
-    device.addBaselineHandler(this);
   },
   methods: {
     updateMeltCurve:  function () {
@@ -91,22 +75,16 @@ export default {
         // TODO error
       });
     },
-    onSelectProtocol: function (item) {
-      this.protocol = item.protocol;
-      this.id = item.id;
-    },
-    onBaselineUpdate: function (data) {
-      this.$refs.fluorescenceMonitor.setBaseline(data);
-    },
     onFluorescenceUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
-      this.$refs.fluorescenceMonitor.add(timestamp, data);
+      this.$refs.fluorescenceMonitor.add(data);
     },
     onMeltCurveUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
       this.$refs.meltCurveMonitor.add(timestamp, data);
     },
     onFluorescenceEvent (data) {
+    // On/Off indicator
       switch (data.type) {
         case "start":
         this.continuous = true;
@@ -118,20 +96,43 @@ export default {
         this.oneShot = true;
         setTimeout(()=>{this.oneShot = false}, 1000);
         break;
-        case "baseline": 
-        this.baselineExists = true;
-        break;
         default:
         break;
       }
     },
+    onDisappear () {
+    },
     onAppear () {
-      console.log("TheExperimentMonitor.onAppear()");
       appState.fetchDeviceExperiment (
         (experiment)=>{
-          this.protocol = experiment.protocol;
-          this.$refs.protocolDetail.setProtocol(this.protocol);
+          this.experiment = experiment;
+          this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+          // Set past data
+          
+          this.$refs.temperatureMonitor.set(
+            experiment.log.temp.time, 
+            experiment.log.temp.well, 
+            experiment.log.temp.lid);
+          this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
+          
+          // TODO init meltCurveMonitor
           this.$refs.progressMonitor.reset();
+          this.$refs.progressMonitor.protocol = this.experiment.protocol;
+          
+          device.addTransitionHandler({
+            onComplete: (obj)=>{
+              startTime = new Date();
+            }
+          });
+          device.addProgressHandler({
+            onProgress:(obj)=>{
+              if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
+                this.$refs.temperatureMonitor.add(obj.elapsed, obj.well, obj.lid);
+              
+              }
+            }
+          });
+          device.addFluorescenceUpdateHandler(this);
         }, 
         ()=>{}
       );

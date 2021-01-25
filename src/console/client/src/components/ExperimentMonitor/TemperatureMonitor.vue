@@ -38,6 +38,7 @@ export default {
       this.graph.update();
     },
     set: function (timeSeries, wellSeries, lidSeries) {
+      this.graph.clearData();
       let maxTime = 0;
       for (let i=0; i<timeSeries.length; i++) {
         const time = timeSeries[i];

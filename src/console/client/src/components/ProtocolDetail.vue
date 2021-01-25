@@ -147,8 +147,6 @@ export default {
       appState.backPanel();
     },
     setProtocol: function (protocol) {
-      console.log("setProtocol");
-      console.log(protocol);
       this.protocol = protocol;
     }
   }

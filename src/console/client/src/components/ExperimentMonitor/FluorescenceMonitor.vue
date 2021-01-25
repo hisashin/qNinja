@@ -11,7 +11,7 @@
     <ul>
       <li v-for="(channel, index) in channels"
         :key="index">
-        {{ channel.label }} / {{ channel.exceeded }} / {{ channel.fluorescence }}
+        {{ channel.label }} / {{ channel.fluorescence }}
       </li>
     </ul>
   </div>
@@ -26,7 +26,6 @@ const TUBE_COUNT = 8;
 const TIME_RANGE_SEC = 240;
 let graph = null;
 
-let startTime = new Date();
 export default {
   data() {
     return {
@@ -41,16 +40,10 @@ export default {
         label: "Well " + (i+1),
         fluorescence: 0,
         threshold: 0,
-        amount: 0,
-        exceeded: false
+        amount: 0
       };
       this.channels.push(obj);
     }
-    device.addTransitionHandler({
-      onStart: (obj)=>{
-        startTime = new Date();
-      }
-    });
   },
   mounted: function () {
     
@@ -82,6 +75,7 @@ export default {
       this.applyBaseline();
     },
     set: function (data) {
+      this.graph.clearData();
       let lastRepeat = 0;
       data.forEach((measurement)=>{
         const repeat = measurement.repeat;
@@ -94,10 +88,10 @@ export default {
       });
       this.graph.update();
     },
-    add: function (timestamp, data) {
+    add: function (data) {
       console.log(data);
       for (let i=0; i<TUBE_COUNT; i++) {
-        this.graph.addData(i, {t:timestamp, v:data.v[i], c:data.repeat});
+        this.graph.addData(i, {t:data.t, v:data.v[i], c:data.repeat});
         this.channels[i].fluorescence = data.v[i];
       }
       this.graph.update();

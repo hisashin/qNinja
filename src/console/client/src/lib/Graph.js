@@ -112,7 +112,6 @@ class Graph {
         ];
       }
     }
-    console.log(this.chart.data)
     this.chart.update();
   }
 }

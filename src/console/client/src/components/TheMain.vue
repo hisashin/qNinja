@@ -46,7 +46,7 @@ import PanelTemplate from './panels/PanelTemplate.vue'
 
 import BackButton from './BackButton.vue';
 
-import network from "../lib/Device.js";
+import device from "../lib/Device.js";
 import appState from "../lib/AppState.js";
 
 const DEVICE_STATUS_IDLE = 1;
@@ -78,9 +78,8 @@ export default {
     }
   },
   created: function () {
-    this.network = network;
     appState.setPanelContainer(this);
-    this.network.addTransitionHandler({
+    device.addTransitionHandler({
       onStart: (obj)=>{
         console.log("Experiment started.");
         this.status = DEVICE_STATUS_RUNNING;

@@ -74,7 +74,7 @@
     </section>
     
     <!-- Raw Log -->
-    <section class="section">
+    <section class="section" v-if="isStarted">
       <header class="section__header">
         <h2 class="section__header__title" >Log</h2>
       </header>
@@ -85,7 +85,6 @@
       </div>
     </section>
     
-    <!-- Log section -->
     <!-- Analysis section -->
     <div>
       <b-button

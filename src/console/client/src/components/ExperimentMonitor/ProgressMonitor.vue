@@ -143,14 +143,11 @@ export default {
         if (this.protocol == null) {
           return;
         }
-        const stage = this.protocol.stages[status.stage];
-        const step = stage.steps[status.step];
       }
     });
     device.addProgressHandler({
       onProgress:(progress)=>{
         this.progress = progress;
-        // console.log(progress)
         if (this.protocol == null) {
           return;
         }
@@ -188,7 +185,9 @@ export default {
         this.step = this.stage.steps[this.progress.state.step];
       } else {
         // TODO ignore this warning on preheating phase
-        console.warn("this.stage is null")
+        if (this.progress.state.state=='preheat') {
+          console.warn("this.stage is null")
+        }
       }
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
     },

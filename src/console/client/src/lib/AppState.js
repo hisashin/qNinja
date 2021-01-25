@@ -141,8 +141,14 @@ class AppState {
     const fromPanel = this._currentPanel();
     if (fromPanel.confirmLeave) {
       fromPanel.confirmLeave(callback);
+      if (fromPanel.onDisappear) {
+        fromPanel.onDisappear();
+      }
     } else {
       callback();
+      if (fromPanel.onDisappear) {
+        fromPanel.onDisappear();
+      }
     }
   }
   _currentPanel () {
