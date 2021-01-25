@@ -416,7 +416,8 @@ export default {
       addStagePosition:0,
       isNew: true,
       lastUpdated: 0,
-      hasError: false
+      hasError: false,
+      isEdited: false
     }
   },
   created: function () {
@@ -470,6 +471,7 @@ export default {
         delete this.protocol.final_hold_temp;
       }
       appState.submitUpdateProtocol(this.$data, ()=>{
+        this.isEdited = false;
         appState.toast(this, "Save", "Saved.");
       }, (error)=>{
         if (error!=null && error.status == 422) {
@@ -485,6 +487,7 @@ export default {
         delete this.protocol.final_hold_temp;
       }
       appState.submitCreateProtocol(this.$data.protocol, ()=>{
+        this.isEdited = false;
         appState.toast(this, "Save", "Saved.");
       }, (error)=>{
         if (error!=null && error.status == 422) {
@@ -519,11 +522,13 @@ export default {
     },
     startCreateProtocol: function () {
       this.protocol = NEW_PROTOCOL;
+      this.isEdited = false;
       this.id = null;
       this.isNew = true;
     },
     startEditProtocol: function (protocol) {
       this.protocol = protocol.protocol;
+      this.isEdited = false;
       if (this.protocol.final_hold_temp !=null && this.protocol.final_hold_temp > 0) {
         this.final_hold_temp = '' + this.protocol.final_hold_temp;
       } else {
@@ -540,6 +545,7 @@ export default {
       console.log("TheProtocolEditor.onAppear()");
     },
     onChangeProtocol () {
+      this.isEdited = true;
       const now = new Date();
       this.lastUpdated = now;
       setTimeout(()=>{
@@ -549,7 +555,11 @@ export default {
       }, 350);
     },
     confirmLeave (callback) {
-      if (window.confirm("Are you sure you want to discard the changes?")) {
+      if (this.isEdited) {
+        if (window.confirm("Are you sure you want to discard the changes?")) {
+          callback();
+        }
+      } else {
         callback();
       }
     }

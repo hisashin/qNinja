@@ -1,38 +1,40 @@
 <template>
   <div class="panel">
     <ProgressMonitor ref="progressMonitor"/>
-    <div class="card p-3">
-      <b-tabs content-class="mt-3">
-        <b-tab
-          title="Temperature"
-          active>
-          <p>
-            <TemperatureMonitor ref="temperatureMonitor" />
-          </p>
-        </b-tab>
-        <b-tab title="Fluorescence">
-          <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
-            <div>one-shot={{ oneShot }}</div>
-            <div>continuous={{ continuous }}</div>
-        </b-tab>
-        <b-tab
-          title="Melt Curve">
-          <p>
-            <b-button
-              class="ml-1"
-              @click.stop="updateMeltCurve">
-              Update (debug)
-            </b-button>
-            <MeltCurveMonitor ref="meltCurveMonitor" />
-          </p>
-        </b-tab>
-        <b-tab
-          title="Protocol">
-          <p><ProtocolDetail
-            ref="protocolDetail" /></p>
-        </b-tab>
-      </b-tabs>
-    </div> 
+    <section class="section">
+      <header class="section__header">
+        <h2 class="section__header__title" >{{ experiment.info.name }}</h2>
+        <div class="section__header__menu"></div>
+      </header>
+      <div class="section__body">
+        <div class="item item--tabbed">
+          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
+            <b-tab title="Temperature">
+              <TemperatureMonitor ref="temperatureMonitor" />
+            </b-tab>
+            <b-tab
+              title="Fluorescence"
+              active>
+                <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
+                  <div>one-shot={{ oneShot }}</div>
+                  <div>continuous={{ continuous }}</div>
+            </b-tab>
+            <b-tab title="Melt curve">
+              <b-button
+                class="ml-1"
+                @click.stop="updateMeltCurve">
+                Update (debug)
+              </b-button>
+              <MeltCurveMonitor ref="meltCurveMonitor" />
+            </b-tab>
+            <b-tab title="Protocol">
+              <ProtocolDetail
+                ref="protocolDetail" />
+            </b-tab>
+          </b-tabs>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script>
