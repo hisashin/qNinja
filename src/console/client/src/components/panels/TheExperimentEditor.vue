@@ -79,9 +79,22 @@
         <h2 class="section__header__title" >Log</h2>
       </header>
       <div class="section__body">
-        <FluorescenceMonitor ref="fluorescenceMonitor" />
-        <TemperatureMonitor ref="temperatureMonitor" />
-        <MeltCurveMonitor ref="meltCurveMonitor" />
+        <!-- Raw log tabs -->
+        <div class="item item--tabbed">
+          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
+            <b-tab title="Temperature">
+              <TemperatureMonitor ref="temperatureMonitor" />
+            </b-tab>
+            <b-tab
+              title="Fluorescence"
+              active>
+              <FluorescenceMonitor ref="fluorescenceMonitor" />
+            </b-tab>
+            <b-tab title="Melt curve">
+              <MeltCurveMonitor ref="meltCurveMonitor" />
+            </b-tab>
+          </b-tabs>
+        </div>
       </div>
     </section>
     
