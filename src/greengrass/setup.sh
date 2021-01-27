@@ -5,7 +5,7 @@ fi
 sudo apt -y update
 sudo apt -y install openjdk-8-jdk
 if [ ! -e $3 ]; then
-  echo "JAVA_HOME ${3} does not exists" 1>&2
+  echo "JAVA_HOME ${3} does not exist." 1>&2
   exit 1
 fi
 echo "export AWS_ACCESS_KEY_ID=${1}\nexport AWS_SECRET_ACCESS_KEY=${2}\nexport JAVA_HOME=${3}" >> environment.txt
