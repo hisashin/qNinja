@@ -1,0 +1,30 @@
+name: deploy-dev
+on:
+  push:
+    branches:
+      - 'master'
+      - 'dev'
+      - 'production'
+    paths:
+      - '**'
+      - 'src/**'
+jobs:
+  sync_to_s3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to S3
+        run: echo 'Sync to S3'
+  call_lambda:
+    needs: [sync_to_s3]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to S3
+        run: echo 'call Lambda'
+  call_slack:
+    if: always()
+    needs: [sync_to_s3, call_lambda]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to S3
+        run: echo 'call Slack'
+
