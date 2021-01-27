@@ -74,7 +74,7 @@
     </section>
     
     <!-- Raw Log -->
-    <section class="section" v-if="isStarted">
+    <section class="section" v-show="isStarted">
       <header class="section__header">
         <h2 class="section__header__title" >Log</h2>
       </header>
@@ -117,6 +117,8 @@
 </template>
 <script>
 import appState from "../../lib/AppState.js";
+import client from "../../lib/RestClient.js";
+
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProtocolPicker from '../ProtocolPicker.vue';
 import ExperimentConfig from '../ExperimentConfig.vue';
@@ -159,12 +161,12 @@ export default {
       this.experiment.config = this.$refs.experimentConfig.config;
       if (this.isNew) {
         this.isNew = false;
-        appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+        client.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
           console.log("submitCreateExperiment success. id=%s", createdItem.id);
           appState.run(createdItem.id);
         });
       } else {
-        appState.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
+        client.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
         ()=>{
           console.log("Saved. run...");
           appState.run(this.experiment.id);
@@ -177,13 +179,13 @@ export default {
       this.experiment.config = this.$refs.experimentConfig.config;
       console.log(this.$data.experiment)
       if (this.isNew) {
-        appState.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
+        client.submitCreateExperiment(this.$data.experiment, (createdItem)=>{
           this.isNew = false;
           console.log("submitCreateExperiment success. id=%s", createdItem.id);
           this.experiment = createdItem;
         });
       } else {
-        appState.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
+        client.submitUpdateExperiment(this.experiment.id, this.$data.experiment, 
         ()=>{
           console.log("Saved.");
         },
@@ -198,17 +200,30 @@ export default {
     },
     /* Panel transition */
     setExperiment (experiment) {
+      console.log("setExperiment 0");
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config);
       
-      this.$refs.temperatureMonitor.set(
-        experiment.log.temp.time, 
-        experiment.log.temp.well, 
-        experiment.log.temp.lid);
-      console.log(experiment.log.fluorescence.qpcr)
-      this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
+      if (!this.$refs.temperatureMonitor) {
+        console.warn("this.$refs.temperatureMonitor is null. why?")
+      }
+      if (this.isStarted) {
+        if (experiment.log && experiment.log.temp) {
+          console.log("setExperiment 1.1");
+          this.$refs.temperatureMonitor.set(
+            experiment.log.temp.time, 
+            experiment.log.temp.well, 
+            experiment.log.temp.lid);
+        
+        }
+        if (experiment.log) {
+          this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
+        
+        }
+      
+      }
       
       this.isNew = false;
     },
@@ -254,14 +269,14 @@ export default {
     updateInfo: function () {
       console.log(this.$data.experiment.id)
       console.log(this.$data.experiment.info)
-      appState.submitUpdateExperimentProperty (this.$data.experiment.id, "info",
+      client.submitUpdateExperimentProperty (this.$data.experiment.id, "info",
        this.$data.experiment.info, (resObj)=>{
         console.log(resObj)
        }, ()=>{});
     },
     updateConfig: function () {
       this.experiment.config = this.$refs.experimentConfig.config;
-      appState.submitUpdateExperimentProperty (this.$data.experiment.id, "config",
+      client.submitUpdateExperimentProperty (this.$data.experiment.id, "config",
        this.$data.experiment.config, (resObj)=>{
         console.log(resObj);
        }, ()=>{});

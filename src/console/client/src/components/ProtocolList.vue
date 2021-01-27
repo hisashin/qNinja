@@ -36,8 +36,9 @@
   </div>
 </template>
 <script>
-import ProtocolCell from './ProtocolCell.vue'
+import ProtocolCell from './ProtocolCell.vue';
 import appState from "../lib/AppState.js";
+import client from "../lib/RestClient.js";
 export default {
   name: 'ProtocolList',
   components: {
@@ -63,9 +64,8 @@ export default {
       console.log("ProtocolList.load");
       this.error = false;
       let params = this.$data.params;
-      appState.fetchProtocols(params, 
+      client.fetchProtocols(params, 
       (res)=>{
-        console.log("fetchProtocols callback");
         this.protocols = res.data;
         this.paging = res.paging;
       },

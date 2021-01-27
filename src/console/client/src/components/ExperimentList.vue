@@ -34,6 +34,7 @@
 </template>
 <script>
 import appState from "../lib/AppState.js";
+import client from "../lib/RestClient.js";
 import ExperimentCell from './ExperimentCell.vue'
 export default {
   name: 'ExperimentList',
@@ -61,7 +62,7 @@ export default {
         this.params.limit = this.limit;
       }
       let params = this.$data.params;
-      appState.fetchExperiments(params, 
+      client.fetchExperiments(params, 
       (res)=>{
         this.summaries = res.data;
         this.paging = res.paging;

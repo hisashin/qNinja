@@ -134,10 +134,14 @@ class NinjaQPCRHTTPServer {
     router.addPath("/experiments/{eid}/config", "GET", this.experimentConfigGet());
     router.addPath("/experiments/{eid}/config", "PUT", this.experimentConfigUpdate());
     router.addPath("/experiments/{eid}/log", "GET", this.experimentLogGet());
+    
     router.addPath("/experiments/{eid}/analysis_config", "GET", this.experimentAnalysisConfigGet());
     router.addPath("/experiments/{eid}/analysis_config", "PUT", this.experimentAnalysisConfigUpdate());
     router.addPath("/experiments/{eid}/analysis", "GET", this.experimentAnalysisGet());
-    router.addPath("/experiments/{eid}/analysis", "PUT", this.experimentAnalysisUpdate());
+    router.addPath("/experiments/{eid}/analysis/baseline", "GET", this.experimentAnalysisBaselineGet());
+    router.addPath("/experiments/{eid}/analysis/threshold", "GET", this.experimentAnalysisThresholdGet());
+    router.addPath("/experiments/{eid}/analysis/standard_curve", "GET", this.experimentAnalysisStandardCurveGet());
+    
     router.addPath("/experiments/draft", "POST", this.experimentDraft());
     
     // TODO: Reconsinder paths.
@@ -474,10 +478,16 @@ class NinjaQPCRHTTPServer {
   // Return partial
   _experimentGetProperty (key) {
     return (req, res, map)=>{
+      const path = key.split(".");
       em.getExperiment(map.eid, (experiment)=>{
         console.log("experimentGet OK. " + key);
         res.writeHead(200,{'Content-Type': 'application/json'});
-        res.write(JSON.stringify(experiment[key]));
+        let obj = experiment;
+        for (let pathElement of path) {
+          obj = obj[pathElement];
+          if (!obj) obj = {}
+        }
+        res.write(JSON.stringify(obj));
         res.end();
       },
       (err)=>{
@@ -491,9 +501,18 @@ class NinjaQPCRHTTPServer {
   _experimentUpdateProperty (key) {
     return this._getRequestContentHandler(
       (req, res, map, propertyValue)=>{
+        const path = key.split(".");
         em.getExperiment(map.eid, (experiment)=>{
           console.log("Experiment Found. Updating %s of experiment %s.", key, experiment.id);
-          experiment[key] = propertyValue;
+          let lastKey = path.pop();
+          let obj = experiment;
+          for (let pathElement of path) {
+            if (!obj[pathElement]) {
+              obj[pathElement] = {};
+            }
+            obj = obj[pathElement];
+          }
+          obj[lastKey] = propertyValue;
           em.update(experiment, (updatedItem)=>{
             res.writeHead(200,{'Content-Type': 'application/json'});
             res.write(JSON.stringify(updatedItem));
@@ -522,8 +541,9 @@ class NinjaQPCRHTTPServer {
   experimentAnalysisConfigUpdate () { return this._experimentUpdateProperty("analysis_config"); }
   experimentLogGet () { return this._experimentGetProperty("log"); }
   experimentAnalysisGet () { return this._experimentGetProperty("analysis"); }
-  experimentAnalysisUpdate () { /* TODO run calculation */ }
-  
+  experimentAnalysisBaselineGet () { return this._experimentGetProperty("analysis.baseline"); }
+  experimentAnalysisThresholdGet () { return this._experimentGetProperty("analysis.baseline"); }
+  experimentAnalysisStandardCurveGet () { return this._experimentGetProperty("analysis.baseline"); }
   
   error404 (req, res) {
     res.writeHead(404,{'Content-Type': 'application/json'});

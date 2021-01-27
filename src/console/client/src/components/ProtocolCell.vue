@@ -43,6 +43,7 @@
 </template>
 <script>
 import appState from "../lib/AppState.js";
+import client from "../lib/RestClient.js";
 import device from "../lib/Device.js";
 export default {
   name: 'ProtocolCell',
@@ -72,7 +73,7 @@ export default {
     },
     deleteIt: function() {
       console.log("ProtocolCell.delete");
-      appState.submitDeleteProtocol(this.pid, ()=>{
+      client.submitDeleteProtocol(this.pid, ()=>{
         console.log("Deleted.");
       });
     },

@@ -37,8 +37,9 @@
   </div>
 </template>
 <script>
-import ProtocolPickerCell from './ProtocolPickerCell.vue'
+import ProtocolPickerCell from './ProtocolPickerCell.vue';
 import appState from "../lib/AppState.js";
+import client from "../lib/RestClient.js";
 export default {
   name: 'ProtocolPicker',
   components: {
@@ -63,7 +64,7 @@ export default {
     load: function () {
       this.error = false;
       let params = this.$data.params;
-      appState.fetchProtocols(params, 
+      client.fetchProtocols(params, 
       (res)=>{
         console.log("fetchProtocols callback");
         this.protocols = res.data;

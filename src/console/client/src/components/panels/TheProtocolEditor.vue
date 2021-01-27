@@ -362,6 +362,7 @@
 <script>
 import network from "../../lib/Device.js";
 import appState from "../../lib/AppState.js";
+import client from "../../lib/RestClient.js";
 import Constants from "../../lib/constants.js";
 
 // const PROJ_ROOT_DIR = "../../../../../../";
@@ -470,7 +471,7 @@ export default {
       } else {
         delete this.protocol.final_hold_temp;
       }
-      appState.submitUpdateProtocol(this.$data, ()=>{
+      client.submitUpdateProtocol(this.$data, ()=>{
         this.isEdited = false;
         appState.toast(this, "Save", "Saved.");
       }, (error)=>{
@@ -486,7 +487,7 @@ export default {
       } else {
         delete this.protocol.final_hold_temp;
       }
-      appState.submitCreateProtocol(this.$data.protocol, ()=>{
+      client.submitCreateProtocol(this.$data.protocol, ()=>{
         this.isEdited = false;
         appState.toast(this, "Save", "Saved.");
       }, (error)=>{

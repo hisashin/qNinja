@@ -40,6 +40,8 @@
 <script>
 import device from "../../lib/Device.js";
 import appState from "../../lib/AppState.js";
+import client from "../../lib/RestClient.js";
+
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProgressMonitor from '../ExperimentMonitor/ProgressMonitor.vue';
 import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
@@ -70,12 +72,6 @@ export default {
   },
   methods: {
     updateMeltCurve:  function () {
-      console.log("updateMeltCurve");
-      appState.fetchMeltCurve((data)=>{
-        this.$refs.meltCurveMonitor.set(data);
-      }, ()=>{
-        // TODO error
-      });
     },
     onFluorescenceUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
@@ -105,7 +101,7 @@ export default {
     onDisappear () {
     },
     onAppear () {
-      appState.fetchDeviceExperiment (
+      client.fetchDeviceExperiment (
         (experiment)=>{
           this.experiment = experiment;
           this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
