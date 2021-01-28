@@ -206,11 +206,11 @@ class AppState {
   
   init () {
     /* HTTP request methods */
-    Util.requestData("device", null, "GET", 
+    client.fetchDevice(
       (data)=>{
         device.config = data.config;
         if (data.hasExperiment) {
-          Util.requestData("device/experiment", null, "GET", 
+          client.fetchDeviceExperiment(
             (data)=>{
               device.setExperiment(data);
             }, 
