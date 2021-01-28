@@ -20,9 +20,8 @@ class AppState {
       PROTOCOL_EDITOR:4,
       EXPERIMENT_EDITOR:5,
       EXPERIMENT_LIST:6,
-      EXPERIMENT_DETAIL:7,
-      EXPERIMENT_MONITOR:8,
-      TEMPLATE:9
+      EXPERIMENT_MONITOR:7,
+      TEMPLATE:8
     };
     this.views = {
       protocolDetail: null,
@@ -45,7 +44,6 @@ class AppState {
     this.viewsMap[this.PANELS.PROTOCOL_LIST] = this.views.panelProtocolList;
     this.viewsMap[this.PANELS.PROTOCOL_DETAIL] = this.views.panelProtocolDetail;
     this.viewsMap[this.PANELS.EXPERIMENT_LIST] = this.views.panelExperimentList;
-    this.viewsMap[this.PANELS.EXPERIMENT_DETAIL] = this.views.panelExperimentDetail;
     this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;

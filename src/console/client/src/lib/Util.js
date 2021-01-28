@@ -34,9 +34,11 @@ const Util = {
       if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
           try {
-            onSuccess(JSON.parse(xmlhttp.responseText));
+            if (onSuccess) {
+              onSuccess(JSON.parse(xmlhttp.responseText));
+            }
           } catch (e) {
-            if (onError != null) {
+            if (onError) {
               onError({exception:e});
             }
           }
@@ -49,9 +51,9 @@ const Util = {
               console.warn("Unable to parse response.");
             }
           }
-          onError(
-            {status:xmlhttp.status, content:response}
-          );
+          if (onError) {
+            onError({status:xmlhttp.status, content:response});
+          }
         }
       }
     };

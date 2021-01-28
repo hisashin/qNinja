@@ -1,4 +1,4 @@
-update=2021 January 08, Friday 16:03:12
+update=Wednesday, 27 January 2021 at 14:20:43
 version=1
 last_client=eeschema
 [general]

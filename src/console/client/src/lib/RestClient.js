@@ -17,157 +17,62 @@ class RestClient {
   
   // GET device/experiment
   fetchDeviceExperiment (onSuccess, onFail) {
-    Util.requestData("device/experiment", null, "GET", 
-      (data)=>{
-        console.log("Device.fetchDeviceExperiment callback");
-        onSuccess(data);
-      }, (error)=>{
-        console.log("Error %s", error);
-        onFail(error);
-      }
-    );
+    Util.requestData("device/experiment", null, "GET", onSuccess, onFail);
   }
   // GET /protocols
   fetchProtocols (params, callback, onError) {
-    Util.requestData(client._createURL("protocols", params), null, "GET", 
-      (data)=>{
-        callback(data);
-      }, (error)=>{
-        console.log("Error");
-        if (onError) {
-          onError(error);
-        }
-      }
-    );
+    Util.requestData(client._createURL("protocols", params), null, "GET", callback, onError);
   }
   
   // GET /protocol/{id}
   fetchProtocol (id, callback, onError) {
-    Util.requestData("protocols/" + id, null, "GET", 
-      (data)=>{
-        callback(data);
-      }, (error)=>{
-        console.error(error);
-        if (onError) {
-          onError(error);
-        }
-      }
-    );
+    Util.requestData("protocols/" + id, null, "GET", callback, onError);
   }
   
   // POST /protocols
   submitCreateProtocol (obj, onSave, onError) {
     const path = "protocols";
-    Util.requestData(path, obj, "POST", (res)=>{
-      if (onSave) {
-        onSave(res);
-      }
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, obj, "POST", onSave, onError);
   }
   
   // PUT protools/{id}
   submitUpdateProtocol (obj, onSave, onError) {
     const path = "protocols/" + obj.id;
-    Util.requestData(path, obj, "PUT", ()=>{
-      if (onSave) {
-        onSave();
-      }
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, obj, "PUT", onSave, onError);
   }
   
   // GET /experiments
   fetchExperiments (params, callback, onError) {
-    Util.requestData(client._createURL("experiments", params), null, "GET", 
-      (data)=>{
-        if (callback) {
-          callback(data);
-        }
-      }, (error)=>{
-        console.log("Error %s", error);
-        if (onError) {
-          onError(error);
-        }
-      }
-    );
+    Util.requestData(client._createURL("experiments", params), null, "GET", callback, onError);
   }
   
   // POST /experiments
   submitCreateExperiment (obj, onSave, onError) {
     const path = "experiments";
-    Util.requestData(path, obj, "POST", (res)=>{
-      if (onSave) {
-        onSave(res);
-      }
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, obj, "POST", onSave, onError);
   }
   
   // GET /experiment/id
   fetchExperiment (id, callback, onFail) {
-    Util.requestData("experiments/" + id, null, "GET", 
-      (data)=>{
-        callback(data);
-      }, (error)=>{
-        console.log(error);
-        if (onFail) {
-          onFail(error);
-        }
-      }
-    );
+    Util.requestData("experiments/" + id, null, "GET", callback, onFail);
   }
   
   // PUT /experiments/{id}/{key}
   submitUpdateExperimentProperty (id, key, valueObj, onSave, onError) {
     const path = "experiments/" + id + "/" + key;
-    Util.requestData(path, valueObj, "PUT", (res)=>{
-      if (onSave) {
-        onSave(res);
-      }
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, valueObj, "PUT", onSave, onError);
   }
   
   // PUT /experiments/{id}
   submitUpdateExperiment (id, valueObj, onSave, onError) {
     const path = "experiments/" + id;
-    Util.requestData(path, valueObj, "PUT", (res)=>{
-      if (onSave) {
-        onSave(res);
-      }
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, valueObj, "PUT", onSave, onError);
   }
   
   // DELETE /experiments/{id}
   submitDeleteProtocol (id, onSave, onError) {
     const path = "protocols/" + id;
-    Util.requestData(path, null, "DELETE", ()=>{
-      if (onSave) {
-        onSave();
-      }
-      client.fetchProtocols();
-    }, (error)=>{
-      if (onError) {
-        onError(error);
-      }
-    });
+    Util.requestData(path, null, "DELETE", onSave, onError);
   }
   
   // POST experiments/draft
