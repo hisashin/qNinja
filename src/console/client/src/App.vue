@@ -161,16 +161,21 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
 
 /* Protocol detail & editor view */
 .protocol {
+}
+.protocol__header {
+  padding:1em;
+}
+.protocol__header__name {
+  font-size: 1.5rem;
+}
+.protocol__stages {
 
 }
-.protocol-stages {
-
-}
-.protocol-stage {
+.protocol__stages__stage {
   border-top:1px solid rgba(0, 0, 0, 0.125);
   padding:1em;
 }
-.protocol-stage-add {
+.protocol__stages__stage-add {
   text-align:right;
   height:38px;
   margin-top:-19px;
@@ -178,21 +183,22 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   z-index:2;
   padding-right:1em;
 }
-.protocol-stage-label {
+.protocol__stages__stage__title {
+  font-size:1.45rem;
+}
+.protocol__stages__stage__steps {
 
 }
-.protocol-steps {
+.protocol__stages__stage__steps__step {
 
 }
-.protocol-step {
-
-}
-.protocol-step-label {
+.protocol__stages__stage__steps__step__label {
   display:inline-block;
   width:100px;
 }
-.protocol-header {
-  padding:1em;
+.protocol__stages__stage__steps__step__value {
+  display:inline-block;
+  width:auto;
 }
 .protocol-footer {
   padding:1em;
@@ -300,5 +306,26 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
 }
 .well_unavailable {
   background-color:gray;
+}
+
+
+.pcr_table {
+  border-collapse: collapse;
+}
+.pcr_table td, .pcr_table th {
+  border:1px solid #888;
+}
+
+.labeled_list {
+  display: flex;
+	flex-wrap:wrap;
+}
+.labeled_list__label {
+  flex-basis:20%;
+  flex-grow: 1;
+}
+.labeled_list__content {
+  flex-basis:80%;
+  flex-grow: 4;
 }
 </style>

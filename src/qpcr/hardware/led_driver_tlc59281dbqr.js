@@ -26,7 +26,7 @@ class TLC59281DBQR {
     } else {
       console.error("ADG731BSUZ.consrturcot spi is not specified. Please pass a SPI obect or channel name.");
     }
-    this.blankFrequency;
+    this.blankFrequency = blankFrequency;
     rpio.open(this.pinLatch, rpio.OUTPUT, rpio.LOW);
   }
   start () {

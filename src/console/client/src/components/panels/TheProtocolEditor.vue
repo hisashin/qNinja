@@ -41,7 +41,7 @@
         <div class="item item--detail-card">
           <!-- Editor here. -->
           <div class="protocol">
-            <div class="protocol-header">
+            <div class="protocol__header">
               <div>
                 Name 
                 <span :class="'validation-label validation__name'"/>
@@ -69,9 +69,9 @@
             </div>
             
             <span :class="'validation-label validation__stages'"/>
-            <ul class="protocol-stages">
+            <ul class="protocol__stages">
               <template v-for="(stage, index) in protocol.stages" >
-                <li class="protocol-stage-add" :key="index + '_add'">
+                <li class="protocol__stages__stage-add" :key="index + '_add'">
                   <b-button
                     pill
                     @click="openAddStageModal(index)"
@@ -79,9 +79,9 @@
                     Add
                   </b-button>
                 </li>
-                <li class="protocol-stage" :key="index + '_stage'">
+                <li class="protocol__stages__stage" :key="index + '_stage'">
                   <template v-if="stage.type==1">
-                    <h3 class="protocol-stage-label">
+                    <h3 class="protocol__stages__stage__title">
                       Hold Stage
                       <span class="'validation-label validation__stages__' + index"/>
                       <b-button
@@ -96,9 +96,9 @@
                         class="input-repeat"
                       > 
                     </h3>
-                    <ul class="protocol-steps">
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                    <ul class="protocol__stages__stage__steps">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Hold
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
@@ -116,7 +116,7 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==2 || stage.type==4">
-                    <h3 class="protocol-stage-label">
+                    <h3 class="protocol__stages__stage__title">
                       <span v-if="stage.type==2">
                         qPCR Stage
                         <span :class="'validation-label validation__stages__'+index"/>
@@ -137,9 +137,9 @@
                       type="number"
                       class="input-repeat"
                     > times
-                    <ul class="protocol-steps">
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                    <ul class="protocol__stages__stage__steps">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/><input
@@ -166,8 +166,8 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Annealing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
@@ -195,8 +195,8 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Extending
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
@@ -227,7 +227,7 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==3">
-                    <h3 class="protocol-stage-label">
+                    <h3 class="protocol__stages__stage__title">
                       Melt Curve Stage
                       <span :class="'validation-label validation__stages__'+index"/>
                       <b-button
@@ -243,9 +243,9 @@
                         class="input-repeat"
                       > 
                     </h3>
-                    <ul class="protocol-steps">
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                    <ul class="protocol__stages__stage__steps">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
@@ -265,8 +265,8 @@
                         >℃/sec
                         
                       </li>
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Cooling
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
@@ -285,8 +285,8 @@
                           class="input-speed" type="number" step="1"
                         >℃/sec
                       </li>
-                      <li class="protocol-step">
-                        <div class="protocol-step-label">
+                      <li class="protocol__stages__stage__steps__step">
+                        <div class="protocol__stages__stage__steps__step__label">
                           Melting
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
@@ -311,7 +311,7 @@
                   </template>
                 </li>
               </template>
-              <li class="protocol-stage-add">
+              <li class="protocol__stages__stage-add">
                 <b-button
                   pill
                   @click="openAddStageModal(protocol.stages.length)"
@@ -319,7 +319,7 @@
                   Add
                 </b-button>
               </li>
-              <li class="protocol-stage">
+              <li class="protocol__stages__stage">
                 <!-- Footer empty cell -->
               </li>
             </ul>

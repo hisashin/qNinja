@@ -16,6 +16,11 @@ class RestClient {
   }
   
   // GET device/experiment
+  fetchDevice (onSuccess, onError) {
+    Util.requestData("device", null, "GET", onSuccess, onError);
+  }
+  
+  // GET device/experiment
   fetchDeviceExperiment (onSuccess, onError) {
     Util.requestData("device/experiment", null, "GET", onSuccess, onError);
   }

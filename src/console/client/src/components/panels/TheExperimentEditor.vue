@@ -15,16 +15,16 @@
       <div class="section__body">
         <div class="item item--detail-card">
           <div class="item--detail-card__body">
-            <div>
-              Name: <input
-                v-model.number="experiment.info.name" type="text"
-              >
-            </div>
-            <div>
-              Comment: <input
-                v-model.number="experiment.info.comment" type="text"
-              >
-            </div>
+            <dl class="labeled_list">
+              <dt class="labeled_list__label">Name</dt>
+              <dd class="labeled_list__content"><input
+                v-model.number="experiment.info.name" type="text" style="width:80%"
+              ></dd>
+              <dt class="labeled_list__label">Comment</dt>
+              <dd class="labeled_list__content"><textarea
+                v-model.number="experiment.info.comment" type="text" style="width:80%" rows="4"
+              ></textarea></dd>
+            </dl>
           </div>
         </div>
       </div>

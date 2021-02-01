@@ -4,7 +4,7 @@
       <div class="item--detail-card__body">
         <h3>Layout</h3>
         <div>
-          <table class="well_layout">
+          <table class="pcr_table pcr_tables--well_layout">
             <tr v-for="(row, row_index) in well_layout" v-bind:key="row_index">
               <td v-for="(well, well_index) in row" v-bind:key="well_index">
                 {{ well.name }}
@@ -14,7 +14,7 @@
         </div>
         <h3>Wells</h3>
         <div>
-          <table class="well_table">
+          <table class="pcr_table pcr_table--wells">
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -64,7 +64,7 @@
         </div>
         <h3>Dilution Series</h3>
         <div>
-          <table v-if="seriesCount" class="well_table">
+          <table v-if="seriesCount" class="pcr_table pcr_table--dilusion_series_list">
             <tr>
               <th>Label</th>
               <th>Type</th>
@@ -172,7 +172,9 @@ export default {
   },
   methods: {
     updateLayout: function () {
+      console.log("ExperimentConfig.updateLayout");
       const layout = device.config.wells.layout;
+      console.log("updateLayout")
       this.well_layout = layout.map((row)=>{
         return row.map((wellId)=>{
           let wellConf = this.findWellConfById(wellId);
@@ -241,11 +243,14 @@ export default {
       }
     },
     setConfig (config) {
-      console.log("setConfig");
       this.config = config;
-      this.makeConfigConsistent();
-      this.updateLayout();
-      this.touch();
+      try {
+        this.makeConfigConsistent();
+        this.updateLayout();
+        this.touch();
+      } catch (ex) {
+        console.log(ex)
+      }
     },
     createDefaultSeries () {
       return {
@@ -321,18 +326,16 @@ export default {
 </script>
 <style>
 
-
-.well_layout, .well_table {
-  border-collapse: collapse;
+.pcr_table--well_layout {
+  min-width:640px;
 }
-.well_layout td, .well_table td,.well_layout th, .well_table th {
-  border:1px solid #888;
-  width:1.74em;
-  height:1.74em;
-  line-height:1.74em;
-  text-align:center;
+.pcr_table--wells {
+  min-width:640px;
 }
-.well_table {
-  min-width:480px;
+.pcr_table--dilusion_series_list {
+  min-width:640px;
+}
+.pcr_table--well_picker {
+  min-width:640px;
 }
 </style>
