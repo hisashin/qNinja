@@ -10,8 +10,7 @@ const adc = new ADS1219IPWR(1, 0x40);
 raspi.init(() => {
   // const led0 = new pwm.PWM(23); // Use GPIO{n} number
   // const led1 = new pwm.PWM(1); // Use GPIO{n} number
-  const led0 = new pwm.PWM({pin:23, frequency:1000});
-  led0.write(0.5);
+  // led0.write(0.5);
   
   adc.initialize();
   let ch = 0;
@@ -23,7 +22,7 @@ raspi.init(() => {
       adc.readConversionData((val)=>{
         console.log(val);
       });
-    }, 500);
+    }, 250);
   },500);
 });
 

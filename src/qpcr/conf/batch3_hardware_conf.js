@@ -6,10 +6,12 @@
   (Hardware testing)
   
 */
+const SPI = require('pi-spi');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
+const PlateBlock = require("../control/plate_block.js");
 const i2c = require('i2c-bus');
 const Thermistor = require("../hardware/thermistor.js");
 
@@ -17,7 +19,7 @@ const Thermistor = require("../hardware/thermistor.js");
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
-const  = require("../hardware/mux_16ch.js");
+const mux = require("../hardware/mux_16ch.js");
 
 const PIN_NUM_PD_MUX_1 = 22; //GPIO6
 const PIN_NUM_PD_MUX_2 = 16; //GPIO4
@@ -25,6 +27,7 @@ const PIN_NUM_PD_MUX_3 = 12; //GPIO1
 const PIN_NUM_PD_MUX_4 = 10; //GPIO16
 const PIN_NUM_PD_MUX_5 = 8; //GPIO15
 
+const PIN_LATCH = 15;
 
 const raspi = require('raspi'); // For SoftPWM
 const pwm = require('raspi-soft-pwm');
@@ -33,6 +36,7 @@ const rpio = require('rpio');
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 // LED Driver
 const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
+
 
 // Pins
 const SPI_CHANNEL = "/dev/spidev0.0";
@@ -44,9 +48,9 @@ const POT_DEVICE_ADDR = 0x2F;
 
 // TODO change according to the circuit design
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
-const ADC_CHANNEL_AIR = 1; // TODO waiting for next main board design (with thermistor mux)
-const ADC_CHANNEL_LID= 2; // TODO TODO waiting for next main board design (with thermistor mux)
-const ADC_CHANNEL_THERMISTOR = 3; // TODO TODO waiting for next main board design (with thermistor mux)
+const ADC_CHANNEL_AIR_THERMISTOR = 1; // TODO waiting for next main board design (with thermistor mux)
+const ADC_CHANNEL_LID_THERMISTOR= 2; // TODO TODO waiting for next main board design (with thermistor mux)
+const ADC_CHANNEL_PLATE_THERMISTOR = 3; // TODO TODO waiting for next main board design (with thermistor mux)
 
 const RES = 47.0; // kOhm
 const R0 = 100.0;
@@ -186,6 +190,7 @@ class HardwareConf {
     if (this.ledUnit == null) {
       console.log("getLEDUnit() create...");
       const pot = new MCP4551T(this.i2c, POT_DEVICE_ADDR);
+      const ledDriver = new TLC59281DBQR(this.spi, PIN_LATCH, 0, 1000 /* Hz (=1kHz) */);
       this.ledUnit = new LEDUnit(pot, ledDriver);
     }
     return this.ledUnit;
@@ -219,11 +224,11 @@ class LEDUnit {
     console.log("LEDUnit.start()");
     this.pot.initialize();
   }
-  select (well) {
+  select (channel) {
     rpio.write(PIN_NUM_SPI_SWITCH, rpio.LOW);
     this.pot.setWiper(0);
     this.flg = !this.flg;
-    this.ledDriver.selectChannel(sell.index);
+    this.ledDriver.selectChannel(channel);
     // Nothing to do
   }
   off () {
@@ -249,7 +254,7 @@ class FluorescenceSensingUnit {
     this.mux.selectChannel(wellIndex);
   }
   measure(wellIndex, callback) {
-    adcManager.readChannelValue(wellIndex, (val)=>{
+    this.adcManager.readChannelValue(wellIndex, (val)=>{
       callback(val);
     });
   }

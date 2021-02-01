@@ -27,10 +27,10 @@ class MUX16ch {
     const val2 = 0x01 & (ch >> 2);
     const val3 = 0x01 & (ch >> 3);
     console.log("selectChannel(%d) %d %d %d %d", ch, val0, val1, val2, val3);
-    rpio.write(this.s0, val0 ? rpio.HIGH, rpio.LOW);
-    rpio.write(this.s1, val1 ? rpio.HIGH, rpio.LOW);
-    rpio.write(this.s2, val2 ? rpio.HIGH, rpio.LOW);
-    rpio.write(this.s3, val3 ? rpio.HIGH, rpio.LOW);
+    rpio.write(this.s0, val0 ? rpio.HIGH : rpio.LOW);
+    rpio.write(this.s1, val1 ? rpio.HIGH : rpio.LOW);
+    rpio.write(this.s2, val2 ? rpio.HIGH : rpio.LOW);
+    rpio.write(this.s3, val3 ? rpio.HIGH : rpio.LOW);
   }
 }
 module.exports = MUX16ch;

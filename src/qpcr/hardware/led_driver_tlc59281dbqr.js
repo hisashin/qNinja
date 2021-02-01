@@ -17,6 +17,10 @@ class TLC59281DBQR {
   constructor (spi /* Channel name (string) or pi-spi object */, pinLatch, pinBlank, blankFrequency) {
     this.pinLatch = pinLatch;
     this.pinBlank = pinBlank;
+    this.useBlankPWM = pinBlank > 0;
+    if (!this.useBlankPWM) {
+      console.log("Blank PWM is disabled.");
+    }
   
     this.spi = null;
     if (typeof(spi)=='string') {
@@ -33,7 +37,9 @@ class TLC59281DBQR {
     if (this.spi == null) {
       this.spi = SPI.initialize(this.spiCh);
     }
-    this.blank = new pwm.PWM({pin:this.pinBlank, frequency:this.blankFrequency}); // Use GPIO{n} number
+    if (this.useBlankPWM) {
+      this.blank = new pwm.PWM({pin:this.pinBlank, frequency:this.blankFrequency}); // Use GPIO{n} number
+    }
   }
   selectChannel (ch) {
     const buffVal = 0x0001 << ch;
@@ -46,7 +52,9 @@ class TLC59281DBQR {
     });
   }
   setDuty (val) {
-    this.blank.write(val);
+    if (this.useBlankPWM) {
+      this.blank.write(val);
+    }
   }
 }
 module.exports = TLC59281DBQR;

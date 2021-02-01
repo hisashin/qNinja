@@ -1,16 +1,19 @@
 "use strict";
-const hardwareConf = require("conf/batch3_hardware_conf");
+const hardwareConf = require("./conf/batch3_hardware_conf.js");
+const Optics = require("./control/optics.js");
+const rpio = require('rpio');
 
 // Run optics demo with batch3 boards.
 class OpticsDemo {
   constructor () {
-    const hardwareConf = require(boardConfFile);
+    // const hardwareConf = require(boardConfFile);
     this.led = hardwareConf.getLEDUnit();
     this.photosensing = hardwareConf.getFluorescenceSensingUnit();
     this.wellsCount = hardwareConf.wellsCount();
     this.opticsStarted = false;
     this.ledStarted = false;
     this.photosensingStarted = false;
+    rpio.open(32, rpio.INPUT); // To disable PWM pin for ADA2200's RCLK
   }
   runOpticsDemo () {
     // Combination of LED and Photosensing
@@ -29,7 +32,7 @@ class OpticsDemo {
     this.ledStarted = true;
     let ch = 0;
     setInterval(()=>{
-      this.led.selectChannel(ch);
+      this.led.select(ch);
       ch = (ch + 1) % 16;
     }, 2000);
   }
