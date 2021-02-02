@@ -97,6 +97,22 @@
         </div>
       </div>
     </section>
+    <!-- Analysis -->
+    <section class="section" v-show="isStarted">
+      <header class="section__header">
+        <h2 class="section__header__title" >Analysis</h2>
+      </header>
+      <div class="section__body">
+        <div class="item item--detail-card">
+          Analytics Config
+          <b-button
+            class="mr-1"
+            @click.stop="updateAnalysis">
+            Update (Debug)
+          </b-button>
+        </div>
+      </div>
+    </section>
     
     <!-- Analysis section -->
     <div>
@@ -278,6 +294,15 @@ export default {
       client.submitUpdateExperimentProperty (this.$data.experiment.id, "config",
        this.$data.experiment.config, (resObj)=>{
         console.log(resObj);
+       }, ()=>{});
+    },
+    updateAnalysis: function () {
+      this.experiment.analysis_config.dummy = new Date().getTime();
+      console.log(this.$data.experiment.id);
+      console.log(this.$data.experiment.analysis_config);
+      client.submitUpdateExperimentProperty (this.$data.experiment.id, "analysis_config",
+       this.$data.experiment.analysis_config, (resObj)=>{
+        console.log(resObj)
        }, ()=>{});
     }
   }

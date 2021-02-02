@@ -56,7 +56,6 @@ export default {
     this.graph.setConversionFunction(
       (obj) =>{return { "x":obj.c, "y":Math.log10(obj.v) }}
     );
-    this.baseline = device.getBaseline();
     this.applyBaseline();
     this.graph.setMinMaxX(0, 50);
     this.graph.setMinMaxY(0, 5);

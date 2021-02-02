@@ -158,6 +158,35 @@ class ExperimentManager {
       }
     });
   }
+  analyze (experiment, callback, onError) {
+    // TODO analyze
+    console.log("ExperimentManager.analyze");
+    const analysis = new OpticsAnalysis(experiment);
+    try {
+      /*
+      analysis.calcBaseline();
+      analysis.calcCt();
+      analysis.calcMeltCurve();
+      experiment.baselines = analysis.getBaselines();
+      experiment.thresholds = analysis.getThresholds();
+      experiment.ct = analysis.getCt();
+      experiment.melt_curve = analysis.getMeltCurve();
+      */
+      const result = analysis.analyze();
+      experiment.analysis = result;
+      
+    } catch (e) {
+      console.log(e);
+      if (onError) {
+        onError({
+          code: ErrorCode.DataError,
+          message:e.message
+        });
+      }
+      return;
+    }
+    this.update(experiment, callback, onError);
+  }
   
   delete (id, onDelete, onError) {
     const filePath = this._experimentDir() + "/" + id;
@@ -201,25 +230,6 @@ class ExperimentManager {
       console.log("ExperimentManager._updateSummaries summaries.length=%d", summaries.length);
       this._saveSummaries(summaries, onSuccess, onError);
     }, onError);
-  }
-  
-  getAnalyzedExperimentLog (id, onLoad, onError) {
-    this.getExperiment(id, (log)=>{
-      const analysis = new OpticsAnalysis(log);
-      try {
-        analysis.calcBaseline();
-        analysis.calcCt();
-        analysis.calcMeltCurve();
-        log.baselines = analysis.getBaselines();
-        log.thresholds = analysis.getThresholds();
-        log.ct = analysis.getCt();
-        log.melt_curve = analysis.getMeltCurve();
-      } catch (e) {
-        console.log(e);
-      }
-      onLoad(log);
-    },
-    onError);
   }
   
   _generateExperimentSummary (experiment) {

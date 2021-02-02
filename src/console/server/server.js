@@ -513,13 +513,24 @@ class NinjaQPCRHTTPServer {
             obj = obj[pathElement];
           }
           obj[lastKey] = propertyValue;
-          em.update(experiment, (updatedItem)=>{
-            res.writeHead(200,{'Content-Type': 'application/json'});
-            res.write(JSON.stringify(updatedItem));
-            res.end();
-          }, (err)=>{
-            this._handleError(req, res, err);
-          });
+          if (key == "analysis_config") {
+            em.analyze(experiment, (updatedItem)=>{
+              res.writeHead(200,{'Content-Type': 'application/json'});
+              res.write(JSON.stringify(updatedItem));
+              res.end();
+            }, (err)=>{
+              this._handleError(req, res, err);
+            });
+          } else {
+            em.update(experiment, (updatedItem)=>{
+              res.writeHead(200,{'Content-Type': 'application/json'});
+              res.write(JSON.stringify(updatedItem));
+              res.end();
+            }, (err)=>{
+              this._handleError(req, res, err);
+            });
+            
+          }
         },
         (err)=>{
           console.log("experimentGet ERROR. " + err);

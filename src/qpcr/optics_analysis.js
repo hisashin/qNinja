@@ -129,5 +129,13 @@ class OpticsAnalysis {
   getMeltCurve () {
     return this.meltCurve;
   }
+  analyze () {
+    return { 
+      "baseline": 0,
+      "threshold": 1,
+      "ct": 2,
+      "standard_curve": 3
+    };
+  }
 }
 module.exports = OpticsAnalysis;

@@ -47,7 +47,6 @@ class TLC59281DBQR {
     const buffVal = 0x0001 << ch;
     const lower = 0xFF & buffVal;
     const upper = 0xFF & (buffVal >> 8);
-    console.log(upper, lower);
     this.spi.write(new Buffer([upper, lower]), ()=>{
       // Latch pulse
       rpio.write(this.pinLatch, rpio.HIGH);

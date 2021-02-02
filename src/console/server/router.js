@@ -58,7 +58,7 @@ class Router {
   }
   route (req, res) {
     const url = URL.parse(req.url).pathname;
-    console.log(req.url)
+    console.log(req.method + " " + req.url)
     for (let i=0; i<this.paths.length; i++) {
       let match = this.paths[i].matches(url, req.method);
       if (match != null) {

@@ -112,7 +112,6 @@ class ADS1219IPWR {
   // Measure single-ended signals
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
-    // console.log(currentVal);
     const muxBits = MUX_SINGLE_END_VALS[channel];
     // Note: By default, it uses internal ref voltage (2.048V)
     const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range

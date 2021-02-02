@@ -10,13 +10,11 @@ class Device {
     this.transitionHandlers = [];
     this.progressHandlers = [];
     this.fluorescenceUpdateHandlers = [];
-    this.baselineHandlers = [];
     
     this.deviceState = null;
     this.experimentProgress = null;
     this.protocol = null;
     this.progress = null;
-    this.baseline = [];
   }
   
   apiEndpoint () {
@@ -80,9 +78,6 @@ class Device {
           this.fluorescenceUpdateHandlers.forEach((handler)=>{
             if (handler.onFluorescenceEvent) {
               handler.onFluorescenceEvent(obj.data);
-            }
-            if (obj.data!=null && obj.data.type == "baseline") {
-              this._fetchBaseline();
             }
           });
           break;
@@ -151,27 +146,6 @@ class Device {
     return this.protocol;
   }
   
-  getBaseline () {
-    return this.baseline;
-  }
-  _fetchBaseline () {
-    // onSuccess, onError
-    Util.requestData("device/experiment/baseline", null, "GET", 
-      (data)=>{
-        console.log("Device._fetchBaseline callback");
-        console.log(data);
-        this.baseline = data;
-        this.baselineHandlers.forEach((handler)=>{
-          if (handler.onBaselineUpdate) {
-            handler.onBaselineUpdate(this.baseline);
-          }
-        });
-      }, (error)=>{
-        console.log("Error %s", error);
-      }
-    );
-  }
-  
   /* Event handler registration */
   addConnectionEventHandler (obj) {
     if (this.connectionEventHandlers.indexOf(obj) > -1) {
@@ -207,13 +181,6 @@ class Device {
       return;
     }
     this.fluorescenceUpdateHandlers.push(obj);
-  }
-  addBaselineHandler (obj) {
-    if (this.baselineHandlers.indexOf(obj) > -1) {
-      console.warn("Device.addBaselineHandler: This object is already registered. Skip.");
-      return;
-    }
-    this.baselineHandlers.push(obj);
   }
   
   getDeviceState () {

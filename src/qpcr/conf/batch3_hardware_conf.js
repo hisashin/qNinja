@@ -221,7 +221,7 @@ class LEDUnit {
   }
   start () {
     this.ledDriver.start();
-    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
+    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, VALUE_SPI_SWITCH_LED);
     this.ledUnit = new LEDUnit(this.pot, this.ledDriver);
     console.log("LEDUnit.start()");
     this.pot.initialize();
@@ -258,7 +258,7 @@ class FluorescenceSensingUnit {
     this.mux.selectChannel(wellIndex);
   }
   measure(wellIndex, callback) {
-    this.adcManager.readChannelValue(wellIndex, (val)=>{
+    this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
       callback(val);
     });
   }
