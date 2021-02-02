@@ -19,7 +19,7 @@ const Thermistor = require("../hardware/thermistor.js");
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
-const mux = require("../hardware/mux_16ch.js");
+const MUX16ch = require("../hardware/mux_16ch.js");
 
 const PIN_NUM_PD_MUX_1 = 22; //GPIO6
 const PIN_NUM_PD_MUX_2 = 16; //GPIO4
@@ -81,6 +81,9 @@ const PIN_NAME_PWM_FAN2 = 22;
 const PIN_NUM_ADC_DRDY = 24;
 
 const PIN_NUM_SPI_SWITCH = 18; //GPIO15
+const VALUE_SPI_SWITCH_LED = rpio.LOW;
+const VALUE_SPI_SWITCH_MUX = rpio.HIGH;
+
 const PIN_NUM_LED_DRIVER_LATCH = 15;
 
 const PIN_NUM_PD_SYNC = 22 //GPIO6
@@ -100,7 +103,7 @@ class HeatLidOutput {
     this.pwm = pwm;
   }
   start () {
-    
+    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
   }
   setOutput (outputValue /* Range={0,1.0} */) {
     outputValue = Math.min(1.0, Math.max(0, outputValue));
@@ -198,11 +201,10 @@ class HardwareConf {
   getFluorescenceSensingUnit() {
     // ADG731BSUZ (SPI)
     const pdMux = new ADG731BSUZ(this.spi, PIN_NUM_PD_SYNC);
-    /*
+    
     // Generic 16ch MUX
-    const pdMux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
-    mux.initialize();
-    */
+    //const pdMux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    // pdMux.initialize();
     return new FluorescenceSensingUnit(pdMux, this.adcManager);
   }
 };
@@ -225,9 +227,10 @@ class LEDUnit {
     this.pot.initialize();
   }
   select (channel) {
-    rpio.write(PIN_NUM_SPI_SWITCH, rpio.LOW);
+    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
+    
     this.ledDriver.selectChannel(channel);
     // Nothing to do
   }
@@ -251,6 +254,7 @@ class FluorescenceSensingUnit {
   }
   select (wellIndex) {
     // TODO: use channel mapping
+    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
     this.mux.selectChannel(wellIndex);
   }
   measure(wellIndex, callback) {
@@ -329,7 +333,6 @@ class PlateSensing {
       const temp = this.thermistor.getTemp(val);
       callback(temp);
     });
-    
   }
 }
 

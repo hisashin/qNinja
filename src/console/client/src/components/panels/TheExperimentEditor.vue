@@ -220,7 +220,6 @@ export default {
         }
         if (experiment.log) {
           this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
-        
         }
       
       }

@@ -25,9 +25,7 @@ class Optics {
     this.devugValue = null;
     this.lastMeasurementTimestamp = new Date();
   }
-  setEventReceiver (receiver) {
-    this.eventReceiver = receiver;
-  }
+  
   start () {
     this.startTimestamp = new Date();
     this.ledUnit.start();
@@ -70,19 +68,46 @@ class Optics {
       this.lastMeasurementTimestamp = new Date();
       this.values = [];
       this.wells.forEach((well)=>{
-        setTimeout(()=>{ this.selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
+        setTimeout(()=>{ this._selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
       });
     }
     this.isMeasuring = true;
   }
-  selectWell (/* well object */well) {
+  measureSingle (wellIndex, callback) {
+    if (callback != null) {
+      this.oneShotCallbacks.push(callback);
+    }
+    const well = this.wells[wellIndex];
+    setTimeout(()=>{ this._selectWell(well, true)}, MEASUREMENT_PER_CH_MSEC);
+    this.isMeasuring = true;
+  }
+  startContinuousDataCollection (callback) {
+    console.log("startContinuousDataCollection");
+    this.continuous = true;
+    this.continuousCallback = callback;
+    this.measureAll(null);
+  }
+  stopContinuousDataCollection () {
+    console.log("stopContinuousDataCollection");
+    this.continuous = false;
+  }
+  _selectWell (/* well object */well, isSingle) {
     this.ledUnit.select(well.index);
     this.fluorescenceSensingUnit.select(well.index);
-    setTimeout(()=>{ this.measureFluorescence(well) }, EXCITATION_DURATION_MSEC);
+    setTimeout(()=>{ this._measureFluorescence(well, isSingle) }, EXCITATION_DURATION_MSEC);
   }
-  measureFluorescence (/* well object */well) {
+  _measureFluorescence (/* well object */well, isSingle) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
     this.fluorescenceSensingUnit.measure(well.index, (measurement)=>{
+      if (isSingle) {
+        if (this.oneShotCallbacks.length > 0) {
+          this.oneShotCallbacks.forEach((callback)=>{
+              callback({well:well, value:measurement});
+          });
+          this.oneShotCallbacks = [];
+        }
+        return;
+      }
       this.values.push(measurement);
       if (well.index == this.wellsCount - 1) {
         // Last well
@@ -105,18 +130,7 @@ class Optics {
       }
     });
   }
-  startContinuousDataCollection (callback) {
-    console.log("startContinuousDataCollection");
-    this.continuous = true;
-    this.continuousCallback = callback;
-    this.measureAll(null);
-  }
-  stopContinuousDataCollection () {
-    console.log("stopContinuousDataCollection");
-    this.continuous = false;
-    
-  }
-  roundFluorescence (value) {
+  _roundFluorescence (value) {
     return Math.round(value * this.ROUND_POSITION) / this.ROUND_POSITION;
   }
   // Start one-shot fluorescence measurement
@@ -128,7 +142,7 @@ class Optics {
         fluorescence:[]
       };
       if (well.fluorescence.length > 0) {
-        wellData.fluorescence.push(roundFluorescence(well.fluorescence[well.fluorescence.length-1]));
+        wellData.fluorescence.push(_roundFluorescence(well.fluorescence[well.fluorescence.length-1]));
       }
       data.push(wellData);
     });

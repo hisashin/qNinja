@@ -2,7 +2,7 @@
 const hardwareConf = require("./conf/batch3_hardware_conf.js");
 const Optics = require("./control/optics.js");
 const rpio = require('rpio');
-
+const SINGLE_TARGET_WELL_INDEX = 8;
 // Run optics demo with batch3 boards.
 class OpticsDemo {
   constructor () {
@@ -20,12 +20,23 @@ class OpticsDemo {
     this.optics = new Optics(this.led, this.photosensing, this.wellsCount);
     this.optics.start();
     this.opticsStarted = true;
+    let singleCh = 0;
+    setInterval(()=>{
+      this.optics.measureSingle(singleCh, (res)=>{
+        console.log(res);
+      });
+      singleCh = (singleCh + 1) % 16;
+    }, 500);
+    
+    /*
     setInterval(()=>{
       this.optics.measureAll((values)=>{
         console.log(values);
       });
     }, 2000);
+    */
   }
+  //  Event handlers
   runLEDDemo () {
     // Test only LEDs
     this.led.start();

@@ -5,7 +5,7 @@
 // https://www.ti.com/lit/ds/symlink/mpc506.pdf?ts=1609917448908&ref_url=https%253A%252F%252Fwww.ti.com%252Fstore%252Fti%252Fen%252Fp%252Fproduct%252F%253Fp%253DMPC506AU
 // S0-S3 GPIO
 "use strict";
-// const rpio = require('rpio');
+const rpio = require('rpio');
 
 class MUX16ch {
   constructor (s0, s1, s2, s3) {
