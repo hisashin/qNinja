@@ -45,7 +45,22 @@
 
 - `curl -OL https://github.com/hisashin/Ninja-qPCR/archive/master.zip`
 - `unzip master.zip; cd Ninja-qPCR-master`
-- //TODO boot setup
+- `git config --global user.email "(your GitHub account email)"`
+- `git config --global user.name "(your GitHub account)"`
+- `git config --global push.default simple`
+- `git config --global -l`
+- `git config --global credential.helper store`
+- `ssh-keygen -t ed25519 -C "(your GitHub account email)"` then just ENTER 3 times to make default private and public keys
+- Upload public key (~/.ssh/id_xxxx.pub) to GitHub as [Adding a new SSH key to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
+- `vi ~/.ssh/config` to write this
+  Host github
+    User git
+    Port 22
+    HostName github.com
+    IdentityFile ~/.ssh/id_xxxx
+    IdentitiesOnly yes
+- `git clone git@github.com:hisashin/Ninja-qPCR.git`
+- //TODO setup bootstrap
 
 ## Dev and Prod model setup with AWS GreenGrass (Skip here if DIY model)
 
