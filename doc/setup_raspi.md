@@ -43,8 +43,6 @@
 
 ## DIY model setup by git clone (Skip here if dev or prod model)
 
-- `curl -OL https://github.com/hisashin/Ninja-qPCR/archive/master.zip`
-- `unzip master.zip; cd Ninja-qPCR-master`
 - `git config --global user.email "(your GitHub account email)"`
 - `git config --global user.name "(your GitHub account)"`
 - `git config --global push.default simple`
