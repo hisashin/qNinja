@@ -43,6 +43,8 @@
 
 ## DIY model setup by git clone (Skip here if dev or prod model)
 
+You need to `git pull` to update software.
+
 - `git config --global user.email "(your GitHub account email)"`
 - `git config --global user.name "(your GitHub account)"`
 - `git config --global push.default simple`
@@ -60,7 +62,9 @@
 - `git clone git@github.com:hisashin/Ninja-qPCR.git`
 - //TODO setup bootstrap
 
-## Dev and Prod model setup with AWS GreenGrass (Skip here if DIY model)
+## Dev and Prod model setup with [AWS GreenGrass](https://aws.amazon.com/greengrass/) (Skip here if DIY model)
+
+Software will be updated to the latest automatically.
 
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
