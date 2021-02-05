@@ -10,11 +10,11 @@
 - Power on Raspi.
 - Login with default ID and password ("pi" and "raspberry")
 - `sudo raspi-config` and reboot
-  ## Keyboard setup (If need to change from US)
+  ### Keyboard setup (If need to change from US)
     - **5 Localisation Options**/**L3 Keyboard**/**Generic 105-key PC (intl.)**/**Other**/**Japanese**/**Japanese - Japanese (OADG 109A)**/**The default...**/**No compose key**
-  ## WiFi setup
+  ### WiFi setup
     - **1 System Options**/**S1 Wireless LAN**/**JP Japan**(for example)/Input SSID and password/**Finish**
-  ## SSH setup
+  ### SSH setup
     - **3 Interface Options**/**P2 SSH**/**Enable**
 - Login with default ID and password ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
@@ -61,9 +61,9 @@ Software will can be done automatically.
 
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
-  - `curl -OL https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh`
-  -　`sh setup.sh`
-  -　`sudo reboot`
+- `curl -OL https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh`
+- `sh setup.sh`
+- `sudo reboot`
 
 [Configure AWS IoT Greengrass on AWS IoT](https://docs.aws.amazon.com/greengrass/v1/developerguide/gg-config.html)
 
