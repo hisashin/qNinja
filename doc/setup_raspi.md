@@ -61,9 +61,9 @@ Software will can be done automatically.
 
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
-- `curl -OL https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh`
--　`sh setup.sh`
--　`sudo reboot`
+  - `curl -OL https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh`
+  -　`sh setup.sh`
+  -　`sudo reboot`
 
 [Configure AWS IoT Greengrass on AWS IoT](https://docs.aws.amazon.com/greengrass/v1/developerguide/gg-config.html)
 
