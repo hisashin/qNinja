@@ -764,4 +764,6 @@ XOUT
 Wire Wire Line
 	5550 4350 5650 4350
 Connection ~ 5550 4350
+Text Notes 7050 5900 0    50   ~ 0
+Pull Up All DEMOD_* to VCC_LOGIC
 $EndSCHEMATC
