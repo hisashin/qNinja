@@ -72,7 +72,7 @@ Software will can be done automatically.
   - example name of group : qpcr-dev
 - Publish **temporary** security credentials using AWS STS trust relationship
   - `aws sts assume-role --role-arn arn:aws:iam::123456789:role/(role-name) --role-session-name "qpcr-dev-temp" --profile (proper IAM) > assume-role-output.txt` on computer
-    my case `aws sts assume-role --role-arn arn:aws:iam::314407188943:role/greengrass --role-session-name qpcr-dev-001 --duration-seconds 3600 --profile gg_publisher` to sysout credentials
+    - my case `aws sts assume-role --role-arn arn:aws:iam::314407188943:role/greengrass --role-session-name qpcr-dev-001 --duration-seconds 3600 --profile gg_publisher` to sysout credentials
 - `ssh -i (private key) pi@(Raspi IP)`
 - `export AWS_ACCESS_KEY_ID=(Credentials.AccessKeyId)`
 - `export AWS_SECRET_ACCESS_KEY=(Credentials.SecretAccessKey)`
