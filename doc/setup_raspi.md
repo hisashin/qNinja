@@ -44,13 +44,15 @@ Software update can be done manually by `git pull`.
 - `git config --global credential.helper store`
 - `ssh-keygen -t rsa -C "(your GitHub account email)"` then just ENTER 3 times to make default private and public keys without password.
 - Upload public key (~/.ssh/id_xxxx.pub) to GitHub as [Adding a new SSH key to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
-- `vi ~/.ssh/config` to write this
+- `vi ~/.ssh/config` to write this 
+  ```
   Host github
     User git
     Port 22
     HostName github.com
     IdentityFile ~/.ssh/id_xxxx
     IdentitiesOnly yes
+  ```
 - `chmod 600 ~/.ssh/config`
 - `git clone github:hisashin/Ninja-qPCR.git`
 - //TODO setup bootstrap
