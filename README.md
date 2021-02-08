@@ -1,5 +1,7 @@
 # Open Source $300 Real Time PCR "Ninja qPCR"
 
+![Image](https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/images/photo/IMG_1679.jpg)
+
 ## Related Projects
 - [Ninja PCR](https://github.com/hisashin/NinjaPCR)
 - [Ninja LAMP](https://github.com/hisashin/NinjaLAMP)
