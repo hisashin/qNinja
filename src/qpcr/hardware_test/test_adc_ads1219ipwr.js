@@ -23,8 +23,10 @@ setInterval(()=>{
     */
     //Async 
     adc.readConversionData((val)=>{
-      console.log("Ch:%d %f", targetCh, val);
+      if (targetCh == 0) {
+        console.log("Ch:%d %f", targetCh, val);
+      }
     });
-  }, 250);
+  }, 100);
   ch = (ch + 1)  % 4;
 },500);

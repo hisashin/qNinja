@@ -163,15 +163,6 @@ class ExperimentManager {
     console.log("ExperimentManager.analyze");
     const analysis = new OpticsAnalysis(experiment);
     try {
-      /*
-      analysis.calcBaseline();
-      analysis.calcCt();
-      analysis.calcMeltCurve();
-      experiment.baselines = analysis.getBaselines();
-      experiment.thresholds = analysis.getThresholds();
-      experiment.ct = analysis.getCt();
-      experiment.melt_curve = analysis.getMeltCurve();
-      */
       const result = analysis.analyze();
       experiment.analysis = result;
       
