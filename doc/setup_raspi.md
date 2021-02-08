@@ -32,7 +32,7 @@
 - `sudo /etc/init.d/ssh restart`
 - `sudo apt -y update; sudo apt-get -y update`
 
-## DIY model setup by git clone (Skip here if dev or prod model)
+## DIY setup with git (Skip here if dev or prod)
 
 Software update can be done manually by `git pull`.
 
@@ -57,7 +57,7 @@ Software update can be done manually by `git pull`.
 - `git clone github:hisashin/Ninja-qPCR.git`
 - //TODO setup bootstrap
 
-## Dev and Prod model setup with [AWS GreenGrass](https://aws.amazon.com/greengrass/) (Skip here if DIY model)
+## Dev or Prod setup with [AWS GreenGrass](https://aws.amazon.com/greengrass/) (Skip here if DIY)
 
 Software will can be done automatically.
 
