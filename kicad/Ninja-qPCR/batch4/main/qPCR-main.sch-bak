@@ -183,207 +183,12 @@ F1 "filePower.sch" 50
 $EndSheet
 Wire Wire Line
 	2150 2950 2000 2950
-Text GLabel 9950 4700 0    50   Input ~ 0
-GND
-Wire Wire Line
-	9950 4700 10150 4700
-Wire Wire Line
-	10150 4800 9950 4800
-Wire Wire Line
-	9950 4900 10150 4900
-Wire Wire Line
-	10150 5000 9950 5000
-Wire Wire Line
-	9950 5100 10150 5100
-Wire Wire Line
-	10150 5200 9950 5200
-Wire Wire Line
-	9950 5300 10150 5300
-Wire Wire Line
-	10150 5400 9950 5400
-Wire Wire Line
-	9950 5500 10150 5500
-$Comp
-L Ninja-qPCR:Conn_02x05 LED1
-U 1 1 5F7E3B13
-P 10200 3400
-AR Path="/5F7E3B13" Ref="LED1"  Part="1" 
-AR Path="/5F708CA1/5F7E3B13" Ref="LED?"  Part="1" 
-F 0 "LED1" H 10600 3100 50  0000 C CNN
-F 1 "Conn_02x05" H 10800 3000 50  0000 C CNN
-F 2 "Ninja-qPCR:Con_2x05" H 10000 3500 50  0001 C CNN
-F 3 "" H 10000 3500 50  0001 C CNN
-	1    10200 3400
-	1    0    0    -1  
-$EndComp
-Text GLabel 9750 3600 0    50   Input ~ 0
-GND
-Text GLabel 9750 3700 0    50   Input ~ 0
-PD_REF_PWM
-Text GLabel 9750 3800 0    50   Input ~ 0
-LED_LAT
-Text GLabel 9750 4000 0    50   Input ~ 0
-LED_SPI_MOSI
-Text GLabel 9750 4100 0    50   Input ~ 0
-SPI_MISO
-Text GLabel 9750 4200 0    50   Input ~ 0
-I2C_SCL
-Text GLabel 9750 4300 0    50   Input ~ 0
-I2C_SDA
-Wire Wire Line
-	9750 4300 10000 4300
-Wire Wire Line
-	9750 4200 10000 4200
-Wire Wire Line
-	9750 4100 10000 4100
-Wire Wire Line
-	9750 4000 10000 4000
-Wire Wire Line
-	9750 3900 10000 3900
-Wire Wire Line
-	9750 3800 10000 3800
-Wire Wire Line
-	9750 3700 10000 3700
-Wire Wire Line
-	9750 3600 10000 3600
-Wire Wire Line
-	9750 3500 10000 3500
-Wire Wire Line
-	9750 3400 10000 3400
-Text GLabel 9950 5100 0    50   Input ~ 0
-PD_MUX_GPIO5
-Text GLabel 9950 5200 0    50   Input ~ 0
-PD_MUX_GPIO4
-Text GLabel 9950 5400 0    50   Input ~ 0
-PD_MUX_GPIO2
-Text GLabel 9950 5300 0    50   Input ~ 0
-PD_MUX_GPIO3
-Text GLabel 9950 5500 0    50   Input ~ 0
-PD_MUX_GPIO1
-Text GLabel 9950 5600 0    50   Input ~ 0
-PD_REF_PWM
-Text GLabel 9950 5700 0    50   Input ~ 0
-ADC_DRDY
-Text GLabel 9950 5800 0    50   Input ~ 0
-I2C_SCL
-Text GLabel 9950 5900 0    50   Input ~ 0
-I2C_SDA
-Wire Wire Line
-	10150 5600 9950 5600
-Wire Wire Line
-	10150 5700 9950 5700
-Wire Wire Line
-	10150 5800 9950 5800
-Wire Wire Line
-	10150 5900 9950 5900
 Text GLabel 3700 3150 2    50   Input ~ 0
 THERM_AIR
-Text GLabel 9950 6000 0    50   Input ~ 0
-THERM_WELL
-Wire Wire Line
-	9950 6000 10150 6000
 Text GLabel 3700 3250 2    50   Input ~ 0
 THERM_LID1
 Text GLabel 3700 3350 2    50   Input ~ 0
 THERM_LID2
-$Comp
-L Ninja-qPCR:Conn_02x05 BODY?
-U 1 1 5F7E3B97
-P 10200 950
-AR Path="/5F58C19F/5F7E3B97" Ref="BODY?"  Part="1" 
-AR Path="/5F7E3B97" Ref="BODY1"  Part="1" 
-AR Path="/5F708CA1/5F7E3B97" Ref="BODY?"  Part="1" 
-F 0 "BODY1" H 10519 561 50  0000 L CNN
-F 1 "Conn_02x05" H 10519 470 50  0000 L CNN
-F 2 "Ninja-qPCR:Con_2x05" H 10000 1050 50  0001 C CNN
-F 3 "" H 10000 1050 50  0001 C CNN
-	1    10200 950 
-	1    0    0    -1  
-$EndComp
-$Comp
-L Ninja-qPCR:Conn_02x05 LID_2X?
-U 1 1 5F7E3B9D
-P 10200 2150
-AR Path="/5F58C19F/5F7E3B9D" Ref="LID_2X?"  Part="1" 
-AR Path="/5F7E3B9D" Ref="LID_2X1"  Part="1" 
-AR Path="/5F708CA1/5F7E3B9D" Ref="LID_2X?"  Part="1" 
-F 0 "LID_2X1" H 10519 1761 50  0000 L CNN
-F 1 "Conn_02x05" H 10519 1670 50  0000 L CNN
-F 2 "Ninja-qPCR:Con_2x05" H 10000 2250 50  0001 C CNN
-F 3 "" H 10000 2250 50  0001 C CNN
-	1    10200 2150
-	1    0    0    -1  
-$EndComp
-Text GLabel 9850 1050 0    50   Input ~ 0
-BODY_HEATER1B
-Text GLabel 9850 1150 0    50   Input ~ 0
-THERM_WELL
-Text GLabel 9850 1250 0    50   Input ~ 0
-FAN_BLACK_GND1
-Text GLabel 9850 1450 0    50   Input ~ 0
-GND
-Text GLabel 9850 1550 0    50   Input ~ 0
-FAN_BLACK_GND2
-Text GLabel 9850 1650 0    50   Input ~ 0
-THERM_EXT3
-Text GLabel 9850 1850 0    50   Input ~ 0
-BODY_HEATER2B
-Wire Wire Line
-	10000 950  9850 950 
-Wire Wire Line
-	9850 1050 10000 1050
-Wire Wire Line
-	10000 1150 9850 1150
-Wire Wire Line
-	9850 1250 10000 1250
-Wire Wire Line
-	10000 1350 9850 1350
-Wire Wire Line
-	9850 1450 10000 1450
-Wire Wire Line
-	10000 1550 9850 1550
-Wire Wire Line
-	9850 1650 10000 1650
-Wire Wire Line
-	10000 1750 9850 1750
-Wire Wire Line
-	9850 1850 10000 1850
-Text GLabel 9850 2250 0    50   Input ~ 0
-LID_HEATER1B
-Text GLabel 9850 3050 0    50   Input ~ 0
-LID_HEATER2B
-Text GLabel 9850 2350 0    50   Input ~ 0
-THERM_AIR
-Text GLabel 9850 2450 0    50   Input ~ 0
-THERM_EXT1
-Text GLabel 9850 2550 0    50   Input ~ 0
-THERM_LID1
-Text GLabel 9850 2650 0    50   Input ~ 0
-GND
-Text GLabel 9850 2750 0    50   Input ~ 0
-THERM_LID2
-Text GLabel 9850 2850 0    50   Input ~ 0
-THERM_EXT2
-Wire Wire Line
-	10000 2150 9850 2150
-Wire Wire Line
-	9850 2250 10000 2250
-Wire Wire Line
-	10000 2350 9850 2350
-Wire Wire Line
-	9850 2450 10000 2450
-Wire Wire Line
-	10000 2550 9850 2550
-Wire Wire Line
-	9850 2650 10000 2650
-Wire Wire Line
-	10000 2750 9850 2750
-Wire Wire Line
-	9850 2850 10000 2850
-Wire Wire Line
-	10000 2950 9850 2950
-Wire Wire Line
-	9850 3050 10000 3050
 Text GLabel 3700 2250 2    50   Input ~ 0
 SPI_SWITCH
 Wire Wire Line
@@ -395,17 +200,6 @@ Wire Wire Line
 Connection ~ 3650 1450
 Wire Wire Line
 	3650 1450 3700 1450
-$Comp
-L Connector:Conn_01x14_Male PHOTO1
-U 1 1 5F89D7B6
-P 10350 5300
-F 0 "PHOTO1" H 10200 5300 50  0000 R CNN
-F 1 "Conn_01x14_Male" H 10200 5200 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x14_Pitch2.54mm" H 10350 5300 50  0001 C CNN
-F 3 "~" H 10350 5300 50  0001 C CNN
-	1    10350 5300
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	8100 3350 7950 3350
 Wire Wire Line
@@ -620,8 +414,6 @@ Wire Wire Line
 Wire Wire Line
 	8200 3950 7950 3950
 NoConn ~ 2000 2250
-Text GLabel 9750 3900 0    50   Input ~ 0
-SPI_SCLK
 $Sheet
 S 5850 2650 850  250 
 U 5FA5D98E
@@ -1134,10 +926,6 @@ Text HLabel 8600 5400 2    50   Input ~ 0
 VCC_LOGIC_LED
 Text HLabel 8600 6000 2    50   Input ~ 0
 VCC_LOGIC_PHOTO
-Text HLabel 9950 5000 0    50   Input ~ 0
-VCC_LOGIC_PHOTO
-Text HLabel 9750 3500 0    50   Input ~ 0
-VCC_LOGIC_LED
 $Comp
 L Connector_Generic:Conn_02x03_Odd_Even J6
 U 1 1 5FBFD18F
@@ -1238,12 +1026,6 @@ Text HLabel 4850 2900 2    50   Input ~ 0
 3V3_RASP
 Text GLabel 3700 1450 2    50   Input ~ 0
 5V
-Text GLabel 9750 3400 0    50   Input ~ 0
-5V
-Text GLabel 9950 4800 0    50   Input ~ 0
-+10V
-Text GLabel 9950 4900 0    50   Input ~ 0
--10V
 Text GLabel 7750 4750 0    50   Input ~ 0
 3V3_SENSE
 Text GLabel 7750 4850 0    50   Input ~ 0
@@ -1256,16 +1038,6 @@ Text GLabel 7750 5900 0    50   Input ~ 0
 3V3_SENSE
 Text GLabel 7750 6000 0    50   Input ~ 0
 3V3_REG
-Text GLabel 9850 950  0    50   Input ~ 0
-12V
-Text GLabel 9850 1350 0    50   Input ~ 0
-12V
-Text GLabel 9850 1750 0    50   Input ~ 0
-12V
-Text GLabel 9850 2150 0    50   Input ~ 0
-12V
-Text GLabel 9850 2950 0    50   Input ~ 0
-12V
 Wire Wire Line
 	4250 2900 4400 2900
 Wire Wire Line
