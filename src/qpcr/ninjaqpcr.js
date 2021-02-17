@@ -40,7 +40,7 @@ class NinjaQPCR {
     
     this.thermalCycler = new ThermalCycler(hardwareConf.getPlate(), hardwareConf.getHeatLids());
     this.thermalCycler.setEventReceiver(this);
-    this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount());
+    this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
     this.analysis = null;

@@ -2,28 +2,37 @@
 
 /* Excitation and fluorescence measurement */
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
-const MEASUREMENT_PER_CH_MSEC = 60;
-const EXCITATION_DURATION_MSEC = 30;
-const MEASUREMENT_MIN_INTERVAL_MSEC = 2000;
+const DEBUG_COEFF = 1;
+const MEASUREMENT_PER_CH_MSEC = 200 * DEBUG_COEFF;
+const EXCITATION_DURATION_MSEC = 50 * DEBUG_COEFF;
+const MEASUREMENT_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 class Optics {
-  constructor (ledUnit, fluorescenceSensingUnit, wellsCount) {
-    // new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount());
+  constructor (ledUnit, fluorescenceSensingUnit, wellsCount, opticsChannelsCount) {
+    // new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
     this.ledUnit = ledUnit;
     this.fluorescenceSensingUnit = fluorescenceSensingUnit;
     this.wellsCount = wellsCount;
+    this.opticsChannelsCount = opticsChannelsCount;
+    
     this.ROUND_POSITION = Math.pow(10, 5);
     
     this.fluorescence = [
       // Channel array?
     ];
     this.isMeasuring = false;
-    this.values = [];
+    this._initValues();
     this.oneShotCallbacks = [];
     this.continuousCallback = null;
     this.continuous = false;
     this.shouldResumeContinuous = false;
     this.devugValue = null;
     this.lastMeasurementTimestamp = new Date();
+  }
+  _initValues () {
+    this.values = [];
+    for (let i=0; i<this.opticsChannelsCount; i++) {
+      this.values.push([]);
+    }
   }
   
   start () {
@@ -66,7 +75,7 @@ class Optics {
     }
     if (!this.isMeasuring) {
       this.lastMeasurementTimestamp = new Date();
-      this.values = [];
+      this._initValues();
       this.wells.forEach((well)=>{
         setTimeout(()=>{ this._selectWell(well)}, MEASUREMENT_PER_CH_MSEC * well.index);
       });
@@ -93,12 +102,23 @@ class Optics {
   }
   _selectWell (/* well object */well, isSingle) {
     this.ledUnit.select(well.index);
-    this.fluorescenceSensingUnit.select(well.index);
-    setTimeout(()=>{ this._measureFluorescence(well, isSingle) }, EXCITATION_DURATION_MSEC);
+    setTimeout(()=>{this.fluorescenceSensingUnit.select(well.index, 0);}, 5);
+    
+    for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
+      setTimeout(()=>{ 
+        this._measureFluorescence(well, opticsChannel, isSingle, ()=>{
+          // Select next optical channel
+          if (opticsChannel < this.opticsChannelsCount - 1) {
+            this.fluorescenceSensingUnit.select(well.index, opticsChannel+1);
+          }
+        }) 
+      }, EXCITATION_DURATION_MSEC * (opticsChannel+1));
+    }
   }
-  _measureFluorescence (/* well object */well, isSingle) {
+  _measureFluorescence (/* well object */well, opticsChannel, isSingle, onMeasure) {
     const elapsed = new Date().getTime() - this.startTimestamp.getTime();
-    this.fluorescenceSensingUnit.measure(well.index, (measurement)=>{
+    this.fluorescenceSensingUnit.measure((measurement)=>{
+      onMeasure();
       if (isSingle) {
         if (this.oneShotCallbacks.length > 0) {
           this.oneShotCallbacks.forEach((callback)=>{
@@ -108,8 +128,10 @@ class Optics {
         }
         return;
       }
-      this.values.push(measurement);
-      if (well.index == this.wellsCount - 1) {
+      // this.value -> channel
+      this.values[opticsChannel].push(measurement);
+      if (well.index == this.wellsCount - 1 && opticsChannel == this.opticsChannelsCount - 1) {
+        this.ledUnit.off();
         // Last well
         if (this.oneShotCallbacks.length > 0) {
           this.oneShotCallbacks.forEach((callback)=>{
