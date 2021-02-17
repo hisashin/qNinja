@@ -6,6 +6,7 @@ const rpio = require('rpio');
 const raspi = require('raspi');
 const pwm = require('raspi-pwm');
 
+
 class ADG731BSUZ {
   constructor (spi /* Channel name (string) or pi-spi object */ , sync) {
     this.spi = null;
@@ -24,11 +25,22 @@ class ADG731BSUZ {
       this.spi = SPI.initialize(this.spiCh);
     }
   }
-  selectChannel (channel) {
-    const val = 0xFF & channel;
+  send (val, callback) {
+    const b = new Buffer([val]);
     rpio.write(this.sync, rpio.HIGH);
-    this.spi.write(new Buffer([val]), ()=>{
-      rpio.write(this.sync, rpio.LOW);
+    rpio.write(this.sync, rpio.LOW);
+    this.spi.write(b, ()=>{
+      if (callback) {
+        callback();
+      }
+    });
+    
+  }
+  selectChannel (channel) {
+    const val = 0b00011111 & channel;
+    this.send(val, ()=>{
+      // this.send(0b01000000);
+      
     });
     
   }

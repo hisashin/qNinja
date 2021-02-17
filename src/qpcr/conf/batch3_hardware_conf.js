@@ -6,6 +6,10 @@
   (Hardware testing)
   
 */
+// Basic configuration
+const OPTICS_CHANNELS_COUNT = 2;
+const WELLS_COUNT = 16;
+
 const SPI = require('pi-spi');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
@@ -26,6 +30,7 @@ const PIN_NUM_PD_MUX_2 = 16; //GPIO4
 const PIN_NUM_PD_MUX_3 = 12; //GPIO1
 const PIN_NUM_PD_MUX_4 = 10; //GPIO16
 const PIN_NUM_PD_MUX_5 = 8; //GPIO15
+const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
 
 const PIN_LATCH = 15;
 
@@ -80,7 +85,7 @@ const PIN_NAME_PWM_FAN2 = 22;
 
 const PIN_NUM_ADC_DRDY = 24;
 
-const PIN_NUM_SPI_SWITCH = 18; //GPIO15
+const PIN_NUM_SPI_SWITCH = 18; //GPIO5
 const VALUE_SPI_SWITCH_LED = rpio.LOW;
 const VALUE_SPI_SWITCH_MUX = rpio.HIGH;
 
@@ -95,6 +100,7 @@ const PLATE_KD = 0.1;
 const HEATER_KP = 1.0;
 const HEATER_KI = 1.0;
 const HEATER_KD = 1.0;
+
 
 class HeatLidOutput {
   // Heater (with PWM)
@@ -179,9 +185,16 @@ class HardwareConf {
   start () {
     this.adcManager.start();
   }
+  
+  /* Hardware specifications */
   wellsCount () {
-    return 16;
+    return WELLS_COUNT;
   }
+  opticsChannelsCount () {
+    return OPTICS_CHANNELS_COUNT;
+  }
+  
+  /* Getters of hardware units */
   getPlate () {
     return this.plate;
   }
@@ -200,14 +213,72 @@ class HardwareConf {
   }
   getFluorescenceSensingUnit() {
     // ADG731BSUZ (SPI)
-    const pdMux = new ADG731BSUZ(this.spi, PIN_NUM_PD_SYNC);
     
     // Generic 16ch MUX
-    //const pdMux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
-    // pdMux.initialize();
-    return new FluorescenceSensingUnit(pdMux, this.adcManager);
+    // const muxWrapper = new GenericGPIOMuxWrapper();
+    const muxWrapper = new SPIMuxWrapper(this.spi, PIN_NUM_PD_SYNC);
+    return new FluorescenceSensingUnit(muxWrapper, this.adcManager);
   }
 };
+// Channel name (Not index)
+const MUX_MAP = [
+  // 0ch
+  [ 7, 5, 3, 1, 15, 13, 11, 9 ],
+  // 1ch
+  [ 8, 6, 4, 2, 16, 14, 12, 10]
+];
+class SPIMuxWrapper {
+  constructor (spi, pinSync) {
+    this.mux = new ADG731BSUZ(spi, pinSync);
+  }
+  start () {
+    this.mux.initialize();
+  }
+  select (wellIndex, channel) {
+    let muxCh = 0;
+    if (wellIndex < 8) {
+        // North (switch=high)
+        muxCh = MUX_MAP[channel][wellIndex] - 1;
+    } else {
+        // North (switch=low)
+        muxCh = 16 + MUX_MAP[channel][wellIndex-8] - 1;
+    }
+    console.log("W %d O %d M %d @%d", wellIndex, channel, muxCh, new Date().getTime()%10000);
+    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
+    this.mux.selectChannel(muxCh);
+  }
+}
+/* 4bit GPIO MUX  + Switch */
+class GenericGPIOMuxWrapper {
+  constructor () {
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
+    this.muxSwitch = PIN_MUX_SWITCH;
+  }
+  start () {
+    rpio.open(this.muxSwitch, rpio.OUTPUT, rpio.LOW);
+    this.mux.initialize();
+    
+  }
+  select (wellIndex, channel) {
+    const channelOffset = channel;
+    let muxSwitchVal = 0;
+    let muxChName = 1;
+    if (wellIndex < 8) {
+        // North (switch=high)
+        muxSwitchVal = 1;
+        muxChName = MUX_MAP[channel][wellIndex];
+    } else {
+        // North (switch=low)
+        muxSwitchVal = 0;
+        muxChName = MUX_MAP[channel][wellIndex-8];
+    }
+    const muxChannel = muxChName - 1;
+    console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
+    rpio.write(this.muxSwitch, muxSwitchVal);
+    this.mux.selectChannel(muxChannel);
+    
+  }
+}
 
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 class LEDUnit {
@@ -223,19 +294,19 @@ class LEDUnit {
     this.ledDriver.start();
     rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, VALUE_SPI_SWITCH_LED);
     this.ledUnit = new LEDUnit(this.pot, this.ledDriver);
-    console.log("LEDUnit.start()");
     this.pot.initialize();
   }
   select (channel) {
+    // channel = 15-channel;
+    console.log("LED select:%d", channel)
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
-    
     this.ledDriver.selectChannel(channel);
     // Nothing to do
   }
   off () {
-    // Nothing to do
+    this.ledDriver.off();
   }
   shutdown () {
     console.log("Shutting down LED unit.");
@@ -251,13 +322,12 @@ class FluorescenceSensingUnit {
   }
   start () {
     this.adcManager.start();
+    this.mux.start();
   }
-  select (wellIndex) {
-    // TODO: use channel mapping
-    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
-    this.mux.selectChannel(wellIndex);
+  select (wellIndex, opticalChannel) {
+    this.mux.select(wellIndex, opticalChannel);
   }
-  measure(wellIndex, callback) {
+  measure(callback) {
     this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
       callback(val);
     });

@@ -53,10 +53,31 @@ class TLC59281DBQR {
       rpio.write(this.pinLatch, rpio.LOW);
     });
   }
+  onAll () {
+    this.spi.write(new Buffer([0xFF, 0xFF]), ()=>{
+      // Latch pulse
+      rpio.write(this.pinLatch, rpio.HIGH);
+      rpio.write(this.pinLatch, rpio.LOW);
+    });
+  }
+  offAll () {
+    this.spi.write(new Buffer([0x00, 0x00]), ()=>{
+      // Latch pulse
+      rpio.write(this.pinLatch, rpio.HIGH);
+      rpio.write(this.pinLatch, rpio.LOW);
+    });
+  }
   setDuty (val) {
     if (this.useBlankPWM) {
       this.blank.write(val);
     }
+  }
+  off () {
+    this.spi.write(new Buffer([0x00, 0x00]), ()=>{
+      // Latch pulse
+      rpio.write(this.pinLatch, rpio.HIGH);
+      rpio.write(this.pinLatch, rpio.LOW);
+    });
   }
 }
 module.exports = TLC59281DBQR;
