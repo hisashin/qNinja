@@ -243,7 +243,7 @@ class SPIMuxWrapper {
         // North (switch=low)
         muxCh = 16 + MUX_MAP[channel][wellIndex-8] - 1;
     }
-    console.log("W %d O %d M %d @%d", wellIndex, channel, muxCh, new Date().getTime()%10000);
+    // console.log("W %d O %d M %d @%d", wellIndex, channel, muxCh, new Date().getTime()%10000);
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
     this.mux.selectChannel(muxCh);
   }
@@ -273,7 +273,7 @@ class GenericGPIOMuxWrapper {
         muxChName = MUX_MAP[channel][wellIndex-8];
     }
     const muxChannel = muxChName - 1;
-    console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
+    // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
     
@@ -298,7 +298,6 @@ class LEDUnit {
   }
   select (channel) {
     // channel = 15-channel;
-    console.log("LED select:%d", channel)
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
@@ -329,6 +328,7 @@ class FluorescenceSensingUnit {
   }
   measure(callback) {
     this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
+      val = Math.max(0, 0.48-val) * 1000;
       callback(val);
     });
   }
