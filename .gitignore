@@ -1,1 +1,20 @@
 *.sch-bak
+
+*/_autosave*
+# src/qpcr/user_data/*
+*/package-lock.json
+src/docs/mockup/img/*
+# .gitignore
+src/console/client/dist/*
+#src/raspi_packaging/*
+src/network_conf_app/network.json
+src/network_conf_app/wpa_supplicant.conf
+#src/qpcr/user_data/*
+src/raspi_packaging/hosts
+
+# KiCad autosave
+*.sch-bak
+*-cache.lib
+*-rescue.dcm
+-rescue.lib
+_autoosave*
