@@ -156,6 +156,44 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
 
 }
 
+/* Protocol summary */
+.protocol-summary {
+  font-size:1em;
+}
+.protocol-summary__title {
+  font-size: 1.2em;
+  font-weight:bold;
+}
+.protocol-summary__stages {
+
+}
+.protocol-summary__stages__stage {
+
+}
+.protocol-summary__stages__stage__label {
+  display:inline-block;
+  width:6em;
+  font-weight:bold;
+
+}
+.protocol-summary__stages__stage__step {
+  display:inline-block;
+  margin-right:1em;
+}
+.protocol-summary__stages__stage__step__temp {
+  display:inline-block;
+  width:3.2em;
+  text-align:right;
+}
+.protocol-summary__stages__stage__step__duration {
+  display:inline-block;
+  width:3.2em;
+  text-align:right;
+}
+.protocol-summary__stages__stage__cycle {
+  display:inline-block;
+  text-align:left;
+}
 
 /* Log list */
 

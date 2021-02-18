@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <ProgressMonitor ref="progressMonitor"/>
-    <section class="section">
+    <section class="section" v-if="experiment">
       <header class="section__header">
         <h2 class="section__header__title" >{{ experiment.info.name }}</h2>
         <div class="section__header__menu"></div>

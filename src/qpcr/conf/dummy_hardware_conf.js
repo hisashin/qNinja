@@ -7,6 +7,10 @@ const BoxMuller = require("../util/box_muller.js");
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
 
+// Basic configuration
+const OPTICS_CHANNELS_COUNT = 2;
+const WELLS_COUNT = 16;
+
 /* Constants and dependencies for testing */
 
 const getDummyTemp = (current, target, interval) => {
@@ -77,11 +81,12 @@ class DummyHardwareConf {
   start () {
     
   }
-  /*
-    Return number of wells
-    */
+  /* Hardware specifications */
   wellsCount () {
-    return 8;
+    return WELLS_COUNT;
+  }
+  opticsChannelsCount () {
+    return OPTICS_CHANNELS_COUNT;
   }
   /*
     Return HeatUnit object as implementation of the plate.

@@ -26,6 +26,9 @@ const MCP4551T = require("../hardware/pot_mcp4551t.js");
 // LED Driver
 const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
 
+// Basic configuration
+const OPTICS_CHANNELS_COUNT = 2;
+const WELLS_COUNT = 16;
 // Pins
 const SPI_CHANNEL = "/dev/spidev0.0";
 const I2C_CHANNEL = 1; // SDA1 & SCL1
@@ -166,8 +169,12 @@ class HardwareConf {
   }
   start () {
   }
+  /* Hardware specifications */
   wellsCount () {
-    return 16;
+    return WELLS_COUNT;
+  }
+  opticsChannelsCount () {
+    return OPTICS_CHANNELS_COUNT;
   }
   getPlate () {
     return this.plate;

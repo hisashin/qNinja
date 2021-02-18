@@ -14,6 +14,9 @@ const raspi = require('raspi');
 // const pwm = require('raspi-pwm');
 const softPwm = require('raspi-soft-pwm');
 
+// Basic configuration
+const OPTICS_CHANNELS_COUNT = 2;
+const WELLS_COUNT = 16;
 
 const SPI_CHANNEL = "/dev/spidev0.0";
 const PIN_MUX_SYNC = 40; // Pin number
@@ -235,9 +238,13 @@ class NinjaQPCRHardwareConf {
   start () {
     
   }
-  // TODO
+  
+  /* Hardware specifications */
   wellsCount () {
-    return 8;
+    return WELLS_COUNT;
+  }
+  opticsChannelsCount () {
+    return OPTICS_CHANNELS_COUNT;
   }
   start () {}
   getPlate () {
