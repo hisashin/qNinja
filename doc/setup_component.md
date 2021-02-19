@@ -11,4 +11,4 @@
   ```
   aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/create-component-version.yaml
   ```
-- [Components](https://ap-northeast-1.console.aws.amazon.com/iot/home?region=ap-northeast-1#/greengrass/v2/components) > Select **dev.hisa.Ninja** > **Deploy** > Add to deployment **deploy-qpcr-prod** > Next.... > Deploy
+- [Components](https://ap-northeast-1.console.aws.amazon.com/iot/home?region=ap-northeast-1#/greengrass/v2/components) > Select **dev.hisa.Ninja** > **Deploy** > Add to deployment **deploy-qpcr-prod** > NextNextNext.... > Deploy
