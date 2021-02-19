@@ -38,6 +38,7 @@ const Util = {
               onSuccess(JSON.parse(xmlhttp.responseText));
             }
           } catch (e) {
+            console.error(e);
             if (onError) {
               onError({exception:e});
             }
@@ -48,6 +49,7 @@ const Util = {
             try {
               response = JSON.parse(xmlhttp.responseText);
             } catch (e) {
+              console.error(e);
               console.warn("Unable to parse response.");
             }
           }
@@ -67,6 +69,7 @@ const Util = {
         xmlhttp.send(JSON.stringify(data));
       }
     } catch (ex) {
+      console.error(ex);
       onError({exception:e});
     }
   }

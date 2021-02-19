@@ -22,7 +22,8 @@ const Chart = require('chart.js');
 import device from "../../lib/Device.js";
 import Graph from "../../lib/Graph.js";
 
-const TUBE_COUNT = 8;
+const WELLS_COUNT = 8;
+const CHANNELS_COUNT = 2;
 const TIME_RANGE_SEC = 240;
 let graph = null;
 
@@ -30,35 +31,16 @@ export default {
   data() {
     return {
       baseline:[],
-      channels:[]
+      measurements:[], // Real-time measurement
+      wellsCount: WELLS_COUNT,
+      channelsCount: CHANNELS_COUNT
     }
   },
   created: function () {
     this.channels = [];
-    for (let i=0; i<TUBE_COUNT; i++) {
-      const obj = {
-        label: "Well " + (i+1),
-        fluorescence: 0,
-        threshold: 0,
-        amount: 0
-      };
-      this.channels.push(obj);
-    }
   },
   mounted: function () {
     
-    this.graph = new Graph(this.$refs.canvas);
-    let labels = [];
-    for (let i=0; i<TUBE_COUNT; i++) {
-      labels.push("Well " + (i+1));
-    }
-    this.graph.addSeries(labels);
-    this.graph.setConversionFunction(
-      (obj) =>{return { "x":obj.c, "y":Math.log10(obj.v) }}
-    );
-    this.applyBaseline();
-    this.graph.setMinMaxX(0, 50);
-    this.graph.setMinMaxY(0, 5);
   },
   methods: {
     applyBaseline: function () {
@@ -69,30 +51,62 @@ export default {
     hasBaseline: function () {
       return this.baseline != null && this.baseline.thresholds != null;
     },
+    // Well iterator
+    eachWell (func /* function(channel, well, dataIndex) */ ) {
+      for (let c=0; c<this.channelsCount; c++) {
+        for (let w=0; w<this.wellsCount; w++) {
+          func(c, w, this._index(c, w));
+        }
+      }
+    
+    },
     setBaseline: function (data) {
       this.baseline = data;
       this.applyBaseline();
     },
-    set: function (data) {
+    _index: function (channelIndex, wellIndex) {
+      return channelIndex * this.wellsCount + wellIndex;
+    },
+    setHardwareConf: function(hardware) {
+      console.log("setHardwareConf")
+      console.log(hardware)
+      this.wellsCount = hardware.wells.count;
+      this.channelsCount = hardware.channels.count;
+      let labels = [];
+      this.graph = new Graph(this.$refs.canvas);
+      this.eachWell((c, w, i)=>{
+        labels[this._index(c, w)] = "W" + w + " / C" + c;
+      });
+      this.graph.setSeries(labels);
+      this.graph.setConversionFunction(
+        (obj) =>{return { "x":obj.c, "y":Math.log10(obj.v) }}
+      );
+      this.applyBaseline();
+      this.graph.setMinMaxX(0, 50);
+      this.graph.setMinMaxY(0, 5);
+    },
+    setData: function (data) {
+      // Expects experiment.log.fluorescence.qpcr
       this.graph.clearData();
-      let lastRepeat = 0;
+      
       data.forEach((measurement)=>{
-        const repeat = measurement.repeat;
-        if (repeat == lastRepeat) return;
-        lastRepeat = repeat;
-        for (let channel = 0; channel < measurement.v.length; channel++) {
-          this.graph.addData(channel, {t:measurement.t, v:measurement.v[channel], c:measurement.repeat});
-        
-        }
+        this.eachWell((c, w, i)=>{
+          this.graph.addData(i, {t:measurement.t, v:measurement.v[c][w], c:measurement.repeat});
+        });
       });
       this.graph.update();
     },
     add: function (data) {
-      console.log(data);
+      /*
+      // Real-time monitor
       for (let i=0; i<TUBE_COUNT; i++) {
         this.graph.addData(i, {t:data.t, v:data.v[i], c:data.repeat});
         this.channels[i].fluorescence = data.v[i];
       }
+      */
+      this.eachWell((c, w, i)=>{
+        this.graph.addData(i, {t:data.t, v:data.v[c][w], c:data.repeat});
+      });
       this.graph.update();
     
     }

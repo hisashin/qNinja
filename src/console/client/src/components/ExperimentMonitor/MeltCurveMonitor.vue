@@ -45,7 +45,7 @@ export default {
     for (let i=0; i<TUBE_COUNT; i++) {
       labels.push("Well " + (i+1));
     }
-    this.graph.addSeries(labels);
+    this.graph.setSeries(labels);
     this.graph.setConversionFunction(
       (obj) =>{return { "x":Math.log10(obj.t), "y":obj.v }}
     );

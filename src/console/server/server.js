@@ -596,6 +596,8 @@ class NinjaQPCRWebSocketServer {
   }
   handleMessage (obj) {
     switch (obj.category) {
+      case "ping":
+        this.pingResponse(); break;
       case "experiment.pause":
         this.pause(); break;
       case "experiment.resume":
@@ -613,6 +615,13 @@ class NinjaQPCRWebSocketServer {
       default:
         break;
     }
+  }
+  pingResponse () {
+    const obj = {
+      category:"ping",
+      data:{}
+    };
+    this._send(obj);
   }
   start (experimentId) {
     em.getExperiment(experimentId, (experiment)=>{

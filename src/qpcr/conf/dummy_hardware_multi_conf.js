@@ -89,7 +89,7 @@ class DummyHardwareConf {
     Return fluorescence measurement unit (Including MUX)
     */
   getFluorescenceSensingUnit() {
-    return new DummyFluorescenceSensingUnit();
+    return new FluorescenceSensingUnit();
   }
 };
 const MAX_ABSOLUTE_FLUORESCENCE = 0.7;
@@ -114,18 +114,47 @@ class LEDUnit {
 }
 const DUMMY_BASELINE_MULTIPLIER = 10;
 const DUMMY_BASELINE_OFFSET = 30;
-class DummyFluorescenceSensingUnit {
-  constructor () {
+class FluorescenceSimulator {
+  constructor() {
+    this.wellIndex = 0;
+    this.opticalChannel = 0;
+    
   }
   start () {
     this.startTimestamp = new Date();
-    this.debugValue = null;
+    this.debugValue = [];
     this.dummyValues = [];
+    // Start with simulated background values
+    for (let i=0; i<OPTICS_CHANNELS_COUNT * WELLS_COUNT; i++) {
+      this.dummyValues[i] = this._getDummyBackground();
+    }
   }
-  select (well) {
-    // Do nothing
+  select (wellIndex, opticalChannel) {
+    this.wellIndex = wellIndex;
+    this.opticalChannel = opticalChannel;
   }
-  getDummySigmoid (channel) {
+  _index () {
+    return this.wellIndex * OPTICS_CHANNELS_COUNT + this.opticalChannel;
+  }
+  getValue () {
+    let value = 0;
+    const index = this._index();
+    if (this.debugValue.type == 3) {
+      // Melt curve
+      // TODO simulate melt curve
+      const high = this.debugValue.high;
+      const temperature = this.debugValue.currentTemp;
+      value = this._getDummyMeltCurve(this.dummyValues[index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+    } else {
+      // Normal PCR
+      value = this._getDummyAmplification(this.debugValue.cycle);
+    }
+    if (! (value >= 0)) value = 0.5;
+    this.dummyValues[index] = value;
+    return value;
+  }
+  // Dummy generator
+  _getDummySigmoid (channel) {
     const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
     const thresholdMsec = 150 * 1000;
     const intercept = 6.0;
@@ -133,7 +162,7 @@ class DummyFluorescenceSensingUnit {
     const sigmoid = MAX_ABSOLUTE_FLUORESCENCE / (1 + Math.exp(-x));
     return sigmoid;
   }
-  getDummyBaseline (value) {
+  _getDummyBackground (value) {
     return Math.max(0, BoxMuller() * DUMMY_BASELINE_MULTIPLIER);
   }
   _getDummyMeltCurve (start, current, high, low) {
@@ -145,39 +174,35 @@ class DummyFluorescenceSensingUnit {
     const value = start * sigmoid/offset;
     return value;
   }
-  _getDummyAmplification (wellIndex, cycle) {
+  _getDummyAmplification (cycle) {
     const AMP_F_START = 1.0;
     const AMP_F_MAX = 20000; // Plateau height
     const AMP_BETA = 0.6;
     const AMP_LAMBDA_DEFAULT = 20;
     const AMP_LAMBDA_STEP = 1.1;
-    const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * wellIndex;
-    const background = this.getDummyBaseline();
+    const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * this.wellIndex * (1 + this.opticalChannel);
+    const background = this._getDummyBackground();
     const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
     return amplification + background;
   }
-  measure(wellIndex, callback) {
-    let value = 0;
-    if (this.debugValue != null) {
-      if (this.debugValue.type == 3) {
-        // Melt curve
-        // TODO simulate melt curve
-        const high = this.debugValue.high;
-        const temperature = this.debugValue.currentTemp;
-        value = this._getDummyMeltCurve(this.dummyValues[wellIndex], this.debugValue.current, this.debugValue.high, this.debugValue.low);
-      } else {
-        value = this._getDummyAmplification(wellIndex, this.debugValue.repeat);
-        while (this.dummyValues.length <= wellIndex) {
-          this.dummyValues.push(0);
-        }
-        this.dummyValues[wellIndex] = value;
-        
-      }
-    } else {
-      console.warn("debugValue is null.");
-    }
-    if (! (value >= 0)) value = 0.5;
+  
+}
+class FluorescenceSensingUnit {
+  constructor () {
+    this.sim = new FluorescenceSimulator();
+  }
+  start () {
+    this.sim.start();
+  }
+  select (wellIndex, opticalChannel) {
+    this.sim.select(wellIndex, opticalChannel);
+  }
+  measure(callback) {
+    const value = this.sim.getValue();
     setTimeout(()=>{ callback(value); }, 10);
+  }
+  setDebugValue (debugValue) {
+    this.sim.debugValue = debugValue;
   }
 }
 module.exports = new DummyHardwareConf();

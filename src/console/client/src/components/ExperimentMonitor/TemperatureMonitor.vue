@@ -22,7 +22,7 @@ export default {
   },
   mounted: function () {
     let graph = new Graph(this.$refs.canvas);
-    graph.addSeries(["Plate", "Lid"]);
+    graph.setSeries(["Plate", "Lid"]);
     graph.setConversionFunction(
       (obj)=>{return { "x":obj.t/1000.0, "y":obj.v } }
     );

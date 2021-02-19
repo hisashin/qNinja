@@ -21,20 +21,20 @@
           </ul>
         </div>
         <div class="col-4 text-right">
-          <b-button @click.stop="deleteIt">
+          <button @click.stop="deleteIt" class="btn btn-outline-danger btn-sm">
             Delete
-          </b-button>
-          <b-button
-            class="ml-1" @click.stop="edit">
+          </button>
+          <button
+            @click.stop="edit" class="ml-1 btn btn-outline-secondary btn-sm">
             Edit
-          </b-button>
-          <b-button
-            class="ml-1"
+          </button>
+          <button
+            class="ml-1 btn btn-outline-primary btn-sm"
             v-bind:disabled="deviceState==null || !deviceState.startAvailable"
             @click.stop="run"
           >
             Run
-          </b-button>
+          </button>
         </div>
       </div>
     </div>

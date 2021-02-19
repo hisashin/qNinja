@@ -26,5 +26,8 @@
       "B8"
     ]
   },
+  "channels": {
+    "count":2
+  },
   "hardware_conf":"dummy_hardware_multi_conf"
 }

@@ -53,7 +53,6 @@ export default {
       appState.pushPanel(appState.PANELS.EXPERIMENT_LIST);
     },
     onAppear () {
-      console.log("TheDashboard.onAppear()");
       this.$refs.protocolList.load();
       this.$refs.experimentList.load();
     }

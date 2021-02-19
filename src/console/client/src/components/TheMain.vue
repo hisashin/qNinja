@@ -2,7 +2,7 @@
   <main class="main">
     <!-- Device monitor -->
     <div class="device-monitor">
-      <DeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
+      <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
     </div>
     <nav class="panel-nav">
       <BackButton v-show="backEnabled" />
@@ -18,20 +18,24 @@
     <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
     <div>
     (Dev)
-      <b-button
+      <b-button class="mr-1"
         @click.stop="showTemplate">
         Panel Template
       </b-button>
-      <b-button
+      <b-button class="mr-1"
         @click.stop="home">
         Home
+      </b-button>
+      <b-button class="mr-1"
+        @click.stop="ping">
+        Ping
       </b-button>
     </div>
   </main>
 </template>
 <script>
 
-import DeviceSummary from './DeviceSummary.vue'
+import TheDeviceSummary from './TheDeviceSummary.vue'
 
 import TheDashboard from './panels/TheDashboard.vue'
 import TheExperimentEditor from './panels/TheExperimentEditor.vue'
@@ -64,7 +68,7 @@ export default {
     TheExperimentEditor,
     TheProtocolEditor,
     PanelTemplate,
-    DeviceSummary,
+    TheDeviceSummary,
     BackButton
   },
   data() {
@@ -109,6 +113,9 @@ export default {
     },
     home () {
       appState.home();
+    },
+    ping () {
+      device.ping();
     }
   }
 }

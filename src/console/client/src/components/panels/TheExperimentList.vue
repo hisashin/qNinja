@@ -65,7 +65,6 @@ export default {
       appState.draftExperiment();
     },
     onAppear () {
-      console.log("TheExperimentList.onAppear()");
       this.$refs.experimentList.load();
     },
     onOrderChanged () {

@@ -104,33 +104,36 @@ export default {
       client.fetchDeviceExperiment (
         (experiment)=>{
           this.experiment = experiment;
-          this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
-          // Set past data
-          
-          this.$refs.temperatureMonitor.set(
-            experiment.log.temp.time, 
-            experiment.log.temp.well, 
-            experiment.log.temp.lid);
-          this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
-          
-          // TODO init meltCurveMonitor
-          this.$refs.progressMonitor.reset();
-          this.$refs.progressMonitor.protocol = this.experiment.protocol;
-          
-          device.addTransitionHandler({
-            onComplete: (obj)=>{
-              startTime = new Date();
-            }
-          });
-          device.addProgressHandler({
-            onProgress:(obj)=>{
-              if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
-                this.$refs.temperatureMonitor.add(obj.elapsed, obj.well, obj.lid);
-              
+          this.$nextTick(()=>{
+            this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+            // Set past data
+            this.$refs.temperatureMonitor.set(
+              experiment.log.temp.time, 
+              experiment.log.temp.well, 
+              experiment.log.temp.lid);
+            this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
+            this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
+            
+            // TODO init meltCurveMonitor
+            this.$refs.progressMonitor.reset();
+            this.$refs.progressMonitor.protocol = this.experiment.protocol;
+            
+            device.addTransitionHandler({
+              onComplete: (obj)=>{
+                startTime = new Date();
               }
-            }
+            });
+            device.addProgressHandler({
+              onProgress:(obj)=>{
+                if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
+                  this.$refs.temperatureMonitor.add(obj.elapsed, obj.well, obj.lid);
+                
+                }
+              }
+            });
+            device.addFluorescenceUpdateHandler(this);
+          
           });
-          device.addFluorescenceUpdateHandler(this);
         }, 
         ()=>{}
       );

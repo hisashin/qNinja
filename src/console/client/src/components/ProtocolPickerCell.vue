@@ -4,23 +4,22 @@
     @click="select">
     <div class="protocol-cell-content">
       <div class="row">
-        <div class="col-12">
-          <strong>{{ protocol.name }}</strong>
+        <div class="col-12 protocol-summary">
+          <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
+          <ul class="protocol-summary__stages">
+            <li class="protocol-summary__stages__stage"
+              v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
+              <span v-if="stage.type==1" class="protocol-summary__stages__stage__label">Hold</span>
+              <span v-if="stage.type==2" class="protocol-summary__stages__stage__label">PCR</span>
+              <span v-if="stage.type==3" class="protocol-summary__stages__stage__label">Melt Curve</span>
+              <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__stages__stage__step">
+                <span class="protocol-summary__stages__stage__step__temp">{{ step.temp }}℃</span>
+                <span class="protocol-summary__stages__stage__step__duration">{{ step.duration }}sec</span>
+              </span>
+              <span v-if="stage.type==2" class="protocol-summary__stages__stage__cycle">x{{ stage.repeat }}</span>
+            </li>
+          </ul>
         </div>
-        <ul class="col-12">
-          <li
-            v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
-            <span v-if="stage.type==1">Hold</span>
-            <span v-if="stage.type==2">PCR</span>
-            <span v-if="stage.type==3">Melt Curve</span>
-              
-            <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex">
-              {{ step.temp }}℃
-              {{ step.duration }}sec
-            </span>
-            <span v-if="stage.type==2">x{{ stage.repeat }}</span>
-          </li>
-        </ul>
       </div>
     </div>
   </li>

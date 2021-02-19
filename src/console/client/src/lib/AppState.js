@@ -2,6 +2,7 @@
 const device = require("../lib/Device.js");
 const Util = require("../lib/Util.js");
 const client = require("../lib/RestClient.js");
+// import Vue from 'vue';
 
 class AppState {
   constructor () {

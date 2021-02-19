@@ -165,10 +165,8 @@ export default {
     }
   },
   created: function () {
-    console.log("TheExperimentEditor.created");
   },
   mounted: function () {
-    console.log("TheExperimentEditor.mounted");
   
   },
   methods: {
@@ -212,11 +210,9 @@ export default {
       this.protocol = protocol;
     },
     onAppear () {
-      console.log("TheExperimentEditor.onAppear()");
     },
     /* Panel transition */
     setExperiment (experiment) {
-      console.log("setExperiment 0");
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
@@ -235,7 +231,8 @@ export default {
         
         }
         if (experiment.log) {
-          this.$refs.fluorescenceMonitor.set(experiment.log.fluorescence.qpcr);
+          this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
+          this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
         }
       
       }
@@ -265,14 +262,12 @@ export default {
       }
     },
     pickProtocol () {
-      console.log("pickProtocol");
       this.pickingProtocol = true;
       this.$refs.protocolPicker.load();
       
     },
     onPickProtocol (id, protocol) {
       this.pickingProtocol = false;
-      console.log("onPickProtocol");
       this.experiment.protocol = protocol;
       this.experiment.protocol_id = id;
       this.pickingProtocol = false;

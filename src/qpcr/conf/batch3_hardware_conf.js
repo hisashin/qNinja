@@ -276,7 +276,6 @@ class GenericGPIOMuxWrapper {
     // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
-    
   }
 }
 

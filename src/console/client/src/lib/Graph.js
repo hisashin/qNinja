@@ -63,7 +63,8 @@ class Graph {
   setConversionFunction (f) {
     this.conversionFunction = f;
   }
-  addSeries (series) {
+  setSeries (series) {
+    this.data = [];
     for (let i=0; i<series.length; i++) {
       this.chart.data.datasets[i] = createDataset(i, series[i], true);
       this.data.push([]);

@@ -58,7 +58,6 @@ export default {
       this.$refs.protocolDetail.setProtocol(protocol);
     },
     onAppear () {
-      console.log("TheProtocolDetail.onAppear()");
     }
   }
 }

@@ -35,16 +35,17 @@ class Device {
     this.ws.onopen = () => {
       console.log('WebSocket Client Connected');
       this.connectionEventHandlers.forEach((handler)=>{
-        if (handler.onOpen != null) {
-          handler.onOpen();
-        } else {
-          console.warn("connectionEventHandlers onOpen is not defined.");
+        if (handler.onConnectionOpen != null) {
+          handler.onConnectionOpen();
         }
       });
     };
     this.ws.onmessage = (e) => {
       const obj = JSON.parse(e.data);
       switch (obj.category) {
+        case "ping":
+          console.log("Received ping response");
+          break;
         case "experiment.transition":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onTransition) {
@@ -105,6 +106,29 @@ class Device {
           break;
       }
     };
+    this.ws.onclose = (e) => {
+      console.log("WebSocket.onclose");
+      console.log(e);
+      this.connectionEventHandlers.forEach((handler)=>{
+        if (handler.onConnectionClose != null) {
+          handler.onConnectionClose();
+        }
+      });
+    };
+    this.ws.onerror = (e) => {
+      console.log("WebSocket.onerror");
+      console.log(e);
+    };
+  }
+  send (obj) {
+    console.log(this.ws.readyState);
+    this.ws.send(JSON.stringify(obj));
+  }
+  ping () {
+    const obj = {
+      "category":"ping"
+    };
+    this.send(obj);
   }
   
   /* Experiment Control */
@@ -112,26 +136,26 @@ class Device {
     const obj = {
       "category":"experiment.pause"
     };
-    this.ws.send(JSON.stringify(obj));
+    this.send(obj);
   }
   resume () {
     const obj = {
       "category":"experiment.resume"
     };
-    this.ws.send(JSON.stringify(obj));
+    this.send(obj);
   }
   abort () {
     const obj = {
       "category":"experiment.abort"
     };
-    this.ws.send(JSON.stringify(obj));
+    this.send(obj);
   }
   
   finish () {
     const obj = {
       "category":"experiment.finish"
     };
-    this.ws.send(JSON.stringify(obj));
+    this.send(obj);
   }
   
   runExperiment (experimentId) {
@@ -139,7 +163,7 @@ class Device {
       "category":"experiment.runExperiment",
       data:{id:experimentId}
     };
-    this.ws.send(JSON.stringify(obj));
+    this.send(obj);
   }
   
   getProtocol () {

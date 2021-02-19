@@ -31,21 +31,24 @@ const DEVICE_STATE = {
 class NinjaQPCR {
   constructor (confFileName) {
     const confPath = __dirname + "/conf/" + confFileName;
-    const confFile = fs.readFileSync(confPath); // Returns Buffer
-    const conf = JSON.parse(confFile.toString());
+    const conf = JSON.parse(fs.readFileSync(confPath).toString());
     this.config = conf;
     const boardConfFile = __dirname + "/conf/" + conf.hardware_conf;
     console.log(boardConfFile)
-    const hardwareConf = require(boardConfFile);
+    const boardConf = require(boardConfFile);
     
-    this.thermalCycler = new ThermalCycler(hardwareConf.getPlate(), hardwareConf.getHeatLids());
+    this.thermalCycler = new ThermalCycler(boardConf.getPlate(), boardConf.getHeatLids());
     this.thermalCycler.setEventReceiver(this);
-    this.optics = new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
+    this.optics = new Optics(boardConf.getLEDUnit(), boardConf.getFluorescenceSensingUnit(), boardConf.wellsCount(), boardConf.opticsChannelsCount());
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
     this.analysis = null;
   }
-  
+  hardwareConfig () {
+    let conf = JSON.parse(JSON.stringify(this.config));
+    delete conf.hardware_conf;
+    return conf;
+  }
   /* API */
   
   /* Event handler registration */
@@ -77,6 +80,7 @@ class NinjaQPCR {
       return false;
     }
     this.experimentLog = experiment;
+    this.experimentLog["hardware"] = this.hardwareConfig();
     this.experimentConf = experiment.config;
     this._setDeviceState(DEVICE_STATE.RUNNING);
     this.protocol = experiment.protocol;
@@ -260,19 +264,20 @@ class NinjaQPCR {
     }
     const toStage = this.protocol.stages[data.to.stage];
     
-    
+    // For debug
     let debug = {
       type: (toStage!=null)?toStage.type:0,
       current:this.progress.well,
-      repeat:this.progress.state.repeat
+      cycle:this.progress.state.repeat
     };
     if (toStage && toStage.steps.length == 3) {
       debug.low = toStage.steps[1].temp;
       debug.high = toStage.steps[2].temp;
     }
     // For debug
-    // console.log("Setting debugValue " + JSON.stringify(debug) + "," + JSON.stringify(this.progress));
-    this.optics.fluorescenceSensingUnit.debugValue = debug;
+    if (this.optics.fluorescenceSensingUnit.setDebugValue) {
+      this.optics.fluorescenceSensingUnit.setDebugValue(debug);
+    }
     
     if (this.receiver != null && this.receiver.onThermalTransition != null) {
       this.receiver.onThermalTransition(data);

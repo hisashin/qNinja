@@ -23,14 +23,6 @@
               <th>Factor</th>
               <th>Label</th>
             </tr>
-            <!--
-            
-              well.is_in_series = false;
-              delete(well.series_id);
-              delete(well.series_type);
-              delete(well.series_quantity);
-              delete(well.series_factor);
-            -->
             <tr v-for="(item, index) in config.wells" v-bind:key="index">
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
@@ -129,7 +121,7 @@
             </tr>
           </table>
           <b-button
-            @click.stop="addSeries">
+            @click.stop="setSeries">
             Add
           </b-button>
           <WellPicker ref="wellPicker" @select="didSelectWell" @cancel="didCancelSelectWell"/>
@@ -265,7 +257,7 @@ export default {
     touch () {
       this.seriesCount ++;
     },
-    addSeries () {
+    setSeries () {
       console.log("Add");
       this.config.series_list.push(this.createDefaultSeries());
       this.touch();

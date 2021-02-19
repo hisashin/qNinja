@@ -543,7 +543,6 @@ export default {
       this.addStagePosition = before;
     },
     onAppear () {
-      console.log("TheProtocolEditor.onAppear()");
     },
     onChangeProtocol () {
       this.isEdited = true;
