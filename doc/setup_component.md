@@ -1,25 +1,14 @@
-## How to setup Greengrass component for Ninja qPCR
+## How to deploy Ninja qPCR with Greengrass
 
-## Manual setup
+## Manual deploy
 
 [Upload components to deploy to your core devices](https://docs.aws.amazon.com/greengrass/v2/developerguide/upload-components.html)
-Replace **1.2.3** to the version you want to publish.
+[AWS IoT Greengrass component recipe reference](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html#component-recipe-artifacts-decompressed-path)
 
-- As AWS IAM gg_component user,
-- vi ~/greengrassv2/recipes/dev.hisa.Ninja-**1.2.3**.yaml
-```
-RecipeFormatVersion: 2020-01-25
-ComponentName: dev.hisa.Ninja
-ComponentVersion: '**1.2.3**'
-ComponentDescription: Ninja qPCR Greengrass component
-ComponentPublisher: Toriningen Inc.
-Manifests:
-  - Platform:
-      os: linux
-    Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/**1.2.3**/hello_world.py
-    Lifecycle:
-      Run: |
-        python3 {artifacts:path}/hello_world.py '{configuration:/Message}'
-```
-- Place all soruces to ~/greengrassv2/recipes/dev.hisa.Ninja-**1.2.3**/
+- Update version number**s** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/create-component-version.yaml?fbclid=IwAR1QTwhSN3xaRFmSvUM1PRnfuE6R080YpyvVHCD1gsyWy5UF_RBfns3m9Uk)
+- Zip and upload to S3 as s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/**{version number}**/Ninja-qPCR-src.zip
+- Run this command as IAM gg_component to create component version
+  ```
+  aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/create-component-version.yaml
+  ```
+- [Components](https://ap-northeast-1.console.aws.amazon.com/iot/home?region=ap-northeast-1#/greengrass/v2/components) > Select **dev.hisa.Ninja** > **Deploy** > Add to deployment **deploy-qpcr-prod** > Next.... > Deploy
