@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 1 5
 Title ""
 Date ""
 Rev ""
@@ -95,8 +95,6 @@ Text GLabel 3700 2950 2    50   Input ~ 0
 PD_REF_PWM
 Wire Wire Line
 	3700 2950 3550 2950
-Text GLabel 2000 3250 0    50   Input ~ 0
-GPIO25
 Wire Wire Line
 	2000 3250 2150 3250
 Text HLabel 2000 3150 0    50   Input ~ 0
@@ -144,17 +142,13 @@ Wire Wire Line
 Wire Wire Line
 	4850 2900 4700 2900
 Wire Wire Line
-	4850 2650 4800 2650
-Text GLabel 4850 2650 2    50   Input ~ 0
-GND
-Wire Wire Line
 	4300 2700 4300 2650
 Connection ~ 4300 2650
 Wire Wire Line
 	4800 2700 4800 2650
 Connection ~ 4800 2650
 $Sheet
-S 4700 900  850  250 
+S 9100 4750 850  250 
 U 5F7093B5
 F0 "SheetPower" 50
 F1 "filePower.sch" 50
@@ -254,12 +248,8 @@ Text GLabel 7300 1200 2    50   Input ~ 0
 THERM_WELL
 Text GLabel 7050 3900 2    50   Input ~ 0
 GPIO7
-Text GLabel 7050 4150 2    50   Input ~ 0
-GPIO25
 Wire Wire Line
 	7050 3900 6800 3900
-Wire Wire Line
-	7050 4150 6800 4150
 NoConn ~ 2000 2250
 Wire Wire Line
 	2700 4550 2350 4550
@@ -551,39 +541,6 @@ Wire Wire Line
 	9600 3000 9350 3000
 Wire Wire Line
 	9600 3450 9350 3450
-Text GLabel 9150 1550 0    50   Input ~ 0
-SPI_SWITCH
-NoConn ~ 10100 1350
-Text HLabel 10250 1550 2    50   Input ~ 0
-SPI_SWITCH_INV
-Text GLabel 10250 1750 2    50   Input ~ 0
-GND
-Wire Wire Line
-	10250 1750 10100 1750
-Wire Wire Line
-	10250 1550 10100 1550
-Wire Wire Line
-	9300 1350 9150 1350
-Wire Wire Line
-	9300 1550 9150 1550
-Text HLabel 9150 1350 0    50   Input ~ 0
-3V3_RASP
-$Comp
-L Ninja-qPCR:SN74LVC1G04DBVR U?
-U 1 1 602B5E4F
-P 9700 1550
-AR Path="/602B5E4F" Ref="U?"  Part="1" 
-AR Path="/5FA5D98E/602B5E4F" Ref="U?"  Part="1" 
-F 0 "U?" H 9700 2017 50  0000 C CNN
-F 1 "SN74LVC1G04DBVR" H 9700 1926 50  0000 C CNN
-F 2 "Ninja-qPCR:SN74LVC1G04DBVR" H 9700 1550 50  0001 L BNN
-F 3 "IPC-7351B" H 9700 1550 50  0001 L BNN
-F 4 "1.45mm" H 9700 1550 50  0001 L BNN "Field4"
-F 5 "AD" H 9700 1550 50  0001 L BNN "Field5"
-F 6 "Texas Instruments" H 9700 1550 50  0001 L BNN "Field6"
-	1    9700 1550
-	1    0    0    -1  
-$EndComp
 $Comp
 L Connector:Conn_01x03_Male J?
 U 1 1 602B5E42
@@ -608,17 +565,6 @@ F 1 "Conn_01x03_Male" H 9258 3090 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 9150 2900 50  0001 C CNN
 F 3 "~" H 9150 2900 50  0001 C CNN
 	1    9150 2900
-	1    0    0    -1  
-$EndComp
-$Comp
-L Ninja-qPCR:TACTILE_4 SW1
-U 1 1 5F67E494
-P 4550 2650
-F 0 "SW1" H 4744 2723 50  0000 L CNN
-F 1 "TACTILE_4" H 4744 2632 50  0000 L CNN
-F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 4550 2850 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 4550 2850 50  0001 C CNN
-	1    4550 2650
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -991,17 +937,6 @@ F 3 "~" H 2600 4800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Connector:Conn_01x01_Male J4
-U 1 1 5F920692
-P 6600 4150
-F 0 "J4" H 6708 4331 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 6708 4240 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6600 4150 50  0001 C CNN
-F 3 "~" H 6600 4150 50  0001 C CNN
-	1    6600 4150
-	1    0    0    -1  
-$EndComp
-$Comp
 L Connector:Conn_01x01_Male J3
 U 1 1 5F91FDBE
 P 6600 3900
@@ -1143,59 +1078,24 @@ F 3 "" H 2400 1350 50  0001 C CNN
 	1    2850 2400
 	1    0    0    -1  
 $EndComp
-$Comp
-L Ninja-qPCR:SN74LVC2G66DCUR U?
-U 1 1 602B5E5D
-P 9500 2100
-AR Path="/602B5E5D" Ref="U?"  Part="1" 
-AR Path="/5FA5D98E/602B5E5D" Ref="U?"  Part="1" 
-F 0 "U?" H 9700 2250 50  0000 C CNN
-F 1 "SN74LVC2G66DCUR" H 9700 1700 50  0000 C CNN
-F 2 "Ninja-qPCR:SN74LVC2G66DCUR" H 9500 2100 50  0001 L BNN
-F 3 "" H 9500 2100 50  0001 C CNN
-	1    9500 2100
-	1    0    0    -1  
-$EndComp
-Text HLabel 10250 2100 2    50   Input ~ 0
+Text HLabel 9200 2050 0    50   Input ~ 0
 3V3_RASP
-Wire Wire Line
-	9300 2400 9150 2400
-Wire Wire Line
-	9300 2300 9150 2300
-Wire Wire Line
-	9300 2200 9150 2200
-Wire Wire Line
-	9300 2100 9150 2100
-Wire Wire Line
-	10100 2300 10250 2300
-Wire Wire Line
-	10100 2200 10250 2200
-Wire Wire Line
-	10250 2100 10100 2100
-Wire Wire Line
-	10250 2400 10100 2400
-Text GLabel 10250 2400 2    50   Input ~ 0
+Text GLabel 9200 2350 0    50   Input ~ 0
 GND
-Text GLabel 9150 2400 0    50   Input ~ 0
+Text GLabel 10100 2250 2    50   Input ~ 0
 LED_SPI_MOSI
-Text GLabel 9150 2300 0    50   Input ~ 0
-SPI_MOSI
-Text GLabel 9150 2200 0    50   Input ~ 0
+Text GLabel 10100 2150 2    50   Input ~ 0
 PD_MUX_SPI_MOSI
-Text GLabel 9150 2100 0    50   Input ~ 0
+Text GLabel 9200 2250 0    50   Input ~ 0
 SPI_MOSI
-Text HLabel 10250 2300 2    50   Input ~ 0
-SPI_SWITCH_INV
-Text GLabel 10250 2200 2    50   Input ~ 0
-SPI_SWITCH
 $Sheet
-S 4700 1400 850  250 
+S 9100 5250 850  250 
 U 603C63DB
 F0 "SheetLEDCtrl" 50
 F1 "fileLEDCtrl.sch" 50
 $EndSheet
 $Sheet
-S 4700 1900 850  250 
+S 9100 5750 850  250 
 U 603C6849
 F0 "SheetPhotoSensing" 50
 F1 "filePhotoSensing.sch" 50
@@ -1203,12 +1103,37 @@ $EndSheet
 $Comp
 L Ninja-qPCR:SN74LVC1G3157DCKR U?
 U 1 1 602E131D
-P 11450 2050
-F 0 "U?" H 11900 2337 60  0000 C CNN
-F 1 "SN74LVC1G3157DCKR" H 11900 2231 60  0000 C CNN
-F 2 "DCK0006A_N" H 11900 1450 60  0001 C CNN
-F 3 "" H 12350 1750 60  0000 C CNN
-	1    11450 2050
+P 9200 2050
+F 0 "U?" H 9650 2337 60  0000 C CNN
+F 1 "SN74LVC1G3157DCKR" H 9650 2231 60  0000 C CNN
+F 2 "DCK0006A_N" H 9650 1450 60  0001 C CNN
+F 3 "" H 10100 1750 60  0000 C CNN
+	1    9200 2050
 	1    0    0    -1  
 $EndComp
+Text GLabel 9200 2150 0    50   Input ~ 0
+SPI_SWITCH
+$Sheet
+S 9100 4250 850  250 
+U 602F5E03
+F0 "SheetPowerRasp" 50
+F1 "filePowerRasp.sch" 50
+$EndSheet
+Text GLabel 2000 3250 0    50   Input ~ 0
+VIN_SENSE
+$Comp
+L Ninja-qPCR:TACTILE_4 SW1
+U 1 1 5F67E494
+P 4550 2650
+F 0 "SW1" H 4450 2950 50  0000 L CNN
+F 1 "TACTILE_4" H 4450 2850 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 4550 2850 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 4550 2850 50  0001 C CNN
+	1    4550 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 2650 4800 2650
+Text GLabel 4850 2650 2    50   Input ~ 0
+GND
 $EndSCHEMATC

@@ -1,0 +1,505 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Barrel_Jack_Switch J?
+U 1 1 602DFE9F
+P 1300 1300
+F 0 "J?" H 1357 1617 50  0000 C CNN
+F 1 "Barrel_Jack_Switch" H 1357 1526 50  0000 C CNN
+F 2 "" H 1350 1260 50  0001 C CNN
+F 3 "~" H 1350 1260 50  0001 C CNN
+	1    1300 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 602E04E9
+P 1750 2100
+F 0 "#PWR?" H 1750 1850 50  0001 C CNN
+F 1 "GND" H 1755 1927 50  0000 C CNN
+F 2 "" H 1750 2100 50  0001 C CNN
+F 3 "" H 1750 2100 50  0001 C CNN
+	1    1750 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 1400 1750 1400
+Wire Wire Line
+	1600 1300 1750 1300
+Wire Wire Line
+	1750 1300 1750 1400
+$Comp
+L Device:D_Schottky D?
+U 1 1 602E0F58
+P 1950 1550
+F 0 "D?" V 1904 1630 50  0000 L CNN
+F 1 "D_Schottky" V 1995 1630 50  0000 L CNN
+F 2 "" H 1950 1550 50  0001 C CNN
+F 3 "~" H 1950 1550 50  0001 C CNN
+	1    1950 1550
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602E1EA6
+P 2500 1850
+F 0 "R?" H 2570 1896 50  0000 L CNN
+F 1 "R" H 2570 1805 50  0000 L CNN
+F 2 "" V 2430 1850 50  0001 C CNN
+F 3 "~" H 2500 1850 50  0001 C CNN
+	1    2500 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 602E22C6
+P 2500 2100
+F 0 "#PWR?" H 2500 1850 50  0001 C CNN
+F 1 "GND" H 2505 1927 50  0000 C CNN
+F 2 "" H 2500 2100 50  0001 C CNN
+F 3 "" H 2500 2100 50  0001 C CNN
+	1    2500 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 1200 1950 1200
+Wire Wire Line
+	2500 2000 2500 2100
+Text GLabel 2700 1650 2    50   Input ~ 0
+SENSE
+Wire Wire Line
+	1750 1400 1750 1800
+Connection ~ 1750 1400
+Wire Wire Line
+	1950 1700 1950 1800
+Wire Wire Line
+	1950 1800 1750 1800
+Connection ~ 1750 1800
+Wire Wire Line
+	1750 1800 1750 2100
+Wire Wire Line
+	1950 1400 1950 1200
+Wire Wire Line
+	1950 1200 2500 1200
+Connection ~ 1950 1200
+Wire Wire Line
+	2700 1200 2500 1200
+Connection ~ 2500 1200
+Wire Wire Line
+	2500 1300 2500 1200
+$Comp
+L Device:R R?
+U 1 1 602E1A4A
+P 2500 1450
+F 0 "R?" H 2570 1496 50  0000 L CNN
+F 1 "R" H 2570 1405 50  0000 L CNN
+F 2 "" V 2430 1450 50  0001 C CNN
+F 3 "~" H 2500 1450 50  0001 C CNN
+	1    2500 1450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 1650 2500 1650
+Wire Wire Line
+	2500 1600 2500 1650
+Wire Wire Line
+	2500 1650 2500 1700
+Connection ~ 2500 1650
+$Comp
+L Device:D D?
+U 1 1 602EA460
+P 2850 1200
+F 0 "D?" H 2850 983 50  0000 C CNN
+F 1 "D" H 2850 1074 50  0000 C CNN
+F 2 "" H 2850 1200 50  0001 C CNN
+F 3 "~" H 2850 1200 50  0001 C CNN
+	1    2850 1200
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602EADC6
+P 3550 1450
+F 0 "R?" H 3480 1404 50  0000 R CNN
+F 1 "R" H 3480 1495 50  0000 R CNN
+F 2 "" V 3480 1450 50  0001 C CNN
+F 3 "~" H 3550 1450 50  0001 C CNN
+	1    3550 1450
+	-1   0    0    1   
+$EndComp
+$Comp
+L Reference_Voltage:TL431PK U?
+U 1 1 602EBA60
+P 3150 2050
+F 0 "U?" V 3196 1981 50  0000 R CNN
+F 1 "TL431PK" V 3105 1981 50  0000 R CNN
+F 2 "Package_TO_SOT_SMD:SOT-89-3" H 3150 1900 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/tl431.pdf" H 3150 2050 50  0001 C CIN
+	1    3150 2050
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 602ECABD
+P 3550 2050
+F 0 "C?" H 3668 2096 50  0000 L CNN
+F 1 "CP" H 3668 2005 50  0000 L CNN
+F 2 "" H 3588 1900 50  0001 C CNN
+F 3 "~" H 3550 2050 50  0001 C CNN
+	1    3550 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602ED769
+P 3900 2050
+F 0 "R?" H 3830 2004 50  0000 R CNN
+F 1 "R" H 3830 2095 50  0000 R CNN
+F 2 "" V 3830 2050 50  0001 C CNN
+F 3 "~" H 3900 2050 50  0001 C CNN
+	1    3900 2050
+	-1   0    0    1   
+$EndComp
+Text Notes 850  5850 0    50   ~ 0
+Reference : https://www.smbaker.com/supercapacitor-uninterruptable-power-supply-ups-for-raspberry-pi http://www.hackerspace-ffm.de/wiki/index.php?title=Raspi_EDLC_UPS
+Wire Wire Line
+	3150 1950 3150 1750
+Wire Wire Line
+	3150 1750 3350 1750
+Wire Wire Line
+	3900 1750 3900 1900
+Wire Wire Line
+	3550 1900 3550 1750
+Connection ~ 3550 1750
+Wire Wire Line
+	3550 1750 3900 1750
+Wire Wire Line
+	3250 2050 3350 2050
+Wire Wire Line
+	3350 2050 3350 1750
+Connection ~ 3350 1750
+Wire Wire Line
+	3350 1750 3550 1750
+Wire Wire Line
+	3150 2150 3150 2300
+Wire Wire Line
+	3150 2300 3550 2300
+Wire Wire Line
+	3900 2300 3900 2200
+Wire Wire Line
+	3550 2200 3550 2300
+Connection ~ 3550 2300
+Wire Wire Line
+	3550 2300 3900 2300
+$Comp
+L Reference_Voltage:TL431PK U?
+U 1 1 602F06A9
+P 3150 2700
+F 0 "U?" V 3196 2631 50  0000 R CNN
+F 1 "TL431PK" V 3105 2631 50  0000 R CNN
+F 2 "Package_TO_SOT_SMD:SOT-89-3" H 3150 2550 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/tl431.pdf" H 3150 2700 50  0001 C CIN
+	1    3150 2700
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 602F06B3
+P 3550 2700
+F 0 "C?" H 3668 2746 50  0000 L CNN
+F 1 "CP" H 3668 2655 50  0000 L CNN
+F 2 "" H 3588 2550 50  0001 C CNN
+F 3 "~" H 3550 2700 50  0001 C CNN
+	1    3550 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602F06BD
+P 3900 2700
+F 0 "R?" H 3830 2654 50  0000 R CNN
+F 1 "R" H 3830 2745 50  0000 R CNN
+F 2 "" V 3830 2700 50  0001 C CNN
+F 3 "~" H 3900 2700 50  0001 C CNN
+	1    3900 2700
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 2600 3150 2400
+Wire Wire Line
+	3150 2400 3350 2400
+Wire Wire Line
+	3900 2400 3900 2550
+Wire Wire Line
+	3550 2550 3550 2400
+Connection ~ 3550 2400
+Wire Wire Line
+	3550 2400 3900 2400
+Wire Wire Line
+	3250 2700 3350 2700
+Wire Wire Line
+	3350 2700 3350 2400
+Connection ~ 3350 2400
+Wire Wire Line
+	3350 2400 3550 2400
+Wire Wire Line
+	3150 2800 3150 2950
+Wire Wire Line
+	3150 2950 3550 2950
+Wire Wire Line
+	3900 2950 3900 2850
+Wire Wire Line
+	3550 2850 3550 2950
+Connection ~ 3550 2950
+Wire Wire Line
+	3550 2950 3900 2950
+$Comp
+L Reference_Voltage:TL431PK U?
+U 1 1 602F3647
+P 3150 3350
+F 0 "U?" V 3196 3281 50  0000 R CNN
+F 1 "TL431PK" V 3105 3281 50  0000 R CNN
+F 2 "Package_TO_SOT_SMD:SOT-89-3" H 3150 3200 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/tl431.pdf" H 3150 3350 50  0001 C CIN
+	1    3150 3350
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 602F3651
+P 3550 3350
+F 0 "C?" H 3668 3396 50  0000 L CNN
+F 1 "CP" H 3668 3305 50  0000 L CNN
+F 2 "" H 3588 3200 50  0001 C CNN
+F 3 "~" H 3550 3350 50  0001 C CNN
+	1    3550 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602F365B
+P 3900 3350
+F 0 "R?" H 3830 3304 50  0000 R CNN
+F 1 "R" H 3830 3395 50  0000 R CNN
+F 2 "" V 3830 3350 50  0001 C CNN
+F 3 "~" H 3900 3350 50  0001 C CNN
+	1    3900 3350
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 3250 3150 3050
+Wire Wire Line
+	3150 3050 3350 3050
+Wire Wire Line
+	3900 3050 3900 3200
+Wire Wire Line
+	3550 3200 3550 3050
+Connection ~ 3550 3050
+Wire Wire Line
+	3550 3050 3900 3050
+Wire Wire Line
+	3250 3350 3350 3350
+Wire Wire Line
+	3350 3350 3350 3050
+Connection ~ 3350 3050
+Wire Wire Line
+	3350 3050 3550 3050
+Wire Wire Line
+	3150 3450 3150 3600
+Wire Wire Line
+	3150 3600 3550 3600
+Wire Wire Line
+	3900 3600 3900 3500
+Wire Wire Line
+	3550 3500 3550 3600
+Connection ~ 3550 3600
+Wire Wire Line
+	3550 3600 3900 3600
+$Comp
+L Reference_Voltage:TL431PK U?
+U 1 1 602F3675
+P 3150 4000
+F 0 "U?" V 3196 3931 50  0000 R CNN
+F 1 "TL431PK" V 3105 3931 50  0000 R CNN
+F 2 "Package_TO_SOT_SMD:SOT-89-3" H 3150 3850 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/tl431.pdf" H 3150 4000 50  0001 C CIN
+	1    3150 4000
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 602F367F
+P 3550 4000
+F 0 "C?" H 3668 4046 50  0000 L CNN
+F 1 "CP" H 3668 3955 50  0000 L CNN
+F 2 "" H 3588 3850 50  0001 C CNN
+F 3 "~" H 3550 4000 50  0001 C CNN
+	1    3550 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602F3689
+P 3900 4000
+F 0 "R?" H 3830 3954 50  0000 R CNN
+F 1 "R" H 3830 4045 50  0000 R CNN
+F 2 "" V 3830 4000 50  0001 C CNN
+F 3 "~" H 3900 4000 50  0001 C CNN
+	1    3900 4000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 3900 3150 3700
+Wire Wire Line
+	3150 3700 3350 3700
+Wire Wire Line
+	3900 3700 3900 3850
+Wire Wire Line
+	3550 3850 3550 3700
+Connection ~ 3550 3700
+Wire Wire Line
+	3550 3700 3900 3700
+Wire Wire Line
+	3250 4000 3350 4000
+Wire Wire Line
+	3350 4000 3350 3700
+Connection ~ 3350 3700
+Wire Wire Line
+	3350 3700 3550 3700
+Wire Wire Line
+	3150 4100 3150 4250
+Wire Wire Line
+	3150 4250 3550 4250
+Wire Wire Line
+	3900 4250 3900 4150
+Wire Wire Line
+	3550 4150 3550 4250
+Connection ~ 3550 4250
+Wire Wire Line
+	3550 4250 3900 4250
+$Comp
+L Reference_Voltage:TL431PK U?
+U 1 1 602F8542
+P 3150 4650
+F 0 "U?" V 3196 4581 50  0000 R CNN
+F 1 "TL431PK" V 3105 4581 50  0000 R CNN
+F 2 "Package_TO_SOT_SMD:SOT-89-3" H 3150 4500 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/tl431.pdf" H 3150 4650 50  0001 C CIN
+	1    3150 4650
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 602F854C
+P 3550 4650
+F 0 "C?" H 3668 4696 50  0000 L CNN
+F 1 "CP" H 3668 4605 50  0000 L CNN
+F 2 "" H 3588 4500 50  0001 C CNN
+F 3 "~" H 3550 4650 50  0001 C CNN
+	1    3550 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 602F8556
+P 3900 4650
+F 0 "R?" H 3830 4604 50  0000 R CNN
+F 1 "R" H 3830 4695 50  0000 R CNN
+F 2 "" V 3830 4650 50  0001 C CNN
+F 3 "~" H 3900 4650 50  0001 C CNN
+	1    3900 4650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 4550 3150 4350
+Wire Wire Line
+	3150 4350 3350 4350
+Wire Wire Line
+	3900 4350 3900 4500
+Wire Wire Line
+	3550 4500 3550 4350
+Connection ~ 3550 4350
+Wire Wire Line
+	3550 4350 3900 4350
+Wire Wire Line
+	3250 4650 3350 4650
+Wire Wire Line
+	3350 4650 3350 4350
+Connection ~ 3350 4350
+Wire Wire Line
+	3350 4350 3550 4350
+Wire Wire Line
+	3150 4750 3150 4900
+Wire Wire Line
+	3150 4900 3550 4900
+Wire Wire Line
+	3900 4900 3900 4800
+Wire Wire Line
+	3550 4800 3550 4900
+Connection ~ 3550 4900
+Wire Wire Line
+	3550 4900 3900 4900
+Wire Wire Line
+	3550 2300 3550 2400
+Wire Wire Line
+	3550 2950 3550 3050
+Wire Wire Line
+	3550 3600 3550 3700
+Wire Wire Line
+	3550 4250 3550 4350
+$Comp
+L power:GND #PWR?
+U 1 1 6030C4B9
+P 3550 5100
+F 0 "#PWR?" H 3550 4850 50  0001 C CNN
+F 1 "GND" H 3555 4927 50  0000 C CNN
+F 2 "" H 3550 5100 50  0001 C CNN
+F 3 "" H 3550 5100 50  0001 C CNN
+	1    3550 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 4900 3550 5100
+Wire Wire Line
+	3550 1600 3550 1650
+$Comp
+L Device:D D?
+U 1 1 603268C9
+P 3800 1650
+F 0 "D?" H 3800 1433 50  0000 C CNN
+F 1 "D" H 3800 1524 50  0000 C CNN
+F 2 "" H 3800 1650 50  0001 C CNN
+F 3 "~" H 3800 1650 50  0001 C CNN
+	1    3800 1650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3650 1650 3550 1650
+Connection ~ 3550 1650
+Wire Wire Line
+	3550 1650 3550 1750
+Wire Wire Line
+	3950 1650 4050 1650
+Wire Wire Line
+	4050 1650 4050 1200
+Wire Wire Line
+	4050 1200 3550 1200
+Wire Wire Line
+	3550 1200 3550 1300
+Wire Wire Line
+	3000 1200 3550 1200
+Connection ~ 3550 1200
+$EndSCHEMATC

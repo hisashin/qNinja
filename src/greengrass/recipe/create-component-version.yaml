@@ -1,0 +1,19 @@
+#
+# AWS IoT Greengrass component recipe reference
+# https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html
+#
+RecipeFormatVersion: 2020-01-25
+ComponentName: dev.hisa.Ninja
+ComponentVersion: '1.0.11'
+ComponentDescription: Ninja qPCR Greengrass component
+ComponentPublisher: Toriningen Inc.
+Manifests:
+  - Platform:
+      os: linux
+    Artifacts:
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/Ninja-qPCR-src.zip
+        Unarchive: ZIP
+    Lifecycle:
+      Run: |
+        python3 {artifacts:decompressedPath}/Ninja-qPCR-src/src/hello_world.py
+
