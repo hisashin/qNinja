@@ -5,7 +5,7 @@
 [Upload components to deploy to your core devices](https://docs.aws.amazon.com/greengrass/v2/developerguide/upload-components.html)
 [AWS IoT Greengrass component recipe reference](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html#component-recipe-artifacts-decompressed-path)
 
-- Update version number**s** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/create-component-version.yaml?fbclid=IwAR1QTwhSN3xaRFmSvUM1PRnfuE6R080YpyvVHCD1gsyWy5UF_RBfns3m9Uk)
+- Update version number**S** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/create-component-version.yaml?fbclid=IwAR1QTwhSN3xaRFmSvUM1PRnfuE6R080YpyvVHCD1gsyWy5UF_RBfns3m9Uk)
 - Zip and upload to S3 as s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/**{version number}**/Ninja-qPCR-src.zip
 - Run this command as IAM gg_component to create component version
   ```
