@@ -12,6 +12,6 @@
   unzip production.zip
   zip -r Ninja-qPCR-src.zip Ninja-qPCR-production/src
   aws s3 cp Ninja-qPCR-src.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/{version number}/Ninja-qPCR-src.zip
-  aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/create-component-version.yaml
+  aws greengrassv2 create-component-version --inline-recipe fileb://Ninja-qPCR-production/src/greengrass/recipe/create-component-version.yaml
   ```
 - [Components](https://ap-northeast-1.console.aws.amazon.com/iot/home?region=ap-northeast-1#/greengrass/v2/components) > Select **dev.hisa.Ninja** > **Deploy** > Add to deployment **deploy-qpcr-prod** > NextNextNext.... > Deploy
