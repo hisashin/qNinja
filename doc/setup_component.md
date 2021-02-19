@@ -7,7 +7,7 @@ Replace **1.2.3** to the version you want to publish.
 
 - As AWS IAM gg_component user,
 - vi ~/greengrassv2/recipes/dev.hisa.Ninja-**1.2.3**.yaml
-  ```
+```
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja
 ComponentVersion: '**1.2.3**'
@@ -21,5 +21,5 @@ Manifests:
     Lifecycle:
       Run: |
         python3 {artifacts:path}/hello_world.py '{configuration:/Message}'
-  ```
+```
 - Place all soruces to ~/greengrassv2/recipes/dev.hisa.Ninja-**1.2.3**/
