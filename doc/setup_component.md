@@ -1,6 +1,6 @@
 ## How to deploy Ninja qPCR with Greengrass
 
-Everything is done automatically with GitHub Action. This is tutorial for manual deploy.
+Everything is done automatically with GitHub Action. This is what they do when recipe is pushed to production branch.
 
 [Upload components to deploy to your core devices](https://docs.aws.amazon.com/greengrass/v2/developerguide/upload-components.html)
 [AWS IoT Greengrass component recipe reference](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html#component-recipe-artifacts-decompressed-path)
