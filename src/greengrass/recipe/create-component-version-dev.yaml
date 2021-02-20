@@ -15,5 +15,5 @@ Manifests:
         Unarchive: ZIP
     Lifecycle:
       Run: |
-        python3 {artifacts:decompressedPath}/src-dev/src/hello_world.py
+        python3 {artifacts:decompressedPath}/src-dev/src/greengrass/recipe/hello_world.py
 
