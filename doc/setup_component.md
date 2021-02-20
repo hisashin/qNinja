@@ -17,7 +17,7 @@
 
 ### Production
 
-- Update version number**S** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/create-component-version-production.yaml) and push to **dev** branch.
+- Update version number**S** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/create-component-version-production.yaml) and push to **production** branch.
 - GitHub Action run these commands as IAM user gg_component.
   ```
   curl -L -o production.zip https://github.com/hisashin/Ninja-qPCR/archive/production.zip
