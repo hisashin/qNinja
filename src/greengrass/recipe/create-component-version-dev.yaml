@@ -4,14 +4,14 @@
 #
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-dev
-ComponentVersion: '1.0.0'
+ComponentVersion: '1.0.1'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.0/src-dev.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.1/src-dev.zip
         Unarchive: ZIP
     Lifecycle:
       Run: |
