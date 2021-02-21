@@ -27,7 +27,7 @@ jobs:
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=10 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
         
-        VERSION=`sed -z "s/.*ComponentVersion: *'//" ${GITHUB_REPOSITORY}/src/greengrass/recipe/$branch.yaml |sed -z "s/'.*//"`
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" ${GITHUB_REPOSITORY}/src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
         echo "VERSION=$VERSION"
 
     - name: Configure AWS credentials from Test account
