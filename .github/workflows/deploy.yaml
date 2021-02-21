@@ -34,7 +34,6 @@ jobs:
         echo "VERSION=$VERSION"
 
     - name: Configure AWS credentials from Test account
-      working-directory: ${{env.working-directory}}
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GG_COMPONENT }}
@@ -42,11 +41,11 @@ jobs:
         aws-region: ap-northeast-1
 
     - name: Archive and upload artifact
-      working-directory: ${{env.working-directory}}
       uses: thedoctor0/zip-release@master
       with:
         filename: 'src.zip'
         directory: src
+        path: ${{env.working-directory}}
 
     - name: Upload artifact
       working-directory: ${{env.working-directory}}
