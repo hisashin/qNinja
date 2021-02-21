@@ -9,8 +9,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./sandbox
     steps:
     - name: Sparse checkout
+      working-directory: ${{env.working-directory}}
       shell: bash
       run: |
         REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
@@ -31,6 +34,7 @@ jobs:
         echo "VERSION=$VERSION"
 
     - name: Configure AWS credentials from Test account
+      working-directory: ${{env.working-directory}}
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GG_COMPONENT }}
@@ -38,12 +42,14 @@ jobs:
         aws-region: ap-northeast-1
 
     - name: Archive and upload artifact
+      working-directory: ${{env.working-directory}}
       uses: thedoctor0/zip-release@master
       with:
         filename: 'src.zip'
         directory: src
 
     - name: Upload artifact
+      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
@@ -52,11 +58,13 @@ jobs:
         aws s3 cp src.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
 
     - name: Create component
+      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/$BRANCH.yaml
 
     - name: Revise deployment
+      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
@@ -65,6 +73,7 @@ jobs:
         aws greengrassv2 create-deployment --cli-input-json file://revise.json
 
     - name: Call Slack
+      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
