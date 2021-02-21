@@ -37,13 +37,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GG_COMPONENT }}
         aws-region: ap-northeast-1
 
-    - name: Archive artifact
+    - name: Archive and upload artifact
       uses: thedoctor0/zip-release@master
       with:
         filename: 'src.zip'
         directory: src
-
-    - name: Upload artifact
+#
+#    - name: Upload artifact
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
