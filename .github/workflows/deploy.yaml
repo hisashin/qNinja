@@ -26,8 +26,6 @@ jobs:
         echo src >> .git/info/sparse-checkout
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=10 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
-        zip -r src-$BRANCH.zip ${GITHUB_REPOSITORY}/src
-        ls -al src-$BRANCH.zip
         
         VERSION=`sed -z "s/.*ComponentVersion: *'//" ${GITHUB_REPOSITORY}/src/greengrass/recipe/$branch.yaml |sed -z "s/'.*//"`
         echo "VERSION=$VERSION"
@@ -35,9 +33,15 @@ jobs:
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GG_COMPONENT }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GG_COMPONENT }}
         aws-region: ap-northeast-1
+
+    - name: Archive artifact
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'src-$BRANCH.zip'
+        directory: ${GITHUB_REPOSITORY}/src
 
     - name: Upload artifact
       run: |
