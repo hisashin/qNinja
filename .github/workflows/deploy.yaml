@@ -9,11 +9,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      working-directory: .
     steps:
+
+    - name: Install zip
+      uses: montudor/action-zip@v0.1.1
+
     - name: Sparse checkout
-      working-directory: ${{env.working-directory}}
       shell: bash
       run: |
         REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
@@ -39,45 +40,30 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GG_COMPONENT }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GG_COMPONENT }}
         aws-region: ap-northeast-1
-    - name: Install zip
-      uses: montudor/action-zip@v0.1.1
-
-#    - name: Archive and upload artifact
-#      uses: thedoctor0/zip-release@master
-#      with:
-#        filename: 'src.zip'
-#        directory: src
-#        path: ${{env.working-directory}}
 
     - name: Upload artifact
-      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
         zip -r src-$BRANCH.zip src
-        pwd
-        ls -al
         aws s3 cp src-$BRANCH.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
 
     - name: Create component
-      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/$BRANCH.yaml
 
     - name: Revise deployment
-      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
-        sed -e "s/{version}/$VERSION/" -e "s/{branch}/$BRANCH/" ${GITHUB_REPOSITORY}/src/greengrass/revise.json.template > revise.json
+        sed -e "s/{version}/$VERSION/" -e "s/{branch}/$BRANCH/" src/greengrass/revise.json.template > revise.json
         cat revise.json
         aws greengrassv2 create-deployment --cli-input-json file://revise.json
 
     - name: Call Slack
-      working-directory: ${{env.working-directory}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
-        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : "Deploying Ninja qPCR $BRANCH $VERSION" }' https://maker.ifttt.com/trigger/SlackDM/with/key/KzFscj5NIaaJPQzVOTJQS
+        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : "Deploying Ninja qPCR $BRANCH $VERSION" }' ${{ secrets.SLACK_URL }}
 
