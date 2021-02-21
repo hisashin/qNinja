@@ -1,3 +1,6 @@
+#
+# curl -o deploy.sh https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/deploy.sh
+#
 if [ $# -ne 1 ]; then
   echo "Usage : sh deploy.sh (branch)"
   exit 1
