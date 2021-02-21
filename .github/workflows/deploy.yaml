@@ -42,11 +42,13 @@ jobs:
       with:
         filename: 'src.zip'
         directory: src
-#
-#    - name: Upload artifact
+
+    - name: Upload artifact
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        pwd
+        ls -al src.zip
         aws s3 cp src.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
 
     - name: Create component
