@@ -10,10 +10,50 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync to S3
-        run: echo 'Sync to S3'
-      - name: Call Lambda
-        run: echo 'call Lambda'
-      - name: Call Slack
-        run: echo 'call Slack'
+    - name: Sparse checkout
+      shell: bash
+      run: |
+        REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+
+        echo "Syncing repository: $GITHUB_REPOSITORY"
+        echo "Working directory is '$(pwd)' GITHUB_WORKSPACE=$GITHUB_WORKSPACE BRANCH=$BRANCH"
+        git version
+        git init $GITHUB_WORKSPACE
+        git remote add origin https://github.com/$GITHUB_REPOSITORY
+        git config --local gc.auto 0
+        git config core.sparseCheckout true
+        echo src >> .git/info/sparse-checkout
+        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=10 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
+        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+        zip -r src-$BRANCH.zip ${GITHUB_REPOSITORY}/src
+        ls -al src-$BRANCH.zip
+        
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" ${GITHUB_REPOSITORY}/src/greengrass/recipe/$branch.yaml |sed -z "s/'.*//"`
+        echo "VERSION=$VERSION"
+
+    - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
+
+    - name: Upload artifact
+      run: |
+        aws s3 cp src-$BRANCH.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
+
+    - name: Create component
+      run: |
+        aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/$BRANCH.yaml
+
+    - name: Revise deployment
+      run: |
+        sed -e "s/{version}/$VERSION/" -e "s/{branch}/$BRANCH/" ${GITHUB_REPOSITORY}/src/greengrass/revise.json.template > revise.json
+        cat revise.json
+        aws greengrassv2 create-deployment --cli-input-json file://revise.json
+
+    - name: Call Slack
+      run: |
+        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : "Deploying Ninja qPCR $BRANCH $VERSION" }' https://maker.ifttt.com/trigger/SlackDM/with/key/KzFscj5NIaaJPQzVOTJQS
 
