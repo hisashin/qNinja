@@ -5,7 +5,7 @@ on:
       - 'batch'
       - 'prod'
     paths:
-      - 'src/greengrass/recipe/**'
+      - 'src/greengrass/recipe/*.yaml'
 jobs:
   deploy:
     runs-on: ubuntu-latest
