@@ -16,10 +16,10 @@ zip -r src-$branch.zip src
 
 version=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$branch.yaml |sed -z "s/'.*//"`
 echo "Upload artifact version $version ($branch)"
-aws s3 cp src-prod.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$version/src-$branch.zip
+aws s3 cp src-$branch.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$version/src-$branch.zip
 echo "Create component version $version ($branch)"
 aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/$branch.yaml
-echo "Revise deployment version $version (prod)"
+echo "Revise deployment version $version ($branch)"
 sed -e "s/{version}/$version/" -e "s/{branch}/$branch/" src/greengrass/revise.json.template > revise.json
 aws greengrassv2 create-deployment --cli-input-json file://revise.json
 cd ..
