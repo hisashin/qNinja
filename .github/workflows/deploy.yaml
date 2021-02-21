@@ -1,13 +1,11 @@
-name: deploy-dev
+name: deploy
 on:
   push:
     branches:
-      - 'master'
-      - 'dev'
-      - 'production'
+      - 'batch'
+      - 'prod'
     paths:
-      - '**'
-      - 'src/**'
+      - 'src/greengrass/recipe/**'
 jobs:
   deploy:
     runs-on: ubuntu-latest
