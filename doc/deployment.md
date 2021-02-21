@@ -3,12 +3,12 @@
 ### bench
 
 - Update version number**S** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/bench.yaml) and push to **bench** branch.
-- GitHub Action run `sh [deploy.sh](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/deploy.sh) bench` as IAM user gg_component.
+- GitHub Action run **sh [deploy.sh](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/deploy.sh) bench** as IAM user gg_component.
 
 ### prod
 
 - Update version number**S** of [recipe](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/recipe/prod.yaml) and push to **prod** branch.
-- GitHub Action run `sh [deploy.sh](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/deploy.sh) prod` as IAM user gg_component.
+- GitHub Action run **sh [deploy.sh](https://github.com/hisashin/Ninja-qPCR/blob/master/src/greengrass/deploy.sh) prod** as IAM user gg_component.
 
 ### References ###
 
