@@ -40,14 +40,14 @@ jobs:
     - name: Archive artifact
       uses: thedoctor0/zip-release@master
       with:
-        filename: 'src-${GITHUB_REF/#refs\/heads\//}.zip'
+        filename: 'src.zip'
         directory: src
 
     - name: Upload artifact
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
-        aws s3 cp src-$BRANCH.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
+        aws s3 cp src.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
 
     - name: Create component
       run: |
