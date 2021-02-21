@@ -1,8 +1,8 @@
 {
-    "targetArn": "arn:aws:iot:ap-northeast-1:314407188943:thinggroup/qpcr-prod",
-    "deploymentName": "dev.hisa.Ninja-prod",
+    "targetArn": "arn:aws:iot:ap-northeast-1:314407188943:thinggroup/qpcr-{branch}",
+    "deploymentName": "dev.hisa.Ninja-{branch}",
     "components": {
-        "dev.hisa.Ninja-prod": {
+        "dev.hisa.Ninja-{branch}": {
             "componentVersion": "{version}"
         }
     },
