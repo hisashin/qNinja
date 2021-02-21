@@ -3,15 +3,15 @@
 # https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html
 #
 RecipeFormatVersion: 2020-01-25
-ComponentName: dev.hisa.Ninja-dev
-ComponentVersion: '1.0.1'
+ComponentName: dev.hisa.Ninja-bench
+ComponentVersion: '1.0.2'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.1/src-dev.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.2/src-bench.zip
         Unarchive: ZIP
     Lifecycle:
       Run: |
