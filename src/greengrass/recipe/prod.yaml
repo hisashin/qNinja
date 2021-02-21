@@ -1,7 +1,7 @@
 #
 # AWS IoT Greengrass component recipe reference
 # https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html
-#
+# 
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-prod
 ComponentVersion: '1.0.6'
