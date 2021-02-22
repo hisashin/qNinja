@@ -20,7 +20,6 @@ Manifests:
           whoami
           curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
           sudo apt-get install -y nodejs
-          node --version
       Run: |
         python3 {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/hello_world.py
 
