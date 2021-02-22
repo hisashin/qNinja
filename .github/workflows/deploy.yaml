@@ -65,5 +65,5 @@ jobs:
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
         MSG="Deploying Ninja qPCR $BRANCH $VERSION"
-        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : "$MSG" }' ${{ secrets.SLACK_URL }}
+        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : $MSG }' ${{ secrets.SLACK_URL }}
 
