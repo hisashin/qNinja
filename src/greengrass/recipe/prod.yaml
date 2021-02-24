@@ -21,5 +21,8 @@ Manifests:
           curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
           sudo apt-get install -y nodejs
       Run: |
-        python3 {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/hello_world.py
-
+#        python3 {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/hello_world.py
+         rm -rf /usr/local/ninjaqpcr
+         mkdir /usr/local/ninjaqpcr
+         chown ggc_user.ggc_user /usr/local/ninjaqpcr
+         ln -s {artifacts:decompressedPath}/src-prod/src /usr/local/ninjaqpcr
