@@ -46,7 +46,7 @@
                 Name 
                 <span :class="'validation-label validation__name'"/>
                 <input
-                  v-model.number="protocol.name" type="text" v-on:input="onChangeProtocol()"
+                  v-model="protocol.name" type="text" v-on:input="onChangeProtocol()"
                 >
               </div>
               <div>
