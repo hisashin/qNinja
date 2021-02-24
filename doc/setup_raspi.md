@@ -16,9 +16,9 @@
     - **1 System Options**/**S1 Wireless LAN**/**JP Japan**(for example)/Input SSID and password/**Finish**
   - SSH setup
     - **3 Interface Options**/**P2 SSH**/**Enable**
-  - I2C setup
-    - **3 Interface Options**/**P4 SPI**/**Enable**
   - SPI setup
+    - **3 Interface Options**/**P4 SPI**/**Enable**
+  - I2C setup
     - **3 Interface Options**/**P5 I2C**/**Enable**
 - Login with default ID and password ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
