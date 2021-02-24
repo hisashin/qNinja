@@ -86,7 +86,7 @@
               <TemperatureMonitor ref="temperatureMonitor" />
             </b-tab>
             <b-tab
-              title="Fluorescence"
+              title="Amplification"
               active>
               <FluorescenceMonitor ref="fluorescenceMonitor" />
             </b-tab>

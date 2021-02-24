@@ -45,12 +45,12 @@
 
 # Register startup script
 * `sudo vi /etc/rc.local`
-* Add `/user/local/ninjaqpcr/startup/startup.sh` above line `exit 0`
+* Add `/usr/local/ninjaqpcr/startup/startup.sh` above line `exit 0`
 
 # Delete logs and settings
 ```
 sudo rm -rf /var/log/*
 echo "" > ~/.ssh/authorized_keys
-sudo cp /user/local/ninjaqpcr/network_conf_app/wpa_supplicant_header.txt /etc/wpa_supplicant/wpa_supplicant.conf
+sudo cp /usr/local/ninjaqpcr/network_conf_app/wpa_supplicant_header.txt /etc/wpa_supplicant/wpa_supplicant.conf
 rm -f ~/.bash_history
 ```
