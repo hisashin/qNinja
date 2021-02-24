@@ -9,7 +9,7 @@
 - Connect monitor and keyboard to Raspi.
 - Power on Raspi.
 - Login with default ID and password ("pi" and "raspberry")
-- `sudo raspi-config` and reboot
+- `sudo raspi-config`
   - Keyboard setup (If need to change from US)
     - **5 Localisation Options**/**L3 Keyboard**/**Generic 105-key PC (intl.)**/**Other**/**Japanese**/**Japanese - Japanese (OADG 109A)**/**The default...**/**No compose key**
   - WiFi setup
@@ -20,7 +20,8 @@
     - **3 Interface Options**/**P4 SPI**/**Enable**
   - I2C setup
     - **3 Interface Options**/**P5 I2C**/**Enable**
-- Login with default ID and password ("pi" and "raspberry")
+- Automatically reboot after raspi-config
+- Login with default ID and password again ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
 - You can get MAC address and provided IP by `ifconfig`
 - `ssh pi@(Raspi IP)` from computer in same wifi network with default ID and password ("pi" and "raspberry")
