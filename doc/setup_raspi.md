@@ -92,9 +92,5 @@ Ninja qPCR software will be installed and updated to the latest automatically wh
   - `sudo -E java -Droot="/greengrass/v2" -Dlog.store=FILE -jar ./GreengrassCore/lib/Greengrass.jar --aws-region ap-northeast-1 --thing-name qpcr-dev-001 --thing-group-name qpcr-dev --component-default-user ggc_user:ggc_group --provision true --setup-system-service true --deploy-dev-tools true`
   - `sudo tail -f /greengrass/v2/logs/greengrass.log` to check log
 - Finish Create core device and wait a while to show up added thing qpcr-dev-001
-- `sudo cp /etc/hosts /etc/hosts.orig`
-- `sudo cp /etc/hostname /etc/hostname.orig`
-- `sudo sed -i -e "s/raspberrypi/qpcr-dev-001/g" /etc/hosts`
-- `sudo sed -i -e "s/raspberrypi/qpcr-dev-001/g" /etc/hostname` (sometimes not needed. automatically updated when /etc/hosts were changed)
 - `sudo reboot`
 
