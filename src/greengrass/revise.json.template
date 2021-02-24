@@ -1,0 +1,22 @@
+{
+    "targetArn": "arn:aws:iot:ap-northeast-1:314407188943:thinggroup/qpcr-{branch}",
+    "deploymentName": "dev.hisa.Ninja-{branch}",
+    "components": {
+        "dev.hisa.Ninja-{branch}": {
+            "componentVersion": "{version}"
+        }
+    },
+    "deploymentPolicies": {
+        "failureHandlingPolicy": "ROLLBACK",
+        "componentUpdatePolicy": {
+            "timeoutInSeconds": 60,
+            "action": "NOTIFY_COMPONENTS"
+        }
+    },
+    "iotJobConfiguration": {
+        "jobExecutionsRolloutConfig": {
+            "maximumPerMinute": 1000
+        }
+    }
+}
+

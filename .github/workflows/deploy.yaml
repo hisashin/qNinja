@@ -1,0 +1,69 @@
+name: deploy
+on:
+  push:
+    branches:
+      - 'batch'
+      - 'prod'
+    paths:
+      - 'src/greengrass/recipe/*.yaml'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Install zip
+      uses: montudor/action-zip@v0.1.1
+
+    - name: Sparse checkout
+      shell: bash
+      run: |
+        REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+
+        echo "Syncing repository: $GITHUB_REPOSITORY"
+        echo "Working directory is '$(pwd)' GITHUB_WORKSPACE=$GITHUB_WORKSPACE BRANCH=$BRANCH"
+        git version
+        git init $GITHUB_WORKSPACE
+        git remote add origin https://github.com/$GITHUB_REPOSITORY
+        git config --local gc.auto 0
+        git config core.sparseCheckout true
+        echo src >> .git/info/sparse-checkout
+        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=10 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
+        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+        
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        echo "VERSION=$VERSION"
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GG_COMPONENT }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GG_COMPONENT }}
+        aws-region: ap-northeast-1
+
+    - name: Upload artifact
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        zip -r src-$BRANCH.zip src
+        aws s3 cp src-$BRANCH.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
+
+    - name: Create component
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        aws greengrassv2 create-component-version --inline-recipe fileb://src/greengrass/recipe/$BRANCH.yaml
+
+    - name: Revise deployment
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        sed -e "s/{version}/$VERSION/" -e "s/{branch}/$BRANCH/" src/greengrass/revise.json.template > revise.json
+        aws greengrassv2 create-deployment --cli-input-json file://revise.json
+
+    - name: Call Slack
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        MSG="Deploying Ninja qPCR $BRANCH $VERSION"
+        curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{ "value1" : "$MSG" }' ${{ secrets.SLACK_URL }}
+

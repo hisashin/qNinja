@@ -9,14 +9,21 @@
 - Connect monitor and keyboard to Raspi.
 - Power on Raspi.
 - Login with default ID and password ("pi" and "raspberry")
-- `sudo raspi-config` and reboot
+- `sudo raspi-config`
   - Keyboard setup (If need to change from US)
     - **5 Localisation Options**/**L3 Keyboard**/**Generic 105-key PC (intl.)**/**Other**/**Japanese**/**Japanese - Japanese (OADG 109A)**/**The default...**/**No compose key**
   - WiFi setup
     - **1 System Options**/**S1 Wireless LAN**/**JP Japan**(for example)/Input SSID and password/**Finish**
+  - Hostname (not required)
+    - **1 System Options**/**S4 Hostname**/**ninjaqpcr**(for example)/**Finish**
   - SSH setup
     - **3 Interface Options**/**P2 SSH**/**Enable**
-- Login with default ID and password ("pi" and "raspberry")
+  - SPI setup
+    - **3 Interface Options**/**P4 SPI**/**Enable**
+  - I2C setup
+    - **3 Interface Options**/**P5 I2C**/**Enable**
+- Reboot automatically
+- Login with default ID and password again ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
 - You can get MAC address and provided IP by `ifconfig`
 - `ssh pi@(Raspi IP)` from computer in same wifi network with default ID and password ("pi" and "raspberry")
@@ -32,7 +39,7 @@
 - `sudo /etc/init.d/ssh restart`
 - `sudo apt -y update; sudo apt-get -y update`
 
-## DIY setup with git (Skip here if dev or prod)
+## DIY setup with git
 
 Software update can be done manually by `git pull`.
 
@@ -57,9 +64,9 @@ Software update can be done manually by `git pull`.
 - `git clone github:hisashin/Ninja-qPCR.git`
 - //TODO setup bootstrap
 
-## Dev or Prod setup with [AWS GreenGrass](https://aws.amazon.com/greengrass/) (Skip here if DIY)
+## PRO setup with [AWS Greengrass](https://aws.amazon.com/greengrass/)
 
-Software will can be done automatically.
+Ninja qPCR software will be installed and updated to the latest automatically when it's added to the proper Greengrass group.
 
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
