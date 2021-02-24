@@ -16,6 +16,10 @@
     - **1 System Options**/**S1 Wireless LAN**/**JP Japan**(for example)/Input SSID and password/**Finish**
   - SSH setup
     - **3 Interface Options**/**P2 SSH**/**Enable**
+  - I2C setup
+    - **3 Interface Options**/**P4 SPI**/**Enable**
+  - SPI setup
+    - **3 Interface Options**/**P5 I2C**/**Enable**
 - Login with default ID and password ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
 - You can get MAC address and provided IP by `ifconfig`
@@ -57,9 +61,9 @@ Software update can be done manually by `git pull`.
 - `git clone github:hisashin/Ninja-qPCR.git`
 - //TODO setup bootstrap
 
-## PRO setup with [AWS GreenGrass](https://aws.amazon.com/greengrass/)
+## PRO setup with [AWS Greengrass](https://aws.amazon.com/greengrass/)
 
-Software will can be done automatically.
+Ninja qPCR software will be installed and updated to the latest automatically when it's added to the proper Greengrass group.
 
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
