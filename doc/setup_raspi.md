@@ -14,13 +14,15 @@
     - **5 Localisation Options**/**L3 Keyboard**/**Generic 105-key PC (intl.)**/**Other**/**Japanese**/**Japanese - Japanese (OADG 109A)**/**The default...**/**No compose key**
   - WiFi setup
     - **1 System Options**/**S1 Wireless LAN**/**JP Japan**(for example)/Input SSID and password/**Finish**
+  - Hostname (not required)
+    - **1 System Options**/**S4 Hostname**/**ninjaqpcr**(for example)/**Finish**
   - SSH setup
     - **3 Interface Options**/**P2 SSH**/**Enable**
   - SPI setup
     - **3 Interface Options**/**P4 SPI**/**Enable**
   - I2C setup
     - **3 Interface Options**/**P5 I2C**/**Enable**
-- Automatically reboot after raspi-config
+- Reboot automatically
 - Login with default ID and password again ("pi" and "raspberry")
 - You can confirm settings by `cat /etc/wpa_supplicant/wpa_supplicant.conf`
 - You can get MAC address and provided IP by `ifconfig`
