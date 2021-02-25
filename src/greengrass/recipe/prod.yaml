@@ -21,6 +21,7 @@ Manifests:
       Bootstrap:
         RequiresPrivilege: true
         Script: |
+          # confirguration/NINJAQPCR_VERSION didn't work sometimes. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
           VERSION=`sh {artifacts:decompressedPath}/src-prod/src/greengrass/version.sh {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/prod.yaml`
           echo "[NinjaPCR] Bootstrap ver$VERSION"
           echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
@@ -36,9 +37,23 @@ Manifests:
           fi
           exit 0
       Install:
+        # {artifacts:decompressedPath} didn't work sometimes. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
+        Skipif : exists {configuration:/NINJAQPCR_SRC}
         Script: |
           VERSION=`sh {artifacts:decompressedPath}/src-prod/src/greengrass/version.sh {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/prod.yaml`
           echo "[NinjaPCR] Install ver$VERSION"
+          echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
+          ln -f -s {artifacts:decompressedPath}/src-prod/src {configuration:/NINJAQPCR_SRC}
+          cd {configuration:/NINJAQPCR_SRC}/qpcr
+          echo y | npm update
+          cd {configuration:/NINJAQPCR_SRC}/console/server
+          echo y | npm update
+          if [ `grep NINJAQPCR_VERSION /etc/profile | wc -l` -eq 0 ]; then
+            echo "export NINJAQPCR_VERSION=$VERSION" | tee -a /etc/profile
+          else
+            sed -i "s/export NINJAQPCR_VERSION=.*/export NINJAQPCR_VERSION=$VERSION/" /etc/profile
+          fi
+          exit 0
       Run:
         Script: |
           #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
