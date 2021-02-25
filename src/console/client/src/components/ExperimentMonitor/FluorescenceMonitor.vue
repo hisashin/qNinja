@@ -56,11 +56,13 @@ export default {
       baseline:[],
       measurements:[], // Real-time measurement
       wellsCount: WELLS_COUNT,
+      channels:[],
       channelsCount: CHANNELS_COUNT,
       debug: "DEBUGDEBUG",
       seriesList:[],
       wellTable:[],
-      yScale:"linear"
+      yScale:"linear",
+      analysis:{}
     }
   },
   created: function () {
@@ -144,7 +146,6 @@ export default {
     setData: function (data) {
       // Expects experiment.log.fluorescence.qpcr
       this.graph.clearData();
-      
       data.forEach((measurement)=>{
         this.eachSeries((c, w, i)=>{
           this.graph.addData(i, {t:measurement.t, v:measurement.v[c][w], c:measurement.repeat});
@@ -152,12 +153,34 @@ export default {
       });
       this.graph.update();
     },
+    setAnalysis: function (analysis) {
+      this.analysis = analysis;
+      if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+        this.updateBaseline();
+        this.graph.update();
+      }
+    },
+    updateBaseline: function () {
+      if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+        let baselines = [];
+        this.eachSeries((c, w, i)=>{
+          baselines.push(this.analysis.baseline[c][w]);
+        });
+        if (this.yScale == "log") {
+          baselines = baselines.map(v=>Math.log10(v));
+        }
+        console.log(baselines)
+        // TODO: Support multiple series of HLines
+        // TODO: Add thresholds
+        // TODO: Add Ct dots
+        this.graph.setHLines(baselines);
+      }
+    },
     add: function (data) {
       this.eachSeries((c, w, i)=>{
         this.graph.addData(i, {t:data.t, v:data.v[c][w], c:data.repeat});
       });
       this.graph.update();
-    
     },
     onFilterChange: function() {
       this.eachWell((well)=>{
@@ -169,6 +192,7 @@ export default {
       });
       const f = this.yScale == "log" ? CONVERSION_FUNC_LOG : CONVERSION_FUNC_LINEAR;
       this.graph.setConversionFunction(f);
+      this.updateBaseline();
       this.graph.update();
     }
   }

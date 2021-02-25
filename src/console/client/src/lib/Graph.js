@@ -78,7 +78,6 @@ class Graph {
     this.data[index].push(data);
   }
   setVisibility (index, visibility) {
-    console.log("Len=%d,Index=%d", this.chart.data.datasets.length, index, visibility)
     this.chart.data.datasets[index].hidden = !visibility;
   }
   setMinMaxX (min, max) {
@@ -114,20 +113,24 @@ class Graph {
         this.chart.data.datasets[i].data = this.data[i];
       }
     }
+    let a = 0;
     if (this.autoMinMax) {
-      xMin = Math.min.apply(null, this.chart.data.datasets.map((series)=>{
+      const dat = this.chart.data.datasets.slice(0, this.data.length-1);
+      xMin = Math.min.apply(null, dat.map((series)=>{
         return Math.min.apply(null, series.data.map(data=>data.x));
       }));
-      xMax = Math.max.apply(null, this.chart.data.datasets.map((series)=>{
+      xMax = Math.max.apply(null, dat.map((series)=>{
         return Math.max.apply(null, series.data.map(data=>data.x));
       }));
-      yMin = Math.min.apply(null, this.chart.data.datasets.map((series)=>{
+      yMin = Math.min.apply(null, dat.map((series)=>{
         return Math.min.apply(null, series.data.map(data=>data.y));
       }));
-      yMax = Math.max.apply(null, this.chart.data.datasets.map((series)=>{
-        return Math.max.apply(null, series.data.map(data=>data.y));
+      yMax = Math.max.apply(null, dat.map((series)=>{
+        const m =  Math.max.apply(null, series.data.map(data=>data.y));
+        console.log(m)
+        a++;
+        return m;
       }));
-      console.log("%f %f %f %f", xMin, xMax, yMin, yMax);
       this.chart.options.scales.xAxes[0].ticks.min = xMin;
       this.chart.options.scales.xAxes[0].ticks.max = xMax;
       this.chart.options.scales.yAxes[0].ticks.min = yMin;
@@ -142,6 +145,8 @@ class Graph {
         ];
       }
     }
+    console.log("GraphDataSize=%d",this.data.length);
+    console.log("GraphDatasetsSize=%d",this.chart.data.datasets.length);
     this.chart.update();
   }
 }

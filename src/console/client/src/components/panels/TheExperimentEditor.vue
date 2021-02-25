@@ -233,6 +233,7 @@ export default {
         if (experiment.log) {
           this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
           this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
+          this.$refs.fluorescenceMonitor.setAnalysis(experiment.analysis);
         }
       
       }
@@ -297,7 +298,8 @@ export default {
       console.log(this.$data.experiment.analysis_config);
       client.submitUpdateExperimentProperty (this.$data.experiment.id, "analysis_config",
        this.$data.experiment.analysis_config, (resObj)=>{
-        console.log(resObj)
+        console.log(resObj.analysis);
+        this.$refs.fluorescenceMonitor.setAnalysis(this.$data.experiment.analysis);
        }, ()=>{});
     }
   }
