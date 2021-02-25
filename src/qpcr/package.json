@@ -13,7 +13,7 @@
     "rpio":"*",
     "raspi-pwm":"*",
     "raspi-soft-pwm":"*",
-    "aws-greengrass-stream-manager-sdk":"*"
+    "@aws-cdk/aws-greengrass":"*"
   },
   "devDependencies": {},
   "scripts": {
