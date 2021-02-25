@@ -56,11 +56,13 @@ export default {
       baseline:[],
       measurements:[], // Real-time measurement
       wellsCount: WELLS_COUNT,
+      channels:[],
       channelsCount: CHANNELS_COUNT,
       debug: "DEBUGDEBUG",
       seriesList:[],
       wellTable:[],
-      yScale:"linear"
+      yScale:"linear",
+      analysis:{}
     }
   },
   created: function () {
@@ -144,7 +146,6 @@ export default {
     setData: function (data) {
       // Expects experiment.log.fluorescence.qpcr
       this.graph.clearData();
-      
       data.forEach((measurement)=>{
         this.eachSeries((c, w, i)=>{
           this.graph.addData(i, {t:measurement.t, v:measurement.v[c][w], c:measurement.repeat});
@@ -152,23 +153,59 @@ export default {
       });
       this.graph.update();
     },
+    setAnalysis: function (analysis) {
+      this.analysis = analysis;
+      if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+        this.updateBaseline();
+        this.graph.update();
+      }
+    },
+    updateBaseline: function () {
+      this.graph.clearHLines();
+      if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+        let baselines = [];
+        this.eachSeries((c, w, i)=>{
+          baselines.push(this.analysis.baseline[c][w]);
+          baselines.push(this.analysis.threshold[c][w]);
+        });
+        if (this.yScale == "log") {
+          baselines = baselines.map(v=>Math.log10(v));
+        }
+        console.log("BaselineCount=%d", baselines.length);
+        this.graph.setHLines(baselines);
+        this.eachSeries((c, w, i)=>{
+          const y = this.analysis.threshold[c][w];
+          const x = this.analysis.ct[c][w];
+          if (this.yScale == "log") {
+            this.graph.addDot(i, x, Math.log10(y));
+          } else {
+            this.graph.addDot(i, x, y);
+          }
+        });
+      }
+    },
     add: function (data) {
       this.eachSeries((c, w, i)=>{
         this.graph.addData(i, {t:data.t, v:data.v[c][w], c:data.repeat});
       });
       this.graph.update();
-    
     },
     onFilterChange: function() {
+      const seriesCount = this.channelsCount * this.wellsCount;
       this.eachWell((well)=>{
         // well.index
         this.channels.forEach((channel)=>{
           const index = this._index(channel.index, well.index);
           this.graph.setVisibility(index, well.visible && channel.visible);
+          if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+            this.graph.setVisibility(seriesCount + index, well.visible && channel.visible);
+            this.graph.setVisibility(seriesCount*2 + index, well.visible && channel.visible);
+          }
         });
       });
       const f = this.yScale == "log" ? CONVERSION_FUNC_LOG : CONVERSION_FUNC_LINEAR;
       this.graph.setConversionFunction(f);
+      this.updateBaseline();
       this.graph.update();
     }
   }

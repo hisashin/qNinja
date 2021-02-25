@@ -11,7 +11,6 @@
 
 ## Documents
 - [How to setup Raspberry Pi for Ninja qPCR safely](doc/setup_raspi.md)
-- [How to deploy Ninja qPCR with GreenGrass](doc/deployment.md)
 - [Latest component diagram](https://www.facebook.com/hisakawa/posts/10158882870144481)
 
 ## Related Projects

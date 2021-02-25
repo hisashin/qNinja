@@ -99,6 +99,7 @@ class OpticsAnalysis {
       
     });
   }
+  // TODO
   calcMeltCurve (limitCount) {
     // this.meltCurve = [];
     // this.meltCurveIndex = 0;

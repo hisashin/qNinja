@@ -62,7 +62,17 @@ Software update can be done manually by `git pull`.
   ```
 - `chmod 600 ~/.ssh/config`
 - `git clone github:hisashin/Ninja-qPCR.git`
-- //TODO setup bootstrap
+
+- `curl -L https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh | sudo sh`
+  
+
+- `sudo ln -f -s Ninja-qPCR/src-prod/src /usr/local/ninjaqpcr`
+- `cd /usr/local/ninjaqpcr/qpcr`
+- `echo y | sudo npm update`
+- `cd /usr/local/ninjaqpcr/console/server`
+- `echo y | sudo npm update`
+- `sudo cp /etc/rc.local /etc/rc.local.orig`
+- `sed -i "s#exit 0#/usr/local/ninjaqpcr/startup/startup.sh;\n\nexit 0#" /etc/rc.local`
 
 ## PRO setup with [AWS Greengrass](https://aws.amazon.com/greengrass/)
 
