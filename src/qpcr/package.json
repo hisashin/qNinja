@@ -13,7 +13,7 @@
     "rpio":"*",
     "raspi-pwm":"*",
     "raspi-soft-pwm":"*",
-    "@aws-cdk/aws-greengrass":"*"
+    "@aws-cdk/aws-greengrassv2":"*"
   },
   "devDependencies": {},
   "scripts": {
