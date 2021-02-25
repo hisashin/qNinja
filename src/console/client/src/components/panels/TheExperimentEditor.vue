@@ -18,11 +18,11 @@
             <dl class="labeled_list">
               <dt class="labeled_list__label">Name</dt>
               <dd class="labeled_list__content"><input
-                v-model.number="experiment.info.name" type="text" style="width:80%"
+                v-model="experiment.info.name" type="text" style="width:80%"
               ></dd>
               <dt class="labeled_list__label">Comment</dt>
               <dd class="labeled_list__content"><textarea
-                v-model.number="experiment.info.comment" type="text" style="width:80%" rows="4"
+                v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
               ></textarea></dd>
             </dl>
           </div>
@@ -86,7 +86,7 @@
               <TemperatureMonitor ref="temperatureMonitor" />
             </b-tab>
             <b-tab
-              title="Fluorescence"
+              title="Amplification"
               active>
               <FluorescenceMonitor ref="fluorescenceMonitor" />
             </b-tab>

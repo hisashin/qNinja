@@ -13,7 +13,7 @@
               <TemperatureMonitor ref="temperatureMonitor" />
             </b-tab>
             <b-tab
-              title="Fluorescence"
+              title="Amplification"
               active>
                 <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
                   <div>one-shot={{ oneShot }}</div>

@@ -23,71 +23,86 @@ const Stat = {
   }
 };
 const DEFAULT_THRESHOLD_RATIO = 10; // Default threshold = baseline + SD * 10
+const DEFAULT_BASELINE_START = 3;
+const DEFAULT_BASELINE_END = 12;
 class OpticsAnalysis {
-  constructor (log) {
-    this.log = log;
+  constructor (experiment) {
+    this.experiment = experiment;
+    const hardware = this.experiment.hardware;
+    this.wellsCount = hardware.wells.count;
+    this.channelsCount = hardware.channels.count;
+    
     this.baselines = [];
     this.thresholds = [];
     this.ct = null;
     this.ctIndex = 0;
     this.meltCurve = [];
     this.meltCurveIndex = 0;
+    
+    this.fluorescenceTable = this.initChannelWellMatrix([]);
+    // [channel][well][cycle]
+    if (this.experiment.log.fluorescence && this.experiment.log.fluorescence.qpcr) {
+      const qpcr = this.experiment.log.fluorescence.qpcr;
+      for (let measurement of qpcr) {
+        this.eachWell((channelIndex, wellIndex)=>{
+          this.fluorescenceTable[channelIndex][wellIndex].push(measurement.v[channelIndex][wellIndex]);
+        });
+      }
+    }
+  }
+  eachWell (func /* (channelIndex, wellIndex)=>{} */) {
+    for (let channelIndex = 0; channelIndex < this.channelsCount; channelIndex++) {
+      for (let wellIndex = 0; wellIndex < this.wellsCount; wellIndex++) {
+        func(channelIndex, wellIndex);
+      }
+    }
+  }
+  /* Returns Channel x Well matrix filled with default values */
+  initChannelWellMatrix (defaultValue) {
+    let a = [];
+    for (let channelIndex = 0; channelIndex < this.channelsCount; channelIndex++) {
+      let row = [];
+      for (let wellIndex = 0; wellIndex < this.wellsCount; wellIndex++) {
+        row.push(JSON.parse(JSON.stringify(defaultValue)));
+      }
+      a.push(row);
+    }
+    return a;
   }
   calcBaseline () {
-    let index = 0;
-    const data = this.log.fluorescence.baseline;
-    if (data==null || data.length == 0) {
-      console.warn("OpticsAnalysis.calcBaseline baseline empty.");
-      return;
-    }
-    const channelsCount = data[0].v.length;
-    // {"repeat":0,"timestamp":22655,"values":[0.10839931087059657,0.14320391221901324,0.12286425068855174,0.14246562122693912,0.11768404832484902,0.11755829662844186,0.10416033499631905,0.12868933895027088]}
-    let values = [];
-    for (let i=0; i<channelsCount; i++) {
-      values.push([]);
-    }
-    data.forEach((line)=>{
-      line.v.forEach((value, index)=>{
-        values[index].push(value);
-      });
-    });
-    this.baselines = [];
-    this.thresholds = [];
-    values.forEach((channel, index)=>{
-      const baseline = Stat.average(channel);
-      const sd = Stat.standardDeviation(channel);
+    this.baselines = this.initChannelWellMatrix([]);
+    this.thresholds = this.initChannelWellMatrix([]);
+    this.eachWell((channelIndex, wellIndex)=>{
+      const values = this.fluorescenceTable[channelIndex][wellIndex];
+      // TODO use baseline target value
+      const target = values.slice(DEFAULT_BASELINE_START, DEFAULT_BASELINE_END);
+      const baseline = Stat.average(target);
+      const sd = Stat.standardDeviation(target);
       const threshold = baseline + sd * DEFAULT_THRESHOLD_RATIO;
-      this.baselines.push(baseline);
-      this.thresholds.push(threshold);
-      console.log("Channel %d avg=%f, sd=%f, threshold=%f", index, baseline, sd, threshold);
+      this.baselines[channelIndex][wellIndex] = baseline;
+      this.thresholds[channelIndex][wellIndex] = threshold;
+      // console.log("Channel %d Well %d avg=%f, sd=%f, threshold=%f", channelIndex, wellIndex, baseline, sd, threshold);
     });
   }
   calcCt () {
-    if (this.thresholds.length == 0) {
-      console.warn("this.thresholds is empty.");
-      return;
-    }
-    if (this.ct == null) {
-      this.ct = this.thresholds.map((v)=>{return -1;});
-      this.ctIndex = 0;
-    }
-    const data = this.log.fluorescence.qpcr;
-    for (let i=this.ctIndex; i<data.length; i++) {
-      //console.log("Repeat %d %s", data[i].repeat, JSON.stringify(data[i].v));
-      for (let ch=0; ch<this.ct.length; ch++) {
-        if (this.ct[ch] < 0 && this.thresholds[ch] < data[i].v[ch]) {
-          //console.log("Ch[%d] OK at %d", ch, data[i].repeat);
-          this.ct[ch] = data[i].repeat;
-        } 
+    this.cts = this.initChannelWellMatrix([]);
+    this.eachWell((channelIndex, wellIndex)=>{
+      const values = this.fluorescenceTable[channelIndex][wellIndex];
+      const threshold = this.thresholds[channelIndex][wellIndex];
+      for (let i=0; i<values.length-1; i++) {
+        if (values[i] <= threshold && threshold < values[i+1]) {
+          const ct = i + (threshold-values[i])/(values[i+1]-values[i]);
+          this.cts[channelIndex][wellIndex] = ct;
+          
+        }
       }
-      this.ctIndex = i;
-    }
-    console.log("Ct=" + JSON.stringify(this.ct));
+      
+    });
   }
   calcMeltCurve (limitCount) {
     // this.meltCurve = [];
     // this.meltCurveIndex = 0;
-    const rawData = this.log.fluorescence.melt_curve;
+    const rawData = this.experiment.fluorescence.melt_curve;
     if (rawData == null || rawData.length == 0) {
       console.warn("Melt curve data is empty.");
       return false;
@@ -123,17 +138,19 @@ class OpticsAnalysis {
   getThresholds () {
     return this.thresholds;
   }
-  getCt () {
-    return this.ct;
+  getCts () {
+    return this.cts;
   }
   getMeltCurve () {
     return this.meltCurve;
   }
   analyze () {
+    this.calcBaseline();
+    this.calcCt();
     return { 
-      "baseline": 0,
-      "threshold": 1,
-      "ct": 2,
+      "baseline": this.baselines,
+      "threshold": this.thresholds,
+      "ct": this.cts,
       "standard_curve": 3
     };
   }

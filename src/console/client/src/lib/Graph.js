@@ -59,9 +59,13 @@ class Graph {
       }
     });
     this.data = [];
+    this.autoMinMax = false;
   }
   setConversionFunction (f) {
     this.conversionFunction = f;
+  }
+  setAutoMinMax (conf) {
+    this.autoMinMax = conf;
   }
   setSeries (series) {
     this.data = [];
@@ -72,6 +76,10 @@ class Graph {
   }
   addData (index, data) {
     this.data[index].push(data);
+  }
+  setVisibility (index, visibility) {
+    console.log("Len=%d,Index=%d", this.chart.data.datasets.length, index, visibility)
+    this.chart.data.datasets[index].hidden = !visibility;
   }
   setMinMaxX (min, max) {
     this.chart.options.scales.xAxes[0].ticks.min = min;
@@ -95,6 +103,10 @@ class Graph {
     }
   }
   update () {
+    let xMin = null;
+    let xMax = null;
+    let yMin = null;
+    let yMax = null;
     for (let i=0; i<this.data.length; i++) {
       if (this.conversionFunction != null) {
         this.chart.data.datasets[i].data = this.data[i].map(this.conversionFunction);
@@ -102,14 +114,31 @@ class Graph {
         this.chart.data.datasets[i].data = this.data[i];
       }
     }
-    const xMin = this.chart.options.scales.xAxes[0].ticks.min;
-    const xMax = this.chart.options.scales.xAxes[0].ticks.max;
+    if (this.autoMinMax) {
+      xMin = Math.min.apply(null, this.chart.data.datasets.map((series)=>{
+        return Math.min.apply(null, series.data.map(data=>data.x));
+      }));
+      xMax = Math.max.apply(null, this.chart.data.datasets.map((series)=>{
+        return Math.max.apply(null, series.data.map(data=>data.x));
+      }));
+      yMin = Math.min.apply(null, this.chart.data.datasets.map((series)=>{
+        return Math.min.apply(null, series.data.map(data=>data.y));
+      }));
+      yMax = Math.max.apply(null, this.chart.data.datasets.map((series)=>{
+        return Math.max.apply(null, series.data.map(data=>data.y));
+      }));
+      console.log("%f %f %f %f", xMin, xMax, yMin, yMax);
+      this.chart.options.scales.xAxes[0].ticks.min = xMin;
+      this.chart.options.scales.xAxes[0].ticks.max = xMax;
+      this.chart.options.scales.yAxes[0].ticks.min = yMin;
+      this.chart.options.scales.yAxes[0].ticks.max = yMax;
+    }
     if (this.hLines) {
       for (let i=0; i<this.hLines.length; i++) {
         const index = this.data.length + i;
         this.chart.data.datasets[index].data = [
-          {x:xMin, y:this.hLines[i]},
-          {x:xMax, y:this.hLines[i]}
+          {x:this.chart.options.scales.xAxes[0].ticks.min, y:this.hLines[i]},
+          {x:this.chart.options.scales.xAxes[0].ticks.max, y:this.hLines[i]}
         ];
       }
     }
