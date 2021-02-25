@@ -4,7 +4,7 @@
 #                  
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-prod
-ComponentVersion: '1.0.23'
+ComponentVersion: '1.0.24'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 ComponentConfiguration:
@@ -15,11 +15,12 @@ Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.23/src-prod.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.24/src-prod.zip
         Unarchive: ZIP
     Lifecycle:
       Bootstrap:
         Script: |
+          echo "[NinjaPCR] Bootstrap"
           echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
           sudo ln -f -s {artifacts:decompressedPath}/src-prod/src {configuration:/NINJAQPCR_SRC}
           cd {configuration:/NINJAQPCR_SRC}/qpcr
@@ -28,4 +29,12 @@ Manifests:
           echo y | sudo npm update
           exit 0
       Run: |
-        python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
+        #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
+        echo "[NinjaPCR] Run"
+        sh /usr/local/ninjaqpcr/startup/startup.sh &
+      Shutdown:
+        Script: |
+          echo "[NinjaPCR] Shutdown"
+      Shutdown: 
+        Script: |
+          echo "[NinjaPCR] Recover"
