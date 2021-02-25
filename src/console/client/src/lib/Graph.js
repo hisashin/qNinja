@@ -18,7 +18,23 @@ const createDataset = (channelIndex, name, showLine)=>{
     pointColor: color,
     pointStrokeColor: "#fff",
     lineTension: 0.1,
+    borderWidth: 1,
     data: [
+    ]
+  };
+};
+const createDotDataset = (channelIndex, x, y)=>{
+  let color = colors[channelIndex%colors.length]
+  return {
+    showLine: false,
+    fill:false,
+    borderColor: color,
+    pointColor: color,
+    pointStrokeColor: color,
+    pointRadius:3,
+    lineTension: 0.1,
+    borderWidth: 1,
+    data: [{x:x,y:y}
     ]
   };
 };
@@ -32,8 +48,6 @@ class Graph {
       datasets: [
       ]
     };
-    let options = {
-    };
     this.chart = new Chart(ctx, {
       type: 'scatter',
       data: emptyData,
@@ -42,6 +56,9 @@ class Graph {
             point:{ radius: 0 }
         },
         animation: false,
+        legend: {
+          display:false
+        },
         scales: {
             xAxes: [{
                 ticks: {
@@ -52,7 +69,7 @@ class Graph {
             yAxes: [{
                 ticks: {
                     min: 20,
-                    max: 115.0 //TODO
+                    max: 115.0
                 }
             }]
         }
@@ -91,10 +108,17 @@ class Graph {
   setHLines (values) {
     this.hLines = values;
     for (let i=0; i<values.length; i++) {
-      if (this.chart.data.datasets.length < this.data.length + i+1) {
-        this.chart.data.datasets[this.data.length + i] = createDataset(i, i, true);
+      if (this.chart.data.datasets.length < this.data.length + i + 1) {
+        this.chart.data.datasets[this.data.length + i] = createDataset(i, null, true);
       }
     }
+  }
+  clearHLines () {
+    this.chart.data.datasets = this.chart.data.datasets.slice(0, this.data.length);
+    console.log("clearHLines %d", this.chart.data.datasets.length);
+  }
+  addDot (channel, x, y) {
+    this.chart.data.datasets.push(createDotDataset(channel, x, y));
   }
   clearData () {
     for (let i=0; i<this.data.length; i++) {
@@ -115,7 +139,7 @@ class Graph {
     }
     let a = 0;
     if (this.autoMinMax) {
-      const dat = this.chart.data.datasets.slice(0, this.data.length-1);
+      const dat = this.chart.data.datasets.slice(0, this.data.length);
       xMin = Math.min.apply(null, dat.map((series)=>{
         return Math.min.apply(null, series.data.map(data=>data.x));
       }));
@@ -127,7 +151,6 @@ class Graph {
       }));
       yMax = Math.max.apply(null, dat.map((series)=>{
         const m =  Math.max.apply(null, series.data.map(data=>data.y));
-        console.log(m)
         a++;
         return m;
       }));
@@ -145,8 +168,6 @@ class Graph {
         ];
       }
     }
-    console.log("GraphDataSize=%d",this.data.length);
-    console.log("GraphDatasetsSize=%d",this.chart.data.datasets.length);
     this.chart.update();
   }
 }

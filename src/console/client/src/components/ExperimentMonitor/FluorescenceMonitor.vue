@@ -161,19 +161,27 @@ export default {
       }
     },
     updateBaseline: function () {
+      this.graph.clearHLines();
       if (this.analysis.baseline && this.analysis.baseline.length > 0) {
         let baselines = [];
         this.eachSeries((c, w, i)=>{
           baselines.push(this.analysis.baseline[c][w]);
+          baselines.push(this.analysis.threshold[c][w]);
         });
         if (this.yScale == "log") {
           baselines = baselines.map(v=>Math.log10(v));
         }
-        console.log(baselines)
-        // TODO: Support multiple series of HLines
-        // TODO: Add thresholds
-        // TODO: Add Ct dots
+        console.log("BaselineCount=%d", baselines.length);
         this.graph.setHLines(baselines);
+        this.eachSeries((c, w, i)=>{
+          const y = this.analysis.threshold[c][w];
+          const x = this.analysis.ct[c][w];
+          if (this.yScale == "log") {
+            this.graph.addDot(i, x, Math.log10(y));
+          } else {
+            this.graph.addDot(i, x, y);
+          }
+        });
       }
     },
     add: function (data) {
@@ -183,11 +191,16 @@ export default {
       this.graph.update();
     },
     onFilterChange: function() {
+      const seriesCount = this.channelsCount * this.wellsCount;
       this.eachWell((well)=>{
         // well.index
         this.channels.forEach((channel)=>{
           const index = this._index(channel.index, well.index);
           this.graph.setVisibility(index, well.visible && channel.visible);
+          if (this.analysis.baseline && this.analysis.baseline.length > 0) {
+            this.graph.setVisibility(seriesCount + index, well.visible && channel.visible);
+            this.graph.setVisibility(seriesCount*2 + index, well.visible && channel.visible);
+          }
         });
       });
       const f = this.yScale == "log" ? CONVERSION_FUNC_LOG : CONVERSION_FUNC_LINEAR;
