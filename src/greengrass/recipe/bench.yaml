@@ -1,40 +1,60 @@
 #
 # AWS IoT Greengrass component recipe reference
 # https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html
-#                  
+#
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-bench
-ComponentVersion: '1.0.23'
+ComponentVersion: '1.0.34'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 ComponentConfiguration:
   DefaultConfiguration:
     NINJAQPCR_SRC: /usr/local/ninjaqpcr
     NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
+    # {confirguration/NINJAQPCR_VERSION} didn't work sometimes so it's removed. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.23/src-bench.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.34/src-bench.zip
         Unarchive: ZIP
     Lifecycle:
       Bootstrap:
+        RequiresPrivilege: true
         Script: |
-          echo "[NinjaPCR] Bootstrap"
+          rm {configuration:/NINJAQPCR_SRC}
+      Install:
+        # Firstly, Bootstrap run these scripts but moved to Install.
+        # Because sometimes GG re-linked /usr/local/ninjaqpcr to old artifacts with old version that didn't exist on server anymore and link get broken. Maybe cached too much.
+        Skipif : exists {configuration:/NINJAQPCR_SRC}
+        RequiresPrivilege: true
+        Script: |
+          VERSION=`sh {artifacts:decompressedPath}/src-bench/src/greengrass/version.sh {artifacts:decompressedPath}/src-bench/src/greengrass/recipe/bench.yaml`
+          echo "[NinjaPCR] Install ver$VERSION"
           echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
-          sudo ln -f -s {artifacts:decompressedPath}/src-bench/src {configuration:/NINJAQPCR_SRC}
+          ln -f -s {artifacts:decompressedPath}/src-bench/src {configuration:/NINJAQPCR_SRC}
           cd {configuration:/NINJAQPCR_SRC}/qpcr
-          echo y | sudo npm update
+          echo y | npm update
           cd {configuration:/NINJAQPCR_SRC}/console/server
-          echo y | sudo npm update
+          echo y | npm update
+          if [ `grep NINJAQPCR_VERSION /etc/profile | wc -l` -eq 0 ]; then
+            echo "export NINJAQPCR_VERSION=$VERSION" | tee -a /etc/profile
+          else
+            sed -i "s/export NINJAQPCR_VERSION=.*/export NINJAQPCR_VERSION=$VERSION/" /etc/profile
+          fi
           exit 0
-      Run: |
-        #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
-        echo "[NinjaPCR] Run"
-        sh /usr/local/ninjaqpcr/startup/startup.sh &
+      Run:
+        Script: |
+          #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
+          VERSION=`sh {artifacts:decompressedPath}/src-bench/src/greengrass/version.sh {artifacts:decompressedPath}/src-bench/src/greengrass/recipe/bench.yaml`
+          echo "[NinjaPCR] Run ver$VERSION"
+          sh {configuration:/NINJAQPCR_SRC}/startup/startup.sh
+          exit 0
       Shutdown:
         Script: |
-          echo "[NinjaPCR] Shutdown"
-      Shutdown: 
+          VERSION=`sh {artifacts:decompressedPath}/src-bench/src/greengrass/version.sh {artifacts:decompressedPath}/src-bench/src/greengrass/recipe/bench.yaml`
+          echo "[NinjaPCR] Shutdown ver$VERSION"
+      Recover: 
         Script: |
-          echo "[NinjaPCR] Recover"
+          VERSION=`sh {artifacts:decompressedPath}/src-bench/src/greengrass/version.sh {artifacts:decompressedPath}/src-bench/src/greengrass/recipe/bench.yaml`
+          echo "[NinjaPCR] Recover ver$VERSION"
