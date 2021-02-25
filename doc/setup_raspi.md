@@ -62,6 +62,10 @@ Software update can be done manually by `git pull`.
   ```
 - `chmod 600 ~/.ssh/config`
 - `git clone github:hisashin/Ninja-qPCR.git`
+
+- `curl -L https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh | sudo sh`
+  
+
 - `sudo ln -f -s Ninja-qPCR/src-prod/src /usr/local/ninjaqpcr`
 - `cd /usr/local/ninjaqpcr/qpcr`
 - `echo y | sudo npm update`
