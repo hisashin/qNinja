@@ -30,4 +30,4 @@ Manifests:
           sudo npm update
           exit 0
       Run: |
-        python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world.py
+        python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
