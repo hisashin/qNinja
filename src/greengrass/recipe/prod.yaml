@@ -4,7 +4,7 @@
 #
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-prod
-ComponentVersion: '1.0.32'
+ComponentVersion: '1.0.33'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 ComponentConfiguration:
@@ -15,13 +15,13 @@ Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.32/src-prod.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.33/src-prod.zip
         Unarchive: ZIP
     Lifecycle:
-      Bootstrap:
+      xxxBootstrap:
         RequiresPrivilege: true
         Script: |
-          # confirguration/NINJAQPCR_VERSION didn't work sometimes. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
+          # {confirguration/NINJAQPCR_VERSION} didn't work sometimes so it's removed. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
           VERSION=`sh {artifacts:decompressedPath}/src-prod/src/greengrass/version.sh {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/prod.yaml`
           echo "[NinjaPCR] Bootstrap ver$VERSION"
           echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
@@ -37,8 +37,9 @@ Manifests:
           fi
           exit 0
       Install:
-        # {artifacts:decompressedPath} didn't work sometimes. GG use old yaml with old version that's not exist and /usr/local/ninjaqpcr link broken. Maybe cached too much.
+        # Sometimes GG re-link /usr/local/ninjaqpcr to old artifacts with old version that's not exist and link is broken. Maybe cached too much.
         Skipif : exists {configuration:/NINJAQPCR_SRC}
+        RequiresPrivilege: true
         Script: |
           VERSION=`sh {artifacts:decompressedPath}/src-prod/src/greengrass/version.sh {artifacts:decompressedPath}/src-prod/src/greengrass/recipe/prod.yaml`
           echo "[NinjaPCR] Install ver$VERSION"
