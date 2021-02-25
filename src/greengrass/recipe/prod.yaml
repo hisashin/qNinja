@@ -16,7 +16,7 @@ Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/{configuration:/NINJAQPCR_VERSION}/src-prod.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.29/src-prod.zip
         Unarchive: ZIP
     Lifecycle:
       Bootstrap:
