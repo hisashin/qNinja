@@ -1,19 +1,40 @@
 #
 # AWS IoT Greengrass component recipe reference
 # https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html
-#
+#                  
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-bench
-ComponentVersion: '1.0.4'
+ComponentVersion: '1.0.23'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
+ComponentConfiguration:
+  DefaultConfiguration:
+    NINJAQPCR_SRC: /usr/local/ninjaqpcr
+    NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.4/src-bench.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.23/src-bench.zip
         Unarchive: ZIP
     Lifecycle:
+      Bootstrap:
+        Script: |
+          echo "[NinjaPCR] Bootstrap"
+          echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
+          sudo ln -f -s {artifacts:decompressedPath}/src-bench/src {configuration:/NINJAQPCR_SRC}
+          cd {configuration:/NINJAQPCR_SRC}/qpcr
+          echo y | sudo npm update
+          cd {configuration:/NINJAQPCR_SRC}/console/server
+          echo y | sudo npm update
+          exit 0
       Run: |
-        python3 {artifacts:decompressedPath}/src-dev/src/greengrass/recipe/hello_world.py
-
+        #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
+        echo "[NinjaPCR] Run"
+        sh /usr/local/ninjaqpcr/startup/startup.sh &
+      Shutdown:
+        Script: |
+          echo "[NinjaPCR] Shutdown"
+      Shutdown: 
+        Script: |
+          echo "[NinjaPCR] Recover"

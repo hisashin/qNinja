@@ -12,6 +12,9 @@ src/network_conf_app/wpa_supplicant.conf
 #src/qpcr/user_data/*
 src/raspi_packaging/hosts
 
+node_modules
+package-lock.json
+
 # KiCad autosave
 *.sch-bak
 *-cache.lib
