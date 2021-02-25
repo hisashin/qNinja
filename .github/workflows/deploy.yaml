@@ -66,3 +66,8 @@ jobs:
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
         curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{"value1" : "Deploying Ninja qPCR '$BRANCH' '$VERSION'"}' ${{ secrets.SLACK_URL }}
 
+    - name: show job status
+      if: always()
+      run: echo $status
+      env:
+        status: ${{job.status}}
