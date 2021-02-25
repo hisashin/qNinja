@@ -4,20 +4,21 @@
 #                  
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-prod
-ComponentVersion: '1.0.13'
+ComponentVersion: '1.0.14'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.13/src-prod.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.14/src-prod.zip
         Unarchive: ZIP
     Lifecycle:
-      SetEnv:
-        NINJAQPCR_SRC : /usr/local/ninjaqpcr
-        NINJAQPCR_DATA : /var/lib/ninjaqpcr/data
+      Setenv:
+        NINJAQPCR_SRC: /usr/local/ninjaqpcr
+        NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
       Run: |
+        echo "NINJAQPCR_SRC=$NINJAQPCR_SRC NINJAQPCR_DATA=$NINJAQPCR_DATA"
         ln -f -s {artifacts:decompressedPath}/src-prod/src $NINJAQPCR_SRC
         sudo chown -R ggc_user.ggc_user $NINJAQPCR_SRC
         sudo chown -R ggc_user.ggc_user $NINJAQPCR_DATA
