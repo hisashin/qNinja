@@ -7,6 +7,10 @@ ComponentName: dev.hisa.Ninja-prod
 ComponentVersion: '1.0.14'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
+ComponentConfiguration:
+  DefaultConfiguration:
+    NINJAQPCR_SRC: /usr/local/ninjaqpcr
+    NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
 Manifests:
   - Platform:
       os: linux
@@ -15,11 +19,8 @@ Manifests:
         Unarchive: ZIP
     Lifecycle:
       Setenv:
-        NINJAQPCR_SRC: /usr/local/ninjaqpcr
-        NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
       Run: |
-        echo "NINJAQPCR_SRC=$NINJAQPCR_SRC NINJAQPCR_DATA=$NINJAQPCR_DATA"
-        ln -f -s {artifacts:decompressedPath}/src-prod/src $NINJAQPCR_SRC
-        sudo chown -R ggc_user.ggc_user $NINJAQPCR_SRC
-        sudo chown -R ggc_user.ggc_user $NINJAQPCR_DATA
-        python3 $NINJAQPCR_SRC/greengrass/recipe/hello_world.py
+        ln -f -s {artifacts:decompressedPath}/src-prod/src {configuration:/NINJAQPCR_SRC}
+        sudo chown -R ggc_user.ggc_user {configuration:/NINJAQPCR_SRC}
+        sudo chown -R ggc_user.ggc_user {configuration:/NINJAQPCR_DATA}
+        python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world.py
