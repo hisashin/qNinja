@@ -4,38 +4,48 @@
 #                  
 RecipeFormatVersion: 2020-01-25
 ComponentName: dev.hisa.Ninja-prod
-ComponentVersion: '1.0.25'
+ComponentVersion: '1.0.26'
 ComponentDescription: Ninja qPCR Greengrass component
 ComponentPublisher: Toriningen Inc.
 ComponentConfiguration:
   DefaultConfiguration:
     NINJAQPCR_SRC: /usr/local/ninjaqpcr
     NINJAQPCR_DATA: /var/lib/ninjaqpcr/data
+    NINJAQPCR_VERSION: 1.0.26
 Manifests:
   - Platform:
       os: linux
     Artifacts:
-      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.25/src-prod.zip
+      - URI: s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/1.0.26/src-prod.zip
         Unarchive: ZIP
     Lifecycle:
+      Bootstrap:
+        RequiresPrivilege: true
+        Script: |
+          echo "[NinjaPCR] Bootstrap ver{configuration:/NINJAQPCR_VERSION}"
+          echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
+          ln -f -s {artifacts:decompressedPath}/src-prod/src {configuration:/NINJAQPCR_SRC}
+          cd {configuration:/NINJAQPCR_SRC}/qpcr
+          echo y | npm update
+          cd {configuration:/NINJAQPCR_SRC}/console/server
+          echo y | npm update
+          if [ `grep NINJAQPCR_VERSION /etc/profile | wc -l` -eq 0 ]; then
+            echo "export NINJAQPCR_VERSION={configuration:/NINJAQPCR_VERSION}" | tee -a /etc/profile
+          else
+            sed -i "s/export NINJAQPCR_VERSION=.*/export NINJAQPCR_VERSION={configuration:/NINJAQPCR_VERSION}/" /etc/profile
+          exit 0
       Install:
         Script: |
-          echo "[NinjaPCR] Bootstrap"
-          echo "configuration:/NINJAQPCR_SRC={configuration:/NINJAQPCR_SRC}"
-          sudo ln -f -s {artifacts:decompressedPath}/src-prod/src {configuration:/NINJAQPCR_SRC}
-          cd {configuration:/NINJAQPCR_SRC}/qpcr
-          echo y | sudo npm update
-          cd {configuration:/NINJAQPCR_SRC}/console/server
-          echo y | sudo npm update
+          echo "[NinjaPCR] Install ver{configuration:/NINJAQPCR_VERSION}"
+      Run:
+        Script: |
+          #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
+          echo "[NinjaPCR] Run ver{configuration:/NINJAQPCR_VERSION}"
+          sh {configuration:/NINJAQPCR_SRC}/startup/startup.sh
           exit 0
-      Run: |
-        #python3 {configuration:/NINJAQPCR_SRC}/greengrass/recipe/hello_world2.py
-        echo "[NinjaPCR] Run"
-        sh {configuration:/NINJAQPCR_SRC}/startup/startup.sh
-        exit 0
       Shutdown:
         Script: |
-          echo "[NinjaPCR] Shutdown"
+          echo "[NinjaPCR] Shutdown ver{configuration:/NINJAQPCR_VERSION}"
       Shutdown: 
         Script: |
-          echo "[NinjaPCR] Recover"
+          echo "[NinjaPCR] Recover ver{configuration:/NINJAQPCR_VERSION}"
