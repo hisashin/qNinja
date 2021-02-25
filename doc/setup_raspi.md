@@ -62,10 +62,9 @@ Software update can be done manually by `git pull`.
   ```
 - `chmod 600 ~/.ssh/config`
 - `git clone github:hisashin/Ninja-qPCR.git`
-
 - `curl -L https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh | sudo sh`
-  isc-dhcp-server may be failed to startup if you're using WiFi. It's ok for now and just ignore.
-  ![fail](https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/images/isc-dhcp-server_fail.png)  
+  - isc-dhcp-server may be failed to startup if you're using WiFi. It's ok for now and just ignore.
+    ![fail](https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/images/isc-dhcp-server_fail.png)  
 - `sudo ln -f -s Ninja-qPCR/src-prod/src /usr/local/ninjaqpcr`
 - `cd /usr/local/ninjaqpcr/qpcr`
 - `echo y | sudo npm update`
@@ -81,8 +80,8 @@ Ninja qPCR software will be installed and updated to the latest automatically wh
 [Setting up a Raspberry Pi](https://docs.aws.amazon.com/greengrass/latest/developerguide/setup-filter.rpi.html)
 
 - `curl -L https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/src/greengrass/setup.sh | sudo sh`
-  isc-dhcp-server may be failed to startup if you're using WiFi. It's ok for now and just ignore.
-  ![fail](https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/images/isc-dhcp-server_fail.png)  
+  - isc-dhcp-server may be failed to startup if you're using WiFi. It's ok for now and just ignore.
+    ![fail](https://raw.githubusercontent.com/hisashin/Ninja-qPCR/master/images/isc-dhcp-server_fail.png)  
 - `sudo reboot`
 
 [Configure AWS IoT Greengrass on AWS IoT](https://docs.aws.amazon.com/greengrass/v1/developerguide/gg-config.html)
