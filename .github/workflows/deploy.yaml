@@ -67,7 +67,7 @@ jobs:
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
-        if[ $status != 'success' ]; then
+        if [ $status != 'success' ]; then
           curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{"value1" : "FAILED to deploy Ninja qPCR '$BRANCH' '$VERSION' https://github.com/hisashin/Ninja-qPCR/actions"}' ${{ secrets.SLACK_URL }}
         else
           curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{"value1" : "Deploying Ninja qPCR '$BRANCH' '$VERSION'"}' ${{ secrets.SLACK_URL }}
