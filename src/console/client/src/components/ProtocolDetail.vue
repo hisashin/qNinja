@@ -12,8 +12,6 @@
     <ul class="protocol__stages">
       <template v-for="(stage, index) in protocol.stages">
         <li :key="index" class="protocol__stages__stage">
-          <div 
-            v-if="stage.pauseAfter">PAUSE</div>
           <template v-if="stage.type==1 && stage.steps.length>0">
             <h3 class="protocol__stages__stage__title">Hold Stage</h3>
             <ul class="protocol__stages__stage__steps">
@@ -129,6 +127,7 @@
               </li>
             </ul>
           </template>
+          <div class="protocol__stages__stage__footer" v-if="stage.pause_after">Pause after the stage</div>
         </li>
       </template>
     </ul>

@@ -7,7 +7,7 @@
       {
         "type": 1,
         "repeat": 1,
-        "pauseAfter": true,
+        "pause_after": true,
         "steps": [
           {
             "label": "hold",

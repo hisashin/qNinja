@@ -746,7 +746,6 @@ class NinjaQPCRServer {
     return map;
   }
   init () {
-    
     // Commandline options
     const options = this.getArgMap();
     console.log(JSON.stringify(options));

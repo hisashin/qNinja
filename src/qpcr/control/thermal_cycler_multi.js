@@ -422,8 +422,8 @@ class StateStepHold {
       // End of the stage.
       // Has next stage
       // Auto pause?
-      console.log("pauseAfter=" + this.protocol.stages[this.stageIndex].pauseAfter);
-      if (this.protocol.stages[this.stageIndex].pauseAfter) {
+      console.log("pause_after=" + this.protocol.stages[this.stageIndex].pause_after);
+      if (this.protocol.stages[this.stageIndex].pause_after) {
         // Pause.
         return new StateAutoPause(this.protocol, this.stageIndex, this.repeatIndex, this.stepIndex, startTemperature);
       }
