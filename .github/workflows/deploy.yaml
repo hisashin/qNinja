@@ -2,7 +2,7 @@ name: deploy
 on:
   push:
     branches:
-      - 'batch'
+      - 'bench'
       - 'prod'
     paths:
       - 'src/greengrass/recipe/*.yaml'
@@ -31,7 +31,8 @@ jobs:
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=10 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
         
-        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        #VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        VERSION=`sh src/greengrass/version.sh src/greengrass/recipe/$BRANCH.yaml`
         echo "VERSION=$VERSION"
 
     - name: Configure AWS credentials
@@ -44,7 +45,8 @@ jobs:
     - name: Upload artifact
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        #VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        VERSION=`sh src/greengrass/version.sh src/greengrass/recipe/$BRANCH.yaml`
         zip -r src-$BRANCH.zip src
         aws s3 cp src-$BRANCH.zip s3://gg-ninja-qpcr/artifacts/dev.hisa.Ninja/$VERSION/src-$BRANCH.zip
 
@@ -56,7 +58,8 @@ jobs:
     - name: Revise deployment
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        #VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        VERSION=`sh src/greengrass/version.sh src/greengrass/recipe/$BRANCH.yaml`
         sed -e "s/{version}/$VERSION/" -e "s/{branch}/$BRANCH/" src/greengrass/revise.json.template > revise.json
         aws greengrassv2 create-deployment --cli-input-json file://revise.json
 
@@ -66,7 +69,8 @@ jobs:
         status: ${{job.status}}
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        #VERSION=`sed -z "s/.*ComponentVersion: *'//" src/greengrass/recipe/$BRANCH.yaml |sed -z "s/'.*//"`
+        VERSION=`sh src/greengrass/version.sh src/greengrass/recipe/$BRANCH.yaml`
         if [ $status != 'success' ]; then
           curl -X POST -o /dev/null -H "Content-Type: application/json" -d '{"value1" : "FAILED to deploy Ninja qPCR '$BRANCH' '$VERSION' https://github.com/hisashin/Ninja-qPCR/actions"}' ${{ secrets.SLACK_URL }}
         else

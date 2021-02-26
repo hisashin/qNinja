@@ -4,6 +4,10 @@
 gpio mode 11 in
 val=$(gpio read 11)
 
+echo "NINJAQPCR_SRC=$NINJAQPCR_SRC"
+echo "NINJAQPCR_DATA=$NINJAQPCR_DATA"
+echo "NINJAQPCR_VERSION=$NINJAQPCR_VERSION"
+
 echo "$val"
 if [ $val = 1 ]; then
   echo "GPIO0 HIGH (AP mode)"
