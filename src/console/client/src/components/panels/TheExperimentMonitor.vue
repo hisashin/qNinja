@@ -7,6 +7,14 @@
         <div class="section__header__menu"></div>
       </header>
       <div class="section__body">
+        <div v-if="autoPause">
+          The expriment is automatically paused.
+          <b-button
+            class="ml-1"
+            @click.stop="finishAutoPause">
+            Continue
+          </b-button>
+        </div>
         <div class="item item--tabbed">
           <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
             <b-tab title="Temperature">
@@ -65,7 +73,8 @@ export default {
     return {
       experiment: null,
       oneShot: false,
-      continuous: false
+      continuous: false,
+      autoPause: false
     };
   },
   created: function () {
@@ -98,6 +107,10 @@ export default {
         break;
       }
     },
+    finishAutoPause () {
+      device.finishAutoPause();
+      this.autoPause = false;
+    },
     onDisappear () {
     },
     onAppear () {
@@ -121,6 +134,10 @@ export default {
             device.addTransitionHandler({
               onComplete: (obj)=>{
                 startTime = new Date();
+              },
+              onAutoPause: (obj)=>{
+                console.log("TheExperimentMonitor AutoPause event received.");
+                this.autoPause = true;
               }
             });
             device.addProgressHandler({

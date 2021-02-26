@@ -16,6 +16,7 @@ const DEMO_TEMP_LOW = 35.0;
 const example_hold_stage = {
   type: Constants.StageType.HOLD,
   repeat: 1,
+  pauseAfter: true,
   steps: [
     { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
   ]
@@ -24,7 +25,8 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  repeat: 20,
+  repeat: 2,
+  pauseAfter: false,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
     { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
@@ -35,6 +37,7 @@ const example_pcr_stage = {
 const example_melt_curve_stage = {
   type: Constants.StageType.MELT_CURVE,
   repeat: 1,
+  pauseAfter: false,
   steps: [
     { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
     { label:"cool", duration:5, temp:DEMO_TEMP_MEDIUM, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
@@ -47,6 +50,7 @@ const protocol = {
   lid_temp: 80.0, // Celsius
   final_hold_temp:20,
   name: "Dev Protocol",
+  pauseAfter: false,
   stages: [
     example_hold_stage,
     example_pcr_stage,

@@ -124,6 +124,13 @@ class ThermalCycler {
   pause () {
     this._stopTimer();
   }
+  finishAutoPause () {
+    if (this.state.resume) {
+      this.state.resume();
+    } else {
+      console.error("Illegal state. ThermalCycler.finishAutoPause was called but the state is not auto_pause.");
+    }
+  }
   resume () {
     this._startTimer();
   }
@@ -187,6 +194,13 @@ class ThermalCycler {
       }
       if (this.state.isFinished () && this.eventReceiver != null && this.eventReceiver.onComplete != null)  {
         this.eventReceiver.onComplete();
+      }
+      if (this.state.getStatus().state == "auto_pause") {
+        console.log("Transition to auto_pause");
+        if (!this.eventReceiver.onAutoPause) {
+          console.error("Event receiver has no onAutoPause");
+        }
+        this.eventReceiver.onAutoPause(this.state.getStatus());
       }
     }
     if (this.eventReceiver != null && this.eventReceiver.onProgress != null) {
@@ -396,7 +410,14 @@ class StateStepHold {
       nextStep = 0;
       nextRepeat += 1;
     } else if (this.stageIndex < this.protocol.stages.length - 1) {
-      // Next stage
+      // End of the stage.
+      // Has next stage
+      // Auto pause?
+      console.log("pauseAfter=" + this.protocol.stages[this.stageIndex].pauseAfter);
+      if (this.protocol.stages[this.stageIndex].pauseAfter) {
+        // Pause.
+        return new StateAutoPause(this.protocol, this.stageIndex, this.repeatIndex, this.stepIndex, startTemperature);
+      }
       nextStage = this.stageIndex += 1;
       nextRepeat = 0;
       nextStep = 0;
@@ -418,6 +439,49 @@ class StateStepHold {
     }
   }
   isFinished () { return false; }
+}
+class StateAutoPause {
+  constructor (protocol, stageIndex, repeatIndex, stepIndex, startTemperature) {
+    this.protocol = protocol;
+    this.stageIndex = stageIndex;
+    this.startTemperature = startTemperature;
+  }
+  start (timestamp) { this.startTimestamp = timestamp; }
+  debug () { return "FinalHold"; }
+  complete (plateTemp, lid_temp, timestamp) { 
+    return (this.resuming == true); 
+  }
+  updateTime (timestamp) {
+    // Nothing to do.
+  }
+  plateTargetTemp () {
+    return this.startTemperature;
+  }
+  lidTargetTemp () {
+    return this.protocol.lid_temp;
+  }
+  next (startTemperature) {
+    if (this.resuming) {
+      return new StateStepRamp(this.protocol, this.stageIndex+1, 
+        0, 0, startTemperature);
+    }
+    return null;
+  }
+  getStatus() {
+    return {
+      state: "auto_pause",
+      stage: this.stageIndex,
+      step: this.stepIndex,
+      repeat: this.repeatIndex,
+      stepElapsed: new Date().getTime() - this.startTimestamp;
+    }
+  }
+  isFinished () { 
+    return false; 
+  }
+  resume () {
+    this.resuming = true;
+  }
 }
 class StateFinalHold {
   constructor (protocol) {

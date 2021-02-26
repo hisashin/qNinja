@@ -48,6 +48,11 @@ class NinjaQPCRDemo {
   onThermalTransition (data) {
     // console.log(data);
   }
+  
+  onAutoPause (data) {
+    console.log("onAutoPause. Resume after 5 seconds.");
+    setTimeout(()=>{qpcr.finishAutoPause();}, 5000);
+  }
   onProgress (data) {
     console.log(data);
   }
