@@ -102,8 +102,9 @@ class LEDUnit {
     // Nothing to do
     
   }
-  select (well) {
+  select (wellIndex) {
     // Nothing to do
+    // console.log("LED %d", wellIndex);
   }
   off () {
     // Nothing to do
@@ -195,6 +196,7 @@ class FluorescenceSensingUnit {
     this.sim.start();
   }
   select (wellIndex, opticalChannel) {
+    // console.log("MUX %d %d", wellIndex, opticalChannel);
     this.sim.select(wellIndex, opticalChannel);
   }
   measure(callback) {

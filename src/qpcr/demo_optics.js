@@ -1,7 +1,7 @@
 "use strict";
-const hardwareConf = require("./conf/batch3_hardware_conf.js");
+const USE_DUMMY = true;
+const hardwareConf = (USE_DUMMY) ? require("./conf/dummy_hardware_multi_conf.js") : require("./conf/batch3_hardware_conf.js");
 const Optics = require("./control/optics.js");
-const rpio = require('rpio');
 const SINGLE_TARGET_WELL_INDEX = 7;
 
 // Run optics demo with batch3 boards.
@@ -15,7 +15,9 @@ class OpticsDemo {
     this.opticsStarted = false;
     this.ledStarted = false;
     this.photosensingStarted = false;
-    rpio.open(32, rpio.INPUT); // To disable PWM pin for ADA2200's RCLK
+    if (!USE_DUMMY) {
+      require('rpio').open(32, rpio.INPUT); // To disable PWM pin for ADA2200's RCLK
+    }
   }
   runOpticsDemo () {
     // Combination of LED and Photosensing
@@ -23,20 +25,18 @@ class OpticsDemo {
     this.optics.start();
     this.opticsStarted = true;
     let singleCh = 0;
-    /*
-    setInterval(()=>{
-      const target = singleCh;
-      this.optics.measureSingle(target, (res)=>{
-        console.log("%d\t%f", target, res.value);
-      });
-      singleCh = (singleCh + 1) % 4;
-    }, 400);
-    */
     setInterval(()=>{
       this.optics.measureAll((values)=>{
         console.log(values);
       });
-    }, 2000);
+    }, 4000);
+  }
+  runContinuousDemo () {
+    this.optics = new Optics(this.led, this.photosensing, this.wellsCount, this.opticsChannelsCount);
+    this.optics.start();
+    this.optics.startContinuousDataCollection((values)=>{
+      console.log("Continuous:" + JSON.stringify(values));
+    });
   }
   //  Event handlers
   runLEDDemo () {
@@ -75,7 +75,8 @@ class OpticsDemo {
   }
 }
 const demo = new OpticsDemo();
-demo.runOpticsDemo();
+// demo.runOpticsDemo();
+demo.runContinuousDemo();
 // demo.runLEDDemo();
 // demo.runPhotosensingDemo();
 
