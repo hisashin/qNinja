@@ -24,6 +24,7 @@ const DEVICE_STATE = {
   IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
   RUNNING: { label:"running", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:true, abortAvailable:true, finishAvailable:false },
   PAUSED: { label:"paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
+  AUTO_PAUSED: { label:"auto_paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
   COMPLETE: { label:"complete", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:false, abortAvailable:true, finishAvailable:true }
 };
 
@@ -113,7 +114,9 @@ class NinjaQPCR {
     this.experimentLog.status.status = "running";
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.RUNNING);
-    
+  }
+  finishAutoPause () {
+    this.thermalCycler.finishAutoPause();
   }
   abort () {
     if (!this.deviceState.abortAvailable) {
@@ -287,6 +290,13 @@ class NinjaQPCR {
       this.notifyFluorescenceEvent(this.optics.continuous?"start":"stop");
       this.isMeasuringFluorescenceContinuously = this.optics.continuous;
     }
+  }
+  onAutoPause (data) {
+    if (!this.receiver.onAutoPause) {
+      console.error("Event receiver has no function named onAutoPause");
+    }
+    this.receiver.onAutoPause(data);
+    
   }
   notifyFluorescenceEvent (eventType) {
     if (this.receiver != null && this.receiver.onFluorescenceEvent != null) {

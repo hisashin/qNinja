@@ -127,6 +127,7 @@
               </li>
             </ul>
           </template>
+          <div class="protocol__stages__stage__footer" v-if="stage.pause_after">Pause after the stage</div>
         </li>
       </template>
     </ul>

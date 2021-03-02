@@ -602,6 +602,8 @@ class NinjaQPCRWebSocketServer {
         this.pause(); break;
       case "experiment.resume":
         this.resume(); break;
+      case "experiment.finishAutoPause":
+        this.finishAutoPause(); break;
       case "experiment.abort":
         this.abort(); break;
       case "experiment.finish":
@@ -636,6 +638,9 @@ class NinjaQPCRWebSocketServer {
   resume () {
     qpcr.resume(this.protocol);
   }
+  finishAutoPause () {
+    qpcr.finishAutoPause();
+  }
   finish () {
     qpcr.finish(this.protocol);
   }
@@ -656,6 +661,13 @@ class NinjaQPCRWebSocketServer {
   onThermalTransition (data) {
     const obj = {
       category:"experiment.transition",
+      data:data
+    };
+    this._send(obj);
+  }
+  onAutoPause (data) {
+    const obj = {
+      category:"experiment.autoPause",
       data:data
     };
     this._send(obj);
@@ -734,7 +746,6 @@ class NinjaQPCRServer {
     return map;
   }
   init () {
-    
     // Commandline options
     const options = this.getArgMap();
     console.log(JSON.stringify(options));

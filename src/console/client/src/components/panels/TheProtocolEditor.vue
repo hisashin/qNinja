@@ -309,6 +309,10 @@
                       </li>
                     </ul>
                   </template>
+                  <div class="protocol__stages__stage__footer">
+                    <span :class="'validation-label validation__stages__'+index+'__pause_after'"/>
+                    <label><input type="checkbox" v-model="stage.pause_after" v-on:change="onChangeProtocol()">Pause after the stage</label>
+                  </div>
                 </li>
               </template>
               <li class="protocol__stages__stage-add">

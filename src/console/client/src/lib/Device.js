@@ -82,7 +82,13 @@ class Device {
             }
           });
           break;
-        
+        case "experiment.autoPause":
+          this.transitionHandlers.forEach((handler)=>{
+            if (handler.onAutoPause) {
+              handler.onAutoPause(obj.data);
+            }
+          });
+          break;
         case "experiment.start":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onStart) {
@@ -135,6 +141,12 @@ class Device {
   pause () {
     const obj = {
       "category":"experiment.pause"
+    };
+    this.send(obj);
+  }
+  finishAutoPause () {
+    const obj = {
+      "category":"experiment.finishAutoPause"
     };
     this.send(obj);
   }

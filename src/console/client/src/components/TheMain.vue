@@ -55,6 +55,7 @@ import appState from "../lib/AppState.js";
 const DEVICE_STATUS_IDLE = 1;
 const DEVICE_STATUS_RUNNING = 2;
 const DEVICE_STATUS_FINISHED = 3;
+const DEVICE_STATUS_AUTO_PAUSE = 4;
 
 export default {
   name: 'TheMain',
@@ -90,6 +91,10 @@ export default {
       onComplete: (obj)=>{
         console.log("Experiment is complete!");
         this.status = DEVICE_STATUS_FINISHED;
+      },
+      onAutoPause: (obj)=>{
+        console.log("Experiment is paused automatically by protocol!");
+        this.status = DEVICE_STATUS_AUTO_PAUSE;
       },
       onTransition:(obj)=>{
       }

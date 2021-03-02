@@ -238,6 +238,9 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   display:inline-block;
   width:auto;
 }
+.protocol__stages__stage__footer {
+  padding:0.2em 0;
+}
 .protocol-footer {
   padding:1em;
   border-top:1px solid rgba(0, 0, 0, 0.125);

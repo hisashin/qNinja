@@ -80,7 +80,7 @@ class TempLog {
     const C = this.fitConstants.C;
     const estimatedTime = this.fitConstants.estimatedTime;
     if (Math.abs(estimatedTime - targetTime) < TIME_SYNC_TOLERANCE) {
-      console.log("Estimated times are almost equal.");
+      // console.log("Estimated times are almost equal.");
       return 1.0;
     }
     const targetTemperature = this.fitConstants.targetTemperature;
@@ -110,7 +110,7 @@ function linearFit (plot) {
     (n * sumXX - sumX * sumX);
   const b = (sumXX * sumY - sumXY * sumX) / 
     (n * sumXX - sumX * sumX);
-    console.log("FIT %f, %f (n=%d)", a, b, n)
+    // console.log("FIT %f, %f (n=%d)", a, b, n)
   return { a:a, b:b };
 }
 
@@ -162,13 +162,13 @@ class PlateBlock {
   syncWith (rear) {
     let output = this.tempLog.getOutputRatioForEstimatedTime(rear.tempLog.getEstimatedTime());
     this.maxDriveRatio *= output;
-    console.log("SyncResult=%f", this.maxDriveRatio);
+    // console.log("SyncResult=%f", this.maxDriveRatio);
     this.sensing.dummyMaxDriveRatio = this.maxDriveRatio;
   }
   calcDesiredOutput () {
     const pidOutput = this.pid.getOutput();
     if (Math.abs(pidOutput) < 0.8 && !this.targetAchieved) {
-      console.log("TargetAchieved!");
+      // console.log("TargetAchieved!");
       this.targetAchieved = true;
     }
     this.desiredOutput = Math.max(-this.maxDriveRatio, Math.min(this.maxDriveRatio, pidOutput));
