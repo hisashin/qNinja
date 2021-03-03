@@ -8,7 +8,161 @@ const protocol = require("./dev_protocol");
 const em = require("./experiment_manager");
 
 const NO_SAVE = false;
-
+const DEMO_CONFIG = {
+  "series_list": [
+    {
+      "label": "Demo",
+      "type": "standard",
+      "start_quantity": 1,
+      "factor": 2,
+      "count": 5,
+      "wells": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "wells": [
+    {
+      "id": 0,
+      "label": "Std A",
+      "quantity": 0.1,
+      "is_in_series": true,
+      "name": "A1",
+      "series_id": 0,
+      "series_type": "standard",
+      "series_factor": 1,
+      "series_quantity": 1
+    },
+    {
+      "id": 1,
+      "label": "Std B",
+      "quantity": 0.2,
+      "is_in_series": true,
+      "name": "A2",
+      "series_id": 0,
+      "series_type": "standard",
+      "series_factor": 2,
+      "series_quantity": 2
+    },
+    {
+      "id": 2,
+      "label": "Std C",
+      "quantity": 0.3,
+      "is_in_series": true,
+      "name": "A3",
+      "series_id": 0,
+      "series_type": "standard",
+      "series_factor": 4,
+      "series_quantity": 4
+    },
+    {
+      "id": 3,
+      "label": "Std D",
+      "quantity": 0.4,
+      "is_in_series": true,
+      "name": "A4",
+      "series_id": 0,
+      "series_type": "standard",
+      "series_factor": 8,
+      "series_quantity": 8
+    },
+    {
+      "id": 4,
+      "label": "Std E",
+      "quantity": 0.5,
+      "is_in_series": true,
+      "name": "A5",
+      "series_id": 0,
+      "series_type": "standard",
+      "series_factor": 16,
+      "series_quantity": 16
+    },
+    {
+      "id": 5,
+      "label": "Sample F",
+      "quantity": "",
+      "is_in_series": false,
+      "name": "A6",
+      "type": "unknown"
+    },
+    {
+      "id": 6,
+      "label": "Sample G",
+      "quantity": "",
+      "is_in_series": false,
+      "name": "A7",
+      "type": "unknown"
+    },
+    {
+      "id": 7,
+      "label": "Sample H",
+      "quantity": "",
+      "is_in_series": false,
+      "name": "A8",
+      "type": "unknown"
+    },
+    {
+      "id": 8,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B1"
+    },
+    {
+      "id": 9,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B2"
+    },
+    {
+      "id": 10,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B3"
+    },
+    {
+      "id": 11,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B4"
+    },
+    {
+      "id": 12,
+      "label": "",
+      "type": "negative_control",
+      "is_in_series": false,
+      "name": "B5"
+    },
+    {
+      "id": 13,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B6"
+    },
+    {
+      "id": 14,
+      "label": "",
+      "type": "empty",
+      "is_in_series": false,
+      "name": "B7"
+    },
+    {
+      "id": 15,
+      "label": "",
+      "type": "unknown",
+      "is_in_series": false,
+      "name": "B8"
+    }
+  ]
+};
 /* Implementation example */
 class NinjaQPCRDemo {
   constructor  () {
@@ -16,7 +170,8 @@ class NinjaQPCRDemo {
   start () {
     qpcr.setEventReceiver(this);
     const option = {
-      protocol: protocol
+      protocol: protocol,
+      config:DEMO_CONFIG
     };
     if (NO_SAVE) {
       const experiment = em._createExperimentDraft(option);
@@ -30,20 +185,17 @@ class NinjaQPCRDemo {
         console.error(err);
       })
     }
-    /*
-    // Polling
-     setInterval(()=>{ console.log(qpcr.getDeviceState()); }, 1000);
-     setInterval(()=>{ console.log(qpcr.getExperimentStatus()); }, 1000);
-     setInterval(()=>{ console.log(qpcr.getThermalCyclerStatus()); }, 1000);
-     setInterval(()=>{ console.log(qpcr.getFluorescenceLogs()); }, 10000);
-    */
   }
   /* Callback functions */
   onStart (data) {
+    console.log("CTSIM  Start!!!");
     console.log(data);
   }
   onComplete (data) {
+    console.log("CTSIM  End!!!");
     console.log(data);
+    qpcr.shutdown();
+    process.exit(1);
   }
   onThermalTransition (data) {
     // console.log(data);

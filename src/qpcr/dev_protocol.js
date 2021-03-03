@@ -9,9 +9,10 @@ const MEASUREMENT_HOLD_CONTINUOUS = 2;
 const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
 
-const DEMO_TEMP_HIGH = 65.0;
+const LID_TEMP = 70;
+const DEMO_TEMP_HIGH = 50.0;
 const DEMO_TEMP_MEDIUM = 50.0;
-const DEMO_TEMP_LOW = 35.0;
+const DEMO_TEMP_LOW = 40.0;
 /* Initial extension */
 const example_hold_stage = {
   type: Constants.StageType.HOLD,
@@ -25,12 +26,12 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  repeat: 2,
+  repeat: 40,
   pause_after: false,
   steps: [
-    { label:"denature", temp:DEMO_TEMP_HIGH, duration:6.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:6.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"extend", temp:DEMO_TEMP_LOW, duration:6.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
+    { label:"denature", temp:DEMO_TEMP_HIGH, duration:3.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"anneal", temp:DEMO_TEMP_MEDIUM, duration:3.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+    { label:"extend", temp:DEMO_TEMP_LOW, duration:3.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
   ]
 };
 
@@ -47,7 +48,7 @@ const example_melt_curve_stage = {
 
 const protocol = {
   id: "2B93DB54-E14D-444F-BAEE-5B595F3FB917",
-  lid_temp: 80.0, // Celsius
+  lid_temp: LID_TEMP, // Celsius
   final_hold_temp:20,
   name: "Dev Protocol",
   pause_after: false,

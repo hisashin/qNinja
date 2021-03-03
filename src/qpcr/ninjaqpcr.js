@@ -229,6 +229,7 @@ class NinjaQPCR {
             console.log("Ramp end.");
             // One-shot fluorescence measurement
             this.notifyFluorescenceEvent("measure");
+            console.log("CTSIM  RampEnd " + JSON.stringify(values));
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_RAMP_END, values);
           });
       }
@@ -239,6 +240,7 @@ class NinjaQPCR {
         this.optics.measureAll(
           (values)=>{
             console.log("Hold end.");
+            console.log("CTSIM  HoldEnd " + JSON.stringify(values));
             // One-shot fluorescence measurement
             this.notifyFluorescenceEvent("measure");
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_HOLD_END, values);
@@ -279,7 +281,7 @@ class NinjaQPCR {
     }
     // For debug
     if (this.optics.fluorescenceSensingUnit.setDebugValue) {
-      this.optics.fluorescenceSensingUnit.setDebugValue(debug);
+      this.optics.fluorescenceSensingUnit.setDebugValue(debug, this.experimentLog.config);
     }
     
     if (this.receiver != null && this.receiver.onThermalTransition != null) {

@@ -38,6 +38,15 @@ class OpticsDemo {
       console.log("Continuous:" + JSON.stringify(values));
     });
   }
+  runSimulationDemo () {
+    const sim = this.photosensing.sim;
+    sim.cts = [[24.0]];
+    for (let i=0; i<40; i++) {
+      const val = sim._getDummyAmplification(i);
+      console.log(val);
+    }
+    
+  }
   //  Event handlers
   runLEDDemo () {
     // Test only LEDs
@@ -76,9 +85,10 @@ class OpticsDemo {
 }
 const demo = new OpticsDemo();
 // demo.runOpticsDemo();
-demo.runContinuousDemo();
+// demo.runContinuousDemo();
 // demo.runLEDDemo();
 // demo.runPhotosensingDemo();
+demo.runSimulationDemo();
 
 process.on('SIGINT', () => {
     console.log('Received SIGINT');
