@@ -128,6 +128,23 @@
         @click.stop="save">
         Save
       </b-button>
+      <table class="pcr_table" v-if="experiment && experiment.analysis">
+        <tr>
+          <th>Well</th>
+          <template v-for="channel of experiment.hardware.channels.count">
+            <th :key="channel">Ct {{ channel }}</th>
+            <th :key="channel">Quantity {{ channel }}</th>
+          </template>
+        </tr>
+        <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+          <td>{{ wellLabel }}</td>
+          <template v-for="channel of experiment.hardware.channels.count">
+            <td :key="channel">{{ experiment.analysis.ct[channel-1][wellIndex] }}</td>
+            <td :key="channel">{{ experiment.analysis.quantity[channel-1][wellIndex] }}</td>
+          </template>
+        </tr>
+        
+      </table>
     </div>
   </div>
 </template>
@@ -161,7 +178,9 @@ export default {
       pickingProtocol: false,
       isEditing: false,
       isNew: false,
-      isStarted: false
+      isStarted: false,
+      channels: [0, 1],
+      wells:[]
     }
   },
   created: function () {
