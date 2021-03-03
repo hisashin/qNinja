@@ -12,7 +12,12 @@
             "label": "hold",
             "temp": 95,
             "duration": 16,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           }
         ]
       },
@@ -24,19 +29,34 @@
             "label": "denature",
             "temp": 94,
             "duration": 15,
-            "data_collection": {"ramp_end":true, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": true,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           },
           {
             "label": "anneal",
             "temp": 55,
             "duration": 12,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           },
           {
             "label": "extend",
             "temp": 72,
             "duration": 18,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           }
         ]
       },
@@ -49,26 +69,40 @@
             "temp": 94,
             "duration": 10,
             "speed": 4,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           },
           {
             "label": "cool",
             "temp": 55,
             "duration": 5,
             "speed": 4,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": false,
+              "hold_continuous": false
+            }
           },
           {
             "label": "melt",
             "temp": 94,
             "duration": 15,
             "speed": 0.05,
-            "data_collection": {"ramp_end":false, "hold_end":false, "ramp_continuous":true, "hold_continuous":false}
+            "data_collection": {
+              "ramp_end": false,
+              "hold_end": false,
+              "ramp_continuous": true,
+              "hold_continuous": false
+            }
           }
         ]
       }
     ]
   },
-  "modified": 1393701440770,
   "modified": 1393701439770
 }
