@@ -839,8 +839,6 @@ Wire Wire Line
 Text GLabel 7000 3650 0    50   Input ~ 0
 VIN_SENSE
 Wire Wire Line
-	7150 2150 7300 2150
-Wire Wire Line
 	8900 2650 8700 2650
 Wire Wire Line
 	8900 2950 8700 2950
@@ -1403,8 +1401,6 @@ Wire Wire Line
 Wire Wire Line
 	3200 2350 3200 2150
 Wire Wire Line
-	3200 2550 3200 2700
-Wire Wire Line
 	3200 3000 3200 2800
 Wire Wire Line
 	3200 3200 3200 3350
@@ -1430,4 +1426,31 @@ Wire Wire Line
 Connection ~ 3600 900 
 Wire Wire Line
 	3600 900  4300 900 
+Wire Wire Line
+	3200 2550 3200 2700
+Wire Wire Line
+	3200 2700 3100 2700
+Wire Wire Line
+	3100 2700 3100 2550
+Connection ~ 3200 2700
+Wire Wire Line
+	3200 3350 3100 3350
+Wire Wire Line
+	3100 3350 3100 3200
+Connection ~ 3200 3350
+Wire Wire Line
+	3200 4000 3100 4000
+Wire Wire Line
+	3100 4000 3100 3850
+Connection ~ 3200 4000
+Wire Wire Line
+	3200 4650 3100 4650
+Wire Wire Line
+	3100 4650 3100 4500
+Connection ~ 3200 4650
+Wire Wire Line
+	3200 5300 3100 5300
+Wire Wire Line
+	3100 5300 3100 5150
+Connection ~ 3200 5300
 $EndSCHEMATC
