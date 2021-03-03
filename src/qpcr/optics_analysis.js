@@ -125,7 +125,7 @@ class OpticsAnalysis {
     });
   }
   calcCt () {
-    this.cts = this.initChannelWellMatrix([]);
+    this.cts = this.initChannelWellMatrix(null);
     this.eachWell((channelIndex, wellIndex)=>{
       const values = this.fluorescenceTable[channelIndex][wellIndex];
       const threshold = this.thresholds[channelIndex][wellIndex];
@@ -181,6 +181,7 @@ class OpticsAnalysis {
       return;
     }
     for (let channel=0; channel<this.experiment.hardware.channels.count; channel++) {
+      let channelCurves = [];
       this.experiment.config.series_list.forEach ((series, seriesIndex)=>{
         const startQuantity = (series.start_quantity > 0) ? series.start_quantity : 1; // User relative quantity if not specified
         const wells = series.wells.map((index)=>{ return this.experiment.config.wells[index] });
@@ -196,9 +197,39 @@ class OpticsAnalysis {
         fit.cts = cts;
         fit.channel = channel;
         fit.series = seriesIndex;
-        this.standardCurves.push(fit);
+        channelCurves.push(fit);
+      });
+      this.standardCurves.push(channelCurves);
+    }
+  }
+  calcQuantityes () {
+    // TODO support external reference
+    this.quantities = this.initChannelWellMatrix(0);
+    for (let channel=0; channel<this.experiment.hardware.channels.count; channel++) {
+      const curves = this.standardCurves[channel];
+      if(!curves || curves.length == 0) return 
+      const curve = curves[0];
+      for (let wellIndex=0; wellIndex<this.experiment.hardware.wells.count; wellIndex++) {
+        const well = this.experiment.config.wells[wellIndex];
+        if (!well.is_in_series && well.type != "empty") {
+          const ct = this.cts[channel][wellIndex];
+          const quantity = this.calcQuantity(curve, ct);
+          // console.log("Ch %d W %d FIT %f->%f", channel, wellIndex, ct, quantity);
+          this.quantities[channel][wellIndex] = quantity;
+        }
+      }
+      this.experiment.config.series_list.forEach ((series, seriesIndex)=>{
+        const quantities = series.wells.map((wellIndex, i)=>{ 
+          return this.quantities[channel][wellIndex] = series.start_quantity * Math.pow(series.factor, i);
+        });
       });
     }
+  }
+  calcQuantity (standardCurve, ct) {
+    if (!ct) {
+      return 0;
+    }
+    return Math.pow(10, (ct - standardCurve.yIntercept) / standardCurve.slope);
   }
   getBaselines () {
     return this.baselines;
@@ -216,11 +247,13 @@ class OpticsAnalysis {
     this.calcBaseline();
     this.calcCt();
     this.calcStandardCurve ();
+    this.calcQuantityes();
     return { 
       "baseline": this.baselines,
       "threshold": this.thresholds,
       "ct": this.cts,
-      "standard_curve": this.standardCurves
+      "standard_curve": this.standardCurves,
+      "quantity": this.quantities
     };
   }
 }
