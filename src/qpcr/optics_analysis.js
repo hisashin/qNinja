@@ -2,6 +2,12 @@
 
 const fs = require('fs');
 
+class BaselineAlgorithmDefault {
+  
+}
+class ThresholdAlgorithmDefault {
+  
+}
 /* Statistics util */
 const Stat = {
   average: (values)=>{
@@ -20,11 +26,44 @@ const Stat = {
       sum += Math.pow(value-average, 2);
     });
     return Math.sqrt(sum/values.length);
+  },
+  sum: (values)=>{
+      let sum = 0;
+      values.forEach((value)=>{
+        if (sum != null) sum += value;
+      });
+      return sum;
+  },
+  sq: (v)=>{
+    return Math.pow(v, 2);
+  },
+  eachXY: (xValues, yValues, f) => {
+    let array = [];
+    for (let i=0; i<xValues.length; i++) {
+      array.push(f(xValues[i], yValues[i]));
+    }
+    return array;
+  },
+  linearLSM: (xValues, yValues)=>{
+    const n = xValues.length;
+    const sumX = Stat.sum(xValues);
+    const sumY = Stat.sum(yValues);
+    const sumXX = Stat.sum(xValues.map(v=>Stat.sq(v)));
+    const sumXY = Stat.sum(Stat.eachXY(xValues, yValues, (x, y)=>{ return x * y }));
+    const denominator = n * sumXX - Stat.sq(sumX);
+    const a = (n * sumXY - sumX * sumY) / denominator;
+    const b = (sumXX * sumY - sumXY * sumX) /  denominator;
+    const fit = xValues.map(x=> a * x + b);
+    return {
+      slope: a,
+      yIntercept: b,
+      xIntercept: -b/a
+    }
   }
 };
 const DEFAULT_THRESHOLD_RATIO = 10; // Default threshold = baseline + SD * 10
-const DEFAULT_BASELINE_START = 3;
-const DEFAULT_BASELINE_END = 12;
+const DEFAULT_BASELINE_START = 0;
+const DEFAULT_BASELINE_END = 10;
 class OpticsAnalysis {
   constructor (experiment) {
     this.experiment = experiment;
@@ -78,17 +117,19 @@ class OpticsAnalysis {
       const target = values.slice(DEFAULT_BASELINE_START, DEFAULT_BASELINE_END);
       const baseline = Stat.average(target);
       const sd = Stat.standardDeviation(target);
-      const threshold = baseline + sd * DEFAULT_THRESHOLD_RATIO;
+      //const threshold = baseline + sd * DEFAULT_THRESHOLD_RATIO;
+      const threshold = Math.pow(10, 2.5); // TODO Debug
       this.baselines[channelIndex][wellIndex] = baseline;
       this.thresholds[channelIndex][wellIndex] = threshold;
       // console.log("Channel %d Well %d avg=%f, sd=%f, threshold=%f", channelIndex, wellIndex, baseline, sd, threshold);
     });
   }
   calcCt () {
-    this.cts = this.initChannelWellMatrix([]);
+    this.cts = this.initChannelWellMatrix(null);
     this.eachWell((channelIndex, wellIndex)=>{
       const values = this.fluorescenceTable[channelIndex][wellIndex];
       const threshold = this.thresholds[channelIndex][wellIndex];
+      this.cts[channelIndex][wellIndex] = null;
       for (let i=0; i<values.length-1; i++) {
         if (values[i] <= threshold && threshold < values[i+1]) {
           const ct = i + (threshold-values[i])/(values[i+1]-values[i]);
@@ -133,6 +174,63 @@ class OpticsAnalysis {
     this.meltCurveIndex = toIndex;
     return updated;
   }
+  calcStandardCurve () {
+    this.standardCurves = [];
+    if (!this.experiment.config.series_list) {
+      console.log("NO SERIES");
+      return;
+    }
+    for (let channel=0; channel<this.experiment.hardware.channels.count; channel++) {
+      let channelCurves = [];
+      this.experiment.config.series_list.forEach ((series, seriesIndex)=>{
+        const startQuantity = (series.start_quantity > 0) ? series.start_quantity : 1; // User relative quantity if not specified
+        const wells = series.wells.map((index)=>{ return this.experiment.config.wells[index] });
+        const quantities = series.wells.map((index, i)=>{ 
+          return series.start_quantity * Math.pow(series.factor, i);
+        });
+        const cts = series.wells.map((index)=>{ 
+          return this.cts[channel][index];
+        });
+        const logQuantities = quantities.map(v=>Math.log10(v));
+        const fit = Stat.linearLSM(logQuantities, cts);
+        fit.quantities = quantities;
+        fit.cts = cts;
+        fit.channel = channel;
+        fit.series = seriesIndex;
+        channelCurves.push(fit);
+      });
+      this.standardCurves.push(channelCurves);
+    }
+  }
+  calcQuantityes () {
+    // TODO support external reference
+    this.quantities = this.initChannelWellMatrix(0);
+    for (let channel=0; channel<this.experiment.hardware.channels.count; channel++) {
+      const curves = this.standardCurves[channel];
+      if(!curves || curves.length == 0) return 
+      const curve = curves[0];
+      for (let wellIndex=0; wellIndex<this.experiment.hardware.wells.count; wellIndex++) {
+        const well = this.experiment.config.wells[wellIndex];
+        if (!well.is_in_series && well.type != "empty") {
+          const ct = this.cts[channel][wellIndex];
+          const quantity = this.calcQuantity(curve, ct);
+          // console.log("Ch %d W %d FIT %f->%f", channel, wellIndex, ct, quantity);
+          this.quantities[channel][wellIndex] = quantity;
+        }
+      }
+      this.experiment.config.series_list.forEach ((series, seriesIndex)=>{
+        const quantities = series.wells.map((wellIndex, i)=>{ 
+          return this.quantities[channel][wellIndex] = series.start_quantity * Math.pow(series.factor, i);
+        });
+      });
+    }
+  }
+  calcQuantity (standardCurve, ct) {
+    if (!ct) {
+      return 0;
+    }
+    return Math.pow(10, (ct - standardCurve.yIntercept) / standardCurve.slope);
+  }
   getBaselines () {
     return this.baselines;
   }
@@ -148,11 +246,14 @@ class OpticsAnalysis {
   analyze () {
     this.calcBaseline();
     this.calcCt();
+    this.calcStandardCurve ();
+    this.calcQuantityes();
     return { 
       "baseline": this.baselines,
       "threshold": this.thresholds,
       "ct": this.cts,
-      "standard_curve": 3
+      "standard_curve": this.standardCurves,
+      "quantity": this.quantities
     };
   }
 }

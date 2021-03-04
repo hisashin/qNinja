@@ -3,8 +3,8 @@ const PID = require("../control/heat_control/pid.js");
 
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const demoPlate = require("../control/plate_multi_demo.js");
+const simulateCts = require("../ct_simulator");
 const BoxMuller = require("../util/box_muller.js");
-
 
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
@@ -119,7 +119,8 @@ class FluorescenceSimulator {
   constructor() {
     this.wellIndex = 0;
     this.opticalChannel = 0;
-    
+    this.cts = null;
+    this.efficiency = 1;
   }
   start () {
     this.startTimestamp = new Date();
@@ -160,11 +161,12 @@ class FluorescenceSimulator {
     const thresholdMsec = 150 * 1000;
     const intercept = 6.0;
     const x =  ((elapsedMsec - thresholdMsec - channel * 10 * 1000)/thresholdMsec) * intercept;
-    const sigmoid = MAX_ABSOLUTE_FLUORESCENCE / (1 + Math.exp(-x));
+    const sigmoid = MAX_ABSOLUTE_FLUORESCENCE / (1.0 + Math.exp(-x));
     return sigmoid;
   }
   _getDummyBackground (value) {
     return Math.max(0, BoxMuller() * DUMMY_BASELINE_MULTIPLIER);
+    // return DUMMY_BASELINE_MULTIPLIER;
   }
   _getDummyMeltCurve (start, current, high, low) {
     const range = 12;
@@ -175,15 +177,30 @@ class FluorescenceSimulator {
     const value = start * sigmoid/offset;
     return value;
   }
+  _getCt () {
+    if (this.cts) {
+      const ct =  this.cts[this.opticalChannel][this.wellIndex];
+      return ct;
+    }
+    return AMP_LAMBDA_STEP * this.wellIndex * (1 + this.opticalChannel);
+  }
   _getDummyAmplification (cycle) {
     const AMP_F_START = 1.0;
-    const AMP_F_MAX = 20000; // Plateau height
+    const AMP_F_MAX = 20000.0; // Plateau height
     const AMP_BETA = 0.6;
     const AMP_LAMBDA_DEFAULT = 20;
     const AMP_LAMBDA_STEP = 1.1;
-    const lambda = AMP_LAMBDA_DEFAULT + AMP_LAMBDA_STEP * this.wellIndex * (1 + this.opticalChannel);
+    const lambda = AMP_LAMBDA_DEFAULT + this._getCt();
     const background = this._getDummyBackground();
-    const amplification = AMP_F_START + AMP_F_MAX / (1 + Math.exp(AMP_BETA*(lambda-cycle)));
+    const amplification = AMP_F_START + AMP_F_MAX / (1.0 + Math.pow((1.0 + this.efficiency), (this._getCt()-cycle)));
+    const tmpB = (1.0 + Math.pow((1.0 + this.efficiency), (this._getCt()-cycle)));
+    const tmpC = 1.0 + this.efficiency;
+    const tmpD = this._getCt();
+    const tmpE = this._getCt()-cycle;
+    if (this.opticalChannel + this.wellIndex == 0) {
+      console.log("CTSIM _getDummyAmplification Cycle=%d Ch=%d W=%d A=%f, B=%f, C=%f, D=%f, E=%f", cycle,this.opticalChannel, this.wellIndex, amplification,
+      tmpB, tmpC, tmpD, tmpE);
+    }
     return amplification + background;
   }
   
@@ -203,8 +220,17 @@ class FluorescenceSensingUnit {
     const value = this.sim.getValue();
     setTimeout(()=>{ callback(value); }, 10);
   }
-  setDebugValue (debugValue) {
+  setDebugValue (debugValue, experimentConfig) {
     this.sim.debugValue = debugValue;
+    // Calc experimentConfig
+    if (!this.sim.cts) {
+      const efficiency = 0.93; // 0.9 to 1.1
+      if (experimentConfig) {
+        const cts = [simulateCts(experimentConfig, efficiency), simulateCts(experimentConfig, efficiency)];
+        this.sim.cts = cts;
+      }
+      this.sim.efficiency = efficiency;
+    }
   }
 }
 module.exports = new DummyHardwareConf();
