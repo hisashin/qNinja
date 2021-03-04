@@ -93,6 +93,28 @@
             <b-tab title="Melt curve">
               <MeltCurveMonitor ref="meltCurveMonitor" />
             </b-tab>
+            <b-tab title="Standard curve">
+              <StandardCurveChart ref="standardCurveChart" />
+            </b-tab>
+            <b-tab title="Wells">
+              <table class="pcr_table" v-if="experiment && experiment.analysis">
+                <tr>
+                  <th>Well</th>
+                  <template v-for="channel of experiment.hardware.channels.count">
+                    <th :key="`c-${channel}`">Ct {{ channel }}</th>
+                    <th :key="`q-${channel}`">Quantity {{ channel }}</th>
+                  </template>
+                </tr>
+                <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+                  <td>{{ wellLabel }}</td>
+                  <template v-for="channel of experiment.hardware.channels.count">
+                    <td :key="`c-${channel}-${wellIndex}`">{{ experiment.analysis.ct[channel-1][wellIndex] }}</td>
+                    <td :key="`q-${channel}-${wellIndex}`">{{ experiment.analysis.quantity[channel-1][wellIndex] }}</td>
+                  </template>
+                </tr>
+                
+              </table>
+            </b-tab>
           </b-tabs>
         </div>
       </div>
@@ -128,23 +150,6 @@
         @click.stop="save">
         Save
       </b-button>
-      <table class="pcr_table" v-if="experiment && experiment.analysis">
-        <tr>
-          <th>Well</th>
-          <template v-for="channel of experiment.hardware.channels.count">
-            <th :key="channel">Ct {{ channel }}</th>
-            <th :key="channel">Quantity {{ channel }}</th>
-          </template>
-        </tr>
-        <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-          <td>{{ wellLabel }}</td>
-          <template v-for="channel of experiment.hardware.channels.count">
-            <td :key="channel">{{ experiment.analysis.ct[channel-1][wellIndex] }}</td>
-            <td :key="channel">{{ experiment.analysis.quantity[channel-1][wellIndex] }}</td>
-          </template>
-        </tr>
-        
-      </table>
     </div>
   </div>
 </template>
@@ -158,6 +163,7 @@ import ExperimentConfig from '../ExperimentConfig.vue';
 import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
 import FluorescenceMonitor from '../ExperimentMonitor/FluorescenceMonitor.vue';
 import MeltCurveMonitor from '../ExperimentMonitor/MeltCurveMonitor.vue';
+import StandardCurveChart from '../StandardCurveChart.vue';
 
 export default {
   name: 'TheExperimentEditor',
@@ -167,7 +173,8 @@ export default {
     ExperimentConfig,
     TemperatureMonitor,
     FluorescenceMonitor,
-    MeltCurveMonitor
+    MeltCurveMonitor,
+    StandardCurveChart
   },
   props: {
     limit: { type:Number }
@@ -236,6 +243,7 @@ export default {
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config);
+      this.$refs.standardCurveChart.setExperiment(this.experiment);
       
       if (!this.$refs.temperatureMonitor) {
         console.warn("this.$refs.temperatureMonitor is null. why?")
