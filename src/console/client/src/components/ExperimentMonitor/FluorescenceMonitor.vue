@@ -59,7 +59,6 @@ export default {
       wellsCount: WELLS_COUNT,
       channels:[],
       channelsCount: CHANNELS_COUNT,
-      debug: "DEBUGDEBUG",
       seriesList:[],
       wellTable:[],
       yScale:"linear",

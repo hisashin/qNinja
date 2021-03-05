@@ -28,7 +28,8 @@ export default {
       graphChannels: [],
       graphSubChannelsStandardCurve: [],
       graphSubChannelsStandardDots: [],
-      graphSubChannelsStandardPlot: []
+      graphSubChannelsStandardPlot: [],
+      graphSubChannelsWells: []
     }
   },
   created: function () {
@@ -72,12 +73,13 @@ export default {
         // Quantity
         // Ct
         for (let channel=0; channel<this.channelsCount; channel++) {
-        // TODO
-          /*
           const quantity = this.experiment.analysis.quantity[channel][well.id];
           const ct = this.experiment.analysis.ct[channel][well.id];
-          this.graph.addDot(0, Math.log10(quantity), ct);
-          */
+          // this.graph.addDot(0, Math.log10(quantity), ct);
+          const subChannel = this.graph.addChannel({index:well.id}).addSubChannel({type:"dots"});
+          subChannel.addData({x:Math.log10(quantity), y:ct});
+          subChannel.data.pointRadius = 10;
+          this.graphSubChannelsStandardCurve.push(subChannel);
         }
       });
       this.graph.update();
