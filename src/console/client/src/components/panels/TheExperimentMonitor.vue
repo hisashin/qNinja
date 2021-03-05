@@ -124,13 +124,23 @@ export default {
               experiment.log.temp.time, 
               experiment.log.temp.well, 
               experiment.log.temp.lid);
-            this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
-            this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
+            try {
+              this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
+              this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
+            
+            } catch (ex) {
+              console.log(ex);
+            }
             
             // TODO init meltCurveMonitor
+            
+          try {
             this.$refs.progressMonitor.reset();
             this.$refs.progressMonitor.protocol = this.experiment.protocol;
             
+          } catch (ex) {
+            console.log(ex);
+          }
             device.addTransitionHandler({
               onComplete: (obj)=>{
                 startTime = new Date();

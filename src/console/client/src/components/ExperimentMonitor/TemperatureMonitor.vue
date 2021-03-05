@@ -19,20 +19,23 @@ export default {
     }
   },
   created: function () {
+    this.channelPlate = null;
+    this.channelLid = null;
   },
   mounted: function () {
+    const CONVERSION_FUNCTION = (obj)=>{return { "x":obj.t/1000.0, "y":obj.v } };
     let graph = new Graph(this.$refs.canvas);
-    graph.setSeries(["Plate", "Lid"]);
-    graph.setConversionFunction(
-      (obj)=>{return { "x":obj.t/1000.0, "y":obj.v } }
-    );
+    this.channelPlate = graph.addChannel({index:0, label:"Plate"}).addSubChannel({type:"line"});
+    this.channelLid = graph.addChannel({index:1, label:"Lid"}).addSubChannel({type:"line"});
+    this.channelPlate.conversionFunction = CONVERSION_FUNCTION;
+    this.channelLid.conversionFunction = CONVERSION_FUNCTION;
     graph.setMinMaxY(20, 120);
     this.graph = graph;
   },
   methods: {
     add: function(timestamp, well, lid) {
-      this.graph.addData(0, {t:timestamp, v:well});
-      this.graph.addData(1, {t:timestamp, v:lid});
+      this.channelPlate.addData({t:timestamp, v:well});
+      this.channelLid.addData({t:timestamp, v:lid});
       const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
       this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
       this.graph.update();
@@ -47,8 +50,8 @@ export default {
         if (time == null || well == null || lid == null) {
           continue;
         }
-        this.graph.addData(0, {t:time, v:well});
-        this.graph.addData(1, {t:time, v:lid});
+        this.channelPlate.addData({t:time, v:well});
+        this.channelLid.addData({t:time, v:lid});
         maxTime = Math.max(maxTime, time);
       }
       

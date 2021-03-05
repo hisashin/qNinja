@@ -24,7 +24,11 @@ export default {
     return {
       experiment:{},
       seriesCount:0,
-      channelsCount:0
+      channelsCount:0,
+      graphChannels: [],
+      graphSubChannelsStandardCurve: [],
+      graphSubChannelsStandardDots: [],
+      graphSubChannelsStandardPlot: []
     }
   },
   created: function () {
@@ -40,31 +44,40 @@ export default {
       this.experiment = experiment;
       this.channelsCount = experiment.hardware.channels.count;
       this.seriesCount = experiment.config.series_list.length;
-      this.graph.clearData();
-      let labels = [];
+      this.graph = new Graph(this.$refs.canvas);
+      this.graph.setMinMaxX(0, 10);
+      this.graph.setMinMaxY(0, 50);
+      this.graphChannels = [];
       this.each ((channelIndex, seriesIndex, i)=>{
-        labels.push("%d %d", seriesIndex, channelIndex);
+        const label = "Ch " + channelIndex + ", Series " + seriesIndex;
+        const graphChannel = this.graph.addChannel({index:i, label: label});
+        this.graphChannels.push(graphChannel);
+        this.graphSubChannelsStandardCurve.push(graphChannel.addSubChannel({type:"line"}));
+        this.graphSubChannelsStandardDots.push(graphChannel.addSubChannel({type:"dots"}));
+        this.graphSubChannelsStandardPlot.push(graphChannel.addSubChannel({type:"dots"}));
       });
-      console.log("Label", labels);
-      
-      this.graph.setSeries(labels);
       this.each ((channelIndex, seriesIndex, i)=>{
         const curve = this.experiment.analysis.standard_curve[channelIndex][seriesIndex];
-        this.graph.addData(i, { x:0, y:curve.yIntercept });
-        this.graph.addData(i, { x:curve.xIntercept, y:0 });
+        const subChannel = this.graphSubChannelsStandardCurve[i];
+        console.log(this.graphSubChannelsStandardCurve)
+        subChannel.addData({ x:0, y:curve.yIntercept });
+        subChannel.addData({ x:curve.xIntercept, y:0 });
+        let dotsChannel = this.graphSubChannelsStandardPlot[i];
         for (let well = 0; well < curve.quantities.length; well++) {
-          this.graph.addDot(i, Math.log10(curve.quantities[well]), curve.cts[well])
-          console.log({x: Math.log10(curve.quantities[well]), y:curve.cts[well]});
+          dotsChannel.addData({x:Math.log10(curve.quantities[well]), y:curve.cts[well]});
         }
+        
       });
       this.experiment.config.wells.filter(well=>!well.is_in_series).forEach((well)=>{
-        console.log("WellIndex %d", well.id);
         // Quantity
         // Ct
         for (let channel=0; channel<this.channelsCount; channel++) {
+        // TODO
+          /*
           const quantity = this.experiment.analysis.quantity[channel][well.id];
           const ct = this.experiment.analysis.ct[channel][well.id];
           this.graph.addDot(0, Math.log10(quantity), ct);
+          */
         }
       });
       this.graph.update();
