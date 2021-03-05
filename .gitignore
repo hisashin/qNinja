@@ -1,4 +1,5 @@
 *.sch-bak
+src/qpcr/aws-greengrass-stream-manager-sdk-js
 
 */_autosave*
 # src/qpcr/user_data/*
