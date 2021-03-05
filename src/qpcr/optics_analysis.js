@@ -127,17 +127,17 @@ class OpticsAnalysis {
   calcCt () {
     this.cts = this.initChannelWellMatrix(null);
     this.eachWell((channelIndex, wellIndex)=>{
-      const values = this.fluorescenceTable[channelIndex][wellIndex];
+      // Baseline subtraction
+      const baseline = this.baselines[channelIndex][wellIndex];
+      const values = this.fluorescenceTable[channelIndex][wellIndex].map(v=>v-baseline);
       const threshold = this.thresholds[channelIndex][wellIndex];
       this.cts[channelIndex][wellIndex] = null;
       for (let i=0; i<values.length-1; i++) {
         if (values[i] <= threshold && threshold < values[i+1]) {
           const ct = i + (threshold-values[i])/(values[i+1]-values[i]);
           this.cts[channelIndex][wellIndex] = ct;
-          
         }
       }
-      
     });
   }
   // TODO
@@ -174,6 +174,12 @@ class OpticsAnalysis {
     this.meltCurveIndex = toIndex;
     return updated;
   }
+  _slopeToAmpFactor (slope) {
+    return Math.pow(10, -1.0/slope);
+  }
+  _slopeToEfficiency (slope) {
+    return (this._slopeToAmpFactor(slope) - 1) * 100.0;
+  }
   calcStandardCurve () {
     this.standardCurves = [];
     if (!this.experiment.config.series_list) {
@@ -197,6 +203,8 @@ class OpticsAnalysis {
         fit.cts = cts;
         fit.channel = channel;
         fit.series = seriesIndex;
+        fit.ampFactor = this._slopeToAmpFactor(fit.slope);
+        fit.efficiency = this._slopeToEfficiency(fit.slope);
         channelCurves.push(fit);
       });
       this.standardCurves.push(channelCurves);

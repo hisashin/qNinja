@@ -35,6 +35,9 @@
     <label>
       <input type="radio" v-model="yScale" value="log" @change="onFilterChange()"/> Log
     </label>
+    <label>
+      <input type="checkbox" v-model="baselineSubtraction" @change="onFilterChange()"/> Baseline subtraction
+    </label>
   </div>
 </template>
 
@@ -46,8 +49,6 @@ import Graph from "../../lib/Graph.js";
 const WELLS_COUNT = 8;
 const CHANNELS_COUNT = 2;
 const TIME_RANGE_SEC = 240;
-const CONVERSION_FUNC_LINEAR = (obj) =>{return { "x":obj.c, "y":obj.v }};
-const CONVERSION_FUNC_LOG = (obj) =>{return { "x":obj.c, "y": Math.log10(obj.v) }};
 let graph = null;
 
 export default {
@@ -58,11 +59,16 @@ export default {
       wellsCount: WELLS_COUNT,
       channels:[],
       channelsCount: CHANNELS_COUNT,
-      debug: "DEBUGDEBUG",
       seriesList:[],
       wellTable:[],
       yScale:"linear",
-      analysis:{}
+      analysis:{},
+      graphChannels: [],
+      subChannelsData: [],
+      subChannelsPoints: [],
+      subChannelsBaselines: [],
+      subChannelsThresholds: [],
+      baselineSubtraction: false
     }
   },
   created: function () {
@@ -72,14 +78,6 @@ export default {
     
   },
   methods: {
-    applyBaseline: function () {
-      if (this.hasBaseline()) {
-        this.graph.setHLines(this.baseline.thresholds);
-      }
-    },
-    hasBaseline: function () {
-      return this.baseline != null && this.baseline.thresholds != null;
-    },
     // Well iterator
     eachSeries (func /* function(channel, well, dataIndex) */ ) {
       for (let c=0; c<this.channelsCount; c++) {
@@ -109,19 +107,27 @@ export default {
       this.channelsCount = hardware.channels.count;
       let labels = [];
       this.graph = new Graph(this.$refs.canvas);
-      const f = this.yScale == "log" ? CONVERSION_FUNC_LOG : CONVERSION_FUNC_LINEAR;
-      this.graph.setConversionFunction(f);
       this.eachSeries((c, w, i)=>{
         labels[this._index(c, w)] = "W" + w + " / C" + c;
       });
-      this.graph.setSeries(labels);
-      this.applyBaseline();
+      this.graphChannels = [];
+      this.subChannelsData = [];
+      this.subChannelsPoints = [];
+      this.subChannelsBaselines = [];
+      this.subChannelsThresholds = [];
+      
+      labels.forEach((label, i)=>{
+        const channel = this.graph.addChannel({label:label, index:i});
+        this.graphChannels.push(channel);
+        this.subChannelsData.push(channel.addSubChannel({type:"line"}));
+        this.subChannelsPoints.push(channel.addSubChannel({type:"dots"}));
+        this.subChannelsBaselines.push(channel.addSubChannel({type:"hline"}));
+        this.subChannelsThresholds.push(channel.addSubChannel({type:"hline"}));
+      });
       this.graph.setMinMaxX(0, 50);
       this.graph.setMinMaxY(0, 20);
       this.graph.setAutoMinMax(true);
       this.debug = JSON.stringify(hardware)
-      // Wells table
-      // Channel list
       this.channels = [];
       for (let i=0; i<this.channelsCount; i++) {
         const obj = {
@@ -148,7 +154,7 @@ export default {
       this.graph.clearData();
       data.forEach((measurement)=>{
         this.eachSeries((c, w, i)=>{
-          this.graph.addData(i, {t:measurement.t, v:measurement.v[c][w], c:measurement.repeat});
+          this.subChannelsData[i].addData({y:measurement.v[c][w], x:measurement.repeat});
         });
       });
       this.graph.update();
@@ -161,32 +167,21 @@ export default {
       }
     },
     updateBaseline: function () {
-      this.graph.clearHLines();
       if (this.analysis.baseline && this.analysis.baseline.length > 0) {
-        let baselines = [];
         this.eachSeries((c, w, i)=>{
-          baselines.push(this.analysis.baseline[c][w]);
-          baselines.push(this.analysis.threshold[c][w]);
+          this.subChannelsBaselines[i].setValue(this.analysis.baseline[c][w]);
+          this.subChannelsThresholds[i].setValue(this.analysis.threshold[c][w]);
         });
-        if (this.yScale == "log") {
-          baselines = baselines.map(v=>Math.log10(v));
-        }
-        console.log("BaselineCount=%d", baselines.length);
-        this.graph.setHLines(baselines);
         this.eachSeries((c, w, i)=>{
           const y = this.analysis.threshold[c][w];
           const x = this.analysis.ct[c][w];
-          if (this.yScale == "log") {
-            this.graph.addDot(i, x, Math.log10(y));
-          } else {
-            this.graph.addDot(i, x, y);
-          }
+          this.subChannelsPoints[i].addData({y:y, x:x});
         });
       }
     },
     add: function (data) {
       this.eachSeries((c, w, i)=>{
-        this.graph.addData(i, {t:data.t, v:data.v[c][w], c:data.repeat});
+        this.subChannelsPoints[i].addData({y:data.v[c][w], x:data.repeat});
       });
       this.graph.update();
     },
@@ -196,15 +191,21 @@ export default {
         // well.index
         this.channels.forEach((channel)=>{
           const index = this._index(channel.index, well.index);
-          this.graph.setVisibility(index, well.visible && channel.visible);
-          if (this.analysis.baseline && this.analysis.baseline.length > 0) {
-            this.graph.setVisibility(seriesCount + index, well.visible && channel.visible);
-            this.graph.setVisibility(seriesCount*2 + index, well.visible && channel.visible);
-          }
+          this.graphChannels[index].setVisibility(well.visible && channel.visible);
         });
       });
-      const f = this.yScale == "log" ? CONVERSION_FUNC_LOG : CONVERSION_FUNC_LINEAR;
-      this.graph.setConversionFunction(f);
+      this.eachSeries((c, w, i)=>{
+        let f = null;
+        if(this.baselineSubtraction) {
+          const baseline = this.analysis.baseline[c][w];
+          f = (v)=>{return {x:v.x, y: Math.max(1, v.y-baseline)}};
+        }
+        this.subChannelsData[i].conversionFunction = f;
+        this.subChannelsPoints[i].conversionFunction = f;
+        this.subChannelsBaselines[i].conversionFunction = f;
+        this.subChannelsThresholds[i].conversionFunction = f;
+      });
+      this.graph.setScaleY((this.yScale == "log" ) ? Graph.Scale.Log : Graph.Scale.Linear);
       this.updateBaseline();
       this.graph.update();
     }
