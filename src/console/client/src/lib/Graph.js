@@ -53,56 +53,59 @@ class GraphSubChannelXY {
 }
 class GraphSubChannelHLine {
   constructor (color, name, showLine) {
+    this.y = 0;
     this.data = createDataset(color, name, true);
-      this.y = 0;
+    this.updateRawData();
   }
   
   setVisibility (visibility) {
     this.data.hidden = !visibility;
   }
+  updateRawData() {
+    this.data.rawData = [
+      {x:0, y:this.y},
+      {x:1, y:this.y}
+    ];
+  }
   setValue (y) {
     this.y = y;
-    this.data.rawData = [
-      {x:0, y:y},
-      {x:1, y:y}
-    ];
+    this.updateRawData();
   }
   clearData() {}
   range () {
     return null;
   }
   applyRange (xMin, xMax, yMin, yMax) {
-    this.data.data = [
-      {x:xMin, y:this.y},
-      {x:xMax, y:this.y}
-    ];
+    this.data.data[0].x = xMin;
+    this.data.data[1].x = xMax;
   }
 }
 class GraphSubChannelVLine {
   constructor (color, name, showLine) {
     this.x = 0;
     this.data = createDataset(color, name, true);
+    this.updateRawData();
   }
-  
   setVisibility (visibility) {
     this.data.hidden = !visibility;
   }
+  updateRawData() {
+    this.data.rawData = [
+      {x:this.x, y:0},
+      {x:this.x, y:1}
+    ];
+  }
   setValue (x) {
     this.x = x;
-    this.data.rawData = [
-      {x:x, y:0},
-      {x:x, y:1}
-    ];
+    this.updateRawData();
   }
   clearData() {}
   range () {
     return null;
   }
   applyRange (xMin, xMax, yMin, yMax) {
-    this.data.data = [
-      {x:this.x, y:yMin},
-      {x:this.x, y:yMax}
-    ];
+    this.data.data[0].y = yMin;
+    this.data.data[1].y = yMax;
   }
 }
 class GraphChannel {
@@ -251,7 +254,6 @@ class Graph {
     // Raw data -> Data to show
     this.channels.forEach((channel)=>{
       channel.subChannels.forEach((subChannel, subChannelIndex)=>{
-        // if (subChannelIndex > 0) return;
         if (subChannel.conversionFunction != null) {
           subChannel.data.data = subChannel.data.rawData.map(subChannel.conversionFunction);
         } else {
@@ -259,13 +261,10 @@ class Graph {
         }
       });
     });
-    console.log("Dataset.length=%d", this.chart.data.datasets.length)
     let a = 0;
     if (this.autoMinMax) {
       const dat = this.chart.data.datasets;
-      //console.log(dat)
       const ranges = this.channels.map(channel=>channel.range());
-      console.log(JSON.stringify(ranges))
       xMin = Math.min.apply(null, ranges.map(range=>range.xMin));
       xMax = Math.max.apply(null, ranges.map(range=>range.xMax));
       yMin = Math.min.apply(null, ranges.map(range=>range.yMin));

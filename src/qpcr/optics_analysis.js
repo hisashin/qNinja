@@ -127,17 +127,17 @@ class OpticsAnalysis {
   calcCt () {
     this.cts = this.initChannelWellMatrix(null);
     this.eachWell((channelIndex, wellIndex)=>{
-      const values = this.fluorescenceTable[channelIndex][wellIndex];
+      // Baseline subtraction
+      const baseline = this.baselines[channelIndex][wellIndex];
+      const values = this.fluorescenceTable[channelIndex][wellIndex].map(v->b-baseline);
       const threshold = this.thresholds[channelIndex][wellIndex];
       this.cts[channelIndex][wellIndex] = null;
       for (let i=0; i<values.length-1; i++) {
         if (values[i] <= threshold && threshold < values[i+1]) {
           const ct = i + (threshold-values[i])/(values[i+1]-values[i]);
           this.cts[channelIndex][wellIndex] = ct;
-          
         }
       }
-      
     });
   }
   // TODO

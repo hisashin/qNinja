@@ -35,6 +35,9 @@
     <label>
       <input type="radio" v-model="yScale" value="log" @change="onFilterChange()"/> Log
     </label>
+    <label>
+      <input type="checkbox" v-model="baselineSubtraction" @change="onFilterChange()"/> Baseline subtraction
+    </label>
   </div>
 </template>
 
@@ -65,7 +68,8 @@ export default {
       subChannelsData: [],
       subChannelsPoints: [],
       subChannelsBaselines: [],
-      subChannelsThresholds: []
+      subChannelsThresholds: [],
+      baselineSubtraction: false
     }
   },
   created: function () {
@@ -190,6 +194,17 @@ export default {
           const index = this._index(channel.index, well.index);
           this.graphChannels[index].setVisibility(well.visible && channel.visible);
         });
+      });
+      this.eachSeries((c, w, i)=>{
+        let f = null;
+        if(this.baselineSubtraction) {
+          const baseline = this.analysis.baseline[c][w];
+          f = (v)=>{return {x:v.x, y: Math.max(1, v.y-baseline)}};
+        }
+        this.subChannelsData[i].conversionFunction = f;
+        this.subChannelsPoints[i].conversionFunction = f;
+        this.subChannelsBaselines[i].conversionFunction = f;
+        this.subChannelsThresholds[i].conversionFunction = f;
       });
       this.graph.setScaleY((this.yScale == "log" ) ? Graph.Scale.Log : Graph.Scale.Linear);
       this.updateBaseline();
