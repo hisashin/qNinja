@@ -15,19 +15,19 @@
     </section>
     <nav class="section__nav section__nav--bottom">
       <b-button class="mr-1"
-        @click.stop="">
+        @click.stop="run">
         Run
       </b-button>
       <b-button class="mr-1"
-        @click.stop="">
+        @click.stop="edit">
         Edit
       </b-button>
       <b-button class="mr-1"
-        @click.stop="">
+        @click.stop="deleteIt">
         Delete
       </b-button>
       <b-button class="mr-1"
-        @click.stop="">
+        @click.stop="duplicate">
         Copy
       </b-button>
     </nav>
@@ -48,16 +48,34 @@ export default {
   },
   data() {
     return {
+      pid: null
     }
   },
   created: function () {
   },
   methods: {
     exampleMethod () {},
-    setProtocol (protocol) {
-      this.$refs.protocolDetail.setProtocol(protocol);
+    setProtocol (item) {
+      this.$refs.protocolDetail.setProtocol(item.protocol);
+      this.pid = item.id;
     },
     onAppear () {
+    },
+    run: function(id) {
+      appState.draftExperimentWithProtocol(this.pid);
+    },
+    edit: function() {
+      console.log("ProtocolCell.edit");
+      appState.startEditProtocol(this.pid);
+    },
+    deleteIt: function() {
+      console.log("ProtocolCell.delete");
+      client.submitDeleteProtocol(this.pid, ()=>{
+        console.log("Deleted.");
+      });
+    },
+    duplicate: function() {
+      console.log("ProtocolCell.duplicate");
     }
   }
 }

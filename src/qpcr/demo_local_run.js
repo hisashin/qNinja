@@ -14,7 +14,7 @@ const DEMO_CONFIG = {
       "label": "Demo",
       "type": "standard",
       "start_quantity": 1,
-      "factor": 2,
+      "factor": 10,
       "count": 5,
       "wells": [
         0,

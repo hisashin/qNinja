@@ -162,7 +162,7 @@ class AppState {
   revealDetailProtocol (id) {
     console.log("AppState.revealDetailProtocol id=%s", id);
     client.fetchProtocol(id, (item)=>{
-      this.views.panelProtocolDetail.setProtocol(item.protocol);
+      this.views.panelProtocolDetail.setProtocol(item);
       this.pushPanel(this.PANELS.PROTOCOL_DETAIL);
     });
   }
