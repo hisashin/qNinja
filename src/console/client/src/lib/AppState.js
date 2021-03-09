@@ -50,7 +50,6 @@ class AppState {
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
     this.viewsMap[this.PANELS.TEMPLATE] = this.views.panelTemplate;
     this.views.panelDashboard.onAppear();
-
   }
   
   /* Public methods */

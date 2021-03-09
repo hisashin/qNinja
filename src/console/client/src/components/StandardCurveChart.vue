@@ -41,8 +41,10 @@ export default {
   },
   methods: {
     setExperiment: function (experiment) {
-      console.log("setExperiment");
       this.experiment = experiment;
+      if (!experiment.analysis || !experiment.analysis.is_valid) {
+        return;
+      }
       this.channelsCount = experiment.hardware.channels.count;
       this.seriesCount = experiment.config.series_list.length;
       this.graph = new Graph(this.$refs.canvas);

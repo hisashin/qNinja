@@ -71,7 +71,8 @@ export default {
     deleteIt: function() {
       console.log("ProtocolCell.delete");
       client.submitDeleteProtocol(this.pid, ()=>{
-        console.log("Deleted.");
+        appState.toast(this, "Deleted", "The protocol was deleted.");
+        appState.backPanel();
       });
     },
     duplicate: function() {

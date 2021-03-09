@@ -184,9 +184,12 @@ class FluorescenceSimulator {
     }
     return AMP_LAMBDA_STEP * this.wellIndex * (1 + this.opticalChannel);
   }
+  _getDummyMax () {
+    return 2000 * (this.opticalChannel + 1) * 9000 + this.wellIndex * 100;
+  }
   _getDummyAmplification (cycle) {
     const AMP_F_START = 1.0;
-    const AMP_F_MAX = 20000.0; // Plateau height
+    const AMP_F_MAX = this._getDummyMax(); // 20000.0; // Plateau height
     const AMP_BETA = 0.6;
     const AMP_LAMBDA_DEFAULT = 20;
     const AMP_LAMBDA_STEP = 1.1;

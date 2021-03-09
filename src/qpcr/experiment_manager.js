@@ -174,9 +174,8 @@ class ExperimentManager {
     console.log("ExperimentManager.analyze");
     const analysis = new OpticsAnalysis(experiment);
     try {
-      const result = analysis.analyze();
-      experiment.analysis = result;
-      
+      experiment.analysis = analysis.analyze();
+      this.update(experiment, callback, onError);
     } catch (e) {
       console.log(e);
       if (onError) {
@@ -187,29 +186,26 @@ class ExperimentManager {
       }
       return;
     }
-    this.update(experiment, callback, onError);
   }
   
   delete (id, onDelete, onError) {
     const filePath = this._experimentDir() + "/" + id;
     this.summaries = this.summaries.filter((summary)=>{ id != summary.id});
-    this._saveSummaries(summaries, ()=>{
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error(err);
-          if (onError) {
-            onError({
-              code:ErrorCode.DataError,
-              message: "Database error."
-            });
-          }
-          return
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(err);
+        if (onError) {
+          onError({
+            code:ErrorCode.DataError,
+            message: "Database error."
+          });
         }
-        if (onDelete) {
-          onDelete();
-        }
-      });
-    }, onError);
+        return
+      }
+      if (onDelete) {
+        onDelete();
+      }
+    });
   }
   
   _updateSummaries (experiment, onSuccess, onError) {

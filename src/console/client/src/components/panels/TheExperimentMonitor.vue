@@ -18,12 +18,12 @@
         <div class="item item--tabbed">
           <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
             <b-tab title="Temperature">
-              <TemperatureMonitor ref="temperatureMonitor" />
+              <TemperatureChart ref="temperatureChart" />
             </b-tab>
             <b-tab
               title="Amplification"
               active>
-                <p><FluorescenceMonitor ref="fluorescenceMonitor" /></p>
+                <p><AmplificationChart ref="amplificationChart" /></p>
                   <div>one-shot={{ oneShot }}</div>
                   <div>continuous={{ continuous }}</div>
             </b-tab>
@@ -33,7 +33,7 @@
                 @click.stop="updateMeltCurve">
                 Update (debug)
               </b-button>
-              <MeltCurveMonitor ref="meltCurveMonitor" />
+              <MeltCurveChart ref="meltCurveChart" />
             </b-tab>
             <b-tab title="Protocol">
               <ProtocolDetail
@@ -52,9 +52,9 @@ import client from "../../lib/RestClient.js";
 
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProgressMonitor from '../ExperimentMonitor/ProgressMonitor.vue';
-import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
-import FluorescenceMonitor from '../ExperimentMonitor/FluorescenceMonitor.vue';
-import MeltCurveMonitor from '../ExperimentMonitor/MeltCurveMonitor.vue';
+import TemperatureChart from '../ExperimentMonitor/TemperatureChart.vue';
+import AmplificationChart from '../ExperimentMonitor/AmplificationChart.vue';
+import MeltCurveChart from '../ExperimentMonitor/MeltCurveChart.vue';
 
 let startTime = new Date();
 
@@ -63,9 +63,9 @@ export default {
   components: {
     ProgressMonitor,
     ProtocolDetail,
-    TemperatureMonitor,
-    FluorescenceMonitor,
-    MeltCurveMonitor
+    TemperatureChart,
+    AmplificationChart,
+    MeltCurveChart
   },
   props: {
   },
@@ -84,11 +84,11 @@ export default {
     },
     onFluorescenceUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
-      this.$refs.fluorescenceMonitor.add(data);
+      this.$refs.amplificationChart.add(data);
     },
     onMeltCurveUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
-      this.$refs.meltCurveMonitor.add(timestamp, data);
+      this.$refs.meltCurveChart.add(timestamp, data);
     },
     onFluorescenceEvent (data) {
     // On/Off indicator
@@ -120,19 +120,19 @@ export default {
           this.$nextTick(()=>{
             this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
             // Set past data
-            this.$refs.temperatureMonitor.set(
+            this.$refs.temperatureChart.set(
               experiment.log.temp.time, 
               experiment.log.temp.well, 
               experiment.log.temp.lid);
             try {
-              this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
-              this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
+              this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
+              this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
             
             } catch (ex) {
               console.log(ex);
             }
             
-            // TODO init meltCurveMonitor
+            // TODO init meltCurveChart
             
           try {
             this.$refs.progressMonitor.reset();
@@ -153,7 +153,7 @@ export default {
             device.addProgressHandler({
               onProgress:(obj)=>{
                 if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
-                  this.$refs.temperatureMonitor.add(obj.elapsed, obj.well, obj.lid);
+                  this.$refs.temperatureChart.add(obj.elapsed, obj.well, obj.lid);
                 
                 }
               }

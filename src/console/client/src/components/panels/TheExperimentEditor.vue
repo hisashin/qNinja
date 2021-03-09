@@ -6,6 +6,11 @@
         <div class="section__header__menu">
           <b-button v-show="isStarted"
             class="ml-1"
+            @click.stop="deleteIt">
+            Delete
+          </b-button>
+          <b-button v-show="isStarted"
+            class="ml-1"
             @click.stop="updateInfo">
             Save
           </b-button>
@@ -76,46 +81,56 @@
     <!-- Raw Log -->
     <section class="section" v-show="isStarted">
       <header class="section__header">
-        <h2 class="section__header__title" >Log</h2>
+        <h2 class="section__header__title" >Log and Analysis</h2>
       </header>
-      <div class="section__body">
-        <!-- Raw log tabs -->
-        <div class="item item--tabbed">
-          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
-            <b-tab title="Temperature">
-              <TemperatureMonitor ref="temperatureMonitor" />
-            </b-tab>
-            <b-tab
-              title="Amplification"
-              active>
-              <FluorescenceMonitor ref="fluorescenceMonitor" />
-            </b-tab>
-            <b-tab title="Melt curve">
-              <MeltCurveMonitor ref="meltCurveMonitor" />
-            </b-tab>
-            <b-tab title="Standard curve">
-              <StandardCurveChart ref="standardCurveChart" />
-            </b-tab>
-            <b-tab title="Wells">
-              <table class="pcr_table" v-if="experiment && experiment.analysis">
-                <tr>
-                  <th>Well</th>
-                  <template v-for="channel of experiment.hardware.channels.count">
-                    <th :key="`c-${channel}`">Ct {{ channel }}</th>
-                    <th :key="`q-${channel}`">Quantity {{ channel }}</th>
-                  </template>
-                </tr>
-                <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-                  <td>{{ wellLabel }}</td>
-                  <template v-for="channel of experiment.hardware.channels.count">
-                    <td :key="`c-${channel}-${wellIndex}`">{{ experiment.analysis.ct[channel-1][wellIndex] }}</td>
-                    <td :key="`q-${channel}-${wellIndex}`">{{ experiment.analysis.quantity[channel-1][wellIndex] }}</td>
-                  </template>
-                </tr>
-                
-              </table>
-            </b-tab>
-          </b-tabs>
+      <div class="section__body ">
+        <div class="row">
+          <div class="col-8">
+            <!-- Raw log tabs -->
+            <div class="item item--tabbed">
+              <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
+                <b-tab
+                  title="Amplification"
+                  active>
+                  <AmplificationChart ref="amplificationChart" />
+                  <div>
+                    TODO Baseline conf
+                  </div>
+                  <div>
+                    TODO Threshold conf
+                  </div>
+                </b-tab>
+                <b-tab title="Melt curve">
+                  <MeltCurveChart ref="meltCurveChart" />
+                </b-tab>
+                <b-tab title="Standard curve">
+                  <StandardCurveChart ref="standardCurveChart" />
+                </b-tab>
+                <b-tab title="Temperature">
+                  <TemperatureChart ref="temperatureChart" />
+                </b-tab>
+              </b-tabs>
+            </div>
+          </div>
+          <div class="col-4">
+            <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid">
+              <tr>
+                <th>Well</th>
+                <template v-for="channel of experiment.hardware.channels.count">
+                  <th :key="`c-${channel}`">Ct {{ channel }}</th>
+                  <th :key="`q-${channel}`">Qty {{ channel }}</th>
+                </template>
+              </tr>
+              <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+                <td>{{ wellLabel }}</td>
+                <template v-for="channel of experiment.hardware.channels.count">
+                  <td :key="`c-${channel}-${wellIndex}`">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
+                  <td :key="`q-${channel}-${wellIndex}`">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
+                </template>
+              </tr>
+              
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -160,9 +175,9 @@ import client from "../../lib/RestClient.js";
 import ProtocolDetail from '../ProtocolDetail.vue';
 import ProtocolPicker from '../ProtocolPicker.vue';
 import ExperimentConfig from '../ExperimentConfig.vue';
-import TemperatureMonitor from '../ExperimentMonitor/TemperatureMonitor.vue';
-import FluorescenceMonitor from '../ExperimentMonitor/FluorescenceMonitor.vue';
-import MeltCurveMonitor from '../ExperimentMonitor/MeltCurveMonitor.vue';
+import TemperatureChart from '../ExperimentMonitor/TemperatureChart.vue';
+import AmplificationChart from '../ExperimentMonitor/AmplificationChart.vue';
+import MeltCurveChart from '../ExperimentMonitor/MeltCurveChart.vue';
 import StandardCurveChart from '../StandardCurveChart.vue';
 
 export default {
@@ -171,9 +186,9 @@ export default {
     ProtocolDetail,
     ProtocolPicker,
     ExperimentConfig,
-    TemperatureMonitor,
-    FluorescenceMonitor,
-    MeltCurveMonitor,
+    TemperatureChart,
+    AmplificationChart,
+    MeltCurveChart,
     StandardCurveChart
   },
   props: {
@@ -245,22 +260,22 @@ export default {
       this.$refs.experimentConfig.setConfig(this.experiment.config);
       this.$refs.standardCurveChart.setExperiment(this.experiment);
       
-      if (!this.$refs.temperatureMonitor) {
-        console.warn("this.$refs.temperatureMonitor is null. why?")
+      if (!this.$refs.temperatureChart) {
+        console.warn("this.$refs.temperatureChart is null. why?")
       }
       if (this.isStarted) {
         if (experiment.log && experiment.log.temp) {
           console.log("setExperiment 1.1");
-          this.$refs.temperatureMonitor.set(
+          this.$refs.temperatureChart.set(
             experiment.log.temp.time, 
             experiment.log.temp.well, 
             experiment.log.temp.lid);
         
         }
         if (experiment.log) {
-          this.$refs.fluorescenceMonitor.setHardwareConf(experiment.hardware);
-          this.$refs.fluorescenceMonitor.setData(experiment.log.fluorescence.qpcr);
-          this.$refs.fluorescenceMonitor.setAnalysis(experiment.analysis);
+          this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
+          this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
+          this.$refs.amplificationChart.setAnalysis(experiment.analysis);
         }
       
       }
@@ -324,10 +339,23 @@ export default {
       console.log(this.$data.experiment.id);
       console.log(this.$data.experiment.analysis_config);
       client.submitUpdateExperimentProperty (this.$data.experiment.id, "analysis_config",
-       this.$data.experiment.analysis_config, (resObj)=>{
-        console.log(resObj.analysis);
-        this.$refs.fluorescenceMonitor.setAnalysis(this.$data.experiment.analysis);
-       }, ()=>{});
+        this.$data.experiment.analysis_config, (resObj)=>{
+          this.experiment = resObj;
+          this.$refs.amplificationChart.setAnalysis(this.$data.experiment.analysis);
+          this.$refs.standardCurveChart.setExperiment(this.experiment);
+        }, ()=>{});
+    },
+    deleteIt: function () {
+      console.log(this.$data.experiment.id)
+      client.submitDeleteExperiment(this.$data.experiment.id, ()=>{
+        appState.toast(this, "Deleted", "The experiment was deleted.");
+        appState.backPanel();
+      });
+    },
+    round: function (val, digits) {
+      if (val === null) return "";
+      const d = Math.pow(10, digits);
+      return Math.round(val * d) / d;
     }
   }
 }

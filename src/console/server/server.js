@@ -366,6 +366,7 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       pm.delete(map.pid, ()=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
+        res.write(JSON.stringify({}));
         // Empty response.
         res.end();
       },
@@ -456,7 +457,7 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       em.delete(map.eid, ()=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
-        // Empty response.
+        res.write(JSON.stringify({}));
         res.end();
       },
       (err)=>{

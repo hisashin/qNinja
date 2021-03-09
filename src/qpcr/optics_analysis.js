@@ -261,7 +261,9 @@ class OpticsAnalysis {
       "threshold": this.thresholds,
       "ct": this.cts,
       "standard_curve": this.standardCurves,
-      "quantity": this.quantities
+      "quantity": this.quantities,
+      "is_valid": true,
+      "updated": new Date().getTime()
     };
   }
 }

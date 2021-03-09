@@ -74,9 +74,14 @@ class RestClient {
     Util.requestData(path, valueObj, "PUT", onSuccess, onError);
   }
   
-  // DELETE /experiments/{id}
+  // DELETE /protocol/{id}
   submitDeleteProtocol (id, onSuccess, onError) {
     const path = "protocols/" + id;
+    Util.requestData(path, null, "DELETE", onSuccess, onError);
+  }
+  // DELETE /protocol/{id}
+  submitDeleteExperiment (id, onSuccess, onError) {
+    const path = "experiments/" + id;
     Util.requestData(path, null, "DELETE", onSuccess, onError);
   }
   

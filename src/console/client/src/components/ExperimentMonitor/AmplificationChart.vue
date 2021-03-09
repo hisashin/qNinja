@@ -101,8 +101,6 @@ export default {
       return channelIndex * this.wellsCount + wellIndex;
     },
     setHardwareConf: function(hardware) {
-      console.log("setHardwareConf")
-      console.log(hardware)
       this.wellsCount = hardware.wells.count;
       this.channelsCount = hardware.channels.count;
       let labels = [];
@@ -160,13 +158,15 @@ export default {
       this.graph.update();
     },
     setAnalysis: function (analysis) {
+      console.log("AplificationChart.setAnalysis");
+      console.log(analysis)
       this.analysis = analysis;
       if (this.analysis.baseline && this.analysis.baseline.length > 0) {
-        this.updateBaseline();
+        this._updateBaseline();
         this.graph.update();
       }
     },
-    updateBaseline: function () {
+    _updateBaseline: function () {
       if (this.analysis.baseline && this.analysis.baseline.length > 0) {
         this.eachSeries((c, w, i)=>{
           this.subChannelsBaselines[i].setValue(this.analysis.baseline[c][w]);
@@ -206,7 +206,7 @@ export default {
         this.subChannelsThresholds[i].conversionFunction = f;
       });
       this.graph.setScaleY((this.yScale == "log" ) ? Graph.Scale.Log : Graph.Scale.Linear);
-      this.updateBaseline();
+      this._updateBaseline();
       this.graph.update();
     }
   }
