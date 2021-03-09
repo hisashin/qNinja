@@ -3,6 +3,7 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const OpticsAnalysis = require("./optics_analysis");
+const PromiseQueue = require("./control/promise_queue");
 const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
 
 const NINJAQPCR_API_VERSION = "1.0";
@@ -40,6 +41,7 @@ class ExperimentManager {
     this.summaries = null;
     this.id = Math.random();
   }
+  
   _createExperimentDraft (option) {
     const timestamp = new Date().getTime();
     let experiment = {
@@ -83,12 +85,15 @@ class ExperimentManager {
       return "Experiment " + dateStr;
     }
   }
+  
   /* API */
   _generateExperimentId () {
     return uuidv4();
   }
+  
   getSummaries (filter, order, onLoad, onError) {
     if (this.summaries != null) {
+      console.log("this.summaries.length=%d", this.summaries.length);
       onLoad(this._filter(this.summaries, filter, order));
       return;
     }
@@ -96,6 +101,7 @@ class ExperimentManager {
       onLoad(this._filter(this.summaries, filter, order));
     }, onError);
   }
+  
   getLatestExperiment (onLoad, onError) {
     this.getSummaries(null, null, (summaries)=>{
       if (summaries == null || summaries.length == 0) {
@@ -106,6 +112,7 @@ class ExperimentManager {
       this.getExperiment(id, onLoad, onError);
     }, onError);
   }
+  
   // Returns single experiment
   getExperiment (id, onLoad, onError) {
     fs.readFile(this._logPath(id), (err, rawData)=>{
@@ -118,6 +125,7 @@ class ExperimentManager {
       }
     });
   }
+  
   // Insert new experiment
   create (options, callback, onError) {
     const experiment = this._createExperimentDraft(options);
@@ -140,6 +148,7 @@ class ExperimentManager {
       }
     });
   }
+  
   update (experiment, callback, onError) {
     if (!experiment.id) {
       console.log("This object is not managed as a database item.");
@@ -190,7 +199,7 @@ class ExperimentManager {
   
   delete (id, onDelete, onError) {
     const filePath = this._experimentDir() + "/" + id;
-    this.summaries = this.summaries.filter((summary)=>{ id != summary.id});
+    this.summaries = this.summaries.filter((summary)=>{ console.log("%s<=>%s", summary.id, id);return id != summary.id});
     fs.unlink(filePath, (err) => {
       if (err) {
         console.error(err);
@@ -202,9 +211,7 @@ class ExperimentManager {
         }
         return
       }
-      if (onDelete) {
-        onDelete();
-      }
+      this._saveSummaries(this.summaries, onDelete, onError);
     });
   }
   
@@ -259,12 +266,40 @@ class ExperimentManager {
     return this._experimentDir() + "/" + id;
   }
   
+  _recreateSummaries(onLoad, onError) {
+    const REGEX_EXPERIMENT_FILE = /[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}/;
+    fs.readdir(this._experimentDir(), (err, allFiles) => {
+      let queue = [];
+      let summaries = [];
+      allFiles.filter((f)=>{
+        return REGEX_EXPERIMENT_FILE.test(f);
+      }).forEach((f)=>{
+        const task = ()=>{
+          return new Promise((resolve, reject)=>{
+            this.getExperiment(f, (experiment)=>{
+              summaries.push(this._generateExperimentSummary(experiment));
+              resolve();
+            }, ()=>{
+              reject();
+            });
+          });
+        };
+        queue.push(task);
+      });
+      new PromiseQueue(queue).exec().then(()=>{
+        summaries.sort((a,b)=>{return b.modified - a.modified});
+        this._saveSummaries(summaries, onLoad, onError);
+      });
+    });
+  }
+  
   _loadSummaries (onLoad, onError) {
       
     if (!fs.existsSync(this._summariesPath())) {
       // New summary file
       this.summaries = [];
-      onLoad(this.summaries);
+      console.log("summaries.json not found. create...");
+      this._recreateSummaries(onLoad, onError);
       return;
     }
     fs.readFile(this._summariesPath(), (err, rawData)=>{
@@ -292,6 +327,7 @@ class ExperimentManager {
       }
     });
   }
+  
   _saveSummaries (summaries, onSave, onError) {
     const path = this._summariesPath();
     if (summaries == null) {
