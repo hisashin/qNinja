@@ -188,11 +188,9 @@ class NinjaQPCRDemo {
   }
   /* Callback functions */
   onStart (data) {
-    console.log("CTSIM  Start!!!");
     console.log(data);
   }
   onComplete (data) {
-    console.log("CTSIM  End!!!");
     console.log(data);
     qpcr.shutdown();
     process.exit(1);

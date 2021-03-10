@@ -217,8 +217,8 @@ class NinjaQPCR {
   
   /* Handling ThermalCycler's events */
   onThermalTransition (data) {
-    const from = this._getStep(data.from);
-    const to = this._getStep(data.to);
+    const from = this._getStep(data.from); // Nullable
+    const to = this._getStep(data.to); // Nullable
     this.experimentLog.log.events.push(data.to);
     this.optics.stopContinuousDataCollection();
     if (data.from.state == 'ramp') {
@@ -229,7 +229,6 @@ class NinjaQPCR {
             console.log("Ramp end.");
             // One-shot fluorescence measurement
             this.notifyFluorescenceEvent("measure");
-            console.log("CTSIM  RampEnd " + JSON.stringify(values));
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_RAMP_END, values);
           });
       }
@@ -240,7 +239,6 @@ class NinjaQPCR {
         this.optics.measureAll(
           (values)=>{
             console.log("Hold end.");
-            console.log("CTSIM  HoldEnd " + JSON.stringify(values));
             // One-shot fluorescence measurement
             this.notifyFluorescenceEvent("measure");
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_HOLD_END, values);
@@ -279,7 +277,6 @@ class NinjaQPCR {
       debug.low = toStage.steps[1].temp;
       debug.high = toStage.steps[2].temp;
     }
-    // For debug
     if (this.optics.fluorescenceSensingUnit.setDebugValue) {
       this.optics.fluorescenceSensingUnit.setDebugValue(debug, this.experimentLog.config);
     }
@@ -291,6 +288,13 @@ class NinjaQPCR {
       // Notify on/off of continuouos fluorescence measurement
       this.notifyFluorescenceEvent(this.optics.continuous?"start":"stop");
       this.isMeasuringFluorescenceContinuously = this.optics.continuous;
+    }
+    if (data.from != null && data.to != null && (data.from.repeat != data.to.repeat || data.from.stage != data.to.stage)) {
+      experimentManager.update(this.experimentLog, null, null);
+      console.log("ThermalCyclerTransition SAVE");
+    } else {
+    console.log("ThermalCyclerTransition SKIP", JSON.stringify(data.from), JSON.stringify(data.to));
+      
     }
   }
   onAutoPause (data) {

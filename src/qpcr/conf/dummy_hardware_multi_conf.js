@@ -200,10 +200,6 @@ class FluorescenceSimulator {
     const tmpC = 1.0 + this.efficiency;
     const tmpD = this._getCt();
     const tmpE = this._getCt()-cycle;
-    if (this.opticalChannel + this.wellIndex == 0) {
-      console.log("CTSIM _getDummyAmplification Cycle=%d Ch=%d W=%d A=%f, B=%f, C=%f, D=%f, E=%f", cycle,this.opticalChannel, this.wellIndex, amplification,
-      tmpB, tmpC, tmpD, tmpE);
-    }
     return amplification + background;
   }
   
