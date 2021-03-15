@@ -1,6 +1,9 @@
 "use strict";
 
-/* Simple blinkey for GPIO test */
+/* 
+  Simple blinkey for GPIO test
+  sudo node test_gpio.js {pin_number}
+*/
 const rpio = require('rpio');
 
 const startBlink = (pin /* J8 pin number (not GPIO ID) */, interval /* msec */) => {

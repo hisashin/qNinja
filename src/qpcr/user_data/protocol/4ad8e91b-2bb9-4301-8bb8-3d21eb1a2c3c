@@ -6,7 +6,7 @@
     "stages": [
       {
         "type": 1,
-        "repeat": 1,
+        "cycles": 1,
         "steps": [
           {
             "label": "hold",
@@ -18,7 +18,7 @@
       },
       {
         "type": 2,
-        "repeat": 30,
+        "cycles": 30,
         "steps": [
           {
             "label": "denature",
@@ -42,7 +42,7 @@
       },
       {
         "type": 3,
-        "repeat": 1,
+        "cycles": 1,
         "steps": [
           {
             "label": "denature",

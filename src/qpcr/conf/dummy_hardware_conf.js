@@ -206,7 +206,7 @@ class DummyFluorescenceSensingUnit {
         const temperature = this.debugValue.currentTemp;
         value = this._getDummyMeltCurve(this.dummyValues[wellIndex], this.debugValue.current, this.debugValue.high, this.debugValue.low);
       } else {
-        value = this._getDummyAmplification(wellIndex, this.debugValue.repeat);
+        value = this._getDummyAmplification(wellIndex, this.debugValue.cycle);
         while (this.dummyValues.length <= wellIndex) {
           this.dummyValues.push(0);
         }

@@ -152,7 +152,7 @@ export default {
       this.graph.clearData();
       data.forEach((measurement)=>{
         this.eachSeries((c, w, i)=>{
-          this.subChannelsData[i].addData({y:measurement.v[c][w], x:measurement.repeat});
+          this.subChannelsData[i].addData({y:measurement.v[c][w], x:measurement.cycle});
         });
       });
       this.graph.update();
@@ -181,7 +181,7 @@ export default {
     },
     add: function (data) {
       this.eachSeries((c, w, i)=>{
-        this.subChannelsPoints[i].addData({y:data.v[c][w], x:data.repeat});
+        this.subChannelsPoints[i].addData({y:data.v[c][w], x:data.cycle});
       });
       this.graph.update();
     },

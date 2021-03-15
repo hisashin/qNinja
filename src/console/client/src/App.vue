@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <header class="header">
-      <h1 class="header__title">Ninja qPCR</h1>
-    </header>
     <TheMain />
-    <footer class="footer">
-    </footer>
   </div>
 </template>
 
@@ -32,7 +27,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  max-width: 800px;
   margin:auto;
 }
 /* Reset */
@@ -51,15 +45,32 @@ a {
 
 /* Frame */
 .header {
+  box-shadow: 0 1px 1px 1px rgba(0,0,0,0.2);
+  padding: 0.4em 0;
+}
+.header__content {
+  max-width: 800px;
+  margin: auto;
+  display:flex;
+  flex-direction:row;
 }
 .header__title {
   margin:0;
   padding:0;
   font-size:1.5rem;
+  flex-grow:1;
+}
+.header__device {
+  flex-grow:1;
+  text-align:right;
 }
 .main {
+  max-width: 800px;
+  margin: auto;
 }
 .footer {
+  max-width: 800px;
+  margin: auto;
 }
 /* Layout params of top-level blocks */
 .header,.device-monitor,.panel-nav,.section {
@@ -190,7 +201,7 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   width:3.2em;
   text-align:right;
 }
-.protocol-summary__stages__stage__cycle {
+.protocol-summary__stages__stage__cycles {
   display:inline-block;
   text-align:left;
 }
@@ -266,7 +277,7 @@ li:not(:last-child) .protocol-cell-content, li:not(:last-child) .experiment-cell
   color:#ffffff;
 }
 /* Input fields */
-.input-repeat {
+.input-cycles {
   width:80px;
 }
 .input-temp {

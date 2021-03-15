@@ -221,7 +221,7 @@ class DummyFluorescenceSensingUnit {
         value = this.getDummySigmoid(well.index);
         value += this.getDummyBaseline(value);
         */
-        value = this._getDummyAmplification(well.index, this.debugValue.repeat);
+        value = this._getDummyAmplification(well.index, this.debugValue.cycle);
         while (this.dummyValues.length <= well.index) {
           this.dummyValues.push(0);
         }

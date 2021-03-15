@@ -15,13 +15,13 @@ class ExperimentCtrl {
       lid_temp: 110,
       stages: [
         {
-          repeat: 1,
+          cycles: 1,
           steps: [
             { type:"initial denaturation", temp:94.0, duration:15.0 }
           ]
         },
         {
-          repeat: 30,
+          cycles: 30,
           steps: [
             { type:"denaturation", temp:94.0, duration:15.0 },
             { type:"annealing", temp:55.0, duration:15.0 },
@@ -29,7 +29,7 @@ class ExperimentCtrl {
           ]
         },
         {
-          repat: 1,
+          cycles: 1,
           steps: [
             { type:"final extension", temp:72.0, duration:30.0 }
           ]

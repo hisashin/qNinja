@@ -2,7 +2,6 @@
 // Requires sudo
 const NinjaQPCR = require("./ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
-//const protocol = require("./protocol_example");
 const protocol = require("./protocol_thremal_only.js");
 const em = require("./experiment_manager");
 

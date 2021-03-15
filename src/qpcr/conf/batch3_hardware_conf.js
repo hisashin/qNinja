@@ -215,18 +215,30 @@ class HardwareConf {
     // ADG731BSUZ (SPI)
     
     // Generic 16ch MUX
-    // const muxWrapper = new GenericGPIOMuxWrapper();
-    const muxWrapper = new SPIMuxWrapper(this.spi, PIN_NUM_PD_SYNC);
+    const muxWrapper = new GenericGPIOMuxWrapper();
+    // const muxWrapper = new SPIMuxWrapper(this.spi, PIN_NUM_PD_SYNC);
     return new FluorescenceSensingUnit(muxWrapper, this.adcManager);
   }
 };
 // Channel name (Not index)
+/*
 const MUX_MAP = [
   // 0ch
   [ 7, 5, 3, 1, 15, 13, 11, 9 ],
   // 1ch
   [ 8, 6, 4, 2, 16, 14, 12, 10]
 ];
+*/
+const MUX_MAP_N = [
+  //0ch
+  [8,6,4,2,16,14,12,10],
+  [7,5,3,1,15,13,11,9]
+];
+const MUX_MAP_S = [
+[8,6,4,2,16,14,12,10],
+[7,5,3,1,15,13,11,9]
+];
+
 class SPIMuxWrapper {
   constructor (spi, pinSync) {
     this.mux = new ADG731BSUZ(spi, pinSync);
@@ -238,10 +250,10 @@ class SPIMuxWrapper {
     let muxCh = 0;
     if (wellIndex < 8) {
         // North (switch=high)
-        muxCh = MUX_MAP[channel][wellIndex] - 1;
+        muxCh = MUX_MAP_N[channel][wellIndex] - 1;
     } else {
         // North (switch=low)
-        muxCh = 16 + MUX_MAP[channel][wellIndex-8] - 1;
+        muxCh = 16 + MUX_MAP_S[channel][wellIndex-8] - 1;
     }
     // console.log("W %d O %d M %d @%d", wellIndex, channel, muxCh, new Date().getTime()%10000);
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
@@ -264,15 +276,16 @@ class GenericGPIOMuxWrapper {
     let muxSwitchVal = 0;
     let muxChName = 1;
     if (wellIndex < 8) {
-        // North (switch=high)
-        muxSwitchVal = 1;
-        muxChName = MUX_MAP[channel][wellIndex];
-    } else {
-        // North (switch=low)
+        // North
         muxSwitchVal = 0;
-        muxChName = MUX_MAP[channel][wellIndex-8];
+        muxChName = MUX_MAP_N[channel][wellIndex];
+    } else {
+        // South
+        muxSwitchVal = 1;
+        muxChName = MUX_MAP_S[channel][wellIndex-8];
     }
     const muxChannel = muxChName - 1;
+    //muxSwitchVal = 0;
     // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
@@ -297,6 +310,7 @@ class LEDUnit {
   }
   select (channel) {
     // channel = 15-channel;
+    // channel = 2;
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
@@ -327,7 +341,7 @@ class FluorescenceSensingUnit {
   }
   measure(callback) {
     this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
-      val = Math.max(0, 0.48-val) * 1000;
+      val = Math.max(0, 0.5-0.013-val) * 1000;
       callback(val);
     });
   }

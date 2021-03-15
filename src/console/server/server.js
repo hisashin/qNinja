@@ -134,6 +134,12 @@ class NinjaQPCRHTTPServer {
     router.addPath("/experiments/{eid}/config", "GET", this.experimentConfigGet());
     router.addPath("/experiments/{eid}/config", "PUT", this.experimentConfigUpdate());
     router.addPath("/experiments/{eid}/log", "GET", this.experimentLogGet());
+    router.addPath("/experiments/{eid}/log/temp", "GET", this.experimentLogTempGet());
+    router.addPath("/experiments/{eid}/log/qpcr", "GET", this.experimentLogQpcrGet());
+    router.addPath("/experiments/{eid}/log/melt_curve", "GET", this.experimentLogMeltCurveGet());
+    router.addPath("/experiments/{eid}/log/temp.csv", "GET", this.experimentLogTempCsvGet());
+    router.addPath("/experiments/{eid}/log/qpcr.csv", "GET", this.experimentLogQpcrCsvGet());
+    router.addPath("/experiments/{eid}/log/melt_curve.csv", "GET", this.experimentLogMeltCurveCsvGet());
     
     router.addPath("/experiments/{eid}/analysis_config", "GET", this.experimentAnalysisConfigGet());
     router.addPath("/experiments/{eid}/analysis_config", "PUT", this.experimentAnalysisConfigUpdate());
@@ -417,6 +423,41 @@ class NinjaQPCRHTTPServer {
         this.error500(req, res, err);
       });
     };
+  }
+  
+  _experimentExportCsv (property) {
+    return (req, res, map)=>{
+      em.getExperiment(map.eid, (experiment)=>{
+        const csv = em.export(experiment, property);
+        res.writeHead(200,{'Content-Type': 'text/csv'});
+        res.write(csv);
+        res.end();
+      },
+      (err)=>{
+        console.log("experimentGet ERROR. " + err);
+        console.log(err)
+        this.error500(req, res, err);
+      });
+    }
+  }
+  
+  experimentLogTempGet () {
+    return this._experimentGetProperty("log.temp");
+  }
+  experimentLogQpcrGet () {
+    return this._experimentGetProperty("log.fluorescence.qpcr");
+  }
+  experimentLogMeltCurveGet () {
+    return this._experimentGetProperty("log.fluorescence.melt_curve");
+  }
+  experimentLogTempCsvGet () {
+    return this._experimentExportCsv("temp");
+  }
+  experimentLogQpcrCsvGet () {
+    return this._experimentExportCsv("qpcr");
+  }
+  experimentLogMeltCurveCsvGet () {
+    return this._experimentExportCsv("melt_curve");
   }
   
   experimentCreate () {

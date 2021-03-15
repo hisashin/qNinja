@@ -1,25 +1,23 @@
 <template>
   <div class="">
-    <div class="card p-2">
-      <div>
-        <span>
-          Device: {{ connectionStatus }}
-        </span>
-        <span>
-          <template v-if="deviceState!=null">
-            State={{ deviceState.label }}
-          </template>
-          <!-- Network -->
-          <button
-            v-show="!connected"
-            
-            class="btn btn-link"
-            @click="reConnect"
-          >
-            Connect
-          </button>
-        </span>
-      </div>
+    <div>
+      <span>
+        Device: {{ connectionStatus }}
+      </span>
+      <span>
+        <template v-if="deviceState!=null">
+          State={{ deviceState.label }}
+        </template>
+        <!-- Network -->
+        <button
+          v-show="!connected"
+          
+          class="btn btn-link"
+          @click="reConnect"
+        >
+          Connect
+        </button>
+      </span>
     </div>
     <template v-if="connected && deviceState!=null && deviceState.hasExperiment">
       <!-- Progress summary -->

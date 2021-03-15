@@ -30,8 +30,8 @@ class MUX16ch {
     rpio.write(this.s1, val1 ? rpio.HIGH : rpio.LOW);
     rpio.write(this.s2, val2 ? rpio.HIGH : rpio.LOW);
     rpio.write(this.s3, val3 ? rpio.HIGH : rpio.LOW);
-    /*
-    console.log("%d->%d, %d->%d, %d->%d, %d->%d", 
+    /* console.log("%d %d->%d, %d->%d, %d->%d, %d->%d", 
+      ch,
       this.s0, val0,
       this.s1, val1,
       this.s2, val2,

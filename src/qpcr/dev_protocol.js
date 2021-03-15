@@ -16,7 +16,7 @@ const DEMO_TEMP_LOW = 40.0;
 /* Initial extension */
 const example_hold_stage = {
   type: Constants.StageType.HOLD,
-  repeat: 1,
+  cycles: 1,
   pause_after: true,
   steps: [
     { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
@@ -26,7 +26,7 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  repeat: 40,
+  cycles: 40,
   pause_after: false,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:3.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
@@ -37,7 +37,7 @@ const example_pcr_stage = {
 
 const example_melt_curve_stage = {
   type: Constants.StageType.MELT_CURVE,
-  repeat: 1,
+  cycles: 1,
   pause_after: false,
   steps: [
     { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },

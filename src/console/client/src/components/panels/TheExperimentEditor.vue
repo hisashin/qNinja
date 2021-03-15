@@ -92,6 +92,8 @@
                 <b-tab
                   title="Amplification"
                   active>
+                  Export <button  class="btn btn-link" @click.stop="exportExperiment('qpcr')" >JSON</button> / 
+                  <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
                   <AmplificationChart ref="amplificationChart" />
                   <div>
                     TODO Baseline conf
@@ -101,12 +103,16 @@
                   </div>
                 </b-tab>
                 <b-tab title="Melt curve">
+                  Export <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve')" >JSON</button> / 
+                  <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve','csv')" >CSV</button>
                   <MeltCurveChart ref="meltCurveChart" />
                 </b-tab>
                 <b-tab title="Standard curve">
                   <StandardCurveChart ref="standardCurveChart" />
                 </b-tab>
                 <b-tab title="Temperature">
+                  Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
+                  <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
                   <TemperatureChart ref="temperatureChart" />
                 </b-tab>
               </b-tabs>
@@ -356,6 +362,10 @@ export default {
       if (val === null) return "";
       const d = Math.pow(10, digits);
       return Math.round(val * d) / d;
+    },
+    exportExperiment: function (property, extension) {
+      const url = client.getExperimentExportURL(this.experiment.id, property, extension);
+      window.open(url);
     }
   }
 }

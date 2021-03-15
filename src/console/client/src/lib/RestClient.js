@@ -89,6 +89,15 @@ class RestClient {
   submitDraftExperiment (option, onSuccess, onError) {
     Util.requestData("experiments/draft", option, "POST", onSuccess, onError);
   }
+  
+  // Export URL
+  getExperimentExportURL(id, property, ext) {
+    let url = Util.apiEndpoint() + "experiments/" + id + "/log/" + property;
+    if (ext) {
+      url += ("." + ext);
+    }
+    return url;
+  }
 }
 const client = new RestClient();
 module.exports = client;

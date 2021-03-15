@@ -4,7 +4,7 @@ const PromiseQueue = require("./promise_queue.js");
 /* Excitation and fluorescence measurement */
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
 const DEBUG_COEFF = 1;
-const EXCITATION_DURATION_MSEC = 50 * DEBUG_COEFF;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
 const MEASUREMENT_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 class Optics {
   constructor (ledUnit, fluorescenceSensingUnit, wellsCount, opticsChannelsCount) {

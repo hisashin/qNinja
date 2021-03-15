@@ -91,9 +91,9 @@
                         Delete
                       </b-button>
                       <input
-                        v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
+                        v-model.number="stage.cycles" v-on:input="onChangeProtocol()"
                         type="hidden"
-                        class="input-repeat"
+                        class="input-cycles"
                       > 
                     </h3>
                     <ul class="protocol__stages__stage__steps">
@@ -132,10 +132,10 @@
                         Delete
                       </b-button>
                     </h3>
-                    Repeat <span :class="'validation-label validation__stages__'+index+'__repeat'"/><input
-                      v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
+                    Repeat <span :class="'validation-label validation__stages__'+index+'__cycles'"/><input
+                      v-model.number="stage.cycles" v-on:input="onChangeProtocol()"
                       type="number"
-                      class="input-repeat"
+                      class="input-cycles"
                     > times
                     <ul class="protocol__stages__stage__steps">
                       <li class="protocol__stages__stage__steps__step">
@@ -238,9 +238,9 @@
                         Delete
                       </b-button>
                       <input
-                        v-model.number="stage.repeat" v-on:input="onChangeProtocol()"
+                        v-model.number="stage.cycles" v-on:input="onChangeProtocol()"
                         type="hidden"
-                        class="input-repeat"
+                        class="input-cycles"
                       > 
                     </h3>
                     <ul class="protocol__stages__stage__steps">
@@ -385,20 +385,20 @@ const MEASUREMENT_RAMP_END = 3;
 const MEASUREMENT_HOLD_END = 4;
 
 const DEFAULT_STAGE_HOLD = { type: Constants.StageType.HOLD, 
-  repeat:1, 
+  cycles:1, 
   steps:[ {label:"hold", temp:94, duration:15, data_collection:{}} ] };
 const DEFAULT_STAGE_QPCR = { type: Constants.StageType.QPCR, 
-  repeat:30, 
+  cycles:30, 
   steps:[ {label:"denature", temp:94, duration:15, data_collection:{"ramp_end":true, "hold_end":false, "ramp_continuous":false, "hold_continuous":false}}, 
   {label:"anneal", temp:55, duration:12, data_collection:{}}, 
   {label:"extend", temp:72, duration:18, data_collection:{}} ] };
 const DEFAULT_STAGE_MELT_CURVE = { type: Constants.StageType.MELT_CURVE, 
-  repeat:1, 
+  cycles:1, 
   steps:[ {label:"denature", temp:94, duration:10, ramp_speed:4, data_collection:{}}, 
   {label:"cool", temp:55, duration:5, ramp_speed:4, data_collection:[]}, 
   {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:{"ramp_end":false, "hold_end":false, "ramp_continuous":true, "hold_continuous":false}} ] };
 const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR, 
-  repeat:30, 
+  cycles:30, 
   steps:[ {label:"denature", temp:94, duration:15, data_collection:{}}, 
   {label:"anneal", temp:55, duration:12, data_collection:{}}, 
   {label:"extend", temp:72, duration:18, data_collection:{}} ] };

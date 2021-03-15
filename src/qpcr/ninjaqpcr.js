@@ -187,10 +187,9 @@ class NinjaQPCR {
         t:this.getExperimentElapsedTime(),
         v:values,
         stage:step.stage,
-        repeat:step.repeat,
+        cycle:step.cycle,
         step:step.step
     };
-    // console.log("_addFluorescenceQPCRLog " + JSON.stringify(data));
     this.experimentLog.log.fluorescence.qpcr.push(data);
     return data;
   }
@@ -271,7 +270,7 @@ class NinjaQPCR {
     let debug = {
       type: (toStage!=null)?toStage.type:0,
       current:this.progress.well,
-      cycle:this.progress.state.repeat
+      cycle:this.progress.state.cycle
     };
     if (toStage && toStage.steps.length == 3) {
       debug.low = toStage.steps[1].temp;
@@ -289,7 +288,7 @@ class NinjaQPCR {
       this.notifyFluorescenceEvent(this.optics.continuous?"start":"stop");
       this.isMeasuringFluorescenceContinuously = this.optics.continuous;
     }
-    if (data.from != null && data.to != null && (data.from.repeat != data.to.repeat || data.from.stage != data.to.stage)) {
+    if (data.from != null && data.to != null && (data.from.cycle != data.to.cycle || data.from.stage != data.to.stage)) {
       experimentManager.update(this.experimentLog, null, null);
       console.log("ThermalCyclerTransition SAVE");
     } else {

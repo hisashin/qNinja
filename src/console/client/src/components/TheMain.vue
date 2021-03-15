@@ -1,37 +1,46 @@
 <template>
-  <main class="main">
-    <!-- Device monitor -->
-    <div class="device-monitor">
-      <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
-    </div>
-    <nav class="panel-nav">
-      <BackButton v-show="backEnabled" />
-    </nav>
-    <!-- Panels -->
-    <TheDashboard ref="panelDashboard" v-show="selectedPanel==panels.DASHBOARD" />
-    <TheProtocolList ref="panelProtocolList" v-show="selectedPanel==panels.PROTOCOL_LIST" />
-    <TheProtocolDetail ref="panelProtocolDetail" v-show="selectedPanel==panels.PROTOCOL_DETAIL" />
-    <TheExperimentList ref="panelExperimentList" v-show="selectedPanel==panels.EXPERIMENT_LIST" />
-    <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
-    <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
-    <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
-    <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
-    <div>
-    (Dev)
-      <b-button class="mr-1"
-        @click.stop="showTemplate">
-        Panel Template
-      </b-button>
-      <b-button class="mr-1"
-        @click.stop="home">
-        Home
-      </b-button>
-      <b-button class="mr-1"
-        @click.stop="ping">
-        Ping
-      </b-button>
-    </div>
-  </main>
+  <div>
+    <header class="header">
+      <div class="header__content">
+        <h1 class="header__title">Ninja qPCR</h1>
+        <!-- Device monitor -->
+        <div class="header__device">
+          <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <nav class="panel-nav">
+        <BackButton v-show="backEnabled" />
+      </nav>
+      <!-- Panels -->
+      <TheDashboard ref="panelDashboard" v-show="selectedPanel==panels.DASHBOARD" />
+      <TheProtocolList ref="panelProtocolList" v-show="selectedPanel==panels.PROTOCOL_LIST" />
+      <TheProtocolDetail ref="panelProtocolDetail" v-show="selectedPanel==panels.PROTOCOL_DETAIL" />
+      <TheExperimentList ref="panelExperimentList" v-show="selectedPanel==panels.EXPERIMENT_LIST" />
+      <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
+      <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
+      <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
+      <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
+      <div>
+      (Dev)
+        <b-button class="mr-1"
+          @click.stop="showTemplate">
+          Panel Template
+        </b-button>
+        <b-button class="mr-1"
+          @click.stop="home">
+          Home
+        </b-button>
+        <b-button class="mr-1"
+          @click.stop="ping">
+          Ping
+        </b-button>
+      </div>
+    </main>
+    <footer class="footer">
+    </footer>
+  </div>
 </template>
 <script>
 

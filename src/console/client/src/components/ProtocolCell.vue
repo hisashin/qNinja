@@ -16,7 +16,7 @@
                 <span class="protocol-summary__stages__stage__step__temp">{{ step.temp }}℃</span>
                 <span class="protocol-summary__stages__stage__step__duration">{{ step.duration }}sec</span>
               </span>
-              <span v-if="stage.type==2" class="protocol-summary__stages__stage__cycle">x{{ stage.repeat }}</span>
+              <span v-if="stage.type==2" class="protocol-summary__stages__stage__cycles">x{{ stage.cycles }}</span>
             </li>
           </ul>
         </div>

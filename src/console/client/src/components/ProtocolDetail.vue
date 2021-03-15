@@ -28,7 +28,7 @@
           </template>
           <template v-if="stage.type==2 && stage.steps.length>2">
             <h3 class="protocol__stages__stage__title">qPCR Stage</h3>
-            Repeat {{ stage.repeat }} times
+            Repeat {{ stage.cycles }} times
             <ul class="protocol__stages__stage__steps">
               <li class="protocol__stages__stage__steps__step">
                 <div class="protocol__stages__stage__steps__step__label">
@@ -96,7 +96,7 @@
           </template>
           <template v-if="stage.type==4 && stage.steps.length>2">
             <h3 class="protocol__stages__stage__title">Normal PCR Stage</h3>
-            Repeat {{ stage.repeat }} times
+            Repeat {{ stage.cycles }} times
             <ul class="protocol__stages__stage__steps">
               <li class="protocol__stages__stage__steps__step">
                 <div class="protocol__stages__stage__steps__step__label">

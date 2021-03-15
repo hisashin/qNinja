@@ -24,7 +24,7 @@ const RULE_STEP = {
 const RULE_STAGE = {
   type: { type:"number", required:false, min:1, max:4 },
   pause_after: { type: "boolean", required: false },
-  repeat: { type:"integer", required:true, min:1, max:255 },
+  cycles: { type:"integer", required:true, min:1, max:255 },
   steps: { type:"array", required:true, min_length:1, max_length:8, rule:RULE_STEP },
   _func: ()=>{}
   

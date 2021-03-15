@@ -178,6 +178,71 @@ class ExperimentManager {
       }
     });
   }
+  
+  export (experiment, property) {
+    if (property == "temp") {
+      return this._exportTemp(experiment);
+    }
+    if (property == "qpcr") {
+      return this._exportQpcr(experiment);
+    }
+    if (property == "melt_curve") {
+      return this._exportMeltCurve(experiment);
+    }
+    return "Invalid key: " + property;
+  }
+  _exportTemp (experiment) {
+    let table = [];
+    // Header
+    table.push(["time", "lid", "plate"]);
+    if (experiment.log && experiment.log.temp) {
+      const data = experiment.log.temp;
+      for (let i=0; i<data.time.length; i++) {
+        table.push([ data.time[i], data.lid[i], data.well[i] ]);
+      }
+      
+    }
+    return this._toCsv(table);
+  }
+  _exportQpcr (experiment) {
+    if (!experiment.hardware) {
+      return "Hardware config is empty.";
+    }
+    if (!experiment.log.fluorescence || !experiment.log.fluorescence.qpcr) {
+      return " No fluorescence data.";
+    }
+    let table = [];
+    const chCount = experiment.hardware.channels.count;
+    const wellCount = experiment.hardware.wells.count;
+    
+    let header = ["time","cycle"];
+    for (let c=0; c<chCount; c++) {
+      for (let w=0; w<wellCount; w++) {
+        header.push("Ch " + (c+1) + "/" + experiment.hardware.wells.names[w]);
+      }
+    }
+    table.push(header);
+    const qpcr = experiment.log.fluorescence.qpcr;
+    for (let i=0; i<qpcr.length; i++) {
+      const data = qpcr[i];
+      let line = [ data.t, data.cycle];
+      for (let ch=0; ch<chCount; ch++) {
+        for (let well=0; well<wellCount; well++) {
+          line.push(data.v[ch][well]);
+        }
+      }
+      table.push(line);
+    }
+    return this._toCsv(table);
+  }
+  
+  _exportMeltCurve (experiment) {
+    return "TODO";
+  }
+  _toCsv (table) {
+    return table.map(line=>line.join("\t")).join("\n");
+  }
+  
   analyze (experiment, callback, onError) {
     // TODO analyze
     console.log("ExperimentManager.analyze");
@@ -342,8 +407,6 @@ class ExperimentManager {
         onSave();
       }
     });
-    
-    
   }
 }
 const instance = new ExperimentManager();

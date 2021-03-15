@@ -2,7 +2,6 @@
 const NinjaQPCR = require("./ninjaqpcr");
 
 const qpcr = new NinjaQPCR("hardware.json");
-// const protocol = require("./protocol_example");
 const protocol = require("./dev_protocol");
 
 const em = require("./experiment_manager");

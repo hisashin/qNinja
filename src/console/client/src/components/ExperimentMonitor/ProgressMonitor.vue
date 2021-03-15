@@ -64,7 +64,7 @@
         Step {{ progress.state.step+1 }}<template v-if="stage!=null">/{{stage.steps.length}}</template>
       </div>
       <div class="col-3">
-        Cycle {{ progress.state.repeat+1 }}<template v-if="stage!=null">/{{stage.repeat}}</template>
+        Cycle {{ progress.state.cycle+1 }}<template v-if="stage!=null">/{{stage.cycles}}</template>
       </div>
       <div class="col-3">
         {{ progress.state.state }} 

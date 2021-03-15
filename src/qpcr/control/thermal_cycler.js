@@ -45,7 +45,7 @@ class RemainingTimeCalculator {
     }
     return (fromTemp - toTemp) / coolingSpeed;
   }
-  update (currentStageIndex, currentRepeatIndex) {
+  update (currentStageIndex, currentCycleIndex) {
     // First
     this.timestamp = new Date();
     let temp = START_TEMP;
@@ -75,13 +75,12 @@ class RemainingTimeCalculator {
       });
       
       if (stageIndex >= currentStageIndex) {
-        let targetRepeat = (stageIndex == currentStageIndex) ? currentRepeatIndex : 0;
-        let stageDuration = (stage.repeat - targetRepeat) * cycleDuration;
-        if (currentRepeatIndex == 0) {
+        let targetCycle = (stageIndex == currentStageIndex) ? currentCycleIndex : 0;
+        let stageDuration = (stage.cycles - targetCycle) * cycleDuration;
+        if (currentCycleIndex == 0) {
           stageDuration -= (cycleDuration - firstCycleDuration);
         }
         remaining += stageDuration;
-        // console.log("Remaining: stage=%d duration=%f repeat=%d", stageIndex, stageDuration, stage.repeat);
       }
     });
     const total = (this.timestamp.getTime() - this.start.getTime())/1000;
@@ -183,8 +182,8 @@ class ThermalCycler {
       this.state.start(now);
       const from = this.stateFrom.getStatus();
       const to = this.state.getStatus();
-      if (!(from.stage == to.stage && from.repeat == to.repeat)) {
-        this.remainingTimeCalculator.update(to.stage, to.repeat);
+      if (!(from.stage == to.stage && from.cycle == to.cycle)) {
+        this.remainingTimeCalculator.update(to.stage, to.cycle);
         
       }
       if (this.eventReceiver != null && this.eventReceiver.onThermalTransition != null) {
@@ -276,7 +275,7 @@ class StatePreheat {
   }
   next (startTemperature) { 
     if (this.protocol.stages.length > 0 && 
-      this.protocol.stages[0].repeat > 0 && this.protocol.stages[0].steps.length > 0) {
+      this.protocol.stages[0].cycles > 0 && this.protocol.stages[0].steps.length > 0) {
       // Choose the first step of the first stage
       const state = new StateStepRamp(this.protocol, 
         0, 0, 0, startTemperature);
@@ -300,11 +299,11 @@ class StateStepControlledRamp  {
 }
 
 class StateStepRamp {
-  constructor (protocol, stageIndex, repeatIndex, stepIndex, startTemperature) {
+  constructor (protocol, stageIndex, cycleIndex, stepIndex, startTemperature) {
     this.startTemperature = startTemperature;
     this.protocol = protocol;
     this.stageIndex = stageIndex;
-    this.repeatIndex = repeatIndex;
+    this.cycleIndex = cycleIndex;
     this.stepIndex = stepIndex
     this.stage = protocol.stages[stageIndex];
     this.step = this.stage.steps[stepIndex];
@@ -350,7 +349,7 @@ class StateStepRamp {
   }
   next (startTemperature) {
     return new StateStepHold(this.protocol, this.stageIndex, 
-      this.repeatIndex, this.stepIndex);
+      this.cycleIndex, this.stepIndex);
   }
   getStatus() {
     // TODO define data format
@@ -358,7 +357,7 @@ class StateStepRamp {
       state: "ramp",
       stage: this.stageIndex,
       step: this.stepIndex,
-      repeat: this.repeatIndex,
+      cycle: this.cycleIndex,
       stepElapsed: this.elapsedMsec
     }
   }
@@ -367,11 +366,11 @@ class StateStepRamp {
 }
 
 class StateStepHold {
-  constructor (protocol, stageIndex, repeatIndex, stepIndex) {
-    // console.log("StateStepHold %d %d %d", stageIndex, repeatIndex, stepIndex);
+  constructor (protocol, stageIndex, cycleIndex, stepIndex) {
+    // console.log("StateStepHold %d %d %d", stageIndex, cycleIndex, stepIndex);
     this.protocol = protocol;
     this.stageIndex = stageIndex;
-    this.repeatIndex = repeatIndex;
+    this.cycleIndex = cycleIndex;
     this.stepIndex = stepIndex;
     this.stage = protocol.stages[stageIndex];
     this.step = this.stage.steps[stepIndex];
@@ -401,14 +400,14 @@ class StateStepHold {
   }
   next (startTemperature) { 
     let nextStage = this.stageIndex;
-    let nextRepeat = this.repeatIndex;
+    let nextCycle = this.cycleIndex;
     let nextStep = this.stepIndex;
     if (this.stepIndex < this.stage.steps.length - 1) {
       nextStep += 1;
-    } else if (this.repeatIndex < this.stage.repeat - 1) {
+    } else if (this.cycleIndex < this.stage.cycles - 1) {
       // Repeat the stage
       nextStep = 0;
-      nextRepeat += 1;
+      nextCycle += 1;
     } else if (this.stageIndex < this.protocol.stages.length - 1) {
       // End of the stage.
       // Has next stage
@@ -416,17 +415,17 @@ class StateStepHold {
       console.log("pause_after=" + this.protocol.stages[this.stageIndex].pause_after);
       if (this.protocol.stages[this.stageIndex].pause_after) {
         // Pause.
-        return new StateAutoPause(this.protocol, this.stageIndex, this.repeatIndex, this.stepIndex, startTemperature);
+        return new StateAutoPause(this.protocol, this.stageIndex, this.cycleIndex, this.stepIndex, startTemperature);
       }
       nextStage = this.stageIndex += 1;
-      nextRepeat = 0;
+      nextCycle = 0;
       nextStep = 0;
     } else {
       // Finish.
       return new StateFinalHold(this.protocol);
     }
     return new StateStepRamp(this.protocol, nextStage, 
-      nextRepeat, nextStep, startTemperature);
+      nextCycle, nextStep, startTemperature);
   }
   getStatus() {
     // TODO define data format
@@ -434,14 +433,14 @@ class StateStepHold {
       state: "hold",
       stage: this.stageIndex,
       step: this.stepIndex,
-      repeat: this.repeatIndex,
+      cycle: this.cycleIndex,
       stepElapsed: this.elapsedMsec
     }
   }
   isFinished () { return false; }
 }
 class StateAutoPause {
-  constructor (protocol, stageIndex, repeatIndex, stepIndex, startTemperature) {
+  constructor (protocol, stageIndex, cycleIndex, stepIndex, startTemperature) {
     this.protocol = protocol;
     this.stageIndex = stageIndex;
     this.startTemperature = startTemperature;
@@ -472,7 +471,7 @@ class StateAutoPause {
       state: "auto_pause",
       stage: this.stageIndex,
       step: this.stepIndex,
-      repeat: this.repeatIndex,
+      cycle: this.cycleIndex,
       stepElapsed: new Date().getTime() - this.startTimestamp;
     }
   }
