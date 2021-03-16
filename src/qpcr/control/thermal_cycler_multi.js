@@ -389,7 +389,6 @@ class StateStepHold {
   start (timestamp) { this.startTimestamp = timestamp; }
   debug () { return "StepHold"; }
   complete (plateTemp, lid_temp, timestamp) {
-    console.log(JSON.stringify(this.step));
     return this.elapsedMsec/1000 > this.step.duration;
   }
   updateTime (timestamp) {

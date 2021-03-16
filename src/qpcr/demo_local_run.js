@@ -195,7 +195,7 @@ class NinjaQPCRDemo {
     process.exit(1);
   }
   onThermalTransition (data) {
-    // console.log(data);
+    console.log(data);
   }
   
   onAutoPause (data) {
@@ -203,7 +203,7 @@ class NinjaQPCRDemo {
     setTimeout(()=>{qpcr.finishAutoPause();}, 5000);
   }
   onProgress (data) {
-    console.log(data);
+    // console.log(data);
   }
   onFluorescenceDataUpdate (data) {
     // console.log(data);

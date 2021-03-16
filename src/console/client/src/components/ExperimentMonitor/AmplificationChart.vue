@@ -93,12 +93,12 @@ export default {
         });
       });
     },
+    _index: function (channelIndex, wellIndex) {
+      return channelIndex * this.wellsCount + wellIndex;
+    },
     setBaseline: function (data) {
       this.baseline = data;
       this.applyBaseline();
-    },
-    _index: function (channelIndex, wellIndex) {
-      return channelIndex * this.wellsCount + wellIndex;
     },
     setHardwareConf: function(hardware) {
       this.wellsCount = hardware.wells.count;

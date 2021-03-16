@@ -30,66 +30,149 @@ const TUBE_COUNT = 8;
 const TIME_RANGE_SEC = 240;
 let graph = null;
 
+const CONVERSION_FUNC_RAW = (v)=>{return {x:v.t, y: v.f};};
+const CONVERSION_FUNC_DERIVATIVE = (v)=>{return {x:v.t, y: v.d};};
+
 let startTime = new Date();
 export default {
   data() {
     return {
+      measurements:[], // Real-time measurement
+      wellsCount: WELLS_COUNT,
+      channels:[],
+      channelsCount: CHANNELS_COUNT,
+      seriesList:[],
+      wellTable:[],
+      yScale:"linear",
+      analysis:{},
+      graphChannels: [],
+      subChannelsData: [],
+      subChannelsPoints: [],
     }
   },
   created: function () {
+    this.seriesList = [];
   },
   mounted: function () {
-    this.graph = new Graph(this.$refs.canvas);
-    this.maxD = 1.0;
-    let labels = [];
-    for (let i=0; i<TUBE_COUNT; i++) {
-      labels.push("Well " + (i+1));
-    }
-    this.graph.setSeries(labels);
-    this.graph.setConversionFunction(
-      (obj) =>{return { "x":Math.log10(obj.t), "y":obj.v }}
-    );
-    this.graph.setMinMaxX(40, 100);
-    this.graph.setMinMaxY(0, 1);
   },
   methods: {
-    set: function (data) {
-      this.graph.clearData();
-      let maxD = 0;
-      data.forEach ((item)=>{
-        for (let i=0; i<TUBE_COUNT; i++) {
-          if (item.d.length == TUBE_COUNT) {
-            this.graph.addData(i, {t:item.temp, v:item.v[i], d:item.d[i]});
-            maxD = Math.max(maxD , item.d[i]);
-          }
+    // Well iterator
+    eachSeries (func /* function(channel, well, dataIndex) */ ) {
+      for (let c=0; c<this.channelsCount; c++) {
+        for (let w=0; w<this.wellsCount; w++) {
+          func(c, w, this._index(c, w));
         }
-      });
-      this.maxD  = maxD;
-      this.graph.update();
+      }
     },
-    add: function (timestamp, data) {
-      // TODO real-time melt curve
-      console.log(data);
-      for (let i=0; i<TUBE_COUNT; i++) {
-        this.graph.addData(i, {t:timestamp, v:data.v[i], d: 0.5});
-        // Support D
-        // this.maxD = Math.max(this.maxD , data.d[i]);
+    eachWell (func) {
+      this.wellTable.forEach((row)=>{
+        row.forEach((well)=>{
+          func(well);
+        });
+      });
+    },
+    _index: function (channelIndex, wellIndex) {
+      return channelIndex * this.wellsCount + wellIndex;
+    },
+    setHardwareConf: function(hardware) {
+      console.log("MeltCurveChart.setHardwareConf");
+      this.wellsCount = hardware.wells.count;
+      this.channelsCount = hardware.channels.count;
+      let labels = [];
+      this.graph = new Graph(this.$refs.canvas);
+      this.eachSeries((c, w, i)=>{
+        labels[this._index(c, w)] = "W" + w + " / C" + c;
+      });
+      this.graphChannels = [];
+      this.subChannelsData = [];
+      
+      labels.forEach((label, i)=>{
+        const channel = this.graph.addChannel({label:label, index:i});
+        this.graphChannels.push(channel);
+        const subCh = channel.addSubChannel({type:"line"});
+        subCh.conversionFunction = CONVERSION_FUNC_RAW;
+        this.subChannelsData.push(subCh);
+      });
+      this.graph.setMinMaxX(0, 50);
+      this.graph.setMinMaxY(0, 20);
+      this.graph.setAutoMinMax(true);
+      this.debug = JSON.stringify(hardware)
+      this.channels = [];
+      for (let i=0; i<this.channelsCount; i++) {
+        const obj = {
+          index:i,
+          label:(i+1),
+          visible:true
+        };
+        this.channels.push(obj);
+      }
+      let wellTable = [];
+      hardware.wells.layout.forEach((row)=>{
+        let vRow = [];
+        row.forEach((col)=>{
+          const name = hardware.wells.names[col];
+          const obj = {index:col, name:name, visible:true};
+          vRow.push(obj);
+        });
+        wellTable.push(vRow);
+      });
+      this.wellTable = wellTable;
+    },
+    setData: function (data) {
+      // Expects experiment.log.fluorescence.melt_curve
+      this.graph.clearData();
+      
+      // TODO set -dF/dT server-side
+      if (data.length > 0) {
+        for (let mIndex=0; mIndex<data.length-1; mIndex++) {
+          this.eachSeries((c, w, i)=>{
+            const m = data[mIndex];
+            const mNext = data[mIndex+1];
+            this.subChannelsData[i].addData({
+              f:m.v[c][w], 
+              d: (-mNext.v[c][w]+m.v[c][w])/(mNext.temp-m.temp), 
+              t:m.temp});
+          });
+        }
       }
       this.graph.update();
     },
+    setAnalysis: function (analysis) {
+      console.log("AplificationChart.setAnalysis");
+      console.log(analysis)
+      this.analysis = analysis;
+    },
+    add: function (data) {
+      this.graph.update();
+    },
+    onFilterChange: function() {
+      const seriesCount = this.channelsCount * this.wellsCount;
+      this.eachWell((well)=>{
+        // well.index
+        this.channels.forEach((channel)=>{
+          const index = this._index(channel.index, well.index);
+          this.graphChannels[index].setVisibility(well.visible && channel.visible);
+        });
+      });
+      this.eachSeries((c, w, i)=>{
+        let f = null;
+        this.subChannelsData[i].conversionFunction = f;
+        this.subChannelsPoints[i].conversionFunction = f;
+      });
+      this.graph.setScaleY((this.yScale == "log" ) ? Graph.Scale.Log : Graph.Scale.Linear);
+      this.graph.update();
+    },
+    // Switch Y axis
     showRaw: function () {
-      this.graph.setConversionFunction(
-        (obj) =>{return { "x":Math.log10(obj.t), "y":obj.v }}
-      );
-      this.graph.setMinMaxY(0, 5);
+      this.subChannelsData.forEach((ch)=>{
+        ch.conversionFunction = CONVERSION_FUNC_RAW;
+      });
       this.graph.update();
     },
     showDerivative: function () {
-      this.graph.setConversionFunction(
-        (obj) =>{return { "x":obj.t, "y":obj.d }}
-      );
-      console.log("this.maxD = %f", this.maxD);
-      this.graph.setMinMaxY(0, this.maxD * 1.2);
+      this.subChannelsData.forEach((ch)=>{
+        ch.conversionFunction = CONVERSION_FUNC_DERIVATIVE;
+      });
       this.graph.update();
     }
   }

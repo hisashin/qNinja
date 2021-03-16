@@ -269,8 +269,8 @@ export default {
       if (!this.$refs.temperatureChart) {
         console.warn("this.$refs.temperatureChart is null. why?")
       }
-      if (this.isStarted) {
-        if (experiment.log && experiment.log.temp) {
+      if (this.isStarted && experiment.log) {
+        if (experiment.log.temp) {
           console.log("setExperiment 1.1");
           this.$refs.temperatureChart.set(
             experiment.log.temp.time, 
@@ -278,10 +278,15 @@ export default {
             experiment.log.temp.lid);
         
         }
-        if (experiment.log) {
+        if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
           this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
           this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
           this.$refs.amplificationChart.setAnalysis(experiment.analysis);
+        }
+        if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
+          this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
+          this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
+          this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
         }
       
       }

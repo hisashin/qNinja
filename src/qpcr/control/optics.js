@@ -25,7 +25,6 @@ class Optics {
     this.continuous = false;
     this.shouldResumeContinuous = false;
     this.devugValue = null;
-    this.lastMeasurementTimestamp = new Date();
   }
   /* Promise queue tasks */
   
@@ -50,7 +49,6 @@ class Optics {
     return ()=>{
       return new Promise((resolve, reject)=>{
         this.fluorescenceSensingUnit.measure((v)=>{
-          // console.log("%d-%d Fluo %f", wellIndex, opticalChannel, v);
           values[opticalChannel][wellIndex] = v;
           resolve();
         });

@@ -29,14 +29,36 @@ class OpticsDemo {
     this.optics = new Optics(this.led, this.photosensing, this.wellsCount, this.opticsChannelsCount);
     this.optics.start();
     this.opticsStarted = true;
-    let singleCh = 0;
     setInterval(()=>{
       this.optics.measureAll((values)=>{
+        console.log(values);
+      });
+    }, 3000);
+  }
+  perWellDemo () {
+    console.log("perWellDemo");
+    // Combination of LED and Photosensing
+    this.optics = new Optics(this.led, this.photosensing, this.wellsCount, this.opticsChannelsCount);
+    this.optics.start();
+    this.opticsStarted = true;
+    let MEASURE_COUNT = 5;
+    let sum = 0;
+    let count = 0;
+    const targetCh = 0;
+    const targetWell = 1;
+    const interval = setInterval(()=>{
+      this.optics.measureAll((values)=>{
         // console.log(values);
-        const targetCh = 0;
-        const targetWell = 1;
-        //console.log("%d %d %f", targetCh, targetWell, values[targetCh][targetWell]);
-        console.log(values[targetCh][targetWell])
+        const value = values[targetCh][targetWell];
+        console.log(value);
+        sum += value;
+        count ++;
+        if (count == MEASURE_COUNT) {
+          const avg = sum / MEASURE_COUNT;
+          clearInterval(interval);
+          console.log("Ch %d Well %d %s", targetCh, targetWell, new Date());
+          console.log(avg);
+        }
       });
     }, 3000);
   }
@@ -97,7 +119,7 @@ class OpticsDemo {
 }
 const demo = new OpticsDemo();
 demo.runOpticsDemo();
-// demo.runContinuousDemo();
+// demo.perWellDemo(0, 1);
 // demo.runLEDDemo();
 // demo.runPhotosensingDemo();
 //demo.runSimulationDemo();

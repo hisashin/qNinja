@@ -248,15 +248,18 @@ class NinjaQPCR {
     const _data = data;
     if (data.to.state == 'ramp') {
       if (to != null && to.data_collection != null && to.data_collection.ramp_continuous==true) {
+        console.log("Starting continuous data collection (ramp)");
         this.optics.startContinuousDataCollection(
           (values)=>{
+            console.log("Ramp continuous.");
             this.onFluorescenceDataUpdate(data.to, MEASUREMENT_RAMP_CONTINUOUS, values);
           }
         );
       }
     }
-    if (data.to.state == 'Hold continuous') {
+    if (data.to.state == 'hold') {
       if (to != null && to.data_collection != null && to.data_collection.hold_continuous==true) {
+        console.log("Starting continuous data collection (hold)");
         this.optics.startContinuousDataCollection(
           (values)=>{
             console.log("Hold continuous.");
@@ -291,9 +294,6 @@ class NinjaQPCR {
     if (data.from != null && data.to != null && (data.from.cycle != data.to.cycle || data.from.stage != data.to.stage)) {
       experimentManager.update(this.experimentLog, null, null);
       console.log("ThermalCyclerTransition SAVE");
-    } else {
-    console.log("ThermalCyclerTransition SKIP", JSON.stringify(data.from), JSON.stringify(data.to));
-      
     }
   }
   onAutoPause (data) {
@@ -315,6 +315,9 @@ class NinjaQPCR {
     this.experimentLog.log.temp.lid.push(data.lid);
     this.progress = data;
     data.elapsed = this.getExperimentElapsedTime();
+    if (this.optics.fluorescenceSensingUnit.setDebugTemp) {
+      this.optics.fluorescenceSensingUnit.setDebugTemp(data.well);
+    }
     if (this.receiver != null && this.receiver.onProgress) {
       this.receiver.onProgress(data);
     }

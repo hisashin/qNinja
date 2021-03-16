@@ -115,6 +115,11 @@ class LEDUnit {
 }
 const DUMMY_BASELINE_MULTIPLIER = 10;
 const DUMMY_BASELINE_OFFSET = 30;
+const MELT_RANGES = [
+  { tm:50, h:5, ratio:0.1}, // Total
+  { tm:84, h:30, ratio:0.7}, // Main
+  { tm:60, h:30, ratio:0.2}, // ?
+];
 class FluorescenceSimulator {
   constructor() {
     this.wellIndex = 0;
@@ -125,10 +130,11 @@ class FluorescenceSimulator {
   start () {
     this.startTimestamp = new Date();
     this.debugValue = [];
-    this.dummyValues = [];
+    this.ampValues = [];
     // Start with simulated background values
+    console.log("FluorescenceSimulator.start");
     for (let i=0; i<OPTICS_CHANNELS_COUNT * WELLS_COUNT; i++) {
-      this.dummyValues[i] = this._getDummyBackground();
+      this.ampValues[i] = this._getDummyBackground();
     }
   }
   select (wellIndex, opticalChannel) {
@@ -138,21 +144,40 @@ class FluorescenceSimulator {
   _index () {
     return this.wellIndex * OPTICS_CHANNELS_COUNT + this.opticalChannel;
   }
+  _getMeltCurve (initial, temp, tempMin, tempMax) {
+    let val = 0;
+    MELT_RANGES.forEach((range)=>{
+      const cont =  - range.h * (temp - range.tm) / (tempMax - tempMin);
+      val += range.ratio / (1 + Math.exp(cont));
+    });
+    return initial * (1.0 - val);
+  }
   getValue () {
     let value = 0;
     const index = this._index();
+    if (index == 0) {
+      console.log("getValue " + JSON.stringify(this.debugValue));
+    }
     if (this.debugValue.type == 3) {
       // Melt curve
       // TODO simulate melt curve
       const high = this.debugValue.high;
       const temperature = this.debugValue.currentTemp;
-      value = this._getDummyMeltCurve(this.dummyValues[index], this.debugValue.current, this.debugValue.high, this.debugValue.low);
+      value = this._getMeltCurve(this.ampValues[index], this.debugValue.current, this.debugValue.low, this.debugValue.high);
+      if (index == 0) {
+        console.log("Melt curve %f, Current=%f, Low=%f, High=%f => %f", 
+        this.ampValues[index], 
+        this.debugValue.current, 
+        this.debugValue.low, 
+        this.debugValue.high, 
+        value);
+      }
     } else {
       // Normal PCR
       value = this._getDummyAmplification(this.debugValue.cycle);
+      this.ampValues[index] = value;
     }
     if (! (value >= 0)) value = 0.5;
-    this.dummyValues[index] = value;
     return value;
   }
   // Dummy generator
@@ -165,7 +190,7 @@ class FluorescenceSimulator {
     return sigmoid;
   }
   _getDummyBackground (value) {
-    return Math.max(0, BoxMuller() * DUMMY_BASELINE_MULTIPLIER);
+    return Math.max(0, DUMMY_BASELINE_OFFSET + BoxMuller() * DUMMY_BASELINE_MULTIPLIER);
     // return DUMMY_BASELINE_MULTIPLIER;
   }
   _getDummyMeltCurve (start, current, high, low) {
@@ -218,6 +243,11 @@ class FluorescenceSensingUnit {
   measure(callback) {
     const value = this.sim.getValue();
     setTimeout(()=>{ callback(value); }, 10);
+  }
+  setDebugTemp (temp) {
+    if (this.sim.debugValue) {
+      this.sim.debugValue.current = temp;
+    }
   }
   setDebugValue (debugValue, experimentConfig) {
     this.sim.debugValue = debugValue;

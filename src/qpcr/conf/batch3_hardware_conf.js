@@ -341,7 +341,7 @@ class FluorescenceSensingUnit {
   }
   measure(callback) {
     this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
-      val = Math.max(0, 0.5-0.013-val) * 1000;
+      val = Math.max(0, 0.5-val) * 1000;
       callback(val);
     });
   }
