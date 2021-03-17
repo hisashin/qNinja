@@ -27,7 +27,7 @@
         </label>
         <input type="text" placeholder="Search" v-model="keyword" @keyup="onKeywordChanged"/>
       </nav>
-      <ProtocolList :limit="2" :pagination="true" ref="protocolList"/>
+      <ProtocolList :limit="10" :pagination="true" ref="protocolList"/>
     </section>
   </div>
 </template>

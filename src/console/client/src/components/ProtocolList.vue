@@ -63,6 +63,7 @@ export default {
     load: function () {
       console.log("ProtocolList.load");
       this.error = false;
+      this.params.limit = this.limit;
       let params = this.$data.params;
       client.fetchProtocols(params, 
       (res)=>{
