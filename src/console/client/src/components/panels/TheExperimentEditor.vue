@@ -20,16 +20,18 @@
       <div class="section__body">
         <div class="item item--detail-card">
           <div class="item--detail-card__body">
-            <dl class="labeled_list">
-              <dt class="labeled_list__label">Name</dt>
-              <dd class="labeled_list__content"><input
-                v-model="experiment.info.name" type="text" style="width:80%"
-              ></dd>
-              <dt class="labeled_list__label">Comment</dt>
-              <dd class="labeled_list__content"><textarea
-                v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
-              ></textarea></dd>
-            </dl>
+            <div class="item--detail-card__body__content">
+              <dl class="labeled_list">
+                <dt class="labeled_list__label">Name</dt>
+                <dd class="labeled_list__content"><input
+                  v-model="experiment.info.name" type="text" style="width:80%"
+                ></dd>
+                <dt class="labeled_list__label">Comment</dt>
+                <dd class="labeled_list__content"><textarea
+                  v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
+                ></textarea></dd>
+              </dl>
+            </div>
           </div>
         </div>
       </div>
@@ -147,12 +149,16 @@
       </header>
       <div class="section__body">
         <div class="item item--detail-card">
-          Analytics Config
-          <b-button
-            class="mr-1"
-            @click.stop="updateAnalysis">
-            Update (Debug)
-          </b-button>
+          <div class="item--detail-card__body">
+            <div class="item--detail-card__body__content">
+              Analysis Config
+              <b-button
+                class="mr-1"
+                @click.stop="updateAnalysis">
+                Update (Debug)
+              </b-button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

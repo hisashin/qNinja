@@ -210,7 +210,7 @@ class FluorescenceSimulator {
     return AMP_LAMBDA_STEP * this.wellIndex * (1 + this.opticalChannel);
   }
   _getDummyMax () {
-    return 2000 * (this.opticalChannel + 1) * 9000 + this.wellIndex * 100;
+    return 2000  + (this.opticalChannel + 1) * 9000 + this.wellIndex * 100;
   }
   _getDummyAmplification (cycle) {
     const AMP_F_START = 1.0;

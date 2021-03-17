@@ -70,6 +70,9 @@ export default {
     },
     deleteIt: function() {
       console.log("ProtocolCell.delete");
+      if (!window.confirm("Are you sure you want to delete this protocol?")) {
+        return;
+      }
       client.submitDeleteProtocol(this.pid, ()=>{
         appState.toast(this, "Deleted", "The protocol was deleted.");
         appState.backPanel();

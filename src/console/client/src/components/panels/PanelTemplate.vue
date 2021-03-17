@@ -31,7 +31,9 @@
             Detail Card Header
           </header>
           <div class="item--detail-card__body">
-            Detail Card Body
+            <div class="item--detail-card__body__content">
+              Detail Card Body Content
+            </div>
           </div>
           <footer class="item--detail-card__footer">
             Detail Card Footer

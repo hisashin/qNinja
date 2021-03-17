@@ -138,6 +138,15 @@ a {
 /* Item variant: Detail card */
 .item--detail-card {
 }
+.item--detail-card__header {
+}
+.item--detail-card__body {
+}
+.item--detail-card__footer {
+}
+.item--detail-card__body__content {
+  padding:1em;
+}
 /* Item variant: Text paragraph */
 .item--paragraph {
 

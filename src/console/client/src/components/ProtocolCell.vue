@@ -72,6 +72,9 @@ export default {
     },
     deleteIt: function() {
       console.log("ProtocolCell.delete");
+      if (!window.confirm("Are you sure you want to delete this experiment log?")) {
+        return;
+      }
       client.submitDeleteProtocol(this.pid, ()=>{
         console.log("Deleted.");
       });
