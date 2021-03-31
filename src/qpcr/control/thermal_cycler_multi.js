@@ -211,7 +211,7 @@ class ThermalCycler {
   getStatus () {
     // TODO: define data format
     return {
-      well: round(this.plate.temperature, 2),
+      plate: round(this.plate.temperature, 2),
       lid: round(this.getLidTemp(), 2),
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()

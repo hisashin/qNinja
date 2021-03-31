@@ -53,6 +53,7 @@ const POT_DEVICE_ADDR = 0x2F;
 
 // TODO change according to the circuit design
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
+// const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 2;
 const ADC_CHANNEL_AIR_THERMISTOR = 1; // TODO waiting for next main board design (with thermistor mux)
 const ADC_CHANNEL_LID_THERMISTOR= 2; // TODO TODO waiting for next main board design (with thermistor mux)
 const ADC_CHANNEL_PLATE_THERMISTOR = 3; // TODO TODO waiting for next main board design (with thermistor mux)
@@ -217,26 +218,18 @@ class HardwareConf {
     // Generic 16ch MUX
     const muxWrapper = new GenericGPIOMuxWrapper();
     // const muxWrapper = new SPIMuxWrapper(this.spi, PIN_NUM_PD_SYNC);
-    return new FluorescenceSensingUnit(muxWrapper, this.adcManager);
+    return new FluorescenceSensingUnit(muxWrapper, this.adcManager, ADC_CHANNEL_FLUORESCENCE_MEASUREMENT);
   }
 };
 // Channel name (Not index)
-/*
-const MUX_MAP = [
-  // 0ch
-  [ 7, 5, 3, 1, 15, 13, 11, 9 ],
-  // 1ch
-  [ 8, 6, 4, 2, 16, 14, 12, 10]
-];
-*/
 const MUX_MAP_N = [
   //0ch
   [8,6,4,2,16,14,12,10],
   [7,5,3,1,15,13,11,9]
 ];
 const MUX_MAP_S = [
-[8,6,4,2,16,14,12,10],
-[7,5,3,1,15,13,11,9]
+  [1,3,5,7,9,11,13,15],
+  [2,4,6,8,10,12,14,16]
 ];
 
 class SPIMuxWrapper {
@@ -284,14 +277,15 @@ class GenericGPIOMuxWrapper {
         muxSwitchVal = 1;
         muxChName = MUX_MAP_S[channel][wellIndex-8];
     }
+    muxSwitchVal = 0;
     const muxChannel = muxChName - 1;
-    //muxSwitchVal = 0;
     // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
   }
 }
 
+let debug = 0;
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 class LEDUnit {
   constructor (pot, ledDriver) {
@@ -309,8 +303,7 @@ class LEDUnit {
     this.pot.initialize();
   }
   select (channel) {
-    // channel = 15-channel;
-    // channel = 2;
+    channel = debug;
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
@@ -319,6 +312,8 @@ class LEDUnit {
   }
   off () {
     this.ledDriver.off();
+    debug = (debug + 1) % 16;
+    console.log("Debug value=%d", debug);
   }
   shutdown () {
     console.log("Shutting down LED unit.");
@@ -340,9 +335,15 @@ class FluorescenceSensingUnit {
     this.mux.select(wellIndex, opticalChannel);
   }
   measure(callback) {
-    this.adcManager.readChannelValue(ADC_CHANNEL_FLUORESCENCE_MEASUREMENT, (val)=>{
-      val = Math.max(0, 0.5-val) * 1000;
+    /*
+    this.adcManager.readChannelValue(this.adcChannel, (val)=>{
       callback(val);
+    });
+    */
+    this.adcManager.readChannelValue(0, (val0)=>{
+      this.adcManager.readChannelValue(3, (val3)=>{
+        callback(val3-val0);
+      });
     });
   }
   shutdown () {
@@ -399,7 +400,6 @@ class AirSensing {
       const temp = this.thermistor.getTemp(val);
       callback(temp);
     });
-    
   }
 }
 

@@ -280,7 +280,7 @@ export default {
           console.log("setExperiment 1.1");
           this.$refs.temperatureChart.set(
             experiment.log.temp.time, 
-            experiment.log.temp.well, 
+            experiment.log.temp.plate, 
             experiment.log.temp.lid);
         
         }

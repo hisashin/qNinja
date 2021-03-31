@@ -51,7 +51,7 @@ class ExperimentManager {
       log: {
         temp: {
           time:[],
-          well:[],
+          plate:[],
           lid:[]
         },
         events: [
@@ -198,7 +198,7 @@ class ExperimentManager {
     if (experiment.log && experiment.log.temp) {
       const data = experiment.log.temp;
       for (let i=0; i<data.time.length; i++) {
-        table.push([ data.time[i], data.lid[i], data.well[i] ]);
+        table.push([ data.time[i], data.lid[i], data.plate[i] ]);
       }
       
     }

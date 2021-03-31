@@ -12,7 +12,6 @@ const MUX_SINGLE_END_A1 = 0b100;
 const MUX_SINGLE_END_A2 = 0b101;
 const MUX_SINGLE_END_A3 = 0b110;
 
-
 const DATA_RATE_20SPS = 0b00;
 const DATA_RATE_90SPS = 0b01;
 const DATA_RATE_330SPS = 0b10;
@@ -112,12 +111,14 @@ class ADS1219IPWR {
   // Measure single-ended signals
   selectChannel (channel) {
     const currentVal = this.readConfigurationRegister();
-    const muxBits = MUX_SINGLE_END_VALS[channel];
+    const muxBits = MUX_SINGLE_END_VALS[channel]; //TODO debug
+    // const muxBits = MUX_DIFF_PA2_NA3;
     // Note: By default, it uses internal ref voltage (2.048V)
     const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
+  
   sync () {
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
@@ -140,6 +141,7 @@ class ADS1219IPWR {
   readConversionData (callback) {
     let buff = Buffer.alloc(3, 0x00);
     this.i2c.readI2cBlock(this.address, COMMAND_RDATA, 3, buff, ()=>{
+      let buffVal = [buff[0], buff[1], buff[2]];
       let val = (buff[0] << 16) | (buff[1] << 8) | buff[2];
       let origVal = val;
       if(val & 0x00800000){
@@ -149,8 +151,9 @@ class ADS1219IPWR {
       if (val < 0) {
         val = 0;
       }
-      
-      callback( Math.max(0, val / (1.0 * 0x00800000))); // For single-ended
+      origVal = val;
+      callback(origVal/0x800000); // TODO debug
+      // callback( Math.max(0, val / (1.0 * 0x00800000))); // For single-ended
     });
   }
   

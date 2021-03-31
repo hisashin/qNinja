@@ -8,7 +8,7 @@ const em = require("./experiment_manager");
 qpcr.setEventReceiver({
   onProgress:function (data) {
     console.log(JSON.stringify(data));
-    console.log("%f\t%f", data.well, data.lid);
+    console.log("%f\t%f", data.plate, data.lid);
   }
 });
 const experiment = em._createExperimentDraft({protocol:protocol});

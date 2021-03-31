@@ -122,7 +122,7 @@ export default {
             // Set past data
             this.$refs.temperatureChart.set(
               experiment.log.temp.time, 
-              experiment.log.temp.well, 
+              experiment.log.temp.plate, 
               experiment.log.temp.lid);
             try {
               this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
@@ -153,7 +153,7 @@ export default {
             device.addProgressHandler({
               onProgress:(obj)=>{
                 if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
-                  this.$refs.temperatureChart.add(obj.elapsed, obj.well, obj.lid);
+                  this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
                 
                 }
               }

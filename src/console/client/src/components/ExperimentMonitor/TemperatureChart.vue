@@ -33,24 +33,24 @@ export default {
     this.graph = graph;
   },
   methods: {
-    add: function(timestamp, well, lid) {
-      this.channelPlate.addData({t:timestamp, v:well});
+    add: function(timestamp, plate, lid) {
+      this.channelPlate.addData({t:timestamp, v:plate});
       this.channelLid.addData({t:timestamp, v:lid});
       const minTime = Math.max(0, timestamp/1000-TIME_RANGE_SEC);
       this.graph.setMinMaxX(minTime, minTime + TIME_RANGE_SEC + 10);
       this.graph.update();
     },
-    set: function (timeSeries, wellSeries, lidSeries) {
+    set: function (timeSeries, plateSeries, lidSeries) {
       this.graph.clearData();
       let maxTime = 0;
       for (let i=0; i<timeSeries.length; i++) {
         const time = timeSeries[i];
-        const well = wellSeries[i];
+        const plate = plateSeries[i];
         const lid = lidSeries[i];
-        if (time == null || well == null || lid == null) {
+        if (time == null || plate == null || lid == null) {
           continue;
         }
-        this.channelPlate.addData({t:time, v:well});
+        this.channelPlate.addData({t:time, v:plate});
         this.channelLid.addData({t:time, v:lid});
         maxTime = Math.max(maxTime, time);
       }

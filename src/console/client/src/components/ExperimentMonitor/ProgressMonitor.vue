@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-6">
         <div>
-          Plate {{ progress.well }}℃ 
+          Plate {{ progress.plate }}℃ 
           <template 
             v-if="step!=null && step.temp!=null">/{{step.temp}}℃</template>
         </div>
@@ -38,7 +38,7 @@
           <meter
             min="0"
             max="110"
-            :value="progress.well"
+            :value="progress.plate"
             style="width:100%" />
         </div>
       </div>

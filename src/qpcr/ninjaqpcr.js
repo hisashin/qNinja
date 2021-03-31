@@ -197,7 +197,7 @@ class NinjaQPCR {
     let data = {
         t:this.getExperimentElapsedTime(),
         v:values,
-        temp:this.progress.well
+        temp:this.progress.plate
     };
     // console.log("_addFluorescenceMeltCurveLog " + JSON.stringify(data));
     this.experimentLog.log.fluorescence.melt_curve.push(data);
@@ -272,7 +272,7 @@ class NinjaQPCR {
     // For debug
     let debug = {
       type: (toStage!=null)?toStage.type:0,
-      current:this.progress.well,
+      current:this.progress.plate,
       cycle:this.progress.state.cycle
     };
     if (toStage && toStage.steps.length == 3) {
@@ -311,12 +311,12 @@ class NinjaQPCR {
   
   onProgress (data) {
     this.experimentLog.log.temp.time.push(this.getExperimentElapsedTime());
-    this.experimentLog.log.temp.well.push(data.well);
+    this.experimentLog.log.temp.plate.push(data.plate);
     this.experimentLog.log.temp.lid.push(data.lid);
     this.progress = data;
     data.elapsed = this.getExperimentElapsedTime();
     if (this.optics.fluorescenceSensingUnit.setDebugTemp) {
-      this.optics.fluorescenceSensingUnit.setDebugTemp(data.well);
+      this.optics.fluorescenceSensingUnit.setDebugTemp(data.plate);
     }
     if (this.receiver != null && this.receiver.onProgress) {
       this.receiver.onProgress(data);

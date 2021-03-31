@@ -51,6 +51,15 @@ class OpticsDemo {
         // console.log(values);
         const value = values[targetCh][targetWell];
         console.log(value);
+        /*
+        let str = value.toString(2);
+        while (str.length < 24) {
+          str = "0" + str;
+        }
+        console.log(str);
+        console.log(value, 0x800000, );
+        */
+        /*
         sum += value;
         count ++;
         if (count == MEASURE_COUNT) {
@@ -59,6 +68,7 @@ class OpticsDemo {
           console.log("Ch %d Well %d %s", targetCh, targetWell, new Date());
           console.log(avg);
         }
+        */
       });
     }, 3000);
   }
@@ -119,7 +129,7 @@ class OpticsDemo {
 }
 const demo = new OpticsDemo();
 demo.runOpticsDemo();
-// demo.perWellDemo(0, 1);
+// demo.perWellDemo(0,  7);
 // demo.runLEDDemo();
 // demo.runPhotosensingDemo();
 //demo.runSimulationDemo();
