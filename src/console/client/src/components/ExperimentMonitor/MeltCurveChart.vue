@@ -1,15 +1,5 @@
 <template>
   <div>
-    <b-button
-      class="ml-1"
-      @click.stop="showRaw">
-      F vs. T
-    </b-button>
-    <b-button
-      class="ml-1"
-      @click.stop="showDerivative">
-      -dF/dT vs. T
-    </b-button>
     <div style="width:400px,height:200px">
       <canvas
         ref="canvas"
@@ -18,6 +8,16 @@
         style="width:400px,height:200px"
       />
     </div>
+    <button
+      class="ml-1 btn btn-link"
+      @click.stop="showRaw">
+      F vs. T
+    </button>
+    <button
+      class="ml-1 btn btn-link"
+      @click.stop="showDerivative">
+      -dF/dT vs. T
+    </button>
   </div>
 </template>
 
@@ -38,9 +38,9 @@ export default {
   data() {
     return {
       measurements:[], // Real-time measurement
-      wellsCount: WELLS_COUNT,
+      wellsCount: 0,
       channels:[],
-      channelsCount: CHANNELS_COUNT,
+      channelsCount: 0,
       seriesList:[],
       wellTable:[],
       yScale:"linear",

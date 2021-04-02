@@ -87,58 +87,97 @@
       </header>
       <div class="section__body ">
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <!-- Raw log tabs -->
             <div class="item item--tabbed">
-              <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
-                <b-tab
+              <b-tabs pills nav-wrapper-class="item--tabbed__tabs">
+                <b-tab @click="onSelectTabAmp()"
                   title="Amplification"
                   active>
-                  Export <button  class="btn btn-link" @click.stop="exportExperiment('qpcr')" >JSON</button> / 
-                  <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
-                  <AmplificationChart ref="amplificationChart" />
-                  <div>
-                    TODO Baseline conf
+                  <div class="item--tabbed__content">
+                    <div class="item--tabbed__content__main" id="tabAmpMain">
+                      <AmplificationChart ref="amplificationChart" />
+                      <div>
+                        TODO Baseline conf / manual
+                      </div>
+                      <div>
+                        TODO Threshold conf / manual
+                      </div>
+                      Export <button  class="btn btn-link" @click.stop="exportExperiment('qpcr')" >JSON</button> / 
+                      <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
+                    </div>
+                    <div class="item--tabbed__content__side" id="tabAmpSide">
+                      
+                    </div>
                   </div>
-                  <div>
-                    TODO Threshold conf
+                </b-tab>
+                <b-tab title="Melt curve" @click="onSelectTabMelt()">
+                  <div class="item--tabbed__content">
+                    <div class="item--tabbed__content__main" ref="tabMeltMain">
+                      <MeltCurveChart ref="meltCurveChart" />
+                      Export <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve')" >JSON</button> / 
+                      <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve','csv')" >CSV</button>
+                    </div>
+                    <div class="item--tabbed__content__side" id="tabMeltSide">
+                      
+                    </div>
                   </div>
                 </b-tab>
-                <b-tab title="Melt curve">
-                  Export <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve')" >JSON</button> / 
-                  <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve','csv')" >CSV</button>
-                  <MeltCurveChart ref="meltCurveChart" />
+                <b-tab title="Standard curve" @click="onSelectTabStdCurve()">
+                  <div class="item--tabbed__content">
+                    <div class="item--tabbed__content__main" ref="tabStdCurveMain">
+                      <StandardCurveChart ref="standardCurveChart" />
+                    </div>
+                    <div class="item--tabbed__content__side" id="tabStdCurveSide">
+                      
+                    </div>
+                  </div>
                 </b-tab>
-                <b-tab title="Standard curve">
-                  <StandardCurveChart ref="standardCurveChart" />
-                </b-tab>
-                <b-tab title="Temperature">
-                  Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
-                  <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
-                  <TemperatureChart ref="temperatureChart" />
+                <b-tab title="Temperature" @click="onSelectTabTemperature()">
+                  <div class="item--tabbed__content">
+                    <div class="item--tabbed__content__main" ref="tabTemperatureMain">
+                      <TemperatureChart ref="temperatureChart" />
+                      Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
+                      <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
+                    </div>
+                    <div class="item--tabbed__content__side" id="tabTemperatureSide">
+                      
+                    </div>
+                  </div>
                 </b-tab>
               </b-tabs>
             </div>
           </div>
-          <div class="col-4">
-            <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid">
-              <tr>
-                <th>Well</th>
-                <template v-for="channel of experiment.hardware.channels.count">
-                  <th :key="`c-${channel}`">Ct {{ channel }}</th>
-                  <th :key="`q-${channel}`">Qty {{ channel }}</th>
-                </template>
-              </tr>
-              <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-                <td>{{ wellLabel }}</td>
-                <template v-for="channel of experiment.hardware.channels.count">
-                  <td :key="`c-${channel}-${wellIndex}`">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
-                  <td :key="`q-${channel}-${wellIndex}`">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
-                </template>
-              </tr>
-              
-            </table>
-          </div>
+          <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
+            <tr>
+              <th>Well</th>
+              <th>A</th>
+              <template v-for="channel of experiment.hardware.channels.count">
+                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
+                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
+                <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
+                <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
+                <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
+                <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
+                <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
+              </template>
+            </tr>
+            <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+              <td>{{ wellLabel }}</td>
+              <td :key="`a-${wellIndex}`" :style="{'background-color':`well_appearance[wellIndex].c`}">
+                {{ well_appearance[wellIndex] }}
+              </td>
+              <template v-for="channel of experiment.hardware.channels.count">
+                <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
+                <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
+                <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
+                <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
+                <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+              </template>
+            </tr>
+            
+          </table>
         </div>
       </div>
     </section>
@@ -192,6 +231,10 @@ import AmplificationChart from '../ExperimentMonitor/AmplificationChart.vue';
 import MeltCurveChart from '../ExperimentMonitor/MeltCurveChart.vue';
 import StandardCurveChart from '../StandardCurveChart.vue';
 
+const TAB_AMP = 0;
+const TAB_MELT= 1;
+const TAB_STD_CURVE= 2;
+const TAB_TEMPERATURE= 3;
 export default {
   name: 'TheExperimentEditor',
   components: {
@@ -214,7 +257,12 @@ export default {
       isNew: false,
       isStarted: false,
       channels: [0, 1],
-      wells:[]
+      well_appearance:[],
+      selectedTab:TAB_AMP,
+      TAB_AMP: TAB_AMP,
+      TAB_MELT: TAB_MELT,
+      TAB_STD_CURVE: TAB_STD_CURVE,
+      TAB_TEMPERATURE: TAB_TEMPERATURE
     }
   },
   created: function () {
@@ -239,7 +287,6 @@ export default {
           appState.run(this.experiment.id);
         },
         ()=>{});
-      
       }
     },
     save () {
@@ -296,6 +343,17 @@ export default {
         }
       
       }
+      this.well_appearance = [];
+      if (experiment.hardware) {
+        for (let w=0; w<experiment.hardware.wells.count; w++) {
+          let obj = {
+            v: true,
+            c: "#888"
+          };
+          this.well_appearance.push(obj);
+        }
+      }
+      console.log(this.$data.well_appearance);
       
       this.isNew = false;
     },
@@ -377,7 +435,43 @@ export default {
     exportExperiment: function (property, extension) {
       const url = client.getExperimentExportURL(this.experiment.id, property, extension);
       window.open(url);
+    },
+    onSelectTabAmp: function (){
+      console.log("onSelectTabAmp");
+      document.getElementById("tabAmpSide").appendChild(document.getElementById("analysisTable"));
+      this.selectedTab = TAB_AMP;
+    },
+    onSelectTabMelt: function (){
+      console.log("onSelectTabMelt");
+      document.getElementById("tabMeltSide").appendChild(document.getElementById("analysisTable"));
+      this.selectedTab = TAB_MELT;
+    },
+    onSelectTabStdCurve: function (){
+      console.log("onSelectTabStdCurve");
+      document.getElementById("tabStdCurveSide").appendChild(document.getElementById("analysisTable"));
+      this.selectedTab = TAB_STD_CURVE;
+    },
+    onSelectTabTemperature: function (){
+      console.log("onSelectTabTemperature");
+      document.getElementById("tabTemperatureSide").appendChild(document.getElementById("analysisTable"));
+      this.selectedTab = TAB_TEMPERATURE;
     }
   }
 }
 </script>
+<style>
+.item--tabbed__content {
+  display:flex;
+  flex-direction:row;
+}
+.item--tabbed__content__main {
+  width:70%;
+  flex-basis: 70%;
+
+}
+.item--tabbed__content__side {
+    width:30%;
+    flex-basis: 30%;
+    overflow-x: scroll;
+}
+</style>

@@ -9,12 +9,24 @@
       />
     </div>
     <div class="chart-widget">
+      Y-Axis
+      <label>
+        <input type="radio" v-model="yScale" value="linear" @change="onFilterChange()"/> Linear
+      </label>
+      <label>
+        <input type="radio" v-model="yScale" value="log" @change="onFilterChange()"/> Log
+      </label>
+      <label>
+        <input type="checkbox" v-model="baselineSubtraction" @change="onFilterChange()"/> Baseline subtraction
+      </label>
+    </div>
+    <div class="chart-widget">
       <h3 class="chart-widget__title">Channels</h3>
-      <div v-for="(channel, channelIndex) in channels" v-bind:key="channelIndex">
+      <span v-for="(channel, channelIndex) in channels" v-bind:key="channelIndex">
         <label><input type="checkbox" v-model="channel.visible" v-on:change="onFilterChange()" />
           Ch {{ channel.label }}
         </label>
-      </div>
+      </span>
     </div>
     <div class="chart-widget">
       <h3 class="chart-widget__title">Wells</h3>
@@ -28,16 +40,6 @@
         </tr>
       </table>
     </div>
-    Y-Axis
-    <label>
-      <input type="radio" v-model="yScale" value="linear" @change="onFilterChange()"/> Linear
-    </label>
-    <label>
-      <input type="radio" v-model="yScale" value="log" @change="onFilterChange()"/> Log
-    </label>
-    <label>
-      <input type="checkbox" v-model="baselineSubtraction" @change="onFilterChange()"/> Baseline subtraction
-    </label>
   </div>
 </template>
 
@@ -46,8 +48,6 @@ const Chart = require('chart.js');
 import device from "../../lib/Device.js";
 import Graph from "../../lib/Graph.js";
 
-const WELLS_COUNT = 8;
-const CHANNELS_COUNT = 2;
 const TIME_RANGE_SEC = 240;
 let graph = null;
 
@@ -56,9 +56,9 @@ export default {
     return {
       baseline:[],
       measurements:[], // Real-time measurement
-      wellsCount: WELLS_COUNT,
+      wellsCount: 0,
       channels:[],
-      channelsCount: CHANNELS_COUNT,
+      channelsCount: 0,
       seriesList:[],
       wellTable:[],
       yScale:"linear",

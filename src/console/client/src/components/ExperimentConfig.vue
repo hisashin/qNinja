@@ -166,9 +166,6 @@ export default {
   },
   methods: {
     updateLayout: function () {
-      console.log("ExperimentConfig.updateLayout");
-      const layout = device.config.wells.layout;
-      console.log("updateLayout")
       this.well_layout = layout.map((row)=>{
         return row.map((wellId)=>{
           let wellConf = this.findWellConfById(wellId);
@@ -181,7 +178,6 @@ export default {
           };
         });
       });
-      console.log(this.well_layout)
     },
     findWellConfById (id) {
       for (let well of this.config.wells) {
@@ -206,7 +202,6 @@ export default {
       for (let row of layout) {
         for (let wellId of row) {
           if (!this.findWellConfById(wellId)) {
-            console.log("Well %d was missing.", wellId);
             this.config.wells.push(this.createWellConfig(wellId));
           }
         }
@@ -260,7 +255,6 @@ export default {
       this.seriesCount ++;
     },
     setSeries () {
-      console.log("Add");
       this.config.series_list.push(this.createDefaultSeries());
       this.touch();
     },

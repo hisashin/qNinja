@@ -26,7 +26,7 @@ const example_hold_stage = {
 /* PCR */
 const example_pcr_stage = {
   type: Constants.StageType.QPCR,
-  cycles:  3,
+  cycles:  40,
   pause_after: false,
   steps: [
     { label:"denature", temp:DEMO_TEMP_HIGH, duration:2.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
