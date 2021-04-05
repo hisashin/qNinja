@@ -286,132 +286,10 @@ Wire Wire Line
 	2500 4250 2600 4250
 Wire Wire Line
 	2600 4450 2500 4450
-Wire Wire Line
-	3100 4550 2300 4550
-Wire Wire Line
-	5100 4350 5550 4350
-$Comp
-L Device:R R3
-U 1 1 5FE4E4E3
-P 4500 6000
-F 0 "R3" V 4293 6000 50  0000 C CNN
-F 1 "10M" V 4384 6000 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4430 6000 50  0001 C CNN
-F 3 "~" H 4500 6000 50  0001 C CNN
-	1    4500 6000
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R5
-U 1 1 5FE5F208
-P 5050 6250
-F 0 "R5" H 5120 6296 50  0000 L CNN
-F 1 "560k" H 5120 6205 50  0000 L CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4980 6250 50  0001 C CNN
-F 3 "~" H 5050 6250 50  0001 C CNN
-	1    5050 6250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5050 6100 5050 6000
-$Comp
-L Device:Crystal Y1
-U 1 1 5FE652B7
-P 4650 6500
-F 0 "Y1" H 4650 6768 50  0000 C CNN
-F 1 "32.768kHz" H 4650 6677 50  0000 C CNN
-F 2 "Capacitors_SMD:C_1206_HandSoldering" H 4650 6500 50  0001 C CNN
-F 3 "~" H 4650 6500 50  0001 C CNN
-	1    4650 6500
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4800 6500 5050 6500
-Wire Wire Line
-	5050 6500 5050 6400
-Wire Wire Line
-	4500 6500 4300 6500
-Wire Wire Line
-	4300 6500 4300 6000
-$Comp
-L Device:C C2
-U 1 1 5FE71967
-P 4300 6750
-F 0 "C2" H 4415 6796 50  0000 L CNN
-F 1 "10pF" H 4415 6705 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 4338 6600 50  0001 C CNN
-F 3 "~" H 4300 6750 50  0001 C CNN
-	1    4300 6750
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C C3
-U 1 1 5FE721BD
-P 5050 6750
-F 0 "C3" H 5165 6796 50  0000 L CNN
-F 1 "10pF" H 5165 6705 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5088 6600 50  0001 C CNN
-F 3 "~" H 5050 6750 50  0001 C CNN
-	1    5050 6750
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4300 6600 4300 6500
-Connection ~ 4300 6500
-Wire Wire Line
-	5050 6600 5050 6500
-Connection ~ 5050 6500
-Text GLabel 5200 7000 2    50   Input ~ 0
-GND
-Wire Wire Line
-	5050 6900 5050 7000
-Wire Wire Line
-	5050 7000 5200 7000
-Wire Wire Line
-	5050 7000 4300 7000
-Wire Wire Line
-	4300 7000 4300 6900
-Connection ~ 5050 7000
 Text GLabel 1750 4950 0    50   Input ~ 0
 DEMOD_SPI_SCLK
 Text HLabel 9700 2900 2    50   Input ~ 0
 AMP_OUT
-$Comp
-L qPCR-photosensing-rescue:LT1006S8-TRPBF-2020-12-17_04-24-35 U3
-U 1 1 5FDCF8FF
-P 7100 2900
-F 0 "U3" H 8100 3287 60  0000 C CNN
-F 1 "LT1006S8-TRPBF" H 8100 3181 60  0000 C CNN
-F 2 "SO-8_S_LIT" H 8100 3140 60  0001 C CNN
-F 3 "" H 7100 2900 60  0000 C CNN
-	1    7100 2900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9100 2900 9200 2900
-Wire Wire Line
-	9100 3200 9300 3200
-Wire Wire Line
-	9100 3300 9300 3300
-NoConn ~ 9300 3200
-NoConn ~ 9300 3300
-Wire Wire Line
-	7100 3200 6850 3200
-NoConn ~ 6850 3200
-Wire Wire Line
-	7100 3600 6850 3600
-Text GLabel 6850 3700 0    50   Input ~ 0
-VCC_LOGIC
-Text GLabel 6850 3600 0    50   Input ~ 0
-GND
-Wire Wire Line
-	6850 3700 7100 3700
-Wire Wire Line
-	7100 2900 6850 2900
-Text GLabel 6850 2900 0    50   Input ~ 0
-GND
-Wire Wire Line
-	7100 3000 6550 3000
 $Comp
 L Device:R R7
 U 1 1 5FDF4248
@@ -537,16 +415,6 @@ Text GLabel 9750 3050 2    50   Input ~ 0
 GND
 Wire Wire Line
 	9750 3050 9650 3050
-Text GLabel 3800 6400 2    50   Input ~ 0
-GND
-Wire Wire Line
-	2300 4550 2300 6000
-Wire Wire Line
-	3650 6000 4300 6000
-Wire Wire Line
-	3550 6000 2300 6000
-Text Notes 4300 7200 0    50   ~ 0
-X’tal circuit should be\nplaced next to ADA2200
 $Comp
 L Connector:Conn_01x14_Male J1
 U 1 1 5FDCE564
@@ -587,84 +455,40 @@ Wire Wire Line
 	6650 5750 6900 5750
 NoConn ~ 1300 1050
 NoConn ~ 1300 1150
-$Comp
-L Connector:Conn_01x03_Male J6
-U 1 1 5FDD8186
-P 3350 6300
-F 0 "J6" H 3458 6581 50  0000 C CNN
-F 1 "Conn_01x03_Male" H 3458 6490 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x03_Pitch2.54mm" H 3350 6300 50  0001 C CNN
-F 3 "~" H 3350 6300 50  0001 C CNN
-	1    3350 6300
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3550 6200 3550 6000
-Wire Wire Line
-	3650 6000 3650 6300
-Wire Wire Line
-	3650 6300 3550 6300
-Wire Wire Line
-	3800 6400 3550 6400
-$Comp
-L Connector:Conn_01x02_Male J7
-U 1 1 5FDECF86
-P 5950 6000
-F 0 "J7" H 6012 6044 50  0000 L CNN
-F 1 "Conn_01x02_Male" V 6103 6044 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 5950 6000 50  0001 C CNN
-F 3 "~" H 5950 6000 50  0001 C CNN
-	1    5950 6000
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	5050 6000 5750 6000
-Wire Wire Line
-	5750 5900 5550 5900
-Wire Wire Line
-	5550 5900 5550 4350
 Text GLabel 1300 1850 2    50   Input ~ 0
 PD_REF_PWM
-Text Notes 5900 6300 0    50   ~ 0
-Place a jumper to use the\non-board X’tal or\nconnect an external circuit
-Text Notes 2750 6700 0    50   ~ 0
-Connect 1-2 to use the\non-board X’tal or\nconnect an external clock source\n
-Text Notes 4300 7500 0    50   ~ 0
-ADA2200 has an interlal inverter\nbetween CLKIN and XOUT
 Text GLabel 6050 3000 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
 L Device:R R6
 U 1 1 5FE329AB
-P 7300 1350
-F 0 "R6" V 7093 1350 50  0000 C CNN
-F 1 "R" V 7184 1350 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 7230 1350 50  0001 C CNN
-F 3 "~" H 7300 1350 50  0001 C CNN
-	1    7300 1350
+P 7300 1250
+F 0 "R6" V 7093 1250 50  0000 C CNN
+F 1 "R" V 7184 1250 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 7230 1250 50  0001 C CNN
+F 3 "~" H 7300 1250 50  0001 C CNN
+	1    7300 1250
 	0    -1   -1   0   
 $EndComp
 $Comp
 L Device:C C4
 U 1 1 5FE329B3
-P 7300 1000
-F 0 "C4" V 7048 1000 50  0000 C CNN
-F 1 "22pF" V 7139 1000 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7338 850 50  0001 C CNN
-F 3 "~" H 7300 1000 50  0001 C CNN
-	1    7300 1000
+P 7300 900
+F 0 "C4" V 7048 900 50  0000 C CNN
+F 1 "22pF" V 7139 900 50  0000 C CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7338 750 50  0001 C CNN
+F 3 "~" H 7300 900 50  0001 C CNN
+	1    7300 900 
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	7450 1000 7600 1000
+	7450 900  7600 900 
 Wire Wire Line
-	7600 1000 7600 1350
+	7600 900  7600 1250
 Wire Wire Line
-	7150 1000 7000 1000
+	7150 900  7000 900 
 Wire Wire Line
-	7000 1000 7000 1350
-Wire Wire Line
-	7600 2300 7850 2300
+	7000 900  7000 1250
 Connection ~ 7600 2300
 Wire Wire Line
 	9200 2300 9200 2900
@@ -673,97 +497,153 @@ Wire Wire Line
 Connection ~ 7000 2300
 Wire Wire Line
 	6550 2300 6550 3000
-$Comp
-L qPCR-photosensing-rescue:SN74LVC2G66DCUR-Ninja-qPCR U4
-U 1 1 5FE7A9A2
-P 8700 1450
-F 0 "U4" H 8700 2320 50  0000 C CNN
-F 1 "SN74LVC2G66DCUR" H 8700 2229 50  0000 C CNN
-F 2 "SOP50P310X90-8N" H 8700 1450 50  0001 L BNN
-F 3 "" H 8700 1450 50  0001 C CNN
-	1    8700 1450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	8000 1350 7600 1350
-Wire Wire Line
-	6550 2300 6550 1350
-Wire Wire Line
-	6550 1350 7000 1350
-Connection ~ 6550 2300
-Wire Wire Line
-	8000 1450 7850 1450
-Wire Wire Line
-	7850 1450 7850 2300
-Connection ~ 7850 2300
-Wire Wire Line
-	7850 2300 9200 2300
-Text GLabel 9600 1950 2    50   Input ~ 0
-GND
-Text GLabel 9550 850  2    50   Input ~ 0
-VCC_LOGIC
-Wire Wire Line
-	9550 850  9400 850 
-Wire Wire Line
-	9400 1950 9600 1950
-Wire Wire Line
-	8000 1050 7800 1050
-Wire Wire Line
-	7800 1050 7800 550 
-Text Label 7800 550  3    50   ~ 0
+	6550 1250 7000 1250
+Text Label 8250 1450 2    50   ~ 0
 AMP_GAIN_SW
-$Comp
-L Connector:Conn_01x01_Male JGAIN1
-U 1 1 5FEE9D72
-P 950 3500
-F 0 "JGAIN1" H 1058 3681 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 1058 3590 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x01_Pitch2.54mm" H 950 3500 50  0001 C CNN
-F 3 "~" H 950 3500 50  0001 C CNN
-	1    950  3500
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1150 3500 2050 3500
-Text Label 1700 3500 0    50   ~ 0
+Text Label 1350 3800 0    50   ~ 0
 AMP_GAIN_SW
-Text Notes 6600 950  0    50   ~ 0
+Text Notes 6250 1150 0    50   ~ 0
 SMALL GAIN FOR\nSTRONG SIGNAL
-$Comp
-L Device:R R4
-U 1 1 5FF71CFB
-P 4850 6000
-F 0 "R4" V 4643 6000 50  0000 C CNN
-F 1 "10M" V 4734 6000 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4780 6000 50  0001 C CNN
-F 3 "~" H 4850 6000 50  0001 C CNN
-	1    4850 6000
-	0    1    1    0   
-$EndComp
 Wire Wire Line
-	5050 6000 5000 6000
-Connection ~ 5050 6000
+	7600 1250 7450 1250
 Wire Wire Line
-	4700 6000 4650 6000
-Wire Wire Line
-	4350 6000 4300 6000
-Connection ~ 4300 6000
-Wire Wire Line
-	7600 1350 7450 1350
-Connection ~ 7600 1350
-Wire Wire Line
-	7000 1350 7150 1350
-Connection ~ 7000 1350
-Text HLabel 2200 6000 0    50   Input ~ 0
-CLKIN
-Wire Wire Line
-	2200 6000 2300 6000
-Connection ~ 2300 6000
-Text HLabel 5650 4350 2    50   Input ~ 0
-XOUT
-Wire Wire Line
-	5550 4350 5650 4350
-Connection ~ 5550 4350
+	7000 1250 7150 1250
+Connection ~ 7000 1250
 Text Notes 7050 5900 0    50   ~ 0
 Pull Up All DEMOD_* to VCC_LOGIC
+$Comp
+L Ninja-qPCR:AD8605ARTZ-R2 U?
+U 1 1 606B7AFD
+P 8850 2900
+F 0 "U?" H 9650 3287 60  0000 C CNN
+F 1 "AD8605ARTZ-R2" H 9650 3181 60  0000 C CNN
+F 2 "RJ_5_ADI" H 9650 3140 60  0001 C CNN
+F 3 "" H 8850 2900 60  0000 C CNN
+	1    8850 2900
+	-1   0    0    -1  
+$EndComp
+Text GLabel 1350 3500 2    50   Input ~ 0
+PHOTO_GND
+Text GLabel 1350 3600 2    50   Input ~ 0
+PHOTO_3V3
+Wire Wire Line
+	5100 4350 5650 4350
+Text GLabel 5650 4350 2    50   Input ~ 0
+XOUT
+Text GLabel 1350 4300 2    50   Input ~ 0
+XOUT
+Text GLabel 2500 4550 0    50   Input ~ 0
+CLKIN
+Wire Wire Line
+	2500 4550 3100 4550
+Text GLabel 1350 4400 2    50   Input ~ 0
+CLKIN
+$Comp
+L Connector:Conn_01x02_Male J?
+U 1 1 606F1692
+P 950 4300
+F 0 "J?" H 1058 4481 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 1058 4390 50  0000 C CNN
+F 2 "" H 950 4300 50  0001 C CNN
+F 3 "~" H 950 4300 50  0001 C CNN
+	1    950  4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 4300 1350 4300
+Wire Wire Line
+	1350 4400 1150 4400
+Text GLabel 9050 3200 3    50   Input ~ 0
+PHOTO_GND
+Text GLabel 7100 2900 0    50   Input ~ 0
+PHOTO_3V3
+Wire Wire Line
+	8850 2900 9200 2900
+Wire Wire Line
+	8850 3000 9050 3000
+Wire Wire Line
+	9050 3000 9050 3200
+Wire Wire Line
+	7250 2900 7100 2900
+Text GLabel 7100 3100 0    50   Input ~ 0
+PHOTO_3V3
+Wire Wire Line
+	7100 3100 7250 3100
+Wire Wire Line
+	6550 3000 7250 3000
+Text Notes 9850 800  0    50   ~ 0
+Active High, Normally Open
+$Comp
+L Ninja-qPCR:TS12A4514DBVR U?
+U 1 1 606B7922
+P 8400 1250
+F 0 "U?" H 9200 1637 60  0000 C CNN
+F 1 "TS12A4514DBVR" H 9200 1531 60  0000 C CNN
+F 2 "DBV5" H 9200 1490 60  0001 C CNN
+F 3 "" H 8400 1250 60  0000 C CNN
+	1    8400 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 2300 9200 2300
+Wire Wire Line
+	6550 2300 6550 1250
+Connection ~ 6550 2300
+Text GLabel 8250 1750 0    50   Input ~ 0
+PHOTO_3V3
+Wire Wire Line
+	7600 1250 8400 1250
+Connection ~ 7600 1250
+Wire Wire Line
+	8250 1450 8400 1450
+Wire Wire Line
+	8250 1750 8400 1750
+Wire Wire Line
+	8250 1950 8400 1950
+Wire Wire Line
+	10250 1250 10250 2300
+Wire Wire Line
+	10250 2300 9200 2300
+Wire Wire Line
+	10000 1250 10250 1250
+Connection ~ 9200 2300
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 60732870
+P 950 3600
+F 0 "J?" H 1058 3881 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 1058 3790 50  0000 C CNN
+F 2 "" H 950 3600 50  0001 C CNN
+F 3 "~" H 950 3600 50  0001 C CNN
+	1    950  3600
+	1    0    0    -1  
+$EndComp
+Text GLabel 1350 3700 2    50   Input ~ 0
+-1V
+Wire Wire Line
+	1350 3800 1150 3800
+Wire Wire Line
+	1150 3700 1350 3700
+Wire Wire Line
+	1350 3600 1150 3600
+Wire Wire Line
+	1150 3500 1350 3500
+Text GLabel 8250 1950 0    50   Input ~ 0
+-1V
+$Comp
+L Connector:Conn_01x01_Male J?
+U 1 1 6074D106
+P 9850 6250
+F 0 "J?" H 9958 6431 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 9958 6340 50  0000 C CNN
+F 2 "" H 9850 6250 50  0001 C CNN
+F 3 "~" H 9850 6250 50  0001 C CNN
+	1    9850 6250
+	1    0    0    -1  
+$EndComp
+Text GLabel 10250 6250 2    50   Input ~ 0
+-1V
+Wire Wire Line
+	10250 6250 10050 6250
 $EndSCHEMATC
