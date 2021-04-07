@@ -149,29 +149,29 @@ Text HLabel 2900 4750 0    50   Input ~ 0
 AMP_OUT
 Text HLabel 5250 4250 2    50   Input ~ 0
 PHOTO_OUT_P
-Text GLabel 10550 3200 0    50   Input ~ 0
+Text GLabel 10600 800  0    50   Input ~ 0
 VCC_LOGIC
-Text GLabel 10550 3700 0    50   Input ~ 0
+Text GLabel 10600 1300 0    50   Input ~ 0
 GND
 $Comp
 L Device:C C5
 U 1 1 5F5B161D
-P 10700 3450
-F 0 "C5" H 10815 3496 50  0000 L CNN
-F 1 "0.1uF" H 10815 3405 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10738 3300 50  0001 C CNN
-F 3 "~" H 10700 3450 50  0001 C CNN
-	1    10700 3450
+P 10750 1050
+F 0 "C5" H 10865 1096 50  0000 L CNN
+F 1 "0.1uF" H 10865 1005 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10788 900 50  0001 C CNN
+F 3 "~" H 10750 1050 50  0001 C CNN
+	1    10750 1050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	10550 3700 10700 3700
+	10600 1300 10750 1300
 Wire Wire Line
-	10700 3700 10700 3600
+	10750 1300 10750 1200
 Wire Wire Line
-	10700 3300 10700 3200
+	10750 900  10750 800 
 Wire Wire Line
-	10700 3200 10550 3200
+	10750 800  10600 800 
 Wire Wire Line
 	2900 4750 3100 4750
 Wire Wire Line
@@ -314,8 +314,6 @@ Wire Wire Line
 	9100 3350 8950 3350
 Wire Wire Line
 	8950 3350 8950 3200
-Text GLabel 9500 3350 2    50   Input ~ 0
-GND
 Wire Wire Line
 	9500 3350 9400 3350
 $Comp
@@ -346,8 +344,6 @@ Text GLabel 3450 6650 2    50   Input ~ 0
 GND
 Text GLabel 3450 6850 2    50   Input ~ 0
 DEMOD_SPI_SDIO
-Text GLabel 3450 6750 2    50   Input ~ 0
-DEMOD_SPI_SCLK
 Wire Wire Line
 	3450 6650 3200 6650
 Wire Wire Line
@@ -392,11 +388,7 @@ Wire Wire Line
 	6850 2150 6700 2150
 Wire Wire Line
 	6700 2150 6700 1800
-Text Label 9300 1600 0    50   ~ 0
-AMP_GAIN_SW
-Text Label 1300 3500 0    50   ~ 0
-AMP_GAIN_SW
-Text Notes 6700 2600 0    50   ~ 0
+Text Notes 6500 2600 0    50   ~ 0
 SMALL GAIN FOR\nSTRONG SIGNAL
 Wire Wire Line
 	7300 1800 7150 1800
@@ -453,7 +445,7 @@ Text GLabel 9200 1400 2    50   Input ~ 0
 PHOTO_3V3
 Text GLabel 1300 3400 2    50   Input ~ 0
 -1V
-Text GLabel 7550 2200 3    50   Input ~ 0
+Text GLabel 7600 2000 0    50   Input ~ 0
 -1V
 Text GLabel 10250 5050 2    50   Input ~ 0
 -1V
@@ -511,10 +503,6 @@ F 3 "" H 8300 1700 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	7700 2000 7550 2000
-Wire Wire Line
-	7550 2000 7550 2200
-Wire Wire Line
 	7700 1800 7300 1800
 Connection ~ 7300 1800
 Wire Wire Line
@@ -526,12 +514,6 @@ Wire Wire Line
 	6300 1800 6300 3300
 Wire Wire Line
 	7700 1600 7300 1600
-Wire Wire Line
-	6700 1200 6300 1200
-Wire Wire Line
-	6300 1200 6300 1800
-Connection ~ 6700 1200
-Connection ~ 6300 1800
 Wire Wire Line
 	9050 1600 9050 1800
 Wire Wire Line
@@ -728,10 +710,8 @@ Wire Wire Line
 	6650 5600 6900 5600
 Wire Wire Line
 	6650 5400 6900 5400
-Text GLabel 8850 4900 2    50   Input ~ 0
+Text GLabel 8850 5750 3    50   Input ~ 0
 CLKIN
-Wire Wire Line
-	8850 4900 8700 4900
 $Comp
 L Device:R R?
 U 1 1 606F3DDA
@@ -749,4 +729,78 @@ Text GLabel 6350 5000 0    50   Input ~ 0
 VCC_LOGIC
 Wire Wire Line
 	6350 5000 6450 5000
+Wire Wire Line
+	7600 2000 7700 2000
+Wire Wire Line
+	7300 2150 7300 2450
+Wire Wire Line
+	7300 2450 7600 2450
+Connection ~ 7300 2150
+Wire Wire Line
+	7300 850  7600 850 
+Connection ~ 7300 850 
+Wire Wire Line
+	6300 1800 6300 850 
+Wire Wire Line
+	6300 850  6700 850 
+Connection ~ 6300 1800
+Connection ~ 6700 850 
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 6070474E
+P 9800 2650
+F 0 "J?" H 9908 2931 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 9908 2840 50  0000 C CNN
+F 2 "" H 9800 2650 50  0001 C CNN
+F 3 "~" H 9800 2650 50  0001 C CNN
+	1    9800 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10250 2850 10000 2850
+Wire Wire Line
+	10250 2550 10000 2550
+Text GLabel 10250 2650 2    50   Input ~ 0
+PD_MUX_OUT
+Wire Wire Line
+	10250 2650 10000 2650
+Text GLabel 10250 2750 2    50   Input ~ 0
+PD_MUX_OUT
+Wire Wire Line
+	10250 2750 10000 2750
+Text Notes 9800 2300 0    50   ~ 0
+External gain resistors
+$Comp
+L Device:Jumper JP?
+U 1 1 606E3CBF
+P 8850 5300
+F 0 "JP?" V 8804 5427 50  0000 L CNN
+F 1 "Jumper" V 8895 5427 50  0000 L CNN
+F 2 "" H 8850 5300 50  0001 C CNN
+F 3 "~" H 8850 5300 50  0001 C CNN
+	1    8850 5300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8700 4900 8850 4900
+Wire Wire Line
+	8850 4900 8850 5000
+Wire Wire Line
+	8850 5600 8850 5750
+Text HLabel 7600 850  2    50   Input ~ 0
+GAIN_LARGE
+Text HLabel 7600 2450 2    50   Input ~ 0
+GAIN_SMALL
+Text HLabel 10250 2850 2    50   Input ~ 0
+GAIN_SMALL
+Text HLabel 10250 2550 2    50   Input ~ 0
+GAIN_LARGE
+Text HLabel 1300 3500 2    50   Input ~ 0
+AMP_GAIN_SW
+Text HLabel 9300 1600 2    50   Input ~ 0
+AMP_GAIN_SW
+Text GLabel 9500 3350 2    50   Input ~ 0
+PHOTO_GND
+Text GLabel 3450 6750 2    50   Input ~ 0
+DEMOD_SPI_SCLK
 $EndSCHEMATC
