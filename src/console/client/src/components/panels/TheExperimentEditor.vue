@@ -154,7 +154,6 @@
               <th>A</th>
               <template v-for="channel of experiment.hardware.channels.count">
                 <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
-                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
                 <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
                 <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
                 <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
@@ -164,7 +163,7 @@
             </tr>
             <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
               <td>{{ wellLabel }}</td>
-              <td :key="`a-${wellIndex}`" :style="{'background-color':`well_appearance[wellIndex].c`}">
+              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}">
                 {{ well_appearance[wellIndex] }}
               </td>
               <template v-for="channel of experiment.hardware.channels.count">
@@ -262,7 +261,8 @@ export default {
       TAB_AMP: TAB_AMP,
       TAB_MELT: TAB_MELT,
       TAB_STD_CURVE: TAB_STD_CURVE,
-      TAB_TEMPERATURE: TAB_TEMPERATURE
+      TAB_TEMPERATURE: TAB_TEMPERATURE,
+      styleDemo: {backgroundColor:"pink"}
     }
   },
   created: function () {
