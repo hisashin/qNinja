@@ -803,4 +803,6 @@ Text GLabel 9500 3350 2    50   Input ~ 0
 PHOTO_GND
 Text GLabel 3450 6750 2    50   Input ~ 0
 DEMOD_SPI_SCLK
+Text Notes 5900 5150 0    50   ~ 0
+CLOOE=HIGH -> Enable clock
 $EndSCHEMATC
