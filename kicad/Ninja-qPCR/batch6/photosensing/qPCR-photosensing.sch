@@ -203,20 +203,18 @@ $EndComp
 $Comp
 L Device:R R2
 U 1 1 5FDDE2F4
-P 2750 4450
-F 0 "R2" V 2543 4450 50  0000 C CNN
-F 1 "10K" V 2634 4450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2680 4450 50  0001 C CNN
-F 3 "~" H 2750 4450 50  0001 C CNN
-	1    2750 4450
+P 1800 4450
+F 0 "R2" V 1593 4450 50  0000 C CNN
+F 1 "10K" V 1684 4450 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 4450 50  0001 C CNN
+F 3 "~" H 1800 4450 50  0001 C CNN
+	1    1800 4450
 	0    1    1    0   
 $EndComp
 Wire Wire Line
 	3100 4950 1750 4950
 Wire Wire Line
 	3100 4250 2900 4250
-Wire Wire Line
-	2900 4450 3100 4450
 Text GLabel 2500 4250 0    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
@@ -466,7 +464,7 @@ Wire Wire Line
 	6150 3300 6300 3300
 Connection ~ 6300 3300
 Text Notes 4700 6350 0    50   ~ 0
-Debug pins
+Debug pins\n(Photo measurement)
 Text GLabel 5550 7150 2    50   Input ~ 0
 PD_MUX_OUT
 Text HLabel 5550 7400 2    50   Input ~ 0
@@ -526,10 +524,10 @@ Text GLabel 5250 4750 2    50   Input ~ 0
 PHOTO_GND
 Wire Wire Line
 	5250 4750 5100 4750
-Text GLabel 2500 4450 0    50   Input ~ 0
+Text GLabel 1550 4450 0    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
-	2500 4450 2600 4450
+	1550 4450 1650 4450
 Text GLabel 2900 5550 0    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
@@ -627,9 +625,9 @@ Wire Wire Line
 Wire Wire Line
 	5550 7150 5100 7150
 Text Notes 2800 6350 0    50   ~ 0
-ADA2200 Debug
+ADA2200 SPI debug
 Text Notes 1200 6350 0    50   ~ 0
-ADA2200 Clock
+ADA2200 Clock\n(For external X’tal circuit)
 Text Notes 750  900  0    50   ~ 0
 Main <-> Photosensing
 Wire Wire Line
@@ -805,4 +803,30 @@ Text GLabel 3450 6750 2    50   Input ~ 0
 DEMOD_SPI_SCLK
 Text Notes 5900 5150 0    50   ~ 0
 CLOOE=HIGH -> Enable clock
+Text Notes 9550 4400 0    50   ~ 0
+-> Photosensing
+Wire Wire Line
+	1950 4450 2050 4450
+$Comp
+L Device:C C?
+U 1 1 60786D85
+P 1800 4700
+F 0 "C?" V 1548 4700 50  0000 C CNN
+F 1 "10uF" V 1639 4700 50  0000 C CNN
+F 2 "" H 1838 4550 50  0001 C CNN
+F 3 "~" H 1800 4700 50  0001 C CNN
+	1    1800 4700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1950 4700 2050 4700
+Wire Wire Line
+	2050 4700 2050 4450
+Connection ~ 2050 4450
+Wire Wire Line
+	2050 4450 3100 4450
+Text GLabel 1550 4700 0    50   Input ~ 0
+PHOTO_GND
+Wire Wire Line
+	1550 4700 1650 4700
 $EndSCHEMATC
