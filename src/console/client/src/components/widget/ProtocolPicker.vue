@@ -38,8 +38,8 @@
 </template>
 <script>
 import ProtocolPickerCell from './ProtocolPickerCell.vue';
-import appState from "../lib/AppState.js";
-import client from "../lib/RestClient.js";
+import appState from "../../lib/AppState.js";
+import client from "../../lib/RestClient.js";
 export default {
   name: 'ProtocolPicker',
   components: {

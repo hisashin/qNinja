@@ -72,7 +72,28 @@ const Util = {
       console.error(ex);
       onError({exception:e});
     }
-  }
+  },
+  defaultPalette:[
+  "#f07575",
+  "#f09e75",
+  "#f0c775",
+  "#f0f075",
+  "#c7f075",
+  "#9ef075",
+  "#75f075",
+  "#75f09e",
+  "#75f0c7",
+  "#75f0f0",
+  "#75c7f0",
+  "#759ef0",
+  "#7575f0",
+  "#9e75f0",
+  "#c775f0",
+  "#f075f0",
+  "#f075c7",
+  "#f0759e",
+  "#f07575",
+  ]
 }
 
 module.exports = Util;

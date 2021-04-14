@@ -163,7 +163,7 @@
             </tr>
             <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
               <td>{{ wellLabel }}</td>
-              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}">
+              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
                 {{ well_appearance[wellIndex] }}
               </td>
               <template v-for="channel of experiment.hardware.channels.count">
@@ -177,6 +177,7 @@
             </tr>
             
           </table>
+          <ColorPicker ref="colorPicker" />
         </div>
       </div>
     </section>
@@ -221,14 +222,16 @@
 <script>
 import appState from "../../lib/AppState.js";
 import client from "../../lib/RestClient.js";
+import Util from "../../lib/Util.js";
 
 import ProtocolDetail from '../ProtocolDetail.vue';
-import ProtocolPicker from '../ProtocolPicker.vue';
+import ProtocolPicker from '../widget/ProtocolPicker.vue';
 import ExperimentConfig from '../ExperimentConfig.vue';
 import TemperatureChart from '../ExperimentMonitor/TemperatureChart.vue';
 import AmplificationChart from '../ExperimentMonitor/AmplificationChart.vue';
 import MeltCurveChart from '../ExperimentMonitor/MeltCurveChart.vue';
 import StandardCurveChart from '../StandardCurveChart.vue';
+import ColorPicker from '../widget/ColorPicker.vue';
 
 const TAB_AMP = 0;
 const TAB_MELT= 1;
@@ -243,7 +246,8 @@ export default {
     TemperatureChart,
     AmplificationChart,
     MeltCurveChart,
-    StandardCurveChart
+    StandardCurveChart,
+    ColorPicker
   },
   props: {
     limit: { type:Number }
@@ -348,7 +352,7 @@ export default {
         for (let w=0; w<experiment.hardware.wells.count; w++) {
           let obj = {
             v: true,
-            c: "#888"
+            c: Util.defaultPalette[w]
           };
           this.well_appearance.push(obj);
         }
@@ -436,25 +440,31 @@ export default {
       const url = client.getExperimentExportURL(this.experiment.id, property, extension);
       window.open(url);
     },
-    onSelectTabAmp: function (){
+    onSelectTabAmp: function () {
       console.log("onSelectTabAmp");
       document.getElementById("tabAmpSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_AMP;
     },
-    onSelectTabMelt: function (){
+    onSelectTabMelt: function () {
       console.log("onSelectTabMelt");
       document.getElementById("tabMeltSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_MELT;
     },
-    onSelectTabStdCurve: function (){
+    onSelectTabStdCurve: function () {
       console.log("onSelectTabStdCurve");
       document.getElementById("tabStdCurveSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_STD_CURVE;
     },
-    onSelectTabTemperature: function (){
+    onSelectTabTemperature: function () {
       console.log("onSelectTabTemperature");
       document.getElementById("tabTemperatureSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_TEMPERATURE;
+    },
+    openColorPicker: function (index) {
+      const origColor = this.well_appearance[index].c;
+      this.$refs.colorPicker.open(origColor, (pickedColor)=>{
+        this.well_appearance[index].c = pickedColor;
+      });
     }
   }
 }
