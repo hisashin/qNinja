@@ -13,10 +13,8 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 10250 4650 2    50   Input ~ 0
+Text GLabel 10250 4750 2    50   Input ~ 0
 GND
-Wire Wire Line
-	10050 4650 10250 4650
 Wire Wire Line
 	10250 4750 10050 4750
 Wire Wire Line
@@ -409,10 +407,10 @@ Wire Wire Line
 Text GLabel 1800 6600 2    50   Input ~ 0
 CLKIN
 $Comp
-L Connector:Conn_01x02_Male J?
+L Connector:Conn_01x02_Male J3
 U 1 1 606F1692
 P 1400 6600
-F 0 "J?" H 1508 6781 50  0000 C CNN
+F 0 "J3" H 1508 6781 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 1508 6690 50  0000 C CNN
 F 2 "" H 1400 6600 50  0001 C CNN
 F 3 "~" H 1400 6600 50  0001 C CNN
@@ -423,20 +421,16 @@ Wire Wire Line
 	1600 6600 1800 6600
 Wire Wire Line
 	1800 6700 1600 6700
-Text GLabel 8800 3500 3    50   Input ~ 0
+Text GLabel 6850 3800 0    50   Input ~ 0
 PHOTO_GND
-Text GLabel 6850 3200 0    50   Input ~ 0
+Text GLabel 6850 3900 0    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
 	8600 3200 8950 3200
-Wire Wire Line
-	8600 3300 8800 3300
-Wire Wire Line
-	8800 3300 8800 3500
-Text GLabel 6850 3400 0    50   Input ~ 0
+Text GLabel 6850 3200 0    50   Input ~ 0
 PHOTO_GND
 Wire Wire Line
-	6850 3400 7000 3400
+	6850 3200 7000 3200
 Wire Wire Line
 	6300 3300 7000 3300
 Text GLabel 9200 1400 2    50   Input ~ 0
@@ -448,10 +442,10 @@ Text GLabel 7600 2000 0    50   Input ~ 0
 Text GLabel 10250 5050 2    50   Input ~ 0
 -1V
 $Comp
-L Device:R R?
+L Device:R R5
 U 1 1 606BE3B5
 P 9300 1800
-F 0 "R?" V 9093 1800 50  0000 C CNN
+F 0 "R5" V 9093 1800 50  0000 C CNN
 F 1 "R" V 9184 1800 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 9230 1800 50  0001 C CNN
 F 3 "~" H 9300 1800 50  0001 C CNN
@@ -490,10 +484,10 @@ THERM_TEST1
 Wire Wire Line
 	2900 1450 3100 1450
 $Comp
-L qPCR-photosensing-rescue:TS5A9411DCKR-Ninja-qPCR U?
+L Ninja-qPCR:TS5A9411DCKR U4
 U 1 1 606C0A32
 P 8300 1700
-F 0 "U?" H 8300 2388 60  0000 C CNN
+F 0 "U4" H 8300 2388 60  0000 C CNN
 F 1 "TS5A9411DCKR" H 8300 2282 60  0000 C CNN
 F 2 "DCK0006A_N" H 8300 1640 60  0001 C CNN
 F 3 "" H 8300 1700 60  0000 C CNN
@@ -552,10 +546,10 @@ Connection ~ 9050 1600
 Text Notes 8850 1200 0    50   ~ 0
 IN=High : COM<->NO (Low gain)\nIN=Low : COM<->NC (High gain)
 $Comp
-L Connector:Conn_01x05_Male J?
+L Connector:Conn_01x05_Male J2
 U 1 1 607C2091
 P 900 3400
-F 0 "J?" H 1008 3781 50  0000 C CNN
+F 0 "J2" H 1008 3781 50  0000 C CNN
 F 1 "Conn_01x05_Male" H 1008 3690 50  0000 C CNN
 F 2 "" H 900 3400 50  0001 C CNN
 F 3 "~" H 900 3400 50  0001 C CNN
@@ -573,10 +567,10 @@ Wire Wire Line
 Wire Wire Line
 	1100 3500 1300 3500
 $Comp
-L Connector:Conn_01x01_Male J?
+L Connector:Conn_01x01_Male J4
 U 1 1 607F0249
 P 4900 6650
-F 0 "J?" H 5008 6831 50  0000 C CNN
+F 0 "J4" H 5008 6831 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 5008 6740 50  0000 C CNN
 F 2 "" H 4900 6650 50  0001 C CNN
 F 3 "~" H 4900 6650 50  0001 C CNN
@@ -586,10 +580,10 @@ $EndComp
 Wire Wire Line
 	5550 6650 5100 6650
 $Comp
-L Connector:Conn_01x01_Male J?
+L Connector:Conn_01x01_Male J5
 U 1 1 607F79E2
 P 4900 6900
-F 0 "J?" H 5008 7081 50  0000 C CNN
+F 0 "J5" H 5008 7081 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 5008 6990 50  0000 C CNN
 F 2 "" H 4900 6900 50  0001 C CNN
 F 3 "~" H 4900 6900 50  0001 C CNN
@@ -597,10 +591,10 @@ F 3 "~" H 4900 6900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x01_Male J?
+L Connector:Conn_01x01_Male J6
 U 1 1 608062B7
 P 4900 7150
-F 0 "J?" H 5008 7331 50  0000 C CNN
+F 0 "J6" H 5008 7331 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 5008 7240 50  0000 C CNN
 F 2 "" H 4900 7150 50  0001 C CNN
 F 3 "~" H 4900 7150 50  0001 C CNN
@@ -608,10 +602,10 @@ F 3 "~" H 4900 7150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x01_Male J?
+L Connector:Conn_01x01_Male J7
 U 1 1 60806962
 P 4900 7400
-F 0 "J?" H 5008 7581 50  0000 C CNN
+F 0 "J7" H 5008 7581 50  0000 C CNN
 F 1 "Conn_01x01_Male" H 5008 7490 50  0000 C CNN
 F 2 "" H 4900 7400 50  0001 C CNN
 F 3 "~" H 4900 7400 50  0001 C CNN
@@ -633,10 +627,10 @@ Main <-> Photosensing
 Wire Wire Line
 	8950 3200 9450 3200
 $Comp
-L Device:R R?
+L Device:R R4
 U 1 1 606CEB7F
 P 7000 850
-F 0 "R?" V 6793 850 50  0000 C CNN
+F 0 "R4" V 6793 850 50  0000 C CNN
 F 1 "R" V 6884 850 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 6930 850 50  0001 C CNN
 F 3 "~" H 7000 850 50  0001 C CNN
@@ -644,56 +638,54 @@ F 3 "~" H 7000 850 50  0001 C CNN
 	0    -1   1    0   
 $EndComp
 Wire Wire Line
-	6850 3200 7000 3200
+	6850 3900 7000 3900
 $Comp
-L qPCR-photosensing-rescue:AD8605ARTZ-R2-Ninja-qPCR U?
+L Ninja-qPCR:AD8605ARTZ-R2 U3
 U 1 1 606B7AFD
-P 8600 3200
-F 0 "U?" H 9400 3587 60  0000 C CNN
-F 1 "AD8605ARTZ-R2" H 9400 3481 60  0000 C CNN
-F 2 "RJ_5_ADI" H 9400 3440 60  0001 C CNN
-F 3 "" H 8600 3200 60  0000 C CNN
-	1    8600 3200
-	-1   0    0    -1  
+P 7000 3200
+F 0 "U3" H 7800 3587 60  0000 C CNN
+F 1 "AD8605ARTZ-R2" H 7800 3481 60  0000 C CNN
+F 2 "RJ_5_ADI" H 7800 3440 60  0001 C CNN
+F 3 "" H 7000 3200 60  0000 C CNN
+	1    7000 3200
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	7300 1600 7300 1200
 Connection ~ 7300 1200
 $Comp
-L Connector:Conn_01x06_Female J?
+L Connector:Conn_01x05_Male J9
 U 1 1 606D4C48
-P 9850 4850
-F 0 "J?" H 9742 5235 50  0000 C CNN
-F 1 "Conn_01x06_Female" H 9742 5144 50  0000 C CNN
-F 2 "" H 9850 4850 50  0001 C CNN
-F 3 "~" H 9850 4850 50  0001 C CNN
-	1    9850 4850
-	-1   0    0    -1  
+P 9850 4950
+F 0 "J9" H 9742 5335 50  0000 C CNN
+F 1 "Conn_01x05_Female" H 9742 5244 50  0000 C CNN
+F 2 "" H 9850 4950 50  0001 C CNN
+F 3 "~" H 9850 4950 50  0001 C CNN
+	1    9850 4950
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	10250 5150 10050 5150
 $Comp
-L Connector:Conn_01x05_Female J?
+L Connector:Conn_01x05_Female J10
 U 1 1 606E6382
 P 9850 5750
-F 0 "J?" H 9742 6135 50  0000 C CNN
+F 0 "J10" H 9742 6135 50  0000 C CNN
 F 1 "Conn_01x05_Female" H 9742 6044 50  0000 C CNN
 F 2 "" H 9850 5750 50  0001 C CNN
 F 3 "~" H 9850 5750 50  0001 C CNN
 	1    9850 5750
 	-1   0    0    -1  
 $EndComp
-Text GLabel 10250 4750 2    50   Input ~ 0
+Text GLabel 10250 4850 2    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 10250 4950 2    50   Input ~ 0
-PHOTO_3V3
-Text GLabel 10250 4850 2    50   Input ~ 0
 PHOTO_GND
 $Comp
-L Ninja-qPCR:OM-7604-C7-32.768KHZ-20PPM-TA-QC XTAL?
+L Ninja-qPCR:OM-7604-C7-32.768KHZ-20PPM-TA-QC XTAL1
 U 1 1 606CE156
 P 6900 5000
-F 0 "XTAL?" H 7800 5487 60  0000 C CNN
+F 0 "XTAL1" H 7800 5487 60  0000 C CNN
 F 1 "OM-7604-C7-32.768KHZ-20PPM-TA-QC" H 7800 5381 60  0000 C CNN
 F 2 "OM-7604-C7_MCX" H 7800 5340 60  0001 C CNN
 F 3 "" H 6900 5000 60  0000 C CNN
@@ -711,10 +703,10 @@ Wire Wire Line
 Text GLabel 8850 5750 3    50   Input ~ 0
 CLKIN
 $Comp
-L Device:R R?
+L Device:R R3
 U 1 1 606F3DDA
 P 6600 5000
-F 0 "R?" V 6393 5000 50  0000 C CNN
+F 0 "R3" V 6393 5000 50  0000 C CNN
 F 1 "10K" V 6484 5000 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 6530 5000 50  0001 C CNN
 F 3 "~" H 6600 5000 50  0001 C CNN
@@ -744,10 +736,10 @@ Wire Wire Line
 Connection ~ 6300 1800
 Connection ~ 6700 850 
 $Comp
-L Connector:Conn_01x04_Male J?
+L Connector:Conn_01x04_Male J8
 U 1 1 6070474E
 P 9800 2650
-F 0 "J?" H 9908 2931 50  0000 C CNN
+F 0 "J8" H 9908 2931 50  0000 C CNN
 F 1 "Conn_01x04_Male" H 9908 2840 50  0000 C CNN
 F 2 "" H 9800 2650 50  0001 C CNN
 F 3 "~" H 9800 2650 50  0001 C CNN
@@ -769,10 +761,10 @@ Wire Wire Line
 Text Notes 9800 2300 0    50   ~ 0
 External gain resistors
 $Comp
-L Device:Jumper JP?
+L Device:Jumper JP1
 U 1 1 606E3CBF
 P 8850 5300
-F 0 "JP?" V 8804 5427 50  0000 L CNN
+F 0 "JP1" V 8804 5427 50  0000 L CNN
 F 1 "Jumper" V 8895 5427 50  0000 L CNN
 F 2 "" H 8850 5300 50  0001 C CNN
 F 3 "~" H 8850 5300 50  0001 C CNN
@@ -808,10 +800,10 @@ Text Notes 9550 4400 0    50   ~ 0
 Wire Wire Line
 	1950 4450 2050 4450
 $Comp
-L Device:C C?
+L Device:C C2
 U 1 1 60786D85
 P 1800 4700
-F 0 "C?" V 1548 4700 50  0000 C CNN
+F 0 "C2" V 1548 4700 50  0000 C CNN
 F 1 "10uF" V 1639 4700 50  0000 C CNN
 F 2 "" H 1838 4550 50  0001 C CNN
 F 3 "~" H 1800 4700 50  0001 C CNN
@@ -829,4 +821,6 @@ Text GLabel 1550 4700 0    50   Input ~ 0
 PHOTO_GND
 Wire Wire Line
 	1550 4700 1650 4700
+Wire Wire Line
+	7000 3800 6850 3800
 $EndSCHEMATC

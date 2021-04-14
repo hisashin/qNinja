@@ -281,20 +281,16 @@ F 3 "" H 9850 3850 50  0001 C CNN
 	1    10050 3750
 	1    0    0    -1  
 $EndComp
-Text GLabel 1300 950  2    50   Input ~ 0
-LOGIC_GND
-Text GLabel 1300 1450 2    50   Input ~ 0
+Text GLabel 1300 1350 2    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
-	1100 950  1300 950 
+	1300 950  1100 950 
 Wire Wire Line
-	1300 1050 1100 1050
+	1100 1050 1300 1050
 Wire Wire Line
-	1100 1150 1300 1150
+	1300 1150 1100 1150
 Wire Wire Line
-	1300 1250 1100 1250
-Wire Wire Line
-	1100 1350 1300 1350
+	1100 1250 1300 1250
 Wire Wire Line
 	1300 1700 1100 1700
 Wire Wire Line
@@ -550,7 +546,7 @@ Wire Wire Line
 	3950 6700 3800 6700
 Wire Wire Line
 	1200 7600 1000 7600
-Text GLabel 1300 1350 2    50   Input ~ 0
+Text GLabel 1300 1250 2    50   Input ~ 0
 -1V
 Text GLabel 2500 4450 2    50   Input ~ 0
 -1V
@@ -560,23 +556,23 @@ Text GLabel 6700 6700 2    50   Input ~ 0
 -1V
 Text GLabel 1400 4050 0    50   Input ~ 0
 LOGIC_3V3
-Text GLabel 1300 1250 2    50   Input ~ 0
-PHOTO_3V3
-Text GLabel 1300 1150 2    50   Input ~ 0
-PHOTO_GND
-Text GLabel 1300 1050 2    50   Input ~ 0
-LOGIC_3V3
 $Comp
-L Connector:Conn_01x06_Male J?
+L Connector:Conn_01x05_Male J1
 U 1 1 606F1AF7
 P 900 1150
-F 0 "J?" H 1008 1531 50  0000 C CNN
-F 1 "Conn_01x06_Male" H 1008 1440 50  0000 C CNN
-F 2 "" H 900 1150 50  0001 C CNN
+F 0 "J1" H 1008 1531 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 1008 1440 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 900 1150 50  0001 C CNN
 F 3 "~" H 900 1150 50  0001 C CNN
 	1    900  1150
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1300 1450 1100 1450
+	1300 1350 1100 1350
+Text GLabel 1300 950  2    50   Input ~ 0
+LOGIC_GND
+Text GLabel 1300 1050 2    50   Input ~ 0
+LOGIC_3V3
+Text GLabel 1300 1150 2    50   Input ~ 0
+PHOTO_GND
 $EndSCHEMATC
