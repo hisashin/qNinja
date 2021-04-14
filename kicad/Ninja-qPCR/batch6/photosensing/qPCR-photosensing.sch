@@ -131,7 +131,7 @@ Wire Wire Line
 Connection ~ 5000 1450
 Wire Wire Line
 	5000 1450 4900 1450
-Text GLabel 1300 3600 2    50   Input ~ 0
+Text GLabel 1300 3200 2    50   Input ~ 0
 THERM_TEST1
 Text GLabel 1300 2150 2    50   Input ~ 0
 ADC_DRDY
@@ -390,9 +390,9 @@ Wire Wire Line
 	7300 1800 7150 1800
 Wire Wire Line
 	6700 1800 6850 1800
-Text GLabel 1300 3200 2    50   Input ~ 0
-PHOTO_GND
 Text GLabel 1300 3300 2    50   Input ~ 0
+PHOTO_GND
+Text GLabel 1300 3400 2    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
 	5100 4350 5650 4350
@@ -435,7 +435,7 @@ Wire Wire Line
 	6300 3300 7000 3300
 Text GLabel 9200 1400 2    50   Input ~ 0
 PHOTO_3V3
-Text GLabel 1300 3400 2    50   Input ~ 0
+Text GLabel 1300 3500 2    50   Input ~ 0
 -1V
 Text GLabel 7600 2000 0    50   Input ~ 0
 -1V
@@ -447,7 +447,7 @@ U 1 1 606BE3B5
 P 9300 1800
 F 0 "R5" V 9093 1800 50  0000 C CNN
 F 1 "R" V 9184 1800 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 9230 1800 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9230 1800 50  0001 C CNN
 F 3 "~" H 9300 1800 50  0001 C CNN
 	1    9300 1800
 	0    -1   -1   0   
@@ -457,19 +457,19 @@ Text GLabel 9550 1800 2    50   Input ~ 0
 Wire Wire Line
 	6150 3300 6300 3300
 Connection ~ 6300 3300
-Text Notes 4700 6350 0    50   ~ 0
+Text Notes 5050 6350 0    50   ~ 0
 Debug pins\n(Photo measurement)
-Text GLabel 5550 7150 2    50   Input ~ 0
+Text GLabel 5450 6850 2    50   Input ~ 0
 PD_MUX_OUT
-Text HLabel 5550 7400 2    50   Input ~ 0
+Text HLabel 5450 6950 2    50   Input ~ 0
 AMP_OUT
 Text HLabel 5250 4150 2    50   Input ~ 0
 PHOTO_OUT_N
 Wire Wire Line
 	5250 4150 5100 4150
-Text HLabel 5550 6900 2    50   Input ~ 0
+Text HLabel 5450 6650 2    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5550 6650 2    50   Input ~ 0
+Text HLabel 5450 6750 2    50   Input ~ 0
 PHOTO_OUT_P
 Text HLabel 2900 1750 0    50   Input ~ 0
 PHOTO_OUT_P
@@ -566,58 +566,14 @@ Wire Wire Line
 	1300 3400 1100 3400
 Wire Wire Line
 	1100 3500 1300 3500
-$Comp
-L Connector:Conn_01x01_Male J4
-U 1 1 607F0249
-P 4900 6650
-F 0 "J4" H 5008 6831 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 6740 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4900 6650 50  0001 C CNN
-F 3 "~" H 4900 6650 50  0001 C CNN
-	1    4900 6650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	5550 6650 5100 6650
-$Comp
-L Connector:Conn_01x01_Male J5
-U 1 1 607F79E2
-P 4900 6900
-F 0 "J5" H 5008 7081 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 6990 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4900 6900 50  0001 C CNN
-F 3 "~" H 4900 6900 50  0001 C CNN
-	1    4900 6900
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J6
-U 1 1 608062B7
-P 4900 7150
-F 0 "J6" H 5008 7331 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 7240 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4900 7150 50  0001 C CNN
-F 3 "~" H 4900 7150 50  0001 C CNN
-	1    4900 7150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J7
-U 1 1 60806962
-P 4900 7400
-F 0 "J7" H 5008 7581 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 7490 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4900 7400 50  0001 C CNN
-F 3 "~" H 4900 7400 50  0001 C CNN
-	1    4900 7400
-	1    0    0    -1  
-$EndComp
+	5450 6650 5000 6650
 Wire Wire Line
-	5550 6900 5100 6900
+	5450 6750 5000 6750
 Wire Wire Line
-	5550 7400 5100 7400
+	5450 6950 5000 6950
 Wire Wire Line
-	5550 7150 5100 7150
+	5450 6850 5000 6850
 Text Notes 2800 6350 0    50   ~ 0
 ADA2200 SPI debug
 Text Notes 1200 6350 0    50   ~ 0
@@ -760,7 +716,7 @@ Text HLabel 10250 2850 2    50   Input ~ 0
 GAIN_SMALL
 Text HLabel 10250 2550 2    50   Input ~ 0
 GAIN_LARGE
-Text HLabel 1300 3500 2    50   Input ~ 0
+Text HLabel 1300 3600 2    50   Input ~ 0
 AMP_GAIN_SW
 Text HLabel 9300 1600 2    50   Input ~ 0
 AMP_GAIN_SW
@@ -823,4 +779,15 @@ Wire Wire Line
 	6950 5150 6700 5150
 Wire Wire Line
 	6800 5450 6700 5450
+$Comp
+L Connector:Conn_01x04_Male J4
+U 1 1 6084E5A5
+P 4800 6750
+F 0 "J4" H 4908 7031 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 4908 6940 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x04_Pitch2.54mm" H 4800 6750 50  0001 C CNN
+F 3 "~" H 4800 6750 50  0001 C CNN
+	1    4800 6750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
