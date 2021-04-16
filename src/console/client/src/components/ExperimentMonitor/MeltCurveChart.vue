@@ -48,6 +48,7 @@ export default {
       graphChannels: [],
       subChannelsData: [],
       subChannelsPoints: [],
+      appearanceConf: []
     }
   },
   created: function () {
@@ -74,8 +75,10 @@ export default {
     _index: function (channelIndex, wellIndex) {
       return channelIndex * this.wellsCount + wellIndex;
     },
+    setAppearanceConf: function (appearanceConf) {
+      this.appearanceConf = appearanceConf;
+    },
     setHardwareConf: function(hardware) {
-      console.log("MeltCurveChart.setHardwareConf");
       this.wellsCount = hardware.wells.count;
       this.channelsCount = hardware.channels.count;
       let labels = [];
@@ -138,8 +141,6 @@ export default {
       this.graph.update();
     },
     setAnalysis: function (analysis) {
-      console.log("AplificationChart.setAnalysis");
-      console.log(analysis)
       this.analysis = analysis;
     },
     add: function (data) {

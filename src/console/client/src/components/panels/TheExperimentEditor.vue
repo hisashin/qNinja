@@ -164,7 +164,7 @@
             <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
               <td>{{ wellLabel }}</td>
               <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
-                {{ well_appearance[wellIndex] }}
+                &nbsp;
               </td>
               <template v-for="channel of experiment.hardware.channels.count">
                 <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
@@ -315,6 +315,15 @@ export default {
     },
     onAppear () {
     },
+    getAppearanceConf () {
+      let appearances = [];
+      for (let ch=0; ch<this.experiment.hardware.channels.count; ch++) {
+        appearances.push(this.well_appearance);
+        console.log(this.well_appearance.length)
+      }
+      console.log(appearances);
+      return appearances;
+    },
     /* Panel transition */
     setExperiment (experiment) {
       this.experiment = experiment;
@@ -325,27 +334,6 @@ export default {
       
       if (!this.$refs.temperatureChart) {
         console.warn("this.$refs.temperatureChart is null. why?")
-      }
-      if (this.isStarted && experiment.log) {
-        if (experiment.log.temp) {
-          console.log("setExperiment 1.1");
-          this.$refs.temperatureChart.set(
-            experiment.log.temp.time, 
-            experiment.log.temp.plate, 
-            experiment.log.temp.lid);
-        
-        }
-        if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
-          this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
-          this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
-          this.$refs.amplificationChart.setAnalysis(experiment.analysis);
-        }
-        if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
-          this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
-          this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
-          this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
-        }
-      
       }
       this.well_appearance = [];
       if (experiment.hardware) {
@@ -358,6 +346,30 @@ export default {
         }
       }
       console.log(this.$data.well_appearance);
+      
+      if (this.isStarted && experiment.log) {
+        if (experiment.log.temp) {
+          console.log("setExperiment 1.1");
+          this.$refs.temperatureChart.set(
+            experiment.log.temp.time, 
+            experiment.log.temp.plate, 
+            experiment.log.temp.lid);
+        
+        }
+        if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
+          this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
+            this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
+          this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
+          this.$refs.amplificationChart.setAnalysis(experiment.analysis);
+        }
+        if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
+          this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
+          this.$refs.meltCurveChart.setAppearanceConf(this.getAppearanceConf());
+          this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
+          this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
+        }
+      
+      }
       
       this.isNew = false;
     },

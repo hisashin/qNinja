@@ -37,6 +37,9 @@ class GraphSubChannelXY {
   setVisibility (visibility) {
     this.data.hidden = !visibility;
   }
+  setColor (color) {
+    this.data.borderColor = color;
+  }
   clearData() {
     this.data.data = [];
     this.data.rawData = [];
@@ -61,6 +64,9 @@ class GraphSubChannelHLine {
   
   setVisibility (visibility) {
     this.data.hidden = !visibility;
+  }
+  setColor (color) {
+    this.data.borderColor = color;
   }
   updateRawData() {
     this.data.rawData = [
@@ -89,6 +95,9 @@ class GraphSubChannelVLine {
   }
   setVisibility (visibility) {
     this.data.hidden = !visibility;
+  }
+  setColor (color) {
+    this.data.borderColor = color;
   }
   updateRawData() {
     this.data.rawData = [
@@ -125,6 +134,11 @@ class GraphChannel {
   setVisibility (visibility) {
     this.subChannels.forEach((subChannel)=>{
       subChannel.setVisibility(visibility);
+    });
+  }
+  setColor (color) {
+    this.subChannels.forEach((subChannel)=>{
+      subChannel.setColor(color);
     });
   }
   addDataTo (data, subChannelIndex) {

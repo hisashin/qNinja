@@ -68,7 +68,8 @@ export default {
       subChannelsPoints: [],
       subChannelsBaselines: [],
       subChannelsThresholds: [],
-      baselineSubtraction: false
+      baselineSubtraction: false,
+      appearanceConf: []
     }
   },
   created: function () {
@@ -99,6 +100,9 @@ export default {
     setBaseline: function (data) {
       this.baseline = data;
       this.applyBaseline();
+    },
+    setAppearanceConf: function (appearanceConf) {
+      this.appearanceConf = appearanceConf;
     },
     setHardwareConf: function(hardware) {
       this.wellsCount = hardware.wells.count;
@@ -192,6 +196,9 @@ export default {
         this.channels.forEach((channel)=>{
           const index = this._index(channel.index, well.index);
           this.graphChannels[index].setVisibility(well.visible && channel.visible);
+          const appearance = this.appearanceConf[channel.index][well.index];
+          console.log(appearance);
+          this.graphChannels[index].setColor(appearance.c);
         });
       });
       this.eachSeries((c, w, i)=>{
