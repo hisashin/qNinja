@@ -65,7 +65,7 @@ U 1 1 5F63A689
 P 3100 1050
 F 0 "U2" H 4000 1437 60  0000 C CNN
 F 1 "ADS1219IPWR" H 4000 1331 60  0000 C CNN
-F 2 "PW16_TEX" H 4000 1290 60  0001 C CNN
+F 2 "Ninja-qPCR:ADS1219IPWR" H 4000 1290 60  0001 C CNN
 F 3 "" H 3100 1050 60  0000 C CNN
 	1    3100 1050
 	1    0    0    -1  
@@ -131,7 +131,7 @@ Wire Wire Line
 Connection ~ 5000 1450
 Wire Wire Line
 	5000 1450 4900 1450
-Text GLabel 1300 3600 2    50   Input ~ 0
+Text GLabel 1300 3200 2    50   Input ~ 0
 THERM_TEST1
 Text GLabel 1300 2150 2    50   Input ~ 0
 ADC_DRDY
@@ -182,7 +182,7 @@ U 1 1 5F7FB45A
 P 3100 4250
 F 0 "U1" H 4100 4737 60  0000 C CNN
 F 1 "ADA2200ARUZ" H 4100 4631 60  0000 C CNN
-F 2 "RU_16_ADI" H 4100 4590 60  0001 C CNN
+F 2 "Ninja-qPCR:ADA2200ARUZ" H 4100 4590 60  0001 C CNN
 F 3 "" H 3100 4250 60  0000 C CNN
 	1    3100 4250
 	1    0    0    -1  
@@ -390,9 +390,9 @@ Wire Wire Line
 	7300 1800 7150 1800
 Wire Wire Line
 	6700 1800 6850 1800
-Text GLabel 1300 3200 2    50   Input ~ 0
-PHOTO_GND
 Text GLabel 1300 3300 2    50   Input ~ 0
+PHOTO_GND
+Text GLabel 1300 3400 2    50   Input ~ 0
 PHOTO_3V3
 Wire Wire Line
 	5100 4350 5650 4350
@@ -412,7 +412,7 @@ U 1 1 606F1692
 P 1400 6600
 F 0 "J3" H 1508 6781 50  0000 C CNN
 F 1 "Conn_01x02_Male" H 1508 6690 50  0000 C CNN
-F 2 "" H 1400 6600 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 1400 6600 50  0001 C CNN
 F 3 "~" H 1400 6600 50  0001 C CNN
 	1    1400 6600
 	1    0    0    -1  
@@ -435,7 +435,7 @@ Wire Wire Line
 	6300 3300 7000 3300
 Text GLabel 9200 1400 2    50   Input ~ 0
 PHOTO_3V3
-Text GLabel 1300 3400 2    50   Input ~ 0
+Text GLabel 1300 3500 2    50   Input ~ 0
 -1V
 Text GLabel 7600 2000 0    50   Input ~ 0
 -1V
@@ -447,7 +447,7 @@ U 1 1 606BE3B5
 P 9300 1800
 F 0 "R5" V 9093 1800 50  0000 C CNN
 F 1 "R" V 9184 1800 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 9230 1800 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 9230 1800 50  0001 C CNN
 F 3 "~" H 9300 1800 50  0001 C CNN
 	1    9300 1800
 	0    -1   -1   0   
@@ -457,19 +457,19 @@ Text GLabel 9550 1800 2    50   Input ~ 0
 Wire Wire Line
 	6150 3300 6300 3300
 Connection ~ 6300 3300
-Text Notes 4700 6350 0    50   ~ 0
+Text Notes 5050 6350 0    50   ~ 0
 Debug pins\n(Photo measurement)
-Text GLabel 5550 7150 2    50   Input ~ 0
+Text GLabel 5450 6850 2    50   Input ~ 0
 PD_MUX_OUT
-Text HLabel 5550 7400 2    50   Input ~ 0
+Text HLabel 5450 6950 2    50   Input ~ 0
 AMP_OUT
 Text HLabel 5250 4150 2    50   Input ~ 0
 PHOTO_OUT_N
 Wire Wire Line
 	5250 4150 5100 4150
-Text HLabel 5550 6900 2    50   Input ~ 0
+Text HLabel 5450 6650 2    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5550 6650 2    50   Input ~ 0
+Text HLabel 5450 6750 2    50   Input ~ 0
 PHOTO_OUT_P
 Text HLabel 2900 1750 0    50   Input ~ 0
 PHOTO_OUT_P
@@ -489,7 +489,7 @@ U 1 1 606C0A32
 P 8300 1700
 F 0 "U4" H 8300 2388 60  0000 C CNN
 F 1 "TS5A9411DCKR" H 8300 2282 60  0000 C CNN
-F 2 "DCK0006A_N" H 8300 1640 60  0001 C CNN
+F 2 "Ninja-qPCR:TS5A9411DCKR" H 8300 1640 60  0001 C CNN
 F 3 "" H 8300 1700 60  0000 C CNN
 	1    8300 1700
 	-1   0    0    -1  
@@ -551,7 +551,7 @@ U 1 1 607C2091
 P 900 3400
 F 0 "J2" H 1008 3781 50  0000 C CNN
 F 1 "Conn_01x05_Male" H 1008 3690 50  0000 C CNN
-F 2 "" H 900 3400 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x05_Pitch2.54mm" H 900 3400 50  0001 C CNN
 F 3 "~" H 900 3400 50  0001 C CNN
 	1    900  3400
 	1    0    0    -1  
@@ -566,58 +566,14 @@ Wire Wire Line
 	1300 3400 1100 3400
 Wire Wire Line
 	1100 3500 1300 3500
-$Comp
-L Connector:Conn_01x01_Male J4
-U 1 1 607F0249
-P 4900 6650
-F 0 "J4" H 5008 6831 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 6740 50  0000 C CNN
-F 2 "" H 4900 6650 50  0001 C CNN
-F 3 "~" H 4900 6650 50  0001 C CNN
-	1    4900 6650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	5550 6650 5100 6650
-$Comp
-L Connector:Conn_01x01_Male J5
-U 1 1 607F79E2
-P 4900 6900
-F 0 "J5" H 5008 7081 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 6990 50  0000 C CNN
-F 2 "" H 4900 6900 50  0001 C CNN
-F 3 "~" H 4900 6900 50  0001 C CNN
-	1    4900 6900
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J6
-U 1 1 608062B7
-P 4900 7150
-F 0 "J6" H 5008 7331 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 7240 50  0000 C CNN
-F 2 "" H 4900 7150 50  0001 C CNN
-F 3 "~" H 4900 7150 50  0001 C CNN
-	1    4900 7150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J7
-U 1 1 60806962
-P 4900 7400
-F 0 "J7" H 5008 7581 50  0000 C CNN
-F 1 "Conn_01x01_Male" H 5008 7490 50  0000 C CNN
-F 2 "" H 4900 7400 50  0001 C CNN
-F 3 "~" H 4900 7400 50  0001 C CNN
-	1    4900 7400
-	1    0    0    -1  
-$EndComp
+	5450 6650 5000 6650
 Wire Wire Line
-	5550 6900 5100 6900
+	5450 6750 5000 6750
 Wire Wire Line
-	5550 7400 5100 7400
+	5450 6950 5000 6950
 Wire Wire Line
-	5550 7150 5100 7150
+	5450 6850 5000 6850
 Text Notes 2800 6350 0    50   ~ 0
 ADA2200 SPI debug
 Text Notes 1200 6350 0    50   ~ 0
@@ -645,7 +601,7 @@ U 1 1 606B7AFD
 P 7000 3200
 F 0 "U3" H 7800 3587 60  0000 C CNN
 F 1 "AD8605ARTZ-R2" H 7800 3481 60  0000 C CNN
-F 2 "RJ_5_ADI" H 7800 3440 60  0001 C CNN
+F 2 "Ninja-qPCR:AD8605ARTZ-R2" H 7800 3440 60  0001 C CNN
 F 3 "" H 7000 3200 60  0000 C CNN
 	1    7000 3200
 	1    0    0    -1  
@@ -659,7 +615,7 @@ U 1 1 606D4C48
 P 9850 4950
 F 0 "J9" H 9742 5335 50  0000 C CNN
 F 1 "Conn_01x05_Female" H 9742 5244 50  0000 C CNN
-F 2 "" H 9850 4950 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 9850 4950 50  0001 C CNN
 F 3 "~" H 9850 4950 50  0001 C CNN
 	1    9850 4950
 	1    0    0    -1  
@@ -672,7 +628,7 @@ U 1 1 606E6382
 P 9850 5750
 F 0 "J10" H 9742 6135 50  0000 C CNN
 F 1 "Conn_01x05_Female" H 9742 6044 50  0000 C CNN
-F 2 "" H 9850 5750 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 9850 5750 50  0001 C CNN
 F 3 "~" H 9850 5750 50  0001 C CNN
 	1    9850 5750
 	-1   0    0    -1  
@@ -681,44 +637,25 @@ Text GLabel 10250 4850 2    50   Input ~ 0
 VCC_LOGIC
 Text GLabel 10250 4950 2    50   Input ~ 0
 PHOTO_GND
-$Comp
-L Ninja-qPCR:OM-7604-C7-32.768KHZ-20PPM-TA-QC XTAL1
-U 1 1 606CE156
-P 6900 5000
-F 0 "XTAL1" H 7800 5487 60  0000 C CNN
-F 1 "OM-7604-C7-32.768KHZ-20PPM-TA-QC" H 7800 5381 60  0000 C CNN
-F 2 "OM-7604-C7_MCX" H 7800 5340 60  0001 C CNN
-F 3 "" H 6900 5000 60  0000 C CNN
-	1    6900 5000
-	1    0    0    -1  
-$EndComp
-Text GLabel 6650 5600 0    50   Input ~ 0
+Text GLabel 8450 5250 2    50   Input ~ 0
 GND
-Text GLabel 6650 5400 0    50   Input ~ 0
+Text GLabel 8450 5150 2    50   Input ~ 0
 VCC_LOGIC
-Wire Wire Line
-	6650 5600 6900 5600
-Wire Wire Line
-	6650 5400 6900 5400
-Text GLabel 8850 5750 3    50   Input ~ 0
+Text GLabel 6700 5450 0    50   Input ~ 0
 CLKIN
 $Comp
 L Device:R R3
 U 1 1 606F3DDA
-P 6600 5000
-F 0 "R3" V 6393 5000 50  0000 C CNN
-F 1 "10K" V 6484 5000 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 6530 5000 50  0001 C CNN
-F 3 "~" H 6600 5000 50  0001 C CNN
-	1    6600 5000
+P 7100 5150
+F 0 "R3" V 6893 5150 50  0000 C CNN
+F 1 "10K" V 6984 5150 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 7030 5150 50  0001 C CNN
+F 3 "~" H 7100 5150 50  0001 C CNN
+	1    7100 5150
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	6750 5000 6900 5000
-Text GLabel 6350 5000 0    50   Input ~ 0
+Text GLabel 6700 5150 0    50   Input ~ 0
 VCC_LOGIC
-Wire Wire Line
-	6350 5000 6450 5000
 Wire Wire Line
 	7600 2000 7700 2000
 Wire Wire Line
@@ -741,7 +678,7 @@ U 1 1 6070474E
 P 9800 2650
 F 0 "J8" H 9908 2931 50  0000 C CNN
 F 1 "Conn_01x04_Male" H 9908 2840 50  0000 C CNN
-F 2 "" H 9800 2650 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x04_Pitch2.54mm" H 9800 2650 50  0001 C CNN
 F 3 "~" H 9800 2650 50  0001 C CNN
 	1    9800 2650
 	1    0    0    -1  
@@ -763,20 +700,14 @@ External gain resistors
 $Comp
 L Device:Jumper JP1
 U 1 1 606E3CBF
-P 8850 5300
-F 0 "JP1" V 8804 5427 50  0000 L CNN
-F 1 "Jumper" V 8895 5427 50  0000 L CNN
-F 2 "" H 8850 5300 50  0001 C CNN
-F 3 "~" H 8850 5300 50  0001 C CNN
-	1    8850 5300
-	0    1    1    0   
+P 7100 5450
+F 0 "JP1" V 7054 5577 50  0000 L CNN
+F 1 "Jumper" V 7145 5577 50  0000 L CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 7100 5450 50  0001 C CNN
+F 3 "~" H 7100 5450 50  0001 C CNN
+	1    7100 5450
+	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	8700 4900 8850 4900
-Wire Wire Line
-	8850 4900 8850 5000
-Wire Wire Line
-	8850 5600 8850 5750
 Text HLabel 7600 850  2    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 7600 2450 2    50   Input ~ 0
@@ -785,7 +716,7 @@ Text HLabel 10250 2850 2    50   Input ~ 0
 GAIN_SMALL
 Text HLabel 10250 2550 2    50   Input ~ 0
 GAIN_LARGE
-Text HLabel 1300 3500 2    50   Input ~ 0
+Text HLabel 1300 3600 2    50   Input ~ 0
 AMP_GAIN_SW
 Text HLabel 9300 1600 2    50   Input ~ 0
 AMP_GAIN_SW
@@ -793,8 +724,6 @@ Text GLabel 9500 3350 2    50   Input ~ 0
 PHOTO_GND
 Text GLabel 3450 6750 2    50   Input ~ 0
 DEMOD_SPI_SCLK
-Text Notes 5900 5150 0    50   ~ 0
-CLOOE=HIGH -> Enable clock
 Text Notes 9550 4400 0    50   ~ 0
 -> Photosensing
 Wire Wire Line
@@ -805,7 +734,7 @@ U 1 1 60786D85
 P 1800 4700
 F 0 "C2" V 1548 4700 50  0000 C CNN
 F 1 "10uF" V 1639 4700 50  0000 C CNN
-F 2 "" H 1838 4550 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 1838 4550 50  0001 C CNN
 F 3 "~" H 1800 4700 50  0001 C CNN
 	1    1800 4700
 	0    1    1    0   
@@ -823,4 +752,42 @@ Wire Wire Line
 	1550 4700 1650 4700
 Wire Wire Line
 	7000 3800 6850 3800
+$Comp
+L Ninja-qPCR:COM1305-0.032768-EXT-T-TR U5
+U 1 1 607778D7
+P 7500 5150
+F 0 "U5" H 7925 5415 50  0000 C CNN
+F 1 "COM1305-0.032768-EXT-T-TR" H 7925 5324 50  0000 C CNN
+F 2 "Ninja-qPCR:COM1305-0.032768-EXT-T-TR" H 7500 5150 50  0001 C CNN
+F 3 "" H 7500 5150 50  0001 C CNN
+	1    7500 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8450 5150 8350 5150
+Wire Wire Line
+	8450 5250 8350 5250
+Wire Wire Line
+	7500 5250 7450 5250
+Wire Wire Line
+	7450 5250 7450 5450
+Wire Wire Line
+	7450 5450 7400 5450
+Wire Wire Line
+	7250 5150 7500 5150
+Wire Wire Line
+	6950 5150 6700 5150
+Wire Wire Line
+	6800 5450 6700 5450
+$Comp
+L Connector:Conn_01x04_Male J4
+U 1 1 6084E5A5
+P 4800 6750
+F 0 "J4" H 4908 7031 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 4908 6940 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x04_Pitch2.54mm" H 4800 6750 50  0001 C CNN
+F 3 "~" H 4800 6750 50  0001 C CNN
+	1    4800 6750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
