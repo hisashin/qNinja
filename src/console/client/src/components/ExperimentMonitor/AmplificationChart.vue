@@ -190,6 +190,10 @@ export default {
       this.graph.update();
     },
     onFilterChange: function() {
+      this.repaint();
+    },
+    repaint: function () {
+      // Apply appearance conf, filter and data updates
       const seriesCount = this.channelsCount * this.wellsCount;
       this.eachWell((well)=>{
         // well.index
@@ -197,7 +201,6 @@ export default {
           const index = this._index(channel.index, well.index);
           this.graphChannels[index].setVisibility(well.visible && channel.visible);
           const appearance = this.appearanceConf[channel.index][well.index];
-          console.log(appearance);
           this.graphChannels[index].setColor(appearance.c);
         });
       });

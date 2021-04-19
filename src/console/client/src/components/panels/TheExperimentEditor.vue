@@ -107,6 +107,34 @@
                       <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
                     </div>
                     <div class="item--tabbed__content__side" id="tabAmpSide">
+                      <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
+                        <tr>
+                          <th>Well</th>
+                          <th>A</th>
+                          <template v-for="channel of experiment.hardware.channels.count">
+                            <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
+                            <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
+                            <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
+                            <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
+                            <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
+                            <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
+                          </template>
+                        </tr>
+                        <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+                          <td>{{ wellLabel }}</td>
+                          <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
+                            &nbsp;
+                          </td>
+                          <template v-for="channel of experiment.hardware.channels.count">
+                            <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                            <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                          </template>
+                        </tr>
+                      </table>
                       
                     </div>
                   </div>
@@ -148,35 +176,6 @@
               </b-tabs>
             </div>
           </div>
-          <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
-            <tr>
-              <th>Well</th>
-              <th>A</th>
-              <template v-for="channel of experiment.hardware.channels.count">
-                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
-                <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
-                <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
-                <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
-                <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
-                <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
-              </template>
-            </tr>
-            <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-              <td>{{ wellLabel }}</td>
-              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
-                &nbsp;
-              </td>
-              <template v-for="channel of experiment.hardware.channels.count">
-                <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
-                <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
-                <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
-                <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
-                <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-                <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-              </template>
-            </tr>
-            
-          </table>
           <ColorPicker ref="colorPicker" />
         </div>
       </div>
@@ -319,9 +318,7 @@ export default {
       let appearances = [];
       for (let ch=0; ch<this.experiment.hardware.channels.count; ch++) {
         appearances.push(this.well_appearance);
-        console.log(this.well_appearance.length)
       }
-      console.log(appearances);
       return appearances;
     },
     /* Panel transition */
@@ -368,7 +365,6 @@ export default {
           this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
           this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
         }
-      
       }
       
       this.isNew = false;
@@ -476,6 +472,10 @@ export default {
       const origColor = this.well_appearance[index].c;
       this.$refs.colorPicker.open(origColor, (pickedColor)=>{
         this.well_appearance[index].c = pickedColor;
+        this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
+        this.$refs.meltCurveChart.setAppearanceConf(this.getAppearanceConf());
+        this.$refs.amplificationChart.repaint();
+        this.$refs.meltCurveChart.repaint();
       });
     }
   }

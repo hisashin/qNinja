@@ -14,7 +14,7 @@ const createDataset = (color, name, showLine)=>{
     label: name,
     fill:false,
     borderColor: color,
-    borderDash: [5, 5],
+    /*borderDash: [5, 5],*/
     pointColor: color,
     pointStrokeColor: "#fff",
     lineTension: 0.1,
