@@ -304,6 +304,7 @@ class LEDUnit {
   }
   select (channel) {
     channel = debug;
+    // channel = 0;
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
@@ -340,7 +341,8 @@ class FluorescenceSensingUnit {
       callback(val);
     });
     */
-    this.adcManager.readChannelValue(0, (val0)=>{
+    
+    this.adcManager.readChannelValue(2, (val0)=>{
       this.adcManager.readChannelValue(3, (val3)=>{
         callback(val3-val0);
       });

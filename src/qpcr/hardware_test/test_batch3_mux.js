@@ -39,4 +39,4 @@ let channelIndex = 0;
 setInterval(()=>{
   select(CHANNEL_OFFSET + channelIndex);
   channelIndex = (channelIndex + 1) % CHANNELS_COUNT;
-}, 500);
+}, 100);
