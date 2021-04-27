@@ -421,7 +421,7 @@ Wire Wire Line
 	1600 6600 1800 6600
 Wire Wire Line
 	1800 6700 1600 6700
-Text GLabel 6850 3800 0    50   Input ~ 0
+Text GLabel 6000 3600 0    50   Input ~ 0
 PHOTO_GND
 Text GLabel 6850 3900 0    50   Input ~ 0
 PHOTO_3V3
@@ -750,8 +750,6 @@ Text GLabel 1550 4700 0    50   Input ~ 0
 PHOTO_GND
 Wire Wire Line
 	1550 4700 1650 4700
-Wire Wire Line
-	7000 3800 6850 3800
 $Comp
 L Ninja-qPCR:COM1305-0.032768-EXT-T-TR U5
 U 1 1 607778D7
@@ -790,4 +788,23 @@ F 3 "~" H 4800 6750 50  0001 C CNN
 	1    4800 6750
 	1    0    0    -1  
 $EndComp
+Text GLabel 6000 4000 0    50   Input ~ 0
+-1V
+$Comp
+L Jumper:SolderJumper_3_Open JP?
+U 1 1 60889F0A
+P 6200 3800
+F 0 "JP?" V 6246 3867 50  0000 L CNN
+F 1 "SolderJumper_3_Open" V 6155 3867 50  0000 L CNN
+F 2 "" H 6200 3800 50  0001 C CNN
+F 3 "~" H 6200 3800 50  0001 C CNN
+	1    6200 3800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6350 3800 7000 3800
+Wire Wire Line
+	6000 3600 6200 3600
+Wire Wire Line
+	6000 4000 6200 4000
 $EndSCHEMATC
