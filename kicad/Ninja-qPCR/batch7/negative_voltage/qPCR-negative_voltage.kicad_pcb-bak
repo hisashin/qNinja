@@ -600,7 +600,7 @@
     )
   )
 
-  (gr_text 32x12mm (at 117.89 85.1) (layer Dwgs.User)
+  (gr_text 32x12mm (at 117.5 86) (layer Dwgs.User)
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (gr_text -0.23V (at 117.49 90.45) (layer F.SilkS) (tstamp 608775C5)
