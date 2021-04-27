@@ -258,13 +258,15 @@ class GenericGPIOMuxWrapper {
   constructor () {
     this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
     this.muxSwitch = PIN_MUX_SWITCH;
+      
   }
-  start () {
+  start () {a
     rpio.open(this.muxSwitch, rpio.OUTPUT, rpio.LOW);
     this.mux.initialize();
-    
   }
   select (wellIndex, channel) {
+    wellIndex = debug;
+    channel = 0;
     const channelOffset = channel;
     let muxSwitchVal = 0;
     let muxChName = 1;
@@ -279,7 +281,7 @@ class GenericGPIOMuxWrapper {
     }
     muxSwitchVal = 0;
     const muxChannel = muxChName - 1;
-    // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
+     console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
   }
@@ -297,19 +299,18 @@ class LEDUnit {
     this.flg = true;
   }
   start () {
-    this.ledDriver.start();
+    // this.ledDriver.start();
     rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, VALUE_SPI_SWITCH_LED);
-    this.ledUnit = new LEDUnit(this.pot, this.ledDriver);
+    // this.ledUnit = new LEDUnit(this.pot, this.ledDriver);
     this.pot.initialize();
   }
   select (channel) {
-    channel = debug;
+    // channel = debug;
     // channel = 0;
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
     this.ledDriver.selectChannel(channel);
-    // Nothing to do
   }
   off () {
     this.ledDriver.off();

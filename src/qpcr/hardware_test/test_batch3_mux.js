@@ -24,8 +24,8 @@ function select (channel) {
   let muxSwitchVal = (channel < 16) ? 0 : 1;
   const muxChannel = channel % 16;
   // ledDriver.selectChannel(7);
-  //ledDriver.onAll();
-  //console.log(channel);
+  // ledDriver.onAll();
+  // console.log(channel);
   // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
   // console.log(muxChannel);
   rpio.write(PIN_MUX_SWITCH, muxSwitchVal);
@@ -34,9 +34,11 @@ function select (channel) {
 }
 const CHANNEL_OFFSET = 0;
 const CHANNELS_COUNT = 32;
+const INTERVAL_MSEC = 500;
 
 let channelIndex = 0;
 setInterval(()=>{
   select(CHANNEL_OFFSET + channelIndex);
   channelIndex = (channelIndex + 1) % CHANNELS_COUNT;
-}, 100);
+}, INTERVAL_MSEC);
+
