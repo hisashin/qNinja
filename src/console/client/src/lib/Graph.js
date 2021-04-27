@@ -14,7 +14,7 @@ const createDataset = (color, name, showLine)=>{
     label: name,
     fill:false,
     borderColor: color,
-    borderDash: [5, 5],
+    /*borderDash: [5, 5],*/
     pointColor: color,
     pointStrokeColor: "#fff",
     lineTension: 0.1,
@@ -36,6 +36,9 @@ class GraphSubChannelXY {
   }
   setVisibility (visibility) {
     this.data.hidden = !visibility;
+  }
+  setColor (color) {
+    this.data.borderColor = color;
   }
   clearData() {
     this.data.data = [];
@@ -61,6 +64,9 @@ class GraphSubChannelHLine {
   
   setVisibility (visibility) {
     this.data.hidden = !visibility;
+  }
+  setColor (color) {
+    this.data.borderColor = color;
   }
   updateRawData() {
     this.data.rawData = [
@@ -89,6 +95,9 @@ class GraphSubChannelVLine {
   }
   setVisibility (visibility) {
     this.data.hidden = !visibility;
+  }
+  setColor (color) {
+    this.data.borderColor = color;
   }
   updateRawData() {
     this.data.rawData = [
@@ -125,6 +134,11 @@ class GraphChannel {
   setVisibility (visibility) {
     this.subChannels.forEach((subChannel)=>{
       subChannel.setVisibility(visibility);
+    });
+  }
+  setColor (color) {
+    this.subChannels.forEach((subChannel)=>{
+      subChannel.setColor(color);
     });
   }
   addDataTo (data, subChannelIndex) {

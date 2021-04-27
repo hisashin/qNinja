@@ -20,19 +20,17 @@ ledDriver.start();
 let channel = 0;
 let duty = 0.0;
 let switchVal = true;
-setInterval(()=>{
+const interval = setInterval(()=>{
   if (channel == 0) {
     switchVal = !switchVal;
     console.log("Switch. %d", switchVal);
     const v = (switchVal)?rpio.LOW:rpio.HIGH;
-    console.log("V=%d",v)
     rpio.write(PIN_NUM_SPI_SWITCH, v);
     //ledDriver.setDuty(1.0 - duty);
     duty += 0.1;
     if (duty > 1.0) {
       duty = 0.0;
     }
-    // console.log("duty=%f", duty);
   }
   ledDriver.selectChannel(channel);
   const ch = CHANNEL_OFFSET + channel;

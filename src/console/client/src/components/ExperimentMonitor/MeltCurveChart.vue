@@ -47,7 +47,7 @@ export default {
       analysis:{},
       graphChannels: [],
       subChannelsData: [],
-      subChannelsPoints: [],
+      appearanceConf: []
     }
   },
   created: function () {
@@ -74,8 +74,10 @@ export default {
     _index: function (channelIndex, wellIndex) {
       return channelIndex * this.wellsCount + wellIndex;
     },
+    setAppearanceConf: function (appearanceConf) {
+      this.appearanceConf = appearanceConf;
+    },
     setHardwareConf: function(hardware) {
-      console.log("MeltCurveChart.setHardwareConf");
       this.wellsCount = hardware.wells.count;
       this.channelsCount = hardware.channels.count;
       let labels = [];
@@ -138,28 +140,32 @@ export default {
       this.graph.update();
     },
     setAnalysis: function (analysis) {
-      console.log("AplificationChart.setAnalysis");
-      console.log(analysis)
       this.analysis = analysis;
     },
     add: function (data) {
       this.graph.update();
     },
     onFilterChange: function() {
+      this.repaint();
+    },
+    repaint: function () {
       const seriesCount = this.channelsCount * this.wellsCount;
       this.eachWell((well)=>{
         // well.index
         this.channels.forEach((channel)=>{
           const index = this._index(channel.index, well.index);
           this.graphChannels[index].setVisibility(well.visible && channel.visible);
+          const appearance = this.appearanceConf[channel.index][well.index];
+          this.graphChannels[index].setColor(appearance.c);
         });
       });
+      /*
       this.eachSeries((c, w, i)=>{
         let f = null;
         this.subChannelsData[i].conversionFunction = f;
-        this.subChannelsPoints[i].conversionFunction = f;
       });
       this.graph.setScaleY((this.yScale == "log" ) ? Graph.Scale.Log : Graph.Scale.Linear);
+      */
       this.graph.update();
     },
     // Switch Y axis

@@ -107,6 +107,34 @@
                       <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
                     </div>
                     <div class="item--tabbed__content__side" id="tabAmpSide">
+                      <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
+                        <tr>
+                          <th>Well</th>
+                          <th>A</th>
+                          <template v-for="channel of experiment.hardware.channels.count">
+                            <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
+                            <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
+                            <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
+                            <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
+                            <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
+                            <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
+                          </template>
+                        </tr>
+                        <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+                          <td>{{ wellLabel }}</td>
+                          <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
+                            &nbsp;
+                          </td>
+                          <template v-for="channel of experiment.hardware.channels.count">
+                            <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
+                            <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                            <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                          </template>
+                        </tr>
+                      </table>
                       
                     </div>
                   </div>
@@ -148,35 +176,7 @@
               </b-tabs>
             </div>
           </div>
-          <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
-            <tr>
-              <th>Well</th>
-              <th>A</th>
-              <template v-for="channel of experiment.hardware.channels.count">
-                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
-                <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
-                <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
-                <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
-                <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
-                <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
-              </template>
-            </tr>
-            <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-              <td>{{ wellLabel }}</td>
-              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}">
-                {{ well_appearance[wellIndex] }}
-              </td>
-              <template v-for="channel of experiment.hardware.channels.count">
-                <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
-                <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
-                <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
-                <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
-                <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-                <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-              </template>
-            </tr>
-            
-          </table>
+          <ColorPicker ref="colorPicker" />
         </div>
       </div>
     </section>
@@ -221,14 +221,16 @@
 <script>
 import appState from "../../lib/AppState.js";
 import client from "../../lib/RestClient.js";
+import Util from "../../lib/Util.js";
 
 import ProtocolDetail from '../ProtocolDetail.vue';
-import ProtocolPicker from '../ProtocolPicker.vue';
+import ProtocolPicker from '../widget/ProtocolPicker.vue';
 import ExperimentConfig from '../ExperimentConfig.vue';
 import TemperatureChart from '../ExperimentMonitor/TemperatureChart.vue';
 import AmplificationChart from '../ExperimentMonitor/AmplificationChart.vue';
 import MeltCurveChart from '../ExperimentMonitor/MeltCurveChart.vue';
 import StandardCurveChart from '../StandardCurveChart.vue';
+import ColorPicker from '../widget/ColorPicker.vue';
 
 const TAB_AMP = 0;
 const TAB_MELT= 1;
@@ -243,7 +245,8 @@ export default {
     TemperatureChart,
     AmplificationChart,
     MeltCurveChart,
-    StandardCurveChart
+    StandardCurveChart,
+    ColorPicker
   },
   props: {
     limit: { type:Number }
@@ -311,6 +314,13 @@ export default {
     },
     onAppear () {
     },
+    getAppearanceConf () {
+      let appearances = [];
+      for (let ch=0; ch<this.experiment.hardware.channels.count; ch++) {
+        appearances.push(this.well_appearance);
+      }
+      return appearances;
+    },
     /* Panel transition */
     setExperiment (experiment) {
       this.experiment = experiment;
@@ -322,6 +332,18 @@ export default {
       if (!this.$refs.temperatureChart) {
         console.warn("this.$refs.temperatureChart is null. why?")
       }
+      this.well_appearance = [];
+      if (experiment.hardware) {
+        for (let w=0; w<experiment.hardware.wells.count; w++) {
+          let obj = {
+            v: true,
+            c: Util.defaultPalette[w]
+          };
+          this.well_appearance.push(obj);
+        }
+      }
+      console.log(this.$data.well_appearance);
+      
       if (this.isStarted && experiment.log) {
         if (experiment.log.temp) {
           console.log("setExperiment 1.1");
@@ -333,27 +355,17 @@ export default {
         }
         if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
           this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
+            this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
           this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
           this.$refs.amplificationChart.setAnalysis(experiment.analysis);
         }
         if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
           this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
+          this.$refs.meltCurveChart.setAppearanceConf(this.getAppearanceConf());
           this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
           this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
         }
-      
       }
-      this.well_appearance = [];
-      if (experiment.hardware) {
-        for (let w=0; w<experiment.hardware.wells.count; w++) {
-          let obj = {
-            v: true,
-            c: "#888"
-          };
-          this.well_appearance.push(obj);
-        }
-      }
-      console.log(this.$data.well_appearance);
       
       this.isNew = false;
     },
@@ -436,25 +448,35 @@ export default {
       const url = client.getExperimentExportURL(this.experiment.id, property, extension);
       window.open(url);
     },
-    onSelectTabAmp: function (){
+    onSelectTabAmp: function () {
       console.log("onSelectTabAmp");
       document.getElementById("tabAmpSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_AMP;
     },
-    onSelectTabMelt: function (){
+    onSelectTabMelt: function () {
       console.log("onSelectTabMelt");
       document.getElementById("tabMeltSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_MELT;
     },
-    onSelectTabStdCurve: function (){
+    onSelectTabStdCurve: function () {
       console.log("onSelectTabStdCurve");
       document.getElementById("tabStdCurveSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_STD_CURVE;
     },
-    onSelectTabTemperature: function (){
+    onSelectTabTemperature: function () {
       console.log("onSelectTabTemperature");
       document.getElementById("tabTemperatureSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_TEMPERATURE;
+    },
+    openColorPicker: function (index) {
+      const origColor = this.well_appearance[index].c;
+      this.$refs.colorPicker.open(origColor, (pickedColor)=>{
+        this.well_appearance[index].c = pickedColor;
+        this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
+        this.$refs.meltCurveChart.setAppearanceConf(this.getAppearanceConf());
+        this.$refs.amplificationChart.repaint();
+        this.$refs.meltCurveChart.repaint();
+      });
     }
   }
 }
