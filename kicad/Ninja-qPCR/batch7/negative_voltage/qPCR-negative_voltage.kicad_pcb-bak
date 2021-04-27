@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 13)
+    (drawings 14)
     (tracks 115)
     (zones 0)
     (modules 13)
@@ -11,8 +11,8 @@
 
   (page A4)
   (layers
-    (0 F.Cu signal hide)
-    (31 B.Cu signal hide)
+    (0 F.Cu signal)
+    (31 B.Cu signal)
     (32 B.Adhes user)
     (33 F.Adhes user)
     (34 B.Paste user)
@@ -600,6 +600,9 @@
     )
   )
 
+  (gr_text 29x12mm (at 117.89 85.1) (layer Dwgs.User)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
   (gr_text -0.23V (at 117.49 90.45) (layer F.SilkS) (tstamp 608775C5)
     (effects (font (size 0.889 0.889) (thickness 0.15875)))
   )
