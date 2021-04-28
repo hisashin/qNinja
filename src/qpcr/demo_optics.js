@@ -108,12 +108,15 @@ class OpticsDemo {
     this.photosensingStarted = true;
     let ch = 0;
     setInterval(()=>{
-      const target = 15 - ch;
-      this.photosensing.measure(target, (measurement)=>{
-        console.log("ch%d=%f", target, measurement);
-        ch = (ch + 1) % 16;
+      const optCh = (ch < 16) ? 0:1;
+      const well = ch % 16;
+      this.photosensing.measure((measurement)=>{
+        console.log("Value=%f", measurement);
+        this.photosensing.select(well, optCh); // Next
+        console.log("Ch %d %d", well, optCh);
       });
-    }, 4000);
+      ch = (ch + 1) % 32;
+    }, 1000);
   }
   shutdown () {
     if (this.opticsStarted) {
@@ -132,8 +135,7 @@ demo.runOpticsDemo();
 // demo.perWellDemo(0,  7);
 // demo.runLEDDemo();
 // demo.runPhotosensingDemo();
-//demo.runSimulationDemo();
-
+// demo.runSimulationDemo();
 process.on('SIGINT', () => {
     console.log('Received SIGINT');
     demo.shutdown();

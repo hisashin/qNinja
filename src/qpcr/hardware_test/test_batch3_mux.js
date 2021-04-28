@@ -11,11 +11,17 @@ const PIN_NUM_PD_MUX_3 = 12; //GPIO1
 const PIN_NUM_PD_MUX_4 = 10; //GPIO16
 const PIN_NUM_PD_MUX_5 = 8; //GPIO15
 
+const PIN_NUM_GAIN_SWITCH = 7;// GPIO7
+const LARGE_GAIN = 0;
+const SMALL_GAIN = 1;
+
 const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
 
 let mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
 mux.initialize();
 rpio.open(PIN_MUX_SWITCH, rpio.OUTPUT, rpio.LOW);
+rpio.open(PIN_NUM_GAIN_SWITCH, rpio.OUTPUT, rpio.LOW);
+rpio.open(PIN_NUM_PD_MUX_5, rpio.OUTPUT, rpio.LOW);
 const PIN_LATCH = 15;
 const ledDriver = new TLC59281DBQR("/dev/spidev0.0", PIN_LATCH, 0, 1000 /* Hz (=1kHz) */);
 ledDriver.start();
@@ -32,12 +38,18 @@ function select (channel) {
   console.log("Ch %d\tSw %d\tMx %d", channel, muxSwitchVal, muxChannel);
   mux.selectChannel(muxChannel);
 }
-const CHANNEL_OFFSET = 0;
-const CHANNELS_COUNT = 32;
-const INTERVAL_MSEC = 500;
+const CHANNEL_OFFSET = 28;
+const CHANNELS_COUNT = 2;
+const INTERVAL_MSEC = 400;
 
 let channelIndex = 0;
+let smallGain = false;
 setInterval(()=>{
+  if (channelIndex == 0) {
+    smallGain = !smallGain;
+    rpio.write(PIN_NUM_GAIN_SWITCH, (smallGain)? SMALL_GAIN:LARGE_GAIN);
+    console.log((smallGain)? "SMALL_GAIN":"LARGE_GAIN");
+  }
   select(CHANNEL_OFFSET + channelIndex);
   channelIndex = (channelIndex + 1) % CHANNELS_COUNT;
 }, INTERVAL_MSEC);

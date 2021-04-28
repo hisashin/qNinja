@@ -4,7 +4,6 @@ class ADCManager {
   constructor (adc, dataRate) {
     this.adc = adc;
     this.dataRate = dataRate;
-    this.currentChannel = -1;
     this._isReaing = false;
     this.readQueue = [];
     this.started = false;
@@ -22,11 +21,15 @@ class ADCManager {
     this.readQueue.push({channel:channel, callback:callback});
     this._readNext(1);
   }
-  _selectChannel (channel) {
-    // Write register (if needed) 
-    if (this.currentChannel != channel) {
-      this.adc.selectChannel(channel);
-      this.currentChannel = channel;
+  readDiffChannelValue(pChannel, nChannel, callback) {
+    this.readQueue.push({diff:true, pChannel:pChannel, nChannel:nChannel, callback:callback});
+    this._readNext(1);
+  }
+  _selectChannel (readConf) {
+    if (readConf.diff) {
+      this.adc.selectDiff(readConf.pChannel, readConf.nChannel);
+    } else {
+      this.adc.selectChannel(readConf.channel);
     }
   }
   _readNext (t /* Debug param */) {
@@ -35,7 +38,7 @@ class ADCManager {
     }
     const read = this.readQueue.shift();
     this._isReading = true;
-    this._selectChannel(read.channel);
+    this._selectChannel(read);
     this.adc.sync();
     const timeoutMsec = 1 + 1000/this.dataRate;
     setTimeout(()=>{

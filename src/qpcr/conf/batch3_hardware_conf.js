@@ -222,6 +222,8 @@ class HardwareConf {
   }
 };
 // Channel name (Not index)
+/*
+Before 2021/04/27
 const MUX_MAP_N = [
   //0ch
   [8,6,4,2,16,14,12,10],
@@ -230,6 +232,16 @@ const MUX_MAP_N = [
 const MUX_MAP_S = [
   [1,3,5,7,9,11,13,15],
   [2,4,6,8,10,12,14,16]
+];
+*/
+const MUX_MAP_N = [
+  //0ch
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
+];
+const MUX_MAP_S = [
+[16,14,11,10,8,6,4,2],
+[15,13,12,9,7,5,3,1]
 ];
 
 class SPIMuxWrapper {
@@ -260,13 +272,11 @@ class GenericGPIOMuxWrapper {
     this.muxSwitch = PIN_MUX_SWITCH;
       
   }
-  start () {a
+  start () {
     rpio.open(this.muxSwitch, rpio.OUTPUT, rpio.LOW);
     this.mux.initialize();
   }
   select (wellIndex, channel) {
-    wellIndex = debug;
-    channel = 0;
     const channelOffset = channel;
     let muxSwitchVal = 0;
     let muxChName = 1;
@@ -279,15 +289,14 @@ class GenericGPIOMuxWrapper {
         muxSwitchVal = 1;
         muxChName = MUX_MAP_S[channel][wellIndex-8];
     }
-    muxSwitchVal = 0;
     const muxChannel = muxChName - 1;
-     console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
+    // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
   }
 }
 
-let debug = 0;
+let debug = 8;
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 class LEDUnit {
   constructor (pot, ledDriver) {
@@ -306,7 +315,7 @@ class LEDUnit {
   }
   select (channel) {
     // channel = debug;
-    // channel = 0;
+    //channel = (channel)%16;
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
@@ -322,32 +331,72 @@ class LEDUnit {
   }
 }
 
+const PIN_NUM_GAIN_SWITCH = 7;// GPIO7
+const LARGE_GAIN_SIG = 0;
+const SMALL_GAIN_SIG = 1;
+const LARGE_GAIN_VALUE = 10.0; // MOhm
+const SMALL_GAIN_VALUE = 1.0; // MOhm
+
+const USE_GAIN_SWITCHING = false;
 // Photodiode
 class FluorescenceSensingUnit {
   constructor (mux, adcManager, adcChannel) {
     this.mux = mux;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
+    this.measuredValues = [];
+    for (let i=0; i<2; i++) {
+      this.measuredValues.push([]);
+      for (let j=0; j<16; j++) {
+        this.measuredValues[i].push({v:0.15,s:true});
+      }
+    }
+    this.wellIndex = 0;
+    this.opticalChannel = 0;
+    this.isStrongSignal = false;
   }
   start () {
+    rpio.open(PIN_NUM_GAIN_SWITCH, rpio.OUTPUT, LARGE_GAIN_SIG);
     this.adcManager.start();
     this.mux.start();
   }
   select (wellIndex, opticalChannel) {
     this.mux.select(wellIndex, opticalChannel);
+    // Switch gain according to previous measurement
+    this.opticalChannel = opticalChannel;
+    this.wellIndex = wellIndex;
+    if (USE_GAIN_SWITCHING) {
+        
+      const prev = this.measuredValues[this.opticalChannel][this.wellIndex];
+      this.isStrongSignal = prev.s;
+      if (prev.s /* 1M */ && prev.v  < 0.008) {
+        // Measured by strong-signal (small gain) mode but the actual measurement was too weak
+        this.isStrongSignal = false;
+      }
+      if (!prev.s /* 10M */  && prev.v  > 0.4) {
+        // Measured by weak-signal (large gain) mode but amplified signal is saturated.
+        this.isStrongSignal = true;
+      }
+    } else {
+      this.isStrongSignal = false;
+    }
+    rpio.write(PIN_NUM_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }
   measure(callback) {
-    /*
-    this.adcManager.readChannelValue(this.adcChannel, (val)=>{
-      callback(val);
+    this.adcManager.readDiffChannelValue(2, 3, (_val)=>{
+      const val = _val * 2;
+      this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
+      callback({v:val,s:this.isStrongSignal?"1M":"10M"});
     });
-    */
-    
+    /*
     this.adcManager.readChannelValue(2, (val0)=>{
       this.adcManager.readChannelValue(3, (val3)=>{
-        callback(val3-val0);
+        const val = (val0 - val3) * 2;
+        this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
+        callback({v:val,s:this.isStrongSignal?"1M":"10M"});
       });
     });
+    */
   }
   shutdown () {
     console.log("Shutting down photosensing unit.");
