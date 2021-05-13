@@ -791,12 +791,12 @@ $EndComp
 Text GLabel 6000 4000 0    50   Input ~ 0
 -1V
 $Comp
-L Jumper:SolderJumper_3_Open JP?
+L Jumper:SolderJumper_3_Open JP2
 U 1 1 60889F0A
 P 6200 3800
-F 0 "JP?" V 6246 3867 50  0000 L CNN
+F 0 "JP2" V 6246 3867 50  0000 L CNN
 F 1 "SolderJumper_3_Open" V 6155 3867 50  0000 L CNN
-F 2 "" H 6200 3800 50  0001 C CNN
+F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 6200 3800 50  0001 C CNN
 F 3 "~" H 6200 3800 50  0001 C CNN
 	1    6200 3800
 	0    -1   -1   0   
