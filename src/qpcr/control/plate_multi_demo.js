@@ -11,13 +11,11 @@ class DummyAir {
     this.model = model;
     this.temperature = DEFAULT_TEMP;
   }
-  measureTemperature () {
-    return new Promise ((resolve)=>{
-      // TODO call thermistor & mux implementation.
-      setTimeout(()=>{
-        resolve()
-      }, 50);
-    });
+  measureTemperature (callback) {
+    // TODO call thermistor & mux implementation.
+    setTimeout(()=>{
+      callback();
+    }, 50);
   }
 }
 

@@ -7,6 +7,7 @@
 
   
 const PlateBlock = require('./plate_block.js');
+const PromiseQueue = require("./promise_queue.js");
 // const PID = require("./heat_control/pid.js");
 
 const DEFAULT_TEMP = 25.0;
@@ -49,11 +50,13 @@ class Plate  {
     this.isOff = true;
   
   }
-  async start () {
+  start () {
     this.startTime = new Date().getTime();
     this.resetSyncTime();
-    await this.air.measureTemperature();
-    this.isOff = false;
+    this.air.measureTemperature(()=>{
+      this.isOff = false;
+      
+    });
   }
   off () {
     this.isOff = true;
@@ -90,14 +93,33 @@ class Plate  {
       block.pid.setSetpoint(this.targetTemperature);
     });
   }
-  async control () {
+  _measureAirTemperatureTask (air) {
+    return ()=>{
+      return new Promise((resolve, reject)=>{
+        air.measureTemperature(resolve);
+      });
+    };
+  }
+  _measureBlockTemperatureTask (block, timestamp) {
+    return ()=>{
+      return new Promise((resolve, reject)=>{
+        block.measureTemperature(this.air.temperature, timestamp, resolve);
+      });
+    };
+  }
+  control (callback) {
     let timestamp = new Date().getTime() - this.startTime;
-    
-    // Read all thermistors
-    await this.air.measureTemperature();
+    let queue = [];
+    queue.push(this._measureAirTemperatureTask(this.air));
     for (let block of this.blocks) {
-      await block.measureTemperature(this.air.temperature, timestamp);
+      queue.push(this._measureBlockTemperatureTask(block, timestamp));
     }
+    new PromiseQueue(queue).exec().then(()=>{
+      this._control();
+      callback();
+    });
+  }
+  _control() {
     this.temperature = this.blocks[0].temperature;
     
     if (!this.isOff) {
@@ -120,7 +142,6 @@ class Plate  {
         block.setOutput(output);
       });
     }
-    
     // console.log("TEMPLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.temperature}).join("\t"));
     // console.log("OUTLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.outputValue}).join("\t"));
   }

@@ -13,6 +13,7 @@ const WELLS_COUNT = 16;
 const SPI = require('pi-spi');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
+const ExclusiveTaskQueue = require("../control/exclusive_task_queue.js");
 const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
 const PlateBlock = require("../control/plate_block.js");
@@ -41,7 +42,7 @@ const rpio = require('rpio');
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 // LED Driver
 const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
-
+const muxQueue = new ExclusiveTaskQueue();
 
 // Pins
 const SPI_CHANNEL = "/dev/spidev0.0";
@@ -124,7 +125,9 @@ class HeatLidOutput {
     this.off();
   }
 }
-
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 1;
+const MUX_CHANNEL_THERMISTOR_AIR = 2;
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
@@ -142,12 +145,15 @@ class HardwareConf {
     this.pwmFan1 = new pwm.SoftPWM(PIN_NAME_PWM_FAN1);
     this.pwmFan2 = new pwm.SoftPWM(PIN_NAME_PWM_FAN2);
     
+    this.thermistorMux = new MUXWrapperThermistor();
+    
     const blocks = [];
     // PLATE_THERMISTOR_POS TODO: switch mux
     {
       const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_PLATE_THERMISTOR);
+        ADC_CHANNEL_PLATE_THERMISTOR,
+        this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1);
       const output = new PlateHeater(this.pwmPlate1);
       const block = new PlateBlock(this.createPID(), sensing, output);
       blocks.push(block);
@@ -155,7 +161,8 @@ class HardwareConf {
     {
       const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_PLATE_THERMISTOR);
+        ADC_CHANNEL_PLATE_THERMISTOR,
+        this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2);
       const output = new PlateHeater(this.pwmPlate2);
       const block = new PlateBlock(this.createPID(), sensing, output);
       blocks.push(block);
@@ -163,7 +170,8 @@ class HardwareConf {
     
     const fan = new Fan([this.pwmFan1, this.pwmFan2]);
     const airThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, AIR_THERMISTOR_POS , RES);
-    const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_AIR_THERMISTOR);
+    const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_AIR_THERMISTOR,
+      this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
     this.plate = new Plate (blocks, fan, air);
   
     this.lids = [];
@@ -185,6 +193,7 @@ class HardwareConf {
   }
   start () {
     this.adcManager.start();
+    this.thermistorMux.start();
   }
   
   /* Hardware specifications */
@@ -295,6 +304,17 @@ class GenericGPIOMuxWrapper {
     // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
   }
 }
+class MUXWrapperThermistor {
+  constructor () {
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
+  }
+  start () {
+    this.mux.initialize();
+  }
+  select (channel) {
+    this.mux.selectChannel(channel);
+  }
+}
 
 let debug = 8;
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
@@ -360,7 +380,7 @@ class FluorescenceSensingUnit {
     this.adcManager.start();
     this.mux.start();
   }
-  select (wellIndex, opticalChannel) {
+  _select (wellIndex, opticalChannel) {
     this.mux.select(wellIndex, opticalChannel);
     // Switch gain according to previous measurement
     this.opticalChannel = opticalChannel;
@@ -381,6 +401,16 @@ class FluorescenceSensingUnit {
       this.isStrongSignal = false;
     }
     rpio.write(PIN_NUM_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
+  }
+  select (wellIndex, opticalChannel, callback) {
+    this.muxTaskId = muxQueue.request(()=>{
+      // Wait if MUX is in use
+      this._select(wellIndex, opticalChannel);
+      callback();
+    });
+  }
+  release () {
+    muxQueue.release(this.muxTaskId);
   }
   measure(callback) {
     this.adcManager.readDiffChannelValue(2, 3, (_val)=>{
@@ -427,46 +457,72 @@ class HeatLid {
   }
 }
 
+const THERMISTOR_MUX_WAIT_MSEC = 4;
+
 class LidSensing {
-  constructor (thermistor, adcManager, adcChannel) {
+  constructor (thermistor, adcManager, adcChannel, mux, muxChannel) {
     this.thermistor = thermistor;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
+    this.mux = mux;
+    this.muxChannel = muxChannel;
   }
-  measureTemperature() {
-    this.adcManager.readChannelValue(this.adcChannel, (val)=>{
-      const temp = this.thermistor.getTemp(val);
-      callback(temp);
+  measureTemperature(callback) {
+    muxQueue.request(()=>{
+      this.mux.selectChannel(this.muxChannel);
+      setTimeout(()=>{
+        this.adcManager.readChannelValue(this.adcChannel, (val)=>{
+          const temp = this.thermistor.getTemp(val);
+          muxQueue.release();
+          callback(temp);
+        });
+      }, THERMISTOR_MUX_WAIT_MSEC);
+
     });
   }
 }
 
 class AirSensing {
-  constructor (thermistor, adcManager, adcChannel) {
+  constructor (thermistor, adcManager, adcChannel, mux, muxChannel) {
     this.thermistor = thermistor;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
+    this.mux = mux;
+    this.muxChannel = muxChannel;
   }
-  measureTemperature() {
-    this.adcManager.readChannelValue(this.adcChannel, (val)=>{
-      const temp = this.thermistor.getTemp(val);
-      callback(temp);
+  measureTemperature(callback) {
+    muxQueue.request(()=>{
+      this.mux.selectChannel(this.muxChannel);
+      setTimeout(()=>{
+        this.adcManager.readChannelValue(this.adcChannel, (val)=>{
+          const temp = this.thermistor.getTemp(val);
+          muxQueue.release();
+          callback(temp);
+        });
+      }, THERMISTOR_MUX_WAIT_MSEC);
     });
   }
 }
 
 class PlateSensing {
-  // TODO mux?
   constructor (thermistor, adcManager, adcChannel) {
     this.thermistor = thermistor;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
+    this.mux = mux;
+    this.muxChannel = muxChannel;
   }
 
-  measureTemperature() {
-    this.adcManager.readChannelValue(this.adcChannel, (val)=>{
-      const temp = this.thermistor.getTemp(val);
-      callback(temp);
+  measureTemperature(callback) {
+    muxQueue.request(()=>{
+      this.mux.selectChannel(this.muxChannel);
+      setTimeout(()=>{
+        this.adcManager.readChannelValue(this.adcChannel, (val)=>{
+          const temp = this.thermistor.getTemp(val);
+          muxQueue.release();
+          callback(temp);
+        });
+      }, THERMISTOR_MUX_WAIT_MSEC);
     });
   }
 }

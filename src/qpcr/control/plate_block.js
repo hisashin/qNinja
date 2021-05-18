@@ -127,22 +127,20 @@ class PlateBlock {
     this.targetAchieved = false;
     // TODO add dependencies to thermistor(s), heater and PID config
   }
-  measureTemperature (airTemp, timestamp) {
-    return new Promise ((resolve)=>{
-      this.sensing.readTemperature((temperature)=>{
-        // TODO call sensing & mux implementation -> callback
-        this.temperature = temperature;
-        this.pid.setValue(this.temperature); // measured temp
-        // Achieved?
-        if (!this.targetAchieved  && (this.temperature > this.targetTemperature != this.transitionStartTemperature > this.targetTemperature
-          || Math.abs(this.temperature - this.targetTemperature) <= TOLERANCE_TEMP)) {
-            // Target is between start & current or current temp is within the "tolerance" range
-            this.targetAchieved = true;
-          }
-        const output = this.maxDriveRatio;
-        this.tempLog.add (output, this.temperature, airTemp, timestamp);
-        resolve();
-      });
+  measureTemperature (airTemp, timestamp, callback) {
+    this.sensing.readTemperature((temperature)=>{
+      // TODO call sensing & mux implementation -> callback
+      this.temperature = temperature;
+      this.pid.setValue(this.temperature); // measured temp
+      // Achieved?
+      if (!this.targetAchieved  && (this.temperature > this.targetTemperature != this.transitionStartTemperature > this.targetTemperature
+        || Math.abs(this.temperature - this.targetTemperature) <= TOLERANCE_TEMP)) {
+          // Target is between start & current or current temp is within the "tolerance" range
+          this.targetAchieved = true;
+        }
+      const output = this.maxDriveRatio;
+      this.tempLog.add (output, this.temperature, airTemp, timestamp);
+      callback();
     });
   }
   setTargetTemperature (targetTemperature) {

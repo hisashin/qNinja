@@ -4,7 +4,8 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const OpticsAnalysis = require("./optics_analysis");
 const PromiseQueue = require("./control/promise_queue");
-const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
+// const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
+const DATA_DIR_ROOT = "/home/pi/ninjaqpcr/user_dat"; // TODO: use user's home dir
 
 const NINJAQPCR_API_VERSION = "1.0";
 
@@ -152,7 +153,10 @@ class ExperimentManager {
   update (experiment, callback, onError) {
     if (!experiment.id) {
       console.log("This object is not managed as a database item.");
-      return callback(Experiment);
+      if (callback) {
+        callback(experiment);
+      }
+      return;
     }
     const timestamp = new Date().getTime();
     experiment.modified = timestamp;

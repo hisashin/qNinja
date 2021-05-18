@@ -36,8 +36,9 @@ class HeatLid {
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
-  control () {
+  control (callback) {
     this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
+    setTimeout(callback, 10);
   }
   off () {
     // Do nothing
@@ -169,7 +170,9 @@ class FluorescenceSimulator {
         this.ampValues[index], 
         this.debugValue.current, 
         this.debugValue.low, 
-        this.debugValue.high, 
+        this.debugValue.high, function () {
+          
+        },
         value);
       }
     } else {

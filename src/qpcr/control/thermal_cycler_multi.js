@@ -1,4 +1,5 @@
 "use strict";
+const PromiseQueue = require("./promise_queue.js");
 
 const START_TEMP = 25.0;
 
@@ -114,6 +115,7 @@ class ThermalCycler {
     console.log(this.protocol);
     this._startTimer();
     this.remainingTimeCalculator = new RemainingTimeCalculator(protocol);
+    console.log("ThermalCycler.start");
   }
   pause () {
     this._stopTimer();
@@ -153,14 +155,42 @@ class ThermalCycler {
       this.controlTempInterval = null;
     }
   }
+  _plateControlTask (plate) {
+    return ()=>{
+      return new Promise((resolve, reject)=>{
+        plate.control(()=>{
+          console.log("ThermalCycler resolving _plateControlTask resolve");
+          resolve();
+        });
+      });
+    };
+  }
+  _lidControlTask (lid) {
+    return ()=>{
+      return new Promise((resolve, reject)=>{
+        console.log("Calling lid.control()");
+        lid.control(()=>{
+          console.log("ThermalCycler resolving _lidControlTask resolve");
+          resolve()
+        });
+      });
+    };
+  }
   control () {
     // TODO: different intervals for different units!
-    this.plate.control();
+    console.log("ThermalCycler.control()");
+    let queue = [];
+    queue.push(this._plateControlTask(this.plate));
     if (this.protocol.lid_temp > 0) {
       for (let lid of this.heatLids) {
-        lid.control();
+        queue.push(this._lidControlTask(lid));
       }
     }
+    new PromiseQueue(queue).exec().then(()=>{
+      this._control();
+    });
+  }
+  _control () {
     const now = new Date();
     this.state.updateTime(now);
     let lidMaxTemperature = Math.max(...this.heatLids.map(lid=>lid.temperature));

@@ -8,8 +8,9 @@ class Plate {
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
-  control () {
+  control (callback) {
     this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
+    callback(); // TODO
   }
 }
 const DUMMY_TEMP_TRANSITION_PER_SEC = 1.0;

@@ -28,7 +28,7 @@ class Optics {
   }
   /* Promise queue tasks */
   
-  taskSelectLED (wellIndex) {
+  _taskSelectLED (wellIndex) {
     return ()=>{
       return new Promise((resolve, reject)=>{
         this.ledUnit.select(wellIndex);
@@ -36,20 +36,20 @@ class Optics {
       });
     };
   }
-  taskSelectPhotodiode (wellIndex, opticalChannel) {
+  _taskSelectPhotodiode (wellIndex, opticalChannel) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        this.fluorescenceSensingUnit.select(wellIndex, opticalChannel);
-        resolve();
+        this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, resolve);
       });
     };
   }
   
-  taskMeasure (wellIndex, opticalChannel, values) {
+  _taskMeasure (wellIndex, opticalChannel, values) {
     return ()=>{
       return new Promise((resolve, reject)=>{
         this.fluorescenceSensingUnit.measure((v)=>{
           values[opticalChannel][wellIndex] = v;
+          this.fluorescenceSensingUnit.release();
           resolve();
         });
       });
@@ -57,7 +57,7 @@ class Optics {
   }
   
   // Delay
-  taskDelay (ms) {
+  _taskDelay (ms) {
     return ()=>{
       return new Promise ((resolve, reject)=>{
         // console.log("Start wait %d", ms);
@@ -67,6 +67,7 @@ class Optics {
   }
   
   start () {
+    console.log("Optics.start");
     this.startTimestamp = new Date();
     this.ledUnit.start();
     this.fluorescenceSensingUnit.start();
@@ -123,12 +124,12 @@ class Optics {
     }
     
     for (let wellIndex=0; wellIndex<this.wellsCount; wellIndex++) {
-      queue.push(this.taskSelectLED(wellIndex));
-      queue.push(this.taskDelay(5));
+      queue.push(this._taskSelectLED(wellIndex));
+      queue.push(this._taskDelay(5));
       for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
-        queue.push(this.taskSelectPhotodiode(wellIndex, opticsChannel));
-        queue.push(this.taskDelay(EXCITATION_DURATION_MSEC));
-        queue.push(this.taskMeasure(wellIndex, opticsChannel, values));
+        queue.push(this._taskSelectPhotodiode(wellIndex, opticsChannel));
+        queue.push(this._taskDelay(EXCITATION_DURATION_MSEC));
+        queue.push(this._taskMeasure(wellIndex, opticsChannel, values));
       }
     }
     
