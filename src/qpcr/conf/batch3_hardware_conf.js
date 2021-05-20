@@ -54,10 +54,7 @@ const POT_DEVICE_ADDR = 0x2F;
 
 // TODO change according to the circuit design
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
-// const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 2;
-const ADC_CHANNEL_AIR_THERMISTOR = 1; // TODO waiting for next main board design (with thermistor mux)
-const ADC_CHANNEL_LID_THERMISTOR= 2; // TODO TODO waiting for next main board design (with thermistor mux)
-const ADC_CHANNEL_PLATE_THERMISTOR = 3; // TODO TODO waiting for next main board design (with thermistor mux)
+const ADC_CHANNEL_THERMISTORS = 0;
 
 const RES = 47.0; // kOhm
 const R0 = 100.0;
@@ -68,9 +65,9 @@ const B_CONST = [
   { minTemp:85.0, bConst:4334, voltageLimit:0.0 } // 4334 for 85-100 deg 
 ];
 
-const PLATE_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
-const LID_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
-const AIR_THERMISTOR_POS = true; /* Thermistor is connected to 3.3V line */
+const PLATE_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
+const LID_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
+const AIR_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
 
 /* 
   PIN_NUM_* means pin number.
@@ -103,6 +100,10 @@ const HEATER_KP = 1.0;
 const HEATER_KI = 1.0;
 const HEATER_KD = 1.0;
 
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 1;
+const MUX_CHANNEL_THERMISTOR_AIR = 2;
+const MUX_CHANNEL_THERMISTOR_LID = 3;
 
 class HeatLidOutput {
   // Heater (with PWM)
@@ -125,9 +126,6 @@ class HeatLidOutput {
     this.off();
   }
 }
-const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
-const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 1;
-const MUX_CHANNEL_THERMISTOR_AIR = 2;
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
@@ -152,7 +150,7 @@ class HardwareConf {
     {
       const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_PLATE_THERMISTOR,
+        ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1);
       const output = new PlateHeater(this.pwmPlate1);
       const block = new PlateBlock(this.createPID(), sensing, output);
@@ -161,7 +159,7 @@ class HardwareConf {
     {
       const sensing = new PlateSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
-        ADC_CHANNEL_PLATE_THERMISTOR,
+        ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2);
       const output = new PlateHeater(this.pwmPlate2);
       const block = new PlateBlock(this.createPID(), sensing, output);
@@ -170,14 +168,15 @@ class HardwareConf {
     
     const fan = new Fan([this.pwmFan1, this.pwmFan2]);
     const airThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, AIR_THERMISTOR_POS , RES);
-    const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_AIR_THERMISTOR,
+    const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_THERMISTORS,
       this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
     this.plate = new Plate (blocks, fan, air);
   
     this.lids = [];
     {
       const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES)
-      const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_LID_THERMISTOR);
+      const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_THERMISTORS, 
+        this.thermistorMux, MUX_CHANNEL_THERMISTOR_LID);
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid1);
@@ -307,12 +306,15 @@ class GenericGPIOMuxWrapper {
 class MUXWrapperThermistor {
   constructor () {
     this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
+    this.muxSwitch = PIN_MUX_SWITCH;
   }
   start () {
     this.mux.initialize();
+    rpio.open(this.muxSwitch, rpio.OUTPUT, rpio.LOW);
   }
-  select (channel) {
+  selectChannel (channel) {
     this.mux.selectChannel(channel);
+    rpio.write(PIN_NUM_SPI_SWITCH, 0);
   }
 }
 
@@ -466,14 +468,19 @@ class LidSensing {
     this.adcChannel = adcChannel;
     this.mux = mux;
     this.muxChannel = muxChannel;
+    console.log("LidSensing.muxChannel",this.muxChannel);
+  }
+  start () {
+    this.adcManager.start();
   }
   measureTemperature(callback) {
-    muxQueue.request(()=>{
+    const muxTaskId = muxQueue.request(()=>{
       this.mux.selectChannel(this.muxChannel);
       setTimeout(()=>{
         this.adcManager.readChannelValue(this.adcChannel, (val)=>{
           const temp = this.thermistor.getTemp(val);
-          muxQueue.release();
+          console.log("Lid ADC=%f TEMP=%f", val, temp);
+          muxQueue.release(muxTaskId);
           callback(temp);
         });
       }, THERMISTOR_MUX_WAIT_MSEC);
@@ -489,14 +496,17 @@ class AirSensing {
     this.adcChannel = adcChannel;
     this.mux = mux;
     this.muxChannel = muxChannel;
+    console.log("LidSensing.muxChannel",this.muxChannel);
   }
   measureTemperature(callback) {
-    muxQueue.request(()=>{
+    const muxTaskId = muxQueue.request(()=>{
+      
       this.mux.selectChannel(this.muxChannel);
       setTimeout(()=>{
         this.adcManager.readChannelValue(this.adcChannel, (val)=>{
           const temp = this.thermistor.getTemp(val);
-          muxQueue.release();
+          muxQueue.release(muxTaskId);
+          console.log("Air ADC=%f TEMP=%f", val, temp);
           callback(temp);
         });
       }, THERMISTOR_MUX_WAIT_MSEC);
@@ -505,21 +515,23 @@ class AirSensing {
 }
 
 class PlateSensing {
-  constructor (thermistor, adcManager, adcChannel) {
+  constructor (thermistor, adcManager, adcChannel, mux, muxChannel) {
     this.thermistor = thermistor;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
     this.mux = mux;
     this.muxChannel = muxChannel;
+    console.log("LidSensing.muxChannel",this.muxChannel);
   }
 
-  measureTemperature(callback) {
-    muxQueue.request(()=>{
+  readTemperature(callback) {
+    const muxTaskId = muxQueue.request(()=>{
       this.mux.selectChannel(this.muxChannel);
       setTimeout(()=>{
         this.adcManager.readChannelValue(this.adcChannel, (val)=>{
           const temp = this.thermistor.getTemp(val);
-          muxQueue.release();
+          console.log("Plate ADC=%f TEMP=%f", val, temp);
+          muxQueue.release(muxTaskId);
           callback(temp);
         });
       }, THERMISTOR_MUX_WAIT_MSEC);
@@ -533,8 +545,14 @@ class Fan {
   }
   setOutput (value) {
     value = Math.max(0.0, Math.min(1.0, value));
-    for (let pwm of this.pwms) {
-      pwm.write(value);
+    try {
+      
+      for (let pwm of this.pwms) {
+        pwm.write(value);
+      }
+    } catch (ex) {
+      console.log("Value", value);
+      console.log(ex);
     }
   }
 }

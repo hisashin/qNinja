@@ -52,9 +52,13 @@ class TempLog {
     if (this.prev == null) {
       return -1;
     }
+    // this.prev.p ... Recent value of output
+    // this.prev.a ... Recent value of air
+    // this.prev.w ... Recent value of well
+    // this.prev.t ... Timestamp of recent measurement
     const plot = this.buff.filter(
       (obj)=>{ return obj.slope != null && Math.abs(obj.p-this.prev.p) < OUTPUT_FIT_TOLERANCE }
-    ).map(obj=>[(obj.w-obj.a),obj.slope]);
+    ).map(obj=>[(obj.w-obj.a), obj.slope]); // Mapped to (WellTemp-AirTemp, Slope of time vs temp plot)
     let consts = linearFit(plot);
     // const a = consts.a;
     // const b = consts.b;
@@ -159,6 +163,7 @@ class PlateBlock {
   // Sync and update max drive ratio.
   syncWith (rear) {
     let output = this.tempLog.getOutputRatioForEstimatedTime(rear.tempLog.getEstimatedTime());
+    console.log("Estimated",rear.tempLog.getEstimatedTime());
     this.maxDriveRatio *= output;
     // console.log("SyncResult=%f", this.maxDriveRatio);
     this.sensing.dummyMaxDriveRatio = this.maxDriveRatio;
@@ -170,6 +175,7 @@ class PlateBlock {
       this.targetAchieved = true;
     }
     this.desiredOutput = Math.max(-this.maxDriveRatio, Math.min(this.maxDriveRatio, pidOutput));
+    console.log("PIDOUtput",pidOutput,this.maxDriveRatio,this.desiredOutput);
     return this.desiredOutput;
   }
   off () {

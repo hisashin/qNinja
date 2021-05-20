@@ -44,13 +44,14 @@ class HeatUnit {
     this.targetTemperature = targetTemperature;
     this.pid.setSetpoint(this.targetTemperature);
   }
-  control () {
-    this.sensing.getTemperature ((temperature)=>{
+  control (callback) {
+    this.sensing.measureTemperature ((temperature)=>{
       this.temperature = temperature;
       this.pid.setValue(temperature);
       if (this.targetTemperature > 0) {
-        this.output.setOutput(this.pid.gaetOutput());
+        this.output.setOutput(this.pid.getOutput());
       }
+      callback();
     });
   }
   temperature () {

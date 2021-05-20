@@ -9,7 +9,7 @@
 const PlateBlock = require('./plate_block.js');
 const PromiseQueue = require("./promise_queue.js");
 // const PID = require("./heat_control/pid.js");
-
+const WELL_SYNC_ENABLED = false;
 const DEFAULT_TEMP = 25.0;
 const CONTROL_TYPE = {
   HEATING:1,
@@ -123,13 +123,14 @@ class Plate  {
     this.temperature = this.blocks[0].temperature;
     
     if (!this.isOff) {
-      if (this.needSync & new Date().getTime () - this.lastSync >= WELL_SYNC_INTERVAL) {
+      if (WELL_SYNC_ENABLED && this.needSync && new Date().getTime () - this.lastSync >= WELL_SYNC_INTERVAL) {
         this.synchronizeBlocks();
       }
       this.blocks.forEach((block)=>{block.calcDesiredOutput()});
       
       let minDesiredOutput = 0;
       this.blocks.forEach((block)=>{ minDesiredOutput = Math.min(minDesiredOutput, block.desiredOutput)});
+      console.log("minDesiredOutput",minDesiredOutput);
       // TODO: consider heater & fan ratio
       if (minDesiredOutput < 0) {
         this.fan.setOutput(-minDesiredOutput);

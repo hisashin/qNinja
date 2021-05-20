@@ -159,7 +159,7 @@ class ThermalCycler {
     return ()=>{
       return new Promise((resolve, reject)=>{
         plate.control(()=>{
-          console.log("ThermalCycler resolving _plateControlTask resolve");
+          // console.log("ThermalCycler resolving _plateControlTask resolve");
           resolve();
         });
       });
@@ -168,9 +168,8 @@ class ThermalCycler {
   _lidControlTask (lid) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        console.log("Calling lid.control()");
         lid.control(()=>{
-          console.log("ThermalCycler resolving _lidControlTask resolve");
+          // console.log("ThermalCycler resolving _lidControlTask resolve");
           resolve()
         });
       });
