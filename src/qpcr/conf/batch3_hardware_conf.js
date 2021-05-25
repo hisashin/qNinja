@@ -26,11 +26,11 @@ const ADCManager = require("../hardware/adc_manager.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 const MUX16ch = require("../hardware/mux_16ch.js");
 
-const PIN_NUM_PD_MUX_1 = 22; //GPIO6
-const PIN_NUM_PD_MUX_2 = 16; //GPIO4
-const PIN_NUM_PD_MUX_3 = 12; //GPIO1
-const PIN_NUM_PD_MUX_4 = 10; //GPIO16
-const PIN_NUM_PD_MUX_5 = 8; //GPIO15
+const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
+const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_3 = 12; //GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_4 = 10; //GPIO16 (Mux channel)
+const PIN_NUM_PD_MUX_5 = 8; //GPIO15 (Mux channel)
 const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
 
 const PIN_LATCH = 15;
@@ -92,40 +92,26 @@ const PIN_NUM_LED_DRIVER_LATCH = 15;
 
 const PIN_NUM_PD_SYNC = 22 //GPIO6
 
-const PLATE_KP = 0.25;
-const PLATE_KI = 0.1;
-const PLATE_KD = 0.1;
+const PLATE_KP = 1.0;
+const PLATE_KI = 0.02;
+const PLATE_KD = 0.02;
 
 const HEATER_KP = 1.0;
 const HEATER_KI = 1.0;
 const HEATER_KD = 1.0;
 
+/*
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 1;
 const MUX_CHANNEL_THERMISTOR_AIR = 2;
 const MUX_CHANNEL_THERMISTOR_LID = 3;
+*/
 
-class HeatLidOutput {
-  // Heater (with PWM)
-  constructor (pwm) {
-  // TODO active low / active high
-    this.pwm = pwm;
-  }
-  start () {
-    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
-  }
-  setOutput (outputValue /* Range={0,1.0} */) {
-    outputValue = Math.min(1.0, Math.max(0, outputValue));
-    //this.pwm.write(outputValue);
-  }
-  off () {
-    //this.pwm.write(0);
-  }
-  shutdown () {
-    console.log("Shutting down HeatLidOutput.");
-    this.off();
-  }
-}
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
+const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 0;
+const MUX_CHANNEL_THERMISTOR_AIR = 0;
+const MUX_CHANNEL_THERMISTOR_LID = 1;
+
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
@@ -184,8 +170,9 @@ class HardwareConf {
     }
   }
   shutdown () {
-      // TODO
-      // Shutdown all
+    // TODO
+    // Shutdown all
+    this.i2c.close();
   }
   createPID () {
     return new PID(PLATE_KP, PLATE_KI, PLATE_KD);
@@ -248,8 +235,8 @@ const MUX_MAP_N = [
   [15,13,12,9,7,5,3,1]
 ];
 const MUX_MAP_S = [
-[16,14,11,10,8,6,4,2],
-[15,13,12,9,7,5,3,1]
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
 ];
 
 class SPIMuxWrapper {
@@ -314,7 +301,7 @@ class MUXWrapperThermistor {
   }
   selectChannel (channel) {
     this.mux.selectChannel(channel);
-    rpio.write(PIN_NUM_SPI_SWITCH, 0);
+    rpio.write(this.muxSwitch, 0);
   }
 }
 
@@ -400,7 +387,7 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
-      this.isStrongSignal = false;
+      // this.isStrongSignal = false;
     }
     rpio.write(PIN_NUM_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }
@@ -487,6 +474,9 @@ class LidSensing {
 
     });
   }
+  shutdown () {
+    
+  }
 }
 
 class AirSensing {
@@ -511,6 +501,9 @@ class AirSensing {
         });
       }, THERMISTOR_MUX_WAIT_MSEC);
     });
+  }
+  shutdown () {
+    
   }
 }
 
@@ -537,6 +530,31 @@ class PlateSensing {
       }, THERMISTOR_MUX_WAIT_MSEC);
     });
   }
+  shutdown () {
+    
+  }
+}
+class HeatLidOutput {
+  // Heater (with PWM)
+  constructor (pwm) {
+  // TODO active low / active high
+    this.pwm = pwm;
+  }
+  start () {
+    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
+  }
+  setOutput (outputValue /* Range={0,1.0} */) {
+    // console.log("Lid output", outputValue);
+    outputValue = Math.min(1.0, Math.max(0, outputValue));
+    //this.pwm.write(outputValue);
+  }
+  off () {
+    //this.pwm.write(0);
+  }
+  shutdown () {
+    console.log("Shutting down HeatLidOutput.");
+    this.off();
+  }
 }
 
 class Fan {
@@ -544,9 +562,9 @@ class Fan {
     this.pwms = pwms;
   }
   setOutput (value) {
+    // console.log("Fan output", value);
     value = Math.max(0.0, Math.min(1.0, value));
     try {
-      
       for (let pwm of this.pwms) {
         pwm.write(value);
       }
@@ -555,6 +573,9 @@ class Fan {
       console.log(ex);
     }
   }
+  shutdown () {
+    this.setOutput(0);
+  }
 }
 
 class PlateHeater  {
@@ -562,8 +583,12 @@ class PlateHeater  {
     this.pwm = pwm;
   }
   setOutput (value) {
+    // console.log("PlateHeater output", value);
     value = Math.max(0.0, Math.min(1.0, value));
     this.pwm.write(value);
+  }
+  shutdown () {
+    this.pwm.write(0);
   }
 }
 

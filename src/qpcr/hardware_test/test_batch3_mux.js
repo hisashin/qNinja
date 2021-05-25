@@ -38,9 +38,22 @@ function select (channel) {
   console.log("Ch %d\tSw %d\tMx %d", channel, muxSwitchVal, muxChannel);
   mux.selectChannel(muxChannel);
 }
-const CHANNEL_OFFSET = 0;
-const CHANNELS_COUNT = 8;
-const INTERVAL_MSEC = 2000;
+/*
+
+const MUX_MAP_N = [
+  //0ch
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
+];
+const MUX_MAP_S = [
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
+];
+20,21
+*/
+const CHANNEL_OFFSET = 16;
+const CHANNELS_COUNT = 16;
+const INTERVAL_MSEC = 500;
 
 let channelIndex = 0;
 let smallGain = false;

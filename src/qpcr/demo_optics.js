@@ -31,6 +31,11 @@ class OpticsDemo {
     this.opticsStarted = true;
     setInterval(()=>{
       this.optics.measureAll((values)=>{
+        values.forEach((ch, chId)=>{
+          ch.forEach((well, wellId)=>{
+            well.id = wellId;
+          });
+        });
         console.log(values);
       });
     }, 3000);

@@ -19,11 +19,11 @@ class ADCManager {
   }
   readChannelValue(channel, callback) {
     this.readQueue.push({channel:channel, callback:callback});
-    this._readNext(1);
+    this._readNext();
   }
   readDiffChannelValue(pChannel, nChannel, callback) {
     this.readQueue.push({diff:true, pChannel:pChannel, nChannel:nChannel, callback:callback});
-    this._readNext(1);
+    this._readNext();
   }
   _selectChannel (readConf) {
     if (readConf.diff) {
@@ -32,20 +32,24 @@ class ADCManager {
       this.adc.selectChannel(readConf.channel);
     }
   }
-  _readNext (t /* Debug param */) {
+  _readNext (t) {
     if (this._isReading) {
       return;
     }
     const read = this.readQueue.shift();
     this._isReading = true;
-    this._selectChannel(read);
+    try {
+      this._selectChannel(read);
+    }  catch (e) {
+        console.log(e);
+    }
     this.adc.sync();
     const timeoutMsec = 1 + 1000/this.dataRate;
     setTimeout(()=>{
       this.adc.readConversionData((val)=>{
         this._isReading = false;
         if (this.readQueue.length > 0) {
-          this._readNext(2);
+          this._readNext();
         }
         read.callback(val);
       });

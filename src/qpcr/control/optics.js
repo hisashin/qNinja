@@ -36,10 +36,13 @@ class Optics {
       });
     };
   }
+  
   _taskSelectPhotodiode (wellIndex, opticalChannel) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, resolve);
+        this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, ()=>{
+          resolve();
+        });
       });
     };
   }

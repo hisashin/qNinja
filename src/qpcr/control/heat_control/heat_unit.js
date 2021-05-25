@@ -49,7 +49,9 @@ class HeatUnit {
       this.temperature = temperature;
       this.pid.setValue(temperature);
       if (this.targetTemperature > 0) {
-        this.output.setOutput(this.pid.getOutput());
+        const outputValue = this.pid.getOutput();
+        console.log("Temp=%f, Target=%f, Out=%f", this.temperature, this.targetTemperature, outputValue);
+        this.output.setOutput(outputValue);
       }
       callback();
     });

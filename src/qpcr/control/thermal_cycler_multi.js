@@ -159,7 +159,6 @@ class ThermalCycler {
     return ()=>{
       return new Promise((resolve, reject)=>{
         plate.control(()=>{
-          // console.log("ThermalCycler resolving _plateControlTask resolve");
           resolve();
         });
       });
@@ -169,7 +168,6 @@ class ThermalCycler {
     return ()=>{
       return new Promise((resolve, reject)=>{
         lid.control(()=>{
-          // console.log("ThermalCycler resolving _lidControlTask resolve");
           resolve()
         });
       });
@@ -177,7 +175,6 @@ class ThermalCycler {
   }
   control () {
     // TODO: different intervals for different units!
-    console.log("ThermalCycler.control()");
     let queue = [];
     queue.push(this._plateControlTask(this.plate));
     if (this.protocol.lid_temp > 0) {
