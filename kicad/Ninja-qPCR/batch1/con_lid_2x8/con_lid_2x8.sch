@@ -98,7 +98,7 @@ THERM_LID2
 Text GLabel 3750 4950 2    50   Input ~ 0
 THERM_EXT2
 Text GLabel 3750 5050 2    50   Input ~ 0
-GND_THERM
+GNDA
 Wire Wire Line
 	3500 3550 3750 3550
 Wire Wire Line
@@ -120,13 +120,13 @@ Wire Wire Line
 Wire Wire Line
 	3750 5050 3500 5050
 Text GLabel 3750 4700 2    50   Input ~ 0
-GND
+GNDA
 Text GLabel 3750 4350 2    50   Input ~ 0
-GND
+GNDA
 Text GLabel 3750 4000 2    50   Input ~ 0
-GND
+GNDA
 Text GLabel 3750 3650 2    50   Input ~ 0
-GND
+GNDA
 Wire Wire Line
 	3500 3650 3750 3650
 Wire Wire Line
@@ -144,7 +144,7 @@ HEATER2A
 Text GLabel 5100 4300 0    50   Input ~ 0
 HEATER2B
 Text GLabel 5100 3900 0    50   Input ~ 0
-GND
+GNDA
 Text GLabel 5100 3600 0    50   Input ~ 0
 THERM_AIR
 Text GLabel 5100 3700 0    50   Input ~ 0
@@ -197,4 +197,8 @@ Wire Wire Line
 	5100 3500 5300 3500
 Wire Wire Line
 	5100 4200 5300 4200
+Text Notes 4450 3450 0    50   ~ 0
+=12V
+Text Notes 4450 4250 0    50   ~ 0
+=12V
 $EndSCHEMATC

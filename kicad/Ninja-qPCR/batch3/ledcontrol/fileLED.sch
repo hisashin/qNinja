@@ -1,0 +1,429 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Ninja-qPCR:TLC59281DBQR U?
+U 1 1 60AF8C8F
+P 6250 1600
+F 0 "U?" H 7150 1987 60  0000 C CNN
+F 1 "TLC59281DBQR" H 7150 1881 60  0000 C CNN
+F 2 "Ninja-qPCR:TLC59281DBQR" H 7150 1840 60  0001 C CNN
+F 3 "" H 6250 1600 60  0000 C CNN
+	1    6250 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ninja-qPCR:TLC59281DBQR U?
+U 2 1 60AF8C95
+P 7100 4050
+F 0 "U?" H 7656 4437 60  0000 C CNN
+F 1 "TLC59281DBQR" H 7656 4331 60  0000 C CNN
+F 2 "Ninja-qPCR:TLC59281DBQR" H 8000 4290 60  0001 C CNN
+F 3 "" H 7100 4050 60  0000 C CNN
+	2    7100 4050
+	1    0    0    -1  
+$EndComp
+Text GLabel 8250 1600 2    50   Input ~ 0
+N_LED_OUT1
+Text GLabel 8250 1700 2    50   Input ~ 0
+N_LED_OUT2
+Text GLabel 8250 1800 2    50   Input ~ 0
+N_LED_OUT3
+Text GLabel 8250 1900 2    50   Input ~ 0
+N_LED_OUT4
+Text GLabel 8250 2000 2    50   Input ~ 0
+N_LED_OUT5
+Text GLabel 8250 2100 2    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 8250 2200 2    50   Input ~ 0
+N_LED_OUT7
+Text GLabel 8250 2300 2    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 8250 2400 2    50   Input ~ 0
+S_LED_OUT1
+Text GLabel 8250 2500 2    50   Input ~ 0
+S_LED_OUT2
+Text GLabel 8250 2600 2    50   Input ~ 0
+S_LED_OUT3
+Text GLabel 8250 2700 2    50   Input ~ 0
+S_LED_OUT4
+Text GLabel 8250 2800 2    50   Input ~ 0
+S_LED_OUT5
+Text GLabel 8250 2900 2    50   Input ~ 0
+S_LED_OUT6
+Text GLabel 8250 3000 2    50   Input ~ 0
+S_LED_OUT7
+Text GLabel 8250 3100 2    50   Input ~ 0
+S_LED_OUT8
+Text GLabel 8250 3200 2    50   Input ~ 0
+LED_SPI_MISO
+Text GLabel 6050 1900 0    50   Input ~ 0
+LED_SPI_MOSI
+Text GLabel 6050 1800 0    50   Input ~ 0
+LED_SPI_SCLK
+Text GLabel 6050 1700 0    50   Input ~ 0
+LED_LAT
+Text GLabel 6050 1600 0    50   Input ~ 0
+LED_BLANK
+Wire Wire Line
+	6250 1600 6050 1600
+Wire Wire Line
+	6250 1700 6050 1700
+Wire Wire Line
+	6250 1800 6050 1800
+Wire Wire Line
+	6250 1900 6050 1900
+Wire Wire Line
+	6250 2100 6050 2100
+Wire Wire Line
+	8050 1600 8250 1600
+Wire Wire Line
+	8050 1700 8250 1700
+Wire Wire Line
+	8050 1800 8250 1800
+Wire Wire Line
+	8050 1900 8250 1900
+Wire Wire Line
+	8050 2000 8250 2000
+Wire Wire Line
+	8050 2100 8250 2100
+Wire Wire Line
+	8050 2200 8250 2200
+Wire Wire Line
+	8050 2300 8250 2300
+Wire Wire Line
+	8050 2400 8250 2400
+Wire Wire Line
+	8050 2500 8250 2500
+Wire Wire Line
+	8050 2600 8250 2600
+Wire Wire Line
+	8050 2700 8250 2700
+Wire Wire Line
+	8050 2800 8250 2800
+Wire Wire Line
+	8050 2900 8250 2900
+Wire Wire Line
+	8050 3000 8250 3000
+Wire Wire Line
+	8050 3100 8250 3100
+Wire Wire Line
+	8050 3200 8250 3200
+Text GLabel 6750 4050 0    50   Input ~ 0
+GND
+Text GLabel 6750 4550 0    50   Input ~ 0
+VCC_LOGIC
+Wire Wire Line
+	6750 4550 7100 4550
+Wire Wire Line
+	6750 4050 7100 4050
+Wire Wire Line
+	10050 2400 9850 2400
+Wire Wire Line
+	10050 2300 9850 2300
+Wire Wire Line
+	10050 2200 9850 2200
+Wire Wire Line
+	10050 2100 9850 2100
+Wire Wire Line
+	10050 2000 9850 2000
+Wire Wire Line
+	10050 1900 9850 1900
+Wire Wire Line
+	10050 1800 9850 1800
+Wire Wire Line
+	10050 1700 9850 1700
+Wire Wire Line
+	10050 1600 9850 1600
+Text GLabel 9850 2400 0    50   Input ~ 0
+N_LED_OUT2
+Text GLabel 9850 2300 0    50   Input ~ 0
+N_LED_OUT1
+Text GLabel 9850 2200 0    50   Input ~ 0
+N_LED_OUT4
+Text GLabel 9850 2100 0    50   Input ~ 0
+N_LED_OUT3
+Text GLabel 9850 2000 0    50   Input ~ 0
+N_LED_OUT7
+Text GLabel 9850 1900 0    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 9850 1800 0    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 9850 1700 0    50   Input ~ 0
+VCC_LED
+Text GLabel 9850 1600 0    50   Input ~ 0
+GND
+Wire Wire Line
+	10050 1500 9850 1500
+Text GLabel 9850 1500 0    50   Input ~ 0
+N_LED_OUT5
+$Comp
+L Ninja-qPCR:Conn_02x05 N_CONN?
+U 1 1 60AF8CDE
+P 10250 1500
+F 0 "N_CONN?" H 10569 1111 50  0000 L CNN
+F 1 "Conn_02x05" H 10569 1020 50  0000 L CNN
+F 2 "Ninja-qPCR:Con_2x05" H 10050 1600 50  0001 C CNN
+F 3 "" H 10050 1600 50  0001 C CNN
+	1    10250 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10050 3800 9850 3800
+Wire Wire Line
+	10050 3700 9850 3700
+Wire Wire Line
+	10050 3600 9850 3600
+Wire Wire Line
+	10050 3500 9850 3500
+Wire Wire Line
+	10050 3400 9850 3400
+Wire Wire Line
+	10050 3300 9850 3300
+Wire Wire Line
+	10050 3200 9850 3200
+Wire Wire Line
+	10050 3100 9850 3100
+Wire Wire Line
+	10050 3000 9850 3000
+Text GLabel 9850 3800 0    50   Input ~ 0
+S_LED_OUT2
+Text GLabel 9850 3700 0    50   Input ~ 0
+S_LED_OUT1
+Text GLabel 9850 3600 0    50   Input ~ 0
+S_LED_OUT4
+Text GLabel 9850 3500 0    50   Input ~ 0
+S_LED_OUT3
+Text GLabel 9850 3400 0    50   Input ~ 0
+S_LED_OUT7
+Text GLabel 9850 3300 0    50   Input ~ 0
+S_LED_OUT8
+Text GLabel 9850 3200 0    50   Input ~ 0
+S_LED_OUT6
+Text GLabel 9850 3100 0    50   Input ~ 0
+VCC_LED
+Text GLabel 9850 3000 0    50   Input ~ 0
+GND
+Wire Wire Line
+	10050 2900 9850 2900
+Text GLabel 9850 2900 0    50   Input ~ 0
+S_LED_OUT5
+$Comp
+L Ninja-qPCR:Conn_02x05 S_CONN?
+U 1 1 60AF8CF8
+P 10250 2900
+F 0 "S_CONN?" H 10569 2511 50  0000 L CNN
+F 1 "Conn_02x05" H 10569 2420 50  0000 L CNN
+F 2 "Ninja-qPCR:Con_2x05" H 10050 3000 50  0001 C CNN
+F 3 "" H 10050 3000 50  0001 C CNN
+	1    10250 2900
+	1    0    0    -1  
+$EndComp
+Text GLabel 1300 1900 0    50   Input ~ 0
+GND
+Text GLabel 1300 1800 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 1300 2500 0    50   Input ~ 0
+I2C_SCL
+Text GLabel 1300 2600 0    50   Input ~ 0
+I2C_SDA
+Text GLabel 1300 2200 0    50   Input ~ 0
+LED_SPI_SCLK
+Text GLabel 1300 2300 0    50   Input ~ 0
+LED_SPI_MOSI
+Text GLabel 1300 2400 0    50   Input ~ 0
+LED_SPI_MISO
+Text GLabel 1300 2000 0    50   Input ~ 0
+LED_PWM
+Text GLabel 1300 2100 0    50   Input ~ 0
+LED_LAT
+Text HLabel 6050 2100 0    50   Input ~ 0
+LED_IREF
+Text GLabel 1300 1700 0    50   Input ~ 0
+VCC_LED
+Wire Wire Line
+	1500 2600 1300 2600
+Wire Wire Line
+	1500 2500 1300 2500
+Wire Wire Line
+	1500 2400 1300 2400
+Wire Wire Line
+	1500 2300 1300 2300
+Wire Wire Line
+	1500 2200 1300 2200
+Wire Wire Line
+	1500 2100 1300 2100
+Wire Wire Line
+	1500 2000 1300 2000
+Wire Wire Line
+	1500 1900 1300 1900
+Wire Wire Line
+	1500 1800 1300 1800
+Wire Wire Line
+	1500 1700 1300 1700
+$Comp
+L Ninja-qPCR:Conn_02x05 U?
+U 1 1 60AF8D13
+P 1700 1700
+F 0 "U?" H 2019 1311 50  0000 L CNN
+F 1 "Conn_02x05" H 2019 1220 50  0000 L CNN
+F 2 "Ninja-qPCR:Con_2x05" H 1500 1800 50  0001 C CNN
+F 3 "" H 1500 1800 50  0001 C CNN
+	1    1700 1700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 2650 3000 2650
+Wire Wire Line
+	3150 2350 3000 2350
+Wire Wire Line
+	3150 2250 3000 2250
+Wire Wire Line
+	3150 2150 3000 2150
+Wire Wire Line
+	3150 2050 3000 2050
+Wire Wire Line
+	3150 1850 3000 1850
+Wire Wire Line
+	3150 1750 3000 1750
+Text GLabel 3000 2150 0    50   Input ~ 0
+GND
+Text HLabel 3000 2250 0    50   Input ~ 0
+LED_IREF
+Text GLabel 3000 2050 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 3000 1750 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 3000 1850 0    50   Input ~ 0
+I2C_SCL
+Text GLabel 3000 2350 0    50   Input ~ 0
+I2C_SDA
+Text GLabel 3000 2650 0    50   Input ~ 0
+VCC_LOGIC
+Wire Wire Line
+	4900 2050 4750 2050
+Text GLabel 4900 2050 2    50   Input ~ 0
+GND
+$Comp
+L Ninja-qPCR:MCP4551T-502E_MS U?
+U 1 1 60AF8D29
+P 3150 1750
+F 0 "U?" H 3950 2137 60  0000 C CNN
+F 1 "MCP4551T-502E_MS" H 3950 2031 60  0000 C CNN
+F 2 "Ninja-qPCR:MCP4551T-502E&slash_MS" H 3950 1990 60  0001 C CNN
+F 3 "" H 3150 1750 60  0000 C CNN
+	1    3150 1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 4350 3400 4350
+Wire Wire Line
+	3400 3950 3200 3950
+Wire Wire Line
+	3850 4150 3200 4150
+Wire Wire Line
+	4200 4400 4000 4400
+Wire Wire Line
+	2350 4150 2400 4150
+Connection ~ 2350 4150
+Wire Wire Line
+	2350 4650 2350 4150
+Wire Wire Line
+	3850 4650 2350 4650
+Wire Wire Line
+	2250 4150 2350 4150
+Wire Wire Line
+	2250 3950 2400 3950
+$Comp
+L Jumper:Jumper_3_Open JP?
+U 1 1 60AF8D39
+P 3850 4400
+F 0 "JP?" V 3896 4487 50  0000 L CNN
+F 1 "Jumper_3_Open" V 3805 4487 50  0000 L CNN
+F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 3850 4400 50  0001 C CNN
+F 3 "~" H 3850 4400 50  0001 C CNN
+	1    3850 4400
+	0    -1   -1   0   
+$EndComp
+Text GLabel 2250 3950 0    50   Input ~ 0
+VCC_LOGIC
+NoConn ~ 3400 3950
+Text GLabel 3400 4350 2    50   Input ~ 0
+GND
+Text GLabel 4200 4400 2    50   Input ~ 0
+LED_BLANK
+Text GLabel 2250 4150 0    50   Input ~ 0
+LED_PWM
+$Comp
+L Ninja-qPCR:SN74LVC1G04DBVR U?
+U 1 1 60AF8D47
+P 2800 4150
+F 0 "U?" H 2800 4617 50  0000 C CNN
+F 1 "SN74LVC1G04DBVR" H 2800 4526 50  0000 C CNN
+F 2 "Ninja-qPCR:SN74LVC1G04DBVR" H 2800 4150 50  0001 L BNN
+F 3 "IPC-7351B" H 2800 4150 50  0001 L BNN
+F 4 "1.45mm" H 2800 4150 50  0001 L BNN "Field4"
+F 5 "AD" H 2800 4150 50  0001 L BNN "Field5"
+F 6 "Texas Instruments" H 2800 4150 50  0001 L BNN "Field6"
+	1    2800 4150
+	1    0    0    -1  
+$EndComp
+Text GLabel 4300 3150 0    50   Input ~ 0
+VCC_LOGIC
+Text GLabel 4300 3600 0    50   Input ~ 0
+GND
+Text GLabel 5300 3600 0    50   Input ~ 0
+GND
+Text GLabel 5300 3150 0    50   Input ~ 0
+VCC_LED
+$Comp
+L Device:C C?
+U 1 1 60AF8D51
+P 4450 3400
+F 0 "C?" H 4565 3446 50  0000 L CNN
+F 1 "0.1uF?" H 4565 3355 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 4488 3250 50  0001 C CNN
+F 3 "~" H 4450 3400 50  0001 C CNN
+	1    4450 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 60AF8D57
+P 5450 3400
+F 0 "C?" H 5565 3446 50  0000 L CNN
+F 1 "0.1uF?" H 5565 3355 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 5488 3250 50  0001 C CNN
+F 3 "~" H 5450 3400 50  0001 C CNN
+	1    5450 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 3600 4450 3600
+Wire Wire Line
+	4450 3600 4450 3550
+Wire Wire Line
+	4450 3250 4450 3150
+Wire Wire Line
+	4450 3150 4300 3150
+Wire Wire Line
+	5300 3600 5450 3600
+Wire Wire Line
+	5450 3600 5450 3550
+Wire Wire Line
+	5300 3150 5450 3150
+Wire Wire Line
+	5450 3150 5450 3250
+$EndSCHEMATC

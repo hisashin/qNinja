@@ -87,9 +87,9 @@ THERM_WELL
 Text GLabel 4400 4300 2    50   Input ~ 0
 THERM_EXT3
 Text GLabel 4400 4200 2    50   Input ~ 0
-GND
+GNDA
 Text GLabel 4400 4400 2    50   Input ~ 0
-GND
+GNDA
 Wire Wire Line
 	4400 4400 4150 4400
 Wire Wire Line
@@ -125,7 +125,7 @@ HEATER2B
 Text GLabel 6250 3350 0    50   Input ~ 0
 FAN_RED_VCC
 Text GLabel 6250 3450 0    50   Input ~ 0
-GND
+GNDA
 Text GLabel 6250 3650 0    50   Input ~ 0
 THERM_EXT3
 Text GLabel 6250 3150 0    50   Input ~ 0
@@ -167,4 +167,10 @@ Text GLabel 4400 3350 2    50   Input ~ 0
 FAN_BLACK_GND1
 Text GLabel 6250 3250 0    50   Input ~ 0
 FAN_BLACK_GND1
+Text Notes 5600 3000 0    50   ~ 0
+=12V
+Text Notes 5450 3400 0    50   ~ 0
+=12V
+Text Notes 5600 3800 0    50   ~ 0
+=12V
 $EndSCHEMATC

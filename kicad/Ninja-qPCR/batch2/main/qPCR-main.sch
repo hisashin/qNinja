@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 3
+Sheet 1 4
 Title ""
 Date ""
 Rev ""
@@ -1294,4 +1294,10 @@ Wire Wire Line
 	4300 2650 4400 2650
 Wire Wire Line
 	4300 2700 4400 2700
+$Sheet
+S 5250 900  1400 550 
+U 60AEA148
+F0 "Sheet60AEA147" 50
+F1 "batch2_main.sch" 50
+$EndSheet
 $EndSCHEMATC
