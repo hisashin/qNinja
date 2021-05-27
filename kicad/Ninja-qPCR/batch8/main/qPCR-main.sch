@@ -360,7 +360,6 @@ Wire Wire Line
 Connection ~ 2850 800 
 Wire Wire Line
 	2850 800  2900 800 
-NoConn ~ 1200 1600
 Text HLabel 1200 2200 0    50   Input ~ 0
 FAN1
 Text HLabel 1200 2300 0    50   Input ~ 0
@@ -1099,4 +1098,6 @@ Text GLabel 2900 1500 2    50   Input ~ 0
 MUX_S0
 Text GLabel 2900 1300 2    50   Input ~ 0
 MUX_S1
+Text HLabel 1200 1600 0    50   Input ~ 0
+3V3_RASP
 $EndSCHEMATC
