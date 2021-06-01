@@ -841,49 +841,4 @@ Wire Wire Line
 	4400 5500 4400 5600
 Text Notes 5800 4100 0    50   ~ 0
 //TODO add UI input device for DIY model user (TACTS or pocketPCR one)
-$Comp
-L Connector:Conn_01x04_Male J5
-U 1 1 60B668FB
-P 2650 4200
-F 0 "J5" H 2758 4481 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 2758 4390 50  0000 C CNN
-F 2 "" H 2650 4200 50  0001 C CNN
-F 3 "~" H 2650 4200 50  0001 C CNN
-	1    2650 4200
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR0101
-U 1 1 60B67547
-P 3050 4500
-AR Path="/60B67547" Ref="#PWR0101"  Part="1" 
-AR Path="/5F7519D0/60B67547" Ref="#PWR?"  Part="1" 
-AR Path="/5F7093B5/60B67547" Ref="#PWR?"  Part="1" 
-AR Path="/60AC8F63/60B67547" Ref="#PWR?"  Part="1" 
-F 0 "#PWR0101" H 3050 4250 50  0001 C CNN
-F 1 "GND" H 3055 4327 50  0000 C CNN
-F 2 "" H 3050 4500 50  0001 C CNN
-F 3 "" H 3050 4500 50  0001 C CNN
-	1    3050 4500
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2850 4100 3050 4100
-Wire Wire Line
-	3050 4100 3050 4200
-Wire Wire Line
-	2850 4200 3050 4200
-Connection ~ 3050 4200
-Wire Wire Line
-	3050 4200 3050 4300
-Wire Wire Line
-	2850 4300 3050 4300
-Connection ~ 3050 4300
-Wire Wire Line
-	3050 4300 3050 4400
-Wire Wire Line
-	2850 4400 3050 4400
-Connection ~ 3050 4400
-Wire Wire Line
-	3050 4400 3050 4500
 $EndSCHEMATC
