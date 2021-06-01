@@ -30,7 +30,7 @@ AR Path="/60AEA148/60AF82D8" Ref="J?"  Part="1"
 AR Path="/60AC8F63/60AF82D8" Ref="J?"  Part="1" 
 F 0 "J1" H 2400 3615 50  0000 C CNN
 F 1 "Raspberry_Pi_3A_Plus_wpi" H 2400 3524 50  0000 C CNN
-F 2 "Ninja-qPCR:Raspberry_Pi_3A+_Socketed_THT_FaceDown_MountingHoles" H 1950 1350 50  0001 C CNN
+F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown" H 1950 1350 50  0001 C CNN
 F 3 "" H 1950 1350 50  0001 C CNN
 	1    2400 2400
 	1    0    0    -1  

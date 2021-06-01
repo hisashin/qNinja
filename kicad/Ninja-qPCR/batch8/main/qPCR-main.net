@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch8/main/qPCR-main.sch)
-    (date "2021 June 01, Tuesday 12:08:16")
+    (date "2021 June 01, Tuesday 13:05:50")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -61,7 +61,7 @@
   (components
     (comp (ref J1)
       (value Raspberry_Pi_3A_Plus_wpi)
-      (footprint Ninja-qPCR:Raspberry_Pi_3A+_Socketed_THT_FaceDown_MountingHoles)
+      (footprint Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown)
       (libsource (lib Ninja-qPCR) (part Raspberry_Pi_3A_Plus_wpi) (description ""))
       (sheetpath (names /) (tstamps /))
       (tstamp 60AF82D8))
