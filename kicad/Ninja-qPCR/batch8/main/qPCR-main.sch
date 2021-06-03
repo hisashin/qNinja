@@ -371,8 +371,8 @@ L Ninja-qPCR:TS5A9411DCKR U?
 U 1 1 60B17B92
 P 6250 2150
 AR Path="/60AC9047/60B17B92" Ref="U?"  Part="1" 
-AR Path="/60B17B92" Ref="U2"  Part="1" 
-F 0 "U2" H 6250 2838 60  0000 C CNN
+AR Path="/60B17B92" Ref="U1"  Part="1" 
+F 0 "U1" H 6250 2838 60  0000 C CNN
 F 1 "TS5A9411DCKR" H 6250 2732 60  0000 C CNN
 F 2 "Ninja-qPCR:TS5A9411DCKR" H 6250 2090 60  0001 C CNN
 F 3 "" H 6250 2150 60  0000 C CNN
@@ -404,99 +404,99 @@ VIN_SENSE
 $Comp
 L Ninja-qPCR:I2C_SSD1306_LCD LCD2
 U 1 1 60B6CC69
-P 9700 2100
-F 0 "LCD2" H 9978 1996 50  0000 L CNN
-F 1 "I2C_SSD1306_LCD" H 9978 1905 50  0000 L CNN
-F 2 "Ninja-qPCR:I2C_SSD1306_LCD" H 9700 2100 50  0001 C CNN
-F 3 "" H 9700 2100 50  0001 C CNN
-	1    9700 2100
+P 9350 1450
+F 0 "LCD2" H 9628 1346 50  0000 L CNN
+F 1 "I2C_SSD1306_LCD" H 9628 1255 50  0000 L CNN
+F 2 "Ninja-qPCR:I2C_SSD1306_LCD" H 9350 1450 50  0001 C CNN
+F 3 "" H 9350 1450 50  0001 C CNN
+	1    9350 1450
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR08
 U 1 1 60B6DAB2
-P 9300 2500
+P 8950 1850
 AR Path="/60B6DAB2" Ref="#PWR08"  Part="1" 
 AR Path="/5F7519D0/60B6DAB2" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60B6DAB2" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60B6DAB2" Ref="#PWR?"  Part="1" 
-F 0 "#PWR08" H 9300 2250 50  0001 C CNN
-F 1 "GND" H 9305 2327 50  0000 C CNN
-F 2 "" H 9300 2500 50  0001 C CNN
-F 3 "" H 9300 2500 50  0001 C CNN
-	1    9300 2500
+F 0 "#PWR08" H 8950 1600 50  0001 C CNN
+F 1 "GND" H 8955 1677 50  0000 C CNN
+F 2 "" H 8950 1850 50  0001 C CNN
+F 3 "" H 8950 1850 50  0001 C CNN
+	1    8950 1850
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R11
 U 1 1 60B6E1C2
-P 9050 1950
+P 8700 1300
 AR Path="/60B6E1C2" Ref="R11"  Part="1" 
 AR Path="/5F7519D0/60B6E1C2" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60B6E1C2" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60B6E1C2" Ref="R?"  Part="1" 
-F 0 "R11" V 8843 1950 50  0000 C CNN
-F 1 "47k" V 8934 1950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 8980 1950 50  0001 C CNN
-F 3 "~" H 9050 1950 50  0001 C CNN
-	1    9050 1950
+F 0 "R11" V 8493 1300 50  0000 C CNN
+F 1 "47k" V 8584 1300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 8630 1300 50  0001 C CNN
+F 3 "~" H 8700 1300 50  0001 C CNN
+	1    8700 1300
 	-1   0    0    1   
 $EndComp
 $Comp
 L Device:R R10
 U 1 1 60B6E6FD
-P 8750 1950
+P 8400 1300
 AR Path="/60B6E6FD" Ref="R10"  Part="1" 
 AR Path="/5F7519D0/60B6E6FD" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60B6E6FD" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60B6E6FD" Ref="R?"  Part="1" 
-F 0 "R10" V 8543 1950 50  0000 C CNN
-F 1 "47k" V 8634 1950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 8680 1950 50  0001 C CNN
-F 3 "~" H 8750 1950 50  0001 C CNN
-	1    8750 1950
+F 0 "R10" V 8193 1300 50  0000 C CNN
+F 1 "47k" V 8284 1300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 8330 1300 50  0001 C CNN
+F 3 "~" H 8400 1300 50  0001 C CNN
+	1    8400 1300
 	-1   0    0    1   
 $EndComp
-Text GLabel 8600 2300 0    50   Input ~ 0
+Text GLabel 8250 1650 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 8600 2200 0    50   Input ~ 0
+Text GLabel 8250 1550 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 9300 1550 1    50   Input ~ 0
+Text GLabel 8950 900  1    50   Input ~ 0
 3V3D
 Wire Wire Line
-	8750 1800 8750 1750
+	8400 1150 8400 1100
 Wire Wire Line
-	8750 1750 9050 1750
-Connection ~ 9300 1750
+	8400 1100 8700 1100
+Connection ~ 8950 1100
 Wire Wire Line
-	9050 1800 9050 1750
-Connection ~ 9050 1750
+	8700 1150 8700 1100
+Connection ~ 8700 1100
 Wire Wire Line
-	9050 1750 9300 1750
+	8700 1100 8950 1100
 Wire Wire Line
-	9500 2400 9300 2400
+	9150 1750 8950 1750
 Wire Wire Line
-	9300 2400 9300 2500
+	8950 1750 8950 1850
 Wire Wire Line
-	9500 2300 9050 2300
+	9150 1650 8700 1650
 Wire Wire Line
-	9500 2200 8750 2200
+	9150 1550 8400 1550
 Wire Wire Line
-	8750 2100 8750 2200
-Connection ~ 8750 2200
+	8400 1450 8400 1550
+Connection ~ 8400 1550
 Wire Wire Line
-	8750 2200 8600 2200
+	8400 1550 8250 1550
 Wire Wire Line
-	9050 2100 9050 2300
-Connection ~ 9050 2300
+	8700 1450 8700 1650
+Connection ~ 8700 1650
 Wire Wire Line
-	9050 2300 8600 2300
+	8700 1650 8250 1650
 Wire Wire Line
-	9500 2100 9300 2100
+	9150 1450 8950 1450
 Wire Wire Line
-	9300 1750 9300 2100
+	8950 1100 8950 1450
 Wire Wire Line
-	9300 1550 9300 1750
+	8950 900  8950 1100
 $Comp
 L power:GNDA #PWR05
 U 1 1 60B20DBD
@@ -540,82 +540,71 @@ Wire Wire Line
 	2100 5400 2350 5400
 Text GLabel 2100 5400 0    50   Input ~ 0
 12V
-Text GLabel 9750 4400 0    50   Input ~ 0
+Text GLabel 10000 4950 0    50   Input ~ 0
 3V3D
 Wire Wire Line
-	9900 5800 9750 5800
+	10150 6350 10000 6350
 Wire Wire Line
-	9900 5700 9750 5700
+	10150 6250 10000 6250
 Wire Wire Line
-	9900 5600 9750 5600
+	10150 6150 10000 6150
 Wire Wire Line
-	9900 5500 9750 5500
+	10150 6050 10000 6050
 Wire Wire Line
-	9900 5400 9750 5400
+	10150 5950 10000 5950
 Wire Wire Line
-	9900 5300 9750 5300
+	10150 5850 10000 5850
 Wire Wire Line
-	9900 5200 9750 5200
+	10150 5750 10000 5750
 Wire Wire Line
-	9900 5100 9750 5100
+	10150 5650 10000 5650
 Wire Wire Line
-	9900 5000 9750 5000
+	10150 5550 10000 5550
 Wire Wire Line
-	9900 4900 9750 4900
+	10150 5450 10000 5450
 Wire Wire Line
-	9900 4800 9750 4800
+	10150 5350 10000 5350
 Wire Wire Line
-	9900 4700 9750 4700
+	10150 5250 10000 5250
 Wire Wire Line
-	9900 4600 9750 4600
+	10150 5150 10000 5150
 Wire Wire Line
-	9900 4500 9750 4500
+	10150 5050 10000 5050
 Wire Wire Line
-	9900 4400 9750 4400
+	10150 4950 10000 4950
 Wire Wire Line
-	9900 4300 9750 4300
-$Comp
-L Connector:Conn_01x16_Male J2
-U 1 1 60B0637E
-P 10100 5000
-F 0 "J2" H 10072 4974 50  0000 R CNN
-F 1 "Conn_01x16_Male" H 10072 4883 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x16_Pitch1.27mm" H 10100 5000 50  0001 C CNN
-F 3 "~" H 10100 5000 50  0001 C CNN
-	1    10100 5000
-	-1   0    0    -1  
-$EndComp
-Text GLabel 9750 5800 0    50   Input ~ 0
+	10150 4850 10000 4850
+Text GLabel 10000 6350 0    50   Input ~ 0
 AMP_GAIN_SW
-Text GLabel 9750 4500 0    50   Input ~ 0
+Text GLabel 10000 5050 0    50   Input ~ 0
 -1V
-Text GLabel 9750 4700 0    50   Input ~ 0
+Text GLabel 10000 5250 0    50   Input ~ 0
 3V3A
-Text GLabel 9750 4600 0    50   Input ~ 0
+Text GLabel 10000 5150 0    50   Input ~ 0
 GNDA
-Text GLabel 9750 5700 0    50   Input ~ 0
+Text GLabel 10000 6250 0    50   Input ~ 0
 THERM_MUX_OUT
-Text GLabel 9750 5600 0    50   Input ~ 0
+Text GLabel 10000 6150 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 9750 5500 0    50   Input ~ 0
+Text GLabel 10000 6050 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 9750 5400 0    50   Input ~ 0
+Text GLabel 10000 5950 0    50   Input ~ 0
 ADC_DRDY
-Text GLabel 9750 5300 0    50   Input ~ 0
+Text GLabel 10000 5850 0    50   Input ~ 0
 PD_REF_PWM
-Text GLabel 9750 5200 0    50   Input ~ 0
+Text GLabel 10000 5750 0    50   Input ~ 0
 MUX_SELECT
-Text GLabel 9750 5000 0    50   Input ~ 0
+Text GLabel 10000 5550 0    50   Input ~ 0
 MUX_S1
-Text GLabel 9750 5100 0    50   Input ~ 0
+Text GLabel 10000 5650 0    50   Input ~ 0
 MUX_S0
-Text GLabel 9750 4900 0    50   Input ~ 0
+Text GLabel 10000 5450 0    50   Input ~ 0
 MUX_S2
-Text GLabel 9750 4800 0    50   Input ~ 0
+Text GLabel 10000 5350 0    50   Input ~ 0
 MUX_S3
-Text GLabel 9750 4300 0    50   Input ~ 0
+Text GLabel 10000 4850 0    50   Input ~ 0
 GND
-Text Notes 9300 6000 0    50   ~ 0
+Text Notes 9550 6500 0    50   ~ 0
 To Photosensing Board
 Wire Wire Line
 	2350 5500 2350 5600
@@ -982,4 +971,95 @@ Wire Wire Line
 Connection ~ 2550 4550
 Wire Wire Line
 	2550 4550 2550 4650
+Wire Wire Line
+	10150 3350 9950 3350
+Wire Wire Line
+	10150 3250 9950 3250
+Wire Wire Line
+	10150 3150 9950 3150
+Wire Wire Line
+	10150 3050 9950 3050
+Wire Wire Line
+	10150 2950 9950 2950
+Wire Wire Line
+	10150 2850 9950 2850
+Wire Wire Line
+	10150 2750 9950 2750
+Wire Wire Line
+	10150 2650 9950 2650
+Wire Wire Line
+	10150 2550 9950 2550
+Text GLabel 9950 3350 0    50   Input ~ 0
+N_LED_OUT2
+Text GLabel 9950 3250 0    50   Input ~ 0
+N_LED_OUT1
+Text GLabel 9950 3150 0    50   Input ~ 0
+N_LED_OUT4
+Text GLabel 9950 3050 0    50   Input ~ 0
+N_LED_OUT3
+Text GLabel 9950 2950 0    50   Input ~ 0
+N_LED_OUT7
+Text GLabel 9950 2850 0    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 9950 2750 0    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 9950 2650 0    50   Input ~ 0
+VCC_LED
+Text GLabel 9950 2550 0    50   Input ~ 0
+GND
+Wire Wire Line
+	10150 2450 9950 2450
+Text GLabel 9950 2450 0    50   Input ~ 0
+N_LED_OUT5
+Wire Wire Line
+	10150 4550 9950 4550
+Wire Wire Line
+	10150 4450 9950 4450
+Wire Wire Line
+	10150 4350 9950 4350
+Wire Wire Line
+	10150 4250 9950 4250
+Wire Wire Line
+	10150 4150 9950 4150
+Wire Wire Line
+	10150 4050 9950 4050
+Wire Wire Line
+	10150 3950 9950 3950
+Wire Wire Line
+	10150 3850 9950 3850
+Wire Wire Line
+	10150 3750 9950 3750
+Text GLabel 9950 4550 0    50   Input ~ 0
+S_LED_OUT2
+Text GLabel 9950 4450 0    50   Input ~ 0
+S_LED_OUT1
+Text GLabel 9950 4350 0    50   Input ~ 0
+S_LED_OUT4
+Text GLabel 9950 4250 0    50   Input ~ 0
+S_LED_OUT3
+Text GLabel 9950 4150 0    50   Input ~ 0
+S_LED_OUT7
+Text GLabel 9950 4050 0    50   Input ~ 0
+S_LED_OUT8
+Text GLabel 9950 3950 0    50   Input ~ 0
+S_LED_OUT6
+Text GLabel 9950 3850 0    50   Input ~ 0
+VCC_LED
+Text GLabel 9950 3750 0    50   Input ~ 0
+GND
+Wire Wire Line
+	10150 3650 9950 3650
+Text GLabel 9950 3650 0    50   Input ~ 0
+S_LED_OUT5
+$Comp
+L Connector:Conn_01x40_Male J2
+U 1 1 60B98A75
+P 10350 4350
+F 0 "J2" H 10322 4324 50  0000 R CNN
+F 1 "Conn_01x40_Male" H 10322 4233 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch1.27mm" H 10350 4350 50  0001 C CNN
+F 3 "~" H 10350 4350 50  0001 C CNN
+	1    10350 4350
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC
