@@ -93,8 +93,6 @@ Wire Wire Line
 	1550 1750 1700 1750
 Wire Wire Line
 	1700 2850 1550 2850
-Wire Wire Line
-	3250 3150 3100 3150
 Text HLabel 1550 3050 0    50   Input ~ 0
 WELL_HEATER
 Wire Wire Line
@@ -111,8 +109,6 @@ Wire Wire Line
 	3250 2450 3100 2450
 Wire Wire Line
 	3250 2950 3100 2950
-Text GLabel 1550 3250 0    50   Input ~ 0
-GPIO25
 Wire Wire Line
 	1550 3250 1700 3250
 Text GLabel 1550 1850 0    50   Input ~ 0
@@ -148,34 +144,6 @@ MUX_SELECT
 Wire Wire Line
 	3250 2550 3100 2550
 Wire Wire Line
-	3100 3250 3250 3250
-Wire Wire Line
-	4400 2900 4250 2900
-Wire Wire Line
-	4400 2650 4350 2650
-Text GLabel 4400 2650 2    50   Input ~ 0
-GND
-$Comp
-L Device:R R4
-U 1 1 60AF8322
-P 4100 2900
-AR Path="/60AF8322" Ref="R4"  Part="1" 
-AR Path="/60AEA148/60AF8322" Ref="R?"  Part="1" 
-AR Path="/60AC8F63/60AF8322" Ref="R?"  Part="1" 
-F 0 "R4" H 4030 2854 50  0000 R CNN
-F 1 "10k" H 4030 2945 50  0000 R CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4030 2900 50  0001 C CNN
-F 3 "~" H 4100 2900 50  0001 C CNN
-	1    4100 2900
-	0    -1   1    0   
-$EndComp
-Wire Wire Line
-	3850 2700 3850 2650
-Connection ~ 3850 2650
-Wire Wire Line
-	4350 2700 4350 2650
-Connection ~ 4350 2650
-Wire Wire Line
 	1700 2950 1550 2950
 Text GLabel 3250 2250 2    50   Input ~ 0
 SPI_SWITCH
@@ -190,41 +158,8 @@ Wire Wire Line
 	3200 1450 3250 1450
 Text HLabel 1550 1450 0    50   Input ~ 0
 3V3_RASP
-Text HLabel 4400 2900 2    50   Input ~ 0
-3V3_RASP
 Text GLabel 3250 1450 2    50   Input ~ 0
 5V_UPS
-Wire Wire Line
-	3800 2900 3950 2900
-Wire Wire Line
-	3100 2650 3800 2650
-Wire Wire Line
-	3800 2650 3850 2650
-Connection ~ 3800 2650
-Wire Wire Line
-	3800 2900 3800 2650
-$Comp
-L Ninja-qPCR:TACTILE_4 SW1
-U 1 1 60AF8341
-P 4100 2650
-AR Path="/60AF8341" Ref="SW1"  Part="1" 
-AR Path="/60AEA148/60AF8341" Ref="SW?"  Part="1" 
-AR Path="/60AC8F63/60AF8341" Ref="SW?"  Part="1" 
-F 0 "SW1" H 4294 2723 50  0000 L CNN
-F 1 "TACTILE_4" H 4294 2632 50  0000 L CNN
-F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 4100 2850 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 4100 2850 50  0001 C CNN
-	1    4100 2650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4250 2650 4350 2650
-Wire Wire Line
-	4250 2700 4350 2700
-Wire Wire Line
-	3850 2650 3950 2650
-Wire Wire Line
-	3850 2700 3950 2700
 $Comp
 L Device:R R2
 U 1 1 60AF834B
@@ -306,14 +241,14 @@ F 3 "~" H 2250 5800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L Device:R R7
 U 1 1 60AF83E3
 P 4000 6050
-AR Path="/60AF83E3" Ref="R5"  Part="1" 
+AR Path="/60AF83E3" Ref="R7"  Part="1" 
 AR Path="/5F7519D0/60AF83E3" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60AF83E3" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60AF83E3" Ref="R?"  Part="1" 
-F 0 "R5" V 3793 6050 50  0000 C CNN
+F 0 "R7" V 3793 6050 50  0000 C CNN
 F 1 "10k" V 3884 6050 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 3930 6050 50  0001 C CNN
 F 3 "~" H 4000 6050 50  0001 C CNN
@@ -321,14 +256,14 @@ F 3 "~" H 4000 6050 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R3
+L Device:R R6
 U 1 1 60AF83E9
 P 3550 5800
-AR Path="/60AF83E9" Ref="R3"  Part="1" 
+AR Path="/60AF83E9" Ref="R6"  Part="1" 
 AR Path="/5F7519D0/60AF83E9" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60AF83E9" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60AF83E9" Ref="R?"  Part="1" 
-F 0 "R3" V 3343 5800 50  0000 C CNN
+F 0 "R6" V 3343 5800 50  0000 C CNN
 F 1 "1k" V 3434 5800 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 3480 5800 50  0001 C CNN
 F 3 "~" H 3550 5800 50  0001 C CNN
@@ -345,14 +280,14 @@ Connection ~ 3750 5800
 Wire Wire Line
 	3750 5800 3700 5800
 $Comp
-L power:GND #PWR02
+L power:GND #PWR03
 U 1 1 60AF83F4
 P 4400 6150
-AR Path="/60AF83F4" Ref="#PWR02"  Part="1" 
+AR Path="/60AF83F4" Ref="#PWR03"  Part="1" 
 AR Path="/5F7519D0/60AF83F4" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60AF83F4" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60AF83F4" Ref="#PWR?"  Part="1" 
-F 0 "#PWR02" H 4400 5900 50  0001 C CNN
+F 0 "#PWR03" H 4400 5900 50  0001 C CNN
 F 1 "GND" H 4405 5977 50  0000 C CNN
 F 2 "" H 4400 6150 50  0001 C CNN
 F 3 "" H 4400 6150 50  0001 C CNN
@@ -396,8 +331,6 @@ F0 "LED" 50
 F1 "fileLED.sch" 50
 $EndSheet
 NoConn ~ 3250 2950
-NoConn ~ 3250 3150
-NoConn ~ 3250 3250
 Text GLabel 1550 1750 0    50   Input ~ 0
 AMP_GAIN_SW
 Text Notes 5850 1350 0    50   ~ 0
@@ -409,8 +342,8 @@ L power:GND #PWR?
 U 1 1 60B17BA2
 P 7000 2450
 AR Path="/60AC9047/60B17BA2" Ref="#PWR?"  Part="1" 
-AR Path="/60B17BA2" Ref="#PWR05"  Part="1" 
-F 0 "#PWR05" H 7000 2200 50  0001 C CNN
+AR Path="/60B17BA2" Ref="#PWR07"  Part="1" 
+F 0 "#PWR07" H 7000 2200 50  0001 C CNN
 F 1 "GND" H 7005 2277 50  0000 C CNN
 F 2 "" H 7000 2450 50  0001 C CNN
 F 3 "" H 7000 2450 50  0001 C CNN
@@ -438,8 +371,8 @@ L Ninja-qPCR:TS5A9411DCKR U?
 U 1 1 60B17B92
 P 6250 2150
 AR Path="/60AC9047/60B17B92" Ref="U?"  Part="1" 
-AR Path="/60B17B92" Ref="U1"  Part="1" 
-F 0 "U1" H 6250 2838 60  0000 C CNN
+AR Path="/60B17B92" Ref="U2"  Part="1" 
+F 0 "U2" H 6250 2838 60  0000 C CNN
 F 1 "TS5A9411DCKR" H 6250 2732 60  0000 C CNN
 F 2 "Ninja-qPCR:TS5A9411DCKR" H 6250 2090 60  0001 C CNN
 F 3 "" H 6250 2150 60  0000 C CNN
@@ -448,10 +381,8 @@ F 3 "" H 6250 2150 60  0000 C CNN
 $EndComp
 Wire Wire Line
 	7000 2450 6850 2450
-Text GLabel 3250 3350 2    50   Input ~ 0
+Text GLabel 3250 2650 2    50   Input ~ 0
 THERM_R_SWITCH
-Wire Wire Line
-	3250 3350 3100 3350
 Text Notes 1150 1400 0    50   ~ 0
 Max 50mA
 Text GLabel 5600 1850 0    50   Input ~ 0
@@ -471,10 +402,10 @@ $EndSheet
 Text GLabel 4100 2100 2    50   Input ~ 0
 VIN_SENSE
 $Comp
-L Ninja-qPCR:I2C_SSD1306_LCD D1
+L Ninja-qPCR:I2C_SSD1306_LCD LCD2
 U 1 1 60B6CC69
 P 9700 2100
-F 0 "D1" H 9978 1996 50  0000 L CNN
+F 0 "LCD2" H 9978 1996 50  0000 L CNN
 F 1 "I2C_SSD1306_LCD" H 9978 1905 50  0000 L CNN
 F 2 "Ninja-qPCR:I2C_SSD1306_LCD" H 9700 2100 50  0001 C CNN
 F 3 "" H 9700 2100 50  0001 C CNN
@@ -482,14 +413,14 @@ F 3 "" H 9700 2100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR07
+L power:GND #PWR08
 U 1 1 60B6DAB2
 P 9300 2500
-AR Path="/60B6DAB2" Ref="#PWR07"  Part="1" 
+AR Path="/60B6DAB2" Ref="#PWR08"  Part="1" 
 AR Path="/5F7519D0/60B6DAB2" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60B6DAB2" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60B6DAB2" Ref="#PWR?"  Part="1" 
-F 0 "#PWR07" H 9300 2250 50  0001 C CNN
+F 0 "#PWR08" H 9300 2250 50  0001 C CNN
 F 1 "GND" H 9305 2327 50  0000 C CNN
 F 2 "" H 9300 2500 50  0001 C CNN
 F 3 "" H 9300 2500 50  0001 C CNN
@@ -497,14 +428,14 @@ F 3 "" H 9300 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R9
+L Device:R R11
 U 1 1 60B6E1C2
 P 9050 1950
-AR Path="/60B6E1C2" Ref="R9"  Part="1" 
+AR Path="/60B6E1C2" Ref="R11"  Part="1" 
 AR Path="/5F7519D0/60B6E1C2" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60B6E1C2" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60B6E1C2" Ref="R?"  Part="1" 
-F 0 "R9" V 8843 1950 50  0000 C CNN
+F 0 "R11" V 8843 1950 50  0000 C CNN
 F 1 "47k" V 8934 1950 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 8980 1950 50  0001 C CNN
 F 3 "~" H 9050 1950 50  0001 C CNN
@@ -512,14 +443,14 @@ F 3 "~" H 9050 1950 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:R R8
+L Device:R R10
 U 1 1 60B6E6FD
 P 8750 1950
-AR Path="/60B6E6FD" Ref="R8"  Part="1" 
+AR Path="/60B6E6FD" Ref="R10"  Part="1" 
 AR Path="/5F7519D0/60B6E6FD" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60B6E6FD" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60B6E6FD" Ref="R?"  Part="1" 
-F 0 "R8" V 8543 1950 50  0000 C CNN
+F 0 "R10" V 8543 1950 50  0000 C CNN
 F 1 "47k" V 8634 1950 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 8680 1950 50  0001 C CNN
 F 3 "~" H 8750 1950 50  0001 C CNN
@@ -567,10 +498,10 @@ Wire Wire Line
 Wire Wire Line
 	9300 1550 9300 1750
 $Comp
-L power:GNDA #PWR04
+L power:GNDA #PWR05
 U 1 1 60B20DBD
 P 6500 7350
-F 0 "#PWR04" H 6500 7100 50  0001 C CNN
+F 0 "#PWR05" H 6500 7100 50  0001 C CNN
 F 1 "GNDA" H 6505 7177 50  0000 C CNN
 F 2 "" H 6500 7350 50  0001 C CNN
 F 3 "" H 6500 7350 50  0001 C CNN
@@ -578,14 +509,14 @@ F 3 "" H 6500 7350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR03
+L power:GND #PWR04
 U 1 1 60B11158
 P 6300 7350
-AR Path="/60B11158" Ref="#PWR03"  Part="1" 
+AR Path="/60B11158" Ref="#PWR04"  Part="1" 
 AR Path="/5F7519D0/60B11158" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60B11158" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60B11158" Ref="#PWR?"  Part="1" 
-F 0 "#PWR03" H 6300 7100 50  0001 C CNN
+F 0 "#PWR04" H 6300 7100 50  0001 C CNN
 F 1 "GND" H 6305 7177 50  0000 C CNN
 F 2 "" H 6300 7350 50  0001 C CNN
 F 3 "" H 6300 7350 50  0001 C CNN
@@ -806,14 +737,14 @@ Wire Wire Line
 Wire Wire Line
 	6550 5800 6200 5800
 $Comp
-L Device:R R6
+L Device:R R8
 U 1 1 60AF8378
 P 6000 5800
-AR Path="/60AF8378" Ref="R6"  Part="1" 
+AR Path="/60AF8378" Ref="R8"  Part="1" 
 AR Path="/5F7519D0/60AF8378" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60AF8378" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60AF8378" Ref="R?"  Part="1" 
-F 0 "R6" V 5793 5800 50  0000 C CNN
+F 0 "R8" V 5793 5800 50  0000 C CNN
 F 1 "1k" V 5884 5800 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 5930 5800 50  0001 C CNN
 F 3 "~" H 6000 5800 50  0001 C CNN
@@ -821,14 +752,14 @@ F 3 "~" H 6000 5800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R7
+L Device:R R9
 U 1 1 60AF8372
 P 6450 6050
-AR Path="/60AF8372" Ref="R7"  Part="1" 
+AR Path="/60AF8372" Ref="R9"  Part="1" 
 AR Path="/5F7519D0/60AF8372" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60AF8372" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60AF8372" Ref="R?"  Part="1" 
-F 0 "R7" V 6243 6050 50  0000 C CNN
+F 0 "R9" V 6243 6050 50  0000 C CNN
 F 1 "10k" V 6334 6050 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 6380 6050 50  0001 C CNN
 F 3 "~" H 6450 6050 50  0001 C CNN
@@ -839,6 +770,216 @@ Wire Wire Line
 	4250 5400 4500 5400
 Wire Wire Line
 	4400 5500 4400 5600
-Text Notes 5800 4100 0    50   ~ 0
-//TODO add UI input device for DIY model user (TACTS or pocketPCR one)
+Text GLabel 1550 4350 0    50   Input ~ 0
+I2C_SDA
+Text GLabel 1550 4450 0    50   Input ~ 0
+I2C_SCL
+Text GLabel 1550 4550 0    50   Input ~ 0
+GND
+$Comp
+L power:GND #PWR02
+U 1 1 60B8E5B3
+P 2550 4900
+AR Path="/60B8E5B3" Ref="#PWR02"  Part="1" 
+AR Path="/5F7519D0/60B8E5B3" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/60B8E5B3" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/60B8E5B3" Ref="#PWR?"  Part="1" 
+F 0 "#PWR02" H 2550 4650 50  0001 C CNN
+F 1 "GND" H 2555 4727 50  0000 C CNN
+F 2 "" H 2550 4900 50  0001 C CNN
+F 3 "" H 2550 4900 50  0001 C CNN
+	1    2550 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 4150 2550 4150
+Wire Wire Line
+	2550 4150 2550 4250
+Wire Wire Line
+	2450 4450 2550 4450
+Wire Wire Line
+	2450 4350 2550 4350
+Connection ~ 2550 4350
+Wire Wire Line
+	2550 4350 2550 4450
+Wire Wire Line
+	2450 4250 2550 4250
+Connection ~ 2550 4250
+Wire Wire Line
+	2550 4250 2550 4350
+Text GLabel 1550 4150 0    50   Input ~ 0
+5V_UPS
+Wire Wire Line
+	1550 4150 1700 4150
+Wire Wire Line
+	1700 4350 1550 4350
+Wire Wire Line
+	1700 4450 1550 4450
+Wire Wire Line
+	1700 4550 1550 4550
+NoConn ~ 1600 4250
+Wire Wire Line
+	1600 4250 1700 4250
+Wire Wire Line
+	3050 2650 3100 2650
+Connection ~ 3100 2650
+Wire Wire Line
+	3100 2650 3250 2650
+$Comp
+L Ninja-qPCR:TACTILE_4 SW1
+U 1 1 60C07DE1
+P 3700 3950
+F 0 "SW1" H 3894 4023 50  0000 L CNN
+F 1 "TACTILE_4" H 3894 3932 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4150 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4150 50  0001 C CNN
+	1    3700 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 60C08B8A
+P 3350 3950
+AR Path="/60C08B8A" Ref="R3"  Part="1" 
+AR Path="/5F7519D0/60C08B8A" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60C08B8A" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60C08B8A" Ref="R?"  Part="1" 
+F 0 "R3" V 3143 3950 50  0000 C CNN
+F 1 "1k" V 3234 3950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 3950 50  0001 C CNN
+F 3 "~" H 3350 3950 50  0001 C CNN
+	1    3350 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L Ninja-qPCR:TACTILE_4 SW2
+U 1 1 60C0A070
+P 3700 4300
+F 0 "SW2" H 3894 4373 50  0000 L CNN
+F 1 "TACTILE_4" H 3894 4282 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4500 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4500 50  0001 C CNN
+	1    3700 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 60C0A07A
+P 3350 4300
+AR Path="/60C0A07A" Ref="R4"  Part="1" 
+AR Path="/5F7519D0/60C0A07A" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60C0A07A" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60C0A07A" Ref="R?"  Part="1" 
+F 0 "R4" V 3143 4300 50  0000 C CNN
+F 1 "1k" V 3234 4300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 4300 50  0001 C CNN
+F 3 "~" H 3350 4300 50  0001 C CNN
+	1    3350 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L Ninja-qPCR:TACTILE_4 SW3
+U 1 1 60C11E93
+P 3700 4650
+F 0 "SW3" H 3894 4723 50  0000 L CNN
+F 1 "TACTILE_4" H 3894 4632 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4850 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4850 50  0001 C CNN
+	1    3700 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 60C11E9D
+P 3350 4650
+AR Path="/60C11E9D" Ref="R5"  Part="1" 
+AR Path="/5F7519D0/60C11E9D" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60C11E9D" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60C11E9D" Ref="R?"  Part="1" 
+F 0 "R5" V 3143 4650 50  0000 C CNN
+F 1 "1k" V 3234 4650 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 4650 50  0001 C CNN
+F 3 "~" H 3350 4650 50  0001 C CNN
+	1    3350 4650
+	0    1    1    0   
+$EndComp
+Text GLabel 1550 3150 0    50   Input ~ 0
+DOPEN
+Text GLabel 3250 3150 2    50   Input ~ 0
+DLOCK
+Text GLabel 1550 3250 0    50   Input ~ 0
+TACT1
+Text GLabel 3250 3250 2    50   Input ~ 0
+TACT2
+Text GLabel 3250 3350 2    50   Input ~ 0
+TACT3
+Wire Wire Line
+	3250 3150 3100 3150
+Wire Wire Line
+	3250 3250 3100 3250
+Wire Wire Line
+	3250 3350 3100 3350
+Text GLabel 4750 3800 0    50   Input ~ 0
+DOPEN
+Text GLabel 4750 4000 0    50   Input ~ 0
+DLOCK
+Text GLabel 3150 3950 0    50   Input ~ 0
+TACT1
+Text GLabel 3150 4300 0    50   Input ~ 0
+TACT2
+Text GLabel 3150 4650 0    50   Input ~ 0
+TACT3
+$Comp
+L Connector:Conn_01x02_Male LCD1_POWER1
+U 1 1 60B95481
+P 1450 5100
+F 0 "LCD1_POWER1" H 1422 5074 50  0000 R CNN
+F 1 "Conn_01x02_Male" H 1422 4983 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 1450 5100 50  0001 C CNN
+F 3 "~" H 1450 5100 50  0001 C CNN
+	1    1450 5100
+	-1   0    0    -1  
+$EndComp
+Text GLabel 1150 5100 0    50   Input ~ 0
+5V_UPS
+Text GLabel 1150 5200 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1250 5100 1150 5100
+Wire Wire Line
+	1250 5200 1150 5200
+Connection ~ 2550 4450
+$Comp
+L Ninja-qPCR:RPI_LCD_TOUCH_7INCH LCD1
+U 1 1 60BA74A3
+P 1700 4150
+F 0 "LCD1" H 2075 4375 50  0000 C CNN
+F 1 "RPI_LCD_TOUCH_7INCH" H 2075 4284 50  0000 C CNN
+F 2 "Ninja-qPCR:RPI_LCD_TOUCH_7INCH" H 1700 4150 50  0001 C CNN
+F 3 "" H 1700 4150 50  0001 C CNN
+	1    1700 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 4450 2550 4550
+Wire Wire Line
+	2450 4850 2550 4850
+Connection ~ 2550 4850
+Wire Wire Line
+	2550 4850 2550 4900
+Wire Wire Line
+	2450 4750 2550 4750
+Connection ~ 2550 4750
+Wire Wire Line
+	2550 4750 2550 4850
+Wire Wire Line
+	2450 4650 2550 4650
+Connection ~ 2550 4650
+Wire Wire Line
+	2550 4650 2550 4750
+Wire Wire Line
+	2450 4550 2550 4550
+Connection ~ 2550 4550
+Wire Wire Line
+	2550 4550 2550 4650
 $EndSCHEMATC
