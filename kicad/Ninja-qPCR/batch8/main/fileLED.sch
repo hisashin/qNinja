@@ -171,7 +171,7 @@ U 1 1 60AF8CDE
 P 9750 1950
 F 0 "LEDN1" H 10069 1561 50  0000 L CNN
 F 1 "Conn_02x05" H 10069 1470 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm" H 9550 2050 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch1.27mm" H 9550 2050 50  0001 C CNN
 F 3 "" H 9550 2050 50  0001 C CNN
 	1    9750 1950
 	1    0    0    -1  
@@ -222,7 +222,7 @@ U 1 1 60AF8CF8
 P 9750 3350
 F 0 "LEDS1" H 10069 2961 50  0000 L CNN
 F 1 "Conn_02x05" H 10069 2870 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm" H 9550 3450 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch1.27mm" H 9550 3450 50  0001 C CNN
 F 3 "" H 9550 3450 50  0001 C CNN
 	1    9750 3350
 	1    0    0    -1  

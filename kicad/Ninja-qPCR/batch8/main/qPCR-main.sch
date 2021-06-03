@@ -580,7 +580,7 @@ U 1 1 60B0637E
 P 10100 5000
 F 0 "J2" H 10072 4974 50  0000 R CNN
 F 1 "Conn_01x16_Male" H 10072 4883 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x16_Pitch2.54mm" H 10100 5000 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x16_Pitch1.27mm" H 10100 5000 50  0001 C CNN
 F 3 "~" H 10100 5000 50  0001 C CNN
 	1    10100 5000
 	-1   0    0    -1  
