@@ -13,100 +13,25 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L Ninja-qPCR:CD74HC4067M96 U?
-U 1 1 60B1EBDE
-P 5200 1900
-AR Path="/60B1EBDE" Ref="U?"  Part="1" 
-AR Path="/60B09AA3/60B1EBDE" Ref="U6"  Part="1" 
-F 0 "U6" H 6500 2287 60  0000 C CNN
-F 1 "CD74HC4067M96" H 6500 2181 60  0000 C CNN
-F 2 "Ninja-qPCR:CD74HC4067M96" H 6500 2140 60  0001 C CNN
-F 3 "" H 5200 1900 60  0000 C CNN
-	1    5200 1900
-	1    0    0    -1  
-$EndComp
-Text GLabel 4950 2600 0    50   Input ~ 0
+Text GLabel 5200 1900 0    50   Input ~ 0
 THERM_EXT2
-Text GLabel 4950 2500 0    50   Input ~ 0
+Text GLabel 7700 2300 2    50   Input ~ 0
 THERM_EXT1
-Text GLabel 4950 2300 0    50   Input ~ 0
+Text GLabel 7700 2000 2    50   Input ~ 0
 THERM_LID
-Text GLabel 4950 2200 0    50   Input ~ 0
+Text GLabel 7700 2100 2    50   Input ~ 0
 THERM_AIR
-Text GLabel 4950 2700 0    50   Input ~ 0
+Text GLabel 5200 2300 0    50   Input ~ 0
 THERM_EXT3
-Text GLabel 4950 2100 0    50   Input ~ 0
+Text GLabel 7700 2200 2    50   Input ~ 0
 THERM_WELL
-Text GLabel 8000 2200 2    50   Input ~ 0
-MUX_S3
-Text GLabel 8000 2100 2    50   Input ~ 0
+Text GLabel 7700 2600 2    50   Input ~ 0
 MUX_S2
-Text GLabel 8000 1900 2    50   Input ~ 0
+Text GLabel 7700 2400 2    50   Input ~ 0
 MUX_S0
-Text GLabel 8000 2000 2    50   Input ~ 0
+Text GLabel 7700 2500 2    50   Input ~ 0
 MUX_S1
-Text GLabel 4950 1900 0    50   Input ~ 0
-MUX_SELECT
-Wire Wire Line
-	4950 1900 5200 1900
-Wire Wire Line
-	8000 1900 7800 1900
-Wire Wire Line
-	8000 2000 7800 2000
-Wire Wire Line
-	8000 2100 7800 2100
-Wire Wire Line
-	8000 2200 7800 2200
-Wire Wire Line
-	4950 2100 5200 2100
-Wire Wire Line
-	4950 2200 5200 2200
-Wire Wire Line
-	4950 2300 5200 2300
-Wire Wire Line
-	4950 2400 5200 2400
-Wire Wire Line
-	4950 2500 5200 2500
-Wire Wire Line
-	4950 2600 5200 2600
-Wire Wire Line
-	4950 2700 5200 2700
-NoConn ~ 4950 2800
-NoConn ~ 4950 2900
-NoConn ~ 4950 3000
-NoConn ~ 4950 3100
-NoConn ~ 4950 3200
-NoConn ~ 4950 3300
-NoConn ~ 4950 3400
-NoConn ~ 4950 3500
-NoConn ~ 4950 3600
-Wire Wire Line
-	4950 2800 5200 2800
-Wire Wire Line
-	4950 2900 5200 2900
-Wire Wire Line
-	4950 3000 5200 3000
-Wire Wire Line
-	4950 3100 5200 3100
-Wire Wire Line
-	4950 3200 5200 3200
-Wire Wire Line
-	4950 3300 5200 3300
-Wire Wire Line
-	4950 3400 5200 3400
-Wire Wire Line
-	4950 3500 5200 3500
-Wire Wire Line
-	4950 3600 5200 3600
-Wire Wire Line
-	5200 3800 5100 3800
-Wire Wire Line
-	5100 3800 5100 4200
-Wire Wire Line
-	5100 4200 4650 4200
-Connection ~ 5100 3800
-Text GLabel 4650 4200 0    50   Input ~ 0
+Text GLabel 4400 4000 0    50   Input ~ 0
 THERM_MUX_OUT
 Text Notes 2300 4650 0    50   ~ 0
 IN=High : COM <-> NO\nIN=Low : COM <-> NC
@@ -191,41 +116,24 @@ Wire Wire Line
 Connection ~ 1500 3800
 Wire Wire Line
 	3350 3800 4150 3800
-Wire Wire Line
-	5550 5450 5800 5450
 Text GLabel 1150 3800 0    50   Input ~ 0
 3V3A
 Wire Wire Line
 	1150 3800 1500 3800
 $Comp
-L Ninja-qPCR:CD74HC4067M96 U?
-U 2 1 60B1EBE4
-P 5800 4450
-AR Path="/60B1EBE4" Ref="U?"  Part="2" 
-AR Path="/60B09AA3/60B1EBE4" Ref="U6"  Part="2" 
-F 0 "U6" H 7100 4837 60  0000 C CNN
-F 1 "CD74HC4067M96" H 7100 4731 60  0000 C CNN
-F 2 "Ninja-qPCR:CD74HC4067M96" H 7100 4690 60  0001 C CNN
-F 3 "" H 5800 4450 60  0000 C CNN
-	2    5800 4450
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR?
 U 1 1 60B11468
-P 8550 4550
+P 5150 2650
 AR Path="/60AC9047/60B11468" Ref="#PWR?"  Part="1" 
 AR Path="/60B11468" Ref="#PWR?"  Part="1" 
 AR Path="/60B09AA3/60B11468" Ref="#PWR033"  Part="1" 
-F 0 "#PWR033" H 8550 4300 50  0001 C CNN
-F 1 "GND" H 8555 4377 50  0000 C CNN
-F 2 "" H 8550 4550 50  0001 C CNN
-F 3 "" H 8550 4550 50  0001 C CNN
-	1    8550 4550
+F 0 "#PWR033" H 5150 2400 50  0001 C CNN
+F 1 "GND" H 5155 2477 50  0000 C CNN
+F 2 "" H 5150 2650 50  0001 C CNN
+F 3 "" H 5150 2650 50  0001 C CNN
+	1    5150 2650
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	8550 4550 8400 4550
 Wire Wire Line
 	2150 3600 2050 3600
 Wire Wire Line
@@ -254,12 +162,12 @@ Wire Wire Line
 	4150 2650 4150 3800
 Connection ~ 4150 3800
 Wire Wire Line
-	4150 3800 5100 3800
+	4150 3800 4650 3800
 Text Notes 2200 2350 0    50   ~ 0
 Connet in case of switching trouble
 Text GLabel 3400 3400 2    50   Input ~ 0
 3V3D
-Text GLabel 5550 5450 0    50   Input ~ 0
+Text GLabel 7700 1900 2    50   Input ~ 0
 3V3D
 Text GLabel 9550 1950 0    50   Input ~ 0
 THERM_WELL
@@ -379,7 +287,6 @@ F 3 "~" H 10000 3800 50  0001 C CNN
 	1    10000 3800
 	-1   0    0    -1  
 $EndComp
-NoConn ~ 4950 2400
 $Comp
 L Connector:Conn_01x02_Male TLID?
 U 1 1 60E1FB82
@@ -394,4 +301,62 @@ F 3 "~" H 10000 2550 50  0001 C CNN
 	1    10000 2550
 	-1   0    0    -1  
 $EndComp
+$Comp
+L Ninja-qPCR:SN74LV4051APWR U?
+U 1 1 60CEB8B0
+P 5350 1900
+F 0 "U?" H 6450 2287 60  0000 C CNN
+F 1 "SN74LV4051APWR" H 6450 2181 60  0000 C CNN
+F 2 "PW16" H 6450 2140 60  0001 C CNN
+F 3 "" H 5350 1900 60  0000 C CNN
+	1    5350 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7700 2400 7550 2400
+Wire Wire Line
+	7700 2500 7550 2500
+Wire Wire Line
+	7700 2600 7550 2600
+Wire Wire Line
+	5200 1900 5350 1900
+Wire Wire Line
+	5200 2300 5350 2300
+Wire Wire Line
+	5350 2100 4650 2100
+Wire Wire Line
+	4650 2100 4650 3800
+Wire Wire Line
+	4400 4000 4650 4000
+Wire Wire Line
+	4650 4000 4650 3800
+Connection ~ 4650 3800
+Wire Wire Line
+	7700 1900 7550 1900
+Wire Wire Line
+	7700 2000 7550 2000
+Wire Wire Line
+	7700 2100 7550 2100
+Wire Wire Line
+	7700 2200 7550 2200
+Wire Wire Line
+	7700 2300 7550 2300
+Wire Wire Line
+	5150 2650 5150 2600
+Wire Wire Line
+	5150 2500 5350 2500
+Wire Wire Line
+	5350 2600 5150 2600
+Connection ~ 5150 2600
+Wire Wire Line
+	5150 2600 5150 2500
+Wire Wire Line
+	5350 2400 5150 2400
+Wire Wire Line
+	5150 2400 5150 2500
+Connection ~ 5150 2500
+NoConn ~ 5200 2000
+NoConn ~ 5200 2200
+Wire Wire Line
+	5200 2200 5350 2200
 $EndSCHEMATC

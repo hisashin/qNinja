@@ -815,81 +815,70 @@ Connection ~ 3100 2650
 Wire Wire Line
 	3100 2650 3250 2650
 $Comp
-L Ninja-qPCR:TACTILE_4 SW1
-U 1 1 60C07DE1
-P 3700 3950
-F 0 "SW1" H 3894 4023 50  0000 L CNN
-F 1 "TACTILE_4" H 3894 3932 50  0000 L CNN
-F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4150 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4150 50  0001 C CNN
-	1    3700 3950
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R3
 U 1 1 60C08B8A
-P 3350 3950
+P 3500 3600
 AR Path="/60C08B8A" Ref="R3"  Part="1" 
 AR Path="/5F7519D0/60C08B8A" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60C08B8A" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60C08B8A" Ref="R?"  Part="1" 
-F 0 "R3" V 3143 3950 50  0000 C CNN
-F 1 "1k" V 3234 3950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 3950 50  0001 C CNN
-F 3 "~" H 3350 3950 50  0001 C CNN
-	1    3350 3950
-	0    1    1    0   
+F 0 "R3" V 3400 3600 50  0000 C CNN
+F 1 "1k" V 3600 3600 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3430 3600 50  0001 C CNN
+F 3 "~" H 3500 3600 50  0001 C CNN
+	1    3500 3600
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Ninja-qPCR:TACTILE_4 SW2
 U 1 1 60C0A070
-P 3700 4300
-F 0 "SW2" H 3894 4373 50  0000 L CNN
-F 1 "TACTILE_4" H 3894 4282 50  0000 L CNN
-F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4500 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4500 50  0001 C CNN
-	1    3700 4300
+P 3700 4400
+F 0 "SW2" H 3750 4500 50  0000 L CNN
+F 1 "TACTILE_4" H 3550 4300 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4600 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4600 50  0001 C CNN
+	1    3700 4400
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R4
 U 1 1 60C0A07A
-P 3350 4300
+P 3500 4150
 AR Path="/60C0A07A" Ref="R4"  Part="1" 
 AR Path="/5F7519D0/60C0A07A" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60C0A07A" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60C0A07A" Ref="R?"  Part="1" 
-F 0 "R4" V 3143 4300 50  0000 C CNN
-F 1 "1k" V 3234 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 4300 50  0001 C CNN
-F 3 "~" H 3350 4300 50  0001 C CNN
-	1    3350 4300
+F 0 "R4" V 3600 4150 50  0000 C CNN
+F 1 "1k" V 3384 4150 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3430 4150 50  0001 C CNN
+F 3 "~" H 3500 4150 50  0001 C CNN
+	1    3500 4150
 	0    1    1    0   
 $EndComp
 $Comp
 L Ninja-qPCR:TACTILE_4 SW3
 U 1 1 60C11E93
-P 3700 4650
-F 0 "SW3" H 3894 4723 50  0000 L CNN
-F 1 "TACTILE_4" H 3894 4632 50  0000 L CNN
-F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4850 50  0001 C CNN
-F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4850 50  0001 C CNN
-	1    3700 4650
+P 3700 4950
+F 0 "SW3" H 3750 5050 50  0000 L CNN
+F 1 "TACTILE_4" H 3550 4850 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 5150 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 5150 50  0001 C CNN
+	1    3700 4950
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R5
 U 1 1 60C11E9D
-P 3350 4650
+P 3500 4700
 AR Path="/60C11E9D" Ref="R5"  Part="1" 
 AR Path="/5F7519D0/60C11E9D" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60C11E9D" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60C11E9D" Ref="R?"  Part="1" 
-F 0 "R5" V 3143 4650 50  0000 C CNN
-F 1 "1k" V 3234 4650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 3280 4650 50  0001 C CNN
-F 3 "~" H 3350 4650 50  0001 C CNN
-	1    3350 4650
+F 0 "R5" V 3600 4700 50  0000 C CNN
+F 1 "1k" V 3384 4700 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 3430 4700 50  0001 C CNN
+F 3 "~" H 3500 4700 50  0001 C CNN
+	1    3500 4700
 	0    1    1    0   
 $EndComp
 Text GLabel 1550 3150 0    50   Input ~ 0
@@ -908,15 +897,15 @@ Wire Wire Line
 	3250 3250 3100 3250
 Wire Wire Line
 	3250 3350 3100 3350
-Text GLabel 4750 3800 0    50   Input ~ 0
+Text GLabel 5150 3150 0    50   Input ~ 0
 DOPEN
-Text GLabel 4750 4000 0    50   Input ~ 0
+Text GLabel 5150 3350 0    50   Input ~ 0
 DLOCK
-Text GLabel 3150 3950 0    50   Input ~ 0
+Text GLabel 3150 3850 0    50   Input ~ 0
 TACT1
-Text GLabel 3150 4300 0    50   Input ~ 0
+Text GLabel 3150 4400 0    50   Input ~ 0
 TACT2
-Text GLabel 3150 4650 0    50   Input ~ 0
+Text GLabel 3150 4950 0    50   Input ~ 0
 TACT3
 $Comp
 L Connector:Conn_01x02_Male LCD1_POWER1
@@ -1062,4 +1051,135 @@ F 3 "~" H 10350 4350 50  0001 C CNN
 	1    10350 4350
 	-1   0    0    -1  
 $EndComp
+Wire Wire Line
+	3600 3850 3550 3850
+Connection ~ 3550 3850
+Wire Wire Line
+	3550 3850 3300 3850
+Wire Wire Line
+	3600 3900 3550 3900
+Wire Wire Line
+	3300 3900 3300 3850
+Connection ~ 3550 3900
+Wire Wire Line
+	3550 3900 3300 3900
+Connection ~ 3300 3850
+Wire Wire Line
+	3300 3850 3150 3850
+Wire Wire Line
+	3300 3850 3300 3600
+Wire Wire Line
+	3300 3600 3350 3600
+$Comp
+L Ninja-qPCR:TACTILE_4 SW1
+U 1 1 60C07DE1
+P 3700 3850
+F 0 "SW1" H 3750 3950 50  0000 L CNN
+F 1 "TACTILE_4" H 3550 3750 50  0000 L CNN
+F 2 "Ninja-qPCR:SW_TH_Tactile_Omron_B3F-10xx" H 3700 4050 50  0001 C CNN
+F 3 "http://www.apem.com/int/index.php?controller=attachment&id_attachment=488" H 3700 4050 50  0001 C CNN
+	1    3700 3850
+	1    0    0    -1  
+$EndComp
+Text GLabel 3700 3600 2    50   Input ~ 0
+3V3D
+Wire Wire Line
+	3700 3600 3650 3600
+Text GLabel 4300 3850 2    50   Input ~ 0
+GND
+Wire Wire Line
+	3800 3850 3850 3850
+Connection ~ 3850 3850
+Wire Wire Line
+	3850 3850 4000 3850
+Wire Wire Line
+	3800 3900 3850 3900
+Wire Wire Line
+	4000 3900 4000 3850
+Connection ~ 3850 3900
+Wire Wire Line
+	3850 3900 4000 3900
+Connection ~ 4000 3850
+Wire Wire Line
+	4000 3850 4300 3850
+Text GLabel 4300 4950 2    50   Input ~ 0
+GND
+Wire Wire Line
+	3850 4950 4000 4950
+Wire Wire Line
+	4000 5000 4000 4950
+Wire Wire Line
+	3850 5000 4000 5000
+Wire Wire Line
+	3800 5000 3850 5000
+Connection ~ 3850 5000
+Text GLabel 4300 4400 2    50   Input ~ 0
+GND
+Wire Wire Line
+	3800 4400 3850 4400
+Connection ~ 3850 4400
+Wire Wire Line
+	3850 4400 4000 4400
+Wire Wire Line
+	3800 4450 3850 4450
+Wire Wire Line
+	4000 4450 4000 4400
+Connection ~ 3850 4450
+Wire Wire Line
+	3850 4450 4000 4450
+Connection ~ 4000 4400
+Wire Wire Line
+	4000 4400 4300 4400
+Text GLabel 3700 4150 2    50   Input ~ 0
+3V3D
+Wire Wire Line
+	3700 4150 3650 4150
+Wire Wire Line
+	3600 4400 3550 4400
+Connection ~ 3550 4400
+Wire Wire Line
+	3550 4400 3300 4400
+Wire Wire Line
+	3600 4450 3550 4450
+Wire Wire Line
+	3300 4450 3300 4400
+Connection ~ 3550 4450
+Wire Wire Line
+	3550 4450 3300 4450
+Connection ~ 3300 4400
+Wire Wire Line
+	3300 4400 3150 4400
+Wire Wire Line
+	3300 4400 3300 4150
+Wire Wire Line
+	3300 4150 3350 4150
+Wire Wire Line
+	3600 4950 3550 4950
+Connection ~ 3550 4950
+Wire Wire Line
+	3550 4950 3300 4950
+Wire Wire Line
+	3600 5000 3550 5000
+Wire Wire Line
+	3300 5000 3300 4950
+Connection ~ 3550 5000
+Wire Wire Line
+	3550 5000 3300 5000
+Connection ~ 3300 4950
+Wire Wire Line
+	3300 4950 3150 4950
+Wire Wire Line
+	3300 4950 3300 4700
+Wire Wire Line
+	3350 4700 3300 4700
+Text GLabel 3700 4700 2    50   Input ~ 0
+3V3D
+Wire Wire Line
+	3700 4700 3650 4700
+Wire Wire Line
+	4300 4950 4000 4950
+Connection ~ 4000 4950
+Connection ~ 3850 4950
+Wire Wire Line
+	3800 4950 3850 4950
 $EndSCHEMATC
