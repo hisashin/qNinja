@@ -330,7 +330,6 @@ U 60AFF976
 F0 "LED" 50
 F1 "fileLED.sch" 50
 $EndSheet
-NoConn ~ 3250 2950
 Text GLabel 1550 1750 0    50   Input ~ 0
 AMP_GAIN_SW
 Text Notes 5850 1350 0    50   ~ 0
@@ -399,7 +398,7 @@ U 60B81B0D
 F0 "SheetSupercap" 50
 F1 "fileSupercap.sch" 50
 $EndSheet
-Text GLabel 4100 2100 2    50   Input ~ 0
+Text GLabel 3250 2950 2    50   Input ~ 0
 VIN_SENSE
 $Comp
 L Ninja-qPCR:I2C_SSD1306_LCD LCD2
@@ -897,9 +896,9 @@ Wire Wire Line
 	3250 3250 3100 3250
 Wire Wire Line
 	3250 3350 3100 3350
-Text GLabel 5150 3150 0    50   Input ~ 0
+Text GLabel 5050 3700 0    50   Input ~ 0
 DOPEN
-Text GLabel 5150 3350 0    50   Input ~ 0
+Text GLabel 7000 3700 0    50   Input ~ 0
 DLOCK
 Text GLabel 3150 3850 0    50   Input ~ 0
 TACT1
@@ -1182,4 +1181,178 @@ Connection ~ 4000 4950
 Connection ~ 3850 4950
 Wire Wire Line
 	3800 4950 3850 4950
+$Comp
+L Device:R R?
+U 1 1 60BB1885
+P 7800 3950
+AR Path="/60BB1885" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/60BB1885" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60BB1885" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60BB1885" Ref="R?"  Part="1" 
+F 0 "R?" V 7593 3950 50  0000 C CNN
+F 1 "10k" V 7684 3950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 7730 3950 50  0001 C CNN
+F 3 "~" H 7800 3950 50  0001 C CNN
+	1    7800 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 60BB188B
+P 7350 3700
+AR Path="/60BB188B" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/60BB188B" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60BB188B" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60BB188B" Ref="R?"  Part="1" 
+F 0 "R?" V 7143 3700 50  0000 C CNN
+F 1 "1k" V 7234 3700 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 7280 3700 50  0001 C CNN
+F 3 "~" H 7350 3700 50  0001 C CNN
+	1    7350 3700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7900 3700 7550 3700
+Wire Wire Line
+	7650 3950 7550 3950
+Wire Wire Line
+	7550 3950 7550 3700
+Connection ~ 7550 3700
+Wire Wire Line
+	7550 3700 7500 3700
+$Comp
+L power:GND #PWR?
+U 1 1 60BB1896
+P 8200 4050
+AR Path="/60BB1896" Ref="#PWR?"  Part="1" 
+AR Path="/5F7519D0/60BB1896" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/60BB1896" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/60BB1896" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 8200 3800 50  0001 C CNN
+F 1 "GND" H 8205 3877 50  0000 C CNN
+F 2 "" H 8200 4050 50  0001 C CNN
+F 3 "" H 8200 4050 50  0001 C CNN
+	1    8200 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 4050 8200 3950
+Wire Wire Line
+	7950 3950 8200 3950
+Connection ~ 8200 3950
+Wire Wire Line
+	8200 3950 8200 3900
+$Comp
+L Device:Q_NMOS_GSD Q?
+U 1 1 60BB18A0
+P 8100 3700
+AR Path="/60BB18A0" Ref="Q?"  Part="1" 
+AR Path="/5F7519D0/60BB18A0" Ref="Q?"  Part="1" 
+AR Path="/5F7093B5/60BB18A0" Ref="Q?"  Part="1" 
+AR Path="/60AC8F63/60BB18A0" Ref="Q?"  Part="1" 
+F 0 "Q?" H 8304 3746 50  0000 L CNN
+F 1 "Q_NMOS_GSD" H 8304 3655 50  0000 L CNN
+F 2 "Ninja-qPCR:SOT95P240X112-3N" H 8300 3800 50  0001 C CNN
+F 3 "~" H 8100 3700 50  0001 C CNN
+	1    8100 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8300 3400 8200 3400
+Text GLabel 8050 3300 0    50   Input ~ 0
+12V
+$Comp
+L Connector:Screw_Terminal_01x02 FAN?
+U 1 1 60BB18A8
+P 8500 3300
+AR Path="/60B6F217/60BB18A8" Ref="FAN?"  Part="1" 
+AR Path="/60BB18A8" Ref="DOOR_SOLENOID"  Part="1" 
+F 0 "DOOR_SOLENOID" H 8418 3517 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 8418 3426 50  0000 C CNN
+F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 8500 3300 50  0001 C CNN
+F 3 "~" H 8500 3300 50  0001 C CNN
+	1    8500 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8050 3300 8300 3300
+Wire Wire Line
+	8200 3400 8200 3500
+Wire Wire Line
+	7000 3700 7200 3700
+Wire Wire Line
+	5050 3700 5450 3700
+$Comp
+L Device:R R?
+U 1 1 60BFB670
+P 5700 3500
+AR Path="/60BFB670" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/60BFB670" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60BFB670" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60BFB670" Ref="R?"  Part="1" 
+F 0 "R?" V 5493 3500 50  0000 C CNN
+F 1 "1k" V 5584 3500 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5630 3500 50  0001 C CNN
+F 3 "~" H 5700 3500 50  0001 C CNN
+	1    5700 3500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5550 3500 5450 3500
+Wire Wire Line
+	5450 3500 5450 3700
+Text GLabel 5950 3500 2    50   Input ~ 0
+3V3D
+Wire Wire Line
+	5950 3500 5850 3500
+$Comp
+L Switch:SW_Reed SW?
+U 1 1 60C1DBCD
+P 6150 3950
+F 0 "SW?" H 6150 4172 50  0000 C CNN
+F 1 "SW_Reed" H 6150 4081 50  0000 C CNN
+F 2 "" H 6150 3950 50  0001 C CNN
+F 3 "~" H 6150 3950 50  0001 C CNN
+	1    6150 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 60C1ED8D
+P 5700 3950
+AR Path="/60C1ED8D" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/60C1ED8D" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/60C1ED8D" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60C1ED8D" Ref="R?"  Part="1" 
+F 0 "R?" V 5493 3950 50  0000 C CNN
+F 1 "1k" V 5584 3950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5630 3950 50  0001 C CNN
+F 3 "~" H 5700 3950 50  0001 C CNN
+	1    5700 3950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5450 3700 5450 3950
+Wire Wire Line
+	5450 3950 5550 3950
+Connection ~ 5450 3700
+Wire Wire Line
+	5950 3950 5850 3950
+$Comp
+L power:GND #PWR?
+U 1 1 60C41FB6
+P 6500 4000
+AR Path="/60AC9047/60C41FB6" Ref="#PWR?"  Part="1" 
+AR Path="/60C41FB6" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 6500 3750 50  0001 C CNN
+F 1 "GND" H 6505 3827 50  0000 C CNN
+F 2 "" H 6500 4000 50  0001 C CNN
+F 3 "" H 6500 4000 50  0001 C CNN
+	1    6500 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6350 3950 6500 3950
+Wire Wire Line
+	6500 3950 6500 4000
 $EndSCHEMATC
