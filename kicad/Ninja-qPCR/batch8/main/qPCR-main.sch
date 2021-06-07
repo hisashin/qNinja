@@ -396,8 +396,6 @@ U 60B81B0D
 F0 "SheetSupercap" 50
 F1 "fileSupercap.sch" 50
 $EndSheet
-Text GLabel 3250 2950 2    50   Input ~ 0
-VIN_SENSE
 $Comp
 L power:GNDA #PWR07
 U 1 1 60B20DBD
@@ -1036,4 +1034,6 @@ F 3 "~" H 6350 4100 50  0001 C CNN
 	1    6350 4100
 	-1   0    0    -1  
 $EndComp
+Text GLabel 1550 1950 0    50   Input ~ 0
+VIN_SENSE
 $EndSCHEMATC
