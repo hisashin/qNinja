@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 5
+Sheet 1 3
 Title ""
 Date ""
 Rev ""
@@ -67,24 +67,12 @@ Text HLabel 1550 2050 0    50   Input ~ 0
 LID_HEATER
 Wire Wire Line
 	1550 2050 1700 2050
-Text GLabel 1550 2550 0    50   Input ~ 0
-SPI_SCLK
-Text GLabel 1550 2350 0    50   Input ~ 0
-SPI_MOSI
 Text GLabel 1550 1650 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 1550 1550 0    50   Input ~ 0
 I2C_SDA
 Text GLabel 1550 2150 0    50   Input ~ 0
 LED_LAT
-Text GLabel 1550 2450 0    50   Input ~ 0
-SPI_MISO
-Wire Wire Line
-	1550 2350 1700 2350
-Wire Wire Line
-	1550 2450 1700 2450
-Wire Wire Line
-	1700 2550 1550 2550
 Wire Wire Line
 	1550 1550 1700 1550
 Wire Wire Line
@@ -318,72 +306,12 @@ F 3 "~" H 4300 5800 50  0001 C CNN
 	1    4300 5800
 	1    0    0    -1  
 $EndComp
-$Sheet
-S 3550 6550 1200 900 
-U 60B09AA3
-F0 "Thermistors" 50
-F1 "fileThermistors.sch" 50
-$EndSheet
-$Sheet
-S 2150 6550 1250 900 
-U 60AFF976
-F0 "LED" 50
-F1 "fileLED.sch" 50
-$EndSheet
 Text GLabel 1550 1750 0    50   Input ~ 0
 AMP_GAIN_SW
-Text Notes 5850 1350 0    50   ~ 0
-IN=High : COM <-> NO\nIN=Low : COM <-> NC
-Text GLabel 5600 2050 0    50   Input ~ 0
-SPI_SWITCH
-$Comp
-L power:GND #PWR?
-U 1 1 60B17BA2
-P 7000 2450
-AR Path="/60AC9047/60B17BA2" Ref="#PWR?"  Part="1" 
-AR Path="/60B17BA2" Ref="#PWR09"  Part="1" 
-F 0 "#PWR09" H 7000 2200 50  0001 C CNN
-F 1 "GND" H 7005 2277 50  0000 C CNN
-F 2 "" H 7000 2450 50  0001 C CNN
-F 3 "" H 7000 2450 50  0001 C CNN
-	1    7000 2450
-	1    0    0    -1  
-$EndComp
-Text GLabel 5600 2250 0    50   Input ~ 0
-SPI_MOSI
-Text GLabel 6950 2050 2    50   Input ~ 0
-LED_SPI_MOSI
-Wire Wire Line
-	5650 1850 5600 1850
-Wire Wire Line
-	5600 2050 5650 2050
-Wire Wire Line
-	5650 2250 5600 2250
-Wire Wire Line
-	6950 2050 6850 2050
-Wire Wire Line
-	6950 2250 6850 2250
-$Comp
-L Ninja-qPCR:TS5A9411DCKR U?
-U 1 1 60B17B92
-P 6250 2150
-AR Path="/60AC9047/60B17B92" Ref="U?"  Part="1" 
-AR Path="/60B17B92" Ref="U1"  Part="1" 
-F 0 "U1" H 6250 2838 60  0000 C CNN
-F 1 "TS5A9411DCKR" H 6250 2732 60  0000 C CNN
-F 2 "Ninja-qPCR:TS5A9411DCKR" H 6250 2090 60  0001 C CNN
-F 3 "" H 6250 2150 60  0000 C CNN
-	1    6250 2150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	7000 2450 6850 2450
 Text GLabel 3250 2650 2    50   Input ~ 0
 THERM_R_SWITCH
 Text Notes 1150 1400 0    50   ~ 0
 Max 50mA
-Text GLabel 5600 1850 0    50   Input ~ 0
-3V3D
 Text GLabel 3250 2150 2    50   Input ~ 0
 MUX_S0
 Text GLabel 3250 1950 2    50   Input ~ 0
@@ -452,8 +380,6 @@ Wire Wire Line
 Wire Wire Line
 	10150 5950 10000 5950
 Wire Wire Line
-	10150 5850 10000 5850
-Wire Wire Line
 	10150 5750 10000 5750
 Wire Wire Line
 	10150 5650 10000 5650
@@ -468,29 +394,21 @@ Wire Wire Line
 Wire Wire Line
 	10150 5150 10000 5150
 Wire Wire Line
-	10150 5050 10000 5050
-Wire Wire Line
 	10150 4950 10000 4950
 Wire Wire Line
 	10150 4850 10000 4850
 Text GLabel 10000 6350 0    50   Input ~ 0
 AMP_GAIN_SW
-Text GLabel 10000 5050 0    50   Input ~ 0
--1V
 Text GLabel 10000 5250 0    50   Input ~ 0
 3V3A
 Text GLabel 10000 5150 0    50   Input ~ 0
 GNDA
-Text GLabel 10000 6250 0    50   Input ~ 0
-THERM_MUX_OUT
 Text GLabel 10000 6150 0    50   Input ~ 0
 I2C_SDA
 Text GLabel 10000 6050 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 10000 5950 0    50   Input ~ 0
 ADC_DRDY
-Text GLabel 10000 5850 0    50   Input ~ 0
-PD_REF_PWM
 Text GLabel 10000 5750 0    50   Input ~ 0
 MUX_SELECT
 Text GLabel 10000 5550 0    50   Input ~ 0
@@ -729,9 +647,9 @@ Wire Wire Line
 	3250 3250 3100 3250
 Wire Wire Line
 	3250 3350 3100 3350
-Text GLabel 3150 4500 0    50   Input ~ 0
+Text GLabel 5200 1750 0    50   Input ~ 0
 DOPEN
-Text GLabel 4850 4500 0    50   Input ~ 0
+Text GLabel 5100 3000 0    50   Input ~ 0
 DLOCK
 $Comp
 L Connector:Conn_01x02_Male LCD1_POWER1
@@ -786,86 +704,6 @@ Wire Wire Line
 Connection ~ 2550 4550
 Wire Wire Line
 	2550 4550 2550 4650
-Wire Wire Line
-	10150 3350 9950 3350
-Wire Wire Line
-	10150 3250 9950 3250
-Wire Wire Line
-	10150 3150 9950 3150
-Wire Wire Line
-	10150 3050 9950 3050
-Wire Wire Line
-	10150 2950 9950 2950
-Wire Wire Line
-	10150 2850 9950 2850
-Wire Wire Line
-	10150 2750 9950 2750
-Wire Wire Line
-	10150 2650 9950 2650
-Wire Wire Line
-	10150 2550 9950 2550
-Text GLabel 9950 3350 0    50   Input ~ 0
-N_LED_OUT2
-Text GLabel 9950 3250 0    50   Input ~ 0
-N_LED_OUT1
-Text GLabel 9950 3150 0    50   Input ~ 0
-N_LED_OUT4
-Text GLabel 9950 3050 0    50   Input ~ 0
-N_LED_OUT3
-Text GLabel 9950 2950 0    50   Input ~ 0
-N_LED_OUT7
-Text GLabel 9950 2850 0    50   Input ~ 0
-N_LED_OUT8
-Text GLabel 9950 2750 0    50   Input ~ 0
-N_LED_OUT6
-Text GLabel 9950 2650 0    50   Input ~ 0
-VCC_LED
-Text GLabel 9950 2550 0    50   Input ~ 0
-GND
-Wire Wire Line
-	10150 2450 9950 2450
-Text GLabel 9950 2450 0    50   Input ~ 0
-N_LED_OUT5
-Wire Wire Line
-	10150 4550 9950 4550
-Wire Wire Line
-	10150 4450 9950 4450
-Wire Wire Line
-	10150 4350 9950 4350
-Wire Wire Line
-	10150 4250 9950 4250
-Wire Wire Line
-	10150 4150 9950 4150
-Wire Wire Line
-	10150 4050 9950 4050
-Wire Wire Line
-	10150 3950 9950 3950
-Wire Wire Line
-	10150 3850 9950 3850
-Wire Wire Line
-	10150 3750 9950 3750
-Text GLabel 9950 4550 0    50   Input ~ 0
-S_LED_OUT2
-Text GLabel 9950 4450 0    50   Input ~ 0
-S_LED_OUT1
-Text GLabel 9950 4350 0    50   Input ~ 0
-S_LED_OUT4
-Text GLabel 9950 4250 0    50   Input ~ 0
-S_LED_OUT3
-Text GLabel 9950 4150 0    50   Input ~ 0
-S_LED_OUT7
-Text GLabel 9950 4050 0    50   Input ~ 0
-S_LED_OUT8
-Text GLabel 9950 3950 0    50   Input ~ 0
-S_LED_OUT6
-Text GLabel 9950 3850 0    50   Input ~ 0
-VCC_LED
-Text GLabel 9950 3750 0    50   Input ~ 0
-GND
-Wire Wire Line
-	10150 3650 9950 3650
-Text GLabel 9950 3650 0    50   Input ~ 0
-S_LED_OUT5
 $Comp
 L Connector:Conn_01x40_Male J2
 U 1 1 60B98A75
@@ -880,160 +718,183 @@ $EndComp
 $Comp
 L Device:R R7
 U 1 1 60BB1885
-P 5650 4750
+P 5900 3250
 AR Path="/60BB1885" Ref="R7"  Part="1" 
 AR Path="/5F7519D0/60BB1885" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60BB1885" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60BB1885" Ref="R?"  Part="1" 
-F 0 "R7" V 5443 4750 50  0000 C CNN
-F 1 "10k" V 5534 4750 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5580 4750 50  0001 C CNN
-F 3 "~" H 5650 4750 50  0001 C CNN
-	1    5650 4750
+F 0 "R7" V 5693 3250 50  0000 C CNN
+F 1 "10k" V 5784 3250 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5830 3250 50  0001 C CNN
+F 3 "~" H 5900 3250 50  0001 C CNN
+	1    5900 3250
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R6
 U 1 1 60BB188B
-P 5200 4500
+P 5450 3000
 AR Path="/60BB188B" Ref="R6"  Part="1" 
 AR Path="/5F7519D0/60BB188B" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60BB188B" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60BB188B" Ref="R?"  Part="1" 
-F 0 "R6" V 4993 4500 50  0000 C CNN
-F 1 "1k" V 5084 4500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5130 4500 50  0001 C CNN
-F 3 "~" H 5200 4500 50  0001 C CNN
-	1    5200 4500
+F 0 "R6" V 5243 3000 50  0000 C CNN
+F 1 "1k" V 5334 3000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5380 3000 50  0001 C CNN
+F 3 "~" H 5450 3000 50  0001 C CNN
+	1    5450 3000
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	5750 4500 5400 4500
+	6000 3000 5650 3000
 Wire Wire Line
-	5500 4750 5400 4750
+	5750 3250 5650 3250
 Wire Wire Line
-	5400 4750 5400 4500
-Connection ~ 5400 4500
+	5650 3250 5650 3000
+Connection ~ 5650 3000
 Wire Wire Line
-	5400 4500 5350 4500
+	5650 3000 5600 3000
 $Comp
 L power:GND #PWR05
 U 1 1 60BB1896
-P 6050 4850
+P 6300 3350
 AR Path="/60BB1896" Ref="#PWR05"  Part="1" 
 AR Path="/5F7519D0/60BB1896" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60BB1896" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60BB1896" Ref="#PWR?"  Part="1" 
-F 0 "#PWR05" H 6050 4600 50  0001 C CNN
-F 1 "GND" H 6055 4677 50  0000 C CNN
-F 2 "" H 6050 4850 50  0001 C CNN
-F 3 "" H 6050 4850 50  0001 C CNN
-	1    6050 4850
+F 0 "#PWR05" H 6300 3100 50  0001 C CNN
+F 1 "GND" H 6305 3177 50  0000 C CNN
+F 2 "" H 6300 3350 50  0001 C CNN
+F 3 "" H 6300 3350 50  0001 C CNN
+	1    6300 3350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6050 4850 6050 4750
+	6300 3350 6300 3250
 Wire Wire Line
-	5800 4750 6050 4750
-Connection ~ 6050 4750
+	6050 3250 6300 3250
+Connection ~ 6300 3250
 Wire Wire Line
-	6050 4750 6050 4700
+	6300 3250 6300 3200
 $Comp
 L Device:Q_NMOS_GSD Q3
 U 1 1 60BB18A0
-P 5950 4500
+P 6200 3000
 AR Path="/60BB18A0" Ref="Q3"  Part="1" 
 AR Path="/5F7519D0/60BB18A0" Ref="Q?"  Part="1" 
 AR Path="/5F7093B5/60BB18A0" Ref="Q?"  Part="1" 
 AR Path="/60AC8F63/60BB18A0" Ref="Q?"  Part="1" 
-F 0 "Q3" H 6154 4546 50  0000 L CNN
-F 1 "Q_NMOS_GSD" H 6154 4455 50  0000 L CNN
-F 2 "Ninja-qPCR:SOT95P240X112-3N" H 6150 4600 50  0001 C CNN
-F 3 "~" H 5950 4500 50  0001 C CNN
-	1    5950 4500
+F 0 "Q3" H 6404 3046 50  0000 L CNN
+F 1 "Q_NMOS_GSD" H 6404 2955 50  0000 L CNN
+F 2 "Ninja-qPCR:SOT95P240X112-3N" H 6400 3100 50  0001 C CNN
+F 3 "~" H 6200 3000 50  0001 C CNN
+	1    6200 3000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6150 4200 6050 4200
-Text GLabel 5900 4100 0    50   Input ~ 0
+	6400 2700 6300 2700
+Text GLabel 6150 2600 0    50   Input ~ 0
 12V
 Wire Wire Line
-	5900 4100 6150 4100
+	6150 2600 6400 2600
 Wire Wire Line
-	6050 4200 6050 4300
+	6300 2700 6300 2800
 Wire Wire Line
-	4850 4500 5050 4500
+	5100 3000 5300 3000
 Wire Wire Line
-	3150 4500 3550 4500
+	5200 1750 5600 1750
 $Comp
 L Device:R R4
 U 1 1 60BFB670
-P 3800 4300
+P 5850 1550
 AR Path="/60BFB670" Ref="R4"  Part="1" 
 AR Path="/5F7519D0/60BFB670" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60BFB670" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60BFB670" Ref="R?"  Part="1" 
-F 0 "R4" V 3593 4300 50  0000 C CNN
-F 1 "47k" V 3684 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 3730 4300 50  0001 C CNN
-F 3 "~" H 3800 4300 50  0001 C CNN
-	1    3800 4300
+F 0 "R4" V 5643 1550 50  0000 C CNN
+F 1 "47k" V 5734 1550 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5780 1550 50  0001 C CNN
+F 3 "~" H 5850 1550 50  0001 C CNN
+	1    5850 1550
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3650 4300 3550 4300
+	5700 1550 5600 1550
 Wire Wire Line
-	3550 4300 3550 4500
-Text GLabel 4050 4300 2    50   Input ~ 0
+	5600 1550 5600 1750
+Text GLabel 6100 1550 2    50   Input ~ 0
 3V3D
 Wire Wire Line
-	4050 4300 3950 4300
+	6100 1550 6000 1550
 $Comp
 L Switch:SW_Reed SW1
 U 1 1 60C1DBCD
-P 3850 4750
-F 0 "SW1" H 3850 4972 50  0000 C CNN
-F 1 "SW_Reed" H 3850 4881 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 3850 4750 50  0001 C CNN
-F 3 "~" H 3850 4750 50  0001 C CNN
-	1    3850 4750
+P 5900 2000
+F 0 "SW1" H 5900 2222 50  0000 C CNN
+F 1 "SW_Reed" H 5900 2131 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 5900 2000 50  0001 C CNN
+F 3 "~" H 5900 2000 50  0001 C CNN
+	1    5900 2000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3550 4500 3550 4750
+	5600 1750 5600 2000
 Wire Wire Line
-	3550 4750 3650 4750
-Connection ~ 3550 4500
+	5600 2000 5700 2000
+Connection ~ 5600 1750
 $Comp
 L power:GND #PWR?
 U 1 1 60C41FB6
-P 4200 4800
+P 6250 2050
 AR Path="/60AC9047/60C41FB6" Ref="#PWR?"  Part="1" 
 AR Path="/60C41FB6" Ref="#PWR03"  Part="1" 
-F 0 "#PWR03" H 4200 4550 50  0001 C CNN
-F 1 "GND" H 4205 4627 50  0000 C CNN
-F 2 "" H 4200 4800 50  0001 C CNN
-F 3 "" H 4200 4800 50  0001 C CNN
-	1    4200 4800
+F 0 "#PWR03" H 6250 1800 50  0001 C CNN
+F 1 "GND" H 6255 1877 50  0000 C CNN
+F 2 "" H 6250 2050 50  0001 C CNN
+F 3 "" H 6250 2050 50  0001 C CNN
+	1    6250 2050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4050 4750 4200 4750
+	6100 2000 6250 2000
 Wire Wire Line
-	4200 4750 4200 4800
-Text GLabel 6950 2250 2    50   Input ~ 0
-PD_MUX_SPI_MOSI
+	6250 2000 6250 2050
 $Comp
 L Connector:Conn_01x02_Male LOCK1
 U 1 1 60C90AC0
-P 6350 4100
-F 0 "LOCK1" H 6322 4074 50  0000 R CNN
-F 1 "Conn_01x02_Male" H 6322 3983 50  0000 R CNN
-F 2 "Connectors_Molex:Molex_KK-6410-02_02x2.54mm_Straight" H 6350 4100 50  0001 C CNN
-F 3 "~" H 6350 4100 50  0001 C CNN
-	1    6350 4100
+P 6600 2600
+F 0 "LOCK1" H 6572 2574 50  0000 R CNN
+F 1 "Conn_01x02_Male" H 6572 2483 50  0000 R CNN
+F 2 "Connectors_Molex:Molex_KK-6410-02_02x2.54mm_Straight" H 6600 2600 50  0001 C CNN
+F 3 "~" H 6600 2600 50  0001 C CNN
+	1    6600 2600
 	-1   0    0    -1  
 $EndComp
 Text GLabel 1550 1950 0    50   Input ~ 0
 VIN_SENSE
+Text GLabel 10000 5050 0    50   Input ~ 0
+VCC_LED
+Wire Wire Line
+	10000 5050 10150 5050
+Text GLabel 9000 5050 2    50   Input ~ 0
+VCC_LED
+Text GLabel 8700 5050 0    50   Input ~ 0
+5V_UPS
+Wire Wire Line
+	8700 5050 9000 5050
+Text GLabel 10000 5850 0    50   Input ~ 0
+LED_LAT
+Wire Wire Line
+	10000 5850 10150 5850
+Wire Wire Line
+	1700 2350 1550 2350
+Wire Wire Line
+	1700 2450 1550 2450
+Wire Wire Line
+	1700 2550 1550 2550
+NoConn ~ 1550 2350
+NoConn ~ 1550 2450
+NoConn ~ 1550 2550
+Text GLabel 10000 6250 0    50   Input ~ 0
+THERM_R_SWITCH
 $EndSCHEMATC

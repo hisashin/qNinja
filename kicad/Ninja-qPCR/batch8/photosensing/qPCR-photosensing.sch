@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 2
+Sheet 1 6
 Title ""
 Date ""
 Rev ""
@@ -65,8 +65,6 @@ Text GLabel 5050 1050 2    50   Input ~ 0
 ADC_DRDY
 Text GLabel 5050 1550 2    50   Input ~ 0
 GNDD
-Text GLabel 1300 2800 2    50   Input ~ 0
-THERM_OUT
 Text GLabel 1300 2500 2    50   Input ~ 0
 ADC_DRDY
 Text GLabel 1300 2600 2    50   Input ~ 0
@@ -239,8 +237,6 @@ Wire Wire Line
 	3450 6850 3200 6850
 Wire Wire Line
 	3200 6950 3450 6950
-Text GLabel 1300 2400 2    50   Input ~ 0
-PD_REF_PWM
 Text GLabel 6150 3300 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
@@ -318,8 +314,6 @@ Wire Wire Line
 	6300 3300 7000 3300
 Text GLabel 9200 1400 2    50   Input ~ 0
 3V3D
-Text GLabel 1300 1600 2    50   Input ~ 0
--1V
 Text GLabel 7600 2000 0    50   Input ~ 0
 -1V
 $Comp
@@ -358,8 +352,6 @@ Wire Wire Line
 	2900 1650 3100 1650
 Wire Wire Line
 	3100 1750 2900 1750
-Text GLabel 2900 1550 0    50   Input ~ 0
-THERM_OUT
 Wire Wire Line
 	2900 1450 3100 1450
 $Comp
@@ -544,8 +536,6 @@ Text HLabel 10250 2850 2    50   Input ~ 0
 GAIN_SMALL
 Text HLabel 10250 2550 2    50   Input ~ 0
 GAIN_LARGE
-Text HLabel 1300 2900 2    50   Input ~ 0
-AMP_GAIN_SW
 Text HLabel 9300 1600 2    50   Input ~ 0
 AMP_GAIN_SW
 Text GLabel 9500 3350 2    50   Input ~ 0
@@ -620,7 +610,7 @@ $Sheet
 S 750  7300 1650 350 
 U 60AF0518
 F0 "Sheet60AF0517" 50
-F1 "fileMUX.sch" 50
+F1 "filePhotoSouth.sch" 50
 $EndSheet
 Text GLabel 1300 1700 2    50   Input ~ 0
 GNDA
@@ -664,8 +654,6 @@ Wire Wire Line
 Wire Wire Line
 	1300 1500 1150 1500
 Wire Wire Line
-	1300 1600 1150 1600
-Wire Wire Line
 	1300 1700 1150 1700
 Wire Wire Line
 	1300 1800 1150 1800
@@ -679,8 +667,6 @@ Wire Wire Line
 	1300 2200 1150 2200
 Wire Wire Line
 	1300 2300 1150 2300
-Wire Wire Line
-	1300 2400 1150 2400
 Wire Wire Line
 	1300 2500 1150 2500
 Wire Wire Line
@@ -713,4 +699,42 @@ Wire Wire Line
 	5050 1550 4900 1550
 Text GLabel 1300 2300 2    50   Input ~ 0
 MUX_SELECT
+$Sheet
+S 9300 4450 1750 450 
+U 60BEA309
+F0 "Power" 50
+F1 "filePower.sch" 50
+$EndSheet
+$Sheet
+S 9300 5150 1750 400 
+U 60BEA5D5
+F0 "LED" 50
+F1 "fileLED.sch" 50
+$EndSheet
+Text GLabel 1300 1600 2    50   Input ~ 0
+VCC_LED
+Wire Wire Line
+	1300 1600 1150 1600
+Text GLabel 1300 2400 2    50   Input ~ 0
+LED_LAT
+Wire Wire Line
+	1300 2400 1150 2400
+Text GLabel 1300 2800 2    50   Input ~ 0
+THERM_R_SWITCH
+Text GLabel 2900 1550 0    50   Input ~ 0
+THERM_MUX_OUT
+Text GLabel 1300 2900 2    50   Input ~ 0
+AMP_GAIN_SW
+$Sheet
+S 9300 5800 1750 400 
+U 60BEA899
+F0 "Thermistors" 50
+F1 "fileThermistors.sch" 50
+$EndSheet
+$Sheet
+S 2650 7300 1850 350 
+U 60C04E5C
+F0 "Sheet60C04E5B" 50
+F1 "filePhotoNorth.sch" 50
+$EndSheet
 $EndSCHEMATC
