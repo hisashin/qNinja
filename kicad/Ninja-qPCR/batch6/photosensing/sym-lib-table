@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name qPCR-photosensing-rescue)(type Legacy)(uri ${KIPRJMOD}/qPCR-photosensing-rescue.lib)(options "")(descr ""))
+)

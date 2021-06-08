@@ -23,3 +23,4 @@ package-lock.json
 -rescue.lib
 _autoosave*
 Untitled.pdf
+src/api/*
