@@ -71,8 +71,6 @@ Text GLabel 1550 1650 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 1550 1550 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 1550 2150 0    50   Input ~ 0
-LED_LAT
 Wire Wire Line
 	1550 1550 1700 1550
 Wire Wire Line
@@ -397,17 +395,17 @@ Wire Wire Line
 	10150 4950 10000 4950
 Wire Wire Line
 	10150 4850 10000 4850
-Text GLabel 10000 6350 0    50   Input ~ 0
+Text GLabel 10000 6250 0    50   Input ~ 0
 AMP_GAIN_SW
 Text GLabel 10000 5250 0    50   Input ~ 0
 3V3A
 Text GLabel 10000 5150 0    50   Input ~ 0
 GNDA
-Text GLabel 10000 6150 0    50   Input ~ 0
-I2C_SDA
 Text GLabel 10000 6050 0    50   Input ~ 0
-I2C_SCL
+I2C_SDA
 Text GLabel 10000 5950 0    50   Input ~ 0
+I2C_SCL
+Text GLabel 10000 5850 0    50   Input ~ 0
 ADC_DRDY
 Text GLabel 10000 5750 0    50   Input ~ 0
 MUX_SELECT
@@ -882,8 +880,6 @@ Text GLabel 8700 5050 0    50   Input ~ 0
 5V_UPS
 Wire Wire Line
 	8700 5050 9000 5050
-Text GLabel 10000 5850 0    50   Input ~ 0
-LED_LAT
 Wire Wire Line
 	10000 5850 10150 5850
 Wire Wire Line
@@ -895,6 +891,6 @@ Wire Wire Line
 NoConn ~ 1550 2350
 NoConn ~ 1550 2450
 NoConn ~ 1550 2550
-Text GLabel 10000 6250 0    50   Input ~ 0
+Text GLabel 10000 6150 0    50   Input ~ 0
 THERM_R_SWITCH
 $EndSCHEMATC

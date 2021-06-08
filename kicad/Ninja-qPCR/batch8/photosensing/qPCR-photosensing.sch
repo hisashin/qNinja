@@ -65,11 +65,11 @@ Text GLabel 5050 1050 2    50   Input ~ 0
 ADC_DRDY
 Text GLabel 5050 1550 2    50   Input ~ 0
 GNDD
-Text GLabel 1300 2500 2    50   Input ~ 0
+Text GLabel 1300 2400 2    50   Input ~ 0
 ADC_DRDY
-Text GLabel 1300 2600 2    50   Input ~ 0
+Text GLabel 1300 2500 2    50   Input ~ 0
 I2C_SCL
-Text GLabel 1300 2700 2    50   Input ~ 0
+Text GLabel 1300 2600 2    50   Input ~ 0
 I2C_SDA
 Text GLabel 2900 4850 0    50   Input ~ 0
 PD_REF_PWM
@@ -715,15 +715,13 @@ Text GLabel 1300 1600 2    50   Input ~ 0
 VCC_LED
 Wire Wire Line
 	1300 1600 1150 1600
-Text GLabel 1300 2400 2    50   Input ~ 0
-LED_LAT
 Wire Wire Line
 	1300 2400 1150 2400
-Text GLabel 1300 2800 2    50   Input ~ 0
+Text GLabel 1300 2700 2    50   Input ~ 0
 THERM_R_SWITCH
 Text GLabel 2900 1550 0    50   Input ~ 0
 THERM_MUX_OUT
-Text GLabel 1300 2900 2    50   Input ~ 0
+Text GLabel 1300 2800 2    50   Input ~ 0
 AMP_GAIN_SW
 $Sheet
 S 9300 5800 1750 400 
