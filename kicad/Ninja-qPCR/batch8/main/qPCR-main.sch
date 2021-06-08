@@ -13,8 +13,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Notes 600  7700 0    50   ~ 0
-Use AGND and DGND  https://www.zuken.co.jp/club_Z/z/product/BD/019/pro_130221_1.html?fbclid=IwAR0Fud5uWcRWMC9uykssyA-G8J9CSF2g4TS7U_EDWa5E4txVfpM9rxRD7ok
 $Sheet
 S 700  6550 1300 900 
 U 60AC8F91
@@ -30,7 +28,7 @@ AR Path="/60AEA148/60AF82D8" Ref="J?"  Part="1"
 AR Path="/60AC8F63/60AF82D8" Ref="J?"  Part="1" 
 F 0 "J1" H 2400 3615 50  0000 C CNN
 F 1 "Raspberry_Pi_3A_Plus_wpi" H 2400 3524 50  0000 C CNN
-F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown" H 1950 1350 50  0001 C CNN
+F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown" H 1950 1350 50  0001 C CNN
 F 3 "" H 1950 1350 50  0001 C CNN
 	1    2400 2400
 	1    0    0    -1  
@@ -105,10 +103,6 @@ Wire Wire Line
 	1550 1950 1700 1950
 Text GLabel 3250 2050 2    50   Input ~ 0
 GND
-NoConn ~ 1550 2750
-Wire Wire Line
-	1700 2750 1550 2750
-NoConn ~ 3250 2750
 Wire Wire Line
 	3250 2750 3100 2750
 Wire Wire Line
@@ -227,14 +221,14 @@ F 3 "~" H 2250 5800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L Device:R R4
 U 1 1 60AF83E3
 P 4000 6050
-AR Path="/60AF83E3" Ref="R5"  Part="1" 
+AR Path="/60AF83E3" Ref="R4"  Part="1" 
 AR Path="/5F7519D0/60AF83E3" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60AF83E3" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60AF83E3" Ref="R?"  Part="1" 
-F 0 "R5" V 3793 6050 50  0000 C CNN
+F 0 "R4" V 3793 6050 50  0000 C CNN
 F 1 "10k" V 3884 6050 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 3930 6050 50  0001 C CNN
 F 3 "~" H 4000 6050 50  0001 C CNN
@@ -266,14 +260,14 @@ Connection ~ 3750 5800
 Wire Wire Line
 	3750 5800 3700 5800
 $Comp
-L power:GND #PWR04
+L power:GND #PWR03
 U 1 1 60AF83F4
 P 4400 6150
-AR Path="/60AF83F4" Ref="#PWR04"  Part="1" 
+AR Path="/60AF83F4" Ref="#PWR03"  Part="1" 
 AR Path="/5F7519D0/60AF83F4" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60AF83F4" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60AF83F4" Ref="#PWR?"  Part="1" 
-F 0 "#PWR04" H 4400 5900 50  0001 C CNN
+F 0 "#PWR03" H 4400 5900 50  0001 C CNN
 F 1 "GND" H 4405 5977 50  0000 C CNN
 F 2 "" H 4400 6150 50  0001 C CNN
 F 3 "" H 4400 6150 50  0001 C CNN
@@ -323,32 +317,6 @@ F0 "SheetSupercap" 50
 F1 "fileSupercap.sch" 50
 $EndSheet
 $Comp
-L power:GNDA #PWR07
-U 1 1 60B20DBD
-P 6500 7350
-F 0 "#PWR07" H 6500 7100 50  0001 C CNN
-F 1 "GNDA" H 6505 7177 50  0000 C CNN
-F 2 "" H 6500 7350 50  0001 C CNN
-F 3 "" H 6500 7350 50  0001 C CNN
-	1    6500 7350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR06
-U 1 1 60B11158
-P 6300 7350
-AR Path="/60B11158" Ref="#PWR06"  Part="1" 
-AR Path="/5F7519D0/60B11158" Ref="#PWR?"  Part="1" 
-AR Path="/5F7093B5/60B11158" Ref="#PWR?"  Part="1" 
-AR Path="/60AC8F63/60B11158" Ref="#PWR?"  Part="1" 
-F 0 "#PWR06" H 6300 7100 50  0001 C CNN
-F 1 "GND" H 6305 7177 50  0000 C CNN
-F 2 "" H 6300 7350 50  0001 C CNN
-F 3 "" H 6300 7350 50  0001 C CNN
-	1    6300 7350
-	1    0    0    -1  
-$EndComp
-$Comp
 L Connector:Screw_Terminal_01x02 HLID?
 U 1 1 60BAF2C5
 P 2550 5400
@@ -365,10 +333,8 @@ Wire Wire Line
 	2100 5400 2350 5400
 Text GLabel 2100 5400 0    50   Input ~ 0
 12V
-Text GLabel 10000 4950 0    50   Input ~ 0
+Text GLabel 10000 5050 0    50   Input ~ 0
 3V3D
-Wire Wire Line
-	10150 6350 10000 6350
 Wire Wire Line
 	10150 6250 10000 6250
 Wire Wire Line
@@ -390,17 +356,13 @@ Wire Wire Line
 Wire Wire Line
 	10150 5250 10000 5250
 Wire Wire Line
-	10150 5150 10000 5150
+	10150 5050 10000 5050
 Wire Wire Line
 	10150 4950 10000 4950
-Wire Wire Line
-	10150 4850 10000 4850
 Text GLabel 10000 6250 0    50   Input ~ 0
 AMP_GAIN_SW
 Text GLabel 10000 5250 0    50   Input ~ 0
 3V3A
-Text GLabel 10000 5150 0    50   Input ~ 0
-GNDA
 Text GLabel 10000 6050 0    50   Input ~ 0
 I2C_SDA
 Text GLabel 10000 5950 0    50   Input ~ 0
@@ -417,7 +379,7 @@ Text GLabel 10000 5450 0    50   Input ~ 0
 MUX_S2
 Text GLabel 10000 5350 0    50   Input ~ 0
 MUX_S3
-Text GLabel 10000 4850 0    50   Input ~ 0
+Text GLabel 10000 4950 0    50   Input ~ 0
 GND
 Text Notes 9550 6500 0    50   ~ 0
 To Photosensing Board
@@ -517,14 +479,14 @@ Wire Wire Line
 Wire Wire Line
 	6850 6150 6850 6050
 $Comp
-L power:GND #PWR08
+L power:GND #PWR06
 U 1 1 60AF8383
 P 6850 6150
-AR Path="/60AF8383" Ref="#PWR08"  Part="1" 
+AR Path="/60AF8383" Ref="#PWR06"  Part="1" 
 AR Path="/5F7519D0/60AF8383" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60AF8383" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60AF8383" Ref="#PWR?"  Part="1" 
-F 0 "#PWR08" H 6850 5900 50  0001 C CNN
+F 0 "#PWR06" H 6850 5900 50  0001 C CNN
 F 1 "GND" H 6855 5977 50  0000 C CNN
 F 2 "" H 6850 6150 50  0001 C CNN
 F 3 "" H 6850 6150 50  0001 C CNN
@@ -574,56 +536,56 @@ Wire Wire Line
 	4250 5400 4500 5400
 Wire Wire Line
 	4400 5500 4400 5600
-Text GLabel 1550 4350 0    50   Input ~ 0
+Text GLabel 1650 4150 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 1550 4450 0    50   Input ~ 0
+Text GLabel 1650 4250 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 1550 4550 0    50   Input ~ 0
+Text GLabel 1650 4350 0    50   Input ~ 0
 GND
 $Comp
 L power:GND #PWR02
 U 1 1 60B8E5B3
-P 2550 4900
+P 2650 4700
 AR Path="/60B8E5B3" Ref="#PWR02"  Part="1" 
 AR Path="/5F7519D0/60B8E5B3" Ref="#PWR?"  Part="1" 
 AR Path="/5F7093B5/60B8E5B3" Ref="#PWR?"  Part="1" 
 AR Path="/60AC8F63/60B8E5B3" Ref="#PWR?"  Part="1" 
-F 0 "#PWR02" H 2550 4650 50  0001 C CNN
-F 1 "GND" H 2555 4727 50  0000 C CNN
-F 2 "" H 2550 4900 50  0001 C CNN
-F 3 "" H 2550 4900 50  0001 C CNN
-	1    2550 4900
+F 0 "#PWR02" H 2650 4450 50  0001 C CNN
+F 1 "GND" H 2655 4527 50  0000 C CNN
+F 2 "" H 2650 4700 50  0001 C CNN
+F 3 "" H 2650 4700 50  0001 C CNN
+	1    2650 4700
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2450 4150 2550 4150
+	2550 3950 2650 3950
 Wire Wire Line
-	2550 4150 2550 4250
+	2650 3950 2650 4050
 Wire Wire Line
-	2450 4450 2550 4450
+	2550 4250 2650 4250
 Wire Wire Line
-	2450 4350 2550 4350
-Connection ~ 2550 4350
+	2550 4150 2650 4150
+Connection ~ 2650 4150
 Wire Wire Line
-	2550 4350 2550 4450
+	2650 4150 2650 4250
 Wire Wire Line
-	2450 4250 2550 4250
-Connection ~ 2550 4250
+	2550 4050 2650 4050
+Connection ~ 2650 4050
 Wire Wire Line
-	2550 4250 2550 4350
-Text GLabel 1550 4150 0    50   Input ~ 0
+	2650 4050 2650 4150
+Text GLabel 1650 3950 0    50   Input ~ 0
 5V_UPS
 Wire Wire Line
-	1550 4150 1700 4150
+	1650 3950 1800 3950
 Wire Wire Line
-	1700 4350 1550 4350
+	1800 4150 1650 4150
 Wire Wire Line
-	1700 4450 1550 4450
+	1800 4250 1650 4250
 Wire Wire Line
-	1700 4550 1550 4550
-NoConn ~ 1600 4250
+	1800 4350 1650 4350
+NoConn ~ 1700 4050
 Wire Wire Line
-	1600 4250 1700 4250
+	1700 4050 1800 4050
 Wire Wire Line
 	3050 2650 3100 2650
 Connection ~ 3100 2650
@@ -633,12 +595,6 @@ Text GLabel 1550 3150 0    50   Input ~ 0
 DOPEN
 Text GLabel 3250 3150 2    50   Input ~ 0
 DLOCK
-Text GLabel 1550 3250 0    50   Input ~ 0
-TACT1
-Text GLabel 3250 3250 2    50   Input ~ 0
-TACT2
-Text GLabel 3250 3350 2    50   Input ~ 0
-TACT3
 Wire Wire Line
 	3250 3150 3100 3150
 Wire Wire Line
@@ -668,51 +624,40 @@ Wire Wire Line
 	1250 5100 1150 5100
 Wire Wire Line
 	1250 5200 1150 5200
-Connection ~ 2550 4450
+Connection ~ 2650 4250
 $Comp
 L Ninja-qPCR:RPI_LCD_TOUCH_7INCH LCD1
 U 1 1 60BA74A3
-P 1700 4150
-F 0 "LCD1" H 2075 4375 50  0000 C CNN
-F 1 "RPI_LCD_TOUCH_7INCH" H 2075 4284 50  0000 C CNN
-F 2 "Ninja-qPCR:RPI_LCD_TOUCH_7INCH" H 1700 4150 50  0001 C CNN
-F 3 "" H 1700 4150 50  0001 C CNN
-	1    1700 4150
+P 1800 3950
+F 0 "LCD1" H 2175 4175 50  0000 C CNN
+F 1 "RPI_LCD_TOUCH_7INCH" H 2175 4084 50  0000 C CNN
+F 2 "Ninja-qPCR:RPI_LCD_TOUCH_7INCH" H 1800 3950 50  0001 C CNN
+F 3 "" H 1800 3950 50  0001 C CNN
+	1    1800 3950
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2550 4450 2550 4550
+	2650 4250 2650 4350
 Wire Wire Line
-	2450 4850 2550 4850
-Connection ~ 2550 4850
+	2550 4650 2650 4650
+Connection ~ 2650 4650
 Wire Wire Line
-	2550 4850 2550 4900
+	2650 4650 2650 4700
 Wire Wire Line
-	2450 4750 2550 4750
-Connection ~ 2550 4750
+	2550 4550 2650 4550
+Connection ~ 2650 4550
 Wire Wire Line
-	2550 4750 2550 4850
+	2650 4550 2650 4650
 Wire Wire Line
-	2450 4650 2550 4650
-Connection ~ 2550 4650
+	2550 4450 2650 4450
+Connection ~ 2650 4450
 Wire Wire Line
-	2550 4650 2550 4750
+	2650 4450 2650 4550
 Wire Wire Line
-	2450 4550 2550 4550
-Connection ~ 2550 4550
+	2550 4350 2650 4350
+Connection ~ 2650 4350
 Wire Wire Line
-	2550 4550 2550 4650
-$Comp
-L Connector:Conn_01x40_Male J2
-U 1 1 60B98A75
-P 10350 4350
-F 0 "J2" H 10322 4324 50  0000 R CNN
-F 1 "Conn_01x40_Male" H 10322 4233 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch1.27mm" H 10350 4350 50  0001 C CNN
-F 3 "~" H 10350 4350 50  0001 C CNN
-	1    10350 4350
-	-1   0    0    -1  
-$EndComp
+	2650 4350 2650 4450
 $Comp
 L Device:R R7
 U 1 1 60BB1885
@@ -729,14 +674,14 @@ F 3 "~" H 5900 3250 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R6
+L Device:R R5
 U 1 1 60BB188B
 P 5450 3000
-AR Path="/60BB188B" Ref="R6"  Part="1" 
+AR Path="/60BB188B" Ref="R5"  Part="1" 
 AR Path="/5F7519D0/60BB188B" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60BB188B" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60BB188B" Ref="R?"  Part="1" 
-F 0 "R6" V 5243 3000 50  0000 C CNN
+F 0 "R5" V 5243 3000 50  0000 C CNN
 F 1 "1k" V 5334 3000 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 5380 3000 50  0001 C CNN
 F 3 "~" H 5450 3000 50  0001 C CNN
@@ -802,14 +747,14 @@ Wire Wire Line
 Wire Wire Line
 	5200 1750 5600 1750
 $Comp
-L Device:R R4
+L Device:R R6
 U 1 1 60BFB670
 P 5850 1550
-AR Path="/60BFB670" Ref="R4"  Part="1" 
+AR Path="/60BFB670" Ref="R6"  Part="1" 
 AR Path="/5F7519D0/60BFB670" Ref="R?"  Part="1" 
 AR Path="/5F7093B5/60BFB670" Ref="R?"  Part="1" 
 AR Path="/60AC8F63/60BFB670" Ref="R?"  Part="1" 
-F 0 "R4" V 5643 1550 50  0000 C CNN
+F 0 "R6" V 5643 1550 50  0000 C CNN
 F 1 "47k" V 5734 1550 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 5780 1550 50  0001 C CNN
 F 3 "~" H 5850 1550 50  0001 C CNN
@@ -845,8 +790,8 @@ L power:GND #PWR?
 U 1 1 60C41FB6
 P 6250 2050
 AR Path="/60AC9047/60C41FB6" Ref="#PWR?"  Part="1" 
-AR Path="/60C41FB6" Ref="#PWR03"  Part="1" 
-F 0 "#PWR03" H 6250 1800 50  0001 C CNN
+AR Path="/60C41FB6" Ref="#PWR04"  Part="1" 
+F 0 "#PWR04" H 6250 1800 50  0001 C CNN
 F 1 "GND" H 6255 1877 50  0000 C CNN
 F 2 "" H 6250 2050 50  0001 C CNN
 F 3 "" H 6250 2050 50  0001 C CNN
@@ -870,10 +815,10 @@ F 3 "~" H 6600 2600 50  0001 C CNN
 $EndComp
 Text GLabel 1550 1950 0    50   Input ~ 0
 VIN_SENSE
-Text GLabel 10000 5050 0    50   Input ~ 0
+Text GLabel 10000 5150 0    50   Input ~ 0
 VCC_LED
 Wire Wire Line
-	10000 5050 10150 5050
+	10000 5150 10150 5150
 Text GLabel 9000 5050 2    50   Input ~ 0
 VCC_LED
 Text GLabel 8700 5050 0    50   Input ~ 0
@@ -882,15 +827,180 @@ Wire Wire Line
 	8700 5050 9000 5050
 Wire Wire Line
 	10000 5850 10150 5850
+Text GLabel 10000 6150 0    50   Input ~ 0
+THERM_R_SWITCH
+$Comp
+L Connector:Conn_01x01_Male J2
+U 1 1 60C0C8E3
+P 4000 3900
+F 0 "J2" H 3972 3924 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 3833 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 3900 50  0001 C CNN
+F 3 "~" H 4000 3900 50  0001 C CNN
+	1    4000 3900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J5
+U 1 1 60C0F3FB
+P 4000 4000
+F 0 "J5" H 3972 4024 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 3933 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4000 50  0001 C CNN
+F 3 "~" H 4000 4000 50  0001 C CNN
+	1    4000 4000
+	-1   0    0    -1  
+$EndComp
+Text HLabel 1550 2150 0    50   Input ~ 0
+GPIO3
+Text HLabel 1550 2350 0    50   Input ~ 0
+GPIO12
+Text HLabel 1550 2450 0    50   Input ~ 0
+GPIO13
+Text HLabel 1550 2550 0    50   Input ~ 0
+GPIO14
+Text HLabel 1550 2950 0    50   Input ~ 0
+GPIO22
+Text HLabel 1550 3250 0    50   Input ~ 0
+GPIO25
+Text HLabel 3250 2950 2    50   Input ~ 0
+GPIO26
+Text HLabel 3250 3250 2    50   Input ~ 0
+GPIO28
+Text HLabel 3250 3350 2    50   Input ~ 0
+GPIO29
+Wire Wire Line
+	1550 2750 1700 2750
 Wire Wire Line
 	1700 2350 1550 2350
 Wire Wire Line
 	1700 2450 1550 2450
 Wire Wire Line
 	1700 2550 1550 2550
-NoConn ~ 1550 2350
-NoConn ~ 1550 2450
-NoConn ~ 1550 2550
-Text GLabel 10000 6150 0    50   Input ~ 0
-THERM_R_SWITCH
+Text HLabel 3600 3900 0    50   Input ~ 0
+GPIO3
+Text HLabel 3600 4000 0    50   Input ~ 0
+GPIO12
+Text HLabel 3600 4100 0    50   Input ~ 0
+GPIO13
+Text HLabel 3600 4200 0    50   Input ~ 0
+GPIO14
+Text HLabel 3600 4300 0    50   Input ~ 0
+GPIO22
+Text HLabel 3600 4400 0    50   Input ~ 0
+GPIO25
+Text HLabel 3600 4500 0    50   Input ~ 0
+GPIO26
+Text HLabel 3600 4600 0    50   Input ~ 0
+GPIO28
+Text HLabel 3600 4700 0    50   Input ~ 0
+GPIO29
+$Comp
+L Connector:Conn_01x01_Male J6
+U 1 1 60C484F3
+P 4000 4100
+F 0 "J6" H 3972 4124 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4033 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4100 50  0001 C CNN
+F 3 "~" H 4000 4100 50  0001 C CNN
+	1    4000 4100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J7
+U 1 1 60C484FD
+P 4000 4200
+F 0 "J7" H 3972 4224 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4133 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4200 50  0001 C CNN
+F 3 "~" H 4000 4200 50  0001 C CNN
+	1    4000 4200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J8
+U 1 1 60C48507
+P 4000 4300
+F 0 "J8" H 3972 4324 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4233 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4300 50  0001 C CNN
+F 3 "~" H 4000 4300 50  0001 C CNN
+	1    4000 4300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J9
+U 1 1 60C48511
+P 4000 4400
+F 0 "J9" H 3972 4424 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4333 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4400 50  0001 C CNN
+F 3 "~" H 4000 4400 50  0001 C CNN
+	1    4000 4400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J10
+U 1 1 60C51A1E
+P 4000 4500
+F 0 "J10" H 3972 4524 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4433 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4500 50  0001 C CNN
+F 3 "~" H 4000 4500 50  0001 C CNN
+	1    4000 4500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J11
+U 1 1 60C51A28
+P 4000 4600
+F 0 "J11" H 3972 4624 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4533 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4600 50  0001 C CNN
+F 3 "~" H 4000 4600 50  0001 C CNN
+	1    4000 4600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J12
+U 1 1 60C51A32
+P 4000 4700
+F 0 "J12" H 3972 4724 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 3972 4633 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4000 4700 50  0001 C CNN
+F 3 "~" H 4000 4700 50  0001 C CNN
+	1    4000 4700
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 4700 3600 4700
+Wire Wire Line
+	3800 4600 3600 4600
+Wire Wire Line
+	3800 4500 3600 4500
+Wire Wire Line
+	3800 4400 3600 4400
+Wire Wire Line
+	3800 4300 3600 4300
+Wire Wire Line
+	3800 4200 3600 4200
+Wire Wire Line
+	3800 4100 3600 4100
+Wire Wire Line
+	3800 4000 3600 4000
+Wire Wire Line
+	3800 3900 3600 3900
+$Comp
+L Connector:Conn_01x14_Male J13
+U 1 1 60D2AE85
+P 10350 5550
+F 0 "J13" H 10322 5524 50  0000 R CNN
+F 1 "Conn_01x14_Male" H 10322 5433 50  0000 R CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x14_Pitch2.54mm" H 10350 5550 50  0001 C CNN
+F 3 "~" H 10350 5550 50  0001 C CNN
+	1    10350 5550
+	-1   0    0    -1  
+$EndComp
+NoConn ~ 3250 2750
+NoConn ~ 1550 2750
 $EndSCHEMATC

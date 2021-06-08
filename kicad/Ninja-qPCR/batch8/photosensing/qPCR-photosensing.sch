@@ -13,9 +13,9 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 1300 1400 2    50   Input ~ 0
-GNDD
 Text GLabel 1300 1500 2    50   Input ~ 0
+GNDD
+Text GLabel 1300 1600 2    50   Input ~ 0
 3V3D
 $Comp
 L Ninja-qPCR:ADS1219IPWR U2
@@ -275,8 +275,6 @@ Wire Wire Line
 	7300 1800 7150 1800
 Wire Wire Line
 	6700 1800 6850 1800
-Text GLabel 1300 1800 2    50   Input ~ 0
-3V3A
 Text GLabel 5200 4350 2    50   Input ~ 0
 XOUT
 Text GLabel 1800 6700 2    50   Input ~ 0
@@ -607,13 +605,13 @@ $EndComp
 Text GLabel 6850 3800 0    50   Input ~ 0
 -1V
 $Sheet
-S 750  7300 1650 350 
+S 750  7150 1650 350 
 U 60AF0518
 F0 "Sheet60AF0517" 50
 F1 "filePhotoSouth.sch" 50
 $EndSheet
-Text GLabel 1300 1700 2    50   Input ~ 0
-GNDA
+Text GLabel 1300 1800 2    50   Input ~ 0
+3V3A
 Text GLabel 1300 1900 2    50   Input ~ 0
 MUX_S3
 Text GLabel 1300 2000 2    50   Input ~ 0
@@ -638,23 +636,10 @@ Text Notes 2150 1350 0    50   ~ 0
 I2C Address\n100 0000
 Wire Wire Line
 	6850 3800 7000 3800
-$Comp
-L Connector:Conn_01x16_Male J?
-U 1 1 60AFBF87
-P 950 2100
-F 0 "J?" H 1058 2981 50  0000 C CNN
-F 1 "Conn_01x16_Male" H 1058 2890 50  0000 C CNN
-F 2 "" H 950 2100 50  0001 C CNN
-F 3 "~" H 950 2100 50  0001 C CNN
-	1    950  2100
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1300 1400 1150 1400
 Wire Wire Line
 	1300 1500 1150 1500
 Wire Wire Line
-	1300 1700 1150 1700
+	1300 1600 1150 1600
 Wire Wire Line
 	1300 1800 1150 1800
 Wire Wire Line
@@ -675,8 +660,6 @@ Wire Wire Line
 	1300 2700 1150 2700
 Wire Wire Line
 	1300 2800 1150 2800
-Wire Wire Line
-	1300 2900 1150 2900
 Text Notes 3950 3250 0    50   ~ 0
 ADC
 Text Notes 8050 2300 0    50   ~ 0
@@ -711,10 +694,10 @@ U 60BEA5D5
 F0 "LED" 50
 F1 "fileLED.sch" 50
 $EndSheet
-Text GLabel 1300 1600 2    50   Input ~ 0
+Text GLabel 1300 1700 2    50   Input ~ 0
 VCC_LED
 Wire Wire Line
-	1300 1600 1150 1600
+	1300 1700 1150 1700
 Wire Wire Line
 	1300 2400 1150 2400
 Text GLabel 1300 2700 2    50   Input ~ 0
@@ -730,9 +713,26 @@ F0 "Thermistors" 50
 F1 "fileThermistors.sch" 50
 $EndSheet
 $Sheet
-S 2650 7300 1850 350 
+S 2650 7150 1850 350 
 U 60C04E5C
 F0 "Sheet60C04E5B" 50
 F1 "filePhotoNorth.sch" 50
 $EndSheet
+Text GLabel 5400 7450 0    50   Input ~ 0
+GNDD
+Text GLabel 5550 7450 2    50   Input ~ 0
+GNDA
+Text Notes 200  7750 0    50   ~ 0
+Use AGND and DGND  https://www.zuken.co.jp/club_Z/z/product/BD/019/pro_130221_1.html?fbclid=IwAR0Fud5uWcRWMC9uykssyA-G8J9CSF2g4TS7U_EDWa5E4txVfpM9rxRD7ok
+$Comp
+L Connector:Conn_01x14_Male J?
+U 1 1 60C2BDFE
+P 950 2100
+F 0 "J?" H 1058 2881 50  0000 C CNN
+F 1 "Conn_01x14_Male" H 1058 2790 50  0000 C CNN
+F 2 "" H 950 2100 50  0001 C CNN
+F 3 "~" H 950 2100 50  0001 C CNN
+	1    950  2100
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
