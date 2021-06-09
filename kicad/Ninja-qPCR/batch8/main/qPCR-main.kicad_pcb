@@ -55,8 +55,8 @@
     (mod_edge_width 0.15)
     (mod_text_size 1 1)
     (mod_text_width 0.15)
-    (pad_size 2.75 2.75)
-    (pad_drill 2.75)
+    (pad_size 1.7 1.7)
+    (pad_drill 1)
     (pad_to_mask_clearance 0)
     (aux_axis_origin 0 0)
     (visible_elements FFFFFF7F)
@@ -3845,7 +3845,7 @@
   )
 
   (module Ninja-qPCR:TB_SeeedOPL_320110028 (layer F.Cu) (tedit 5F05691F) (tstamp 60B8BFD8)
-    (at 151.4 55.2 180)
+    (at 161.78 55.05 180)
     (path /60B74175)
     (fp_text reference FAN1 (at 0 4.5) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -3865,7 +3865,7 @@
   )
 
   (module Ninja-qPCR:TB_SeeedOPL_320110028 (layer F.Cu) (tedit 5F05691F) (tstamp 60B8BFBA)
-    (at 124.4 55.2 180)
+    (at 134.78 55.05 180)
     (path /60BAF2C5)
     (fp_text reference HLID1 (at 0 4.5) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -3885,7 +3885,7 @@
   )
 
   (module Ninja-qPCR:TB_SeeedOPL_320110028 (layer F.Cu) (tedit 5F05691F) (tstamp 60B8BF9C)
-    (at 133.4 55.2 180)
+    (at 143.78 55.05 180)
     (path /60B74169)
     (fp_text reference HWELL1 (at 0 4.5) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -3905,7 +3905,7 @@
   )
 
   (module Ninja-qPCR:TB_SeeedOPL_320110028 (layer F.Cu) (tedit 5F05691F) (tstamp 60B8BF7E)
-    (at 142.4 55.2 180)
+    (at 152.78 55.05 180)
     (path /60B7416F)
     (fp_text reference HWELL2 (at 0 4.5) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -3924,8 +3924,8 @@
       (net 1 12V))
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60B8A7D0)
-    (at 175.68 72.86 90)
+  (module Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF78B4)
+    (at 184.46 73.45 90)
     (descr "Through hole straight pin header, 1x02, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x02 2.54mm single row")
     (path /60B95481)
@@ -4020,7 +4020,7 @@
   )
 
   (module Connectors_Molex:Molex_KK-6410-02_02x2.54mm_Straight (layer F.Cu) (tedit 58EE6EE4) (tstamp 60BA99F6)
-    (at 34.925001 168.575001)
+    (at 232.96 55.12)
     (descr "Connector Headers with Friction Lock, 22-27-2021, http://www.molex.com/pdm_docs/sd/022272021_sd.pdf")
     (tags "connector molex kk_6410 22-27-2021")
     (path /60C90AC0)
@@ -4263,8 +4263,8 @@
     )
   )
 
-  (module Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown (layer F.Cu) (tedit 60BD9F7D) (tstamp 60BF1E0E)
-    (at 175.53 79.62 270)
+  (module Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown (layer F.Cu) (tedit 60BF67F3) (tstamp 60BF774F)
+    (at 184.31 80.21 270)
     (descr "Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf")
     (tags "raspberry pi 3a+ through hole")
     (path /60AF82D8)
@@ -4493,8 +4493,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF2E53)
-    (at 158 83)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF6818) (tstamp 60BF7517)
+    (at 166.49 82.89)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C0C8E3)
@@ -4522,7 +4522,7 @@
     (fp_line (start -1.8 1.8) (end 1.8 1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 1.8) (end 1.8 -1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 -1.8) (end -1.8 -1.8) (layer F.CrtYd) (width 0.05))
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0.04 -0.14) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 52 /GPIO3))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4531,8 +4531,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F09)
-    (at 29.005001 75.125001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF6812) (tstamp 60BF7643)
+    (at 161.45 82.88)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C0F3FB)
@@ -4560,7 +4560,7 @@
     (fp_line (start -1.8 1.8) (end 1.8 1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 1.8) (end 1.8 -1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 -1.8) (end -1.8 -1.8) (layer F.CrtYd) (width 0.05))
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.13) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 50 /GPIO12))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4569,8 +4569,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F1E)
-    (at 21.975001 84.425001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF680D) (tstamp 60BF767F)
+    (at 158.91 82.87)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C484F3)
@@ -4598,7 +4598,7 @@
     (fp_text user %R (at 0 0 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.12) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 45 /GPIO13))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4607,8 +4607,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F33)
-    (at 29.005001 79.775001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF6808) (tstamp 60BF792E)
+    (at 156.36 82.87)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C484FD)
@@ -4636,7 +4636,7 @@
     (fp_text user %R (at 0 0 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0.01 -0.12) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 51 /GPIO14))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4645,8 +4645,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F48)
-    (at 33.655001 75.125001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF6801) (tstamp 60BF78F2)
+    (at 146.21 82.8)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C48507)
@@ -4674,7 +4674,7 @@
     (fp_text user %R (at 0 0 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.05) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 47 /GPIO22))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4683,8 +4683,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F5D)
-    (at 26.625001 84.425001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF67FB) (tstamp 60BF7553)
+    (at 138.59 82.8)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C48511)
@@ -4712,7 +4712,7 @@
     (fp_line (start -1.8 1.8) (end 1.8 1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 1.8) (end 1.8 -1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 -1.8) (end -1.8 -1.8) (layer F.CrtYd) (width 0.05))
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.05) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 49 /GPIO25))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4721,8 +4721,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F72)
-    (at 33.655001 79.775001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF67EC) (tstamp 60BF758F)
+    (at 146.22 75.38)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C51A1E)
@@ -4750,7 +4750,7 @@
     (fp_text user %R (at 0 0 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at -0.01 -0.25) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 46 /GPIO26))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4759,8 +4759,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F87)
-    (at 38.305001 75.125001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF67E7) (tstamp 60BF7607)
+    (at 138.59 75.45)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C51A28)
@@ -4788,7 +4788,7 @@
     (fp_line (start -1.8 1.8) (end 1.8 1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 1.8) (end 1.8 -1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 -1.8) (end -1.8 -1.8) (layer F.CrtYd) (width 0.05))
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.32) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 48 /GPIO28))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4797,8 +4797,8 @@
     )
   )
 
-  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60BF1F9C)
-    (at 31.275001 84.425001)
+  (module Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm (layer F.Cu) (tedit 60BF67E3) (tstamp 60BF75CB)
+    (at 136.05 75.5)
     (descr "Through hole straight pin header, 1x01, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x01 2.54mm single row")
     (path /60C51A32)
@@ -4826,7 +4826,7 @@
     (fp_text user %R (at 0 0 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
+    (pad 1 thru_hole rect (at 0 -0.37) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 44 /GPIO29))
     (model ${KISYS3DMOD}/Pin_Headers.3dshapes/Pin_Header_Straight_1x01_Pitch2.54mm.wrl
       (at (xyz 0 0 0))
@@ -4836,7 +4836,7 @@
   )
 
   (module Socket_Strips:Socket_Strip_Angled_1x14_Pitch2.54mm (layer F.Cu) (tedit 58CD5446) (tstamp 60BF220A)
-    (at 214.5 58 270)
+    (at 210.38 61.85 270)
     (descr "Through hole angled socket strip, 1x14, 2.54mm pitch, 8.51mm socket length, single row")
     (tags "Through hole angled socket strip THT 1x14 2.54mm single row")
     (path /60D2AE85)
