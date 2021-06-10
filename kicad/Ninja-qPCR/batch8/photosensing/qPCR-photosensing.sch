@@ -13,63 +13,15 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 1300 1500 2    50   Input ~ 0
+Text GLabel 1150 1750 2    50   Input ~ 0
 GNDD
-Text GLabel 1300 1600 2    50   Input ~ 0
+Text GLabel 1150 1850 2    50   Input ~ 0
 3V3D
-$Comp
-L Ninja-qPCR:ADS1219IPWR U1
-U 1 1 5F63A689
-P 3100 1050
-F 0 "U1" H 4000 1437 60  0000 C CNN
-F 1 "ADS1219IPWR" H 4000 1331 60  0000 C CNN
-F 2 "Ninja-qPCR:ADS1219IPWR" H 4000 1290 60  0001 C CNN
-F 3 "" H 3100 1050 60  0000 C CNN
-	1    3100 1050
-	1    0    0    -1  
-$EndComp
-Text GLabel 2900 1050 0    50   Input ~ 0
-3V3D
-Text GLabel 2900 1250 0    50   Input ~ 0
-GNDD
-Text GLabel 2900 1950 0    50   Input ~ 0
-GNDA
-Text GLabel 2900 2050 0    50   Input ~ 0
-3V3A
-Text GLabel 2900 2150 0    50   Input ~ 0
-I2C_SCL
-Text GLabel 2900 2350 0    50   Input ~ 0
-I2C_SDA
-Text GLabel 2900 2750 0    50   Input ~ 0
-3V3A
-Wire Wire Line
-	3100 2350 2900 2350
-Wire Wire Line
-	3100 2150 2900 2150
-Wire Wire Line
-	3100 2050 2900 2050
-Wire Wire Line
-	3100 1950 2900 1950
-Wire Wire Line
-	3100 1050 2900 1050
-Wire Wire Line
-	3100 1250 3000 1250
-Wire Wire Line
-	3100 1350 3000 1350
-Wire Wire Line
-	3000 1350 3000 1250
-Connection ~ 3000 1250
-Wire Wire Line
-	3000 1250 2900 1250
-Text GLabel 5050 1050 2    50   Input ~ 0
+Text GLabel 1150 2650 2    50   Input ~ 0
 ADC_DRDY
-Text GLabel 5050 1550 2    50   Input ~ 0
-GNDD
-Text GLabel 1300 2400 2    50   Input ~ 0
-ADC_DRDY
-Text GLabel 1300 2500 2    50   Input ~ 0
+Text GLabel 1150 2750 2    50   Input ~ 0
 I2C_SCL
-Text GLabel 1300 2600 2    50   Input ~ 0
+Text GLabel 1150 2850 2    50   Input ~ 0
 I2C_SDA
 Text GLabel 2900 4850 0    50   Input ~ 0
 PD_REF_PWM
@@ -193,8 +145,6 @@ Wire Wire Line
 	7300 1200 7300 850 
 Wire Wire Line
 	6850 1200 6700 1200
-Wire Wire Line
-	6700 1200 6700 850 
 $Comp
 L Device:C C5
 U 1 1 5FDE1D78
@@ -237,7 +187,7 @@ Wire Wire Line
 	3450 6850 3200 6850
 Wire Wire Line
 	3200 6950 3450 6950
-Text GLabel 6150 3300 0    50   Input ~ 0
+Text GLabel 6350 3300 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
 L Device:R R4
@@ -308,8 +258,6 @@ Text GLabel 6850 3200 0    50   Input ~ 0
 GNDA
 Wire Wire Line
 	6850 3200 7000 3200
-Wire Wire Line
-	6300 3300 7000 3300
 Text GLabel 9200 1400 2    50   Input ~ 0
 3V3D
 Text GLabel 7600 2000 0    50   Input ~ 0
@@ -327,9 +275,6 @@ F 3 "~" H 9300 1800 50  0001 C CNN
 $EndComp
 Text GLabel 9550 1800 2    50   Input ~ 0
 -1V
-Wire Wire Line
-	6150 3300 6300 3300
-Connection ~ 6300 3300
 Text Notes 5050 6350 0    50   ~ 0
 Debug pins\n(Photo measurement)
 Text GLabel 5450 6850 2    50   Input ~ 0
@@ -342,16 +287,6 @@ Text HLabel 5450 6650 2    50   Input ~ 0
 PHOTO_OUT_N
 Text HLabel 5450 6750 2    50   Input ~ 0
 PHOTO_OUT_P
-Text HLabel 2900 1750 0    50   Input ~ 0
-PHOTO_OUT_P
-Text HLabel 2900 1650 0    50   Input ~ 0
-PHOTO_OUT_N
-Wire Wire Line
-	2900 1650 3100 1650
-Wire Wire Line
-	3100 1750 2900 1750
-Wire Wire Line
-	2900 1450 3100 1450
 $Comp
 L Ninja-qPCR:TS5A9411DCKR U5
 U 1 1 606C0A32
@@ -368,11 +303,6 @@ Wire Wire Line
 Connection ~ 7300 1800
 Wire Wire Line
 	9200 1400 8900 1400
-Wire Wire Line
-	6700 1800 6300 1800
-Connection ~ 6700 1800
-Wire Wire Line
-	6300 1800 6300 3300
 Wire Wire Line
 	7700 1600 7300 1600
 Wire Wire Line
@@ -424,7 +354,7 @@ Text Notes 2800 6350 0    50   ~ 0
 ADA2200 SPI debug
 Text Notes 1200 6350 0    50   ~ 0
 ADA2200 Clock\n(For external X’tal circuit)
-Text Notes 750  900  0    50   ~ 0
+Text Notes 600  1150 0    50   ~ 0
 Main <-> Photosensing
 Wire Wire Line
 	8950 3200 9450 3200
@@ -484,36 +414,30 @@ Connection ~ 7300 2150
 Wire Wire Line
 	7300 850  7600 850 
 Connection ~ 7300 850 
-Wire Wire Line
-	6300 1800 6300 850 
-Wire Wire Line
-	6300 850  6700 850 
-Connection ~ 6300 1800
-Connection ~ 6700 850 
 $Comp
 L Connector:Conn_01x04_Male J4
 U 1 1 6070474E
-P 9800 2650
-F 0 "J4" H 9908 2931 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 9908 2840 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 9800 2650 50  0001 C CNN
-F 3 "~" H 9800 2650 50  0001 C CNN
-	1    9800 2650
+P 10050 2700
+F 0 "J4" H 10158 2981 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 10158 2890 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 10050 2700 50  0001 C CNN
+F 3 "~" H 10050 2700 50  0001 C CNN
+	1    10050 2700
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	10250 2850 10000 2850
+	10500 2900 10250 2900
 Wire Wire Line
-	10250 2550 10000 2550
-Text GLabel 10250 2650 2    50   Input ~ 0
+	10500 2600 10250 2600
+Text GLabel 10500 2700 2    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
-	10250 2650 10000 2650
-Text GLabel 10250 2750 2    50   Input ~ 0
+	10500 2700 10250 2700
+Text GLabel 10500 2800 2    50   Input ~ 0
 PD_MUX_OUT
 Wire Wire Line
-	10250 2750 10000 2750
-Text Notes 9800 2300 0    50   ~ 0
+	10500 2800 10250 2800
+Text Notes 10050 2350 0    50   ~ 0
 External gain resistors
 $Comp
 L Device:Jumper JP1
@@ -530,9 +454,9 @@ Text HLabel 7600 850  2    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 7600 2450 2    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10250 2850 2    50   Input ~ 0
+Text HLabel 10500 2900 2    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10250 2550 2    50   Input ~ 0
+Text HLabel 10500 2600 2    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 9300 1600 2    50   Input ~ 0
 AMP_GAIN_SW
@@ -610,58 +534,44 @@ U 60AF0518
 F0 "Sheet60AF0517" 50
 F1 "filePhotoSouth.sch" 50
 $EndSheet
-Text GLabel 1300 1800 2    50   Input ~ 0
+Text GLabel 1150 2050 2    50   Input ~ 0
 3V3A
-Text GLabel 1300 1900 2    50   Input ~ 0
+Text GLabel 1150 2150 2    50   Input ~ 0
 MUX_S3
-Text GLabel 1300 2000 2    50   Input ~ 0
+Text GLabel 1150 2250 2    50   Input ~ 0
 MUX_S2
-Text GLabel 1300 2100 2    50   Input ~ 0
+Text GLabel 1150 2350 2    50   Input ~ 0
 MUX_S1
-Text GLabel 1300 2200 2    50   Input ~ 0
+Text GLabel 1150 2450 2    50   Input ~ 0
 MUX_S0
-Wire Wire Line
-	2900 1550 3100 1550
-Text GLabel 2900 1450 0    50   Input ~ 0
+Text GLabel 5050 2750 2    50   Input ~ 0
 GNDA
-Text GLabel 5050 1450 2    50   Input ~ 0
-GNDA
-Wire Wire Line
-	2900 2750 3100 2750
-Text GLabel 2900 2950 0    50   Input ~ 0
-3V3D
-Wire Wire Line
-	2900 2950 3100 2950
-Text Notes 2150 1350 0    50   ~ 0
-I2C Address\n100 0000
 Wire Wire Line
 	6850 3800 7000 3800
 Wire Wire Line
-	1300 1500 1150 1500
+	1150 1750 1000 1750
 Wire Wire Line
-	1300 1600 1150 1600
+	1150 1850 1000 1850
 Wire Wire Line
-	1300 1800 1150 1800
+	1150 2050 1000 2050
 Wire Wire Line
-	1300 1900 1150 1900
+	1150 2150 1000 2150
 Wire Wire Line
-	1300 2000 1150 2000
+	1150 2250 1000 2250
 Wire Wire Line
-	1300 2100 1150 2100
+	1150 2350 1000 2350
 Wire Wire Line
-	1300 2200 1150 2200
+	1150 2450 1000 2450
 Wire Wire Line
-	1300 2300 1150 2300
+	1150 2550 1000 2550
 Wire Wire Line
-	1300 2500 1150 2500
+	1150 2750 1000 2750
 Wire Wire Line
-	1300 2600 1150 2600
+	1150 2850 1000 2850
 Wire Wire Line
-	1300 2700 1150 2700
+	1150 2950 1000 2950
 Wire Wire Line
-	1300 2800 1150 2800
-Text Notes 3950 3250 0    50   ~ 0
-ADC
+	1150 3050 1000 3050
 Text Notes 8050 2300 0    50   ~ 0
 Gain Switch
 Text Notes 7650 4200 0    50   ~ 0
@@ -675,12 +585,8 @@ Wire Wire Line
 Wire Wire Line
 	5200 4750 5100 4750
 Wire Wire Line
-	5050 1050 4900 1050
-Wire Wire Line
-	5050 1450 4900 1450
-Wire Wire Line
-	5050 1550 4900 1550
-Text GLabel 1300 2300 2    50   Input ~ 0
+	5050 2750 4900 2750
+Text GLabel 1150 2550 2    50   Input ~ 0
 MUX_SELECT
 $Sheet
 S 9300 4450 1750 450 
@@ -694,17 +600,15 @@ U 60BEA5D5
 F0 "LED" 50
 F1 "fileLED.sch" 50
 $EndSheet
-Text GLabel 1300 1700 2    50   Input ~ 0
+Text GLabel 1150 1950 2    50   Input ~ 0
 VCC_LED
 Wire Wire Line
-	1300 1700 1150 1700
+	1150 1950 1000 1950
 Wire Wire Line
-	1300 2400 1150 2400
-Text GLabel 1300 2700 2    50   Input ~ 0
+	1150 2650 1000 2650
+Text GLabel 1150 2950 2    50   Input ~ 0
 THERM_R_SWITCH
-Text GLabel 2900 1550 0    50   Input ~ 0
-THERM_MUX_OUT
-Text GLabel 1300 2800 2    50   Input ~ 0
+Text GLabel 1150 3050 2    50   Input ~ 0
 AMP_GAIN_SW
 $Sheet
 S 9300 5800 1750 400 
@@ -727,12 +631,103 @@ Use AGND and DGND  https://www.zuken.co.jp/club_Z/z/product/BD/019/pro_130221_
 $Comp
 L Connector:Conn_01x14_Male J1
 U 1 1 60C2BDFE
-P 950 2100
-F 0 "J1" H 1058 2881 50  0000 C CNN
-F 1 "Conn_01x14_Male" H 1058 2790 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x14_Pitch2.54mm" H 950 2100 50  0001 C CNN
-F 3 "~" H 950 2100 50  0001 C CNN
-	1    950  2100
+P 800 2350
+F 0 "J1" H 908 3131 50  0000 C CNN
+F 1 "Conn_01x14_Male" H 908 3040 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x14_Pitch2.54mm" H 800 2350 50  0001 C CNN
+F 3 "~" H 800 2350 50  0001 C CNN
+	1    800  2350
 	1    0    0    -1  
 $EndComp
+$Comp
+L Ninja-qPCR:ADS122C04IPWR U?
+U 1 1 60C266F0
+P 3900 2350
+F 0 "U?" H 3900 3238 60  0000 C CNN
+F 1 "ADS122C04IPWR" H 3900 3132 60  0000 C CNN
+F 2 "PW0016A_N" H 3900 2290 60  0001 C CNN
+F 3 "" H 3900 2350 60  0000 C CNN
+	1    3900 2350
+	1    0    0    -1  
+$EndComp
+Text GLabel 2700 2050 0    50   Input ~ 0
+3V3D
+Text GLabel 5100 2150 2    50   Input ~ 0
+GNDD
+Text GLabel 2700 2950 0    50   Input ~ 0
+GNDA
+Text GLabel 2700 1850 0    50   Input ~ 0
+3V3A
+Text GLabel 5100 1950 2    50   Input ~ 0
+I2C_SCL
+Text GLabel 5100 1850 2    50   Input ~ 0
+I2C_SDA
+Text GLabel 2700 2750 0    50   Input ~ 0
+3V3A
+Wire Wire Line
+	4900 1850 5100 1850
+Wire Wire Line
+	4900 1950 5100 1950
+Wire Wire Line
+	2900 1850 2700 1850
+Wire Wire Line
+	2900 2950 2700 2950
+Wire Wire Line
+	2900 2050 2700 2050
+Wire Wire Line
+	4900 2150 5000 2150
+Wire Wire Line
+	4900 2250 5000 2250
+Wire Wire Line
+	5000 2250 5000 2150
+Connection ~ 5000 2150
+Wire Wire Line
+	5000 2150 5100 2150
+Text HLabel 2700 2550 0    50   Input ~ 0
+PHOTO_OUT_P
+Text HLabel 2700 2450 0    50   Input ~ 0
+PHOTO_OUT_N
+Wire Wire Line
+	2900 2550 2700 2550
+Text GLabel 2700 2250 0    50   Input ~ 0
+GNDA
+Wire Wire Line
+	2700 2750 2900 2750
+Text Notes 5750 2250 2    50   ~ 0
+I2C Addr\n100 0000
+Text GLabel 2700 2350 0    50   Input ~ 0
+THERM_MUX_OUT
+Text GLabel 5050 2350 2    50   Input ~ 0
+ADC_DRDY
+Text GLabel 5050 2950 2    50   Input ~ 0
+GNDD
+Wire Wire Line
+	5050 2350 4900 2350
+Wire Wire Line
+	5050 2950 4900 2950
+Wire Wire Line
+	2700 2350 2900 2350
+Wire Wire Line
+	2700 2250 2900 2250
+Wire Wire Line
+	2700 2450 2900 2450
+Text GLabel 5050 2550 2    50   Input ~ 0
+3V3D
+Wire Wire Line
+	5050 2550 4900 2550
+Wire Wire Line
+	6700 1800 6500 1800
+Wire Wire Line
+	6500 1800 6500 3300
+Connection ~ 6700 1800
+Wire Wire Line
+	6500 3300 7000 3300
+Wire Wire Line
+	6700 850  6700 1200
+Connection ~ 6700 1200
+Wire Wire Line
+	6700 1200 6700 1800
+Wire Wire Line
+	6350 3300 6500 3300
+Connection ~ 6500 3300
 $EndSCHEMATC
