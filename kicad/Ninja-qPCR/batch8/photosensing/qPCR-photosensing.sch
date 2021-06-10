@@ -497,7 +497,7 @@ Text GLabel 1150 2350 2    50   Input ~ 0
 MUX_S1
 Text GLabel 1150 2450 2    50   Input ~ 0
 MUX_S0
-Text GLabel 5050 2750 2    50   Input ~ 0
+Text GLabel 5300 2750 2    50   Input ~ 0
 GNDA
 Wire Wire Line
 	8050 3600 8200 3600
@@ -533,8 +533,6 @@ Wire Wire Line
 	5200 4350 5100 4350
 Wire Wire Line
 	5200 4750 5100 4750
-Wire Wire Line
-	5050 2750 4900 2750
 Text GLabel 1150 2550 2    50   Input ~ 0
 MUX_SELECT
 $Sheet
@@ -599,13 +597,13 @@ F 3 "" H 3900 2350 60  0000 C CNN
 	1    3900 2350
 	1    0    0    -1  
 $EndComp
-Text GLabel 2700 2050 0    50   Input ~ 0
+Text GLabel 2400 2050 0    50   Input ~ 0
 3V3D
 Text GLabel 5100 2150 2    50   Input ~ 0
 GNDD
 Text GLabel 2700 2950 0    50   Input ~ 0
 GNDA
-Text GLabel 2700 1850 0    50   Input ~ 0
+Text GLabel 2400 1650 0    50   Input ~ 0
 3V3A
 Text GLabel 5100 1950 2    50   Input ~ 0
 I2C_SCL
@@ -618,11 +616,7 @@ Wire Wire Line
 Wire Wire Line
 	4900 1950 5100 1950
 Wire Wire Line
-	2900 1850 2700 1850
-Wire Wire Line
 	2900 2950 2700 2950
-Wire Wire Line
-	2900 2050 2700 2050
 Wire Wire Line
 	4900 2150 5000 2150
 Wire Wire Line
@@ -648,12 +642,12 @@ Text GLabel 2700 2350 0    50   Input ~ 0
 THERM_MUX_OUT
 Text GLabel 5050 2350 2    50   Input ~ 0
 ADC_DRDY
-Text GLabel 5050 2950 2    50   Input ~ 0
+Text GLabel 5300 3200 2    50   Input ~ 0
 GNDD
 Wire Wire Line
 	5050 2350 4900 2350
 Wire Wire Line
-	5050 2950 4900 2950
+	5300 3200 5150 3200
 Wire Wire Line
 	2700 2350 2900 2350
 Wire Wire Line
@@ -733,4 +727,60 @@ Wire Wire Line
 Connection ~ 6500 3100
 Wire Wire Line
 	6350 3100 6500 3100
+$Comp
+L Device:C C?
+U 1 1 60C277DF
+P 2550 1850
+F 0 "C?" H 2665 1896 50  0000 L CNN
+F 1 "0.1uF" H 2665 1805 50  0000 L CNN
+F 2 "" H 2588 1700 50  0001 C CNN
+F 3 "~" H 2550 1850 50  0001 C CNN
+	1    2550 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 2050 2900 2050
+Wire Wire Line
+	2400 2050 2550 2050
+Connection ~ 2550 2050
+Wire Wire Line
+	2550 2000 2550 2050
+Wire Wire Line
+	2550 1700 2550 1650
+Wire Wire Line
+	2400 1650 2550 1650
+$Comp
+L Device:C C?
+U 1 1 60C5F146
+P 5150 3000
+F 0 "C?" H 5265 3046 50  0000 L CNN
+F 1 "0.1uF" H 5265 2955 50  0000 L CNN
+F 2 "" H 5188 2850 50  0001 C CNN
+F 3 "~" H 5150 3000 50  0001 C CNN
+	1    5150 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 2750 5150 2750
+Wire Wire Line
+	5150 2850 5150 2750
+Connection ~ 5150 2750
+Wire Wire Line
+	5150 2750 5300 2750
+Wire Wire Line
+	5150 3200 5150 3150
+Wire Wire Line
+	5150 3200 4950 3200
+Wire Wire Line
+	4950 3200 4950 2950
+Wire Wire Line
+	4950 2950 4900 2950
+Connection ~ 5150 3200
+Wire Wire Line
+	2550 1650 2850 1650
+Wire Wire Line
+	2850 1650 2850 1850
+Wire Wire Line
+	2850 1850 2900 1850
+Connection ~ 2550 1650
 $EndSCHEMATC
