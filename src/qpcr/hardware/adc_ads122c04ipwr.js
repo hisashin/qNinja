@@ -7,19 +7,52 @@ const DEFAULT_BUS_NUMBER = 1;
 // PDF: https://www.ti.com/lit/ds/symlink/ads1219.pdf?&ts=1589885438370
 // Voltage->Value -FS->800000h, 0->000000h, FS->7FFFFFh
 
-const MUX_SINGLE_END_A0 = 0b011;
-const MUX_SINGLE_END_A1 = 0b100;
-const MUX_SINGLE_END_A2 = 0b101;
-const MUX_SINGLE_END_A3 = 0b110;
+const DATA_RATE_20SPS = 0b000;
+const DATA_RATE_45SPS = 0b001;
+const DATA_RATE_90SPS = 0b010;
+const DATA_RATE_175SPS = 0b011;
+const DATA_RATE_330SPS = 0b100;
+const DATA_RATE_600SPS = 0b101;
+const DATA_RATE_1000SPS = 0b110;
 
-const DATA_RATE_20SPS = 0b00;
-const DATA_RATE_90SPS = 0b01;
-const DATA_RATE_330SPS = 0b10;
-const DATA_RATE_1000SPS = 0b11;
+const DATA_RATE = [];
+DATA_RATE[20] = DATA_RATE_20SPS;
+DATA_RATE[45] = DATA_RATE_45SPS;
+DATA_RATE[90] = DATA_RATE_90SPS;
+DATA_RATE[175] = DATA_RATE_175SPS;
+DATA_RATE[330] = DATA_RATE_330SPS;
+DATA_RATE[600] = DATA_RATE_600SPS;
+DATA_RATE[1000] = DATA_RATE_1000SPS;
 
-const MUX_DIFF_PA0_NA1 = 0b000;
-const MUX_DIFF_PA2_NA3 = 0b001;
-const MUX_DIFF_PA1_NA2 = 0b010;
+const MUX_DIFF_PA0_NA1 = 0b0000;
+const MUX_DIFF_PA0_NA2 = 0b0001;
+const MUX_DIFF_PA0_NA3 = 0b0010;
+const MUX_DIFF_PA1_NA0 = 0b0011;
+const MUX_DIFF_PA1_NA2 = 0b0100;
+const MUX_DIFF_PA1_NA3 = 0b0101;
+const MUX_DIFF_PA2_NA3 = 0b0110;
+const MUX_DIFF_PA3_NA2 = 0b0111;
+
+const MUX_SINGLE_END_A0 = 0b1000;
+const MUX_SINGLE_END_A1 = 0b1001;
+const MUX_SINGLE_END_A2 = 0b1010;
+const MUX_SINGLE_END_A3 = 0b1011;
+
+const MUX_DIFF = [[],[],[],[]];
+MUX_DIFF[0][1] = MUX_DIFF_PA0_NA1;
+MUX_DIFF[0][2] = MUX_DIFF_PA0_NA2;
+MUX_DIFF[0][3] = MUX_DIFF_PA0_NA3;
+MUX_DIFF[1][0] = MUX_DIFF_PA1_NA0;
+MUX_DIFF[1][2] = MUX_DIFF_PA1_NA2;
+MUX_DIFF[1][3] = MUX_DIFF_PA1_NA3;
+MUX_DIFF[2][3] = MUX_DIFF_PA2_NA3;
+MUX_DIFF[3][2] = MUX_DIFF_PA3_NA2;
+
+const MUX_SINGLE = [];
+MUX_SINGLE[0] = MUX_SINGLE_END_A0;
+MUX_SINGLE[1] = MUX_SINGLE_END_A1;
+MUX_SINGLE[2] = MUX_SINGLE_END_A2;
+MUX_SINGLE[3] = MUX_SINGLE_END_A3;
 
 const MUX_SINGLE_END_VALS = [
   MUX_SINGLE_END_A0,
@@ -29,10 +62,12 @@ const MUX_SINGLE_END_VALS = [
 ];
 
 /* Commands */
+const COMMAND_RESET = 0b00000110;
+const COMMAND_SYNC = 0b00001000;
+const COMMAND_PDOWN = 0b00000010;
 const COMMAND_RDATA = 0b00010000;
-const COMMAND_SSYNC = 0b00001000;
-const COMMAND_RREG = 0b00100000;
-const COMMAND_WREG = 0b01000000;
+const COMMAND_RREG = 0b00100000; // 0010 rrxx : Read register at address rr
+const COMMAND_WREG = 0b01000000; // 0100 rrxx : Write register at address rr
 
 class ADS1219IPWR {
   constructor (i2c, address) {
@@ -56,65 +91,48 @@ class ADS1219IPWR {
         console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
-  /*
-    Command
-    RESET: Reset 0000 011x
-    START/SYNC: Start/Sync 0000 100x
-    POWERDOWN: Power down 0000 001x
-    RDATA: Read data 0001 xxxx
-    RREG: Read register at addr r 0010 0rxx
-    WREG: Write configuration register 0100 00xx
-  */
-  readConfigurationRegister () {
-    // RREG: Read register at addr r 0010 0rxx
-      this.i2c.sendByteSync(this.address, COMMAND_RREG);
-      return this.i2c.receiveByteSync(this.address);
+  readRegister (addr) {
+    const val = COMMAND_RREG | (0b11&addr) << 2;
+    this.i2c.sendByteSync(this.address, val);
+    return this.i2c.receiveByteSync(this.address);
   }
   selectDataRate (rate) {
     console.log("SelectDataRate %d", rate);
-    let rateBits = DATA_RATE_20SPS;
-    if (rate == 20) {
-      rateBits = DATA_RATE_20SPS;
-    } else if (rate == 90) {
-      rateBits = DATA_RATE_90SPS;
-    } else if (rate == 330) {
-      rateBits = DATA_RATE_330SPS;
-    } else if (rate == 1000) {
-      rateBits = DATA_RATE_1000SPS;
-    } else {
+    let rateBits = DATA_RATE[rate];
+    if (rateBits == null) {
       console.warn("Data rate %d is invalid. Supported values are 20, 90, 330 and 1000.", rate);
     }
-    const currentVal = this.readConfigurationRegister();
+    const currentVal = this.readRegister(0x01);
+    // TODO
     const val = (0b11110011 & currentVal) | (rateBits << 2)
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   
   // Measure diff signals
-  selectDiff (pChannel, nChannel) {
-    let muxBits = null;
-    if (pChannel == 0 && nChannel == 1) {
-      muxBits = MUX_DIFF_PA0_NA1;
-    } else if (pChannel == 2 && nChannel == 3) {
-      muxBits = MUX_DIFF_PA2_NA3;
-    } else if (pChannel == 1 && nChannel == 2) {
-      muxBits = MUX_DIFF_PA1_NA2;
+  selectDiff (pCh, nCh) {
+    if (!MUX_DIFF[pCh]) {
+      console.warn("Invalid combination", pCh, nCh);
+      return;
     }
+    const muxBits = MUX_DIFF[pCh][nCh];
     if (muxBits == null) {
-      console.error("Wrong combination of P and N. Valid combinations are (0, 1), (2, 3) and (1, 2).");
+      console.warn("Invalid combination", pCh, nCh);
     }
-    const currentVal = this.readConfigurationRegister();
-    const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
+    const currentVal = this.readRegister(0x00);
+    const val = (0b00001111 & currentVal) | (muxBits << 4);
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   // Measure single-ended signals
   selectChannel (channel) {
-    const currentVal = this.readConfigurationRegister();
-    const muxBits = MUX_SINGLE_END_VALS[channel]; //TODO debug
-    // const muxBits = MUX_DIFF_PA2_NA3;
-    // Note: By default, it uses internal ref voltage (2.048V)
-    const val = (0b00011111 & currentVal) | (muxBits << 5) | 0x01; // Full range
+    const muxBits = MUX_SINGLE[channel];
+    if (muxBits == null) {
+      console.warn("Invalid channel", channel);
+      return;
+    }
+    const currentVal = this.readRegister(0x00);
+    const val = (0b00001111 & currentVal) | (muxBits << 4);
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
