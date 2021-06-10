@@ -2,7 +2,7 @@
 src/qpcr/aws-greengrass-stream-manager-sdk-js
 
 */_autosave*
-# src/qpcr/user_data/*
+src/qpcr/user_data/*
 */package-lock.json
 src/docs/mockup/img/*
 # .gitignore
