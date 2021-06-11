@@ -245,8 +245,8 @@ AR Path="/60B0344A/60B710AF" Ref="C?"  Part="1"
 AR Path="/60AC8F91/60B710AF" Ref="C?"  Part="1" 
 AR Path="/60BEA309/60B710AF" Ref="C11"  Part="1" 
 F 0 "C11" H 3585 2754 50  0000 R CNN
-F 1 "470nF" H 3585 2845 50  0000 R CNN
-F 2 "Capacitors_SMD:C_1206_HandSoldering" H 3738 2650 50  0001 C CNN
+F 1 "0.1uF" H 3585 2845 50  0000 R CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 3738 2650 50  0001 C CNN
 F 3 "~" H 3700 2800 50  0001 C CNN
 	1    3700 2800
 	-1   0    0    1   
@@ -260,7 +260,7 @@ AR Path="/60AC8F91/60B710A9" Ref="C?"  Part="1"
 AR Path="/60BEA309/60B710A9" Ref="C13"  Part="1" 
 F 0 "C13" V 3498 2200 50  0000 C CNN
 F 1 "4.7uF" V 3589 2200 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 3788 2050 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 3788 2050 50  0001 C CNN
 F 3 "~" H 3750 2200 50  0001 C CNN
 	1    3750 2200
 	0    1    1    0   
@@ -346,8 +346,8 @@ AR Path="/60B0344A/60B7107E" Ref="C?"  Part="1"
 AR Path="/60AC8F91/60B7107E" Ref="C?"  Part="1" 
 AR Path="/60BEA309/60B7107E" Ref="C8"  Part="1" 
 F 0 "C8" H 1985 2754 50  0000 R CNN
-F 1 "10uF" H 1985 2845 50  0000 R CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 2138 2650 50  0001 C CNN
+F 1 "0.1uF" H 1985 2845 50  0000 R CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 2138 2650 50  0001 C CNN
 F 3 "~" H 2100 2800 50  0001 C CNN
 	1    2100 2800
 	-1   0    0    1   
@@ -360,7 +360,7 @@ AR Path="/60B0344A/60B71078" Ref="C?"  Part="1"
 AR Path="/60AC8F91/60B71078" Ref="C?"  Part="1" 
 AR Path="/60BEA309/60B71078" Ref="C7"  Part="1" 
 F 0 "C7" H 1535 2754 50  0000 R CNN
-F 1 "10uF" H 1535 2845 50  0000 R CNN
+F 1 "4.7uF" H 1535 2845 50  0000 R CNN
 F 2 "Capacitors_SMD:C_0805_HandSoldering" H 1688 2650 50  0001 C CNN
 F 3 "~" H 1650 2800 50  0001 C CNN
 	1    1650 2800
@@ -389,7 +389,7 @@ AR Path="/60AC8F91/60B71066" Ref="C?"  Part="1"
 AR Path="/60BEA309/60B71066" Ref="C10"  Part="1" 
 F 0 "C10" V 2498 1550 50  0000 C CNN
 F 1 "4.7uF" V 2589 1550 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 2788 1400 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 2788 1400 50  0001 C CNN
 F 3 "~" H 2750 1550 50  0001 C CNN
 	1    2750 1550
 	0    1    1    0   
