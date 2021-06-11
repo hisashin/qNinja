@@ -1,6 +1,7 @@
 // ADS1219IPWR (4ch ADC)
 "use strict";
-
+// TODO Support DRDY
+// Wait for DRDY to transition low
 const i2c = require('i2c-bus');
 const DEFAULT_BUS_NUMBER = 1;
 // Datasheet: https://www.ti.com/store/ti/en/p/product/?p=ADS1219IPWR
@@ -63,7 +64,7 @@ const MUX_SINGLE_END_VALS = [
 
 /* Commands */
 const COMMAND_RESET = 0b00000110;
-const COMMAND_SYNC = 0b00001000;
+const COMMAND_SSYNC = 0b00001000;
 const COMMAND_PDOWN = 0b00000010;
 const COMMAND_RDATA = 0b00010000;
 const COMMAND_RREG = 0b00100000; // 0010 rrxx : Read register at address rr
@@ -96,6 +97,11 @@ class ADS1219IPWR {
     this.i2c.sendByteSync(this.address, val);
     return this.i2c.receiveByteSync(this.address);
   }
+  writeRegister (addr, value) {
+    const addrVal = COMMAND_WREG | (0b11&addr) << 2;
+    this.i2c.i2cWriteSync(this.address, 2, new Buffer([addrVal, value]));
+    this.sync();
+  }
   selectDataRate (rate) {
     console.log("SelectDataRate %d", rate);
     let rateBits = DATA_RATE[rate];
@@ -104,9 +110,8 @@ class ADS1219IPWR {
     }
     const currentVal = this.readRegister(0x01);
     // TODO
-    const val = (0b11110011 & currentVal) | (rateBits << 2)
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
-    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
+    const val = (0b11110011 & currentVal) | (rateBits << 2);
+    this.writeRegister(0x01, val);
   }
   
   // Measure diff signals
@@ -121,8 +126,7 @@ class ADS1219IPWR {
     }
     const currentVal = this.readRegister(0x00);
     const val = (0b00001111 & currentVal) | (muxBits << 4);
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
-    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
+    this.writeRegister(0x00, val);
   }
   // Measure single-ended signals
   selectChannel (channel) {
@@ -133,8 +137,7 @@ class ADS1219IPWR {
     }
     const currentVal = this.readRegister(0x00);
     const val = (0b00001111 & currentVal) | (muxBits << 4);
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
-    this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
+    this.writeRegister(0x00, val);
   }
   
   sync () {
