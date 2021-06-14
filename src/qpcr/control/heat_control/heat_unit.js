@@ -56,7 +56,7 @@ class HeatUnit {
       callback();
     });
   }
-  temperature () {
+  getTemperature() {
     return this.temperature;
   }
   off() {

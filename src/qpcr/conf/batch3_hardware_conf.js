@@ -1,30 +1,34 @@
 "use strict";
-/*
-  TODO
-  (After designing batch3 board)
-  - Define MUX channels of thermistors
-  (Hardware testing)
-  
-*/
+
 // Basic configuration
 const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
 
 const SPI = require('pi-spi');
+const i2c = require('i2c-bus');
+const raspi = require('raspi'); // For SoftPWM
+const pwm = require('raspi-soft-pwm');
+const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const ExclusiveTaskQueue = require("../control/exclusive_task_queue.js");
 const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
+const HeatLidMulti = require("../control/heat_lid_multi.js");
 const PlateBlock = require("../control/plate_block.js");
-const i2c = require('i2c-bus');
 const Thermistor = require("../hardware/thermistor.js");
 
-// ADC and wrapper
+// Hardware lilbraries
 const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
 const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 const MUX16ch = require("../hardware/mux_16ch.js");
+const MCP4551T = require("../hardware/pot_mcp4551t.js");
+const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
+
+const DEBUG_COEFF = 1;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
 const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
@@ -35,13 +39,7 @@ const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
 
 const PIN_LATCH = 15;
 
-const raspi = require('raspi'); // For SoftPWM
-const pwm = require('raspi-soft-pwm');
-const rpio = require('rpio');
-// Potentiometer
-const MCP4551T = require("../hardware/pot_mcp4551t.js");
 // LED Driver
-const TLC59281DBQR = require("../hardware/led_driver_tlc59281dbqr.js");
 const muxQueue = new ExclusiveTaskQueue();
 
 // Pins
@@ -52,7 +50,6 @@ const ADC_DATA_RATE = 90;
 const ADC_DEVICE_ADDR = 0x40;
 const POT_DEVICE_ADDR = 0x2F;
 
-// TODO change according to the circuit design
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
 const ADC_CHANNEL_THERMISTORS = 0;
 
@@ -99,13 +96,6 @@ const PLATE_KD = 0.02;
 const HEATER_KP = 1.0;
 const HEATER_KI = 1.0;
 const HEATER_KD = 1.0;
-
-/*
-const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
-const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 1;
-const MUX_CHANNEL_THERMISTOR_AIR = 2;
-const MUX_CHANNEL_THERMISTOR_LID = 3;
-*/
 
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK1 = 0;
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK2 = 0;
@@ -158,7 +148,7 @@ class HardwareConf {
       this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
     this.plate = new Plate (blocks, fan, air);
   
-    this.lids = [];
+    let lids = [];
     {
       const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES)
       const lidSensing = new LidSensing(lidThermistor, this.adcManager, ADC_CHANNEL_THERMISTORS, 
@@ -166,8 +156,9 @@ class HardwareConf {
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid1);
-      this.lids.push(new HeatUnit(pid, lidSensing, output));
+      lids.push(new HeatUnit(pid, lidSensing, output));
     }
+    this.lid = new HeatLidMulti(lids);
   }
   shutdown () {
     // TODO
@@ -194,8 +185,8 @@ class HardwareConf {
   getPlate () {
     return this.plate;
   }
-  getHeatLids () {
-    return this.lids;
+  getHeatLid () {
+    return this.lid;
   }
   getLEDUnit () {
     console.log("getLEDUnit()");
@@ -217,18 +208,6 @@ class HardwareConf {
   }
 };
 // Channel name (Not index)
-/*
-Before 2021/04/27
-const MUX_MAP_N = [
-  //0ch
-  [8,6,4,2,16,14,12,10],
-  [7,5,3,1,15,13,11,9]
-];
-const MUX_MAP_S = [
-  [1,3,5,7,9,11,13,15],
-  [2,4,6,8,10,12,14,16]
-];
-*/
 const MUX_MAP_N = [
   //0ch
   [16,14,11,10,8,6,4,2],
@@ -255,7 +234,6 @@ class SPIMuxWrapper {
         // North (switch=low)
         muxCh = 16 + MUX_MAP_S[channel][wellIndex-8] - 1;
     }
-    // console.log("W %d O %d M %d @%d", wellIndex, channel, muxCh, new Date().getTime()%10000);
     rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
     this.mux.selectChannel(muxCh);
   }
@@ -319,7 +297,6 @@ class LEDUnit {
   start () {
     // this.ledDriver.start();
     rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, VALUE_SPI_SWITCH_LED);
-    // this.ledUnit = new LEDUnit(this.pot, this.ledDriver);
     this.pot.initialize();
   }
   select (channel) {
@@ -369,6 +346,8 @@ class FluorescenceSensingUnit {
     this.adcManager.start();
     this.mux.start();
   }
+  excitationDuration () { return EXCITATION_DURATION_MSEC; }
+  measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   _select (wellIndex, opticalChannel) {
     this.mux.select(wellIndex, opticalChannel);
     // Switch gain according to previous measurement
@@ -407,15 +386,6 @@ class FluorescenceSensingUnit {
       this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
       callback({v:val,s:this.isStrongSignal?"1M":"10M"});
     });
-    /*
-    this.adcManager.readChannelValue(2, (val0)=>{
-      this.adcManager.readChannelValue(3, (val3)=>{
-        const val = (val0 - val3) * 2;
-        this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
-        callback({v:val,s:this.isStrongSignal?"1M":"10M"});
-      });
-    });
-    */
   }
   shutdown () {
     console.log("Shutting down photosensing unit.");

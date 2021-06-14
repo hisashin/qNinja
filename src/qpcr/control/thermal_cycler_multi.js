@@ -21,6 +21,7 @@ class RemainingTimeCalculator {
   constructor (protocol) {
     this.start = new Date();
     this.protocol = protocol;
+    
     this.timestamp = new Date();
     this.update(0, 0, new Date());
   }
@@ -85,9 +86,9 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (plate, heatLids) {
+  constructor (plate, heatLid) {
     this.plate = plate;
-    this.heatLids = heatLids;
+    this.heatLid = heatLid;
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {
@@ -96,19 +97,16 @@ class ThermalCycler {
   start (protocol) {
     this.protocol = protocol;
     this.plate.start();
-    for (let lid of this.heatLids) {
-      lid.start();
-      if (protocol.lid_temp > 0) {
-        lid.setTargetTemperature(protocol.lid_temp);
-      } else {
-        lid.off();
-      }
-      
+    this.heatLid.start();
+    if (protocol.lid_temp > 0) {
+      this.heatLid.setTargetTemperature(protocol.lid_temp);
+    } else {
+      this.heatLid.off();
     }
     this.state = new StatePreheat(protocol);
     if (!(this.protocol.lid_temp > 0)) {
       // Skip preheat if lid is disabled
-      this.state = this.state.next(this.plate.temperature);
+      this.state = this.state.next(this.plate.getTemperature());
     }
     this.startTime = new Date();
     this.state.start(this.startTime);
@@ -136,10 +134,7 @@ class ThermalCycler {
   finish () {
     this._stopTimer();
     this.plate.off();
-    for (let lid of this.heatLids) {
-      lid.off();
-    }
-    
+    this.heatLid.off();
   }
   _startTimer () {
     if (this.controlTempInterval != null){
@@ -167,9 +162,7 @@ class ThermalCycler {
   _lidControlTask (lid) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        lid.control(()=>{
-          resolve()
-        });
+        this.heatLid.control(resolve);
       });
     };
   }
@@ -178,9 +171,7 @@ class ThermalCycler {
     let queue = [];
     queue.push(this._plateControlTask(this.plate));
     if (this.protocol.lid_temp > 0) {
-      for (let lid of this.heatLids) {
-        queue.push(this._lidControlTask(lid));
-      }
+      queue.push(this._lidControlTask());
     }
     new PromiseQueue(queue).exec().then(()=>{
       this._control();
@@ -189,17 +180,15 @@ class ThermalCycler {
   _control () {
     const now = new Date();
     this.state.updateTime(now);
-    let lidMaxTemperature = Math.max(...this.heatLids.map(lid=>lid.temperature));
-    if (this.state.complete(this.plate.temperature, lidMaxTemperature, now)) {
+    let lidMaxTemperature = this.heatLid.getTemperature();
+    if (this.state.complete(this.plate.getTemperature(), lidMaxTemperature, now)) {
       // Transition
       this.stateFrom = this.state;
-      this.state = this.state.next(this.plate.temperature);
+      this.state = this.state.next(this.plate.getTemperature());
       
       let lidTargetTemp = this.state.lidTargetTemp();
       if (lidTargetTemp != null) {
-        for (let lid of this.heatLids) {
-          lid.setTargetTemperature(lidTargetTemp);
-        }
+        this.heatLid.setTargetTemperature(lidTargetTemp);
       }
       this.state.start(now);
       const from = this.stateFrom.getStatus();
@@ -237,25 +226,16 @@ class ThermalCycler {
   getStatus () {
     // TODO: define data format
     return {
-      plate: round(this.plate.temperature, 2),
-      lid: round(this.getLidTemp(), 2),
+      plate: round(this.plate.getTemperature(), 2),
+      lid: round(this.heatLid.getTemperature(), 2),
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
   }
-  getLidTemp () {
-    let sum = 0;
-    for (let lid of this.heatLids) {
-      sum += lid.temperature;
-    }
-    return sum / this.heatLids.length;
-  }
   shutdown () {
     console.log("ThermalCycler.shutdown()");
     this.plate.shutdown();
-    for (let lid of this.heatLids) {
-      lid.shutdown();
-    }
+    this.heatLid.shutdown();
   }
 }
 function round (value, position) {

@@ -9,6 +9,7 @@
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const demoPlate = require("../control/plate_multi_demo.js");
+const HeatLidMulti = require("../control/heat_lid_multi.js");
 const Plate = require("../control/plate_multi.js");
 const i2c = require('i2c-bus');
 const Thermistor = require("../hardware/thermistor.js");
@@ -148,7 +149,7 @@ class HardwareConf {
     const air = new AirSensing(airThermistor, this.adcManager, ADC_CHANNEL_AIR_THERMISTOR);
     this.plate = new Plate (blocks, fan, air);
   
-    this.lids = [];
+    let lids = [];
     {
       const lidThermistor = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
         this.adcManager, 
@@ -157,8 +158,9 @@ class HardwareConf {
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid1);
-      this.lids.push(new HeatUnit(pid, lidSensing, output));
+      lids.push(new HeatUnit(pid, lidSensing, output));
     }
+    this.lid = new HeatLidMulti(lids);
     shutdown () {
       // TODO
       // Shutdown all
@@ -179,8 +181,8 @@ class HardwareConf {
   getPlate () {
     return this.plate;
   }
-  getHeatLids () {
-    return this.lids;
+  getHeatLid () {
+    return this.lid;
   }
   getLEDUnit () {
     console.log("getLEDUnit()");
@@ -207,8 +209,6 @@ class LEDUnit {
     this.pot = pot;
     this.ledDriver = ledDriver;
     this.flg = true;
-    
-    // this.lid
   }
   start () {
     this.ledDriver.start();
