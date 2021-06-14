@@ -31,70 +31,18 @@ Text GLabel 7700 2400 2    50   Input ~ 0
 MUX_S0
 Text GLabel 7700 2500 2    50   Input ~ 0
 MUX_S1
-Text Notes 2300 4650 0    50   ~ 0
+Text Notes 2050 4950 0    50   ~ 0
 IN=High : COM <-> NO\nIN=Low : COM <-> NC
-$Comp
-L power:GND #PWR?
-U 1 1 60D3592E
-P 2000 4000
-AR Path="/60AC9047/60D3592E" Ref="#PWR?"  Part="1" 
-AR Path="/60D3592E" Ref="#PWR?"  Part="1" 
-AR Path="/60B09AA3/60D3592E" Ref="#PWR?"  Part="1" 
-AR Path="/60BEA899/60D3592E" Ref="#PWR011"  Part="1" 
-F 0 "#PWR011" H 2000 3750 50  0001 C CNN
-F 1 "GND" H 2005 3827 50  0000 C CNN
-F 2 "" H 2000 4000 50  0001 C CNN
-F 3 "" H 2000 4000 50  0001 C CNN
-	1    2000 4000
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
-	3350 3400 3400 3400
+	3350 4200 3400 4200
 Wire Wire Line
 	3400 3600 3350 3600
-$Comp
-L Ninja-qPCR:TS5A9411DCKR U?
-U 1 1 60D3593D
-P 2750 3700
-AR Path="/60AC9047/60D3593D" Ref="U?"  Part="1" 
-AR Path="/60D3593D" Ref="U?"  Part="1" 
-AR Path="/60B09AA3/60D3593D" Ref="U?"  Part="1" 
-AR Path="/60BEA899/60D3593D" Ref="U12"  Part="1" 
-F 0 "U12" H 2750 4388 60  0000 C CNN
-F 1 "TS5A9411DCKR" H 2750 4282 60  0000 C CNN
-F 2 "Ninja-qPCR:TS5A9411DCKR" H 2750 3640 60  0001 C CNN
-F 3 "" H 2750 3700 60  0000 C CNN
-	1    2750 3700
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	2000 4000 2150 4000
 Text GLabel 3400 3600 2    50   Input ~ 0
 THERM_R_SWITCH
 $Comp
 L Device:R R?
-U 1 1 60D549A8
-P 1800 3450
-AR Path="/5F58C19F/60D549A8" Ref="R?"  Part="1" 
-AR Path="/60D549A8" Ref="R?"  Part="1" 
-AR Path="/5F708CA1/60D549A8" Ref="R?"  Part="1" 
-AR Path="/60AEA148/60D549A8" Ref="R?"  Part="1" 
-AR Path="/60AC8F63/60D549A8" Ref="R?"  Part="1" 
-AR Path="/60B09AA3/60D549A8" Ref="R?"  Part="1" 
-AR Path="/60BEA899/60D549A8" Ref="R8"  Part="1" 
-F 0 "R8" V 1593 3450 50  0000 C CNN
-F 1 "?k" V 1684 3450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 3450 50  0001 C CNN
-F 3 "~" H 1800 3450 50  0001 C CNN
-	1    1800 3450
-	0    -1   1    0   
-$EndComp
-Wire Wire Line
-	1500 3450 1650 3450
-$Comp
-L Device:R R?
 U 1 1 60D57FA5
-P 1800 3800
+P 1500 3600
 AR Path="/5F58C19F/60D57FA5" Ref="R?"  Part="1" 
 AR Path="/60D57FA5" Ref="R?"  Part="1" 
 AR Path="/5F708CA1/60D57FA5" Ref="R?"  Part="1" 
@@ -102,26 +50,17 @@ AR Path="/60AEA148/60D57FA5" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60D57FA5" Ref="R?"  Part="1" 
 AR Path="/60B09AA3/60D57FA5" Ref="R?"  Part="1" 
 AR Path="/60BEA899/60D57FA5" Ref="R9"  Part="1" 
-F 0 "R9" V 1593 3800 50  0000 C CNN
-F 1 "?k" V 1684 3800 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 3800 50  0001 C CNN
-F 3 "~" H 1800 3800 50  0001 C CNN
-	1    1800 3800
+F 0 "R9" V 1293 3600 50  0000 C CNN
+F 1 "?k" V 1384 3600 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 1430 3600 50  0001 C CNN
+F 3 "~" H 1500 3600 50  0001 C CNN
+	1    1500 3600
 	0    -1   1    0   
 $EndComp
 Wire Wire Line
-	2150 3800 1950 3800
-Wire Wire Line
-	1650 3800 1500 3800
-Wire Wire Line
-	1500 3450 1500 3800
-Connection ~ 1500 3800
-Wire Wire Line
 	3350 3800 4150 3800
-Text GLabel 1150 3800 0    50   Input ~ 0
+Text GLabel 850  3600 0    50   Input ~ 0
 3V3A
-Wire Wire Line
-	1150 3800 1500 3800
 $Comp
 L power:GND #PWR?
 U 1 1 60B11468
@@ -137,12 +76,6 @@ F 3 "" H 5150 2650 50  0001 C CNN
 	1    5150 2650
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	2150 3600 2050 3600
-Wire Wire Line
-	2050 3600 2050 3450
-Wire Wire Line
-	2050 3450 1950 3450
 $Comp
 L Jumper:Jumper_2_Open JP4
 U 1 1 60B18AB9
@@ -155,11 +88,6 @@ F 3 "~" H 2800 2650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2600 2650 2050 2650
-Wire Wire Line
-	2050 2650 2050 3450
-Connection ~ 2050 3450
-Wire Wire Line
 	3000 2650 4150 2650
 Wire Wire Line
 	4150 2650 4150 3800
@@ -168,7 +96,7 @@ Wire Wire Line
 	4150 3800 4650 3800
 Text Notes 2200 2350 0    50   ~ 0
 Connet in case of switching trouble
-Text GLabel 3400 3400 2    50   Input ~ 0
+Text GLabel 3400 4200 2    50   Input ~ 0
 3V3D
 Text GLabel 7700 1900 2    50   Input ~ 0
 3V3D
@@ -393,4 +321,75 @@ THERM_MUX_OUT
 NoConn ~ 5200 2000
 Wire Wire Line
 	5350 2000 5200 2000
+$Comp
+L Ninja-qPCR:TS12A12511DCNR U15
+U 1 1 60C7338A
+P 3350 3600
+F 0 "U15" H 4150 3987 60  0000 C CNN
+F 1 "TS12A12511DCNR" H 4150 3881 60  0000 C CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-8" H 4150 3840 60  0001 C CNN
+F 3 "" H 3350 3600 60  0000 C CNN
+	1    3350 3600
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 4500 3350 4500
+$Comp
+L power:GND #PWR?
+U 1 1 60D3592E
+P 3450 4500
+AR Path="/60AC9047/60D3592E" Ref="#PWR?"  Part="1" 
+AR Path="/60D3592E" Ref="#PWR?"  Part="1" 
+AR Path="/60B09AA3/60D3592E" Ref="#PWR?"  Part="1" 
+AR Path="/60BEA899/60D3592E" Ref="#PWR011"  Part="1" 
+F 0 "#PWR011" H 3450 4250 50  0001 C CNN
+F 1 "GND" H 3455 4327 50  0000 C CNN
+F 2 "" H 3450 4500 50  0001 C CNN
+F 3 "" H 3450 4500 50  0001 C CNN
+	1    3450 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 60D549A8
+P 1500 4000
+AR Path="/5F58C19F/60D549A8" Ref="R?"  Part="1" 
+AR Path="/60D549A8" Ref="R?"  Part="1" 
+AR Path="/5F708CA1/60D549A8" Ref="R?"  Part="1" 
+AR Path="/60AEA148/60D549A8" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/60D549A8" Ref="R?"  Part="1" 
+AR Path="/60B09AA3/60D549A8" Ref="R?"  Part="1" 
+AR Path="/60BEA899/60D549A8" Ref="R8"  Part="1" 
+F 0 "R8" V 1293 4000 50  0000 C CNN
+F 1 "?k" V 1384 4000 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 1430 4000 50  0001 C CNN
+F 3 "~" H 1500 4000 50  0001 C CNN
+	1    1500 4000
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	850  3600 1150 3600
+Wire Wire Line
+	1750 3600 1650 3600
+Wire Wire Line
+	1750 4000 1700 4000
+Wire Wire Line
+	1350 4000 1150 4000
+Wire Wire Line
+	1150 4000 1150 3600
+Connection ~ 1150 3600
+Wire Wire Line
+	1150 3600 1350 3600
+Wire Wire Line
+	1700 2650 1700 4000
+Connection ~ 1700 4000
+Wire Wire Line
+	1700 4000 1650 4000
+Wire Wire Line
+	1700 2650 2600 2650
+Wire Wire Line
+	3350 4300 3450 4300
+Wire Wire Line
+	3450 4300 3450 4500
+Connection ~ 3450 4500
 $EndSCHEMATC
