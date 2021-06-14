@@ -30,7 +30,7 @@ const PCA9955B = require("../hardware/led_driver_pca9955b.js");
 const DEBUG_COEFF = 1;
 const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
 const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
-const I2C_ADDR_PCA9955B = 0;
+const I2C_ADDR_PCA9955B = 0x05;
 
 const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
 const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
