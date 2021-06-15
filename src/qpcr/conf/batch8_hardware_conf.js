@@ -38,8 +38,7 @@ const PIN_NUM_PD_MUX_3 = 12; //GPIO1 (Mux channel)
 const PIN_NUM_PD_MUX_4 = 10; //GPIO16 (Mux channel)
 const PIN_NUM_PD_MUX_5 = 8; //GPIO15 (Mux channel)
 const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
-
-const PIN_LATCH = 15;
+const PIN_NUM_THERMISTOR_R = 26;
 
 // LED Driver
 const muxQueue = new ExclusiveTaskQueue();
@@ -55,7 +54,10 @@ const POT_DEVICE_ADDR = 0x2F;
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
 const ADC_CHANNEL_THERMISTORS = 0;
 
-const RES = 47.0; // kOhm
+// http://localhost:8888/notebooks/PCR/Ninja_qPCR_thermistor_selection.ipynb
+const RES_LOW_TEMP = 30.0; // kOhm
+const RES_HIGH_TEMP = 10.0; // kOhm
+const SWITCHING_TEMP = 66.0;
 const R0 = 100.0;
 const BASE_TEMP = 25.0;
 const B_CONST = [
@@ -109,14 +111,21 @@ class HardwareConf {
     this.pwmPlate = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER);
     this.pwmLid = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER);
     this.pwmFan = new pwm.SoftPWM(PIN_NAME_PWM_FAN);
-    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4)
+    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    /*
+    const RES_LOW_TEMP = 30.0; // kOhm
+    const RES_HIGH_TEMP = 10.0; // kOhm
+    const SWITCHING_TEMP = 66.0;
+    */
+    const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES_LOW_TEMP);
+    const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES_HIGH_TEMP);
     
     {
       // TODO switching?
-      const plateBlockSensing = new TemperatureSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
+      const plateBlockSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP,
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK);
-      const airSensing = new TemperatureSensing(new Thermistor(B_CONST, R0, BASE_TEMP, AIR_THERMISTOR_POS , RES), 
+      const airSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP,
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
       const plateSensing = new PlateSensing(plateBlockSensing, airSensing);
@@ -124,7 +133,7 @@ class HardwareConf {
       this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
     }
     {
-      const lidSensing = new TemperatureSensing(new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES), 
+      const lidSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP, 
         this.adcManager, ADC_CHANNEL_THERMISTORS, 
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_LID);
       const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
@@ -196,23 +205,39 @@ class PlateSensing {
 const THERMISTOR_MUX_WAIT_MSEC = 4;
 
 class TemperatureSensing {
-  constructor (thermistor, adcManager, adcChannel, mux, muxChannel) {
-    this.thermistor = thermistor;
+  constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
+    this.thermistorLowTemp = thermistorLowTemp;
+    this.thermistorHighTemp = thermistorHighTemp;
+    this.switchingTemp = switchingTemp;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
     this.mux = mux;
     this.muxChannel = muxChannel;
+    this.prevValue = BASE_TEMP;
     console.log("LidSensing.muxChannel",this.muxChannel);
   }
   start () {
     this.adcManager.start();
+    rpio.open(PIN_NUM_THERMISTOR_R, rpio.OUTPUT, rpio.LOW);
   }
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
       this.mux.selectChannel(this.muxChannel);
+      let thermistor = null;
+      let switchPinVal = 0;
+      if (this.prevValue < switchingTemp) {
+        thermistor = this.thermistorLowTemp;
+      } else {
+        thermistor = this.thermistorHighTemp;
+        switchPinVal = 1;
+      }
+      rpio.write(PIN_NUM_THERMISTOR_R, switchPinVal);
+      // Prev value
+      // Switch
       setTimeout(()=>{
         this.adcManager.readChannelValue(this.adcChannel, (val)=>{
-          const temp = this.thermistor.getTemp(val);
+          const temp = thermistor.getTemp(val);
+          this.prevValue = temp;
           console.log("ADC=%f TEMP=%f", val, temp);
           muxQueue.release(muxTaskId);
           callback(temp);
