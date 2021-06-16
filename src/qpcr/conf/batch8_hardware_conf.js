@@ -4,7 +4,6 @@
 const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
 
-const SPI = require('pi-spi');
 const i2c = require('i2c-bus');
 const raspi = require('raspi'); // For SoftPWM
 const pwm = require('raspi-soft-pwm');
@@ -70,6 +69,7 @@ const PLATE_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
 const LID_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
 const AIR_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
 
+
 /* 
   PIN_NUM_* means pin number.
   PIN_NAME_* means pin's GPIO name
@@ -104,7 +104,6 @@ const MUX_CHANNEL_THERMISTOR_LID = 1;
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
-    this.spi = SPI.initialize(SPI_CHANNEL);
     this.i2c = i2c.openSync(I2C_CHANNEL);
     const adc = new ADS122C04IPWR(this.i2c, ADC_DEVICE_ADDR);
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
@@ -170,16 +169,14 @@ class HardwareConf {
     if (this.ledUnit == null) {
       console.log("getLEDUnit() create...");
       const pot = new MCP4551T(this.i2c, POT_DEVICE_ADDR);
-      const ledDriver = new PCA9955B(this.spi, I2C_ADDR_PCA9955B);
+      const ledDriver = new PCA9955B(this.i2c, I2C_ADDR_PCA9955B);
       this.ledUnit = new LEDUnit(pot, ledDriver);
     }
     return this.ledUnit;
   }
   getFluorescenceSensingUnit() {
-    // ADG731BSUZ (SPI)
     // Generic 16ch MUX
     const muxWrapper = new GenericGPIOMuxWrapper();
-    // const muxWrapper = new SPIMuxWrapper(this.spi, PIN_NUM_PD_SYNC);
     return new FluorescenceSensingUnit(muxWrapper, this.adcManager, ADC_CHANNEL_FLUORESCENCE_MEASUREMENT);
   }
 };
@@ -289,26 +286,6 @@ const MUX_MAP_S = [
   [15,13,12,9,7,5,3,1]
 ];
 
-class SPIMuxWrapper {
-  constructor (spi, pinSync) {
-    this.mux = new ADG731BSUZ(spi, pinSync);
-  }
-  start () {
-    this.mux.initialize();
-  }
-  select (wellIndex, channel) {
-    let muxCh = 0;
-    if (wellIndex < 8) {
-        // North (switch=high)
-        muxCh = MUX_MAP_N[channel][wellIndex] - 1;
-    } else {
-        // North (switch=low)
-        muxCh = 16 + MUX_MAP_S[channel][wellIndex-8] - 1;
-    }
-    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_MUX);
-    this.mux.selectChannel(muxCh);
-  }
-}
 /* 4bit GPIO MUX  + Switch */
 class GenericGPIOMuxWrapper {
   constructor () {
