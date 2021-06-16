@@ -815,4 +815,6 @@ Wire Wire Line
 Connection ~ 9050 900 
 Wire Wire Line
 	9050 900  9000 900 
+Text Notes 800  3200 0    50   ~ 0
+TODO main
 $EndSCHEMATC

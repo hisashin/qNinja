@@ -331,7 +331,7 @@ Wire Wire Line
 	8050 1000 8300 1000
 Text GLabel 8050 1000 0    50   Input ~ 0
 12V
-Text GLabel 10000 5050 0    50   Input ~ 0
+Text GLabel 10000 4950 0    50   Input ~ 0
 3V3D
 Wire Wire Line
 	10150 6250 10000 6250
@@ -357,9 +357,7 @@ Wire Wire Line
 	10150 5050 10000 5050
 Wire Wire Line
 	10150 4950 10000 4950
-Text GLabel 10000 6250 0    50   Input ~ 0
-AMP_GAIN_SW
-Text GLabel 10000 5250 0    50   Input ~ 0
+Text GLabel 10000 5050 0    50   Input ~ 0
 3V3A
 Text GLabel 10000 6050 0    50   Input ~ 0
 I2C_SDA
@@ -377,8 +375,6 @@ Text GLabel 10000 5450 0    50   Input ~ 0
 MUX_S2
 Text GLabel 10000 5350 0    50   Input ~ 0
 MUX_S3
-Text GLabel 10000 4950 0    50   Input ~ 0
-GND
 Text Notes 9550 6500 0    50   ~ 0
 To Photosensing Board
 Wire Wire Line
@@ -1087,4 +1083,8 @@ Text HLabel 3900 6550 0    50   Input ~ 0
 GPIO5
 Wire Wire Line
 	3900 6550 4100 6550
+Text GLabel 10000 6250 0    50   Input ~ 0
+GND
+Text GLabel 10000 5250 0    50   Input ~ 0
+AMP_GAIN_SW
 $EndSCHEMATC
