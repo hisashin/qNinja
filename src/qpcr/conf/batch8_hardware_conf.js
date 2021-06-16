@@ -31,14 +31,6 @@ const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
 const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 const I2C_ADDR_PCA9955B = 0x05;
 
-const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
-const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
-const PIN_NUM_PD_MUX_3 = 12; //GPIO1 (Mux channel)
-const PIN_NUM_PD_MUX_4 = 10; //GPIO16 (Mux channel)
-const PIN_NUM_PD_MUX_5 = 8; //GPIO15 (Mux channel)
-const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
-const PIN_NUM_THERMISTOR_R = 26;
-
 // LED Driver
 const muxQueue = new ExclusiveTaskQueue();
 
@@ -75,6 +67,14 @@ const AIR_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
   PIN_NAME_* means pin's GPIO name
 */
 
+
+const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
+const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_3 = 12; //GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_4 = 10; //GPIO16 (Mux channel)
+const PIN_NUM_PD_MUX_5 = 8; //GPIO15 (Mux channel)
+const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
+const PIN_NUM_THERMISTOR_R = 26;
 const PIN_NAME_PWM_PLATE_HEATER = 23;
 const PIN_NAME_PWM_LID_HEATER = 2;
 const PIN_NAME_PWM_FAN = 21;
