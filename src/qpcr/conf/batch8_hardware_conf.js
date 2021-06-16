@@ -11,7 +11,7 @@ const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const ExclusiveTaskQueue = require("../control/exclusive_task_queue.js");
-const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
+// const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
 const HeatLidMulti = require("../control/heat_lid_multi.js");
 const PlateBlock = require("../control/plate_block.js");
@@ -31,11 +31,7 @@ const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
 const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 const I2C_ADDR_PCA9955B = 0x05;
 
-// LED Driver
-const muxQueue = new ExclusiveTaskQueue();
-
 // Pins
-const SPI_CHANNEL = "/dev/spidev0.0";
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
 const ADC_DATA_RATE = 90;
@@ -45,6 +41,7 @@ const POT_DEVICE_ADDR = 0x2F;
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = [3, 2]; // AIN3->P, AIN2->N
 const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
 
+/* Thermistor config */
 // http://localhost:8888/notebooks/PCR/Ninja_qPCR_thermistor_selection.ipynb
 const RES_LOW_TEMP = 30.0; // kOhm
 const RES_HIGH_TEMP = 10.0; // kOhm
@@ -56,11 +53,7 @@ const B_CONST = [
   { minTemp:50.0, bConst:4311, voltageLimit:0.0 }, // 4311 for 50-85 deg 
   { minTemp:85.0, bConst:4334, voltageLimit:0.0 } // 4334 for 85-100 deg 
 ];
-
-const PLATE_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
-const LID_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
-const AIR_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
-
+const THERMISTOR_POSITION = false; /* Thermistor is connected to 0V line */
 
 /* 
   PIN_NUM_* means pin number.
@@ -80,18 +73,9 @@ const PIN_NAME_PWM_LID_HEATER = 2; // Pin 13, GPIO2
 const PIN_NAME_PWM_FAN = 21; // Pin 29, GPIO 21
 const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
 const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
-
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
 
-const PIN_NUM_SPI_SWITCH = 18; //GPIO5
-
-const VALUE_SPI_SWITCH_LED = rpio.LOW;
-const VALUE_SPI_SWITCH_MUX = rpio.HIGH;
-
-const PIN_NUM_LED_DRIVER_LATCH = 15;
-
-const PIN_NUM_PD_SYNC = 22 //GPIO6
-
+/* Pin COnfig */
 const PLATE_KP = 1.0;
 const PLATE_KI = 0.02;
 const PLATE_KD = 0.02;
@@ -103,6 +87,19 @@ const HEATER_KD = 1.0;
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK = 0;
 const MUX_CHANNEL_THERMISTOR_AIR = 0;
 const MUX_CHANNEL_THERMISTOR_LID = 1;
+
+// Channel name (Not index)
+const MUX_MAP_PHOTODIODES_N = [
+  //0ch
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
+];
+const MUX_MAP_PHOTODIODES_S = [
+  [16,14,11,10,8,6,4,2],
+  [15,13,12,9,7,5,3,1]
+];
+
+const muxQueue = new ExclusiveTaskQueue();
 
 class HardwareConf {
   constructor () {
@@ -119,8 +116,8 @@ class HardwareConf {
     const RES_HIGH_TEMP = 10.0; // kOhm
     const SWITCHING_TEMP = 66.0;
     */
-    const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES_LOW_TEMP);
-    const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, PLATE_THERMISTOR_POS , RES_HIGH_TEMP);
+    const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
+    const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
     
     {
       // TODO switching?
@@ -278,17 +275,6 @@ class PlateOutput {
   }
 }
 
-// Channel name (Not index)
-const MUX_MAP_N = [
-  //0ch
-  [16,14,11,10,8,6,4,2],
-  [15,13,12,9,7,5,3,1]
-];
-const MUX_MAP_S = [
-  [16,14,11,10,8,6,4,2],
-  [15,13,12,9,7,5,3,1]
-];
-
 /* 4bit GPIO MUX  + Switch */
 class GenericGPIOMuxWrapper {
   constructor () {
@@ -307,11 +293,11 @@ class GenericGPIOMuxWrapper {
     if (wellIndex < 8) {
         // North
         muxSwitchVal = 0;
-        muxChName = MUX_MAP_N[channel][wellIndex];
+        muxChName = MUX_MAP_PHOTODIODES_N[channel][wellIndex];
     } else {
         // South
         muxSwitchVal = 1;
-        muxChName = MUX_MAP_S[channel][wellIndex-8];
+        muxChName = MUX_MAP_PHOTODIODES_S[channel][wellIndex-8];
     }
     const muxChannel = muxChName - 1;
     rpio.write(this.muxSwitch, muxSwitchVal);
@@ -346,14 +332,9 @@ class LEDUnit {
     this.flg = true;
   }
   start () {
-    // this.ledDriver.start();
-    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, VALUE_SPI_SWITCH_LED);
     this.pot.initialize();
   }
   select (channel) {
-    // channel = debug;
-    //channel = (channel)%16;
-    rpio.write(PIN_NUM_SPI_SWITCH, VALUE_SPI_SWITCH_LED);
     this.pot.setWiper(0);
     this.flg = !this.flg;
     this.ledDriver.selectChannel(channel);
@@ -473,7 +454,6 @@ class HeatLidOutput {
     this.pwm = pwm;
   }
   start () {
-    rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
   }
   setOutput (outputValue /* Range={0,1.0} */) {
     // console.log("Lid output", outputValue);
