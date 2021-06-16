@@ -42,8 +42,8 @@ const ADC_DATA_RATE = 90;
 const ADC_DEVICE_ADDR = 0x40;
 const POT_DEVICE_ADDR = 0x2F;
 
-const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = 0;
-const ADC_CHANNEL_THERMISTORS = 0;
+const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = [3, 2]; // AIN3->P, AIN2->N
+const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
 
 // http://localhost:8888/notebooks/PCR/Ninja_qPCR_thermistor_selection.ipynb
 const RES_LOW_TEMP = 30.0; // kOhm
@@ -235,7 +235,7 @@ class TemperatureSensing {
       // Prev value
       // Switch
       setTimeout(()=>{
-        this.adcManager.readChannelValue(this.adcChannel, (val)=>{
+        this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
           const temp = thermistor.getTemp(val);
           this.prevValue = temp;
           console.log("ADC=%f TEMP=%f", val, temp);
@@ -431,7 +431,7 @@ class FluorescenceSensingUnit {
     muxQueue.release(this.muxTaskId);
   }
   measure(callback) {
-    this.adcManager.readDiffChannelValue(2, 3, (_val)=>{
+    this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (_val)=>{
       const val = _val * 2;
       this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
       callback({v:val,s:this.isStrongSignal?"1M":"10M"});
