@@ -760,13 +760,13 @@ Wire Wire Line
 $Comp
 L Connector:Conn_01x02_Male LOCK1
 U 1 1 60C90AC0
-P 5950 2700
-F 0 "LOCK1" H 5922 2674 50  0000 R CNN
-F 1 "Conn_01x02_Male" H 5922 2583 50  0000 R CNN
-F 2 "Connectors_Molex:Molex_KK-6410-02_02x2.54mm_Straight" H 5950 2700 50  0001 C CNN
-F 3 "~" H 5950 2700 50  0001 C CNN
-	1    5950 2700
-	-1   0    0    -1  
+P 5950 2800
+F 0 "LOCK1" H 5922 2774 50  0000 R CNN
+F 1 "Conn_01x02_Male" H 5922 2683 50  0000 R CNN
+F 2 "Connectors_Molex:Molex_KK-6410-02_02x2.54mm_Straight" H 5950 2800 50  0001 C CNN
+F 3 "~" H 5950 2800 50  0001 C CNN
+	1    5950 2800
+	-1   0    0    1   
 $EndComp
 Text GLabel 1550 1950 0    50   Input ~ 0
 VIN_SENSE
