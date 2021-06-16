@@ -3,8 +3,13 @@ const PID = require("../control/heat_control/pid.js");
 
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const demoPlate = require("../control/plate_multi_demo.js");
+const HeatLidMulti = require("../control/heat_lid_multi.js");
 const simulateCts = require("../ct_simulator");
 const BoxMuller = require("../util/box_muller.js");
+
+const DEBUG_COEFF = 1;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
@@ -76,8 +81,9 @@ class DummyHardwareConf {
   /*
     Return HeatUnit object as implementation of the heater lid.
     */
-  getHeatLids () {
-    return [new HeatLid(), new HeatLid()];
+  getHeatLid () {
+    const lids = [new HeatLid(), new HeatLid()];
+    return new HeatLidMulti(lids);
   }
   // TODO support ambient temp sensor
   /*
@@ -138,6 +144,8 @@ class FluorescenceSimulator {
       this.ampValues[i] = this._getDummyBackground();
     }
   }
+  excitationDuration () { return EXCITATION_DURATION_MSEC; }
+  measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   select (wellIndex, opticalChannel) {
     this.wellIndex = wellIndex;
     this.opticalChannel = opticalChannel;

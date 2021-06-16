@@ -3,9 +3,6 @@ const PromiseQueue = require("./promise_queue.js");
 
 /* Excitation and fluorescence measurement */
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
-const DEBUG_COEFF = 1;
-const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
-const MEASUREMENT_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 class Optics {
   constructor (ledUnit, fluorescenceSensingUnit, wellsCount, opticsChannelsCount) {
     // new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
@@ -128,10 +125,10 @@ class Optics {
     
     for (let wellIndex=0; wellIndex<this.wellsCount; wellIndex++) {
       queue.push(this._taskSelectLED(wellIndex));
-      queue.push(this._taskDelay(5));
+      // queue.push(this._taskDelay(5));
       for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
         queue.push(this._taskSelectPhotodiode(wellIndex, opticsChannel));
-        queue.push(this._taskDelay(EXCITATION_DURATION_MSEC));
+        queue.push(this._taskDelay(this.fluorescenceSensingUnit.excitationDuration()));
         queue.push(this._taskMeasure(wellIndex, opticsChannel, values));
       }
     }
@@ -150,7 +147,7 @@ class Optics {
       if (this.continuous) {
         // Next time
         const elapsed = new Date().getTime() - lastMeasurementTimestamp.getTime();
-        const next = Math.max(0, MEASUREMENT_MIN_INTERVAL_MSEC - elapsed);
+        const next = Math.max(0, this.fluorescenceSensingUnit.measurementAllMinInterval() - elapsed);
         setTimeout(()=>{ this._measureAll() }, next);
       }
       this.isMeasuring = false;

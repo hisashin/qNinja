@@ -203,10 +203,10 @@ class NinjaQPCRDemo {
     setTimeout(()=>{qpcr.finishAutoPause();}, 5000);
   }
   onProgress (data) {
-    // console.log(data);
+    console.log(data);
   }
   onFluorescenceDataUpdate (data) {
-    // console.log(data);
+    console.log(data);
   }
   onMeltCurveDataUpdate (data) {
     // console.log(data);

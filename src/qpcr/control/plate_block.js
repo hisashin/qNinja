@@ -175,7 +175,7 @@ class PlateBlock {
       this.targetAchieved = true;
     }
     this.desiredOutput = Math.max(-this.maxDriveRatio, Math.min(this.maxDriveRatio, pidOutput));
-    console.log("PIDOUtput",pidOutput,this.maxDriveRatio,this.desiredOutput);
+    // console.log("PIDOUtput",pidOutput,this.maxDriveRatio,this.desiredOutput);
     return this.desiredOutput;
   }
   off () {

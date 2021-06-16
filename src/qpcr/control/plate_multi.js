@@ -130,7 +130,7 @@ class Plate  {
       
       let minDesiredOutput = 0;
       this.blocks.forEach((block)=>{ minDesiredOutput = Math.min(minDesiredOutput, block.desiredOutput)});
-      console.log("minDesiredOutput",minDesiredOutput);
+      // console.log("minDesiredOutput",minDesiredOutput);
       // TODO: consider heater & fan ratio
       if (minDesiredOutput < 0) {
         this.fan.setOutput(-minDesiredOutput);
@@ -145,6 +145,9 @@ class Plate  {
     }
     // console.log("TEMPLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.temperature}).join("\t"));
     // console.log("OUTLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.outputValue}).join("\t"));
+  }
+  getTemperature () {
+    return this.temperature();
   }
   // Private
   resetSyncTime () {
@@ -197,6 +200,7 @@ module.exports = Plate;
 /*
 Plate.api
     this.plate.temperature
+    this.plate.getTemperature()
     this.plate.start(); // OK (TODO: "cycle start" and "hardware start" are ambiguous)
     this.plate.off(); // Stub OK
     this.plate.control(); // OK (TODO: insert yield)

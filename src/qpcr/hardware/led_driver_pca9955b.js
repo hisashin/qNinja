@@ -1,10 +1,8 @@
 // PCA9955B (16ch I2C LED driver)
 // Datasheet: https://www.nxp.com/docs/en/data-sheet/PCA9955B.pdf
 "use strict";
-const SPI = require('pi-spi');
 const rpio = require('rpio');
 const raspi = require('raspi');
-const pwm = require('raspi-pwm');
 
 const i2c = require('i2c-bus');
 const DEFAULT_BUS_NUMBER = 1;
@@ -14,9 +12,7 @@ const REG_ADDR_LEDOUT2 = 0x04;
 const REG_ADDR_LEDOUT3 = 0x05;
 
 const LED_COUNT = 16;
-/*
-  SPI channel example: "/dev/spidev0.0"
-*/ 
+
 class PCA9955B {
   constructor (i2c, address) {
     if (typeof(i2c)=="number") {

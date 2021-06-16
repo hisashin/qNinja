@@ -12,6 +12,12 @@ class HeatLid {
     this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
     callback();
   }
+  getTemperature () {
+    return this.temperature;
+  }
+  shutdown () {}
+  off () {}
+  start () {}
   
 }
 const DUMMY_TEMP_TRANSITION_PER_SEC = 1.0;
