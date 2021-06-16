@@ -66,22 +66,25 @@ const AIR_THERMISTOR_POS = false; /* Thermistor is connected to 0V line */
   PIN_NUM_* means pin number.
   PIN_NAME_* means pin's GPIO name
 */
+const PIN_NUM_VIN_SENSE = 11; //GPIO0
 
+const PIN_NUM_MUX_SELECT = 22; // GPIO6
+const PIN_NUM_PD_MUX_1 = 16; //GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_2 = 12; //GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_3 = 10; //GPIO16 (Mux channel)
+const PIN_NUM_PD_MUX_4 = 8; //GPIO15 (Mux channel)
+const PIN_NUM_AMP_GAIN_SWITCH = 7;// GPIO7
+const PIN_NUM_THERMISTOR_R = 26;// Pin 26, GPIO 11
+const PIN_NAME_PWM_PLATE_HEATER = 23; // Pin 33, GPIO23
+const PIN_NAME_PWM_LID_HEATER = 2; // Pin 13, GPIO2
+const PIN_NAME_PWM_FAN = 21; // Pin 29, GPIO 21
+const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
+const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
 
-const PIN_NUM_PD_MUX_1 = 22; //GPIO6 (Mux select)
-const PIN_NUM_PD_MUX_2 = 16; //GPIO4 (Mux channel)
-const PIN_NUM_PD_MUX_3 = 12; //GPIO1 (Mux channel)
-const PIN_NUM_PD_MUX_4 = 10; //GPIO16 (Mux channel)
-const PIN_NUM_PD_MUX_5 = 8; //GPIO15 (Mux channel)
-const PIN_MUX_SWITCH = PIN_NUM_PD_MUX_1;
-const PIN_NUM_THERMISTOR_R = 26;
-const PIN_NAME_PWM_PLATE_HEATER = 23;
-const PIN_NAME_PWM_LID_HEATER = 2;
-const PIN_NAME_PWM_FAN = 21;
-
-const PIN_NUM_ADC_DRDY = 24;
+const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
 
 const PIN_NUM_SPI_SWITCH = 18; //GPIO5
+
 const VALUE_SPI_SWITCH_LED = rpio.LOW;
 const VALUE_SPI_SWITCH_MUX = rpio.HIGH;
 
@@ -110,7 +113,7 @@ class HardwareConf {
     this.pwmPlate = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER);
     this.pwmLid = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER);
     this.pwmFan = new pwm.SoftPWM(PIN_NAME_PWM_FAN);
-    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
     /*
     const RES_LOW_TEMP = 30.0; // kOhm
     const RES_HIGH_TEMP = 10.0; // kOhm
@@ -289,8 +292,8 @@ const MUX_MAP_S = [
 /* 4bit GPIO MUX  + Switch */
 class GenericGPIOMuxWrapper {
   constructor () {
-    this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
-    this.muxSwitch = PIN_MUX_SWITCH;
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    this.muxSwitch = PIN_NUM_MUX_SELECT;
       
   }
   start () {
@@ -318,8 +321,8 @@ class GenericGPIOMuxWrapper {
 }
 class MUXWrapperThermistor {
   constructor () {
-    this.mux = new MUX16ch(PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4, PIN_NUM_PD_MUX_5);
-    this.muxSwitch = PIN_MUX_SWITCH;
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    this.muxSwitch = PIN_NUM_MUX_SELECT;
   }
   start () {
     this.mux.initialize();
@@ -365,7 +368,6 @@ class LEDUnit {
   }
 }
 
-const PIN_NUM_GAIN_SWITCH = 7;// GPIO7
 const LARGE_GAIN_SIG = 0;
 const SMALL_GAIN_SIG = 1;
 const LARGE_GAIN_VALUE = 10.0; // MOhm
@@ -390,7 +392,7 @@ class FluorescenceSensingUnit {
     this.isStrongSignal = false;
   }
   start () {
-    rpio.open(PIN_NUM_GAIN_SWITCH, rpio.OUTPUT, LARGE_GAIN_SIG);
+    rpio.open(PIN_NUM_AMP_GAIN_SWITCH, rpio.OUTPUT, LARGE_GAIN_SIG);
     this.adcManager.start();
     this.mux.start();
   }
@@ -416,7 +418,7 @@ class FluorescenceSensingUnit {
     } else {
       // this.isStrongSignal = false;
     }
-    rpio.write(PIN_NUM_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
+    rpio.write(PIN_NUM_AMP_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }
   select (wellIndex, opticalChannel, callback) {
     this.muxTaskId = muxQueue.request(()=>{
