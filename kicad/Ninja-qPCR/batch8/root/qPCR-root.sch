@@ -28,7 +28,7 @@ AR Path="/60AEA148/60AF82D8" Ref="J?"  Part="1"
 AR Path="/60AC8F63/60AF82D8" Ref="J?"  Part="1" 
 F 0 "J1" H 2400 3615 50  0000 C CNN
 F 1 "Raspberry_Pi_3A_Plus_wpi" H 2400 3524 50  0000 C CNN
-F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown" H 1950 1350 50  0001 C CNN
+F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown_TopOnly" H 1950 1350 50  0001 C CNN
 F 3 "" H 1950 1350 50  0001 C CNN
 	1    2400 2400
 	1    0    0    -1  
@@ -536,19 +536,7 @@ $EndComp
 Wire Wire Line
 	2050 4700 2150 4700
 Wire Wire Line
-	2150 4700 2150 4800
-Wire Wire Line
 	2050 5000 2150 5000
-Wire Wire Line
-	2050 4900 2150 4900
-Connection ~ 2150 4900
-Wire Wire Line
-	2150 4900 2150 5000
-Wire Wire Line
-	2050 4800 2150 4800
-Connection ~ 2150 4800
-Wire Wire Line
-	2150 4800 2150 4900
 Text GLabel 1150 4700 0    50   Input ~ 0
 5V_UPS
 Wire Wire Line
@@ -601,12 +589,12 @@ Wire Wire Line
 Wire Wire Line
 	1300 5900 1200 5900
 $Comp
-L Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5ONLY LCD1
+L Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5_TOP_ONLY LCD1
 U 1 1 60BA74A3
 P 1300 4700
 F 0 "LCD1" H 1675 4925 50  0000 C CNN
 F 1 "RPI_LCD_TOUCH_7INCH" H 1675 4834 50  0000 C CNN
-F 2 "Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5ONLY" H 1300 4700 50  0001 C CNN
+F 2 "Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5_TOP_ONLY" H 1300 4700 50  0001 C CNN
 F 3 "" H 1300 4700 50  0001 C CNN
 	1    1300 4700
 	1    0    0    -1  
@@ -868,61 +856,6 @@ F 3 "~" H 4300 6850 50  0001 C CNN
 	1    4300 6850
 	-1   0    0    -1  
 $EndComp
-$Comp
-L Connector:Conn_01x01_Male J7
-U 1 1 60C48507
-P 4300 6950
-F 0 "J7" H 4272 6974 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 6883 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 6950 50  0001 C CNN
-F 3 "~" H 4300 6950 50  0001 C CNN
-	1    4300 6950
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J8
-U 1 1 60C48511
-P 4300 7050
-F 0 "J8" H 4272 7074 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
-F 3 "~" H 4300 7050 50  0001 C CNN
-	1    4300 7050
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J9
-U 1 1 60C51A1E
-P 4300 7150
-F 0 "J9" H 4272 7174 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7083 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7150 50  0001 C CNN
-F 3 "~" H 4300 7150 50  0001 C CNN
-	1    4300 7150
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J10
-U 1 1 60C51A28
-P 4300 7250
-F 0 "J10" H 4272 7274 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7183 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7250 50  0001 C CNN
-F 3 "~" H 4300 7250 50  0001 C CNN
-	1    4300 7250
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J11
-U 1 1 60C51A32
-P 4300 7350
-F 0 "J11" H 4272 7374 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7283 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7350 50  0001 C CNN
-F 3 "~" H 4300 7350 50  0001 C CNN
-	1    4300 7350
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	4100 7350 3900 7350
 Wire Wire Line
@@ -1087,4 +1020,61 @@ Text GLabel 10000 6250 0    50   Input ~ 0
 GND
 Text GLabel 10000 5250 0    50   Input ~ 0
 AMP_GAIN_SW
+$Comp
+L Connector:Conn_01x01_Male J7
+U 1 1 60CC84EA
+P 4300 6950
+F 0 "J7" H 4272 6974 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 6883 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 6950 50  0001 C CNN
+F 3 "~" H 4300 6950 50  0001 C CNN
+	1    4300 6950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J8
+U 1 1 60CC8790
+P 4300 7050
+F 0 "J8" H 4272 7074 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
+F 3 "~" H 4300 7050 50  0001 C CNN
+	1    4300 7050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J9
+U 1 1 60CC8925
+P 4300 7150
+F 0 "J9" H 4272 7174 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 7083 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7150 50  0001 C CNN
+F 3 "~" H 4300 7150 50  0001 C CNN
+	1    4300 7150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J10
+U 1 1 60CC8AA5
+P 4300 7250
+F 0 "J10" H 4272 7274 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 7183 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7250 50  0001 C CNN
+F 3 "~" H 4300 7250 50  0001 C CNN
+	1    4300 7250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J11
+U 1 1 60CC8C8E
+P 4300 7350
+F 0 "J11" H 4272 7374 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 7283 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7350 50  0001 C CNN
+F 3 "~" H 4300 7350 50  0001 C CNN
+	1    4300 7350
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 4700 2150 5000
 $EndSCHEMATC
