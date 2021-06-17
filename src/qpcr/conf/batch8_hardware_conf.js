@@ -111,11 +111,6 @@ class HardwareConf {
     this.pwmLid = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER);
     this.pwmFan = new pwm.SoftPWM(PIN_NAME_PWM_FAN);
     this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
-    /*
-    const RES_LOW_TEMP = 30.0; // kOhm
-    const RES_HIGH_TEMP = 10.0; // kOhm
-    const SWITCHING_TEMP = 66.0;
-    */
     const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
     const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
     
@@ -420,30 +415,6 @@ class FluorescenceSensingUnit {
   }
   shutdown () {
     console.log("Shutting down photosensing unit.");
-  }
-}
-
-// instance of HeatUnit (Replace it with real hardware implementation)
-class HeatLid {
-  constructor () {
-    this.temperature = 25;
-    this.targetTemperature = 25;
-  }
-  start () {
-    // Initialize hardware. This function is called once at the first run.
-  }
-  setTargetTemperature (targetTemperature) {
-    this.targetTemperature = targetTemperature;
-  }
-  control () {
-    this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
-  }
-  off () {
-    // Do nothing
-  }
-  shutdown () {
-    console.log("Shutting down dummy heat lid.");
-    this.off();
   }
 }
 
