@@ -134,8 +134,6 @@ Wire Wire Line
 Connection ~ 3200 1450
 Wire Wire Line
 	3200 1450 3250 1450
-Text HLabel 1550 1450 0    50   Input ~ 0
-3V3_RASP
 Text GLabel 3250 1450 2    50   Input ~ 0
 5V_UPS
 $Comp
@@ -306,8 +304,6 @@ Text GLabel 3250 2150 2    50   Input ~ 0
 MUX_S0
 Text GLabel 3250 1950 2    50   Input ~ 0
 MUX_S1
-Text HLabel 1550 2250 0    50   Input ~ 0
-3V3_RASP
 $Sheet
 S 2150 6550 1150 900 
 U 60B81B0D
@@ -1077,4 +1073,6 @@ F 3 "~" H 4300 7350 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2150 4700 2150 5000
+NoConn ~ 1550 2250
+NoConn ~ 1550 1450
 $EndSCHEMATC

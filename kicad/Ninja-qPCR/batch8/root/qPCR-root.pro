@@ -1,4 +1,4 @@
-update=2021 June 16, Wednesday 12:57:28
+update=2021 June 17, Thursday 15:42:53
 version=1
 last_client=pcbnew
 [general]
@@ -25,7 +25,7 @@ ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=qPCR-main.net
+LastNetListRead=qPCR-root.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=0
@@ -79,7 +79,7 @@ OthersTextUpright=1
 SolderMaskClearance=0
 SolderMaskMinWidth=0
 SolderPasteClearance=0
-SolderPasteRatio=-0
+SolderPasteRatio=0
 [pcbnew/Layer.F.Cu]
 Name=F.Cu
 Type=0
