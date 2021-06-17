@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch8/root/qPCR-root.sch)
-    (date "2021 June 17, Thursday 15:42:41")
+    (date "2021 June 17, Thursday 16:25:10")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -219,7 +219,7 @@
       (tstamp 60C484FD))
     (comp (ref J12)
       (value Conn_01x14_Male)
-      (footprint Socket_Strips:Socket_Strip_Straight_2x07_Pitch2.54mm)
+      (footprint Socket_Strips:Socket_Strip_Straight_2x07_Pitch1.27mm)
       (datasheet ~)
       (libsource (lib Connector) (part Conn_01x14_Male) (description "Generic connector, single row, 01x14, script generated (kicad-library-utils/schlib/autogen/connector/)"))
       (sheetpath (names /) (tstamps /))

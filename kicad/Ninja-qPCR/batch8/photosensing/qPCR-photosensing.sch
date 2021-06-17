@@ -13,9 +13,9 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 1150 1750 2    50   Input ~ 0
+Text GLabel 1150 3050 2    50   Input ~ 0
 GNDD
-Text GLabel 1150 1850 2    50   Input ~ 0
+Text GLabel 1150 1750 2    50   Input ~ 0
 3V3D
 Text GLabel 1150 2650 2    50   Input ~ 0
 ADC_DRDY
@@ -483,7 +483,7 @@ U 60AF0518
 F0 "Sheet60AF0517" 50
 F1 "filePhotoSouth.sch" 50
 $EndSheet
-Text GLabel 1150 2050 2    50   Input ~ 0
+Text GLabel 1150 1850 2    50   Input ~ 0
 3V3A
 Text GLabel 1150 2150 2    50   Input ~ 0
 MUX_S3
@@ -551,7 +551,7 @@ Wire Wire Line
 	1150 2650 1000 2650
 Text GLabel 1150 2950 2    50   Input ~ 0
 THERM_R_SWITCH
-Text GLabel 1150 3050 2    50   Input ~ 0
+Text GLabel 1150 2050 2    50   Input ~ 0
 AMP_GAIN_SW
 $Sheet
 S 9300 5800 1750 400 
@@ -577,7 +577,7 @@ U 1 1 60C2BDFE
 P 800 2350
 F 0 "J1" H 908 3131 50  0000 C CNN
 F 1 "Conn_01x14_Male" H 908 3040 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x14_Pitch2.54mm" H 800 2350 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x07_Pitch1.27mm" H 800 2350 50  0001 C CNN
 F 3 "~" H 800 2350 50  0001 C CNN
 	1    800  2350
 	1    0    0    -1  
@@ -815,6 +815,4 @@ Wire Wire Line
 Connection ~ 9050 900 
 Wire Wire Line
 	9050 900  9000 900 
-Text Notes 800  3200 0    50   ~ 0
-TODO main
 $EndSCHEMATC

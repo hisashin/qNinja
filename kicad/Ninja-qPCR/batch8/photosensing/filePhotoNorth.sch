@@ -99,347 +99,6 @@ F 3 "" H 4050 1350 60  0000 C CNN
 	1    4050 1350
 	-1   0    0    -1  
 $EndComp
-Connection ~ 6950 1350
-Wire Wire Line
-	6950 1250 6950 1350
-$Comp
-L power:PWR_FLAG #FLG?
-U 1 1 60CBC657
-P 6950 1250
-AR Path="/60AF0518/60CBC657" Ref="#FLG?"  Part="1" 
-AR Path="/60C04E5C/60CBC657" Ref="#FLG02"  Part="1" 
-F 0 "#FLG02" H 6950 1325 50  0001 C CNN
-F 1 "PWR_FLAG" H 6950 1423 50  0000 C CNN
-F 2 "" H 6950 1250 50  0001 C CNN
-F 3 "~" H 6950 1250 50  0001 C CNN
-	1    6950 1250
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	6250 4150 6500 4150
-Wire Wire Line
-	6250 3750 6500 3750
-Wire Wire Line
-	6250 3350 6500 3350
-Wire Wire Line
-	6250 2950 6500 2950
-Wire Wire Line
-	6250 2550 6500 2550
-Wire Wire Line
-	6250 2150 6500 2150
-Wire Wire Line
-	6250 1750 6500 1750
-Wire Wire Line
-	6250 1350 6500 1350
-Wire Wire Line
-	6950 2950 6950 3350
-Connection ~ 6950 2950
-Wire Wire Line
-	6800 2950 6950 2950
-Wire Wire Line
-	6950 2550 6950 2950
-Connection ~ 6950 2550
-Wire Wire Line
-	6800 2550 6950 2550
-Wire Wire Line
-	6950 2150 6950 2550
-Connection ~ 6950 2150
-Wire Wire Line
-	6800 2150 6950 2150
-Wire Wire Line
-	6950 1750 6950 2150
-Connection ~ 6950 1750
-Wire Wire Line
-	6800 1750 6950 1750
-Wire Wire Line
-	6950 3350 6950 3750
-Connection ~ 6950 3350
-Wire Wire Line
-	6800 3350 6950 3350
-Wire Wire Line
-	6950 3750 6950 4150
-Connection ~ 6950 3750
-Wire Wire Line
-	6800 3750 6950 3750
-Wire Wire Line
-	6950 4150 6950 4550
-Connection ~ 6950 4150
-Wire Wire Line
-	6800 4150 6950 4150
-Wire Wire Line
-	6950 1350 6950 1750
-Wire Wire Line
-	6800 1350 6950 1350
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC684
-P 6700 4150
-AR Path="/60AF0518/60CBC684" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC684" Ref="D24"  Part="1" 
-F 0 "D24" H 6650 3933 50  0000 C CNN
-F 1 "D_Photo" H 6650 4024 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 4150 50  0001 C CNN
-F 3 "~" H 6650 4150 50  0001 C CNN
-	1    6700 4150
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC68A
-P 6700 3750
-AR Path="/60AF0518/60CBC68A" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC68A" Ref="D23"  Part="1" 
-F 0 "D23" H 6650 3533 50  0000 C CNN
-F 1 "D_Photo" H 6650 3624 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 3750 50  0001 C CNN
-F 3 "~" H 6650 3750 50  0001 C CNN
-	1    6700 3750
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC690
-P 6700 3350
-AR Path="/60AF0518/60CBC690" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC690" Ref="D22"  Part="1" 
-F 0 "D22" H 6650 3133 50  0000 C CNN
-F 1 "D_Photo" H 6650 3224 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 3350 50  0001 C CNN
-F 3 "~" H 6650 3350 50  0001 C CNN
-	1    6700 3350
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC696
-P 6700 2950
-AR Path="/60AF0518/60CBC696" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC696" Ref="D21"  Part="1" 
-F 0 "D21" H 6650 2733 50  0000 C CNN
-F 1 "D_Photo" H 6650 2824 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 2950 50  0001 C CNN
-F 3 "~" H 6650 2950 50  0001 C CNN
-	1    6700 2950
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC69C
-P 6700 2550
-AR Path="/60AF0518/60CBC69C" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC69C" Ref="D20"  Part="1" 
-F 0 "D20" H 6650 2333 50  0000 C CNN
-F 1 "D_Photo" H 6650 2424 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 2550 50  0001 C CNN
-F 3 "~" H 6650 2550 50  0001 C CNN
-	1    6700 2550
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC6A2
-P 6700 2150
-AR Path="/60AF0518/60CBC6A2" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC6A2" Ref="D19"  Part="1" 
-F 0 "D19" H 6650 1933 50  0000 C CNN
-F 1 "D_Photo" H 6650 2024 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 2150 50  0001 C CNN
-F 3 "~" H 6650 2150 50  0001 C CNN
-	1    6700 2150
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC6A8
-P 6700 1750
-AR Path="/60AF0518/60CBC6A8" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC6A8" Ref="D18"  Part="1" 
-F 0 "D18" H 6650 1533 50  0000 C CNN
-F 1 "D_Photo" H 6650 1624 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 1750 50  0001 C CNN
-F 3 "~" H 6650 1750 50  0001 C CNN
-	1    6700 1750
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC6AE
-P 6700 1350
-AR Path="/60AF0518/60CBC6AE" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC6AE" Ref="D17"  Part="1" 
-F 0 "D17" H 6650 1133 50  0000 C CNN
-F 1 "D_Photo" H 6650 1224 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 6650 1350 50  0001 C CNN
-F 3 "~" H 6650 1350 50  0001 C CNN
-	1    6700 1350
-	1    0    0    1   
-$EndComp
-Wire Wire Line
-	9000 4550 8900 4550
-Text GLabel 9000 4550 2    50   Input ~ 0
-GNDA
-Wire Wire Line
-	8200 1350 8450 1350
-Wire Wire Line
-	8200 1750 8450 1750
-Wire Wire Line
-	8200 2150 8450 2150
-Wire Wire Line
-	8200 2550 8450 2550
-Wire Wire Line
-	8200 2950 8450 2950
-Wire Wire Line
-	8200 3350 8450 3350
-Wire Wire Line
-	8200 3750 8450 3750
-Wire Wire Line
-	8200 4150 8450 4150
-Wire Wire Line
-	8900 2950 8900 3350
-Connection ~ 8900 2950
-Wire Wire Line
-	8750 2950 8900 2950
-Wire Wire Line
-	8900 2550 8900 2950
-Connection ~ 8900 2550
-Wire Wire Line
-	8750 2550 8900 2550
-Wire Wire Line
-	8900 2150 8900 2550
-Connection ~ 8900 2150
-Wire Wire Line
-	8750 2150 8900 2150
-Wire Wire Line
-	8900 1750 8900 2150
-Connection ~ 8900 1750
-Wire Wire Line
-	8750 1750 8900 1750
-Wire Wire Line
-	8900 3350 8900 3750
-Connection ~ 8900 3350
-Wire Wire Line
-	8750 3350 8900 3350
-Wire Wire Line
-	8900 3750 8900 4150
-Connection ~ 8900 3750
-Wire Wire Line
-	8750 3750 8900 3750
-Wire Wire Line
-	8900 4150 8900 4550
-Connection ~ 8900 4150
-Wire Wire Line
-	8750 4150 8900 4150
-Wire Wire Line
-	8900 1350 8900 1750
-Wire Wire Line
-	8750 1350 8900 1350
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC627
-P 8650 4150
-AR Path="/60AF0518/60CBC627" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC627" Ref="D32"  Part="1" 
-F 0 "D32" H 8600 3933 50  0000 C CNN
-F 1 "D_Photo" H 8600 4024 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 4150 50  0001 C CNN
-F 3 "~" H 8600 4150 50  0001 C CNN
-	1    8650 4150
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC621
-P 8650 3750
-AR Path="/60AF0518/60CBC621" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC621" Ref="D31"  Part="1" 
-F 0 "D31" H 8600 3533 50  0000 C CNN
-F 1 "D_Photo" H 8600 3624 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 3750 50  0001 C CNN
-F 3 "~" H 8600 3750 50  0001 C CNN
-	1    8650 3750
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC61B
-P 8650 3350
-AR Path="/60AF0518/60CBC61B" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC61B" Ref="D30"  Part="1" 
-F 0 "D30" H 8600 3133 50  0000 C CNN
-F 1 "D_Photo" H 8600 3224 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 3350 50  0001 C CNN
-F 3 "~" H 8600 3350 50  0001 C CNN
-	1    8650 3350
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC615
-P 8650 2950
-AR Path="/60AF0518/60CBC615" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC615" Ref="D29"  Part="1" 
-F 0 "D29" H 8600 2733 50  0000 C CNN
-F 1 "D_Photo" H 8600 2824 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 2950 50  0001 C CNN
-F 3 "~" H 8600 2950 50  0001 C CNN
-	1    8650 2950
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC60F
-P 8650 2550
-AR Path="/60AF0518/60CBC60F" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC60F" Ref="D28"  Part="1" 
-F 0 "D28" H 8600 2333 50  0000 C CNN
-F 1 "D_Photo" H 8600 2424 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 2550 50  0001 C CNN
-F 3 "~" H 8600 2550 50  0001 C CNN
-	1    8650 2550
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC609
-P 8650 2150
-AR Path="/60AF0518/60CBC609" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC609" Ref="D27"  Part="1" 
-F 0 "D27" H 8600 1933 50  0000 C CNN
-F 1 "D_Photo" H 8600 2024 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 2150 50  0001 C CNN
-F 3 "~" H 8600 2150 50  0001 C CNN
-	1    8650 2150
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC603
-P 8650 1750
-AR Path="/60AF0518/60CBC603" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC603" Ref="D26"  Part="1" 
-F 0 "D26" H 8600 1533 50  0000 C CNN
-F 1 "D_Photo" H 8600 1624 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 1750 50  0001 C CNN
-F 3 "~" H 8600 1750 50  0001 C CNN
-	1    8650 1750
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D?
-U 1 1 60CBC5FD
-P 8650 1350
-AR Path="/60AF0518/60CBC5FD" Ref="D?"  Part="1" 
-AR Path="/60C04E5C/60CBC5FD" Ref="D25"  Part="1" 
-F 0 "D25" H 8600 1133 50  0000 C CNN
-F 1 "D_Photo" H 8600 1224 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 8600 1350 50  0001 C CNN
-F 3 "~" H 8600 1350 50  0001 C CNN
-	1    8650 1350
-	1    0    0    1   
-$EndComp
-Wire Wire Line
-	6950 4550 8900 4550
-Connection ~ 8900 4550
 Text HLabel 4200 1550 2    50   Input ~ 0
 N_PD_OUT1
 Text HLabel 4200 1650 2    50   Input ~ 0
@@ -472,40 +131,101 @@ Text HLabel 4200 2950 2    50   Input ~ 0
 N_PD_OUT15
 Text HLabel 4200 3050 2    50   Input ~ 0
 N_PD_OUT16
-Text HLabel 6250 1350 0    50   Input ~ 0
+Text HLabel 7850 2700 0    50   Input ~ 0
 N_PD_OUT1
-Text HLabel 6250 2150 0    50   Input ~ 0
+Text HLabel 7850 2900 0    50   Input ~ 0
 N_PD_OUT3
-Text HLabel 6250 1750 0    50   Input ~ 0
+Text HLabel 7850 2800 0    50   Input ~ 0
 N_PD_OUT2
-Text HLabel 6250 2550 0    50   Input ~ 0
+Text HLabel 7850 3000 0    50   Input ~ 0
 N_PD_OUT4
-Text HLabel 6250 2950 0    50   Input ~ 0
+Text HLabel 7850 3100 0    50   Input ~ 0
 N_PD_OUT5
-Text HLabel 6250 3350 0    50   Input ~ 0
+Text HLabel 7850 3200 0    50   Input ~ 0
 N_PD_OUT6
-Text HLabel 6250 3750 0    50   Input ~ 0
+Text HLabel 7850 3300 0    50   Input ~ 0
 N_PD_OUT7
-Text HLabel 6250 4150 0    50   Input ~ 0
+Text HLabel 7850 3400 0    50   Input ~ 0
 N_PD_OUT8
-Text HLabel 8200 1350 0    50   Input ~ 0
+Text HLabel 7850 3500 0    50   Input ~ 0
 N_PD_OUT9
-Text HLabel 8200 1750 0    50   Input ~ 0
+Text HLabel 7850 3600 0    50   Input ~ 0
 N_PD_OUT10
-Text HLabel 8200 2150 0    50   Input ~ 0
+Text HLabel 7850 3700 0    50   Input ~ 0
 N_PD_OUT11
-Text HLabel 8200 2550 0    50   Input ~ 0
+Text HLabel 7850 3800 0    50   Input ~ 0
 N_PD_OUT12
-Text HLabel 8200 2950 0    50   Input ~ 0
+Text HLabel 7850 3900 0    50   Input ~ 0
 N_PD_OUT13
-Text HLabel 8200 3350 0    50   Input ~ 0
+Text HLabel 7850 4000 0    50   Input ~ 0
 N_PD_OUT14
-Text HLabel 8200 3750 0    50   Input ~ 0
+Text HLabel 7850 4100 0    50   Input ~ 0
 N_PD_OUT15
-Text HLabel 8200 4150 0    50   Input ~ 0
+Text HLabel 7850 4200 0    50   Input ~ 0
 N_PD_OUT16
 Wire Wire Line
 	4350 6750 4150 6750
 Wire Wire Line
 	1250 5850 1550 5850
+Text GLabel 7850 4300 0    50   Input ~ 0
+GNDA
+Text GLabel 7850 4400 0    50   Input ~ 0
+GNDA
+Text GLabel 7850 2600 0    50   Input ~ 0
+GNDA
+Text GLabel 7850 2500 0    50   Input ~ 0
+GNDA
+$Comp
+L Connector:Conn_01x20_Male JPD?
+U 1 1 60CFB9BA
+P 8300 3400
+AR Path="/60AF0518/60CFB9BA" Ref="JPD?"  Part="1" 
+AR Path="/60C04E5C/60CFB9BA" Ref="JPD2"  Part="1" 
+F 0 "JPD2" H 8272 3374 50  0000 R CNN
+F 1 "Conn_01x20_Male" H 8272 3283 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 8300 3400 50  0001 C CNN
+F 3 "~" H 8300 3400 50  0001 C CNN
+	1    8300 3400
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 2500 7850 2500
+Wire Wire Line
+	8100 2600 7850 2600
+Wire Wire Line
+	8100 2700 7850 2700
+Wire Wire Line
+	8100 2800 7850 2800
+Wire Wire Line
+	8100 2900 7850 2900
+Wire Wire Line
+	8100 3000 7850 3000
+Wire Wire Line
+	8100 3100 7850 3100
+Wire Wire Line
+	8100 3200 7850 3200
+Wire Wire Line
+	8100 3300 7850 3300
+Wire Wire Line
+	8100 3400 7850 3400
+Wire Wire Line
+	8100 3500 7850 3500
+Wire Wire Line
+	8100 3600 7850 3600
+Wire Wire Line
+	8100 3700 7850 3700
+Wire Wire Line
+	8100 3800 7850 3800
+Wire Wire Line
+	8100 3900 7850 3900
+Wire Wire Line
+	8100 4000 7850 4000
+Wire Wire Line
+	8100 4100 7850 4100
+Wire Wire Line
+	8100 4200 7850 4200
+Wire Wire Line
+	8100 4300 7850 4300
+Wire Wire Line
+	8100 4400 7850 4400
 $EndSCHEMATC

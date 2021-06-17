@@ -876,7 +876,7 @@ U 1 1 60D2AE85
 P 10350 5550
 F 0 "J12" H 10322 5524 50  0000 R CNN
 F 1 "Conn_01x14_Male" H 10322 5433 50  0000 R CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_2x07_Pitch2.54mm" H 10350 5550 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_2x07_Pitch1.27mm" H 10350 5550 50  0001 C CNN
 F 3 "~" H 10350 5550 50  0001 C CNN
 	1    10350 5550
 	-1   0    0    -1  

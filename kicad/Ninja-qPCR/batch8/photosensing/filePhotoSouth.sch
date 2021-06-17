@@ -101,149 +101,6 @@ Text GLabel 2800 6800 2    50   Input ~ 0
 Text GLabel 1700 6400 0    50   Input ~ 0
 3V3D
 $Comp
-L Device:D_Photo D9
-U 1 1 60C204B0
-P 9400 1200
-F 0 "D9" H 9350 983 50  0000 C CNN
-F 1 "D_Photo" H 9350 1074 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 1200 50  0001 C CNN
-F 3 "~" H 9350 1200 50  0001 C CNN
-	1    9400 1200
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D10
-U 1 1 60C204B6
-P 9400 1600
-F 0 "D10" H 9350 1383 50  0000 C CNN
-F 1 "D_Photo" H 9350 1474 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 1600 50  0001 C CNN
-F 3 "~" H 9350 1600 50  0001 C CNN
-	1    9400 1600
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D11
-U 1 1 60C204BC
-P 9400 2000
-F 0 "D11" H 9350 1783 50  0000 C CNN
-F 1 "D_Photo" H 9350 1874 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 2000 50  0001 C CNN
-F 3 "~" H 9350 2000 50  0001 C CNN
-	1    9400 2000
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D12
-U 1 1 60C204C2
-P 9400 2400
-F 0 "D12" H 9350 2183 50  0000 C CNN
-F 1 "D_Photo" H 9350 2274 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 2400 50  0001 C CNN
-F 3 "~" H 9350 2400 50  0001 C CNN
-	1    9400 2400
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D13
-U 1 1 60C204C8
-P 9400 2800
-F 0 "D13" H 9350 2583 50  0000 C CNN
-F 1 "D_Photo" H 9350 2674 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 2800 50  0001 C CNN
-F 3 "~" H 9350 2800 50  0001 C CNN
-	1    9400 2800
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D14
-U 1 1 60C204CE
-P 9400 3200
-F 0 "D14" H 9350 2983 50  0000 C CNN
-F 1 "D_Photo" H 9350 3074 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 3200 50  0001 C CNN
-F 3 "~" H 9350 3200 50  0001 C CNN
-	1    9400 3200
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D15
-U 1 1 60C204D4
-P 9400 3600
-F 0 "D15" H 9350 3383 50  0000 C CNN
-F 1 "D_Photo" H 9350 3474 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 3600 50  0001 C CNN
-F 3 "~" H 9350 3600 50  0001 C CNN
-	1    9400 3600
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D16
-U 1 1 60C204DA
-P 9400 4000
-F 0 "D16" H 9350 3783 50  0000 C CNN
-F 1 "D_Photo" H 9350 3874 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 9350 4000 50  0001 C CNN
-F 3 "~" H 9350 4000 50  0001 C CNN
-	1    9400 4000
-	1    0    0    1   
-$EndComp
-Wire Wire Line
-	9500 1200 9650 1200
-Wire Wire Line
-	9650 1200 9650 1600
-Wire Wire Line
-	9500 4000 9650 4000
-Connection ~ 9650 4000
-Wire Wire Line
-	9650 4000 9650 4400
-Wire Wire Line
-	9500 3600 9650 3600
-Connection ~ 9650 3600
-Wire Wire Line
-	9650 3600 9650 4000
-Wire Wire Line
-	9500 3200 9650 3200
-Connection ~ 9650 3200
-Wire Wire Line
-	9650 3200 9650 3600
-Wire Wire Line
-	9500 1600 9650 1600
-Connection ~ 9650 1600
-Wire Wire Line
-	9650 1600 9650 2000
-Wire Wire Line
-	9500 2000 9650 2000
-Connection ~ 9650 2000
-Wire Wire Line
-	9650 2000 9650 2400
-Wire Wire Line
-	9500 2400 9650 2400
-Connection ~ 9650 2400
-Wire Wire Line
-	9650 2400 9650 2800
-Wire Wire Line
-	9500 2800 9650 2800
-Connection ~ 9650 2800
-Wire Wire Line
-	9650 2800 9650 3200
-Wire Wire Line
-	8950 4000 9200 4000
-Wire Wire Line
-	8950 3600 9200 3600
-Wire Wire Line
-	8950 3200 9200 3200
-Wire Wire Line
-	8950 2800 9200 2800
-Wire Wire Line
-	8950 2400 9200 2400
-Wire Wire Line
-	8950 2000 9200 2000
-Wire Wire Line
-	8950 1600 9200 1600
-Wire Wire Line
-	8950 1200 9200 1200
-$Comp
 L Ninja-qPCR:CD74HC4067M96 U6
 U 2 1 60B0D59F
 P 3850 4200
@@ -269,167 +126,6 @@ F 3 "" H 3900 1150 60  0000 C CNN
 	1    3900 1150
 	-1   0    0    -1  
 $EndComp
-Connection ~ 7800 1200
-Wire Wire Line
-	7800 1100 7800 1200
-$Comp
-L power:PWR_FLAG #FLG01
-U 1 1 60C2052F
-P 7800 1100
-F 0 "#FLG01" H 7800 1175 50  0001 C CNN
-F 1 "PWR_FLAG" H 7800 1273 50  0000 C CNN
-F 2 "" H 7800 1100 50  0001 C CNN
-F 3 "~" H 7800 1100 50  0001 C CNN
-	1    7800 1100
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	7100 4000 7350 4000
-Wire Wire Line
-	7100 3600 7350 3600
-Wire Wire Line
-	7100 3200 7350 3200
-Wire Wire Line
-	7100 2800 7350 2800
-Wire Wire Line
-	7100 2400 7350 2400
-Wire Wire Line
-	7100 2000 7350 2000
-Wire Wire Line
-	7100 1600 7350 1600
-Wire Wire Line
-	7100 1200 7350 1200
-Wire Wire Line
-	7800 2800 7800 3200
-Connection ~ 7800 2800
-Wire Wire Line
-	7650 2800 7800 2800
-Wire Wire Line
-	7800 2400 7800 2800
-Connection ~ 7800 2400
-Wire Wire Line
-	7650 2400 7800 2400
-Wire Wire Line
-	7800 2000 7800 2400
-Connection ~ 7800 2000
-Wire Wire Line
-	7650 2000 7800 2000
-Wire Wire Line
-	7800 1600 7800 2000
-Connection ~ 7800 1600
-Wire Wire Line
-	7650 1600 7800 1600
-Wire Wire Line
-	7800 3200 7800 3600
-Connection ~ 7800 3200
-Wire Wire Line
-	7650 3200 7800 3200
-Wire Wire Line
-	7800 3600 7800 4000
-Connection ~ 7800 3600
-Wire Wire Line
-	7650 3600 7800 3600
-Wire Wire Line
-	7800 4000 7800 4400
-Connection ~ 7800 4000
-Wire Wire Line
-	7650 4000 7800 4000
-Wire Wire Line
-	7800 1200 7800 1600
-Wire Wire Line
-	7650 1200 7800 1200
-$Comp
-L Device:D_Photo D8
-U 1 1 60C2048D
-P 7550 4000
-F 0 "D8" H 7500 3783 50  0000 C CNN
-F 1 "D_Photo" H 7500 3874 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 4000 50  0001 C CNN
-F 3 "~" H 7500 4000 50  0001 C CNN
-	1    7550 4000
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D7
-U 1 1 60C20487
-P 7550 3600
-F 0 "D7" H 7500 3383 50  0000 C CNN
-F 1 "D_Photo" H 7500 3474 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 3600 50  0001 C CNN
-F 3 "~" H 7500 3600 50  0001 C CNN
-	1    7550 3600
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D6
-U 1 1 60C20481
-P 7550 3200
-F 0 "D6" H 7500 2983 50  0000 C CNN
-F 1 "D_Photo" H 7500 3074 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 3200 50  0001 C CNN
-F 3 "~" H 7500 3200 50  0001 C CNN
-	1    7550 3200
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D5
-U 1 1 60C2047B
-P 7550 2800
-F 0 "D5" H 7500 2583 50  0000 C CNN
-F 1 "D_Photo" H 7500 2674 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 2800 50  0001 C CNN
-F 3 "~" H 7500 2800 50  0001 C CNN
-	1    7550 2800
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D4
-U 1 1 60C20475
-P 7550 2400
-F 0 "D4" H 7500 2183 50  0000 C CNN
-F 1 "D_Photo" H 7500 2274 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 2400 50  0001 C CNN
-F 3 "~" H 7500 2400 50  0001 C CNN
-	1    7550 2400
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D3
-U 1 1 60C2046F
-P 7550 2000
-F 0 "D3" H 7500 1783 50  0000 C CNN
-F 1 "D_Photo" H 7500 1874 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 2000 50  0001 C CNN
-F 3 "~" H 7500 2000 50  0001 C CNN
-	1    7550 2000
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D2
-U 1 1 60C20469
-P 7550 1600
-F 0 "D2" H 7500 1383 50  0000 C CNN
-F 1 "D_Photo" H 7500 1474 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 1600 50  0001 C CNN
-F 3 "~" H 7500 1600 50  0001 C CNN
-	1    7550 1600
-	1    0    0    1   
-$EndComp
-$Comp
-L Device:D_Photo D1
-U 1 1 60C20463
-P 7550 1200
-F 0 "D1" H 7500 983 50  0000 C CNN
-F 1 "D_Photo" H 7500 1074 50  0000 C CNN
-F 2 "Diodes_SMD:D_1206" H 7500 1200 50  0001 C CNN
-F 3 "~" H 7500 1200 50  0001 C CNN
-	1    7550 1200
-	1    0    0    1   
-$EndComp
-Text GLabel 9750 4400 2    50   Input ~ 0
-GNDA
-Wire Wire Line
-	9750 4400 9650 4400
 Text GLabel 4050 3050 2    50   Input ~ 0
 PD_MUX_OUT
 Text HLabel 4050 1350 2    50   Input ~ 0
@@ -464,43 +160,99 @@ Text HLabel 4050 2750 2    50   Input ~ 0
 S_PD_OUT15
 Text HLabel 4050 2850 2    50   Input ~ 0
 S_PD_OUT16
-Text HLabel 7100 1200 0    50   Input ~ 0
+Text HLabel 6550 2100 0    50   Input ~ 0
 S_PD_OUT1
-Text HLabel 7100 1600 0    50   Input ~ 0
+Text HLabel 6550 2200 0    50   Input ~ 0
 S_PD_OUT2
-Text HLabel 7100 2000 0    50   Input ~ 0
+Text HLabel 6550 2300 0    50   Input ~ 0
 S_PD_OUT3
-Text HLabel 7100 2400 0    50   Input ~ 0
+Text HLabel 6550 2400 0    50   Input ~ 0
 S_PD_OUT4
-Text HLabel 7100 2800 0    50   Input ~ 0
+Text HLabel 6550 2500 0    50   Input ~ 0
 S_PD_OUT5
-Text HLabel 7100 3200 0    50   Input ~ 0
+Text HLabel 6550 2600 0    50   Input ~ 0
 S_PD_OUT6
-Text HLabel 7100 3600 0    50   Input ~ 0
+Text HLabel 6550 2700 0    50   Input ~ 0
 S_PD_OUT7
-Text HLabel 7100 4000 0    50   Input ~ 0
+Text HLabel 6550 2800 0    50   Input ~ 0
 S_PD_OUT8
-Text HLabel 8950 1200 0    50   Input ~ 0
+Text HLabel 6550 2900 0    50   Input ~ 0
 S_PD_OUT9
-Text HLabel 8950 1600 0    50   Input ~ 0
+Text HLabel 6550 3000 0    50   Input ~ 0
 S_PD_OUT10
-Text HLabel 8950 2000 0    50   Input ~ 0
+Text HLabel 6550 3100 0    50   Input ~ 0
 S_PD_OUT11
-Text HLabel 8950 2400 0    50   Input ~ 0
+Text HLabel 6550 3200 0    50   Input ~ 0
 S_PD_OUT12
-Text HLabel 8950 2800 0    50   Input ~ 0
+Text HLabel 6550 3300 0    50   Input ~ 0
 S_PD_OUT13
-Text HLabel 8950 3200 0    50   Input ~ 0
+Text HLabel 6550 3400 0    50   Input ~ 0
 S_PD_OUT14
-Text HLabel 8950 3600 0    50   Input ~ 0
+Text HLabel 6550 3500 0    50   Input ~ 0
 S_PD_OUT15
-Text HLabel 8950 4000 0    50   Input ~ 0
+Text HLabel 6550 3600 0    50   Input ~ 0
 S_PD_OUT16
-Wire Wire Line
-	7800 4400 9650 4400
-Connection ~ 9650 4400
 Wire Wire Line
 	1050 4300 1250 4300
 Wire Wire Line
 	4000 5200 3850 5200
+Text GLabel 6550 3700 0    50   Input ~ 0
+GNDA
+Text GLabel 6550 3800 0    50   Input ~ 0
+GNDA
+Text GLabel 6550 2000 0    50   Input ~ 0
+GNDA
+Text GLabel 6550 1900 0    50   Input ~ 0
+GNDA
+$Comp
+L Connector:Conn_01x20_Male JPD1
+U 1 1 60CDBEA3
+P 7000 2800
+F 0 "JPD1" H 6972 2774 50  0000 R CNN
+F 1 "Conn_01x20_Male" H 6972 2683 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 7000 2800 50  0001 C CNN
+F 3 "~" H 7000 2800 50  0001 C CNN
+	1    7000 2800
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6800 1900 6550 1900
+Wire Wire Line
+	6800 2000 6550 2000
+Wire Wire Line
+	6800 2100 6550 2100
+Wire Wire Line
+	6800 2200 6550 2200
+Wire Wire Line
+	6800 2300 6550 2300
+Wire Wire Line
+	6800 2400 6550 2400
+Wire Wire Line
+	6800 2500 6550 2500
+Wire Wire Line
+	6800 2600 6550 2600
+Wire Wire Line
+	6800 2700 6550 2700
+Wire Wire Line
+	6800 2800 6550 2800
+Wire Wire Line
+	6800 2900 6550 2900
+Wire Wire Line
+	6800 3000 6550 3000
+Wire Wire Line
+	6800 3100 6550 3100
+Wire Wire Line
+	6800 3200 6550 3200
+Wire Wire Line
+	6800 3300 6550 3300
+Wire Wire Line
+	6800 3400 6550 3400
+Wire Wire Line
+	6800 3500 6550 3500
+Wire Wire Line
+	6800 3600 6550 3600
+Wire Wire Line
+	6800 3700 6550 3700
+Wire Wire Line
+	6800 3800 6550 3800
 $EndSCHEMATC
