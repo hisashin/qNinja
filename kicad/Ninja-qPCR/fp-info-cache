@@ -1,4 +1,4 @@
-275691799546217
+278958479176217
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19544,6 +19544,13 @@ RPI_LCD_TOUCH_7INCH_M2.5ONLY
 9
 9
 Ninja-qPCR
+RPI_LCD_TOUCH_7INCH_M2.5_TOP_ONLY
+
+
+0
+7
+7
+Ninja-qPCR
 RPI_LCD_TOUCH_7INCH_M3ONLY
 
 
@@ -19552,6 +19559,13 @@ RPI_LCD_TOUCH_7INCH_M3ONLY
 9
 Ninja-qPCR
 Raspberry_Pi_3A+_3B+_4B_FaceDown
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
+Raspberry_Pi_3A+_3B+_4B_FaceDown_TopOnly
 Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
 raspberry pi 3a+ through hole
 0
