@@ -944,7 +944,7 @@
   )
 
   (module Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60CC0530)
-    (at 95 55 90)
+    (at 95 49.3005 90)
     (descr "Through hole straight pin header, 1x10, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x10 2.54mm single row")
     (path /60BEA5D5/60BF3ECD)
@@ -1000,7 +1000,7 @@
   )
 
   (module Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm (layer F.Cu) (tedit 59650532) (tstamp 60CC0587)
-    (at 95 96 90)
+    (at 95 102.6995 90)
     (descr "Through hole straight pin header, 1x10, 2.54mm pitch, single row")
     (tags "Through hole pin header THT 1x10 2.54mm single row")
     (path /60BEA5D5/60BFD371)
