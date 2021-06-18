@@ -117,37 +117,37 @@ Text GLabel 4000 5200 2    50   Input ~ 0
 3V3D
 Text GLabel 4050 3050 2    50   Input ~ 0
 PD_MUX_OUT
-Text HLabel 4050 1350 2    50   Input ~ 0
+Text HLabel 4050 2150 2    50   Input ~ 0
 S_PD_OUT1
-Text HLabel 4050 1450 2    50   Input ~ 0
+Text HLabel 4050 2050 2    50   Input ~ 0
 S_PD_OUT2
-Text HLabel 4050 1550 2    50   Input ~ 0
+Text HLabel 4050 2250 2    50   Input ~ 0
 S_PD_OUT3
-Text HLabel 4050 1650 2    50   Input ~ 0
+Text HLabel 4050 1950 2    50   Input ~ 0
 S_PD_OUT4
-Text HLabel 4050 1750 2    50   Input ~ 0
+Text HLabel 4050 2350 2    50   Input ~ 0
 S_PD_OUT5
 Text HLabel 4050 1850 2    50   Input ~ 0
 S_PD_OUT6
-Text HLabel 4050 1950 2    50   Input ~ 0
-S_PD_OUT7
-Text HLabel 4050 2050 2    50   Input ~ 0
-S_PD_OUT8
-Text HLabel 4050 2150 2    50   Input ~ 0
-S_PD_OUT9
-Text HLabel 4050 2250 2    50   Input ~ 0
-S_PD_OUT10
-Text HLabel 4050 2350 2    50   Input ~ 0
-S_PD_OUT11
 Text HLabel 4050 2450 2    50   Input ~ 0
-S_PD_OUT12
+S_PD_OUT7
+Text HLabel 4050 1750 2    50   Input ~ 0
+S_PD_OUT8
 Text HLabel 4050 2550 2    50   Input ~ 0
-S_PD_OUT13
+S_PD_OUT9
+Text HLabel 4050 1650 2    50   Input ~ 0
+S_PD_OUT10
 Text HLabel 4050 2650 2    50   Input ~ 0
-S_PD_OUT14
+S_PD_OUT11
+Text HLabel 4050 1550 2    50   Input ~ 0
+S_PD_OUT12
 Text HLabel 4050 2750 2    50   Input ~ 0
-S_PD_OUT15
+S_PD_OUT13
+Text HLabel 4050 1450 2    50   Input ~ 0
+S_PD_OUT14
 Text HLabel 4050 2850 2    50   Input ~ 0
+S_PD_OUT15
+Text HLabel 4050 1350 2    50   Input ~ 0
 S_PD_OUT16
 Text HLabel 6550 2100 0    50   Input ~ 0
 S_PD_OUT1

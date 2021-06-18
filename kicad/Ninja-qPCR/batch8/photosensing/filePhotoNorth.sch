@@ -101,35 +101,35 @@ F 3 "" H 4050 1350 60  0000 C CNN
 $EndComp
 Text HLabel 4200 1550 2    50   Input ~ 0
 N_PD_OUT1
-Text HLabel 4200 1650 2    50   Input ~ 0
-N_PD_OUT2
-Text HLabel 4200 1750 2    50   Input ~ 0
-N_PD_OUT3
-Text HLabel 4200 1850 2    50   Input ~ 0
-N_PD_OUT4
-Text HLabel 4200 1950 2    50   Input ~ 0
-N_PD_OUT5
-Text HLabel 4200 2050 2    50   Input ~ 0
-N_PD_OUT6
-Text HLabel 4200 2150 2    50   Input ~ 0
-N_PD_OUT7
-Text HLabel 4200 2250 2    50   Input ~ 0
-N_PD_OUT8
-Text HLabel 4200 2350 2    50   Input ~ 0
-N_PD_OUT9
-Text HLabel 4200 2450 2    50   Input ~ 0
-N_PD_OUT10
-Text HLabel 4200 2550 2    50   Input ~ 0
-N_PD_OUT11
-Text HLabel 4200 2650 2    50   Input ~ 0
-N_PD_OUT12
-Text HLabel 4200 2750 2    50   Input ~ 0
-N_PD_OUT13
-Text HLabel 4200 2850 2    50   Input ~ 0
-N_PD_OUT14
-Text HLabel 4200 2950 2    50   Input ~ 0
-N_PD_OUT15
 Text HLabel 4200 3050 2    50   Input ~ 0
+N_PD_OUT2
+Text HLabel 4200 1650 2    50   Input ~ 0
+N_PD_OUT3
+Text HLabel 4200 2950 2    50   Input ~ 0
+N_PD_OUT4
+Text HLabel 4200 1750 2    50   Input ~ 0
+N_PD_OUT5
+Text HLabel 4200 2850 2    50   Input ~ 0
+N_PD_OUT6
+Text HLabel 4200 1850 2    50   Input ~ 0
+N_PD_OUT7
+Text HLabel 4200 2750 2    50   Input ~ 0
+N_PD_OUT8
+Text HLabel 4200 1950 2    50   Input ~ 0
+N_PD_OUT9
+Text HLabel 4200 2650 2    50   Input ~ 0
+N_PD_OUT10
+Text HLabel 4200 2050 2    50   Input ~ 0
+N_PD_OUT11
+Text HLabel 4200 2550 2    50   Input ~ 0
+N_PD_OUT12
+Text HLabel 4200 2150 2    50   Input ~ 0
+N_PD_OUT13
+Text HLabel 4200 2450 2    50   Input ~ 0
+N_PD_OUT14
+Text HLabel 4200 2250 2    50   Input ~ 0
+N_PD_OUT15
+Text HLabel 4200 2350 2    50   Input ~ 0
 N_PD_OUT16
 Text HLabel 7850 2700 0    50   Input ~ 0
 N_PD_OUT1
