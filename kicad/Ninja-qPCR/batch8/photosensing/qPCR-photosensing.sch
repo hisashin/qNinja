@@ -195,7 +195,7 @@ U 1 1 5FE329AB
 P 7000 1800
 F 0 "R4" V 6793 1800 50  0000 C CNN
 F 1 "R" V 6884 1800 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 6930 1800 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 1800 50  0001 C CNN
 F 3 "~" H 7000 1800 50  0001 C CNN
 	1    7000 1800
 	0    -1   1    0   
@@ -337,7 +337,7 @@ U 1 1 606CEB7F
 P 7000 850
 F 0 "R3" V 6793 850 50  0000 C CNN
 F 1 "R" V 6884 850 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 6930 850 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 850 50  0001 C CNN
 F 3 "~" H 7000 850 50  0001 C CNN
 	1    7000 850 
 	0    -1   1    0   
