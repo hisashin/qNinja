@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/maripo/git/Ninja-qPCR/kicad/Ninja-qPCR/batch8/photosensing/qPCR-photosensing.sch)
-    (date "Friday, 18 June 2021 at 16:13:17")
+    (date "Saturday, 19 June 2021 at 22:36:14")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -421,7 +421,7 @@
       (tstamp 60C38304))
     (comp (ref R9)
       (value ?k)
-      (footprint Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm)
+      (footprint Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm)
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))
       (sheetpath (names /Thermistors/) (tstamps /60BEA899/))
@@ -489,7 +489,7 @@
       (tstamp 60C7338A))
     (comp (ref R8)
       (value ?k)
-      (footprint Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm)
+      (footprint Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm)
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))
       (sheetpath (names /Thermistors/) (tstamps /60BEA899/))

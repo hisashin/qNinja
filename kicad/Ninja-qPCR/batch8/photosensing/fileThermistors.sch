@@ -52,7 +52,7 @@ AR Path="/60B09AA3/60D57FA5" Ref="R?"  Part="1"
 AR Path="/60BEA899/60D57FA5" Ref="R9"  Part="1" 
 F 0 "R9" V 1293 3600 50  0000 C CNN
 F 1 "?k" V 1384 3600 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 1430 3600 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 1430 3600 50  0001 C CNN
 F 3 "~" H 1500 3600 50  0001 C CNN
 	1    1500 3600
 	0    -1   1    0   
@@ -362,7 +362,7 @@ AR Path="/60B09AA3/60D549A8" Ref="R?"  Part="1"
 AR Path="/60BEA899/60D549A8" Ref="R8"  Part="1" 
 F 0 "R8" V 1293 4000 50  0000 C CNN
 F 1 "?k" V 1384 4000 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Angled_1x02_Pitch2.54mm" V 1430 4000 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 1430 4000 50  0001 C CNN
 F 3 "~" H 1500 4000 50  0001 C CNN
 	1    1500 4000
 	0    -1   1    0   
