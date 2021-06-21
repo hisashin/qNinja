@@ -227,29 +227,10 @@ Wire Wire Line
 	6700 1800 6850 1800
 Text GLabel 5200 4350 2    50   Input ~ 0
 XOUT
-Text GLabel 1800 6700 2    50   Input ~ 0
-XOUT
 Text GLabel 2500 4550 0    50   Input ~ 0
 CLKIN
 Wire Wire Line
 	2500 4550 3100 4550
-Text GLabel 1800 6600 2    50   Input ~ 0
-CLKIN
-$Comp
-L Connector:Conn_01x02_Male J2
-U 1 1 606F1692
-P 1400 6600
-F 0 "J2" H 1508 6781 50  0000 C CNN
-F 1 "Conn_01x02_Male" H 1508 6690 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 1400 6600 50  0001 C CNN
-F 3 "~" H 1400 6600 50  0001 C CNN
-	1    1400 6600
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1600 6600 1800 6600
-Wire Wire Line
-	1800 6700 1600 6700
 Text GLabel 8050 2800 0    50   Input ~ 0
 3V3D
 Text GLabel 7650 3300 0    50   Input ~ 0
@@ -325,8 +306,6 @@ Wire Wire Line
 	5450 6850 5000 6850
 Text Notes 2800 6350 0    50   ~ 0
 ADA2200 SPI debug
-Text Notes 1200 6350 0    50   ~ 0
-ADA2200 Clock\n(For external X’tal circuit)
 Text Notes 600  1150 0    50   ~ 0
 Main <-> Photosensing
 Wire Wire Line
