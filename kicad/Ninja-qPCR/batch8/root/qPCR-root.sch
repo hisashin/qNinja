@@ -870,17 +870,6 @@ Wire Wire Line
 	4100 6650 3900 6650
 Wire Wire Line
 	4100 6450 3900 6450
-$Comp
-L Connector:Conn_01x14_Male J12
-U 1 1 60D2AE85
-P 10350 5550
-F 0 "J12" H 10322 5524 50  0000 R CNN
-F 1 "Conn_01x14_Male" H 10322 5433 50  0000 R CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_2x07_Pitch1.27mm" H 10350 5550 50  0001 C CNN
-F 3 "~" H 10350 5550 50  0001 C CNN
-	1    10350 5550
-	-1   0    0    -1  
-$EndComp
 NoConn ~ 3250 2750
 NoConn ~ 1550 2750
 Wire Wire Line
@@ -1075,4 +1064,15 @@ Wire Wire Line
 	2150 4700 2150 5000
 NoConn ~ 1550 2250
 NoConn ~ 1550 1450
+$Comp
+L Connector:Conn_01x20_Male J12
+U 1 1 60D0C797
+P 10350 5250
+F 0 "J12" H 10322 5224 50  0000 R CNN
+F 1 "Conn_01x20_Male" H 10322 5133 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 10350 5250 50  0001 C CNN
+F 3 "~" H 10350 5250 50  0001 C CNN
+	1    10350 5250
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC

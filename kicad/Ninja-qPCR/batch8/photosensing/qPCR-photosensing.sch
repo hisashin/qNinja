@@ -13,15 +13,15 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text GLabel 1150 3050 2    50   Input ~ 0
+Text GLabel 1150 2950 2    50   Input ~ 0
 GNDD
-Text GLabel 1150 1750 2    50   Input ~ 0
+Text GLabel 1150 1850 2    50   Input ~ 0
 3V3D
-Text GLabel 1150 2650 2    50   Input ~ 0
+Text GLabel 1150 2550 2    50   Input ~ 0
 ADC_DRDY
-Text GLabel 1150 2750 2    50   Input ~ 0
-I2C_SCL
 Text GLabel 1150 2850 2    50   Input ~ 0
+I2C_SCL
+Text GLabel 1150 2750 2    50   Input ~ 0
 I2C_SDA
 Text GLabel 2900 4850 0    50   Input ~ 0
 PD_REF_PWM
@@ -470,15 +470,15 @@ U 60AF0518
 F0 "Sheet60AF0517" 50
 F1 "filePhotoSouth.sch" 50
 $EndSheet
-Text GLabel 1150 1850 2    50   Input ~ 0
+Text GLabel 1150 1750 2    50   Input ~ 0
 3V3A
-Text GLabel 1150 2150 2    50   Input ~ 0
-MUX_S3
 Text GLabel 1150 2250 2    50   Input ~ 0
+MUX_S3
+Text GLabel 1150 2150 2    50   Input ~ 0
 MUX_S2
-Text GLabel 1150 2350 2    50   Input ~ 0
-MUX_S1
 Text GLabel 1150 2450 2    50   Input ~ 0
+MUX_S1
+Text GLabel 1150 2350 2    50   Input ~ 0
 MUX_S0
 Text GLabel 5300 2750 2    50   Input ~ 0
 GNDA
@@ -516,7 +516,7 @@ Wire Wire Line
 	5200 4350 5100 4350
 Wire Wire Line
 	5200 4750 5100 4750
-Text GLabel 1150 2550 2    50   Input ~ 0
+Text GLabel 1150 2650 2    50   Input ~ 0
 MUX_SELECT
 $Sheet
 S 9300 4450 1750 450 
@@ -530,15 +530,15 @@ U 60BEA5D5
 F0 "LED" 50
 F1 "fileLED.sch" 50
 $EndSheet
-Text GLabel 1150 1950 2    50   Input ~ 0
+Text GLabel 1150 2050 2    50   Input ~ 0
 VCC_LED
 Wire Wire Line
 	1150 1950 1000 1950
 Wire Wire Line
 	1150 2650 1000 2650
-Text GLabel 1150 2950 2    50   Input ~ 0
+Text GLabel 1150 3050 2    50   Input ~ 0
 THERM_R_SWITCH
-Text GLabel 1150 2050 2    50   Input ~ 0
+Text GLabel 1150 1950 2    50   Input ~ 0
 AMP_GAIN_SW
 $Sheet
 S 9300 5800 1750 400 
@@ -558,17 +558,6 @@ Text GLabel 5550 7450 2    50   Input ~ 0
 GNDA
 Text Notes 200  7750 0    50   ~ 0
 Use AGND and DGND  https://www.zuken.co.jp/club_Z/z/product/BD/019/pro_130221_1.html?fbclid=IwAR0Fud5uWcRWMC9uykssyA-G8J9CSF2g4TS7U_EDWa5E4txVfpM9rxRD7ok
-$Comp
-L Connector:Conn_01x14_Male J1
-U 1 1 60C2BDFE
-P 800 2350
-F 0 "J1" H 908 3131 50  0000 C CNN
-F 1 "Conn_01x14_Male" H 908 3040 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x07_Pitch1.27mm" H 800 2350 50  0001 C CNN
-F 3 "~" H 800 2350 50  0001 C CNN
-	1    800  2350
-	1    0    0    -1  
-$EndComp
 $Comp
 L Ninja-qPCR:ADS122C04IPWR U1
 U 1 1 60C266F0
@@ -815,4 +804,15 @@ Wire Wire Line
 	8400 5250 8950 5250
 Wire Wire Line
 	7250 5150 7500 5150
+$Comp
+L Connector:Conn_01x20_Male J1
+U 1 1 60D0E2EB
+P 800 2050
+F 0 "J1" H 908 3131 50  0000 C CNN
+F 1 "Conn_01x20_Male" H 908 3040 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 800 2050 50  0001 C CNN
+F 3 "~" H 800 2050 50  0001 C CNN
+	1    800  2050
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
