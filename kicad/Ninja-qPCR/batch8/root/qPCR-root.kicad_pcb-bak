@@ -4201,6 +4201,11 @@
     (pad 2 thru_hole circle (at 89.56 -5) (size 1.524 1.524) (drill 1.016) (layers *.Cu *.Mask))
     (pad 1 thru_hole circle (at 92.1 -5) (size 1.524 1.524) (drill 1.016) (layers *.Cu *.Mask)
       (net 5 5V_UPS))
+    (model :kicad-packages3D:Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x05_P2.54mm_Vertical.step
+      (offset (xyz 92.09999999999999 5 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 90))
+    )
   )
 
   (gr_text GND (at 183.6928 71.54) (layer F.SilkS) (tstamp 60D244BA)
