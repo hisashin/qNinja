@@ -531,9 +531,9 @@ U 60C04E5C
 F0 "Sheet60C04E5B" 50
 F1 "filePhotoNorth.sch" 50
 $EndSheet
-Text GLabel 5400 7450 0    50   Input ~ 0
+Text GLabel 5300 7300 0    50   Input ~ 0
 GNDD
-Text GLabel 5550 7450 2    50   Input ~ 0
+Text GLabel 5700 7300 2    50   Input ~ 0
 GNDA
 Text Notes 200  7750 0    50   ~ 0
 Use AGND and DGND  https://www.zuken.co.jp/club_Z/z/product/BD/019/pro_130221_1.html?fbclid=IwAR0Fud5uWcRWMC9uykssyA-G8J9CSF2g4TS7U_EDWa5E4txVfpM9rxRD7ok
@@ -794,4 +794,19 @@ F 3 "~" H 800 2050 50  0001 C CNN
 	1    800  2050
 	1    0    0    -1  
 $EndComp
+$Comp
+L Jumper:SolderJumper_2_Bridged JP5
+U 1 1 60D25B27
+P 5500 7300
+F 0 "JP5" H 5500 7505 50  0000 C CNN
+F 1 "SolderJumper_2_Bridged" H 5500 7414 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm" H 5500 7300 50  0001 C CNN
+F 3 "~" H 5500 7300 50  0001 C CNN
+	1    5500 7300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 7300 5650 7300
+Wire Wire Line
+	5300 7300 5350 7300
 $EndSCHEMATC
