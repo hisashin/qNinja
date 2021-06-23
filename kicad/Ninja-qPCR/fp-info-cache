@@ -1,4 +1,4 @@
-280624577416217
+282254627781217
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19384,6 +19384,13 @@ COM1305-0.032768-EXT-T-TR
 4
 Ninja-qPCR
 CP_Radial_D12.5mm_P5.00mm_L34mm
+CP, Radial series, Radial, pin pitch=5.00mm, , diameter=12.5mm, Electrolytic Capacitor
+CP Radial series Radial pin pitch 5.00mm  diameter 12.5mm Electrolytic Capacitor
+0
+2
+2
+Ninja-qPCR
+CP_Radial_P5.00mm
 CP, Radial series, Radial, pin pitch=5.00mm, , diameter=12.5mm, Electrolytic Capacitor
 CP Radial series Radial pin pitch 5.00mm  diameter 12.5mm Electrolytic Capacitor
 0
