@@ -131,101 +131,110 @@ Text HLabel 4200 2250 2    50   Input ~ 0
 N_PD_OUT15
 Text HLabel 4200 2350 2    50   Input ~ 0
 N_PD_OUT16
-Text HLabel 7850 2700 0    50   Input ~ 0
+Text HLabel 7300 4100 0    50   Input ~ 0
 N_PD_OUT1
-Text HLabel 7850 2900 0    50   Input ~ 0
+Text HLabel 7300 3900 0    50   Input ~ 0
 N_PD_OUT3
-Text HLabel 7850 2800 0    50   Input ~ 0
+Text HLabel 7300 2800 0    50   Input ~ 0
 N_PD_OUT2
-Text HLabel 7850 3000 0    50   Input ~ 0
+Text HLabel 7300 2600 0    50   Input ~ 0
 N_PD_OUT4
-Text HLabel 7850 3100 0    50   Input ~ 0
+Text HLabel 7300 3700 0    50   Input ~ 0
 N_PD_OUT5
-Text HLabel 7850 3200 0    50   Input ~ 0
+Text HLabel 7300 2400 0    50   Input ~ 0
 N_PD_OUT6
-Text HLabel 7850 3300 0    50   Input ~ 0
+Text HLabel 7300 3500 0    50   Input ~ 0
 N_PD_OUT7
-Text HLabel 7850 3400 0    50   Input ~ 0
+Text HLabel 7300 2200 0    50   Input ~ 0
 N_PD_OUT8
-Text HLabel 7850 3500 0    50   Input ~ 0
+Text HLabel 7300 3400 0    50   Input ~ 0
 N_PD_OUT9
-Text HLabel 7850 3600 0    50   Input ~ 0
+Text HLabel 7300 2300 0    50   Input ~ 0
 N_PD_OUT10
-Text HLabel 7850 3700 0    50   Input ~ 0
+Text HLabel 7300 3600 0    50   Input ~ 0
 N_PD_OUT11
-Text HLabel 7850 3800 0    50   Input ~ 0
+Text HLabel 7300 2500 0    50   Input ~ 0
 N_PD_OUT12
-Text HLabel 7850 3900 0    50   Input ~ 0
+Text HLabel 7300 3800 0    50   Input ~ 0
 N_PD_OUT13
-Text HLabel 7850 4000 0    50   Input ~ 0
+Text HLabel 7300 2700 0    50   Input ~ 0
 N_PD_OUT14
-Text HLabel 7850 4100 0    50   Input ~ 0
+Text HLabel 7300 4000 0    50   Input ~ 0
 N_PD_OUT15
-Text HLabel 7850 4200 0    50   Input ~ 0
+Text HLabel 7300 2900 0    50   Input ~ 0
 N_PD_OUT16
 Wire Wire Line
 	4350 6750 4150 6750
 Wire Wire Line
 	1250 5850 1550 5850
-Text GLabel 7850 4300 0    50   Input ~ 0
+Text GLabel 7300 4200 0    50   Input ~ 0
 GNDA
-Text GLabel 7850 4400 0    50   Input ~ 0
+Text GLabel 7300 4300 0    50   Input ~ 0
 GNDA
-Text GLabel 7850 2600 0    50   Input ~ 0
+Text GLabel 7300 3100 0    50   Input ~ 0
 GNDA
-Text GLabel 7850 2500 0    50   Input ~ 0
+Text GLabel 7300 3000 0    50   Input ~ 0
 GNDA
+Wire Wire Line
+	7550 3000 7300 3000
+Wire Wire Line
+	7550 3100 7300 3100
+Wire Wire Line
+	7550 3400 7300 3400
+Wire Wire Line
+	7550 3500 7300 3500
+Wire Wire Line
+	7550 3600 7300 3600
+Wire Wire Line
+	7550 3700 7300 3700
+Wire Wire Line
+	7550 3800 7300 3800
+Wire Wire Line
+	7550 3900 7300 3900
+Wire Wire Line
+	7550 4000 7300 4000
+Wire Wire Line
+	7550 4100 7300 4100
+Wire Wire Line
+	7550 4200 7300 4200
+Wire Wire Line
+	7550 4300 7300 4300
 $Comp
-L Connector:Conn_01x20_Male JPD?
-U 1 1 60CFB9BA
-P 8300 3400
-AR Path="/60AF0518/60CFB9BA" Ref="JPD?"  Part="1" 
-AR Path="/60C04E5C/60CFB9BA" Ref="JPDN1"  Part="1" 
-F 0 "JPDN1" H 8272 3374 50  0000 R CNN
-F 1 "Conn_01x20_Male" H 8272 3283 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 8300 3400 50  0001 C CNN
-F 3 "~" H 8300 3400 50  0001 C CNN
-	1    8300 3400
+L Connector:Conn_01x10_Male JSDN1
+U 1 1 60D9568B
+P 7750 2600
+F 0 "JSDN1" H 7722 2574 50  0000 R CNN
+F 1 "Conn_01x10_Male" H 7722 2483 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 7750 2600 50  0001 C CNN
+F 3 "~" H 7750 2600 50  0001 C CNN
+	1    7750 2600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x10_Male JSDN2
+U 1 1 60D97630
+P 7750 3800
+F 0 "JSDN2" H 7722 3774 50  0000 R CNN
+F 1 "Conn_01x10_Male" H 7722 3683 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 7750 3800 50  0001 C CNN
+F 3 "~" H 7750 3800 50  0001 C CNN
+	1    7750 3800
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	8100 2500 7850 2500
+	7550 2200 7300 2200
 Wire Wire Line
-	8100 2600 7850 2600
+	7550 2300 7300 2300
 Wire Wire Line
-	8100 2700 7850 2700
+	7550 2400 7300 2400
 Wire Wire Line
-	8100 2800 7850 2800
+	7550 2500 7300 2500
 Wire Wire Line
-	8100 2900 7850 2900
+	7550 2600 7300 2600
 Wire Wire Line
-	8100 3000 7850 3000
+	7550 2700 7300 2700
 Wire Wire Line
-	8100 3100 7850 3100
+	7550 2800 7300 2800
 Wire Wire Line
-	8100 3200 7850 3200
-Wire Wire Line
-	8100 3300 7850 3300
-Wire Wire Line
-	8100 3400 7850 3400
-Wire Wire Line
-	8100 3500 7850 3500
-Wire Wire Line
-	8100 3600 7850 3600
-Wire Wire Line
-	8100 3700 7850 3700
-Wire Wire Line
-	8100 3800 7850 3800
-Wire Wire Line
-	8100 3900 7850 3900
-Wire Wire Line
-	8100 4000 7850 4000
-Wire Wire Line
-	8100 4100 7850 4100
-Wire Wire Line
-	8100 4200 7850 4200
-Wire Wire Line
-	8100 4300 7850 4300
-Wire Wire Line
-	8100 4400 7850 4400
+	7550 2900 7300 2900
 $EndSCHEMATC

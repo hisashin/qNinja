@@ -168,7 +168,7 @@ U 1 1 5FDD1B56
 P 3000 6750
 F 0 "JSPI1" H 3108 7031 50  0000 C CNN
 F 1 "Conn_01x04_Male" H 3108 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 3000 6750 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3000 6750 50  0001 C CNN
 F 3 "~" H 3000 6750 50  0001 C CNN
 	1    3000 6750
 	1    0    0    -1  

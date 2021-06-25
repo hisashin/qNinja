@@ -3999,6 +3999,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model :desktop:SuperCap_D12.5mm_P5.00mm_L34mm.step
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (module Ninja-qPCR:CP_Radial_P5.00mm (layer B.Cu) (tedit 60D3AC40) (tstamp 60D3AF41)
@@ -4024,6 +4029,11 @@
     (pad 1 thru_hole rect (at 0 0) (size 2.4 2.4) (drill 1.2) (layers *.Cu *.Mask)
       (net 47 "Net-(C16-Pad2)"))
     (model ${KISYS3DMOD}/Capacitors_THT.3dshapes/CP_Radial_D12.5mm_P5.00mm.wrl
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
+    (model :desktop:SuperCap_D12.5mm_P5.00mm_L34mm.step
       (at (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
@@ -4057,6 +4067,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model :desktop:SuperCap_D12.5mm_P5.00mm_L34mm.step
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (module Ninja-qPCR:CP_Radial_P5.00mm (layer B.Cu) (tedit 60D3AC40) (tstamp 60D3AF55)
@@ -4086,6 +4101,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model :desktop:SuperCap_D12.5mm_P5.00mm_L34mm.step
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (module Ninja-qPCR:CP_Radial_P5.00mm (layer B.Cu) (tedit 60D3AC40) (tstamp 60D3AF5F)
@@ -4111,6 +4131,11 @@
     (pad 2 thru_hole circle (at 5 0) (size 2.4 2.4) (drill 1.2) (layers *.Cu *.Mask)
       (net 2 GND))
     (model ${KISYS3DMOD}/Capacitors_THT.3dshapes/CP_Radial_D12.5mm_P5.00mm.wrl
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
+    (model :desktop:SuperCap_D12.5mm_P5.00mm_L34mm.step
       (at (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))

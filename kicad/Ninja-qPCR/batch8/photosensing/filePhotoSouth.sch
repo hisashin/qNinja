@@ -149,101 +149,72 @@ Text HLabel 4050 2850 2    50   Input ~ 0
 S_PD_OUT15
 Text HLabel 4050 1350 2    50   Input ~ 0
 S_PD_OUT16
-Text HLabel 6550 2100 0    50   Input ~ 0
+Text HLabel 6500 3800 0    50   Input ~ 0
 S_PD_OUT1
-Text HLabel 6550 2200 0    50   Input ~ 0
+Text HLabel 6500 2550 0    50   Input ~ 0
 S_PD_OUT2
-Text HLabel 6550 2300 0    50   Input ~ 0
+Text HLabel 6500 3600 0    50   Input ~ 0
 S_PD_OUT3
-Text HLabel 6550 2400 0    50   Input ~ 0
+Text HLabel 6500 2350 0    50   Input ~ 0
 S_PD_OUT4
-Text HLabel 6550 2500 0    50   Input ~ 0
+Text HLabel 6500 3400 0    50   Input ~ 0
 S_PD_OUT5
-Text HLabel 6550 2600 0    50   Input ~ 0
+Text HLabel 6500 2150 0    50   Input ~ 0
 S_PD_OUT6
-Text HLabel 6550 2700 0    50   Input ~ 0
+Text HLabel 6500 3200 0    50   Input ~ 0
 S_PD_OUT7
-Text HLabel 6550 2800 0    50   Input ~ 0
+Text HLabel 6500 1950 0    50   Input ~ 0
 S_PD_OUT8
-Text HLabel 6550 2900 0    50   Input ~ 0
+Text HLabel 6500 3100 0    50   Input ~ 0
 S_PD_OUT9
-Text HLabel 6550 3000 0    50   Input ~ 0
+Text HLabel 6500 2050 0    50   Input ~ 0
 S_PD_OUT10
-Text HLabel 6550 3100 0    50   Input ~ 0
+Text HLabel 6500 3300 0    50   Input ~ 0
 S_PD_OUT11
-Text HLabel 6550 3200 0    50   Input ~ 0
+Text HLabel 6500 2250 0    50   Input ~ 0
 S_PD_OUT12
-Text HLabel 6550 3300 0    50   Input ~ 0
+Text HLabel 6500 3500 0    50   Input ~ 0
 S_PD_OUT13
-Text HLabel 6550 3400 0    50   Input ~ 0
+Text HLabel 6500 2450 0    50   Input ~ 0
 S_PD_OUT14
-Text HLabel 6550 3500 0    50   Input ~ 0
+Text HLabel 6500 3700 0    50   Input ~ 0
 S_PD_OUT15
-Text HLabel 6550 3600 0    50   Input ~ 0
+Text HLabel 6500 2650 0    50   Input ~ 0
 S_PD_OUT16
 Wire Wire Line
 	1050 4300 1250 4300
 Wire Wire Line
 	4000 5200 3850 5200
-Text GLabel 6550 3700 0    50   Input ~ 0
+Text GLabel 6500 3900 0    50   Input ~ 0
 GNDA
-Text GLabel 6550 3800 0    50   Input ~ 0
+Text GLabel 6500 4000 0    50   Input ~ 0
 GNDA
-Text GLabel 6550 2000 0    50   Input ~ 0
+Text GLabel 6500 2850 0    50   Input ~ 0
 GNDA
-Text GLabel 6550 1900 0    50   Input ~ 0
+Text GLabel 6500 2750 0    50   Input ~ 0
 GNDA
-$Comp
-L Connector:Conn_01x20_Male JPDS1
-U 1 1 60CDBEA3
-P 7000 2800
-F 0 "JPDS1" H 6972 2774 50  0000 R CNN
-F 1 "Conn_01x20_Male" H 6972 2683 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x10_Pitch1.27mm" H 7000 2800 50  0001 C CNN
-F 3 "~" H 7000 2800 50  0001 C CNN
-	1    7000 2800
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
-	6800 1900 6550 1900
+	6750 2750 6500 2750
 Wire Wire Line
-	6800 2000 6550 2000
+	6750 2850 6500 2850
 Wire Wire Line
-	6800 2100 6550 2100
+	6750 3200 6500 3200
 Wire Wire Line
-	6800 2200 6550 2200
+	6750 3300 6500 3300
 Wire Wire Line
-	6800 2300 6550 2300
+	6750 3400 6500 3400
 Wire Wire Line
-	6800 2400 6550 2400
+	6750 3500 6500 3500
 Wire Wire Line
-	6800 2500 6550 2500
+	6750 3600 6500 3600
 Wire Wire Line
-	6800 2600 6550 2600
+	6750 3700 6500 3700
 Wire Wire Line
-	6800 2700 6550 2700
+	6750 3800 6500 3800
 Wire Wire Line
-	6800 2800 6550 2800
+	6750 3900 6500 3900
 Wire Wire Line
-	6800 2900 6550 2900
-Wire Wire Line
-	6800 3000 6550 3000
-Wire Wire Line
-	6800 3100 6550 3100
-Wire Wire Line
-	6800 3200 6550 3200
-Wire Wire Line
-	6800 3300 6550 3300
-Wire Wire Line
-	6800 3400 6550 3400
-Wire Wire Line
-	6800 3500 6550 3500
-Wire Wire Line
-	6800 3600 6550 3600
-Wire Wire Line
-	6800 3700 6550 3700
-Wire Wire Line
-	6800 3800 6550 3800
+	6750 4000 6500 4000
 $Comp
 L Ninja-qPCR:CD74HC4067M96 U6
 U 1 1 60B0D5A6
@@ -255,4 +226,44 @@ F 3 "" H 3900 1150 60  0000 C CNN
 	1    3900 1150
 	-1   0    0    -1  
 $EndComp
+$Comp
+L Connector:Conn_01x10_Male JPDS1
+U 1 1 60D7840A
+P 6950 2350
+F 0 "JPDS1" H 6922 2324 50  0000 R CNN
+F 1 "Conn_01x10_Male" H 6922 2233 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 6950 2350 50  0001 C CNN
+F 3 "~" H 6950 2350 50  0001 C CNN
+	1    6950 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x10_Male JPDS2
+U 1 1 60D79D33
+P 6950 3500
+F 0 "JPDS2" H 6922 3474 50  0000 R CNN
+F 1 "Conn_01x10_Male" H 6922 3383 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 6950 3500 50  0001 C CNN
+F 3 "~" H 6950 3500 50  0001 C CNN
+	1    6950 3500
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 1950 6500 1950
+Wire Wire Line
+	6750 2050 6500 2050
+Wire Wire Line
+	6750 2150 6500 2150
+Wire Wire Line
+	6750 2250 6500 2250
+Wire Wire Line
+	6750 2350 6500 2350
+Wire Wire Line
+	6750 2450 6500 2450
+Wire Wire Line
+	6750 2550 6500 2550
+Wire Wire Line
+	6750 2650 6500 2650
+Wire Wire Line
+	6500 3100 6750 3100
 $EndSCHEMATC

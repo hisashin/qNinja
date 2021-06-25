@@ -1,4 +1,4 @@
-update=2021 June 25, Friday 05:46:08
+update=2021 June 25, Friday 10:43:10
 version=1
 last_client=pcbnew
 [general]
@@ -25,7 +25,7 @@ ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=qPCR-photodiode.net
+LastNetListRead=qPCR-led-north.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=0
@@ -41,18 +41,8 @@ MinHoleToHole=0.25
 TrackWidth1=0.25
 TrackWidth2=0.508
 TrackWidth3=1.016
-TrackWidth4=1.524
-TrackWidth5=2.54
 ViaDiameter1=0.8
 ViaDrill1=0.4
-ViaDiameter2=0.508
-ViaDrill2=0.4
-ViaDiameter3=1.016
-ViaDrill3=0.4
-ViaDiameter4=1.524
-ViaDrill4=0.4
-ViaDiameter5=2.54
-ViaDrill5=0.4
 dPairWidth1=0.2
 dPairGap1=0.25
 dPairViaGap1=0.25
@@ -79,7 +69,7 @@ OthersTextUpright=1
 SolderMaskClearance=0
 SolderMaskMinWidth=0
 SolderPasteClearance=0
-SolderPasteRatio=0
+SolderPasteRatio=-0
 [pcbnew/Layer.F.Cu]
 Name=F.Cu
 Type=0

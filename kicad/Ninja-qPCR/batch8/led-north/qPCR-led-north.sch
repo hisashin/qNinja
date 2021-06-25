@@ -270,7 +270,7 @@ U 1 1 5F22415F
 P 4450 3000
 F 0 "U1" H 4769 2611 50  0000 L CNN
 F 1 "Conn_02x05" H 4769 2520 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 4250 3100 50  0001 C CNN
+F 2 "Socket_Strips:Socket_Strip_Angled_1x10_Pitch2.54mm" H 4250 3100 50  0001 C CNN
 F 3 "" H 4250 3100 50  0001 C CNN
 	1    4450 3000
 	1    0    0    -1  
