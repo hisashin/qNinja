@@ -7,8 +7,8 @@
 * Power on
 * Login (user=pi, password=raspberry)
 * Config `sudo raspi-config`
-  * Change keyboard layout (Lozalisation Options > Change Keyboard Layout > Change Keyboard Layout > Generic 105-key PC (intl.) > Japanese)
-  * Lozalisation Options > Change WLAN Country
+  * Change keyboard layout (Localisation Options > Change Keyboard Layout > Change Keyboard Layout > Generic 105-key PC (intl.) > Japanese)
+  * Localisation Options > Change WLAN Country
   * Change User Password
   * Open "Network Options > Hostname" and input "ninjaqpcr". This config is applied to mDNS.
   * Enable functionalities
@@ -34,13 +34,15 @@
 * `sudo mkdir /usr/local/ninjaqpcr
 * `sudo chown pi /usr/local/ninjaqpcr`
 * `mkdir ~/ninjaqpcr`
+* `mkdir ~/ninjaqpcr/user_data`
+
 
 # Install apps (From mac)
 
 ```
-/Users/maripo/git/Ninja-qPCR/src
+cd /Users/maripo/git/Ninja-qPCR/src
 ./deploy.sh
-./deploy_update.sh
+./deploy_update.sh # Update packages
 ```
 
 # Register startup script
@@ -54,3 +56,14 @@ echo "" > ~/.ssh/authorized_keys
 sudo cp /usr/local/ninjaqpcr/network_conf_app/wpa_supplicant_header.txt /etc/wpa_supplicant/wpa_supplicant.conf
 rm -f ~/.bash_history
 ```
+
+# Extra (Ortanize this section in the installation flow)
+Add to ~/.bashrc
+```
+export NINJAQPCR_USER_DATA=/home/pi/ninjaqpcr/user_data
+export NINJAQPCR_HOME=/usr/local/ninjaqpcr
+```
+
+/etc/environment
+NINJAQPCR_USER_DATA=/home/pi/ninjaqpcr/user_data
+NINJAQPCR_HOME=/usr/local/ninjaqpcr

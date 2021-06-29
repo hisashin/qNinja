@@ -17,7 +17,9 @@ class PromiseQueue {
     });
   }
   exec () {
-    this._exec();
+    setImmediate(() => {
+      this._exec();
+    });
     return new Promise((resolve, reject)=>{
       this.resolve = resolve;
       this.reject = reject;

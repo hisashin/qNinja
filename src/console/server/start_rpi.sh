@@ -1,1 +1,1 @@
-node server.js --clientHost toripi.local --clientPort 8080
+node server.js --clientHost ninjaqpcr.local --clientPort 8080
