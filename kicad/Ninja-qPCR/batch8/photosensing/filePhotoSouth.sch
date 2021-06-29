@@ -189,10 +189,6 @@ Text GLabel 6500 3900 0    50   Input ~ 0
 GNDA
 Text GLabel 6500 4000 0    50   Input ~ 0
 GNDA
-Text GLabel 6500 2850 0    50   Input ~ 0
-GNDA
-Text GLabel 6500 2750 0    50   Input ~ 0
-GNDA
 Wire Wire Line
 	6750 2750 6500 2750
 Wire Wire Line
@@ -266,4 +262,8 @@ Wire Wire Line
 	6750 2650 6500 2650
 Wire Wire Line
 	6500 3100 6750 3100
+Text GLabel 6500 2750 0    50   Input ~ 0
+PD_TH1
+Text GLabel 6500 2850 0    50   Input ~ 0
+PD_TH2
 $EndSCHEMATC

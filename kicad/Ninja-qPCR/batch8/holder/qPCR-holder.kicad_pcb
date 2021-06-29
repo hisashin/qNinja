@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 219)
+    (drawings 220)
     (tracks 0)
     (zones 0)
     (modules 0)
@@ -101,6 +101,9 @@
     (uvia_drill 0.1)
   )
 
+  (gr_text 94x58mm (at 122 69.02) (layer Dwgs.User)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
   (gr_text https://github.com/hisashin/Ninja-qPCR (at 165.650074 121.5) (layer F.SilkS) (tstamp 60D54DBF)
     (effects (font (size 1 1) (thickness 0.15)))
   )
