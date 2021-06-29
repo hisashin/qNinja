@@ -1,6 +1,7 @@
 "use strict";
-const API_ENDPOINT = "http://localhost:2222/";
+const host = location.href.replace(new RegExp("http\\\:\\\/\\\/([^:/]*).*"),"$1");
 const API_PORT = "2222";
+const API_ENDPOINT = "http://" + host + ":" + API_PORT + "/";
 const Util = {
   humanTime: (timeSec)=>{
     let tokens = [];

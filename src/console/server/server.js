@@ -1,5 +1,11 @@
 "use strict";
 
+/*
+  Options
+  --clientHost : Allowed access origin host
+  --clientPort : Allowed access origin port
+*/
+
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const qpcr = new NinjaQPCR("hardware.json");
@@ -163,8 +169,16 @@ class NinjaQPCRHTTPServer {
     
     this.server.on('request', (req, res)=>{
       // CORS
-      let corsAllow = 'http://' + clientHost;
-      if (clientPort != "80")  corsAllow += (":" + clientPort);
+      let corsAllow = null;
+      const origin = req.headers.origin;
+      const HOST_REGEX = new RegExp("http:\\\/\\\/localhost(:[0-9]+)?");
+      if (origin && HOST_REGEX.test(origin)) {
+        console.log("User port", RegExp.$1)
+        corsAllow = origin;
+      } else {
+        corsAllow = 'http://' + clientHost;
+        if (clientPort != "80")  corsAllow += (":" + clientPort);
+      }
       res.setHeader('Access-Control-Allow-Origin', corsAllow);
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');

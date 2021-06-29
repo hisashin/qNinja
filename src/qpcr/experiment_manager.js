@@ -4,8 +4,7 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const OpticsAnalysis = require("./optics_analysis");
 const PromiseQueue = require("./control/promise_queue");
-const DATA_DIR_ROOT = "/Users/maripo/git/Ninja-qPCR/src/qpcr/user_data"; // TODO: use user's home dir
-// const DATA_DIR_ROOT = "/home/pi/ninjaqpcr/user_dat"; // TODO: use user's home dir
+const DATA_DIR_ROOT = process.env.NINJAQPCR_USER_DATA || "/home/pi/ninjaqpcr/user_data"; // TODO: use user's home dir
 
 const NINJAQPCR_API_VERSION = "1.0";
 
@@ -337,9 +336,12 @@ class ExperimentManager {
   
   _recreateSummaries(onLoad, onError) {
     const REGEX_EXPERIMENT_FILE = /[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}/;
+    console.log("Read content of " + this._experimentDir());
     fs.readdir(this._experimentDir(), (err, allFiles) => {
       let queue = [];
       let summaries = [];
+      console.log(allFiles)
+      console.log(err)
       allFiles.filter((f)=>{
         return REGEX_EXPERIMENT_FILE.test(f);
       }).forEach((f)=>{
@@ -349,6 +351,7 @@ class ExperimentManager {
               summaries.push(this._generateExperimentSummary(experiment));
               resolve();
             }, ()=>{
+              console.log("Reject!");
               reject();
             });
           });
