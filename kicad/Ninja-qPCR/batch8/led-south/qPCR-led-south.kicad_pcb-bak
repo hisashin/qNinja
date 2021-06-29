@@ -157,6 +157,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model :kicad-packages3D:Capacitor_SMD.3dshapes/C_0603_1608Metric.step
+      (at (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 0))
+    )
   )
 
   (module LEDs:LED_D5.0mm (layer F.Cu) (tedit 5995936A) (tstamp 60D571F2)
