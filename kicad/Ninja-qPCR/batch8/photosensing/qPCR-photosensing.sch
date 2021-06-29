@@ -168,7 +168,7 @@ U 1 1 5FDD1B56
 P 3000 6750
 F 0 "JSPI1" H 3108 7031 50  0000 C CNN
 F 1 "Conn_01x04_Male" H 3108 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 3000 6750 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3000 6750 50  0001 C CNN
 F 3 "~" H 3000 6750 50  0001 C CNN
 	1    3000 6750
 	1    0    0    -1  
@@ -449,7 +449,7 @@ U 60AF0518
 F0 "Sheet60AF0517" 50
 F1 "filePhotoSouth.sch" 50
 $EndSheet
-Text GLabel 1150 1750 2    50   Input ~ 0
+Text GLabel 6600 3950 0    50   Input ~ 0
 3V3A
 Text GLabel 1150 2250 2    50   Input ~ 0
 MUX_S3
@@ -809,4 +809,53 @@ Wire Wire Line
 	5700 7300 5650 7300
 Wire Wire Line
 	5300 7300 5350 7300
+Text GLabel 7250 3950 2    50   Input ~ 0
+PD_TH1
+Text GLabel 7250 4250 2    50   Input ~ 0
+PD_TH2
+Wire Wire Line
+	1000 1550 1150 1550
+Wire Wire Line
+	1000 1650 1150 1650
+$Comp
+L Device:R R_TH1
+U 1 1 60DB6C4E
+P 6950 3950
+F 0 "R_TH1" V 6743 3950 50  0000 C CNN
+F 1 "10K" V 6834 3950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6880 3950 50  0001 C CNN
+F 3 "~" H 6950 3950 50  0001 C CNN
+	1    6950 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R_TH2
+U 1 1 60DD84A1
+P 6950 4250
+F 0 "R_TH2" V 6743 4250 50  0000 C CNN
+F 1 "10K" V 6834 4250 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6880 4250 50  0001 C CNN
+F 3 "~" H 6950 4250 50  0001 C CNN
+	1    6950 4250
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7250 3950 7100 3950
+Wire Wire Line
+	7250 4250 7100 4250
+Wire Wire Line
+	6600 3950 6700 3950
+Wire Wire Line
+	6800 4250 6700 4250
+Wire Wire Line
+	6700 4250 6700 3950
+Connection ~ 6700 3950
+Wire Wire Line
+	6700 3950 6800 3950
+Text GLabel 1150 1750 2    50   Input ~ 0
+3V3A
+Text GLabel 1150 1550 2    50   Input ~ 0
+PD_TH1
+Text GLabel 1150 1650 2    50   Input ~ 0
+PD_TH2
 $EndSCHEMATC
