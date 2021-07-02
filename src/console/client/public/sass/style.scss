@@ -1,0 +1,157 @@
+/* Common style */
+#app {
+  color: #2c3e50;
+  margin:auto;
+}
+/* Reset */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  margin: 0;
+  padding:0;
+}
+a {
+  color: #42b983;
+}
+
+.footer {
+  max-width: 800px;
+  margin: auto;
+}
+/* Layout params of top-level blocks */
+.header,.device-monitor,.panel-nav {
+  margin-bottom:1.5rem;
+}
+.device-monitor {
+}
+
+/* Common list view */
+.experiment-cell-content {
+}
+
+.progress-meter {
+  display:flex;
+}
+.progress-meter-item {
+  border:1px solid rgba(0, 0, 0, 0.125);
+  text-align:center;
+  padding:0.2em;
+  margin:0.1em;
+  width: 100%;
+}
+.progress-meter-item-current {
+  text-align:center;
+  padding:0.2em;
+  margin:0.1em;
+  width: 100%;
+  background-color:#007bff;
+  border-color:#007bff;
+  color:#ffffff;
+}
+/* Input fields */
+.input-cycles {
+  width:80px;
+}
+.input-temp {
+  width:80px;
+}
+.input-duration {
+  width:80px;
+}
+.input-speed {
+  width:80px;
+}
+/* List pagination */
+.paging {
+  padding: 1em 0;
+  text-align:center;
+}
+.paging__pages {
+  padding:0;
+  margin:0;
+}
+.paging__pages__page {
+  display:inline-block;
+}
+.paging__pages__page__label {
+  margin: 0 0.2em;
+  border: 1px solid #aaa;
+  padding: 0.2em 0.6em;
+  border-radius: 0.2em;
+}
+.paging__pages__page__label--linked {
+  background-color: #fff;
+  border-color: #007bff;
+  color: #007bff;
+}
+.paging__pages__page__label--current {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+/* Error in card view */
+.error {
+  text-align:center;
+  padding:2em 0;
+}
+.error__title {
+  color: #666;
+  font-weight: normal;
+}
+.error__retry {
+
+}
+.error__retry__link {
+
+}
+.validation-label {
+  position:relative;
+  font-size:1rem;
+  font-weight:normal;
+}
+.validation-label__content {
+  position: absolute;
+  background-color: pink;
+  border-radius: 0.3em;
+  font-size: 0.75em;
+  padding: 0.2em 1em;
+  line-height:120%;
+  white-space: nowrap;
+  left:0;
+  top:100%;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.2)
+}
+
+.well_selected {
+  background-color:pink;
+}
+.well_available {
+  background-color:white;
+}
+.well_unavailable {
+  background-color:gray;
+}
+
+
+.pcr_table {
+  border-collapse: collapse;
+}
+.pcr_table td, .pcr_table th {
+  border:1px solid #888;
+}
+
+.labeled-list {
+  display: flex;
+	flex-wrap:wrap;
+}
+.labeled-list__label {
+  flex-basis:20%;
+  flex-grow: 1;
+}
+.labeled-list__content {
+  flex-basis:80%;
+  flex-grow: 4;
+}

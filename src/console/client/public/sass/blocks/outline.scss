@@ -1,0 +1,133 @@
+/*
+html
+  header.header
+    Title etc.
+  main.main // limit maxwidth
+    div.device-monitor
+      // Device monitor
+    nav.panel-nav
+    div.panel
+      [section.section]
+        header.section__header
+          h2.section__title
+          (div.section__header__menu)
+        div.section__nav--top
+          // Search, sort etc.
+        div.section__body
+          div.section__body__item--*
+        div.section__nav--bottom
+          // Pagination etc.
+  footer.footer
+    Contact, help etc.
+*/
+
+/* Layout params of secondary-level blocks */
+.section {
+  margin-bottom:1.5rem;
+}
+.section__header:not(:last-child),
+.section__nav:not(:last-child),
+.section__body:not(:last-child),
+.section__body__item:not(:last-child) {
+  margin-bottom:0.75rem;
+  padding:0;
+}
+
+.panel {
+}
+.panel-nav {
+}
+.section {
+}
+
+.section__header {
+
+}
+.section__title {
+  font-size: $text_size_l;
+}
+.section__header__menu {
+  float:right;
+}
+
+.section__nav {
+  &--top {
+    
+  }
+  &--bottom {
+    
+  }
+  &--item {
+    
+  }
+}
+/* Inside section__body */
+.item {
+
+}
+/* Item variants */
+/* Item variant: List card */
+.list-card-cell {
+  padding:$box_padding;
+  &--header {
+    
+  }
+  &--item {
+    
+  }
+  &--footer {
+    
+  }
+  &--error {
+    
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+  &__title {
+    font-weight: bold;;
+    font-size: $text_size_m;
+  }
+}
+/* Item variant: Detail card */
+.detail-card {
+  &__header {
+    
+  }
+  &__body {
+    
+  }
+  &__footer {
+    
+  }
+}
+.item--detail-card {
+}
+.item--detail-card__header {
+}
+.item--detail-card__body {
+}
+.item--detail-card__footer {
+}
+.item--detail-card__body__content {
+  padding:1em;
+}
+/* Item variant: Text paragraph */
+.item--paragraph {
+
+}
+/* Card styles */
+.item--list-card, .item--detail-card, .item--tabbed {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+/* Tabbed section */
+.item--tabbed {
+}
+.item--tabbed__tabs {
+  padding:0.5em;
+}
+.item--tabbed__content {
+  padding: 0.5em
+}

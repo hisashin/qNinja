@@ -1,0 +1,39 @@
+
+/* Protocol summary */
+.protocol-summary {
+  font-size: $text_size_s;
+  &__title {
+    font-size: $text_size_m;
+    font-weight:bold;
+    
+  }
+  &__stages {
+    &__stage {
+      
+    }
+  }
+  &__stage-label {
+    display:inline-block;
+    width:6em;
+    font-weight:bold;
+
+  }
+  &__step {
+    display:inline-block;
+    margin-right:1em;
+  }
+  &__step-temp {
+    display:inline-block;
+    width:3.2em;
+    text-align:right;
+  }
+  &__step-duration {
+    display:inline-block;
+    width:3.2em;
+    text-align:right;
+  }
+  &__cycles {
+    display:inline-block;
+    text-align:left;
+  }
+}

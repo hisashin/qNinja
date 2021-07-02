@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="panel panel--experiment-editor">
     <!-- Info section -->
     <section class="section" v-if="experiment">
       <header class="section__header">
@@ -15,23 +15,21 @@
             Save
           </b-button>
         </div>
-        <h2 class="section__header__title" >Summary</h2>
+        <h2 class="section__title" >Summary</h2>
       </header>
       <div class="section__body">
-        <div class="item item--detail-card">
-          <div class="item--detail-card__body">
-            <div class="item--detail-card__body__content">
-              <dl class="labeled_list">
-                <dt class="labeled_list__label">Name</dt>
-                <dd class="labeled_list__content"><input
-                  v-model="experiment.info.name" type="text" style="width:80%"
-                ></dd>
-                <dt class="labeled_list__label">Comment</dt>
-                <dd class="labeled_list__content"><textarea
-                  v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
-                ></textarea></dd>
-              </dl>
-            </div>
+        <div class="item detail-card">
+          <div class="detail-card__body">
+            <dl class="labeled-list">
+              <dt class="labeled-list__label">Name</dt>
+              <dd class="labeled-list__content"><input
+                v-model="experiment.info.name" type="text" style="width:80%"
+              ></dd>
+              <dt class="labeled-list__label">Comment</dt>
+              <dd class="labeled-list__content"><textarea
+                v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
+              ></textarea></dd>
+            </dl>
           </div>
         </div>
       </div>
@@ -52,11 +50,11 @@
             Cancel
           </b-button>
         </div>
-        <h2 class="section__header__title" >Protocol</h2>
+        <h2 class="section__title" >Protocol</h2>
       </header>
       <div class="section__body" v-show="!pickingProtocol">
-        <div class="item item--detail-card">
-          <div class="item--detail-card__body">
+        <div class="item detail-card">
+          <div class="detail-card__body">
             <ProtocolDetail ref="protocolDetail" />
           </div>
         </div>
@@ -75,7 +73,7 @@
             Save
           </b-button>
         </div>
-        <h2 class="section__header__title" >Plate Layout</h2>
+        <h2 class="section__title" >Plate Layout</h2>
       </header>
       <ExperimentConfig ref="experimentConfig" />
     </section>
@@ -83,7 +81,7 @@
     <!-- Raw Log -->
     <section class="section" v-show="isStarted">
       <header class="section__header">
-        <h2 class="section__header__title" >Log and Analysis</h2>
+        <h2 class="section__title" >Log and Analysis</h2>
       </header>
       <div class="section__body ">
         <div class="row">
@@ -183,19 +181,17 @@
     <!-- Analysis -->
     <section class="section" v-show="isStarted">
       <header class="section__header">
-        <h2 class="section__header__title" >Analysis</h2>
+        <h2 class="section__title" >Analysis</h2>
       </header>
       <div class="section__body">
-        <div class="item item--detail-card">
-          <div class="item--detail-card__body">
-            <div class="item--detail-card__body__content">
-              Analysis Config
-              <b-button
-                class="mr-1"
-                @click.stop="updateAnalysis">
-                Update (Debug)
-              </b-button>
-            </div>
+        <div class="item detail-card">
+          <div class="detail-card__body">
+            Analysis Config
+            <b-button
+              class="mr-1"
+              @click.stop="updateAnalysis">
+              Update (Debug)
+            </b-button>
           </div>
         </div>
       </div>

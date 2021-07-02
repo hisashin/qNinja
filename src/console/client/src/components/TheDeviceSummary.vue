@@ -60,12 +60,10 @@ export default {
     appState.pushPanel(appState.PANELS.EXPERIMENT_MONITOR);
     },
     onConnectionOpen: function () {
-      console.log("TheDeviceSummary.onConnectionOpen");
       this.connected = true;
       this.connectionStatus = "Connected";
     },
     onConnectionClose: function () {
-      console.log("TheDeviceSummary.onConnectionOpen");
       this.connected = false;
       this.connectionStatus = "Disconnected";
     

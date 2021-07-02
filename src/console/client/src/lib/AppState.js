@@ -32,6 +32,10 @@ class AppState {
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
+  isKiosk () {
+    
+    return this.isKiosk = location.href.indexOf("kiosk=true")>0;
+  }
   setNavigationHandler (handler) {
     this.navigationHandler = handler;
   }

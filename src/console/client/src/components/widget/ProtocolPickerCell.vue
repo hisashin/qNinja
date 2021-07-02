@@ -1,26 +1,22 @@
 <template>
   <li
-    class="item--list-card__cell item--list-card__cell--item"
+    class="list-card-cell list-card-cell--item"
     @click="select">
-    <div class="protocol-cell-content">
-      <div class="row">
-        <div class="col-12 protocol-summary">
-          <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
-          <ul class="protocol-summary__stages">
-            <li class="protocol-summary__stages__stage"
-              v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
-              <span v-if="stage.type==1" class="protocol-summary__stages__stage__label">Hold</span>
-              <span v-if="stage.type==2" class="protocol-summary__stages__stage__label">PCR</span>
-              <span v-if="stage.type==3" class="protocol-summary__stages__stage__label">Melt Curve</span>
-              <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__stages__stage__step">
-                <span class="protocol-summary__stages__stage__step__temp">{{ step.temp }}℃</span>
-                <span class="protocol-summary__stages__stage__step__duration">{{ step.duration }}sec</span>
-              </span>
-              <span v-if="stage.type==2" class="protocol-summary__stages__stage__cycles">x{{ stage.cycles }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="protocol-summary">
+      <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
+      <ul class="protocol-summary__stages">
+        <li class="protocol-summary__stage"
+          v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
+          <span v-if="stage.type==1" class="protocol-summary__stage-label">Hold</span>
+          <span v-if="stage.type==2" class="protocol-summary__stage-label">PCR</span>
+          <span v-if="stage.type==3" class="protocol-summary__stage-label">Melt Curve</span>
+          <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__step">
+            <span class="protocol-summary__step-temp">{{ step.temp }}℃</span>
+            <span class="protocol-summary__step-duration">{{ step.duration }}sec</span>
+          </span>
+          <span v-if="stage.type==2" class="protocol-summary__cycles">x{{ stage.cycles }}</span>
+        </li>
+      </ul>
     </div>
   </li>
 </template>

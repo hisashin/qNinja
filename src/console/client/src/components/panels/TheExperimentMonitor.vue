@@ -1,9 +1,9 @@
 <template>
-  <div class="panel">
+  <div class="panel panel--experiment-monitor">
     <ProgressMonitor ref="progressMonitor"/>
     <section class="section" v-if="experiment">
       <header class="section__header">
-        <h2 class="section__header__title" >{{ experiment.info.name }}</h2>
+        <h2 class="section__title" >{{ experiment.info.name }}</h2>
         <div class="section__header__menu"></div>
       </header>
       <div class="section__body">

@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="panel panel--protocol-editor">
     <!-- Modal (Select stage type) -->
     <b-modal
       id="add-stage-modal"
@@ -33,12 +33,12 @@
     </b-modal>
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Protocol Editor</h2>
+        <h2 class="section__title" >Protocol Editor</h2>
         <div class="section__header__menu"></div>
       </header>
       <div class="section__body">
         <!-- Variant: Detail card -->
-        <div class="item item--detail-card">
+        <div class="item detail-card">
           <!-- Editor here. -->
           <div class="protocol">
             <div class="protocol__header">
@@ -71,7 +71,7 @@
             <span :class="'validation-label validation__stages'"/>
             <ul class="protocol__stages">
               <template v-for="(stage, index) in protocol.stages" >
-                <li class="protocol__stages__stage-add" :key="index + '_add'">
+                <li class="protocol__stage-add" :key="index + '_add'">
                   <b-button
                     pill
                     @click="openAddStageModal(index)"
@@ -79,9 +79,9 @@
                     Add
                   </b-button>
                 </li>
-                <li class="protocol__stages__stage" :key="index + '_stage'">
+                <li class="protocol__stage" :key="index + '_stage'">
                   <template v-if="stage.type==1">
-                    <h3 class="protocol__stages__stage__title">
+                    <h3 class="protocol__stage__title">
                       Hold Stage
                       <span class="'validation-label validation__stages__' + index"/>
                       <b-button
@@ -96,9 +96,9 @@
                         class="input-cycles"
                       > 
                     </h3>
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    <ul class="protocol__steps">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Hold
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
@@ -116,7 +116,7 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==2 || stage.type==4">
-                    <h3 class="protocol__stages__stage__title">
+                    <h3 class="protocol__stage__title">
                       <span v-if="stage.type==2">
                         qPCR Stage
                         <span :class="'validation-label validation__stages__'+index"/>
@@ -137,9 +137,9 @@
                       type="number"
                       class="input-cycles"
                     > times
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    <ul class="protocol__steps">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/><input
@@ -166,8 +166,8 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Annealing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
@@ -195,8 +195,8 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Extending
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
@@ -227,7 +227,7 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==3">
-                    <h3 class="protocol__stages__stage__title">
+                    <h3 class="protocol__stage__title">
                       Melt Curve Stage
                       <span :class="'validation-label validation__stages__'+index"/>
                       <b-button
@@ -243,9 +243,9 @@
                         class="input-cycles"
                       > 
                     </h3>
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    <ul class="protocol__steps">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
@@ -265,8 +265,8 @@
                         >℃/sec
                         
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Cooling
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
@@ -285,8 +285,8 @@
                           class="input-speed" type="number" step="1"
                         >℃/sec
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol__steps__step">
+                        <div class="protocol__steps__step__label">
                           Melting
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
@@ -309,13 +309,13 @@
                       </li>
                     </ul>
                   </template>
-                  <div class="protocol__stages__stage__footer">
+                  <div class="protocol__stage__footer">
                     <span :class="'validation-label validation__stages__'+index+'__pause_after'"/>
                     <label><input type="checkbox" v-model="stage.pause_after" v-on:change="onChangeProtocol()">Pause after the stage</label>
                   </div>
                 </li>
               </template>
-              <li class="protocol__stages__stage-add">
+              <li class="protocol__stage-add">
                 <b-button
                   pill
                   @click="openAddStageModal(protocol.stages.length)"
@@ -323,7 +323,7 @@
                   Add
                 </b-button>
               </li>
-              <li class="protocol__stages__stage">
+              <li class="protocol__stage">
                 <!-- Footer empty cell -->
               </li>
             </ul>

@@ -5,7 +5,7 @@
       <ul class="item item--list-card">
         <template v-for="(item, index) in protocols"
         >
-          <li class="item--list-card__cell item--list-card__cell--item"
+          <li class="list-card-cell list-card-cell--item"
             :key="index">
             <ProtocolPickerCell
               v-if="index < limit"
@@ -15,7 +15,7 @@
             />
           </li>
         </template>
-        <li v-if="error" class="item--list-card__cell item--list-card__cell--error">
+        <li v-if="error" class="list-card-cell list-card-cell--error">
           <div class="error">
             <h2 class="error__title">Failed to load protocols.</h2>
             <div class="error__retry">

@@ -173,7 +173,6 @@ class NinjaQPCRHTTPServer {
       const origin = req.headers.origin;
       const HOST_REGEX = new RegExp("http:\\\/\\\/localhost(:[0-9]+)?");
       if (origin && HOST_REGEX.test(origin)) {
-        console.log("User port", RegExp.$1)
         corsAllow = origin;
       } else {
         corsAllow = 'http://' + clientHost;

@@ -159,7 +159,6 @@ export default {
     this.deviceState = device.getDeviceState();
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
-        console.log("ProgressMonitor.onDeviceStateChange");
         if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
           console.log("Show modal.");
           this.$bvModal.show('finish-modal');
@@ -168,7 +167,6 @@ export default {
       },
       onUpdateProtocol: (protocol)=>{
         this.protocol = protocol;
-        console.log("ProgressMonitor.onUpdateProtocol");
       }
     });
   },

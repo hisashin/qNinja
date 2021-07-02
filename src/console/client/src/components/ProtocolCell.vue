@@ -1,41 +1,39 @@
 <template>
-  <li
-    class="item--list-card__cell item--list-card__cell--item"
-    @click="revealDetail">
-    <div class="protocol-cell-content">
-      <div class="row">
-        <div class="col-8 protocol-summary">
-          <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
-          <ul class="protocol-summary__stages">
-            <li class="protocol-summary__stages__stage"
-              v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
-              <span v-if="stage.type==1" class="protocol-summary__stages__stage__label">Hold</span>
-              <span v-if="stage.type==2" class="protocol-summary__stages__stage__label">PCR</span>
-              <span v-if="stage.type==3" class="protocol-summary__stages__stage__label">Melt Curve</span>
-              <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__stages__stage__step">
-                <span class="protocol-summary__stages__stage__step__temp">{{ step.temp }}℃</span>
-                <span class="protocol-summary__stages__stage__step__duration">{{ step.duration }}sec</span>
-              </span>
-              <span v-if="stage.type==2" class="protocol-summary__stages__stage__cycles">x{{ stage.cycles }}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="col-4 text-right">
-          <button @click.stop="deleteIt" class="btn btn-outline-danger btn-sm">
-            Delete
-          </button>
-          <button
-            @click.stop="edit" class="ml-1 btn btn-outline-secondary btn-sm">
-            Edit
-          </button>
-          <button
-            class="ml-1 btn btn-outline-primary btn-sm"
-            v-bind:disabled="deviceState==null || !deviceState.startAvailable"
-            @click.stop="run"
-          >
-            Run
-          </button>
-        </div>
+  <li @click="revealDetail"
+    class="list-card-cell list-card-cell--item"
+    >
+    <div class="row">
+      <div class="col-8 protocol-summary">
+        <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
+        <ul class="protocol-summary__stages">
+          <li class="protocol-summary__stage"
+            v-for="(stage, stageIndex) in protocol.stages" :key="stageIndex">
+            <span v-if="stage.type==1" class="protocol-summary__stage-label">Hold</span>
+            <span v-if="stage.type==2" class="protocol-summary__stage-label">PCR</span>
+            <span v-if="stage.type==3" class="protocol-summary__stage-label">Melt Curve</span>
+            <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__step">
+              <span class="protocol-summary__step-temp">{{ step.temp }}℃</span>
+              <span class="protocol-summary__step-duration">{{ step.duration }}sec</span>
+            </span>
+            <span v-if="stage.type==2" class="protocol-summary__cycles">x{{ stage.cycles }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-4 text-right">
+        <button @click.stop="deleteIt" class="btn btn-outline-danger btn-sm">
+          Delete
+        </button>
+        <button
+          @click.stop="edit" class="ml-1 btn btn-outline-secondary btn-sm">
+          Edit
+        </button>
+        <button
+          class="ml-1 btn btn-outline-primary btn-sm"
+          v-bind:disabled="deviceState==null || !deviceState.startAvailable"
+          @click.stop="run"
+        >
+          Run
+        </button>
       </div>
     </div>
   </li>
@@ -84,7 +82,6 @@ export default {
     },
     onDeviceStateChange: function (deviceState) {
       this.deviceState = deviceState;
-      console.log("DeviceState=" + JSON.stringify(this.deviceState));
     }
   }
 }

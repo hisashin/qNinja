@@ -1,0 +1,14 @@
+@import 'var-app.scss';
+
+@import 'style.scss';
+@import 'blocks/header.scss';
+@import 'blocks/protocol.scss';
+@import 'blocks/protocol-summary.scss';
+@import 'blocks/outline.scss';
+body {
+}
+
+.main {
+  max-width: 800px;
+  margin: auto;
+}

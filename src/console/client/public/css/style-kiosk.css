@@ -1,0 +1,384 @@
+/* Common style */
+#app {
+  color: #2c3e50;
+  margin: auto;
+}
+
+/* Reset */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #42b983;
+}
+
+.footer {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Layout params of top-level blocks */
+.header, .device-monitor, .panel-nav {
+  margin-bottom: 1.5rem;
+}
+
+/* Common list view */
+.progress-meter {
+  display: flex;
+}
+
+.progress-meter-item {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  text-align: center;
+  padding: 0.2em;
+  margin: 0.1em;
+  width: 100%;
+}
+
+.progress-meter-item-current {
+  text-align: center;
+  padding: 0.2em;
+  margin: 0.1em;
+  width: 100%;
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+/* Input fields */
+.input-cycles {
+  width: 80px;
+}
+
+.input-temp {
+  width: 80px;
+}
+
+.input-duration {
+  width: 80px;
+}
+
+.input-speed {
+  width: 80px;
+}
+
+/* List pagination */
+.paging {
+  padding: 1em 0;
+  text-align: center;
+}
+
+.paging__pages {
+  padding: 0;
+  margin: 0;
+}
+
+.paging__pages__page {
+  display: inline-block;
+}
+
+.paging__pages__page__label {
+  margin: 0 0.2em;
+  border: 1px solid #aaa;
+  padding: 0.2em 0.6em;
+  border-radius: 0.2em;
+}
+
+.paging__pages__page__label--linked {
+  background-color: #fff;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.paging__pages__page__label--current {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+/* Error in card view */
+.error {
+  text-align: center;
+  padding: 2em 0;
+}
+
+.error__title {
+  color: #666;
+  font-weight: normal;
+}
+
+.validation-label {
+  position: relative;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.validation-label__content {
+  position: absolute;
+  background-color: pink;
+  border-radius: 0.3em;
+  font-size: 0.75em;
+  padding: 0.2em 1em;
+  line-height: 120%;
+  white-space: nowrap;
+  left: 0;
+  top: 100%;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.well_selected {
+  background-color: pink;
+}
+
+.well_available {
+  background-color: white;
+}
+
+.well_unavailable {
+  background-color: gray;
+}
+
+.pcr_table {
+  border-collapse: collapse;
+}
+
+.pcr_table td, .pcr_table th {
+  border: 1px solid #888;
+}
+
+.labeled-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.labeled-list__label {
+  flex-basis: 20%;
+  flex-grow: 1;
+}
+
+.labeled-list__content {
+  flex-basis: 80%;
+  flex-grow: 4;
+}
+
+/* Frame */
+.header {
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+  padding: 0.4em 0;
+}
+.header__content {
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+.header__title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5rem;
+  flex-grow: 1;
+}
+.header__device {
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* Protocol detail & editor view */
+.protocol__header {
+  padding: 1em;
+}
+.protocol__header__name {
+  font-size: 1.5rem;
+}
+.protocol__stage {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1em;
+}
+
+.protocol__stage-add {
+  text-align: right;
+  height: 38px;
+  margin-top: -19px;
+  margin-bottom: -19px;
+  z-index: 2;
+  padding-right: 1em;
+}
+
+.protocol__stage__title {
+  font-size: 1.45rem;
+}
+
+.protocol__steps__step__label {
+  display: inline-block;
+  width: 100px;
+}
+
+.protocol__steps__step__value {
+  display: inline-block;
+  width: auto;
+}
+
+.protocol__stage__footer {
+  padding: 0.2em 0;
+}
+
+.protocol-footer {
+  padding: 1em;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Protocol summary */
+.protocol-summary {
+  font-size: 0.9rem;
+}
+.protocol-summary__title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.protocol-summary__stage-label {
+  display: inline-block;
+  width: 6em;
+  font-weight: bold;
+}
+.protocol-summary__step {
+  display: inline-block;
+  margin-right: 1em;
+}
+.protocol-summary__step-temp {
+  display: inline-block;
+  width: 3.2em;
+  text-align: right;
+}
+.protocol-summary__step-duration {
+  display: inline-block;
+  width: 3.2em;
+  text-align: right;
+}
+.protocol-summary__cycles {
+  display: inline-block;
+  text-align: left;
+}
+
+/*
+html
+  header.header
+    Title etc.
+  main.main // limit maxwidth
+    div.device-monitor
+      // Device monitor
+    nav.panel-nav
+    div.panel
+      [section.section]
+        header.section__header
+          h2.section__title
+          (div.section__header__menu)
+        div.section__nav--top
+          // Search, sort etc.
+        div.section__body
+          div.section__body__item--*
+        div.section__nav--bottom
+          // Pagination etc.
+  footer.footer
+    Contact, help etc.
+*/
+/* Layout params of secondary-level blocks */
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section__header:not(:last-child),
+.section__nav:not(:last-child),
+.section__body:not(:last-child),
+.section__body__item:not(:last-child) {
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+.section__title {
+  font-size: 1.2rem;
+}
+
+.section__header__menu {
+  float: right;
+}
+
+/* Inside section__body */
+/* Item variants */
+/* Item variant: List card */
+.list-card-cell {
+  padding: 0.5rem;
+}
+.list-card-cell:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+.list-card-cell__title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Item variant: Detail card */
+.item--detail-card__body__content {
+  padding: 1em;
+}
+
+/* Item variant: Text paragraph */
+/* Card styles */
+.item--list-card, .item--detail-card, .item--tabbed {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+/* Tabbed section */
+.item--tabbed__tabs {
+  padding: 0.5em;
+}
+
+.item--tabbed__content {
+  padding: 0.5em;
+}
+
+/* Layout variant for RPi kiosk */
+body {
+  width: 800px;
+}
+
+.main {
+  max-width: 100%;
+}
+
+.header {
+  display: none;
+}
+
+/* Panel */
+.panel {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Layout of individual panels */
+.section {
+  padding: 1em;
+  width: 100%;
+}
+.section--dashboard {
+  flex-grow: 1;
+}
+.section--dashboard-protocols {
+  width: 50%;
+}
+.section--dashboard-experiments {
+  width: 50%;
+}
+
+/*# sourceMappingURL=style-kiosk.css.map */
