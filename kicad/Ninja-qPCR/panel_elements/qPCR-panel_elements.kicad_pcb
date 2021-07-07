@@ -2,8 +2,8 @@
 
   (general
     (thickness 1.6)
-    (drawings 15)
-    (tracks 1)
+    (drawings 16)
+    (tracks 0)
     (zones 0)
     (modules 0)
     (nets 1)
@@ -199,6 +199,7 @@
     (uvia_drill 0.1)
   )
 
+  (gr_circle (center 76.4 52.5) (end 76.875 52.5) (layer Edge.Cuts) (width 0.1))
   (gr_circle (center 76.4 52.5) (end 76.8 52.5) (layer F.Mask) (width 0.475) (tstamp 60DAF743))
   (gr_text 5mm (at 76.8 48.4) (layer Dwgs.User) (tstamp 60DA928D)
     (effects (font (size 1 1) (thickness 0.15)))
@@ -218,7 +219,5 @@
   (gr_text "GAP\n1.6mm" (at 83.8 54) (layer Dwgs.User) (tstamp 6087E746)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-
-  (via (at 76.4 52.5) (size 1.2) (drill 0.95) (layers F.Cu B.Cu) (net 0))
 
 )

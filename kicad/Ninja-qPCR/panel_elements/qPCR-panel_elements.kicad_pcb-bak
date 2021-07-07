@@ -2,8 +2,8 @@
 
   (general
     (thickness 1.6)
-    (drawings 16)
-    (tracks 0)
+    (drawings 15)
+    (tracks 1)
     (zones 0)
     (modules 0)
     (nets 1)
@@ -218,6 +218,7 @@
   (gr_text "GAP\n1.6mm" (at 83.8 54) (layer Dwgs.User) (tstamp 6087E746)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-  (target x (at 76.4 52.5) (size 0.95) (width 0.2) (layer Edge.Cuts) (tstamp 60886528))
+
+  (via (at 76.4 52.5) (size 1.2) (drill 0.95) (layers F.Cu B.Cu) (net 0))
 
 )
