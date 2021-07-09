@@ -437,6 +437,7 @@ export default {
         this.protocol.stages.splice(index, 1);
       }
     },
+    title () { return "Protocol Editor" },
     addStage(stage) {
       this.protocol.stages.splice(this.addStagePosition, 0, stage);
       this.onChangeProtocol();

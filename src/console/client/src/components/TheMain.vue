@@ -4,14 +4,29 @@
       <div class="header__content">
         <h1 class="header__title">Ninja qPCR</h1>
         <!-- Device monitor -->
-        <div class="header__device">
-          <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
+          <div class="header__device">
+          <span>
+            Device: {{ connectionStatus }}
+          </span>
+          <!-- Network -->
+          <button
+            v-show="!connected"
+            
+            class="btn btn-link"
+            @click="reConnect"
+          >
+            Connect
+          </button>
         </div>
       </div>
     </header>
     <main class="main">
+        <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
       <nav class="panel-nav">
         <BackButton v-show="backEnabled" />
+        <h2 class="panel-nav__title">
+          {{ panelTitle }}
+        </h2>
       </nav>
       <!-- Panels -->
       <TheDashboard ref="panelDashboard" v-show="selectedPanel==panels.DASHBOARD" />
@@ -24,15 +39,15 @@
       <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
       <div>
       (Dev)
-        <b-button class="mr-1"
+        <b-button class="mr-1 btn-sm"
           @click.stop="showTemplate">
           Panel Template
         </b-button>
-        <b-button class="mr-1"
+        <b-button class="mr-1 btn-sm"
           @click.stop="home">
           Home
         </b-button>
-        <b-button class="mr-1"
+        <b-button class="mr-1 btn-sm"
           @click.stop="ping">
           Ping
         </b-button>
@@ -86,11 +101,16 @@ export default {
       status:DEVICE_STATUS_IDLE,
       panels:appState.PANELS,
       selectedPanel:appState.PANELS.DASHBOARD,
-      backEnabled: false
+      backEnabled: false,
+      panelTitle: "",
+      connectionStatus: "Disconnected",
+      connected: false
     }
   },
   created: function () {
     appState.setPanelContainer(this);
+    this.connected = device.connected;
+    device.addConnectionEventHandler(this);
     device.addTransitionHandler({
       onStart: (obj)=>{
         console.log("Experiment started.");
@@ -117,8 +137,14 @@ export default {
   
   },
   methods: {
-    presentPanel(panel) {
+    reConnect: function () {
+      console.log("reConnect");
+      device.connect();
+    },
+    presentPanel(panel, toPanel) {
       this.selectedPanel = panel;
+      console.log(toPanel)
+      this.panelTitle = (toPanel.title) ? toPanel.title() : "N/A";
     },
     showTemplate () {
       appState.pushPanel(appState.PANELS.TEMPLATE);
@@ -129,7 +155,16 @@ export default {
     },
     ping () {
       device.ping();
-    }
+    },
+    onConnectionOpen: function () {
+      this.connected = true;
+      this.connectionStatus = "Connected";
+    },
+    onConnectionClose: function () {
+      this.connected = false;
+      this.connectionStatus = "Disconnected";
+    
+    },
   }
 }
 </script>

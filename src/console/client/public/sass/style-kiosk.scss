@@ -5,9 +5,12 @@
 @import 'blocks/protocol.scss';
 @import 'blocks/protocol-summary.scss';
 @import 'blocks/outline.scss';
+@import 'blocks/experiment-monitor.scss';
 /* Layout variant for RPi kiosk */
 body {
   width:800px;
+  background-image: url("../img/LCD_800x480.png"); /* RPi LCD size checker */
+  background-repeat: no-repeat;
 }
 .main {
   max-width: 100%;
@@ -35,4 +38,18 @@ body {
       width: 50%;
     }
   }
+}
+.protocol-summary__menu {
+  display:none;
+}
+
+.device-summary {
+  width:800px;
+  z-index:999;
+  position:absolute;
+  bottom:0;
+  /* background-color:#fed; */
+  background-color: #ffffff;
+  border-radius: 1em;
+  border: 1px solid #aaa;
 }

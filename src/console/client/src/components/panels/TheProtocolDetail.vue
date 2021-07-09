@@ -61,6 +61,7 @@ export default {
     },
     onAppear () {
     },
+    title () { return "Protocol Detail" },
     run: function(id) {
       appState.draftExperimentWithProtocol(this.pid);
     },

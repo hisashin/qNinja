@@ -82,6 +82,7 @@ export default {
   methods: {
     updateMeltCurve:  function () {
     },
+    title () { return "Experiment Monitor" },
     onFluorescenceUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
       this.$refs.amplificationChart.add(data);

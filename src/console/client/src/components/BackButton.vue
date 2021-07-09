@@ -1,12 +1,8 @@
 <template>
-  <div class="my-1">
-    <b-button
-      variant="primary"
+    <button
       @click="back"
-    >
-      Back
-    </b-button>
-  </div>
+      class="panel-nav__back"
+    ></button>
 </template>
 <script>
 import appState from "../lib/AppState.js";

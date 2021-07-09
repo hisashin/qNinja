@@ -1,25 +1,24 @@
 <template>
   <div class="panel panel--experiment-editor">
-    <!-- Info section -->
-    <section class="section" v-if="experiment">
-      <header class="section__header">
-        <div class="section__header__menu">
-          <b-button v-show="isStarted"
-            class="ml-1"
-            @click.stop="deleteIt">
-            Delete
-          </b-button>
-          <b-button v-show="isStarted"
-            class="ml-1"
-            @click.stop="updateInfo">
-            Save
-          </b-button>
-        </div>
-        <h2 class="section__title" >Summary</h2>
-      </header>
-      <div class="section__body">
-        <div class="item detail-card">
-          <div class="detail-card__body">
+    <b-tabs content-class="tab-content" nav-wrapper-class="fuga" class="tabs tabs--primary">
+      <b-tab title="Summary" active>
+        <!-- Info section -->
+        <section class="tab-content__section" v-if="experiment">
+          <header class="tab-content__header">
+            <div class="tab-content__header-menu">
+              <b-button v-show="isStarted"
+                class="ml-1"
+                @click.stop="deleteIt">
+                Delete
+              </b-button>
+              <b-button v-show="isStarted"
+                class="ml-1"
+                @click.stop="updateInfo">
+                Save
+              </b-button>
+            </div>
+          </header>
+          <div class="tab-content__body">
             <dl class="labeled-list">
               <dt class="labeled-list__label">Name</dt>
               <dd class="labeled-list__content"><input
@@ -31,158 +30,162 @@
               ></textarea></dd>
             </dl>
           </div>
-        </div>
-      </div>
-    </section>
-    <!-- Protocol Section -->
-    <section class="section">
-      <header class="section__header">
-        <div class="section__header__menu">
-          <b-button v-show="!pickingProtocol && !isStarted"
-            class="ml-1"
-            @click.stop="pickProtocol">
-            Select protocol
-          </b-button>
-          
-          <b-button v-show="pickingProtocol"
-            class="ml-1"
-            @click.stop="cancelPickProtocol">
-            Cancel
-          </b-button>
-        </div>
-        <h2 class="section__title" >Protocol</h2>
-      </header>
-      <div class="section__body" v-show="!pickingProtocol">
-        <div class="item detail-card">
-          <div class="detail-card__body">
-            <ProtocolDetail ref="protocolDetail" />
-          </div>
-        </div>
-      </div>
-      <!-- Protocol Picker -->
-      <ProtocolPicker v-show="pickingProtocol" ref="protocolPicker" :limit="2" :pagination="true" @select="onPickProtocol" />
-    </section>
-    
-    <!-- Config Section  -->
-    <section class="section">
-      <header class="section__header">
-        <div class="section__header__menu">
-          <b-button v-show="isStarted"
-            class="ml-1"
-            @click.stop="updateConfig">
-            Save
-          </b-button>
-        </div>
-        <h2 class="section__title" >Plate Layout</h2>
-      </header>
-      <ExperimentConfig ref="experimentConfig" />
-    </section>
-    
-    <!-- Raw Log -->
-    <section class="section" v-show="isStarted">
-      <header class="section__header">
-        <h2 class="section__title" >Log and Analysis</h2>
-      </header>
-      <div class="section__body ">
-        <div class="row">
-          <div class="col-12">
-            <!-- Raw log tabs -->
-            <div class="item item--tabbed">
-              <b-tabs pills nav-wrapper-class="item--tabbed__tabs">
-                <b-tab @click="onSelectTabAmp()"
-                  title="Amplification"
-                  active>
-                  <div class="item--tabbed__content">
-                    <div class="item--tabbed__content__main" id="tabAmpMain">
-                      <AmplificationChart ref="amplificationChart" />
-                      <div>
-                        TODO Baseline conf / manual
-                      </div>
-                      <div>
-                        TODO Threshold conf / manual
-                      </div>
-                      Export <button  class="btn btn-link" @click.stop="exportExperiment('qpcr')" >JSON</button> / 
-                      <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
-                    </div>
-                    <div class="item--tabbed__content__side" id="tabAmpSide">
-                      <table class="pcr_table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
-                        <tr>
-                          <th>Well</th>
-                          <th>A</th>
-                          <template v-for="channel of experiment.hardware.channels.count">
-                            <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
-                            <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
-                            <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
-                            <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
-                            <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
-                            <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
-                          </template>
-                        </tr>
-                        <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
-                          <td>{{ wellLabel }}</td>
-                          <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
-                            &nbsp;
-                          </td>
-                          <template v-for="channel of experiment.hardware.channels.count">
-                            <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
-                            <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
-                            <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
-                            <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
-                            <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-                            <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
-                          </template>
-                        </tr>
-                      </table>
-                      
-                    </div>
-                  </div>
-                </b-tab>
-                <b-tab title="Melt curve" @click="onSelectTabMelt()">
-                  <div class="item--tabbed__content">
-                    <div class="item--tabbed__content__main" ref="tabMeltMain">
-                      <MeltCurveChart ref="meltCurveChart" />
-                      Export <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve')" >JSON</button> / 
-                      <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve','csv')" >CSV</button>
-                    </div>
-                    <div class="item--tabbed__content__side" id="tabMeltSide">
-                      
-                    </div>
-                  </div>
-                </b-tab>
-                <b-tab title="Standard curve" @click="onSelectTabStdCurve()">
-                  <div class="item--tabbed__content">
-                    <div class="item--tabbed__content__main" ref="tabStdCurveMain">
-                      <StandardCurveChart ref="standardCurveChart" />
-                    </div>
-                    <div class="item--tabbed__content__side" id="tabStdCurveSide">
-                      
-                    </div>
-                  </div>
-                </b-tab>
-                <b-tab title="Temperature" @click="onSelectTabTemperature()">
-                  <div class="item--tabbed__content">
-                    <div class="item--tabbed__content__main" ref="tabTemperatureMain">
-                      <TemperatureChart ref="temperatureChart" />
-                      Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
-                      <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
-                    </div>
-                    <div class="item--tabbed__content__side" id="tabTemperatureSide">
-                      
-                    </div>
-                  </div>
-                </b-tab>
-              </b-tabs>
+        </section>
+      </b-tab>
+      <b-tab title="Protocol">
+        <!-- Protocol Section -->
+        <section class="tab-content__section">
+          <header class="tab-content__header">
+            <div class="tab-content__header-menu">
+              <b-button v-show="!pickingProtocol && !isStarted"
+                class="ml-1"
+                @click.stop="pickProtocol">
+                Select protocol
+              </b-button>
+              
+              <b-button v-show="pickingProtocol"
+                class="ml-1"
+                @click.stop="cancelPickProtocol">
+                Cancel
+              </b-button>
+            </div>
+          </header>
+          <div class="tab-content__body" v-show="!pickingProtocol">
+            <div class="item detail-card">
+              <div class="detail-card__body">
+                <ProtocolDetail ref="protocolDetail" />
+              </div>
             </div>
           </div>
-          <ColorPicker ref="colorPicker" />
-        </div>
-      </div>
-    </section>
+          <!-- Protocol Picker -->
+          <ProtocolPicker v-show="pickingProtocol" ref="protocolPicker" :limit="2" :pagination="true" @select="onPickProtocol" />
+        </section>
+      </b-tab>
+      <b-tab title="Plate layout">
+        <!-- Config Section  -->
+        <section class="tab-content__section">
+          <header class="tab-content__header">
+            <div class="tab-content__header-menu">
+              <b-button v-show="isStarted"
+                class="ml-1"
+                @click.stop="updateConfig">
+                Save
+              </b-button>
+            </div>
+          </header>
+          <div class="tab-content__body ">
+            <ExperimentConfig ref="experimentConfig" />
+          </div>
+        </section>
+      </b-tab>
+      <b-tab title="Log and Analysis"
+      >
+        <!-- Raw Log -->
+        <section class="tab-content__section" v-show="isStarted">
+          <header class="tab-content__header">
+          </header>
+          <div class="tab-content__body ">
+            <div class="row">
+              <div class="col-12">
+                <!-- Raw log tabs -->
+                <div class="item item--tabbed">
+                  <b-tabs pills nav-wrapper-class="item--tabbed__tabs" class="tabs tabs--secondary">
+                    <b-tab @click="onSelectTabAmp()"
+                      title="Amplification"
+                      active>
+                      <div class="item--tabbed__content">
+                        <div class="item--tabbed__content__main" id="tabAmpMain">
+                          <AmplificationChart ref="amplificationChart" />
+                          <div>
+                            TODO Baseline conf / manual
+                          </div>
+                          <div>
+                            TODO Threshold conf / manual
+                          </div>
+                          Export <button  class="btn btn-link" @click.stop="exportExperiment('qpcr')" >JSON</button> / 
+                          <button  class="btn btn-link" @click.stop="exportExperiment('qpcr','csv')" >CSV</button>
+                        </div>
+                        <div class="item--tabbed__content__side" id="tabAmpSide">
+                          <table class="pcr-table" v-if="experiment && experiment.analysis && experiment.analysis.is_valid" id="analysisTable">
+                            <tr>
+                              <th>Well</th>
+                              <th>A</th>
+                              <template v-for="channel of experiment.hardware.channels.count">
+                                <th :key="`b-${channel}`" v-show="selectedTab==TAB_AMP">Baseline {{ channel }}</th>
+                                <th :key="`t-${channel}`" v-show="selectedTab==TAB_AMP">Threshold {{ channel }}</th>
+                                <th :key="`c-${channel}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">Ct {{ channel }}</th>
+                                <th :key="`q-${channel}`" v-show="selectedTab==TAB_STD_CURVE">Qty {{ channel }}</th>
+                                <th :key="`tm1-${channel}`" v-show="selectedTab==TAB_MELT">Tm1 {{ channel }}</th>
+                                <th :key="`tm2-${channel}`" v-show="selectedTab==TAB_MELT">Tm2 {{ channel }}</th>
+                              </template>
+                            </tr>
+                            <tr v-for="(wellLabel, wellIndex) of experiment.hardware.wells.names" :key="wellIndex">
+                              <td>{{ wellLabel }}</td>
+                              <td :key="`a-${wellIndex}`" v-bind:style="{backgroundColor:well_appearance[wellIndex].c}" @click="openColorPicker(wellIndex)">
+                                &nbsp;
+                              </td>
+                              <template v-for="channel of experiment.hardware.channels.count">
+                                <td :key="`b-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.baseline[channel-1][wellIndex], 1) }}</td>
+                                <td :key="`t-${channel}-${wellIndex}`" v-show="selectedTab==TAB_AMP">{{ round(experiment.analysis.threshold[channel-1][wellIndex], 1) }}</td>
+                                <td :key="`c-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE || selectedTab==TAB_AMP">{{ round(experiment.analysis.ct[channel-1][wellIndex], 1) }}</td>
+                                <td :key="`q-${channel}-${wellIndex}`" v-show="selectedTab==TAB_STD_CURVE">{{ round(experiment.analysis.quantity[channel-1][wellIndex], 1) }}</td>
+                                <td :key="`tm1-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                                <td :key="`tm2-${channel}-${wellIndex}`" v-show="selectedTab==TAB_MELT">-</td>
+                              </template>
+                            </tr>
+                          </table>
+                          
+                        </div>
+                      </div>
+                    </b-tab>
+                    <b-tab title="Melt curve" @click="onSelectTabMelt()">
+                      <div class="item--tabbed__content">
+                        <div class="item--tabbed__content__main" ref="tabMeltMain">
+                          <MeltCurveChart ref="meltCurveChart" />
+                          Export <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve')" >JSON</button> / 
+                          <button  class="btn btn-link" @click.stop="exportExperiment('melt_curve','csv')" >CSV</button>
+                        </div>
+                        <div class="item--tabbed__content__side" id="tabMeltSide">
+                          
+                        </div>
+                      </div>
+                    </b-tab>
+                    <b-tab title="Standard curve" @click="onSelectTabStdCurve()">
+                      <div class="item--tabbed__content">
+                        <div class="item--tabbed__content__main" ref="tabStdCurveMain">
+                          <StandardCurveChart ref="standardCurveChart" />
+                        </div>
+                        <div class="item--tabbed__content__side" id="tabStdCurveSide">
+                          
+                        </div>
+                      </div>
+                    </b-tab>
+                    <b-tab title="Temperature" @click="onSelectTabTemperature()">
+                      <div class="item--tabbed__content">
+                        <div class="item--tabbed__content__main" ref="tabTemperatureMain">
+                          <TemperatureChart ref="temperatureChart" />
+                          Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
+                          <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
+                        </div>
+                        <div class="item--tabbed__content__side" id="tabTemperatureSide">
+                          
+                        </div>
+                      </div>
+                    </b-tab>
+                  </b-tabs>
+                </div>
+              </div>
+              <ColorPicker ref="colorPicker" />
+            </div>
+          </div>
+        </section>
+      
+      </b-tab>
+    </b-tabs>
+    
+
     <!-- Analysis -->
     <section class="section" v-show="isStarted">
-      <header class="section__header">
-        <h2 class="section__title" >Analysis</h2>
-      </header>
       <div class="section__body">
         <div class="item detail-card">
           <div class="detail-card__body">
@@ -197,7 +200,7 @@
       </div>
     </section>
     
-    <!-- Analysis section -->
+    <!-- Menu section -->
     <div>
       <b-button
         v-if="!isStarted"
@@ -270,6 +273,7 @@ export default {
   
   },
   methods: {
+    title () { return "Experiment Detail" },
     saveAndRun () {
       this.isEditing = false;
       this.experiment.config = this.$refs.experimentConfig.config;

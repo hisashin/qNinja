@@ -147,7 +147,7 @@ class Plate  {
     // console.log("OUTLOG\t" + timestamp/1000 + "\t" + this.blocks.map((block)=>{return block.outputValue}).join("\t"));
   }
   getTemperature () {
-    return this.temperature();
+    return this.temperature;
   }
   // Private
   resetSyncTime () {

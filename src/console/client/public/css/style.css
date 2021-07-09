@@ -17,7 +17,7 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: #007bff;
 }
 
 .footer {
@@ -167,6 +167,11 @@ a {
 .labeled-list__content {
   flex-basis: 80%;
   flex-grow: 4;
+}
+
+/* device-summary */
+.device-summary {
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -2,7 +2,6 @@
   <div class="panel panel--protocol-list">
     <section class="section">
       <header class="section__header">
-        <h2 class="section__title" >Protocols</h2>
         <div class="section__header__menu">
           <b-button @click="startCreateProtocol">
             New Protocol
@@ -59,6 +58,7 @@ export default {
     onAppear () {
       this.$refs.protocolList.load();
     },
+    title () { return "Protocols" },
     onOrderChanged () {
       this.$refs.protocolList.setOrder(this.order);
     },

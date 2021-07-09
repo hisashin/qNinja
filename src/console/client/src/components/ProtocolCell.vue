@@ -2,8 +2,8 @@
   <li @click="revealDetail"
     class="list-card-cell list-card-cell--item"
     >
-    <div class="row">
-      <div class="col-8 protocol-summary">
+    <div class="protocol-summary">
+      <div class="protocol-summary__view">
         <h3 class="protocol-summary__title">{{ protocol.name }}</h3>
         <ul class="protocol-summary__stages">
           <li class="protocol-summary__stage"
@@ -13,13 +13,13 @@
             <span v-if="stage.type==3" class="protocol-summary__stage-label">Melt Curve</span>
             <span v-for="(step, stepIndex) in stage.steps" :key="stepIndex" class="protocol-summary__step">
               <span class="protocol-summary__step-temp">{{ step.temp }}℃</span>
-              <span class="protocol-summary__step-duration">{{ step.duration }}sec</span>
+              <span class="protocol-summary__step-duration">{{ step.duration }}s</span>
             </span>
             <span v-if="stage.type==2" class="protocol-summary__cycles">x{{ stage.cycles }}</span>
           </li>
         </ul>
       </div>
-      <div class="col-4 text-right">
+      <div class="protocol-summary__menu">
         <button @click.stop="deleteIt" class="btn btn-outline-danger btn-sm">
           Delete
         </button>

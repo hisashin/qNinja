@@ -2,7 +2,6 @@
   <div class="panel panel--experiment-list">
     <section class="section">
       <header class="section__header">
-        <h2 class="section__title" >Experiments</h2>
         <div class="section__header__menu">
           <b-button @click="startCreateExperiment">
             New Experiment
@@ -67,6 +66,7 @@ export default {
     onAppear () {
       this.$refs.experimentList.load();
     },
+    title () { return "Experiment Logs" },
     onOrderChanged () {
       this.$refs.experimentList.setOrder(this.order);
     },

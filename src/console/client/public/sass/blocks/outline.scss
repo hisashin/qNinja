@@ -36,6 +36,21 @@ html
 .panel {
 }
 .panel-nav {
+  &__back {
+    display: inline-block;
+    background-image: url("../img/back.svg");
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 22px;
+    border: none;
+    background-size: 14px 20px;
+    background-color: #ffffff;
+    background-position:center;
+  }
+  &__title {
+    display: inline-block;
+    font-size: 1.2em;
+  }
 }
 .section {
 }
@@ -117,7 +132,7 @@ html
 
 }
 /* Card styles */
-.item--list-card, .item--detail-card, .item--tabbed {
+.item--list-card, .item--detail-card, .item--tabbed,.detail-card {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
 }
@@ -130,4 +145,24 @@ html
 }
 .item--tabbed__content {
   padding: 0.5em
+}
+.tabs {
+  width:100%;
+  &--primary {
+    
+  }
+  &--secondary {
+    
+  }
+}
+.tab-content {
+  &__header {
+    
+  }
+  &__header-menu {
+    
+  }
+  &__body {
+    padding:$box_padding;
+  }
 }
