@@ -27,7 +27,7 @@ a {
 
 /* Layout params of top-level blocks */
 .header, .device-monitor, .panel-nav {
-  margin-bottom: 1.5rem;
+  /* margin-bottom:1.5rem; */
 }
 
 /* Common list view */
@@ -61,13 +61,25 @@ a {
 .input-temp {
   width: 80px;
 }
+.input-temp--2 {
+  width: 3em;
+}
+.input-temp--3 {
+  width: 4em;
+}
 
 .input-duration {
   width: 80px;
 }
+.input-duration--2 {
+  width: 3em;
+}
+.input-duration--3 {
+  width: 4em;
+}
 
 .input-speed {
-  width: 80px;
+  width: 5em;
 }
 
 /* List pagination */
@@ -178,6 +190,7 @@ a {
 .header {
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
   padding: 0.4em 0;
+  margin-bottom: 2px;
 }
 .header__content {
   max-width: 800px;
@@ -238,6 +251,49 @@ a {
 .protocol-footer {
   padding: 1em;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Outline */
+.protocol-editor, .protocol-detail {
+  /* Each section */
+}
+.protocol-editor__header, .protocol-detail__header {
+  display: flex;
+}
+.protocol-editor-stages, .protocol-detail-stages {
+  display: flex;
+  padding: 18px 30px 0;
+}
+.protocol-editor-stages-wrapper, .protocol-detail-stages-wrapper {
+  overflow-x: scroll;
+}
+.protocol-editor-stages__stage, .protocol-detail-stages__stage {
+  padding: 0.5em 1em 0.5em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+}
+.protocol-editor-stages__stage:not(:last-child), .protocol-detail-stages__stage:not(:last-child) {
+  border-right: none !important;
+}
+.protocol-editor-stages__add-button, .protocol-detail-stages__add-button {
+  width: 60px;
+  margin: -18px -30px 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+  z-index: 3;
+}
+.protocol-editor-stage__title, .protocol-detail-stage__title {
+  text-align: center;
+}
+.protocol-editor-steps__step, .protocol-detail-steps__step {
+  border-top: 1px solid #aaa;
+}
+.protocol-detail__protocol-name {
+  /* H3 */
 }
 
 /* Protocol summary */
@@ -497,6 +553,13 @@ html
   justify-content: flex-end;
   align-items: flex-end;
   line-height: 100%;
+}
+.time-monitor__button {
+  border: none;
+  margin: 0 0.2em;
+  font-size: 0.8em;
+  padding: 0.2em 0.7em;
+  border-radius: 0.5em;
 }
 .time-monitor__meter {
   flex-grow: 1;

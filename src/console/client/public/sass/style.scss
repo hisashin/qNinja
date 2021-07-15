@@ -23,7 +23,7 @@ a {
 }
 /* Layout params of top-level blocks */
 .header,.device-monitor,.panel-nav {
-  margin-bottom:1.5rem;
+  /* margin-bottom:1.5rem; */
 }
 .device-monitor {
 }
@@ -57,12 +57,24 @@ a {
 }
 .input-temp {
   width:80px;
+  &--2 {
+    width:3em;
+  }
+  &--3 {
+    width:4em;
+  }
 }
 .input-duration {
   width:80px;
+  &--2 {
+    width:3em;
+  }
+  &--3 {
+    width:4em;
+  }
 }
 .input-speed {
-  width:80px;
+  width:5em;
 }
 /* List pagination */
 .paging {

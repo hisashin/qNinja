@@ -16,23 +16,18 @@
           </b-button>
         </div>
         <div class="item item--tabbed">
-          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs">
+          <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs" active>
             <b-tab title="Temperature">
               <TemperatureChart ref="temperatureChart" />
             </b-tab>
             <b-tab
               title="Amplification"
-              active>
+              >
                 <p><AmplificationChart ref="amplificationChart" /></p>
                   <div>one-shot={{ oneShot }}</div>
                   <div>continuous={{ continuous }}</div>
             </b-tab>
             <b-tab title="Melt curve">
-              <b-button
-                class="ml-1"
-                @click.stop="updateMeltCurve">
-                Update (debug)
-              </b-button>
               <MeltCurveChart ref="meltCurveChart" />
             </b-tab>
             <b-tab title="Protocol">
@@ -80,8 +75,6 @@ export default {
   created: function () {
   },
   methods: {
-    updateMeltCurve:  function () {
-    },
     title () { return "Experiment Monitor" },
     onFluorescenceUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();

@@ -1,10 +1,6 @@
 <template>
   <div class="panel panel--protocol-detail">
     <section class="section">
-      <header class="section__header">
-        <div class="section__header__menu"></div>
-        <h2 class="section__title" >Protocol detail</h2>
-      </header>
       <div class="section__body">
         <div class="item detail-card">
           <div class="detail-card__body">

@@ -157,13 +157,11 @@ class Optics {
     });
   }
   startContinuousDataCollection (callback) {
-    console.log("startContinuousDataCollection");
     this.continuous = true;
     this.continuousCallback = callback;
     this._measureAll();
   }
   stopContinuousDataCollection () {
-    console.log("stopContinuousDataCollection");
     this.continuous = false;
   }
   _roundFluorescence (value) {

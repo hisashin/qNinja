@@ -21,8 +21,10 @@
       </div>
     </header>
     <main class="main">
-        <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
-      <nav class="panel-nav">
+      <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
+      <nav 
+        v-if="panelTitle"
+        class="panel-nav">
         <BackButton v-show="backEnabled" />
         <h2 class="panel-nav__title">
           {{ panelTitle }}
