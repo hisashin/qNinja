@@ -1029,4 +1029,6 @@ F 3 "~" H 4300 7150 50  0001 C CNN
 	1    4300 7150
 	-1   0    0    -1  
 $EndComp
+Text Notes 800  850  0    50   ~ 0
+NOTE : C2&C6 too close / make clear polar C1 / Update U2 footprint / R12 cement too short footprint
 $EndSCHEMATC
