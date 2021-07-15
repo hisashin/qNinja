@@ -1,0 +1,1011 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Conn_01x10_Male JNB1
+U 1 1 60DE191E
+P 1150 4100
+F 0 "JNB1" H 1258 4681 50  0000 C CNN
+F 1 "Conn_01x10_Male" H 1258 4590 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 1150 4100 50  0001 C CNN
+F 3 "~" H 1150 4100 50  0001 C CNN
+	1    1150 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x10_Male JNA1
+U 1 1 60DDF629
+P 1150 2800
+F 0 "JNA1" H 1258 3381 50  0000 C CNN
+F 1 "Conn_01x10_Male" H 1258 3290 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 1150 2800 50  0001 C CNN
+F 3 "~" H 1150 2800 50  0001 C CNN
+	1    1150 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 2500 6400 2500
+Wire Wire Line
+	6200 2600 6400 2600
+Wire Wire Line
+	6200 2700 6400 2700
+Wire Wire Line
+	6200 2800 6400 2800
+Wire Wire Line
+	6200 2900 6400 2900
+Wire Wire Line
+	6200 3000 6400 3000
+Wire Wire Line
+	6200 3100 6400 3100
+$Comp
+L Connector:Conn_01x10_Male JSB1
+U 1 1 60D6C099
+P 6000 4100
+F 0 "JSB1" H 6108 4681 50  0000 C CNN
+F 1 "Conn_01x10_Male" H 6108 4590 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 6000 4100 50  0001 C CNN
+F 3 "~" H 6000 4100 50  0001 C CNN
+	1    6000 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x10_Male JSA1
+U 1 1 60D69FBB
+P 6000 2800
+F 0 "JSA1" H 6108 3381 50  0000 C CNN
+F 1 "Conn_01x10_Male" H 6108 3290 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch1.27mm" H 6000 2800 50  0001 C CNN
+F 3 "~" H 6000 2800 50  0001 C CNN
+	1    6000 2800
+	1    0    0    -1  
+$EndComp
+Connection ~ 5250 5300
+Wire Wire Line
+	5250 5300 3850 5300
+Wire Wire Line
+	1550 4600 1350 4600
+Wire Wire Line
+	1550 4500 1350 4500
+Wire Wire Line
+	1350 3100 1550 3100
+Wire Wire Line
+	1350 3000 1550 3000
+Wire Wire Line
+	1350 2900 1550 2900
+Wire Wire Line
+	1350 2800 1550 2800
+Wire Wire Line
+	1350 2700 1550 2700
+Wire Wire Line
+	1350 2600 1550 2600
+Wire Wire Line
+	1350 2500 1550 2500
+Wire Wire Line
+	1350 2400 1550 2400
+Wire Wire Line
+	1350 4400 1550 4400
+Wire Wire Line
+	1350 4300 1550 4300
+Wire Wire Line
+	1350 4200 1550 4200
+Wire Wire Line
+	1350 4100 1550 4100
+Wire Wire Line
+	1350 4000 1550 4000
+Wire Wire Line
+	1350 3900 1550 3900
+Wire Wire Line
+	1350 3800 1550 3800
+Wire Wire Line
+	1350 3700 1550 3700
+Wire Wire Line
+	1350 3300 1550 3300
+Wire Wire Line
+	1350 3200 1550 3200
+Text GLabel 1550 3200 2    50   Input ~ 0
+GNDA
+Text GLabel 1550 3300 2    50   Input ~ 0
+GNDA
+Text GLabel 1550 4500 2    50   Input ~ 0
+GNDA
+Text GLabel 1550 4600 2    50   Input ~ 0
+GNDA
+Text HLabel 1550 3100 2    50   Input ~ 0
+N_PD_OUT15
+Text HLabel 1550 2900 2    50   Input ~ 0
+N_PD_OUT13
+Text HLabel 1550 2700 2    50   Input ~ 0
+N_PD_OUT11
+Text HLabel 1550 2500 2    50   Input ~ 0
+N_PD_OUT9
+Text HLabel 1550 2400 2    50   Input ~ 0
+N_PD_OUT7
+Text HLabel 1550 2600 2    50   Input ~ 0
+N_PD_OUT5
+Text HLabel 1550 2800 2    50   Input ~ 0
+N_PD_OUT3
+Text HLabel 1550 3000 2    50   Input ~ 0
+N_PD_OUT1
+Text HLabel 4550 4500 0    50   Input ~ 0
+N_PD_OUT15
+Text HLabel 4550 3700 0    50   Input ~ 0
+N_PD_OUT13
+Text HLabel 4550 2900 0    50   Input ~ 0
+N_PD_OUT11
+Text HLabel 4550 2100 0    50   Input ~ 0
+N_PD_OUT9
+Text HLabel 3150 4500 0    50   Input ~ 0
+N_PD_OUT7
+Text HLabel 3150 3700 0    50   Input ~ 0
+N_PD_OUT5
+Text HLabel 3150 2900 0    50   Input ~ 0
+N_PD_OUT3
+Text HLabel 3150 2100 0    50   Input ~ 0
+N_PD_OUT1
+Wire Wire Line
+	5350 5300 5250 5300
+Text GLabel 5350 5300 2    50   Input ~ 0
+GNDA
+$Comp
+L Device:D_Photo D1A1
+U 1 1 60D69CD7
+P 3600 2100
+F 0 "D1A1" H 3550 1883 50  0000 C CNN
+F 1 "D_Photo" H 3550 1974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 2100 50  0001 C CNN
+F 3 "~" H 3550 2100 50  0001 C CNN
+	1    3600 2100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D1B1
+U 1 1 60D69CCD
+P 3600 2500
+F 0 "D1B1" H 3550 2283 50  0000 C CNN
+F 1 "D_Photo" H 3550 2374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 2500 50  0001 C CNN
+F 3 "~" H 3550 2500 50  0001 C CNN
+	1    3600 2500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D2A1
+U 1 1 60D69CC3
+P 3600 2900
+F 0 "D2A1" H 3550 2683 50  0000 C CNN
+F 1 "D_Photo" H 3550 2774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 2900 50  0001 C CNN
+F 3 "~" H 3550 2900 50  0001 C CNN
+	1    3600 2900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D2B1
+U 1 1 60D69CB9
+P 3600 3300
+F 0 "D2B1" H 3550 3083 50  0000 C CNN
+F 1 "D_Photo" H 3550 3174 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 3300 50  0001 C CNN
+F 3 "~" H 3550 3300 50  0001 C CNN
+	1    3600 3300
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D3A1
+U 1 1 60D69CAF
+P 3600 3700
+F 0 "D3A1" H 3550 3483 50  0000 C CNN
+F 1 "D_Photo" H 3550 3574 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 3700 50  0001 C CNN
+F 3 "~" H 3550 3700 50  0001 C CNN
+	1    3600 3700
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D3B1
+U 1 1 60D69CA5
+P 3600 4100
+F 0 "D3B1" H 3550 3883 50  0000 C CNN
+F 1 "D_Photo" H 3550 3974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 4100 50  0001 C CNN
+F 3 "~" H 3550 4100 50  0001 C CNN
+	1    3600 4100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D4A1
+U 1 1 60D69C9B
+P 3600 4500
+F 0 "D4A1" H 3550 4283 50  0000 C CNN
+F 1 "D_Photo" H 3550 4374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 4500 50  0001 C CNN
+F 3 "~" H 3550 4500 50  0001 C CNN
+	1    3600 4500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D4B1
+U 1 1 60D69C91
+P 3600 4900
+F 0 "D4B1" H 3550 4683 50  0000 C CNN
+F 1 "D_Photo" H 3550 4774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 3550 4900 50  0001 C CNN
+F 3 "~" H 3550 4900 50  0001 C CNN
+	1    3600 4900
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	3700 2100 3850 2100
+Wire Wire Line
+	3700 4500 3850 4500
+Connection ~ 3850 4500
+Wire Wire Line
+	3700 2900 3850 2900
+Connection ~ 3850 2900
+Wire Wire Line
+	3700 3700 3850 3700
+Connection ~ 3850 3700
+$Comp
+L power:PWR_FLAG #FLG02
+U 1 1 60D69C68
+P 3850 2000
+F 0 "#FLG02" H 3850 2075 50  0001 C CNN
+F 1 "PWR_FLAG" H 3850 2173 50  0000 C CNN
+F 2 "" H 3850 2000 50  0001 C CNN
+F 3 "~" H 3850 2000 50  0001 C CNN
+	1    3850 2000
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 2000 3850 2100
+Connection ~ 3850 2100
+Connection ~ 5250 3700
+Wire Wire Line
+	5100 3700 5250 3700
+Connection ~ 5250 2900
+Wire Wire Line
+	5100 2900 5250 2900
+Connection ~ 5250 4500
+Wire Wire Line
+	5100 4500 5250 4500
+Wire Wire Line
+	5100 2100 5250 2100
+$Comp
+L Device:D_Photo D8B1
+U 1 1 60D69C3D
+P 5000 4900
+F 0 "D8B1" H 4950 4683 50  0000 C CNN
+F 1 "D_Photo" H 4950 4774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 4900 50  0001 C CNN
+F 3 "~" H 4950 4900 50  0001 C CNN
+	1    5000 4900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D8A1
+U 1 1 60D69C33
+P 5000 4500
+F 0 "D8A1" H 4950 4283 50  0000 C CNN
+F 1 "D_Photo" H 4950 4374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 4500 50  0001 C CNN
+F 3 "~" H 4950 4500 50  0001 C CNN
+	1    5000 4500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D7B1
+U 1 1 60D69C29
+P 5000 4100
+F 0 "D7B1" H 4950 3883 50  0000 C CNN
+F 1 "D_Photo" H 4950 3974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 4100 50  0001 C CNN
+F 3 "~" H 4950 4100 50  0001 C CNN
+	1    5000 4100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D7A1
+U 1 1 60D69C1F
+P 5000 3700
+F 0 "D7A1" H 4950 3483 50  0000 C CNN
+F 1 "D_Photo" H 4950 3574 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 3700 50  0001 C CNN
+F 3 "~" H 4950 3700 50  0001 C CNN
+	1    5000 3700
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D6B1
+U 1 1 60D69C15
+P 5000 3300
+F 0 "D6B1" H 4950 3083 50  0000 C CNN
+F 1 "D_Photo" H 4950 3174 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 3300 50  0001 C CNN
+F 3 "~" H 4950 3300 50  0001 C CNN
+	1    5000 3300
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D6A1
+U 1 1 60D69C0B
+P 5000 2900
+F 0 "D6A1" H 4950 2683 50  0000 C CNN
+F 1 "D_Photo" H 4950 2774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 2900 50  0001 C CNN
+F 3 "~" H 4950 2900 50  0001 C CNN
+	1    5000 2900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D5B1
+U 1 1 60D69C01
+P 5000 2500
+F 0 "D5B1" H 4950 2283 50  0000 C CNN
+F 1 "D_Photo" H 4950 2374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 2500 50  0001 C CNN
+F 3 "~" H 4950 2500 50  0001 C CNN
+	1    5000 2500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D5A1
+U 1 1 60D69BF7
+P 5000 2100
+F 0 "D5A1" H 4950 1883 50  0000 C CNN
+F 1 "D_Photo" H 4950 1974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 4950 2100 50  0001 C CNN
+F 3 "~" H 4950 2100 50  0001 C CNN
+	1    5000 2100
+	1    0    0    1   
+$EndComp
+Connection ~ 10300 5300
+Wire Wire Line
+	10300 5300 8900 5300
+Wire Wire Line
+	6200 3700 6400 3700
+Wire Wire Line
+	6200 2400 6400 2400
+Wire Wire Line
+	6200 4400 6400 4400
+Wire Wire Line
+	6200 4300 6400 4300
+Wire Wire Line
+	6200 4200 6400 4200
+Wire Wire Line
+	6200 4100 6400 4100
+Wire Wire Line
+	6200 4000 6400 4000
+Wire Wire Line
+	6200 3900 6400 3900
+Wire Wire Line
+	6200 3800 6400 3800
+Wire Wire Line
+	6200 3300 6400 3300
+Wire Wire Line
+	6200 3200 6400 3200
+Text GLabel 6400 3200 2    50   Input ~ 0
+GNDA
+Text GLabel 6400 3300 2    50   Input ~ 0
+GNDA
+Text HLabel 6400 3100 2    50   Input ~ 0
+S_PD_OUT15
+Text HLabel 6400 2900 2    50   Input ~ 0
+S_PD_OUT13
+Text HLabel 6400 2700 2    50   Input ~ 0
+S_PD_OUT11
+Text HLabel 6400 2500 2    50   Input ~ 0
+S_PD_OUT9
+Text HLabel 6400 2400 2    50   Input ~ 0
+S_PD_OUT7
+Text HLabel 6400 2600 2    50   Input ~ 0
+S_PD_OUT5
+Text HLabel 6400 2800 2    50   Input ~ 0
+S_PD_OUT3
+Text HLabel 6400 3000 2    50   Input ~ 0
+S_PD_OUT1
+Text HLabel 9600 4500 0    50   Input ~ 0
+S_PD_OUT15
+Text HLabel 9600 3700 0    50   Input ~ 0
+S_PD_OUT13
+Text HLabel 9600 2900 0    50   Input ~ 0
+S_PD_OUT11
+Text HLabel 9600 2100 0    50   Input ~ 0
+S_PD_OUT9
+Text HLabel 8200 4500 0    50   Input ~ 0
+S_PD_OUT7
+Text HLabel 8200 3700 0    50   Input ~ 0
+S_PD_OUT5
+Text HLabel 8200 2900 0    50   Input ~ 0
+S_PD_OUT3
+Text HLabel 8200 2100 0    50   Input ~ 0
+S_PD_OUT1
+Wire Wire Line
+	10400 5300 10300 5300
+Text GLabel 10400 5300 2    50   Input ~ 0
+GNDA
+$Comp
+L Device:D_Photo D9A1
+U 1 1 60CCEE4B
+P 8650 2100
+F 0 "D9A1" H 8600 1883 50  0000 C CNN
+F 1 "D_Photo" H 8600 1974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 2100 50  0001 C CNN
+F 3 "~" H 8600 2100 50  0001 C CNN
+	1    8650 2100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D9B1
+U 1 1 60CCEE45
+P 8650 2500
+F 0 "D9B1" H 8600 2283 50  0000 C CNN
+F 1 "D_Photo" H 8600 2374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 2500 50  0001 C CNN
+F 3 "~" H 8600 2500 50  0001 C CNN
+	1    8650 2500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D10A1
+U 1 1 60CCEE3F
+P 8650 2900
+F 0 "D10A1" H 8600 2683 50  0000 C CNN
+F 1 "D_Photo" H 8600 2774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 2900 50  0001 C CNN
+F 3 "~" H 8600 2900 50  0001 C CNN
+	1    8650 2900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D10B1
+U 1 1 60CCEE39
+P 8650 3300
+F 0 "D10B1" H 8600 3083 50  0000 C CNN
+F 1 "D_Photo" H 8600 3174 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 3300 50  0001 C CNN
+F 3 "~" H 8600 3300 50  0001 C CNN
+	1    8650 3300
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D11A1
+U 1 1 60CCEE33
+P 8650 3700
+F 0 "D11A1" H 8600 3483 50  0000 C CNN
+F 1 "D_Photo" H 8600 3574 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 3700 50  0001 C CNN
+F 3 "~" H 8600 3700 50  0001 C CNN
+	1    8650 3700
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D11B1
+U 1 1 60CCEE2D
+P 8650 4100
+F 0 "D11B1" H 8600 3883 50  0000 C CNN
+F 1 "D_Photo" H 8600 3974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 4100 50  0001 C CNN
+F 3 "~" H 8600 4100 50  0001 C CNN
+	1    8650 4100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D12A1
+U 1 1 60CCEE27
+P 8650 4500
+F 0 "D12A1" H 8600 4283 50  0000 C CNN
+F 1 "D_Photo" H 8600 4374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 4500 50  0001 C CNN
+F 3 "~" H 8600 4500 50  0001 C CNN
+	1    8650 4500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D12B1
+U 1 1 60CCEE21
+P 8650 4900
+F 0 "D12B1" H 8600 4683 50  0000 C CNN
+F 1 "D_Photo" H 8600 4774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 8600 4900 50  0001 C CNN
+F 3 "~" H 8600 4900 50  0001 C CNN
+	1    8650 4900
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	8750 2100 8900 2100
+Wire Wire Line
+	8750 4500 8900 4500
+Connection ~ 8900 4500
+Wire Wire Line
+	8750 2900 8900 2900
+Connection ~ 8900 2900
+Wire Wire Line
+	8750 3700 8900 3700
+Connection ~ 8900 3700
+$Comp
+L power:PWR_FLAG #FLG01
+U 1 1 60CCEDFC
+P 8900 2000
+F 0 "#FLG01" H 8900 2075 50  0001 C CNN
+F 1 "PWR_FLAG" H 8900 2173 50  0000 C CNN
+F 2 "" H 8900 2000 50  0001 C CNN
+F 3 "~" H 8900 2000 50  0001 C CNN
+	1    8900 2000
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	8900 2000 8900 2100
+Connection ~ 8900 2100
+Connection ~ 10300 3700
+Wire Wire Line
+	10150 3700 10300 3700
+Connection ~ 10300 2900
+Wire Wire Line
+	10150 2900 10300 2900
+Connection ~ 10300 4500
+Wire Wire Line
+	10150 4500 10300 4500
+Wire Wire Line
+	10150 2100 10300 2100
+$Comp
+L Device:D_Photo D16B1
+U 1 1 60CCEDD5
+P 10050 4900
+F 0 "D16B1" H 10000 4683 50  0000 C CNN
+F 1 "D_Photo" H 10000 4774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 4900 50  0001 C CNN
+F 3 "~" H 10000 4900 50  0001 C CNN
+	1    10050 4900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D16A1
+U 1 1 60CCEDCF
+P 10050 4500
+F 0 "D16A1" H 10000 4283 50  0000 C CNN
+F 1 "D_Photo" H 10000 4374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 4500 50  0001 C CNN
+F 3 "~" H 10000 4500 50  0001 C CNN
+	1    10050 4500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D15B1
+U 1 1 60CCEDC9
+P 10050 4100
+F 0 "D15B1" H 10000 3883 50  0000 C CNN
+F 1 "D_Photo" H 10000 3974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 4100 50  0001 C CNN
+F 3 "~" H 10000 4100 50  0001 C CNN
+	1    10050 4100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D15A1
+U 1 1 60CCEDC3
+P 10050 3700
+F 0 "D15A1" H 10000 3483 50  0000 C CNN
+F 1 "D_Photo" H 10000 3574 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 3700 50  0001 C CNN
+F 3 "~" H 10000 3700 50  0001 C CNN
+	1    10050 3700
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D14B1
+U 1 1 60CCEDBD
+P 10050 3300
+F 0 "D14B1" H 10000 3083 50  0000 C CNN
+F 1 "D_Photo" H 10000 3174 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 3300 50  0001 C CNN
+F 3 "~" H 10000 3300 50  0001 C CNN
+	1    10050 3300
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D14A1
+U 1 1 60CCEDB7
+P 10050 2900
+F 0 "D14A1" H 10000 2683 50  0000 C CNN
+F 1 "D_Photo" H 10000 2774 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 2900 50  0001 C CNN
+F 3 "~" H 10000 2900 50  0001 C CNN
+	1    10050 2900
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D13B1
+U 1 1 60CCEDB1
+P 10050 2500
+F 0 "D13B1" H 10000 2283 50  0000 C CNN
+F 1 "D_Photo" H 10000 2374 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 2500 50  0001 C CNN
+F 3 "~" H 10000 2500 50  0001 C CNN
+	1    10050 2500
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:D_Photo D13A1
+U 1 1 60CCEDAB
+P 10050 2100
+F 0 "D13A1" H 10000 1883 50  0000 C CNN
+F 1 "D_Photo" H 10000 1974 50  0000 C CNN
+F 2 "Diodes_SMD:D_1206" H 10000 2100 50  0001 C CNN
+F 3 "~" H 10000 2100 50  0001 C CNN
+	1    10050 2100
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:Thermistor TH2
+U 1 1 60D93F24
+P 7250 5150
+F 0 "TH2" H 7355 5196 50  0000 L CNN
+F 1 "Thermistor" H 7355 5105 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" H 7250 5150 50  0001 C CNN
+F 3 "~" H 7250 5150 50  0001 C CNN
+	1    7250 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Thermistor TH1
+U 1 1 60D94A0B
+P 6600 5150
+F 0 "TH1" H 6705 5196 50  0000 L CNN
+F 1 "Thermistor" H 6705 5105 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" H 6600 5150 50  0001 C CNN
+F 3 "~" H 6600 5150 50  0001 C CNN
+	1    6600 5150
+	1    0    0    -1  
+$EndComp
+Text GLabel 7400 5500 2    50   Input ~ 0
+GNDA
+Wire Wire Line
+	7250 4500 7250 4950
+Wire Wire Line
+	6200 4500 7250 4500
+Wire Wire Line
+	6600 4600 6600 4950
+Wire Wire Line
+	6200 4600 6600 4600
+Wire Wire Line
+	6600 5350 6600 5500
+Wire Wire Line
+	6600 5500 7250 5500
+Wire Wire Line
+	7250 5350 7250 5500
+Connection ~ 7250 5500
+Wire Wire Line
+	7250 5500 7400 5500
+Wire Wire Line
+	3850 2100 3850 2900
+Wire Wire Line
+	3700 2500 3750 2500
+Wire Wire Line
+	3750 2500 3750 2250
+Wire Wire Line
+	3750 2250 3350 2250
+Wire Wire Line
+	3350 2250 3350 2100
+Wire Wire Line
+	3350 2100 3400 2100
+Wire Wire Line
+	3150 2100 3250 2100
+Wire Wire Line
+	3250 2100 3250 2500
+Wire Wire Line
+	3250 2500 3400 2500
+Wire Wire Line
+	3850 2900 3850 3700
+Wire Wire Line
+	3850 3700 3850 4500
+Wire Wire Line
+	3850 4500 3850 5300
+Wire Wire Line
+	5250 2100 5250 2900
+Wire Wire Line
+	5250 2900 5250 3700
+Wire Wire Line
+	5250 3700 5250 4500
+Wire Wire Line
+	5250 4500 5250 5300
+Wire Wire Line
+	8900 2100 8900 2900
+Wire Wire Line
+	8900 2900 8900 3700
+Wire Wire Line
+	8900 3700 8900 4500
+Wire Wire Line
+	8900 4500 8900 5300
+Wire Wire Line
+	10300 2100 10300 2900
+Wire Wire Line
+	10300 2900 10300 3700
+Wire Wire Line
+	10300 3700 10300 4500
+Wire Wire Line
+	10300 4500 10300 5300
+Wire Wire Line
+	3400 2900 3350 2900
+Wire Wire Line
+	3350 2900 3350 3050
+Wire Wire Line
+	3350 3050 3750 3050
+Wire Wire Line
+	3750 3050 3750 3300
+Wire Wire Line
+	3750 3300 3700 3300
+Wire Wire Line
+	3150 2900 3250 2900
+Wire Wire Line
+	3250 2900 3250 3300
+Wire Wire Line
+	3250 3300 3400 3300
+Wire Wire Line
+	3400 3700 3350 3700
+Wire Wire Line
+	3350 3700 3350 3850
+Wire Wire Line
+	3350 3850 3750 3850
+Wire Wire Line
+	3750 3850 3750 4100
+Wire Wire Line
+	3750 4100 3700 4100
+Wire Wire Line
+	3150 3700 3250 3700
+Wire Wire Line
+	3250 3700 3250 4100
+Wire Wire Line
+	3250 4100 3400 4100
+Wire Wire Line
+	3400 4500 3350 4500
+Wire Wire Line
+	3350 4500 3350 4650
+Wire Wire Line
+	3350 4650 3750 4650
+Wire Wire Line
+	3750 4650 3750 4900
+Wire Wire Line
+	3750 4900 3700 4900
+Wire Wire Line
+	3150 4500 3250 4500
+Wire Wire Line
+	3250 4500 3250 4900
+Wire Wire Line
+	3250 4900 3400 4900
+Wire Wire Line
+	4800 2100 4750 2100
+Wire Wire Line
+	4750 2100 4750 2250
+Wire Wire Line
+	4750 2250 5150 2250
+Wire Wire Line
+	5150 2250 5150 2500
+Wire Wire Line
+	5150 2500 5100 2500
+Wire Wire Line
+	4550 2100 4650 2100
+Wire Wire Line
+	4650 2100 4650 2500
+Wire Wire Line
+	4650 2500 4800 2500
+Wire Wire Line
+	4800 2900 4750 2900
+Wire Wire Line
+	4750 2900 4750 3050
+Wire Wire Line
+	4750 3050 5150 3050
+Wire Wire Line
+	5150 3050 5150 3300
+Wire Wire Line
+	5150 3300 5100 3300
+Wire Wire Line
+	4550 2900 4650 2900
+Wire Wire Line
+	4650 2900 4650 3300
+Wire Wire Line
+	4650 3300 4800 3300
+Wire Wire Line
+	4800 3700 4750 3700
+Wire Wire Line
+	4750 3700 4750 3850
+Wire Wire Line
+	4750 3850 5150 3850
+Wire Wire Line
+	5150 3850 5150 4100
+Wire Wire Line
+	5150 4100 5100 4100
+Wire Wire Line
+	4550 3700 4650 3700
+Wire Wire Line
+	4650 3700 4650 4100
+Wire Wire Line
+	4650 4100 4800 4100
+Wire Wire Line
+	4800 4500 4750 4500
+Wire Wire Line
+	4750 4500 4750 4650
+Wire Wire Line
+	4750 4650 5150 4650
+Wire Wire Line
+	5150 4650 5150 4900
+Wire Wire Line
+	5150 4900 5100 4900
+Wire Wire Line
+	4550 4500 4650 4500
+Wire Wire Line
+	4650 4500 4650 4900
+Wire Wire Line
+	4650 4900 4800 4900
+Wire Wire Line
+	8450 2100 8350 2100
+Wire Wire Line
+	8350 2100 8350 2250
+Wire Wire Line
+	8350 2250 8800 2250
+Wire Wire Line
+	8800 2250 8800 2500
+Wire Wire Line
+	8800 2500 8750 2500
+Wire Wire Line
+	8200 2100 8300 2100
+Wire Wire Line
+	8300 2100 8300 2500
+Wire Wire Line
+	8300 2500 8450 2500
+Wire Wire Line
+	8450 2900 8350 2900
+Wire Wire Line
+	8350 2900 8350 3050
+Wire Wire Line
+	8350 3050 8800 3050
+Wire Wire Line
+	8800 3050 8800 3300
+Wire Wire Line
+	8800 3300 8750 3300
+Wire Wire Line
+	8200 2900 8300 2900
+Wire Wire Line
+	8300 2900 8300 3300
+Wire Wire Line
+	8300 3300 8450 3300
+Wire Wire Line
+	8450 3700 8350 3700
+Wire Wire Line
+	8350 3700 8350 3850
+Wire Wire Line
+	8350 3850 8800 3850
+Wire Wire Line
+	8800 3850 8800 4100
+Wire Wire Line
+	8800 4100 8750 4100
+Wire Wire Line
+	8200 3700 8300 3700
+Wire Wire Line
+	8300 3700 8300 4100
+Wire Wire Line
+	8300 4100 8450 4100
+Wire Wire Line
+	8450 4500 8350 4500
+Wire Wire Line
+	8350 4500 8350 4650
+Wire Wire Line
+	8350 4650 8800 4650
+Wire Wire Line
+	8800 4650 8800 4900
+Wire Wire Line
+	8800 4900 8750 4900
+Wire Wire Line
+	8200 4500 8300 4500
+Wire Wire Line
+	8300 4500 8300 4900
+Wire Wire Line
+	8300 4900 8450 4900
+Wire Wire Line
+	9850 2100 9750 2100
+Wire Wire Line
+	9750 2100 9750 2250
+Wire Wire Line
+	9750 2250 10200 2250
+Wire Wire Line
+	10200 2250 10200 2500
+Wire Wire Line
+	10200 2500 10150 2500
+Wire Wire Line
+	9600 2100 9700 2100
+Wire Wire Line
+	9700 2100 9700 2500
+Wire Wire Line
+	9700 2500 9850 2500
+Wire Wire Line
+	9850 2900 9750 2900
+Wire Wire Line
+	9750 2900 9750 3050
+Wire Wire Line
+	9750 3050 10200 3050
+Wire Wire Line
+	10200 3050 10200 3300
+Wire Wire Line
+	10200 3300 10150 3300
+Wire Wire Line
+	9600 2900 9700 2900
+Wire Wire Line
+	9700 2900 9700 3300
+Wire Wire Line
+	9700 3300 9850 3300
+Wire Wire Line
+	9850 3700 9750 3700
+Wire Wire Line
+	9750 3700 9750 3850
+Wire Wire Line
+	9750 3850 10200 3850
+Wire Wire Line
+	10200 3850 10200 4100
+Wire Wire Line
+	10200 4100 10150 4100
+Wire Wire Line
+	9600 3700 9700 3700
+Wire Wire Line
+	9700 3700 9700 4100
+Wire Wire Line
+	9700 4100 9850 4100
+Wire Wire Line
+	9850 4500 9750 4500
+Wire Wire Line
+	9750 4500 9750 4650
+Wire Wire Line
+	9750 4650 10200 4650
+Wire Wire Line
+	10200 4650 10200 4900
+Wire Wire Line
+	10200 4900 10150 4900
+Wire Wire Line
+	9600 4500 9700 4500
+Wire Wire Line
+	9700 4500 9700 4900
+Wire Wire Line
+	9700 4900 9850 4900
+Text HLabel 1550 4400 2    50   Input ~ 0
+N_PD_OUT1
+Text HLabel 1550 4200 2    50   Input ~ 0
+N_PD_OUT3
+Text HLabel 1550 4000 2    50   Input ~ 0
+N_PD_OUT5
+Text HLabel 1550 3800 2    50   Input ~ 0
+N_PD_OUT7
+Text HLabel 1550 3700 2    50   Input ~ 0
+N_PD_OUT9
+Text HLabel 1550 3900 2    50   Input ~ 0
+N_PD_OUT11
+Text HLabel 1550 4100 2    50   Input ~ 0
+N_PD_OUT13
+Text HLabel 1550 4300 2    50   Input ~ 0
+N_PD_OUT15
+Text HLabel 6400 4400 2    50   Input ~ 0
+S_PD_OUT1
+Text HLabel 6400 4200 2    50   Input ~ 0
+S_PD_OUT3
+Text HLabel 6400 4000 2    50   Input ~ 0
+S_PD_OUT5
+Text HLabel 6400 3800 2    50   Input ~ 0
+S_PD_OUT7
+Text HLabel 6400 3700 2    50   Input ~ 0
+S_PD_OUT9
+Text HLabel 6400 3900 2    50   Input ~ 0
+S_PD_OUT11
+Text HLabel 6400 4100 2    50   Input ~ 0
+S_PD_OUT13
+Text HLabel 6400 4300 2    50   Input ~ 0
+S_PD_OUT15
+$EndSCHEMATC
