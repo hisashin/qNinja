@@ -28,6 +28,14 @@
               <dd class="labeled-list__content"><textarea
                 v-model="experiment.info.comment" type="text" style="width:80%" rows="4"
               ></textarea></dd>
+              <dt class="labeled-list__label">Start</dt>
+              <dd class="labeled-list__content">{{start}}</dd>
+              <dt class="labeled-list__label">End</dt>
+              <dd class="labeled-list__content">{{end}}</dd>
+              <dt class="labeled-list__label">Duration</dt>
+              <dd class="labeled-list__content">{{duration}}</dd>
+              <dt class="labeled-list__label">Status</dt>
+              <dd class="labeled-list__content">{{status}}</dd>
             </dl>
           </div>
         </section>
@@ -272,6 +280,30 @@ export default {
   mounted: function () {
   
   },
+  computed: {
+    start: function () {
+      if (this.experiment.status.start > 0) {
+        const date = new Date(this.experiment.status.start);
+        return date.toLocaleString();
+      }
+      return "";
+    },
+    end: function () {
+      if (this.experiment.status.end > 0) {
+        return new Date(this.experiment.status.end).toDateString();
+      }
+      return "";
+    },
+    duration: function () {
+      if (this.experiment.status.start > 0 && this.experiment.status.end > 0) {
+        return Util.humanTime((this.experiment.status.end - this.experiment.status.start)/1000);
+      }
+      return "";
+    },
+    status: function () {
+      return this.experiment.status.status;
+    }
+  },
   methods: {
     title () { return "Experiment Detail" },
     saveAndRun () {
@@ -326,7 +358,7 @@ export default {
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
-      this.$refs.experimentConfig.setConfig(this.experiment.config);
+      this.$refs.experimentConfig.setConfig(this.experiment.config, this.experiment.hardware);
       this.$refs.standardCurveChart.setExperiment(this.experiment);
       
       if (!this.$refs.temperatureChart) {
@@ -374,7 +406,7 @@ export default {
       this.isStarted = false;
       this.experiment = draft;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
-      this.$refs.experimentConfig.setConfig(this.experiment.config);
+      this.$refs.experimentConfig.setConfig(this.experiment.config, this.experiment.hardware);
     },
     submitCreateExperiment () {
     

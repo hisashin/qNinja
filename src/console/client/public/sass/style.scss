@@ -171,3 +171,77 @@ a {
 .device-summary {
   width:100%;
 }
+
+
+
+.pcr-table--well-layout {
+}
+.pcr-table--wells {
+  min-width:640px;
+}
+.pcr-table--dilusion-series-list {
+  min-width:640px;
+}
+.pcr-table--well_picker {
+  min-width:640px;
+}
+.plate-layout {
+  &__well {
+    vertical-align: top;
+    font-size:0.8em;
+    text-align: center;
+    border: 1px solid #aaa;
+    width:32px;
+    height:48px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    line-height: 16px;
+    &--standard {
+      color:blue;
+      background-image:url(../img/well-bg-standard.svg);
+      &::after {
+        content: "S";
+        display:block;
+        line-height: 32px;
+      }
+    }
+    &--unknown {
+      color:red;
+      background-image:url(../img/well-bg-unknown.svg);
+      &::after {
+        content: "U";
+        display:block;
+        line-height: 32px;
+      }
+    }
+    &--positive_control {
+      color:orange;
+      background-image:url(../img/well-bg-positive-control.svg);
+      &::after {
+        content: "P";
+        display:block;
+        line-height: 32px;
+      }
+    }
+    &--negative_control {
+      color:green;
+      background-image:url(../img/well-bg-negative-control.svg);
+      &::after {
+        content: "N";
+        display:block;
+        line-height: 32px;
+      }
+    }
+    &--empty {
+      color:gray;
+      background-image:url(../img/well-bg-empty.svg);
+      &::after {
+        content: "E";
+        display:block;
+        line-height: 32px;
+      }
+      
+    }
+  }
+}

@@ -3,10 +3,12 @@
     <div class="item detail-card">
       <div class="detail-card__body">
         <div>
-          <table class="pcr-table pcr-tables--well-layout">
+          <table class="pcr-table plate-layout">
             <tr v-for="(row, row_index) in well_layout" v-bind:key="row_index">
-              <td v-for="(well, well_index) in row" v-bind:key="well_index">
+              <td v-for="(well, well_index) in row" v-bind:key="well_index"
+                v-bind:class="'plate-layout__well plate-layout__well--' + (well.conf.type || well.conf.series_type)">
                 {{ well.name }}
+                <!-- {{ well }} -->
               </td>
             </tr>
           </table>
@@ -163,7 +165,7 @@ export default {
   },
   methods: {
     updateLayout: function () {
-      this.well_layout = layout.map((row)=>{
+      this.well_layout = this.hardware.wells.layout.map((row)=>{
         return row.map((wellId)=>{
           let wellConf = this.findWellConfById(wellId);
           let name = device.config.wells.names[wellId];
@@ -228,8 +230,10 @@ export default {
         }
       }
     },
-    setConfig (config) {
+    setConfig (config, hardware) {
       this.config = config;
+      this.hardware = hardware;
+      console.log(hardware)
       try {
         this.makeConfigConsistent();
         this.updateLayout();
@@ -310,17 +314,4 @@ export default {
 }
 </script>
 <style>
-
-.pcr-table--well-layout {
-  min-width:640px;
-}
-.pcr-table--wells {
-  min-width:640px;
-}
-.pcr-table--dilusion-series-list {
-  min-width:640px;
-}
-.pcr-table--well_picker {
-  min-width:640px;
-}
 </style>

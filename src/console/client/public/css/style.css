@@ -186,4 +186,74 @@ a {
   width: 100%;
 }
 
+.pcr-table--wells {
+  min-width: 640px;
+}
+
+.pcr-table--dilusion-series-list {
+  min-width: 640px;
+}
+
+.pcr-table--well_picker {
+  min-width: 640px;
+}
+
+.plate-layout__well {
+  vertical-align: top;
+  font-size: 0.8em;
+  text-align: center;
+  border: 1px solid #aaa;
+  width: 32px;
+  height: 48px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  line-height: 16px;
+}
+.plate-layout__well--standard {
+  color: blue;
+  background-image: url(../img/well-bg-standard.svg);
+}
+.plate-layout__well--standard::after {
+  content: "S";
+  display: block;
+  line-height: 32px;
+}
+.plate-layout__well--unknown {
+  color: red;
+  background-image: url(../img/well-bg-unknown.svg);
+}
+.plate-layout__well--unknown::after {
+  content: "U";
+  display: block;
+  line-height: 32px;
+}
+.plate-layout__well--positive_control {
+  color: orange;
+  background-image: url(../img/well-bg-positive-control.svg);
+}
+.plate-layout__well--positive_control::after {
+  content: "P";
+  display: block;
+  line-height: 32px;
+}
+.plate-layout__well--negative_control {
+  color: green;
+  background-image: url(../img/well-bg-negative-control.svg);
+}
+.plate-layout__well--negative_control::after {
+  content: "N";
+  display: block;
+  line-height: 32px;
+}
+.plate-layout__well--empty {
+  color: gray;
+  background-image: url(../img/well-bg-empty.svg);
+}
+.plate-layout__well--empty::after {
+  content: "E";
+  display: block;
+  line-height: 32px;
+}
+
 /*# sourceMappingURL=style.css.map */
