@@ -858,4 +858,6 @@ Text GLabel 1150 1550 2    50   Input ~ 0
 PD_TH1
 Text GLabel 1150 1650 2    50   Input ~ 0
 PD_TH2
+Text Notes 1300 700  0    50   ~ 0
+NOTE : U10 pad was too big and shorten
 $EndSCHEMATC
