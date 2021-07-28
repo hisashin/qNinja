@@ -165,6 +165,7 @@ export default {
   },
   methods: {
     updateLayout: function () {
+      console.log(JSON.stringify(this.hardware))
       this.well_layout = this.hardware.wells.layout.map((row)=>{
         return row.map((wellId)=>{
           let wellConf = this.findWellConfById(wellId);

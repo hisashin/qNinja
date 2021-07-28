@@ -43,7 +43,7 @@ class PCA9955B {
     const firstBit = startAddr | (0b01 << 7);
     let regValues = [firstBit].concat(values); // Auto-increment + First reg address
     this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
-    console.log(regValues.map(v=>v.toString(2)))
+    // console.log(regValues.map(v=>v.toString(2)))
   }
   writeSeqSameValues (startAddr, value, count) {
     const firstBit = startAddr | (0b01 << 7);
@@ -51,9 +51,10 @@ class PCA9955B {
     for (let i=0; i<count; i++) {
       regValues.push(value);
     }
-    console.log(regValues.map(v=>v.toString(2)))
+    // console.log(regValues.map(v=>v.toString(2)))
     this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
   }
+  // Call this to get ready for blank control (by OD pin)
   setBlankControlMode () {
     // Enable  auto increment
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([0x00, 0b10001001]));

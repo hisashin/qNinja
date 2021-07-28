@@ -29,10 +29,12 @@ const ADS122C04IPWR = require("../hardware/adc_ads122c04ipwr.js");
 const Thermistor = require("../hardware/thermistor.js");
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 const ADC_DEVICE_ADDR = 0x40;
+
 const adc = new ADS122C04IPWR(I2C_CHANNEL, ADC_DEVICE_ADDR);
 adc.initialize();
 adc.selectDataRate(20);
 adc.selectVoltageReferenceExternal();
+
 const RES = 47.0; // kOhm
 const R0 = 100.0;
 const BASE_TEMP = 25.0;

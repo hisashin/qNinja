@@ -45,7 +45,7 @@ qpcr.setEventReceiver({
   }
 });
 const execDemo = ()=>{
-  const experiment = em._createExperimentDraft({protocol:protocol});
+  const experiment = em.createExperimentDraft({protocol:protocol});
   qpcr.start(experiment);
   const demo = new OpticsDemo(qpcr.optics);
   demo.runOpticsDemo();

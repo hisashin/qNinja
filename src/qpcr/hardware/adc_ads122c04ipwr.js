@@ -97,6 +97,9 @@ class ADS1219IPWR {
         console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
+  start () {
+    this.selectVoltageReferenceExternal();
+  }
   readRegister (addr) {
     const val = COMMAND_RREG | (0b11&addr) << 2;
     this.i2c.sendByteSync(this.address, val);
@@ -105,7 +108,6 @@ class ADS1219IPWR {
   writeRegister (addr, value) {
     const addrVal = COMMAND_WREG | (0b11&addr) << 2;
     this.i2c.i2cWriteSync(this.address, 2, new Buffer([addrVal, value]));
-    console.log("WriteRegister %s %s", addr.toString(16), value.toString(2));
     this.sync();
   }
   selectDataRate (rate) {

@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
-const DATA_DIR_ROOT = __dirname + "/user_data";
+const DATA_DIR_ROOT = process.env.NINJAQPCR_USER_DATA || "/home/pi/ninjaqpcr/user_data"; // TODO: use user's home dir
 const ErrorCode = require("./error_code");
 const validator = require("./protocol_validator");
 

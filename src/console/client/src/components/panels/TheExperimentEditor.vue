@@ -405,6 +405,8 @@ export default {
       this.isNew = true;
       this.isStarted = false;
       this.experiment = draft;
+      console.log("startCreateExperiment");
+      console.log(this.experiment);
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
       this.$refs.experimentConfig.setConfig(this.experiment.config, this.experiment.hardware);
     },

@@ -64,8 +64,17 @@ class HeatUnit {
   }
   shutdown () {
     console.log("Shutting down HeatUnit.");
-    this.sensing.shutdown();
-    this.output.shutdown();
+    if (this.output.shutdown) {
+      this.output.shutdown();
+    } else {
+      console.warn("HeatUnit.output.shutdown() is not defined.");
+    }
+    if (this.sensing.shutdown) {
+      this.sensing.shutdown();
+    } else {
+      console.warn("HeatUnit.sensing.shutdown() is not defined.");
+      
+    }
   }
 }
 
