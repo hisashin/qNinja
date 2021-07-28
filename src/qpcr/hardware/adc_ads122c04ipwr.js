@@ -25,6 +25,10 @@ DATA_RATE[330] = DATA_RATE_330SPS;
 DATA_RATE[600] = DATA_RATE_600SPS;
 DATA_RATE[1000] = DATA_RATE_1000SPS;
 
+const VREF_INTERNAL = 0b00; // Internal 2.048V (default)
+const VREF_EXTERNAL = 0b01; // External ref (REFP-REFN)
+const VREF_ANALOG_SUPPLY = 0b10; // Analog supply (AVDD-AVSS)
+
 const MUX_DIFF_PA0_NA1 = 0b0000;
 const MUX_DIFF_PA0_NA2 = 0b0001;
 const MUX_DIFF_PA0_NA3 = 0b0010;
@@ -66,7 +70,8 @@ const MUX_SINGLE_END_VALS = [
 const COMMAND_RESET = 0b00000110;
 const COMMAND_SSYNC = 0b00001000;
 const COMMAND_PDOWN = 0b00000010;
-const COMMAND_RDATA = 0b00010000;
+// const COMMAND_RDATA = 0b00010000;
+const COMMAND_RDATA = 0x10;
 const COMMAND_RREG = 0b00100000; // 0010 rrxx : Read register at address rr
 const COMMAND_WREG = 0b01000000; // 0100 rrxx : Write register at address rr
 
@@ -92,6 +97,9 @@ class ADS1219IPWR {
         console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
+  start () {
+    this.selectVoltageReferenceExternal();
+  }
   readRegister (addr) {
     const val = COMMAND_RREG | (0b11&addr) << 2;
     this.i2c.sendByteSync(this.address, val);
@@ -109,9 +117,25 @@ class ADS1219IPWR {
       console.warn("Data rate %d is invalid. Supported values are 20, 90, 330 and 1000.", rate);
     }
     const currentVal = this.readRegister(0x01);
-    // TODO
-    const val = (0b11110011 & currentVal) | (rateBits << 2);
+    const val = (0b00011111 & currentVal) | (rateBits << 5);
     this.writeRegister(0x01, val);
+  }
+  _selectVoltageReference (refType) {
+    const currentVal = this.readRegister(0x01);
+    const val = (0b11111001 & currentVal) | (refType << 1);
+    this.writeRegister(0x01, val);
+  }
+  selectVoltageReferenceInternal () {
+    // Internal 2.048V (default)
+    this._selectVoltageReference(VREF_INTERNAL);
+  }
+  selectVoltageReferenceExternal () {
+    // External ref (REFP-REFN)
+    this._selectVoltageReference(VREF_EXTERNAL);
+  }
+  selectVoltageReferenceSupply () {
+    // Analog supply (AVDD-AVSS)
+    this._selectVoltageReference(VREF_ANALOG_SUPPLY);
   }
   
   // Measure diff signals
@@ -176,6 +200,14 @@ class ADS1219IPWR {
       callback(origVal/0x800000); // TODO debug
       // callback( Math.max(0, val / (1.0 * 0x00800000))); // For single-ended
     });
+  }
+  
+  debug () {
+    this.hoge = !this.hoge;
+    if (this.hoge)
+      console.log("Reg 1h", this.readRegister(0x01).toString(2));
+    else
+      this.writeRegister(0x01, 0b00000110);
   }
   
   reset () {

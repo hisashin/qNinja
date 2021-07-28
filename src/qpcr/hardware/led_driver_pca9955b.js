@@ -39,19 +39,40 @@ class PCA9955B {
         console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
+  writeSeq (startAddr, values) {
+    const firstBit = startAddr | (0b01 << 7);
+    let regValues = [firstBit].concat(values); // Auto-increment + First reg address
+    this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
+    // console.log(regValues.map(v=>v.toString(2)))
+  }
+  writeSeqSameValues (startAddr, value, count) {
+    const firstBit = startAddr | (0b01 << 7);
+    let regValues = [firstBit];
+    for (let i=0; i<count; i++) {
+      regValues.push(value);
+    }
+    // console.log(regValues.map(v=>v.toString(2)))
+    this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
+  }
+  // Call this to get ready for blank control (by OD pin)
+  setBlankControlMode () {
+    // Enable  auto increment
+    this.i2c.i2cWriteSync(this.address, 2, new Buffer([0x00, 0b10001001]));
+    // this.writeSeqSameValues(0x08, 0x00, 16); // PWM
+    this.writeSeqSameValues(0x18, 0xFF, 16); // Current value
+  }
   applyLED () {
-    const firstBit = REG_ADDR_LEDOUT0 | (0b01 << 7);
-    let regValues = [firstBit]; // Auto-increment + First reg address
+    let regValues = [];
+    // let regValues = [0x02]; // Auto-increment + First reg address
     for (let groupIndex = 0; groupIndex < LED_COUNT/4; groupIndex++) {
       let regVal = 0b00000000;
       for (let i=0; i<4; i++) {
-        let modeVal = (this.leds[groupIndex * 4 + i]) ? 0b10 : 0b00;
+        let modeVal = (this.leds[groupIndex * 4 + i]) ? 0b01 : 0b00;
         regVal = regVal | (modeVal << (i*2));
       }
       regValues.push(regVal);
     }
-    this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
-    
+    this.writeSeq(REG_ADDR_LEDOUT0, regValues);
   }
   // Select single channel
   selectChannel (ch) {

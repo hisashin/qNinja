@@ -4,17 +4,14 @@
       <!-- List card -->
       <ul class="item item--list-card">
         <template v-for="(item, index) in protocols"
-        >
-          <li class="item--list-card__cell item--list-card__cell--item"
-            :key="index">
-            <ProtocolCell
-              v-if="index < limit"
-              :pid="item.id"
-              :protocol="item.protocol"
-            />
-          </li>
+          >
+          <ProtocolCell :key="index"
+            v-if="index < limit"
+            :pid="item.id"
+            :protocol="item.protocol"
+          />
         </template>
-        <li v-if="error" class="item--list-card__cell item--list-card__cell--error">
+        <li v-if="error" class="list-card-cell list-card-cell--error">
           <div class="error">
             <h2 class="error__title">Failed to load protocols.</h2>
             <div class="error__retry">
@@ -61,7 +58,6 @@ export default {
   },
   methods: {
     load: function () {
-      console.log("ProtocolList.load");
       this.error = false;
       this.params.limit = this.limit;
       let params = this.$data.params;

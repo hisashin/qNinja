@@ -2,7 +2,7 @@
   <div class="panel">
     <section class="section">
       <header class="section__header">
-        <h2 class="section__header__title" >Section Title</h2>
+        <h2 class="section__title" >Section Title</h2>
         <div class="section__header__menu">Header Menu</div>
       </header>
       <nav class="section__nav section__nav--top">
@@ -11,31 +11,29 @@
       <div class="section__body">
         <!-- Variant: List card -->
         <ul class="item item--list-card">
-          <li class="item--list-card__cell item--list-card__cell--header">
+          <li class="list-card-cell list-card-cell--header">
             List Header
           </li>
-          <li class="item--list-card__cell item--list-card__cell--item">
+          <li class="list-card-cell list-card-cell--item">
             List Item
           </li>
-          <li class="item--list-card__cell item--list-card__cell--item">
+          <li class="list-card-cell list-card-cell--item">
             List Item
           </li>
-          <li class="item--list-card__cell item--list-card__cell--footer">
+          <li class="list-card-cell list-card-cell--footer">
             List Footer
           </li>
-          <li class="item--list-card__cell item--list-card__cell--error"></li>
+          <li class="list-card-cell list-card-cell--error"></li>
         </ul>
         <!-- Variant: Detail card -->
-        <div class="item item--detail-card">
-          <header class="item--detail-card__header">
+        <div class="item detail-card">
+          <header class="detail-card__header">
             Detail Card Header
           </header>
-          <div class="item--detail-card__body">
-            <div class="item--detail-card__body__content">
-              Detail Card Body Content
-            </div>
+          <div class="detail-card__body">
+            Detail Card Body
           </div>
-          <footer class="item--detail-card__footer">
+          <footer class="detail-card__footer">
             Detail Card Footer
           </footer>
         </div>

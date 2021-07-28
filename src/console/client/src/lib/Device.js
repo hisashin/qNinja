@@ -15,6 +15,7 @@ class Device {
     this.experimentProgress = null;
     this.protocol = null;
     this.progress = null;
+    this.connected = false;
   }
   
   apiEndpoint () {
@@ -34,6 +35,7 @@ class Device {
     }
     this.ws.onopen = () => {
       console.log('WebSocket Client Connected');
+      this.connected = true;
       this.connectionEventHandlers.forEach((handler)=>{
         if (handler.onConnectionOpen != null) {
           handler.onConnectionOpen();
@@ -115,6 +117,7 @@ class Device {
     this.ws.onclose = (e) => {
       console.log("WebSocket.onclose");
       console.log(e);
+      this.connected = false;
       this.connectionEventHandlers.forEach((handler)=>{
         if (handler.onConnectionClose != null) {
           handler.onConnectionClose();
@@ -233,6 +236,11 @@ class Device {
   setExperiment (experiment) {
     this.experiment = experiment;
     this.protocol = this.experiment.protocol;
+    this.deviceStateHandlers.forEach((handler)=>{
+      if (handler.onUpdateProtocol) {
+        handler.onUpdateProtocol(this.experiment.protocol);
+      }
+    });
   }
 }
 const device = new Device();

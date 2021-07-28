@@ -6,7 +6,8 @@ const MAX_VAL = 256;
 const VAL_STEP = 16;
 let val = 0;// 0 - 256
 setInterval(()=>{
-  pot.setWiper(val);
+  //pot.setWiper(val);
+  pot.setWiper(0);
   val += VAL_STEP;
   if (val > MAX_VAL) {
     val = 0;

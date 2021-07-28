@@ -1,24 +1,5 @@
 <template>
-  <div class="">
-    <div>
-      <span>
-        Device: {{ connectionStatus }}
-      </span>
-      <span>
-        <template v-if="deviceState!=null">
-          State={{ deviceState.label }}
-        </template>
-        <!-- Network -->
-        <button
-          v-show="!connected"
-          
-          class="btn btn-link"
-          @click="reConnect"
-        >
-          Connect
-        </button>
-      </span>
-    </div>
+  <div class="device-summary">
     <template v-if="connected && deviceState!=null && deviceState.hasExperiment">
       <!-- Progress summary -->
       <ProgressMonitor />
@@ -38,7 +19,6 @@ export default {
   data() {
     return {
       connected: false,
-      connectionStatus: "Disconnected",
       deviceState: null
     }
   },
@@ -46,26 +26,20 @@ export default {
     this.device = device;
     this.device.addConnectionEventHandler(this);
     this.deviceState = this.device.getDeviceState();
+    this.connected = this.device.connected;
     this.device.addDeviceStateHandler(this);
   },
   methods: {
-    reConnect: function () {
-      console.log("reConnect");
-      this.device.connect();
-      
-    },
     start: function () {
     },
     openExperimentMonitor () {
     appState.pushPanel(appState.PANELS.EXPERIMENT_MONITOR);
     },
     onConnectionOpen: function () {
-      console.log("TheDeviceSummary.onConnectionOpen");
       this.connected = true;
       this.connectionStatus = "Connected";
     },
     onConnectionClose: function () {
-      console.log("TheDeviceSummary.onConnectionOpen");
       this.connected = false;
       this.connectionStatus = "Disconnected";
     

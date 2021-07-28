@@ -42,7 +42,7 @@ class ExperimentManager {
     this.id = Math.random();
   }
   
-  _createExperimentDraft (option) {
+  createExperimentDraft (option) {
     const timestamp = new Date().getTime();
     let experiment = {
       api_version: NINJAQPCR_API_VERSION,
@@ -128,7 +128,7 @@ class ExperimentManager {
   
   // Insert new experiment
   create (options, callback, onError) {
-    const experiment = this._createExperimentDraft(options);
+    const experiment = this.createExperimentDraft(options);
     experiment.id = this._generateExperimentId();
     const filePath = this._experimentDir() + "/" + experiment.id;
     fs.writeFile(filePath, JSON.stringify(experiment), (err)=>{

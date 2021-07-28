@@ -1,0 +1,48 @@
+/* Protocol detail & editor view */
+.protocol {
+  &__header {
+    padding:1em;
+  }
+  &__header__name {
+    font-size: 1.5rem;
+  }
+  &__stages {
+
+  }
+  &__stage {
+    border-top:1px solid rgba(0, 0, 0, 0.125);
+    padding:1em;
+  }
+}
+.protocol__stage-add {
+  text-align:right;
+  height:38px;
+  margin-top:-19px;
+  margin-bottom:-19px;
+  z-index:2;
+  padding-right:1em;
+}
+.protocol__stage__title {
+  font-size:1.45rem;
+}
+.protocol__steps {
+
+}
+.protocol__steps__step {
+
+}
+.protocol__steps__step__label {
+  display:inline-block;
+  width:100px;
+}
+.protocol__steps__step__value {
+  display:inline-block;
+  width:auto;
+}
+.protocol__stage__footer {
+  padding:0.2em 0;
+}
+.protocol-footer {
+  padding:1em;
+  border-top:1px solid rgba(0, 0, 0, 0.125);
+}

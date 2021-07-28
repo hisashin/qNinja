@@ -1,9 +1,9 @@
 <template>
-  <div class="panel">
+  <div class="panel panel--protocol-editor">
     <!-- Modal (Select stage type) -->
     <b-modal
       id="add-stage-modal"
-      title="Add a Stage"
+      title="+ a Stage"
       hide-footer
     >
       <b-button
@@ -32,16 +32,12 @@
       </b-button>
     </b-modal>
     <section class="section">
-      <header class="section__header">
-        <h2 class="section__header__title" >Protocol Editor</h2>
-        <div class="section__header__menu"></div>
-      </header>
       <div class="section__body">
         <!-- Variant: Detail card -->
-        <div class="item item--detail-card">
+        <div class="item detail-card">
           <!-- Editor here. -->
-          <div class="protocol">
-            <div class="protocol__header">
+          <div class="protocol-editor">
+            <div class="protocol-editor__header">
               <div>
                 Name 
                 <span :class="'validation-label validation__name'"/>
@@ -50,39 +46,64 @@
                 >
               </div>
               <div>
-                Lid temp
+                Lid
                 <span :class="'validation-label validation__lid_temp'"/>
                 <input
                   v-model.number="protocol.lid_temp" v-on:input="onChangeProtocol()"
-                  class="input-temp" type="number"
+                  class="input-temp input-temp--3" type="number"
                 >℃
               </div>
               <div>
-                Final Hold Temp
+                Final Hold
                 <span :class="'validation-label validation__final_hold_temp'"/>
                 <input
                   v-model.number="final_hold_temp" v-on:input="onChangeProtocol()"
-                  class="input-temp"
+                  class="input-temp input-temp--2"
                 >℃ (Optional)
                 
               </div>
+              <b-button
+                variant="primary"
+                @click="submitUpdateProtocol"
+                :disabled=hasError
+                v-show="!isNew"
+              >
+                Save
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="submitCreateProtocol"
+                :disabled=hasError
+                v-show="isNew"
+              >
+                Save
+              </b-button>
+              <b-button
+                variant="secondary"
+                @click="validateProtocol">
+                Validate
+              </b-button>
+            </div>
+            <div v-show="hasError">
+              This protocol has some errors.
             </div>
             
             <span :class="'validation-label validation__stages'"/>
-            <ul class="protocol__stages">
+            <div class="protocol-editor-stages-wrapper">
+            <ul class="protocol-editor-stages">
               <template v-for="(stage, index) in protocol.stages" >
-                <li class="protocol__stages__stage-add" :key="index + '_add'">
+                <li class="protocol-editor-stages__add-button" :key="index + '_add'">
                   <b-button
                     pill
                     @click="openAddStageModal(index)"
                   >
-                    Add
+                    +
                   </b-button>
                 </li>
-                <li class="protocol__stages__stage" :key="index + '_stage'">
+                <li class="protocol-editor-stages__stage protocol-editor-stage" :key="index + '_stage'">
                   <template v-if="stage.type==1">
-                    <h3 class="protocol__stages__stage__title">
-                      Hold Stage
+                    <h3 class="protocol-editor-stage__title">
+                      Hold
                       <span class="'validation-label validation__stages__' + index"/>
                       <b-button
                         size="sm"
@@ -96,9 +117,9 @@
                         class="input-cycles"
                       > 
                     </h3>
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    <ul class="protocol-editor-steps">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Hold
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
@@ -116,13 +137,13 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==2 || stage.type==4">
-                    <h3 class="protocol__stages__stage__title">
+                    <h3 class="protocol-editor-stage__title">
                       <span v-if="stage.type==2">
-                        qPCR Stage
+                        qPCR
                         <span :class="'validation-label validation__stages__'+index"/>
                       </span>
                       <span v-if="stage.type==4">
-                        Normal PCR Stage
+                        Normal PCR
                         <span :class="'validation-label validation__stages__'+index"/>
                       </span>
                       <b-button
@@ -132,24 +153,24 @@
                         Delete
                       </b-button>
                     </h3>
-                    Repeat <span :class="'validation-label validation__stages__'+index+'__cycles'"/><input
+                    <span :class="'validation-label validation__stages__'+index+'__cycles'"/><input
                       v-model.number="stage.cycles" v-on:input="onChangeProtocol()"
                       type="number"
                       class="input-cycles"
-                    > times
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    > cycles
+                    <ul class="protocol-editor-steps">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/><input
                           v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
                         <input
                           v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration" type="number" step="1"
+                          class="input-duration input-duration--3" type="number" step="1"
                         >sec
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
                         <input
@@ -158,7 +179,7 @@
                         >℃/sec
                         
                         <div v-if="stage.type==2">
-                          Data Collection : 
+                          
                           <span :class="'validation-label validation__stages__'+index+'__steps__0__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[0].data_collection.ramp_end" v-on:change="onChangeProtocol()">
                           Ramp End
@@ -166,19 +187,19 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Annealing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
                         <input
                           v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
                         <input
                           v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration" type="number" step="1"
+                          class="input-duration input-duration--3" type="number" step="1"
                         >sec
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
                         <input
@@ -187,7 +208,7 @@
                         >℃/sec
                         
                         <div v-if="stage.type==2">
-                          Data Collection : 
+                          
                           <span :class="'validation-label validation__stages__'+index+'__steps__1__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[1].data_collection.ramp_end" v-on:change="onChangeProtocol()">
                           Ramp End
@@ -195,19 +216,19 @@
                           Hold End
                         </div>
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Extending
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
                         <input
                           v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
                         <input
                           v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration" type="number" step="1"
+                          class="input-duration input-duration--3" type="number" step="1"
                         >sec
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
                         <input
@@ -215,7 +236,7 @@
                           class="input-speed" type="number" step="1"
                         >℃/sec
                         <div v-if="stage.type==2">
-                          Data Collection : 
+                          
                           <span :class="'validation-label validation__stages__'+index+'__steps__2__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[2].data_collection.ramp_end" v-on:change="onChangeProtocol()">
                           Ramp End
@@ -227,8 +248,8 @@
                     </ul>
                   </template>
                   <template v-if="stage.type==3">
-                    <h3 class="protocol__stages__stage__title">
-                      Melt Curve Stage
+                    <h3 class="protocol-editor-stage__title">
+                      Melt Curve
                       <span :class="'validation-label validation__stages__'+index"/>
                       <b-button
                         size="sm"
@@ -243,20 +264,20 @@
                         class="input-cycles"
                       > 
                     </h3>
-                    <ul class="protocol__stages__stage__steps">
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                    <ul class="protocol-editor-steps">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Denaturing
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
                         <input
                           v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
                         <input
                           v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration" type="number" step="1"
+                          class="input-duration input-duration--3" type="number" step="1"
                         >sec
                         <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
                         <input
@@ -265,19 +286,19 @@
                         >℃/sec
                         
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Cooling
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
                         <input
                           v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
                         <input
                           v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration" type="number" step="1"
+                          class="input-duration input-duration--3" type="number" step="1"
                         >sec
                         <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
                         <input
@@ -285,19 +306,19 @@
                           class="input-speed" type="number" step="1"
                         >℃/sec
                       </li>
-                      <li class="protocol__stages__stage__steps__step">
-                        <div class="protocol__stages__stage__steps__step__label">
+                      <li class="protocol-editor-steps__step protocol-editor-step">
+                        <div class="protocol-editor-step__label">
                           Melting
                         </div>
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
                         <input
                           v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp" type="number"
+                          class="input-temp input-temp--2" type="number"
                         >℃
                         <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
                         <input
                           v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration"
+                          class="input-duration input-duration--3"
                           type="number"
                           step="1"
                         >sec
@@ -309,56 +330,26 @@
                       </li>
                     </ul>
                   </template>
-                  <div class="protocol__stages__stage__footer">
+                  <div class="protocol__stage__footer">
                     <span :class="'validation-label validation__stages__'+index+'__pause_after'"/>
                     <label><input type="checkbox" v-model="stage.pause_after" v-on:change="onChangeProtocol()">Pause after the stage</label>
                   </div>
                 </li>
               </template>
-              <li class="protocol__stages__stage-add">
+              <li class="protocol-editor-stages__add-button">
                 <b-button
                   pill
                   @click="openAddStageModal(protocol.stages.length)"
                 >
-                  Add
+                  +
                 </b-button>
               </li>
-              <li class="protocol__stages__stage">
-                <!-- Footer empty cell -->
-              </li>
             </ul>
+            </div>
           </div>
           <!-- Protocol End -->
         </div>
       </div>
-      <nav class="section__nav section__nav--bottom">
-        <div v-show="hasError">
-          This protocol has some errors.
-        </div>
-        <b-button
-          variant="primary"
-          @click="submitUpdateProtocol"
-          :disabled=hasError
-          v-show="!isNew"
-        >
-          Save
-        </b-button>
-        <b-button
-          variant="primary"
-          @click="submitCreateProtocol"
-          :disabled=hasError
-          v-show="isNew"
-        >
-          Save
-        </b-button>
-        <b-button
-          variant="secondary"
-          @click="validateProtocol">
-          Validate
-        </b-button>
-      </nav>
-    
-
     </section>
   </div><!-- Panel -->
 </template>
@@ -437,6 +428,7 @@ export default {
         this.protocol.stages.splice(index, 1);
       }
     },
+    title () { return "Protocol Editor" },
     addStage(stage) {
       this.protocol.stages.splice(this.addStagePosition, 0, stage);
       this.onChangeProtocol();
@@ -571,6 +563,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- + "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

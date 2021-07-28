@@ -23,8 +23,8 @@ var URL = require('url');
 const WebSocketServer = require('websocket').server;
 
 const WEBSOCKET_PORT = "2222";
-const CLIENT_HOST_DEFAULT = "localhost";
-const CLIENT_PORT_DEFAULT = "8888";
+const CLIENT_HOST_DEFAULT = "ninjaqpcr.local";
+const CLIENT_PORT_DEFAULT = "8080";
 
 const protocolPager = new Pager(
   // Defaults
@@ -173,7 +173,6 @@ class NinjaQPCRHTTPServer {
       const origin = req.headers.origin;
       const HOST_REGEX = new RegExp("http:\\\/\\\/localhost(:[0-9]+)?");
       if (origin && HOST_REGEX.test(origin)) {
-        console.log("User port", RegExp.$1)
         corsAllow = origin;
       } else {
         corsAllow = 'http://' + clientHost;
@@ -525,7 +524,8 @@ class NinjaQPCRHTTPServer {
     return this._getRequestContentHandler(
       (req, res, map, content)=>{
         res.writeHead(200,{'Content-Type': 'application/json'});
-        const draft = em._createExperimentDraft(content);
+        const draft = em.createExperimentDraft(content);
+        draft.hardware = qpcr.getConfig();
         res.write(JSON.stringify(draft));
         res.end();
       }

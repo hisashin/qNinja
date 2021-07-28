@@ -1,132 +1,131 @@
 <template>
   <div class="section__body">
-    <div class="item item--detail-card">
-      <div class="item--detail-card__body">
-        <div class="item--detail-card__body__content">
-          <h3>Layout</h3>
-          <div>
-            <table class="pcr_table pcr_tables--well_layout">
-              <tr v-for="(row, row_index) in well_layout" v-bind:key="row_index">
-                <td v-for="(well, well_index) in row" v-bind:key="well_index">
-                  {{ well.name }}
-                </td>
-              </tr>
-            </table>
-          </div>
-          <h3>Wells</h3>
-          <div>
-            <table class="pcr_table pcr_table--wells">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Factor</th>
-                <th>Label</th>
-              </tr>
-              <tr v-for="(item, index) in config.wells" v-bind:key="index">
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>
-                  <select v-model="item.type" @change="onChange()" v-if="!item.is_in_series">
-                    <option value="">----</option>
-                    <option value="standard">Standard</option>
-                    <option value="unknown">Unknown sample</option>
-                    <option value="positive_control">Positive control</option>
-                    <option value="negative_control">Negative control</option>
-                    <option value="empty">Empty</option>
-                  </select>
-                  <span v-if="item.is_in_series">{{ item.series_type }}</span>
-                </td>
-                <td>
-                  <input v-if="!item.is_in_series"
-                    v-model.number="item.quantity" v-on:input="onChange()"
-                      type="number" step="0.01"/>
-                  <span v-if="item.series_type=='standard'">{{ item.series_quantity }}</span>
-                </td>
-                <td>
-                  <span v-if="item.is_in_series">{{ item.series_factor }}</span>
-                </td>
-                <td>
-                  <input
-                    v-model.number="item.label" v-on:input="onChange()"
-                      type="text"/>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <h3>Dilution Series</h3>
-          <div>
-            <table v-if="seriesCount" class="pcr_table pcr_table--dilusion_series_list">
-              <tr>
-                <th>Label</th>
-                <th>Type</th>
-                <th>Starting Quantity</th>
-                <th>Serial Factor</th>
-                <th>Number of Wells</th>
-                <th>Wells</th>
-              </tr>
-              <tr v-for="(series, series_index) in config.series_list" v-bind:key="series_index">
-                <td>
-                  <input
-                    v-model.number="series.label" v-on:input="onChange()"
-                      size="8"
-                      type="text"/>
-                </td>
-                <td>
-                  <select v-model="series.type" @change="onChange()">
-                    <option value="">----</option>
-                    <option value="standard">Standard</option>
-                    <option value="unknown">Unknown sample</option>
-                  </select>
-                </td>
-                <td>
-                  <input
-                    v-model.number="series.start_quantity" v-on:input="onChange()"
-                      size="4"
-                      type="text"/>
-                </td>
-                <td>
-                  <input
-                    v-model.number="series.factor" v-on:input="onChange()"
-                      size="4"
-                      type="text"/>
-                </td>
-                <td>
-                  <input
-                    v-model.number="series.count" v-on:input="onChange()"
-                      size="4"
-                      type="number" step="1"/>
-                </td>
-                <td>
-                  <div v-if="series.wells.length > 0">
-                    {{ series.wells }}
-                    <b-button
-                      @click.stop="clearWells(series_index)">
-                      Clear
-                    </b-button>
-                  </div>
-                  <div v-if="series.wells.length == 0">
-                    Assign wells
-                    <b-button
-                      @click.stop="assignWellsAuto(series_index)">
-                      Auto
-                    </b-button>
-                    <b-button
-                      @click.stop="assignWellsManual(series_index)">
-                      Manual
-                    </b-button>
-                  </div>
-                  
-                </td>
-              </tr>
-            </table>
-            <b-button
-              @click.stop="setSeries">
-              Add
-            </b-button>
-            <WellPicker ref="wellPicker" @select="didSelectWell" @cancel="didCancelSelectWell"/>
-          </div>
+    <div class="item detail-card">
+      <div class="detail-card__body">
+        <div>
+          <table class="pcr-table plate-layout">
+            <tr v-for="(row, row_index) in well_layout" v-bind:key="row_index">
+              <td v-for="(well, well_index) in row" v-bind:key="well_index"
+                v-bind:class="'plate-layout__well plate-layout__well--' + (well.conf.type || well.conf.series_type)">
+                {{ well.name }}
+                <!-- {{ well }} -->
+              </td>
+            </tr>
+          </table>
+        </div>
+        <h3>Wells</h3>
+        <div>
+          <table class="pcr-table pcr-table--wells">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Factor</th>
+              <th>Label</th>
+            </tr>
+            <tr v-for="(item, index) in config.wells" v-bind:key="index">
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>
+                <select v-model="item.type" @change="onChange()" v-if="!item.is_in_series">
+                  <option value="">----</option>
+                  <option value="standard">Standard</option>
+                  <option value="unknown">Unknown sample</option>
+                  <option value="positive_control">Positive control</option>
+                  <option value="negative_control">Negative control</option>
+                  <option value="empty">Empty</option>
+                </select>
+                <span v-if="item.is_in_series">{{ item.series_type }}</span>
+              </td>
+              <td>
+                <input v-if="!item.is_in_series"
+                  v-model.number="item.quantity" v-on:input="onChange()"
+                    type="number" step="0.01"/>
+                <span v-if="item.series_type=='standard'">{{ item.series_quantity }}</span>
+              </td>
+              <td>
+                <span v-if="item.is_in_series">{{ item.series_factor }}</span>
+              </td>
+              <td>
+                <input
+                  v-model.number="item.label" v-on:input="onChange()"
+                    type="text"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <h3>Dilution Series</h3>
+        <div>
+          <table v-if="seriesCount" class="pcr-table pcr-table--dilusion-series-list">
+            <tr>
+              <th>Label</th>
+              <th>Type</th>
+              <th>Starting Quantity</th>
+              <th>Serial Factor</th>
+              <th>Number of Wells</th>
+              <th>Wells</th>
+            </tr>
+            <tr v-for="(series, series_index) in config.series_list" v-bind:key="series_index">
+              <td>
+                <input
+                  v-model.number="series.label" v-on:input="onChange()"
+                    size="8"
+                    type="text"/>
+              </td>
+              <td>
+                <select v-model="series.type" @change="onChange()">
+                  <option value="">----</option>
+                  <option value="standard">Standard</option>
+                  <option value="unknown">Unknown sample</option>
+                </select>
+              </td>
+              <td>
+                <input
+                  v-model.number="series.start_quantity" v-on:input="onChange()"
+                    size="4"
+                    type="text"/>
+              </td>
+              <td>
+                <input
+                  v-model.number="series.factor" v-on:input="onChange()"
+                    size="4"
+                    type="text"/>
+              </td>
+              <td>
+                <input
+                  v-model.number="series.count" v-on:input="onChange()"
+                    size="4"
+                    type="number" step="1"/>
+              </td>
+              <td>
+                <div v-if="series.wells.length > 0">
+                  {{ series.wells }}
+                  <b-button
+                    @click.stop="clearWells(series_index)">
+                    Clear
+                  </b-button>
+                </div>
+                <div v-if="series.wells.length == 0">
+                  Assign wells
+                  <b-button
+                    @click.stop="assignWellsAuto(series_index)">
+                    Auto
+                  </b-button>
+                  <b-button
+                    @click.stop="assignWellsManual(series_index)">
+                    Manual
+                  </b-button>
+                </div>
+                
+              </td>
+            </tr>
+          </table>
+          <b-button
+            @click.stop="setSeries">
+            Add
+          </b-button>
+          <WellPicker ref="wellPicker" @select="didSelectWell" @cancel="didCancelSelectWell"/>
         </div>
       </div>
     </div>
@@ -166,7 +165,8 @@ export default {
   },
   methods: {
     updateLayout: function () {
-      this.well_layout = layout.map((row)=>{
+      console.log(JSON.stringify(this.hardware))
+      this.well_layout = this.hardware.wells.layout.map((row)=>{
         return row.map((wellId)=>{
           let wellConf = this.findWellConfById(wellId);
           let name = device.config.wells.names[wellId];
@@ -231,8 +231,10 @@ export default {
         }
       }
     },
-    setConfig (config) {
+    setConfig (config, hardware) {
       this.config = config;
+      this.hardware = hardware;
+      console.log(hardware)
       try {
         this.makeConfigConsistent();
         this.updateLayout();
@@ -313,17 +315,4 @@ export default {
 }
 </script>
 <style>
-
-.pcr_table--well_layout {
-  min-width:640px;
-}
-.pcr_table--wells {
-  min-width:640px;
-}
-.pcr_table--dilusion_series_list {
-  min-width:640px;
-}
-.pcr_table--well_picker {
-  min-width:640px;
-}
 </style>

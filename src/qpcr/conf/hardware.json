@@ -29,5 +29,5 @@
   "channels": {
     "count":2
   },
-  "hardware_conf":"dummy_hardware_multi_conf"
+  "hardware_conf":"batch8_hardware_conf"
 }

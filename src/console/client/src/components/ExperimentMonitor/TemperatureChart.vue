@@ -1,5 +1,5 @@
 <template>
-  <div style="width:400px,height:200px">
+  <div style="width:400px;height:200px" id="hogehoge">
     <canvas
       ref="canvas"
       width="400"
@@ -23,6 +23,7 @@ export default {
     this.channelLid = null;
   },
   mounted: function () {
+  console.log("TemperatureChart.mounted");
     const CONVERSION_FUNCTION = (obj)=>{return { "x":obj.t/1000.0, "y":obj.v } };
     let graph = new Graph(this.$refs.canvas);
     this.channelPlate = graph.addChannel({index:0, label:"Plate"}).addSubChannel({type:"line"});
@@ -41,6 +42,7 @@ export default {
       this.graph.update();
     },
     set: function (timeSeries, plateSeries, lidSeries) {
+    console.log("TemperatureChart.set");
       this.graph.clearData();
       let maxTime = 0;
       for (let i=0; i<timeSeries.length; i++) {

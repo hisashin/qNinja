@@ -1,10 +1,10 @@
 <template>
-  <div class="panel">
-    <section class="section">
+  <div class="panel panel--dashboard">
+    <section class="section section--dashboard-protocols">
       <header class="section__header">
-        <h2 class="section__header__title" >
+        <h2 class="section__title" >
           Recent Protocols
-          <b-button @click="viewProtocolList" class="float-right">
+          <b-button @click="viewProtocolList" class="float-right" variant="outline-secondary" size="sm">
             More
           </b-button>
         </h2>
@@ -12,11 +12,11 @@
       </header>
       <ProtocolList :limit="2" ref="protocolList" :pagination="false" />
     </section>
-    <section class="section">
+    <section class="section section--dashboard-experiments">
       <header class="section__header">
-        <h2 class="section__header__title">
+        <h2 class="section__title list-header__title">
           Recent Experiments
-          <b-button @click="viewExperimentList" class="float-right">
+          <b-button @click="viewExperimentList" class="float-right" variant="outline-secondary" size="sm">
             More
           </b-button>
         </h2>
@@ -39,6 +39,7 @@ export default {
   },
   props: {
   },
+  title () { return "Dashboard" },
   data() {
     return {
     }

@@ -57,13 +57,17 @@ sudo cp /usr/local/ninjaqpcr/network_conf_app/wpa_supplicant_header.txt /etc/wpa
 rm -f ~/.bash_history
 ```
 
-# Extra (Ortanize this section in the installation flow)
-Add to ~/.bashrc
-```
-export NINJAQPCR_USER_DATA=/home/pi/ninjaqpcr/user_data
-export NINJAQPCR_HOME=/usr/local/ninjaqpcr
-```
-
+# Define global env variables
 /etc/environment
 NINJAQPCR_USER_DATA=/home/pi/ninjaqpcr/user_data
 NINJAQPCR_HOME=/usr/local/ninjaqpcr
+
+# Launch Chromium on GUI launch
+* `mkdir ~/.config/autorun`
+* `vi ~/.config/autorun/ninjaqpcr.desktop`
+```
+[Desktop Entry]
+Name=Ninja-qPCR
+Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8888?kiosk=true
+Type=Application
+```

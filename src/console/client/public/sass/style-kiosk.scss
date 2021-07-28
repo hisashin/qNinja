@@ -1,0 +1,56 @@
+@import 'var-kiosk.scss';
+
+@import 'style.scss';
+@import 'blocks/header.scss';
+@import 'blocks/protocol.scss';
+@import 'blocks/protocol-editor.scss';
+@import 'blocks/protocol-summary.scss';
+@import 'blocks/outline.scss';
+@import 'blocks/experiment-monitor.scss';
+/* Layout variant for RPi kiosk */
+body {
+  width:800px;
+  background-image: url("../img/LCD_800x480.png"); /* RPi LCD size checker */
+  background-repeat: no-repeat;
+}
+.main {
+  max-width: 100%;
+}
+.header {
+  display:none;
+}
+/* Panel */
+.panel {
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+/* Layout of individual panels */
+.section {
+  padding:1em;
+  width: 100%;
+  &--dashboard {
+    flex-grow:1;
+    &-protocols {
+      width: 50%;
+    }
+    &-experiments {
+      width: 50%;
+    }
+  }
+}
+.protocol-summary__menu {
+  display:none;
+}
+
+.device-summary {
+  width:800px;
+  z-index:999;
+  position:absolute;
+  bottom:0;
+  /* background-color:#fed; */
+  background-color: #ffffff;
+  border-radius: 1em;
+  border: 1px solid #aaa;
+}

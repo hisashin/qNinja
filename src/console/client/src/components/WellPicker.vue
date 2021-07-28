@@ -6,7 +6,7 @@
   >
     <div>
     
-      <table class="pcr_table pcr_table--well_picker">
+      <table class="pcr-table pcr-table--well_picker">
         <tr v-for="(row, row_index) in layout" v-bind:key="row_index">
           <td v-for="(well, well_index) in row" v-bind:key="well_index" @click="toggle(well.id)" v-bind:class="[ styleClass(well.id) ]">
             {{ well.name }}

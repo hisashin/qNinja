@@ -1,95 +1,123 @@
 <template>
-  <div class="card p-3 mb-3" 
-    v-if="protocol!=null && progress!=null && deviceState != null">
-    <b-modal
-      id="finish-modal"
-      title="Completed!"
-      hide-footer
-    >
-      <b-button 
-        variant="primary"
-        block @click="finish"
+  <div>
+    <!-- ProgressMonitor copied start -->
+    <div v-if="protocol==null">Protocol is null</div>
+    <div v-if="progress==null">Progress is null</div>
+    <div v-if="deviceState==null">DeviceState is null</div>
+    <div class="progress-monitor"
+      v-if="protocol!=null && progress!=null && deviceState != null">
+      <b-modal
+        id="finish-modal"
+        title="Completed!"
+        hide-footer
       >
-        Stop the device
-      </b-button>
-    </b-modal>
-    <ul class="progress-meter">
-      <li 
-        class="progress-meter-item"
-        v-bind:class="{ 'progress-meter-item-current': progress.state.state=='preheat' }">Preheat</li>
-      <li 
-        class="progress-meter-item"
-        v-for="(stage, index) in protocol.stages" :key="index" 
-        v-bind:class="{ 'progress-meter-item-current': progress.state.stage==index }">
-        {{ stageLabel(stage.type) }}
-      </li>
-      <li
-        class="progress-meter-item"
-        v-bind:class="{ 'progress-meter-item-current': progress.state.state=='complete' }">Final Hold</li>
-    </ul>
-    <div class="row">
-      <div class="col-6">
-        <div>
-          Plate {{ progress.plate }}℃ 
-          <template 
-            v-if="step!=null && step.temp!=null">/{{step.temp}}℃</template>
+        <b-button 
+          variant="primary"
+          block @click="finish"
+        >
+          Stop the device
+        </b-button>
+      </b-modal>
+      <div class="progress-monitor__row">
+        <ul class="progress-meter">
+          <li 
+            class="progress-meter__item"
+            v-bind:class="{ 'progress-meter__item--current': progress.state.state=='preheat','progress-meter__item--done': progress.state.state!='preheat' }">
+              <span class="progress-meter__item progress-meter__label">Preheat</span>
+            </li>
+          <li 
+            class="progress-meter__item"
+            v-for="(stage, index) in protocol.stages" :key="index" 
+            v-bind:class="{ 'progress-meter__item--notyet': progress.state.stage<index,'progress-meter__item--current': progress.state.stage==index,'progress-meter__item--done': progress.state.stage>index }">
+            <span class="progress-meter__item progress-meter__label">{{ stageLabel(stage.type) }}</span>
+            <div
+              v-if="progress.state.stage==index" class="progress-meter__item progress-meter__progress" v-bind:style="{width: (100*progress.state.cycle/stage.cycles) + '%'}"></div>
+            <div
+              v-if="progress.state.stage==index" class="progress-meter__item progress-meter__detail">
+              {{ progress.state.cycle+1 }}<template
+                v-if="stage!=null">/{{stage.cycles}}</template> {{ progress.state.state }}</div>
+          </li>
+          <li
+            class="progress-meter__item"
+            v-bind:class="{ 'progress-meter__item--current': progress.state.state=='complete', 'progress-meter__item--notyet': progress.state.state!='complete' }">
+            <span class="progress-meter__item progress-meter__label">Final Hold</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="progress-monitor__row">
+        <div class="temperature-monitor">
+          <div class="temperature-monitor__label">
+            Plate
+            <div class="temperature-monitor__value">{{ plateTemp }} 
+            <template 
+              v-if="step!=null && step.temp!=null">/{{step.temp}}℃</template>
+            </div>
+          </div>
+          <div class="temperature-monitor__meter">
+            <meter class="temperature-monitor__meter-body"
+              min="20"
+              max="100"
+              :value="progress.plate"></meter>
+            <div class="temperature-monitor__meter-scale">
+              <div class="temperature-monitor__meter-scale-element">20</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">40</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">60</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">80</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">100</div>
+            </div>
+          </div>
         </div>
-        <div>
-          <meter
+        <div class="temperature-monitor">
+          <div class="temperature-monitor__label">
+            Lid
+            <div class="temperature-monitor__value">{{ progress.lid }}/{{protocol.lid_temp}}℃</div>
+          </div>
+          <div class="temperature-monitor__meter">
+            <meter class="temperature-monitor__meter-body"
+              min="20"
+              :value="progress.lid"
+              max="120"></meter>
+            <div class="temperature-monitor__meter-scale">
+              <div class="temperature-monitor__meter-scale-element">20</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">40</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">60</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">80</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">100</div>
+              <div class="temperature-monitor__meter-scale-spacer"></div>
+              <div class="temperature-monitor__meter-scale-element">120</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="progress-monitor__row" v-if="progress.state.state!='preheat' && progress.state.state!='complete'">
+        <div class="time-monitor">
+          <div class="time-monitor__elapsed">{{ elapsedTime }} </div>
+          <div class="time-monitor__estimated"> / {{ totalTime }}</div>
+          <div class="time-monitor__remaining"> ({{ remainingTime }} left)</div>
+          <meter class="time-monitor__meter" 
             min="0"
-            max="110"
-            :value="progress.plate"
-            style="width:100%" />
+            :max="progress.remaining+progress.elapsed"
+            :value="progress.elapsed"></meter>
+          
+          <template v-if="deviceState != null">
+          <button class="time-monitor__button" v-if="deviceState.pauseAvailable" @click="pause">Pause</button>
+          <button class="time-monitor__button" v-if="deviceState.resumeAvailable" @click="resume">Resume</button>
+          <button class="time-monitor__button" v-if="deviceState.abortAvailable" @click="abort">Abort</button>
+          <button class="time-monitor__button" v-if="deviceState.finishAvailable" @click="finish">Finish</button>
+          <button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>
+          </template>
+          
         </div>
       </div>
-      <div class="col-6">
-        <div>
-          Lid {{ progress.lid }}℃/{{protocol.lid_temp}}℃
-        </div>
-        <div>
-          <meter
-            min="0"
-            max="110"
-            :value="progress.lid"
-            style="width:100%"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row" v-if="progress.state.state!='preheat' && progress.state.state!='complete'">
-      <div class="col-3">
-        Stage {{ progress.state.stage+1 }}/{{ protocol.stages.length }}
-      </div>
-      <div class="col-3">
-        Step {{ progress.state.step+1 }}<template v-if="stage!=null">/{{stage.steps.length}}</template>
-      </div>
-      <div class="col-3">
-        Cycle {{ progress.state.cycle+1 }}<template v-if="stage!=null">/{{stage.cycles}}</template>
-      </div>
-      <div class="col-3">
-        {{ progress.state.state }} 
-        {{ stepElapsedSec }} sec
-      </div>
-      <div class="col-12">
-        <meter
-          min="0"
-          :max="progress.remaining+progress.elapsed"
-          :value="progress.elapsed"
-          style="width:100%" />
-        {{ progress.state.state }}
-        Elapsed:{{ elapsedTime }} 
-        Remaining:{{ remainingTime }} 
-        Total: {{ totalTime }}
-      </div>
-    </div>
-    <div>
-      <template v-if="deviceState != null">
-        <b-button pill v-if="deviceState.pauseAvailable" @click="pause" class="mr-1">Pause</b-button>
-        <b-button pill v-if="deviceState.resumeAvailable" @click="resume" class="mr-1">Resume</b-button>
-        <b-button pill v-if="deviceState.abortAvailable" @click="abort" class="mr-1">Abort</b-button>
-        <b-button pill v-if="deviceState.finishAvailable" @click="finish" class="mr-1">Finish</b-button>
-        <b-button pill v-if="deviceState.startAvailable" @click="start" class="mr-1">Start</b-button>
-      </template>
     </div>
   </div>
 </template>
@@ -129,10 +157,14 @@ export default {
     },
     totalTime: function () {
       return Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
+    },
+    plateTemp: function () {
+      return (this.progress) ? Math.round(this.progress.plate) : 0;
     }
   },
   created: function () {
     this.protocol = device.getProtocol();
+    device.addConnectionEventHandler(this);
     device.addTransitionHandler({
       onStart:(obj)=>{
         this.protocol = obj.protocol;
@@ -159,7 +191,6 @@ export default {
     this.deviceState = device.getDeviceState();
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
-        console.log("ProgressMonitor.onDeviceStateChange");
         if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
           console.log("Show modal.");
           this.$bvModal.show('finish-modal');
@@ -168,7 +199,6 @@ export default {
       },
       onUpdateProtocol: (protocol)=>{
         this.protocol = protocol;
-        console.log("ProgressMonitor.onUpdateProtocol");
       }
     });
   },
@@ -193,6 +223,18 @@ export default {
     },
     reset () {
       this.$bvModal.hide('finish-modal');
+    },
+    onConnectionOpen: function () {
+      console.log("onConnectionOpen");
+      this.protocol = device.getProtocol();
+      this.connected = true;
+      this.connectionStatus = "Connected";
+    },
+    onConnectionClose: function () {
+      this.protocol = null;
+      this.connected = false;
+      this.connectionStatus = "Disconnected";
+    
     },
     pause () { device.pause(); },
     resume () { device.resume(); },

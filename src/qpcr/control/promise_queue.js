@@ -12,8 +12,9 @@ class PromiseQueue {
     const f = this.tasks.shift();
     f().then(()=>{
       this._exec();
-    }, ()=>{
-      this.reject();
+    }, (reason)=>{
+      console.log(reason);
+      if (this.reject) this.reject();
     });
   }
   exec () {

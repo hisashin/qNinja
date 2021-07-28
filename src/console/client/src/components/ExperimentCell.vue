@@ -1,6 +1,6 @@
 <template>
-  <div class="experiment-cell-content" @click="revealDetail">
-    <div class="p-1">
+  <li class="list-card-cell list-card-cell--item" @click="revealDetail">
+    <div class="experiment-cell-content">
       <div class="row">
         <div class="col-12"><strong>{{summary.name}}</strong></div>
         <div class="col-4">{{start}}</div>
@@ -8,7 +8,7 @@
         <div class="col-4">{{summary.status}}</div>
       </div>
     </div>
-  </div>
+  </li>
 </template>
 <script>
 import appState from "../lib/AppState.js";

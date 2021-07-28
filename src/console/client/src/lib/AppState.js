@@ -32,6 +32,9 @@ class AppState {
     };
     this.panelStack.push(this.PANELS.DASHBOARD);
   }
+  isKiosk () {
+    return this.isKiosk = location.href.indexOf("kiosk=true")>0;
+  }
   setNavigationHandler (handler) {
     this.navigationHandler = handler;
   }
@@ -65,7 +68,7 @@ class AppState {
       }
       this.panelStack.push(panel);
       if (this.panelContainer) {
-        this.panelContainer.presentPanel(panel);
+        this.panelContainer.presentPanel(panel, toPanel);
         this._didNavigate();
       } else {
         console.log("PushPanel panelContainer is null.");
