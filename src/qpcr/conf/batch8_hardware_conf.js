@@ -109,6 +109,7 @@ class HardwareConf {
     this.ledUnit = null;
     this.i2c = i2c.openSync(I2C_CHANNEL);
     const adc = new ADS122C04IPWR(this.i2c, ADC_DEVICE_ADDR);
+    this.adc = adc;
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
     this.pwmPlate = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER);
     this.pwmLid = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER);
@@ -137,12 +138,21 @@ class HardwareConf {
       const output = new HeatLidOutput(this.pwmLid);
       this.lid = new HeatUnit(pid, lidSensing, output);
     }
+    try {
+      this.adcManager.start();
+      this.adc.initialize();
+      console.log("adc.initialize()");
+      this.adc.selectDataRate(20);
+      console.log("adc.selectDataRate()");
+      this.adc.selectVoltageReferenceExternal();
+      console.log("adc.selectVoltageReferenceExternal()");
+      this.thermistorMux.initialize();
+      console.log("thermistorMux.initialize()");
+    } catch (ex) {
+      console.log(ex);
+    }
   }
   start () {
-    this.adcManager.start();
-    this.thermistorMux.start();
-    adc.selectDataRate(20);
-    adc.selectVoltageReferenceExternal();
   }
   shutdown () {
     this.i2c.close();
@@ -199,7 +209,7 @@ class PlateSensing {
   }
 }
 const THERMISTOR_MUX_WAIT_MSEC = 4;
-
+const USE_TEMP_SWITCHING = false;
 class TemperatureSensing {
   constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
     this.thermistorLowTemp = thermistorLowTemp;
@@ -218,6 +228,24 @@ class TemperatureSensing {
   }
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
+      /*
+      this.mux.selectChannel(this.muxChannel);
+      let thermistor = null;
+      if (USE_TEMP_SWITCHING) {
+        let switchPinVal = 0;
+        if (this.prevValue < this.switchingTemp) {
+          thermistor = this.thermistorLowTemp;
+        } else {
+          thermistor = this.thermistorHighTemp;
+          switchPinVal = 1;
+        }
+        rpio.write(PIN_NUM_THERMISTOR_R, switchPinVal);
+      } else {
+        thermistor = this.thermistorLowTemp;
+      }
+      */
+      // Prev value
+      // Switch
       this.mux.selectChannel(this.muxChannel);
       let thermistor = null;
       let switchPinVal = 0;
@@ -234,7 +262,7 @@ class TemperatureSensing {
         this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
           const temp = thermistor.getTemp(val);
           this.prevValue = temp;
-          // console.log("Ch=%d ADC=%f TEMP=%f", this.muxChannel, val, temp);
+          console.log("Ch=%d ADC=%f TEMP=%f", this.muxChannel, val, temp);
           muxQueue.release(muxTaskId);
           callback(temp);
         });
