@@ -26,15 +26,11 @@ const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
 
-const DEBUG_COEFF = 1;
-const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
-const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 const I2C_ADDR_PCA9955B = 0x05;
 
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
-const ADC_DATA_RATE = 90;
 const ADC_DEVICE_ADDR = 0x40;
 const POT_DEVICE_ADDR = 0x2F;
 
@@ -100,7 +96,15 @@ const MUX_MAP_PHOTODIODES_S = [
   [8,9,10,11,12,13,14,15], // Opt channel 0
   [7,6,5,4,3,2,1,0] // Opt channel 1
 ];
-// TODO LED table
+/* 
+  Measurement Interval and Data Rate
+  Interval > 1000 / DataRate
+*/
+const ADC_DATA_RATE = 90;
+const THERMISTOR_MUX_WAIT_MSEC = 20;
+const DEBUG_COEFF = 1;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 const muxQueue = new ExclusiveTaskQueue();
 
@@ -142,8 +146,8 @@ class HardwareConf {
       this.adcManager.start();
       this.adc.initialize();
       console.log("adc.initialize()");
-      this.adc.selectDataRate(20);
-      console.log("adc.selectDataRate()");
+      this.adc.selectDataRate(ADC_DATA_RATE);
+      console.log("adc.selectDataRate(%d)", ADC_DATA_RATE);
       this.adc.selectVoltageReferenceExternal();
       console.log("adc.selectVoltageReferenceExternal()");
       this.thermistorMux.initialize();
@@ -155,7 +159,6 @@ class HardwareConf {
   start () {
   }
   shutdown () {
-    this.i2c.close();
   }
   
   /* Hardware specifications */
@@ -208,7 +211,6 @@ class PlateSensing {
     });
   }
 }
-const THERMISTOR_MUX_WAIT_MSEC = 4;
 const USE_TEMP_SWITCHING = false;
 class TemperatureSensing {
   constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
@@ -228,24 +230,6 @@ class TemperatureSensing {
   }
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
-      /*
-      this.mux.selectChannel(this.muxChannel);
-      let thermistor = null;
-      if (USE_TEMP_SWITCHING) {
-        let switchPinVal = 0;
-        if (this.prevValue < this.switchingTemp) {
-          thermistor = this.thermistorLowTemp;
-        } else {
-          thermistor = this.thermistorHighTemp;
-          switchPinVal = 1;
-        }
-        rpio.write(PIN_NUM_THERMISTOR_R, switchPinVal);
-      } else {
-        thermistor = this.thermistorLowTemp;
-      }
-      */
-      // Prev value
-      // Switch
       this.mux.selectChannel(this.muxChannel);
       let thermistor = null;
       let switchPinVal = 0;
@@ -410,6 +394,7 @@ const LARGE_GAIN_VALUE = 10.0; // MOhm
 const SMALL_GAIN_VALUE = 1.0; // MOhm
 
 const USE_GAIN_SWITCHING = false;
+const DEFAULT_IS_STRONG_SIGNAL = false; // Set "false" to use the larger gain
 // Photodiode
 class FluorescenceSensingUnit {
   constructor (mux, adcManager, adcChannel) {
@@ -452,7 +437,7 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
-      this.isStrongSignal = false;
+      this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
     }
     rpio.write(PIN_NUM_AMP_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }

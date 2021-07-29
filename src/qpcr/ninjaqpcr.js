@@ -51,25 +51,17 @@ class NinjaQPCR {
     return conf;
   }
   /* API */
-  
   /* Event handler registration */
   setEventReceiver (receiver) {
     this.receiver = receiver;
     /*
       onThermalTransition(transition)
-      
       onProgress(data)
-      
       onStart(data)
-      
       onComplete(data)
-      
       onDeviceStateChange(data)
-      
       onFluorescenceDataUpdate(data)
-      
       onFluorescenceEvent (data)
-      
       onError(error)
     */
   }
@@ -411,8 +403,16 @@ class NinjaQPCR {
   }
   shutdown () {
     console.log("NinjaQPCR.shutdown()");
-    this.thermalCycler.shutdown();
-    this.optics.shutdown();
+    try {
+      this.thermalCycler.shutdown();
+    } catch (e) {
+      console.warn(e);
+    }
+    try {
+      this.optics.shutdown();
+    } catch (e) {
+      console.warn(e);
+    }
   }
 }
 

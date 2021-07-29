@@ -223,8 +223,16 @@ class ThermalCycler {
   }
   shutdown () {
     console.log("ThermalCycler.shutdown()");
-    this.plate.shutdown();
-    this.heatLid.shutdown();
+    try {
+      this.plate.shutdown();
+    } catch (e) {
+      console.warn(e);
+    }
+    try {
+      this.heatLid.shutdown();
+    } catch (e) {
+      console.warn(e);
+    }
   }
 }
 

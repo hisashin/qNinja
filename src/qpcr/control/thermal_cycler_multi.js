@@ -234,8 +234,24 @@ class ThermalCycler {
   }
   shutdown () {
     console.log("ThermalCycler.shutdown()");
-    this.plate.shutdown();
-    this.heatLid.shutdown();
+    if (this.plate && this.plate.shutdown) {
+      try {
+        this.plate.shutdown();
+      } catch (e) {
+        console.warn(e);
+      }
+    } else {
+      console.warn("ThermalCycler.shutdown() plate does not have shutdown function.");
+    }
+    if (this.heatLid && this.heatLid.shutdown) {
+      try {
+        this.heatLid.shutdown();
+      } catch (e) {
+        console.warn(e);
+      }
+    } else {
+      console.warn("ThermalCycler.shutdown() heatLid does not have shutdown function.");
+    }
   }
 }
 function round (value, position) {

@@ -21,8 +21,18 @@ class HeatWorkbench {
     }, 500);
   }
   shutdown () {
-    this.plate.shutdown();
-    this.heatLid.shutdown();
+    console.log("HeatWorkbench.shutdown()");
+    try {
+      this.plate.shutdown();
+    } catch (e) {
+      console.warn(e);
+    }
+    try {
+      this.heatLid.shutdown();
+    } catch (e) {
+      console.warn(e);
+      
+    }
   }
 }
 module.exports = HeatWorkbench;

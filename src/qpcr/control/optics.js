@@ -125,7 +125,6 @@ class Optics {
     
     for (let wellIndex=0; wellIndex<this.wellsCount; wellIndex++) {
       queue.push(this._taskSelectLED(wellIndex));
-      // queue.push(this._taskDelay(5));
       for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
         queue.push(this._taskSelectPhotodiode(wellIndex, opticsChannel));
         queue.push(this._taskDelay(this.fluorescenceSensingUnit.excitationDuration()));
@@ -183,7 +182,15 @@ class Optics {
   }
   shutdown () {
     console.log("Optics.shutdown()");
-    this.ledUnit.shutdown();
+    if (this.ledUnit && this.ledUnit.shutdown) {
+      try {
+        this.ledUnit.shutdown();
+      } catch (e) {
+        console.warn(e);
+      }
+    } else {
+      console.warn("Optics.shutdown() ledUnit does not have shutdown function.");
+    }
   }
 }
 

@@ -225,8 +225,8 @@ class ExperimentManager {
       }
     }
     table.push(header);
-    const qpcr = experiment.log.fluorescence.qpcr;
-    for (let i=0; i<qpcr.length; i++) {
+    const qpcrData = experiment.log.fluorescence.qpcr;
+    for (let i=0; i<qpcrData.length; i++) {
       const data = qpcr[i];
       let line = [ data.t, data.cycle];
       for (let ch=0; ch<chCount; ch++) {
