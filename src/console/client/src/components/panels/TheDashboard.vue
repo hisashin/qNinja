@@ -24,6 +24,12 @@
       </header>
       <ExperimentList :limit="4" ref="experimentList" :pagination="false" />
     </section>
+    <section class="section">
+      <b-button class="mr-1 btn-sm"
+        @click.stop="optics">
+        Optics
+      </b-button>
+    </section>
   </div>
 </template>
 <script>
@@ -56,6 +62,9 @@ export default {
     onAppear () {
       this.$refs.protocolList.load();
       this.$refs.experimentList.load();
+    },
+    optics () {
+      appState.pushPanel(appState.PANELS.OPTICS_MONITOR);
     }
   }
 }

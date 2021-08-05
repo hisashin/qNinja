@@ -1,5 +1,5 @@
 "use strict";
-const PromiseQueue = require("./promise_queue.js");
+const PromiseQueue = require("../lib/promise_queue.js");
 
 const START_TEMP = 25.0;
 
@@ -86,9 +86,10 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (plate, heatLid) {
+  constructor (plate, heatLid, /* Optional */extraSensing) {
     this.plate = plate;
     this.heatLid = heatLid;
+    this.extraSensing = extraSensing;
     this.state = new StateIdle(null);
   }
   setEventReceiver (receiver) {
@@ -162,7 +163,14 @@ class ThermalCycler {
   _lidControlTask (lid) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        this.heatLid.control(resolve);
+        lid.control(resolve);
+      });
+    };
+  }
+  _extraSensingControlTask (extraSensing) {
+    return ()=>{
+      return new Promise((resolve, reject)=>{
+        extraSensing.control(resolve);
       });
     };
   }
@@ -171,7 +179,11 @@ class ThermalCycler {
     let queue = [];
     queue.push(this._plateControlTask(this.plate));
     if (this.protocol.lid_temp > 0) {
-      queue.push(this._lidControlTask());
+      queue.push(this._lidControlTask(this.heatLid));
+    }
+    if (this.extraSensing) {
+      queue.push(this._extraSensingControlTask(this.extraSensing));
+      
     }
     new PromiseQueue(queue).exec().then(()=>{
       this._control();
@@ -225,12 +237,16 @@ class ThermalCycler {
   }
   getStatus () {
     // TODO: define data format
-    return {
+    let status = {
       plate: round(this.plate.getTemperature(), 2),
       lid: round(this.heatLid.getTemperature(), 2),
       state: this.state.getStatus(),
       remaining: this.remainingTimeCalculator.getRemainingMsec()
     };
+    if (this.extraSensing && this.extraSensing.data) {
+      status.extra = this.extraSensing.data();
+    }
+    return status;
   }
   shutdown () {
     console.log("ThermalCycler.shutdown()");

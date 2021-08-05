@@ -1,5 +1,5 @@
 "use strict";
-const PromiseQueue = require("./promise_queue.js");
+const PromiseQueue = require("../lib/promise_queue.js");
 
 /* Excitation and fluorescence measurement */
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec

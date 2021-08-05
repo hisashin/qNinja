@@ -89,7 +89,7 @@ class RemainingTimeCalculator {
 }
 
 class ThermalCycler {
-  constructor (plate, heatLids) {
+  constructor (plate, heatLids, /* Optional */extraSensing) {
     this.plate = plate;
     this.heatLids = heatLids;
     this.state = new StateIdle(null);

@@ -15,14 +15,15 @@ class AppState {
     this.panelStack = [];
     
     this.PANELS = {
-      DASHBOARD:1,
-      PROTOCOL_LIST:2,
-      PROTOCOL_DETAIL:3,
-      PROTOCOL_EDITOR:4,
-      EXPERIMENT_EDITOR:5,
-      EXPERIMENT_LIST:6,
-      EXPERIMENT_MONITOR:7,
-      TEMPLATE:8
+      DASHBOARD: 1,
+      PROTOCOL_LIST: 2,
+      PROTOCOL_DETAIL: 3,
+      PROTOCOL_EDITOR: 4,
+      EXPERIMENT_EDITOR: 5,
+      EXPERIMENT_LIST: 6,
+      EXPERIMENT_MONITOR: 7,
+      OPTICS_MONITOR: 8,
+      TEMPLATE: 9
     };
     this.views = {
       protocolDetail: null,
@@ -51,6 +52,9 @@ class AppState {
     this.viewsMap[this.PANELS.PROTOCOL_EDITOR] = this.views.panelProtocolEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_EDITOR] = this.views.panelExperimentEditor;
     this.viewsMap[this.PANELS.EXPERIMENT_MONITOR] = this.views.panelExperimentMonitor;
+    this.viewsMap[this.PANELS.OPTICS_MONITOR] = this.views.panelOpticsMonitor;
+    console.log(this.views.panelOpticsMonitor)
+    
     this.viewsMap[this.PANELS.TEMPLATE] = this.views.panelTemplate;
     this.views.panelDashboard.onAppear();
   }

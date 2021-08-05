@@ -7,7 +7,7 @@
 
   
 const PlateBlock = require('./plate_block.js');
-const PromiseQueue = require("./promise_queue.js");
+const PromiseQueue = require("../lib/promise_queue.js");
 // const PID = require("./heat_control/pid.js");
 const DEFAULT_TEMP = 25.0;
 const CONTROL_TYPE = {

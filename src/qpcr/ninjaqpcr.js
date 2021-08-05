@@ -37,14 +37,31 @@ class NinjaQPCR {
     const boardConfFile = __dirname + "/conf/" + conf.hardware_conf;
     console.log(boardConfFile)
     const boardConf = require(boardConfFile);
-    
-    this.thermalCycler = new ThermalCycler(boardConf.getPlate(), boardConf.getHeatLid());
+    this.boardConf = boardConf;
+    /* To add extra thermistors or other sensors, implement "getExtraSensing()" function */
+    let extraSensing = null;
+    if (boardConf.getExtraSensing) {
+      extraSensing = boardConf.getExtraSensing();
+    }
+    this.thermalCycler = new ThermalCycler(boardConf.getPlate(), boardConf.getHeatLid(), extraSensing);
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(boardConf.getLEDUnit(), boardConf.getFluorescenceSensingUnit(), boardConf.wellsCount(), boardConf.opticsChannelsCount());
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
     this.analysis = null;
+    this.session = null;
   }
+  setSession (session) {
+    if (this.session) {
+      throw "The device already has a session. Cancel and remove it before setting new one.";
+    }
+    this.session = session;
+    session.setHardware(this.thermalCycler, this.optics);
+  }
+  removeSession () {
+    this.session = null;
+  }
+  
   hardwareConfig () {
     let conf = JSON.parse(JSON.stringify(this.config));
     delete conf.hardware_conf;

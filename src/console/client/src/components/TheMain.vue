@@ -38,6 +38,7 @@
       <TheProtocolEditor ref="panelProtocolEditor" v-show="selectedPanel==panels.PROTOCOL_EDITOR" />
       <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
       <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
+      <TheOpticsMonitor ref="panelOpticsMonitor" v-show="selectedPanel==panels.OPTICS_MONITOR" />
       <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
       <div>
       (Dev)
@@ -70,6 +71,7 @@ import TheExperimentList from './panels/TheExperimentList.vue'
 import TheProtocolDetail from './panels/TheProtocolDetail.vue'
 import TheProtocolEditor from './panels/TheProtocolEditor.vue'
 import TheProtocolList from './panels/TheProtocolList.vue'
+import TheOpticsMonitor from './panels/TheOpticsMonitor.vue'
 import PanelTemplate from './panels/PanelTemplate.vue'
 
 import BackButton from './BackButton.vue';
@@ -86,7 +88,6 @@ export default {
   name: 'TheMain',
   components: {
   TheDashboard,
-    //TheExperimentDetail,
     TheExperimentList,
     TheProtocolDetail,
     TheProtocolList,
@@ -95,6 +96,7 @@ export default {
     TheProtocolEditor,
     PanelTemplate,
     TheDeviceSummary,
+    TheOpticsMonitor,
     BackButton
   },
   data() {
@@ -133,6 +135,9 @@ export default {
       this.backEnabled = (panelStack.length > 1);
     
     });
+    device.subscribe("pong", (topic, data)=>{
+      alert("TheMain.vue pong received.");
+    });
   },
   mounted: function () {
     appState.setViews(this.$refs);
@@ -156,7 +161,7 @@ export default {
       appState.home();
     },
     ping () {
-      device.ping();
+      device.publish("ping", {});
     },
     onConnectionOpen: function () {
       this.connected = true;

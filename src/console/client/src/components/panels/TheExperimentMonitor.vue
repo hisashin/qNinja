@@ -1,5 +1,6 @@
 <template>
   <div class="panel panel--experiment-monitor">
+    <strong>the experiment monitor</strong>
     <ProgressMonitor ref="progressMonitor"/>
     <section class="section" v-if="experiment">
       <header class="section__header">
@@ -38,6 +39,8 @@
         </div>
       </div>
     </section>
+    <textarea id="measurement">
+    </textarea>
   </div>
 </template>
 <script>
@@ -108,6 +111,7 @@ export default {
     onDisappear () {
     },
     onAppear () {
+    document.getElementById("measurement").innerHTML = "onAppear";
       client.fetchDeviceExperiment (
         (experiment)=>{
           this.experiment = experiment;
@@ -146,10 +150,12 @@ export default {
             });
             device.addProgressHandler({
               onProgress:(obj)=>{
+                console.log("TheExperimentMonitor.onProgress")
                 if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
                   this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
                 
                 }
+                document.getElementById("measurement").innerHTML += [obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
               }
             });
             device.addFluorescenceUpdateHandler(this);

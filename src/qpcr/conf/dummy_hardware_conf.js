@@ -10,6 +10,9 @@ const TEMP_CONTROL_INTERVAL_MSEC = 500;
 // Basic configuration
 const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
+const DEBUG_COEFF = 1;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 /* Constants and dependencies for testing */
 
@@ -165,6 +168,8 @@ class DummyFluorescenceSensingUnit {
   select (well) {
     // Do nothing
   }
+  excitationDuration () { return EXCITATION_DURATION_MSEC; }
+  measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   getDummySigmoid (channel) {
     const elapsedMsec = (new Date().getTime() - this.startTimestamp.getTime());
     const thresholdMsec = 150 * 1000;

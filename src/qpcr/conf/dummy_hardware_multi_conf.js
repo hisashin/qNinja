@@ -260,6 +260,8 @@ class FluorescenceSensingUnit {
       this.sim.debugValue.current = temp;
     }
   }
+  excitationDuration () { return EXCITATION_DURATION_MSEC; }
+  measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   setDebugValue (debugValue, experimentConfig) {
     this.sim.debugValue = debugValue;
     // Calc experimentConfig
