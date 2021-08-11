@@ -27,11 +27,6 @@ class MUX8ch {
     rpio.write(this.s0, val0 ? rpio.HIGH : rpio.LOW);
     rpio.write(this.s1, val1 ? rpio.HIGH : rpio.LOW);
     rpio.write(this.s2, val2 ? rpio.HIGH : rpio.LOW);
-    console.log("%d %d->%d, %d->%d, %d->%d", 
-      ch,
-      this.s0, val0,
-      this.s1, val1,
-      this.s2, val2);
   }
 }
 module.exports = MUX8ch;

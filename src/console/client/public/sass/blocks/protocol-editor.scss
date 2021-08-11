@@ -1,0 +1,54 @@
+/* Outline */
+.protocol-editor, .protocol-detail {
+  &__header {
+    display: flex;
+  }
+  &-stages {
+    &-wrapper {
+    overflow-x: scroll;
+      
+    }
+    display:flex;
+    padding:18px 30px 0;
+    &__stage {
+      padding:0.5em 1em 0.5em;
+      flex-grow: 0;
+      flex-shrink: 0;
+      border-top:1px solid #aaa;
+      border-left:1px solid #aaa;
+      border-right:1px solid #aaa;
+      &:not(:last-child) {
+      border-right:none!important;
+      }
+    }
+    &__add-button {
+      width:60px;
+      margin: -18px -30px 0;
+      flex-grow: 0;
+      flex-shrink: 0;
+      text-align:center;
+      z-index:3;
+    }
+  }
+  /* Each section */
+  &-stage {
+    &__title {
+      text-align: center;
+    }
+  }
+  &-steps {
+    &__step {
+      border-top:1px solid #aaa;
+    }
+  }
+  &-step {
+    &__label {
+      
+    }
+  }
+}
+.protocol-detail {
+  &__protocol-name {
+    /* H3 */
+  }
+}

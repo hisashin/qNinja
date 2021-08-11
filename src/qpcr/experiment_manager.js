@@ -3,7 +3,7 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const OpticsAnalysis = require("./optics_analysis");
-const PromiseQueue = require("./control/promise_queue");
+const PromiseQueue = require("./lib/promise_queue");
 const DATA_DIR_ROOT = process.env.NINJAQPCR_USER_DATA || "/home/pi/ninjaqpcr/user_data"; // TODO: use user's home dir
 
 const NINJAQPCR_API_VERSION = "1.0";
@@ -225,8 +225,8 @@ class ExperimentManager {
       }
     }
     table.push(header);
-    const qpcr = experiment.log.fluorescence.qpcr;
-    for (let i=0; i<qpcr.length; i++) {
+    const qpcrData = experiment.log.fluorescence.qpcr;
+    for (let i=0; i<qpcrData.length; i++) {
       const data = qpcr[i];
       let line = [ data.t, data.cycle];
       for (let ch=0; ch<chCount; ch++) {

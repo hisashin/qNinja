@@ -10,7 +10,7 @@ const pwm = require('raspi-soft-pwm');
 const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
-const ExclusiveTaskQueue = require("../control/exclusive_task_queue.js");
+const ExclusiveTaskQueue = require("../lib/exclusive_task_queue.js");
 // const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
 const HeatLidMulti = require("../control/heat_lid_multi.js");
@@ -25,16 +25,13 @@ const MUX16ch = require("../hardware/mux_16ch.js");
 const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
+const PromiseQueue = require("../lib/promise_queue.js");
 
-const DEBUG_COEFF = 1;
-const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
-const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 const I2C_ADDR_PCA9955B = 0x05;
 
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
-const ADC_DATA_RATE = 90;
 const ADC_DEVICE_ADDR = 0x40;
 const POT_DEVICE_ADDR = 0x2F;
 
@@ -93,14 +90,22 @@ const MUX_CHANNEL_THERMISTOR_EXT3 = 5;
 
 // Channel name (Not index)
 const MUX_MAP_PHOTODIODES_N = [
-  [0,1,2,3,4,5,6,7], // Opt channel 0
-  [15,14,13,12,11,10,9,8] // Opt channel 1
+  [15,14,13,12,11,10,9,8], // Opt channel 1
+    [0,1,2,3,4,5,6,7], // Opt channel 0
 ];
 const MUX_MAP_PHOTODIODES_S = [
   [8,9,10,11,12,13,14,15], // Opt channel 0
   [7,6,5,4,3,2,1,0] // Opt channel 1
 ];
-// TODO LED table
+/* 
+  Measurement Interval and Data Rate
+  Interval > 1000 / DataRate
+*/
+const ADC_DATA_RATE = 90;
+const THERMISTOR_MUX_WAIT_MSEC = 20;
+const DEBUG_COEFF = 1;
+const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 const muxQueue = new ExclusiveTaskQueue();
 
@@ -138,12 +143,18 @@ class HardwareConf {
       const output = new HeatLidOutput(this.pwmLid);
       this.lid = new HeatUnit(pid, lidSensing, output);
     }
+    {
+      this.extraSensing = new ExtraSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP, 
+        this.adcManager, ADC_CHANNEL_THERMISTORS, 
+        this.thermistorMux, [MUX_CHANNEL_THERMISTOR_AIR, MUX_CHANNEL_THERMISTOR_EXT1/*, MUX_CHANNEL_THERMISTOR_EXT2, MUX_CHANNEL_THERMISTOR_EXT3*/]);
+    }
+    // this.extraSensing
     try {
       this.adcManager.start();
       this.adc.initialize();
       console.log("adc.initialize()");
-      this.adc.selectDataRate(20);
-      console.log("adc.selectDataRate()");
+      this.adc.selectDataRate(ADC_DATA_RATE);
+      console.log("adc.selectDataRate(%d)", ADC_DATA_RATE);
       this.adc.selectVoltageReferenceExternal();
       console.log("adc.selectVoltageReferenceExternal()");
       this.thermistorMux.initialize();
@@ -151,11 +162,11 @@ class HardwareConf {
     } catch (ex) {
       console.log(ex);
     }
+    
   }
   start () {
   }
   shutdown () {
-    this.i2c.close();
   }
   
   /* Hardware specifications */
@@ -172,6 +183,9 @@ class HardwareConf {
   }
   getHeatLid () {
     return this.lid;
+  }
+  getExtraSensing () {
+    return this.extraSensing;
   }
   getLEDUnit () {
     console.log("getLEDUnit()");
@@ -208,7 +222,6 @@ class PlateSensing {
     });
   }
 }
-const THERMISTOR_MUX_WAIT_MSEC = 4;
 const USE_TEMP_SWITCHING = false;
 class TemperatureSensing {
   constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
@@ -228,24 +241,6 @@ class TemperatureSensing {
   }
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
-      /*
-      this.mux.selectChannel(this.muxChannel);
-      let thermistor = null;
-      if (USE_TEMP_SWITCHING) {
-        let switchPinVal = 0;
-        if (this.prevValue < this.switchingTemp) {
-          thermistor = this.thermistorLowTemp;
-        } else {
-          thermistor = this.thermistorHighTemp;
-          switchPinVal = 1;
-        }
-        rpio.write(PIN_NUM_THERMISTOR_R, switchPinVal);
-      } else {
-        thermistor = this.thermistorLowTemp;
-      }
-      */
-      // Prev value
-      // Switch
       this.mux.selectChannel(this.muxChannel);
       let thermistor = null;
       let switchPinVal = 0;
@@ -273,6 +268,39 @@ class TemperatureSensing {
     
   }
 }
+/* Thermistor array */
+class ExtraSensing {
+  constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannels) {
+    // muxChannels
+    this.units = [];
+    this.measurements = [];
+    muxChannels.forEach ((channel)=>{
+      const unit = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, channel);
+      this.units.push(unit);
+      this.measurements.push(0);
+    });
+  }
+  _measure(i, resolve) {
+    const unit = this.units[i];
+    if (unit) {
+      unit.measureTemperature((temperature)=>{
+        this.measurements[i] = temperature;
+        this._measure(i+1, resolve);
+      });
+      
+    } else {
+      resolve();
+    }
+    
+  }
+  control (resolve) {
+    this._measure(0, resolve);
+  }
+  data () {
+    return this.measurements;
+  }
+}
+
 class PlateOutput {
   // Combination of heater (PWM) and fan (PWM)
   constructor (platePWM, fanPWM) {
@@ -392,7 +420,7 @@ class LEDUnit {
     // channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
     this.ledDriver.selectChannel(channel);
     if (well == 15) {
-      console.log("Well %d", hoge);
+      // console.log("Well %d", hoge);
       hoge = (hoge + 1) % 16;
     }
   }
@@ -410,6 +438,7 @@ const LARGE_GAIN_VALUE = 10.0; // MOhm
 const SMALL_GAIN_VALUE = 1.0; // MOhm
 
 const USE_GAIN_SWITCHING = false;
+const DEFAULT_IS_STRONG_SIGNAL = false; // Set "false" to use the larger gain
 // Photodiode
 class FluorescenceSensingUnit {
   constructor (mux, adcManager, adcChannel) {
@@ -452,7 +481,10 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
-      this.isStrongSignal = false;
+      if (hoge%2==0)
+        this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
+      else
+        this.isStrongSignal = !DEFAULT_IS_STRONG_SIGNAL;
     }
     rpio.write(PIN_NUM_AMP_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }

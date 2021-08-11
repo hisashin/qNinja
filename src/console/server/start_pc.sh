@@ -1,1 +1,1 @@
-node server.js
+node server.js --dummyHardware true

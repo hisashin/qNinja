@@ -1,0 +1,141 @@
+$monitor-foreground: #007bff;
+.progress-monitor {
+  width:800px;
+  border:1px solid #ece1c0;
+  padding:0.5em;
+  border-radius: 0.5em;
+  &__row {
+    display: flex;
+  }
+
+}
+.progress-meter {
+  display:flex;
+  width:100%;
+  flex-direction: row;
+  list-style: none;
+  padding:0 0 1.5em;
+  margin:0;
+  &__item {
+    flex-grow: 1;
+    flex-basis: 0;
+    border: 1px solid $monitor-foreground;
+    text-align: center;
+    padding: 0.15em 0;
+    font-size:0.9rem;
+    box-sizing: border-box;
+    position:relative;
+    &:not(:last-child) {
+      margin-right: 0.5em;
+    }
+    &--done {
+      background-color:$monitor-foreground!important;
+      color:#ffffff;
+    }
+    &--current {
+      border-width: 2px;
+      color:$monitor-foreground;
+      font-weight: bold;
+    }
+    &--notyet {
+      border-width: 2px;
+      color:$monitor-foreground;
+    }
+  }
+  &__progress {
+    position: absolute;
+    background-color: #c3dcf7;
+    border: none;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+  &__label {
+    z-index: 8;
+    border:none;
+  }
+  &__detail {
+    position: absolute;
+    background-color: #ffffff;
+    white-space: nowrap;
+    border: none;
+    left: 50%;
+    top: 100%;
+    margin-top:2px;
+    transform: translate(-50%, 0);
+    font-weight: normal;
+    line-height: 100%;
+  }
+}
+.temperature-monitor {
+  width:400px;
+  display: flex;
+  &__label {
+    vertical-align: top;
+    text-align: right;
+    width:80px;
+    font-size: 0.85rem;
+    padding-right:0.75em;
+    line-height: 100%;
+  }
+  &__value {
+    vertical-align: top;
+    padding-left:0.75em;
+    font-size: 0.85rem;
+  }
+  &__meter {
+    flex-grow: 1;
+    display: inline-block;
+    vertical-align: top;
+    &-body {
+      width:100%;
+      display: block;
+    }
+    &-scale {
+      display: flex;
+      flex-wrap: nowrap;
+      &-element {
+        box-sizing: border-box;
+        width:24px;
+        margin-left: -12px;
+        margin-right: -12px;
+        text-align: center;
+        flex-grow: 0;
+        font-size:0.7rem;
+      }
+      &-spacer {
+        flex-grow: 1;
+      }
+    }
+  }
+}
+.time-monitor {
+  margin-top:0.2em;
+  width: 100%;
+  display: flex;
+  flex-flow: nowrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  line-height: 100%;
+  &__button {
+    border: none;
+    margin: 0 0.2em;
+    font-size: 0.8em;
+    padding: 0.2em 0.7em;
+    border-radius: 0.5em;
+  }
+  &__meter {
+    flex-grow: 1;
+    margin: 0 0.5em;
+  }
+  &__elapsed {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  &__estimated {
+    font-size: 0.9rem;
+  }
+  &__remaining {
+    font-size: 0.9rem;
+  }
+}

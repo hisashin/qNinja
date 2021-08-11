@@ -8,7 +8,10 @@
 
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
-const qpcr = new NinjaQPCR("hardware.json");
+const OpticsSession = require(QPCR_PATH + "session_optics.js");
+// const qpcr = new NinjaQPCR("hardware_dummy.json");
+let qpcr = null;
+const eventBus = require(QPCR_PATH + "lib/event_bus.js");
 const defaultProtocol = require(QPCR_PATH + "dev_protocol");
 const ErrorCode = require(QPCR_PATH + "error_code");
 
@@ -303,18 +306,27 @@ class NinjaQPCRHTTPServer {
   // with request body
   _getRequestContentHandler (callback) {
     return (req, res, map)=>{
+      let chunk = "";
+      let data = null;
       req.on("data", (rawData)=>{
+        chunk += rawData.toString()
+      });
+      req.on("end", ()=>{
         try {
-          const data = JSON.parse(rawData);
-          callback(req, res, map, data);
+          data = JSON.parse(chunk);
         } catch (error) {
           // Failed to parse JSON
+          console.error(error);
+          console.error("Raw data=")
+          console.error(rawData.toString());
           let errorObj = {
             code:ErrorCode.DataError,
             message:"Malformed JSON"
           };
           this._handleError(req, res, errorObj);
+          return;
         }
+        callback(req, res, map, data);
       });
     }
   }
@@ -631,6 +643,13 @@ class NinjaQPCRWebSocketServer {
     this.wsServer = new WebSocketServer({
         httpServer: this.server
     });
+    eventBus.subscribe("", (topic, data)=>{
+      const obj = {
+        topic:topic,
+        data:data
+      };
+      this._send(obj);
+    });
     this.connections = [];
     
     this.wsServer.on('request', (request)=>{
@@ -639,6 +658,7 @@ class NinjaQPCRWebSocketServer {
       connection.on('message', (message)=>{
         const obj = JSON.parse(message.utf8Data);
         this.handleMessage(obj);
+        eventBus.publish(obj.topic, obj.data);
       });
       connection.on('close', (reasonCode, description)=>{
         console.log('Disconnected.');
@@ -649,22 +669,37 @@ class NinjaQPCRWebSocketServer {
       });
     });
     this.protocol = defaultProtocol;
+    
+    // Ping server
+    eventBus.subscribe("ping", (topic, data) => {
+      console.log("Ping received.");
+      eventBus.publish("pong", {});
+    });
+    // Device control server
+    eventBus.subscribe("device.command", (topic, data)=>{
+      console.log("Device command received! %s", topic);
+      if (topic == "device.command.runOptics") {
+        // TODO check device availability
+        const session = new OpticsSession();
+        qpcr.setSession(session);
+        // TODO receive command
+        session.runOpticsDemo();
+      }
+    });
   }
   handleMessage (obj) {
-    switch (obj.category) {
-      case "ping":
-        this.pingResponse(); break;
-      case "experiment.pause":
+    switch (obj.topic) {
+      case "experiment.command.pause":
         this.pause(); break;
-      case "experiment.resume":
+      case "experiment.command.resume":
         this.resume(); break;
-      case "experiment.finishAutoPause":
+      case "experiment.command.finishAutoPause":
         this.finishAutoPause(); break;
-      case "experiment.abort":
+      case "experiment.command.abort":
         this.abort(); break;
-      case "experiment.finish":
+      case "experiment.command.finish":
         this.finish(); break;
-      case "experiment.runExperiment": {
+      case "experiment.command.runExperiment": {
         const experimentId = obj.data.id;
         console.log("Run experiment. %s", experimentId);
         this.start(experimentId);
@@ -676,7 +711,7 @@ class NinjaQPCRWebSocketServer {
   }
   pingResponse () {
     const obj = {
-      category:"ping",
+      topic:"ping",
       data:{}
     };
     this._send(obj);
@@ -716,35 +751,35 @@ class NinjaQPCRWebSocketServer {
   }
   onThermalTransition (data) {
     const obj = {
-      category:"experiment.transition",
+      topic:"experiment.update.transition",
       data:data
     };
     this._send(obj);
   }
   onAutoPause (data) {
     const obj = {
-      category:"experiment.autoPause",
+      topic:"experiment.update.autoPause",
       data:data
     };
     this._send(obj);
   }
   onProgress (data) {
     const obj = {
-      category:"experiment.progress",
+      topic:"experiment.update.progress",
       data:data
     };
     this._send(obj);
   }
   onFluorescenceDataUpdate (data) {
     const obj = {
-      category:"experiment.fluorescence",
+      topic:"experiment.update.fluorescence",
       data:data
     };
     this._send(obj);
   }
   onMeltCurveDataUpdate (data) {
     const obj = {
-      category:"experiment.meltCurve",
+      topic:"experiment.update.meltCurve",
       data:data
     };
     console.log(obj)
@@ -752,21 +787,21 @@ class NinjaQPCRWebSocketServer {
   }
   onFluorescenceEvent (data) {
     const obj = {
-      category:"experiment.fluorescenceEvent",
+      topic:"experiment.update.fluorescenceEvent",
       data:data
     };
     this._send(obj);
   }
   onDeviceStateChange (state) {
     const obj = {
-      category:"device.transition",
+      topic:"device.update.transition",
       data:state
     };
     this._send(obj);
   }
   onStart (data) {
     const obj = {
-      category:"experiment.start",
+      topic:"experiment.update.start",
       data:data
     };
     this._send(obj);
@@ -775,7 +810,7 @@ class NinjaQPCRWebSocketServer {
   }
   onComplete (data) {
     const obj = {
-      category:"experiment.finish",
+      topic:"experiment.update.finish",
       data:data
     };
     this._send(obj);
@@ -808,6 +843,9 @@ class NinjaQPCRServer {
     
     const clientHost = (options.clientHost) ? options.clientHost:CLIENT_HOST_DEFAULT;
     const clientPort = (options.clientPort) ? options.clientPort:CLIENT_PORT_DEFAULT;
+    const hardwareFile = (options.dummyHardware) ? "hardware_dummy.json" : "hardware.json";
+    console.log("hardwareFile=%s", hardwareFile);
+    qpcr = new NinjaQPCR(hardwareFile);
     
     this.server = http.createServer();
     this.server.listen(WEBSOCKET_PORT);
@@ -817,9 +855,9 @@ class NinjaQPCRServer {
     
   }
 }
+new NinjaQPCRServer().init();
 process.on('SIGINT', () => {
-    console.log('Received SIGINT');
+    console.log('server.js Received SIGINT');
     qpcr.shutdown();
     process.exit(1);
 });
-new NinjaQPCRServer().init();

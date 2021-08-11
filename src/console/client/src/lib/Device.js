@@ -1,5 +1,6 @@
 "use strict";
 const Util = require("../lib/Util.js");
+const TopicManager = require("qpcr/lib/topic_manager.js");
 const WS_API_PORT = "2222";
 class Device {
   constructor () {
@@ -16,10 +17,32 @@ class Device {
     this.protocol = null;
     this.progress = null;
     this.connected = false;
+    this.topicManager = new TopicManager();
   }
   
   apiEndpoint () {
     return "ws://" + location.hostname + ":" + WS_API_PORT + "/";
+  }
+  subscribe (topic, handler) {
+    if (typeof(topic) != 'string') {
+      throw "EventBus.subscribe topic should be <string> type.";
+    }
+    if (typeof(handler) != 'function') {
+      throw "EventBus.subscribe handler should be <handler> type.";
+    }
+    const subscription = {
+      handler: handler,
+      topic: topic
+    };
+    const subId = this.topicManager.add(topic, subscription);
+    return subId;
+  }
+  publish (topic, data) {
+    const obj = {
+      "topic": topic,
+      "data": data
+    };
+    this.send(obj);
   }
   
   /* API */
@@ -44,54 +67,59 @@ class Device {
     };
     this.ws.onmessage = (e) => {
       const obj = JSON.parse(e.data);
-      switch (obj.category) {
-        case "ping":
-          console.log("Received ping response");
-          break;
-        case "experiment.transition":
+      const topic = obj.topic;
+      const targets = this.topicManager.find(topic);
+      // console.log("%d targets for topic %s", targets.length, topic);
+      targets.forEach((subscriber)=>{
+        subscriber.handler(topic, obj.data);
+      });
+      // TODO remove.
+      switch (obj.topic) {
+        case "experiment.update.transition":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onTransition) {
               handler.onTransition(obj.data);
             }
           });
           break;
-        case "experiment.progress":
+        case "experiment.update.progress":
           this.progressHandlers.forEach((handler)=>{
             this.progress = obj.data;
+            console.log(obj.data);
             if (handler.onProgress) {
               handler.onProgress(obj.data);
             }
           });
           break;
-        case "experiment.fluorescence":
+        case "experiment.update.fluorescence":
           this.fluorescenceUpdateHandlers.forEach((handler)=>{
             if (handler.onFluorescenceUpdate) {
               handler.onFluorescenceUpdate(obj.data);
             }
           });
           break;
-        case "experiment.meltCurve":
+        case "experiment.update.meltCurve":
           this.fluorescenceUpdateHandlers.forEach((handler)=>{
             if (handler.onMeltCurveUpdate) {
               handler.onMeltCurveUpdate(obj.data);
             }
           });
           break;
-        case "experiment.fluorescenceEvent":
+        case "experiment.update.fluorescenceEvent":
           this.fluorescenceUpdateHandlers.forEach((handler)=>{
             if (handler.onFluorescenceEvent) {
               handler.onFluorescenceEvent(obj.data);
             }
           });
           break;
-        case "experiment.autoPause":
+        case "experiment.update.autoPause":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onAutoPause) {
               handler.onAutoPause(obj.data);
             }
           });
           break;
-        case "experiment.start":
+        case "experiment.update.start":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onStart) {
               console.log(obj)
@@ -99,18 +127,17 @@ class Device {
             }
           });
           break;
-        case "experiment.finish":
+        case "experiment.update.finish":
           this.transitionHandlers.forEach((handler)=>{
             if (handler.onComplete) {
               handler.onComplete(obj.data);
             }
           });
           break;
-        case "device.transition":
+        case "device.update.transition":
           this.setDeviceState(obj.data);
           break;
         default:
-          console.log("Warning: unhandled category=%s", obj.category);
           break;
       }
     };
@@ -133,49 +160,43 @@ class Device {
     console.log(this.ws.readyState);
     this.ws.send(JSON.stringify(obj));
   }
-  ping () {
-    const obj = {
-      "category":"ping"
-    };
-    this.send(obj);
-  }
   
   /* Experiment Control */
   pause () {
     const obj = {
-      "category":"experiment.pause"
+      "topic":"experiment.command.pause"
     };
     this.send(obj);
   }
   finishAutoPause () {
     const obj = {
-      "category":"experiment.finishAutoPause"
+      "topic":"experiment.command.finishAutoPause"
     };
     this.send(obj);
   }
   resume () {
     const obj = {
-      "category":"experiment.resume"
+      "topic":"experiment.command.resume"
     };
     this.send(obj);
   }
   abort () {
     const obj = {
-      "category":"experiment.abort"
+      "topic":"experiment.command.abort"
     };
     this.send(obj);
   }
   
   finish () {
     const obj = {
-      "category":"experiment.finish"
+      "topic":"experiment.command.finish"
     };
     this.send(obj);
   }
   
   runExperiment (experimentId) {
     const obj = {
-      "category":"experiment.runExperiment",
+      topic:"experiment.command.runExperiment",
       data:{id:experimentId}
     };
     this.send(obj);
