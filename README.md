@@ -8,6 +8,7 @@
 - [Project overview Youtube (Japanese)](https://www.youtube.com/watch?v=D_qZ6llMb-4)
 - [Shingo](https://www.facebook.com/hisakawa) shares latest updates on Facebook
 - [Autodesk Gellery](https://gallery.autodesk.com/projects/152314/ninja-qpcr) for 3D model
+- [Ninja qPCRの検証と改善にご協力頂ける方を、東京または隣県で募集します](https://docs.google.com/forms/d/e/1FAIpQLScrQFHF8yvqFDvPrcCPfEzIWUlI87MwEmo-cwhVNrZ-PuzTCQ/viewform?fbclid=IwAR1955oQE94m4a12eQiYOzssu6Wxg_NgismxyXR_IaEPR1JLF7hsNOnSx_Q)
 
 ## Documents
 - [How to setup Raspberry Pi for Ninja qPCR safely](doc/setup_raspi.md)
