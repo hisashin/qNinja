@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name Ninja-qPCR)(type Legacy)(uri /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/Ninja-qPCR.lib)(options "")(descr ""))
+  (lib (name qPCR-ledarray-rescue)(type Legacy)(uri ${KIPRJMOD}/qPCR-ledarray-rescue.lib)(options "")(descr ""))
+)
