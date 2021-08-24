@@ -13,7 +13,7 @@ const PIN_NUM_PD_MUX_3 = 10; //GPIO16 (Mux channel)
 let mux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
 mux.initialize();
 let muxCh = 0;
-const CHANNELS_COUNT = 4;
+const CHANNELS_COUNT = 6;
 /*
   Test thermistor connection
   

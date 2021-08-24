@@ -109,9 +109,17 @@ export default {
       this.autoPause = false;
     },
     onDisappear () {
+      device.unsubscribe(this.progressSubId);
     },
     onAppear () {
-    document.getElementById("measurement").innerHTML = "onAppear";
+      document.getElementById("measurement").innerHTML = "";
+      this.progressSubId = device.subscribe("experiment.update.progress", (topic, obj)=>{
+        try {
+          document.getElementById("measurement").innerHTML += [obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
+        } catch (e) {
+          console.warn(e);
+        }
+      });
       client.fetchDeviceExperiment (
         (experiment)=>{
           this.experiment = experiment;
@@ -132,13 +140,13 @@ export default {
             
             // TODO init meltCurveChart
             
-          try {
-            this.$refs.progressMonitor.reset();
-            this.$refs.progressMonitor.protocol = this.experiment.protocol;
-            
-          } catch (ex) {
-            console.log(ex);
-          }
+            try {
+              this.$refs.progressMonitor.reset();
+              this.$refs.progressMonitor.protocol = this.experiment.protocol;
+              
+            } catch (ex) {
+              console.log(ex);
+            }
             device.addTransitionHandler({
               onComplete: (obj)=>{
                 startTime = new Date();
@@ -155,11 +163,9 @@ export default {
                   this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
                 
                 }
-                document.getElementById("measurement").innerHTML += [obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
               }
             });
             device.addFluorescenceUpdateHandler(this);
-          
           });
         }, 
         ()=>{}

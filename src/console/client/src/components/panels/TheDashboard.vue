@@ -45,7 +45,6 @@ export default {
   },
   props: {
   },
-  title () { return "Dashboard" },
   data() {
     return {
     }
@@ -59,6 +58,7 @@ export default {
     viewExperimentList () {
       appState.pushPanel(appState.PANELS.EXPERIMENT_LIST);
     },
+    title () { return "Dashboard" },
     onAppear () {
       this.$refs.protocolList.load();
       this.$refs.experimentList.load();
