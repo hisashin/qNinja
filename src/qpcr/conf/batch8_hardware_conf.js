@@ -42,7 +42,8 @@ const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
 // http://localhost:8888/notebooks/PCR/Ninja_qPCR_thermistor_selection.ipynb
 const RES_LOW_TEMP = 47.0; // kOhm
 const RES_HIGH_TEMP = 47.0; // kOhm
-const SWITCHING_TEMP = 66.0;
+// const SWITCHING_TEMP = 66.0;
+const SWITCHING_TEMP = 999.0;
 const R0 = 100.0;
 const BASE_TEMP = 25.0;
 const B_CONST = [
@@ -257,7 +258,6 @@ class TemperatureSensing {
         this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
           const temp = thermistor.getTemp(val);
           this.prevValue = temp;
-          console.log("Ch=%d ADC=%f TEMP=%f", this.muxChannel, val, temp);
           muxQueue.release(muxTaskId);
           callback(temp);
         });
@@ -306,26 +306,39 @@ class PlateOutput {
   constructor (platePWM, fanPWM) {
     this.platePWM = platePWM;
     this.fanPWM = fanPWM;
+    this.plateActualOutput = 0.0;
+    this.setFanOutput(1.0);
+    this.setPlateOutput(0);
+  }
+  setPlateOutput (value) {
+    const actualOutput = Math.min(1.0, Math.min(value, this.plateActualOutput + 0.25));
+    this.platePWM.write(actualOutput);
+    // this.platePWM.write(value);
+    this.plateActualOutput = actualOutput;
+  }
+  setFanOutput (value) {
+    this.fanPWM.write(value);
   }
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
     outputValue = Math.min(1.0, Math.max(-1, outputValue));
     if (outputValue > 0) {
-      this.platePWM.write(outputValue);
-      this.fanPWM.write(0);
+      this.setPlateOutput(outputValue);
+      this.setFanOutput(0);
     } else {
-      this.platePWM.write(0);
-      this.fanPWM.write(-outputValue);
+      this.setPlateOutput(0);
+      this.setFanOutput(-outputValue);
     }
   }
   off () {
-    this.platePWM.write(0);
-    this.fanPWM.write(0);
+    this.setPlateOutput(0);
+    this.setFanOutput(0);
   }
   shutdown () {
-    console.log("Shutting down HeatLidOutput.");
-    this.off();
+    console.log("Shutting down PlateOutput.");
+      this.setPlateOutput(0);
+      this.setFanOutput(1.0);
   }
 }
 

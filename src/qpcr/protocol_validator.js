@@ -3,7 +3,7 @@
 const Validator = require("./validator");
 
 const LID_TEMP_MAX = 120;
-const LID_TEMP_MIN = 25;
+const LID_TEMP_MIN = 0;
 const PLATE_TEMP_MAX = 100;
 const PLATE_TEMP_MIN = 25;
 
@@ -38,3 +38,4 @@ const RULE_PROTOCOL = {
 };
 
 module.exports = new Validator(RULE_PROTOCOL);
+

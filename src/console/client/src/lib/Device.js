@@ -23,7 +23,9 @@ class Device {
   apiEndpoint () {
     return "ws://" + location.hostname + ":" + WS_API_PORT + "/";
   }
-  subscribe (topic, handler) {
+  
+  /* Event bus proxy functionalities */
+  subscribe (topic, handler/* (topic, data)=>{} */) {
     if (typeof(topic) != 'string') {
       throw "EventBus.subscribe topic should be <string> type.";
     }
@@ -36,6 +38,9 @@ class Device {
     };
     const subId = this.topicManager.add(topic, subscription);
     return subId;
+  }
+  unsubscribe (subId) {
+    this.topicManager.remove(subId);
   }
   publish (topic, data) {
     const obj = {
