@@ -85,19 +85,24 @@ class TopicManager {
     }
     // Remove empty node
     let depth = objPath.length - 1;
+    console.log("ObjPath %d", objPath.length);
     let subTopic = null;
     while (depth >= 0) {
       const node = objPath[depth];
       if (subTopic != null) {
         delete node.topics[subTopic];
+        console.log("Sub topic removed: %s", subTopic);
       }
       subTopic = node.topic;
       const isEmpty = node.subscribers.length==0 && Object.keys(node.topics).length == 0;
       if (!isEmpty) {
         break;
       }
+      console.log(node)
+      console.log(isEmpty)
       depth -= 1;
     }
+    console.log(this.topicRoot)
     return true;
   }
   _issueSubId () {

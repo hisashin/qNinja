@@ -2,9 +2,7 @@
   <div>
     <header class="header">
       <div class="header__content">
-        <h1 class="header__title">
-          <a href="ninjaqpcr_splash.html">Ninja qPCR</a>
-        </h1>
+        <h1 class="header__title">Ninja qPCR</h1>
         <!-- Device monitor -->
           <div class="header__device">
           <span>
@@ -152,6 +150,7 @@ export default {
     },
     presentPanel(panel, toPanel) {
       this.selectedPanel = panel;
+      console.log(toPanel)
       this.panelTitle = (toPanel.title) ? toPanel.title() : "N/A";
     },
     showTemplate () {

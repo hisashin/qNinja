@@ -62,17 +62,17 @@ class AppState {
   /* Public methods */
   
   // Returns current panel component
-  pushPanel (panelId) {
+  pushPanel (panel) {
     this._confirmLeavePanel(()=>{
-      const toPanel = this.getPanel(panelId);
+      const toPanel = this.getPanel(panel);
       if (toPanel && toPanel.onAppear) {
         toPanel.onAppear();
       } else {
         console.log("onAppear not defined.");
       }
-      this.panelStack.push(panelId);
+      this.panelStack.push(panel);
       if (this.panelContainer) {
-        this.panelContainer.presentPanel(panelId, toPanel);
+        this.panelContainer.presentPanel(panel, toPanel);
         this._didNavigate();
       } else {
         console.log("PushPanel panelContainer is null.");
@@ -86,14 +86,14 @@ class AppState {
     this._confirmLeavePanel(()=>{
       this.panelStack.pop();
       if (this.panelContainer) {
-        const panelId = this.panelStack[this.panelStack.length-1];
-        const toPanel = this.getPanel(panelId);
+        const panel = this.panelStack[this.panelStack.length-1];
+        const toPanel = this.getPanel(panel);
         if (toPanel && toPanel.onAppear) {
           toPanel.onAppear();
         } else {
           console.log("onAppear not defined.");
         }
-        this.panelContainer.presentPanel(panelId, toPanel);
+        this.panelContainer.presentPanel(panel);
         this._didNavigate();
       }
     });
@@ -107,14 +107,14 @@ class AppState {
         this.panelStack.pop();
       }
       if (this.panelContainer) {
-        const panelId = this.panelStack[this.panelStack.length-1];
-        const toPanel = this.getPanel(panelId);
+        const panel = this.panelStack[this.panelStack.length-1];
+        const toPanel = this.getPanel(panel);
         if (toPanel && toPanel.onAppear) {
           toPanel.onAppear();
         } else {
           console.log("onAppear not defined.");
         }
-        this.panelContainer.presentPanel(panelId, toPanel);
+        this.panelContainer.presentPanel(panel);
         this._didNavigate();
       }
       
