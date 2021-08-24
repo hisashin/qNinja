@@ -16,78 +16,423 @@ $EndDescr
 $Comp
 L Connector:Barrel_Jack_Switch J1
 U 1 1 612341BB
-P 2650 3700
-F 0 "J1" H 2707 4017 50  0000 C CNN
-F 1 "Barrel_Jack_Switch" H 2707 3926 50  0000 C CNN
-F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 2700 3660 50  0001 C CNN
-F 3 "~" H 2700 3660 50  0001 C CNN
-	1    2650 3700
+P 2000 2600
+F 0 "J1" H 2057 2917 50  0000 C CNN
+F 1 "Barrel_Jack_Switch" H 2057 2826 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 2050 2560 50  0001 C CNN
+F 3 "~" H 2050 2560 50  0001 C CNN
+	1    2000 2600
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x40_Female J2
-U 1 1 61237215
-P 9500 3250
-F 0 "J2" H 9528 3226 50  0000 L CNN
-F 1 "Conn_01x40_Female" H 9528 3135 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 9500 3250 50  0001 C CNN
-F 3 "~" H 9500 3250 50  0001 C CNN
-	1    9500 3250
+L Ninja-qPCR:AOZ6663DI-01 U?
+U 1 1 61249DBC
+P 5550 2400
+F 0 "U?" H 5800 2665 50  0000 C CNN
+F 1 "AOZ6663DI-01" H 5800 2574 50  0000 C CNN
+F 2 "" H 5550 2400 50  0001 C CNN
+F 3 "" H 5550 2400 50  0001 C CNN
+	1    5550 2400
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:CP C1
-U 1 1 61242414
-P 6000 2450
-F 0 "C1" H 6118 2496 50  0000 L CNN
-F 1 "CP" H 6118 2405 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:CP_Radial_D12.5mm_P5.00mm" H 6038 2300 50  0001 C CNN
-F 3 "~" H 6000 2450 50  0001 C CNN
-	1    6000 2450
+L power:GND #PWR?
+U 1 1 6124A82C
+P 6250 2800
+F 0 "#PWR?" H 6250 2550 50  0001 C CNN
+F 1 "GND" H 6255 2627 50  0000 C CNN
+F 2 "" H 6250 2800 50  0001 C CNN
+F 3 "" H 6250 2800 50  0001 C CNN
+	1    6250 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6150 2700 6250 2700
+Wire Wire Line
+	6250 2700 6250 2800
+$Comp
+L Device:L L1
+U 1 1 6124B593
+P 6650 2500
+F 0 "L1" V 6840 2500 50  0000 C CNN
+F 1 "L" V 6749 2500 50  0000 C CNN
+F 2 "" H 6650 2500 50  0001 C CNN
+F 3 "~" H 6650 2500 50  0001 C CNN
+	1    6650 2500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 6124C71F
+P 6900 2700
+F 0 "R1" H 6970 2746 50  0000 L CNN
+F 1 "110k" H 6970 2655 50  0000 L CNN
+F 2 "" V 6830 2700 50  0001 C CNN
+F 3 "~" H 6900 2700 50  0001 C CNN
+	1    6900 2700
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:CP C2
-U 1 1 61242962
-P 6350 2450
-F 0 "C2" H 6468 2496 50  0000 L CNN
-F 1 "CP" H 6468 2405 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:CP_Radial_D12.5mm_P5.00mm" H 6388 2300 50  0001 C CNN
-F 3 "~" H 6350 2450 50  0001 C CNN
-	1    6350 2450
+L Device:R R2
+U 1 1 6124CE54
+P 6900 3100
+F 0 "R2" H 6970 3146 50  0000 L CNN
+F 1 "15k" H 6970 3055 50  0000 L CNN
+F 2 "" V 6830 3100 50  0001 C CNN
+F 3 "~" H 6900 3100 50  0001 C CNN
+	1    6900 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 2950 6900 2900
+Wire Wire Line
+	6900 2900 6550 2900
+Wire Wire Line
+	6550 2900 6550 2600
+Connection ~ 6900 2900
+Wire Wire Line
+	6900 2900 6900 2850
+$Comp
+L power:GND #PWR?
+U 1 1 6124DCAC
+P 7250 3350
+F 0 "#PWR?" H 7250 3100 50  0001 C CNN
+F 1 "GND" H 7255 3177 50  0000 C CNN
+F 2 "" H 7250 3350 50  0001 C CNN
+F 3 "" H 7250 3350 50  0001 C CNN
+	1    7250 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 3300 6900 3250
+Wire Wire Line
+	6900 2500 6900 2550
+$Comp
+L Device:C CBST
+U 1 1 6124EB6F
+P 6450 2200
+F 0 "CBST" H 6335 2154 50  0000 R CNN
+F 1 "0.1uF" H 6335 2245 50  0000 R CNN
+F 2 "" H 6488 2050 50  0001 C CNN
+F 3 "~" H 6450 2200 50  0001 C CNN
+	1    6450 2200
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6550 2600 6150 2600
+Wire Wire Line
+	6150 2400 6200 2400
+Wire Wire Line
+	6800 2500 6900 2500
+Wire Wire Line
+	6500 2500 6450 2500
+Wire Wire Line
+	6450 2350 6450 2500
+Connection ~ 6450 2500
+Wire Wire Line
+	6450 2500 6150 2500
+Wire Wire Line
+	6450 2050 6450 2000
+Wire Wire Line
+	6450 2000 6200 2000
+Wire Wire Line
+	6200 2000 6200 2400
+$Comp
+L Device:C C2
+U 1 1 61253F20
+P 7250 2900
+F 0 "C2" H 7135 2854 50  0000 R CNN
+F 1 "C" H 7135 2945 50  0000 R CNN
+F 2 "" H 7288 2750 50  0001 C CNN
+F 3 "~" H 7250 2900 50  0001 C CNN
+	1    7250 2900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7250 3050 7250 3300
+Wire Wire Line
+	6900 3300 7250 3300
+Wire Wire Line
+	6900 2500 7250 2500
+Wire Wire Line
+	7250 2500 7250 2750
+Connection ~ 6900 2500
+Text GLabel 7600 2500 2    50   Input ~ 0
+5V
+Wire Wire Line
+	5450 2400 4950 2400
+Text GLabel 4600 2400 0    50   Input ~ 0
+12V
+$Comp
+L Device:C CIN
+U 1 1 61255E14
+P 4750 2650
+F 0 "CIN" H 4635 2604 50  0000 R CNN
+F 1 "C" H 4635 2695 50  0000 R CNN
+F 2 "" H 4788 2500 50  0001 C CNN
+F 3 "~" H 4750 2650 50  0001 C CNN
+	1    4750 2650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4750 2500 4750 2400
+Connection ~ 4750 2400
+Wire Wire Line
+	4750 2400 4600 2400
+$Comp
+L power:GND #PWR?
+U 1 1 61256959
+P 4750 2900
+F 0 "#PWR?" H 4750 2650 50  0001 C CNN
+F 1 "GND" H 4755 2727 50  0000 C CNN
+F 2 "" H 4750 2900 50  0001 C CNN
+F 3 "" H 4750 2900 50  0001 C CNN
+	1    4750 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 2900 4750 2800
+$Comp
+L Device:C C1
+U 1 1 61257E4D
+P 5400 3150
+F 0 "C1" H 5285 3104 50  0000 R CNN
+F 1 "1uF" H 5285 3195 50  0000 R CNN
+F 2 "" H 5438 3000 50  0001 C CNN
+F 3 "~" H 5400 3150 50  0001 C CNN
+	1    5400 3150
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5450 2700 5400 2700
+$Comp
+L power:GND #PWR?
+U 1 1 61258D90
+P 5150 3400
+F 0 "#PWR?" H 5150 3150 50  0001 C CNN
+F 1 "GND" H 5155 3227 50  0000 C CNN
+F 2 "" H 5150 3400 50  0001 C CNN
+F 3 "" H 5150 3400 50  0001 C CNN
+	1    5150 3400
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:CP C3
-U 1 1 61242E27
-P 6700 2450
-F 0 "C3" H 6818 2496 50  0000 L CNN
-F 1 "CP" H 6818 2405 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:CP_Radial_D12.5mm_P5.00mm" H 6738 2300 50  0001 C CNN
-F 3 "~" H 6700 2450 50  0001 C CNN
-	1    6700 2450
+L Device:R RC
+U 1 1 6125987D
+P 5150 2800
+F 0 "RC" H 5220 2846 50  0000 L CNN
+F 1 "R" H 5220 2755 50  0000 L CNN
+F 2 "" V 5080 2800 50  0001 C CNN
+F 3 "~" H 5150 2800 50  0001 C CNN
+	1    5150 2800
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:CP C4
-U 1 1 612432D1
-P 7050 2450
-F 0 "C4" H 7168 2496 50  0000 L CNN
-F 1 "CP" H 7168 2405 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:CP_Radial_D12.5mm_P5.00mm" H 7088 2300 50  0001 C CNN
-F 3 "~" H 7050 2450 50  0001 C CNN
-	1    7050 2450
+L Device:C CC
+U 1 1 6125A0F6
+P 5150 3150
+F 0 "CC" H 5035 3104 50  0000 R CNN
+F 1 "C" H 5035 3195 50  0000 R CNN
+F 2 "" H 5188 3000 50  0001 C CNN
+F 3 "~" H 5150 3150 50  0001 C CNN
+	1    5150 3150
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5150 3000 5150 2950
+Wire Wire Line
+	5150 3300 5150 3350
+Wire Wire Line
+	5150 3350 5400 3350
+Connection ~ 5150 3350
+Wire Wire Line
+	5150 3350 5150 3400
+Wire Wire Line
+	5400 3300 5400 3350
+Wire Wire Line
+	5450 2600 5150 2600
+Wire Wire Line
+	5150 2600 5150 2650
+Wire Wire Line
+	5400 2700 5400 3000
+$Comp
+L Device:R R?
+U 1 1 6126616C
+P 5200 2500
+F 0 "R?" V 4993 2500 50  0000 C CNN
+F 1 "10k" V 5084 2500 50  0000 C CNN
+F 2 "" V 5130 2500 50  0001 C CNN
+F 3 "~" H 5200 2500 50  0001 C CNN
+	1    5200 2500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5350 2500 5450 2500
+Wire Wire Line
+	5050 2500 4950 2500
+Wire Wire Line
+	4950 2500 4950 2400
+Connection ~ 4950 2400
+Wire Wire Line
+	4950 2400 4750 2400
+Text Notes 3500 2800 0    50   ~ 0
+- Ceramic capacitor\n- Close to VIN pin and GND pin
+Wire Wire Line
+	7250 3350 7250 3300
+Connection ~ 7250 3300
+Wire Notes Line
+	6200 2450 7450 2450
+Wire Notes Line
+	7450 2450 7450 3600
+Wire Notes Line
+	7450 3600 7050 3600
+Wire Notes Line
+	7050 3600 7050 2550
+Wire Notes Line
+	7050 2550 6200 2550
+Wire Notes Line
+	6200 2550 6200 2450
+Text Notes 6900 3700 0    50   ~ 0
+Geometrically short
+Text GLabel 2550 2500 2    50   Input ~ 0
+12V
+$Comp
+L power:GND #PWR?
+U 1 1 6124D551
+P 2450 2750
+F 0 "#PWR?" H 2450 2500 50  0001 C CNN
+F 1 "GND" H 2455 2577 50  0000 C CNN
+F 2 "" H 2450 2750 50  0001 C CNN
+F 3 "" H 2450 2750 50  0001 C CNN
+	1    2450 2750
 	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 2750 2450 2700
+Wire Wire Line
+	2450 2600 2300 2600
+Wire Wire Line
+	2300 2700 2450 2700
+Connection ~ 2450 2700
+Wire Wire Line
+	2450 2700 2450 2600
+Wire Wire Line
+	2550 2500 2300 2500
+Wire Wire Line
+	7600 2500 7250 2500
+Connection ~ 7250 2500
+$Comp
+L Ninja-qPCR:Raspberry_Pi_3A_Plus_wpi J?
+U 1 1 6124F83C
+P 2450 5350
+F 0 "J?" H 2450 6565 50  0000 C CNN
+F 1 "Raspberry_Pi_3A_Plus_wpi" H 2450 6474 50  0000 C CNN
+F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown_TopOnly" H 2000 4300 50  0001 C CNN
+F 3 "" H 2000 4300 50  0001 C CNN
+	1    2450 5350
+	1    0    0    -1  
+$EndComp
+Text GLabel 3350 4400 2    50   Input ~ 0
+5V
+Wire Wire Line
+	3350 4400 3250 4400
+Wire Wire Line
+	3150 4500 3250 4500
+Wire Wire Line
+	3250 4500 3250 4400
+Connection ~ 3250 4400
+Wire Wire Line
+	3250 4400 3150 4400
+Wire Wire Line
+	3150 4600 3350 4600
+Text GLabel 3350 4600 2    50   Input ~ 0
+GND
+Text GLabel 3350 5000 2    50   Input ~ 0
+GND
+Text GLabel 3350 5300 2    50   Input ~ 0
+GND
+Text GLabel 3350 5800 2    50   Input ~ 0
+GND
+Text GLabel 3350 6000 2    50   Input ~ 0
+GND
+Wire Wire Line
+	3350 6000 3150 6000
+Wire Wire Line
+	3350 5000 3150 5000
+Wire Wire Line
+	3350 5300 3150 5300
+Wire Wire Line
+	3350 5800 3150 5800
+Text GLabel 1600 6300 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1600 6300 1750 6300
+Text GLabel 1600 5600 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1600 5600 1750 5600
+Text GLabel 1600 4800 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1600 4800 1750 4800
+$Comp
+L Connector:Conn_01x02_Female J?
+U 1 1 612659ED
+P 2250 3550
+F 0 "J?" H 2142 3225 50  0000 C CNN
+F 1 "Conn_01x02_Female" H 2142 3316 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2250 3550 50  0001 C CNN
+F 3 "~" H 2250 3550 50  0001 C CNN
+	1    2250 3550
+	-1   0    0    1   
 $EndComp
 $Comp
-L Device:CP C5
-U 1 1 612435E6
-P 7400 2450
-F 0 "C5" H 7518 2496 50  0000 L CNN
-F 1 "CP" H 7518 2405 50  0000 L CNN
-F 2 "Capacitors_ThroughHole:CP_Radial_D12.5mm_P5.00mm" H 7438 2300 50  0001 C CNN
-F 3 "~" H 7400 2450 50  0001 C CNN
-	1    7400 2450
+L Connector:Conn_01x02_Female J?
+U 1 1 61267658
+P 8850 2450
+F 0 "J?" H 8878 2426 50  0000 L CNN
+F 1 "Conn_01x02_Female" H 8878 2335 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 8850 2450 50  0001 C CNN
+F 3 "~" H 8850 2450 50  0001 C CNN
+	1    8850 2450
 	1    0    0    -1  
 $EndComp
+Text GLabel 2550 3450 2    50   Input ~ 0
+12V
+Wire Wire Line
+	2550 3450 2450 3450
+$Comp
+L power:GND #PWR?
+U 1 1 612698CD
+P 2550 3600
+F 0 "#PWR?" H 2550 3350 50  0001 C CNN
+F 1 "GND" H 2555 3427 50  0000 C CNN
+F 2 "" H 2550 3600 50  0001 C CNN
+F 3 "" H 2550 3600 50  0001 C CNN
+	1    2550 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 3600 2550 3550
+Wire Wire Line
+	2550 3550 2450 3550
+Text GLabel 8500 2450 0    50   Input ~ 0
+5V
+Wire Wire Line
+	8500 2450 8650 2450
+$Comp
+L power:GND #PWR?
+U 1 1 6126D40F
+P 8500 2650
+F 0 "#PWR?" H 8500 2400 50  0001 C CNN
+F 1 "GND" H 8505 2477 50  0000 C CNN
+F 2 "" H 8500 2650 50  0001 C CNN
+F 3 "" H 8500 2650 50  0001 C CNN
+	1    8500 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8500 2650 8500 2550
+Wire Wire Line
+	8500 2550 8650 2550
 $EndSCHEMATC
