@@ -316,60 +316,6 @@ Wire Wire Line
 	7600 2500 7250 2500
 Connection ~ 7250 2500
 $Comp
-L Ninja-qPCR:Raspberry_Pi_3A_Plus_wpi J3
-U 1 1 6124F83C
-P 2450 5350
-F 0 "J3" H 2450 6565 50  0000 C CNN
-F 1 "Raspberry_Pi_3A_Plus_wpi" H 2450 6474 50  0000 C CNN
-F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_FaceDown_TopOnly" H 2000 4300 50  0001 C CNN
-F 3 "" H 2000 4300 50  0001 C CNN
-	1    2450 5350
-	1    0    0    -1  
-$EndComp
-Text GLabel 3350 4400 2    50   Input ~ 0
-5V
-Wire Wire Line
-	3350 4400 3250 4400
-Wire Wire Line
-	3150 4500 3250 4500
-Wire Wire Line
-	3250 4500 3250 4400
-Connection ~ 3250 4400
-Wire Wire Line
-	3250 4400 3150 4400
-Wire Wire Line
-	3150 4600 3350 4600
-Text GLabel 3350 4600 2    50   Input ~ 0
-GND
-Text GLabel 3350 5000 2    50   Input ~ 0
-GND
-Text GLabel 3350 5300 2    50   Input ~ 0
-GND
-Text GLabel 3350 5800 2    50   Input ~ 0
-GND
-Text GLabel 3350 6000 2    50   Input ~ 0
-GND
-Wire Wire Line
-	3350 6000 3150 6000
-Wire Wire Line
-	3350 5000 3150 5000
-Wire Wire Line
-	3350 5300 3150 5300
-Wire Wire Line
-	3350 5800 3150 5800
-Text GLabel 1600 6300 0    50   Input ~ 0
-GND
-Wire Wire Line
-	1600 6300 1750 6300
-Text GLabel 1600 5600 0    50   Input ~ 0
-GND
-Wire Wire Line
-	1600 5600 1750 5600
-Text GLabel 1600 4800 0    50   Input ~ 0
-GND
-Wire Wire Line
-	1600 4800 1750 4800
-$Comp
 L Connector:Conn_01x02_Female J2
 U 1 1 612659ED
 P 2250 3550
@@ -555,4 +501,58 @@ Wire Wire Line
 Wire Wire Line
 	4950 3300 4950 3200
 Connection ~ 5150 3300
+$Comp
+L Connector_Generic:Conn_02x20_Odd_Even J8
+U 1 1 6126B928
+P 2150 5300
+F 0 "J8" H 2200 6417 50  0000 C CNN
+F 1 "Conn_02x20_Odd_Even" H 2200 6326 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 2150 5300 50  0001 C CNN
+F 3 "~" H 2150 5300 50  0001 C CNN
+	1    2150 5300
+	1    0    0    -1  
+$EndComp
+Text GLabel 2650 4400 2    50   Input ~ 0
+5V
+Wire Wire Line
+	2650 4400 2550 4400
+Wire Wire Line
+	2450 4500 2550 4500
+Wire Wire Line
+	2550 4500 2550 4400
+Connection ~ 2550 4400
+Wire Wire Line
+	2550 4400 2450 4400
+Wire Wire Line
+	2450 4600 2650 4600
+Text GLabel 2650 4600 2    50   Input ~ 0
+GND
+Text GLabel 2650 5000 2    50   Input ~ 0
+GND
+Text GLabel 2650 5300 2    50   Input ~ 0
+GND
+Text GLabel 2650 5800 2    50   Input ~ 0
+GND
+Text GLabel 2650 6000 2    50   Input ~ 0
+GND
+Wire Wire Line
+	2650 6000 2450 6000
+Wire Wire Line
+	2650 5000 2450 5000
+Wire Wire Line
+	2650 5300 2450 5300
+Wire Wire Line
+	2650 5800 2450 5800
+Text GLabel 1800 6300 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1800 6300 1950 6300
+Text GLabel 1800 5600 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1800 5600 1950 5600
+Text GLabel 1800 4800 0    50   Input ~ 0
+GND
+Wire Wire Line
+	1800 4800 1950 4800
 $EndSCHEMATC
