@@ -1,6 +1,6 @@
-update=Tuesday, 24 August 2021 at 18:34:41
+update=2021 August 25, Wednesday 09:54:51
 version=1
-last_client=eeschema
+last_client=pcbnew
 [general]
 version=1
 RootSch=
@@ -12,10 +12,20 @@ NetIExt=net
 version=1
 LibDir=
 [eeschema/libraries]
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceAjustPassiveValues=0
+LabSize=50
+ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=outline.net
+LastNetListRead=5v.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=0
@@ -238,13 +248,3 @@ uViaDrill=0.1
 dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=Pcbnew
-SpiceAjustPassiveValues=0
-LabSize=50
-ERC_TestSimilarLabels=1
