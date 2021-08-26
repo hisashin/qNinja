@@ -17,7 +17,7 @@ node_modules
 package-lock.json
 
 # KiCad autosave
-*.sch-bak
+*/*.sch-bak
 *-cache.lib
 *-rescue.dcm
 -rescue.lib
