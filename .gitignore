@@ -18,9 +18,11 @@ package-lock.json
 
 # KiCad autosave
 */*.sch-bak
+*/*.kicad_pcb-bak
 *-cache.lib
 *-rescue.dcm
 -rescue.lib
 _autoosave*
 Untitled.pdf
 src/api/*
+tmp/*
