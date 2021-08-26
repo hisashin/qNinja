@@ -844,7 +844,7 @@
   (gr_arc (start 165.454254 95.59964) (end 164.977127 95.45014) (angle 72.60244929) (layer Edge.Cuts) (width 0.1))
   (gr_line (start 183 95.09964) (end 165.454254 95.09964) (layer Edge.Cuts) (width 0.1))
   (gr_arc (start 211.5 94) (end 211.5 93.5) (angle 90) (layer Edge.Cuts) (width 0.1))
-  (gr_text 121.5x16.4mm (at 94.5 90) (layer Dwgs.User)
+  (gr_text 119.5x16.4mm (at 94.5 90) (layer Dwgs.User)
     (effects (font (size 1 1) (thickness 0.15)))
   )
 
