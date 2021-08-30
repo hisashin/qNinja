@@ -1,5 +1,6 @@
 "use strict";
 const PromiseQueue = require("../lib/promise_queue.js");
+const TemperatureMonitor = require("./temperature_monitor.js");
 
 const START_TEMP = 25.0;
 
@@ -91,6 +92,7 @@ class ThermalCycler {
     this.heatLid = heatLid;
     this.extraSensing = extraSensing;
     this.state = new StateIdle(null);
+    this.tempMonitor = new TemperatureMonitor(plate, heatLid, extraSensing);
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
@@ -183,7 +185,6 @@ class ThermalCycler {
     }
     if (this.extraSensing) {
       queue.push(this._extraSensingControlTask(this.extraSensing));
-      
     }
     new PromiseQueue(queue).exec().then(()=>{
       this._control();
@@ -226,7 +227,12 @@ class ThermalCycler {
       }
     }
     if (this.eventReceiver != null && this.eventReceiver.onProgress != null) {
-      this.eventReceiver.onProgress(this.getStatus());
+      this.tempMonitor.getMeasurement((detail)=>{
+        let status = this.getStatus();
+        status.detail = detail;
+        this.eventReceiver.onProgress(status);
+        
+      }, 1000);
     }
     let plateTargetTemp = this.state.plateTargetTemp();
     if (plateTargetTemp != null) {

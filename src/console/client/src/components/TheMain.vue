@@ -9,6 +9,8 @@
           <div class="header__device">
           <span>
             Device: {{ connectionStatus }}
+            Well: {{ wellTemp }}
+            Well: {{ lidTemp }}
           </span>
           <!-- Network -->
           <button
@@ -110,7 +112,9 @@ export default {
       backEnabled: false,
       panelTitle: "",
       connectionStatus: "Disconnected",
-      connected: false
+      connected: false,
+      wellTemp: "-",
+      lidTemp: "-"
     }
   },
   created: function () {
@@ -139,6 +143,10 @@ export default {
     });
     device.subscribe("pong", (topic, data)=>{
       alert("TheMain.vue pong received.");
+    });
+    device.subscribe("device.update.temperature", (topic, data)=>{
+      this.wellTemp = data.plate.main;
+      this.lidTemp = data.lid.main;
     });
   },
   mounted: function () {

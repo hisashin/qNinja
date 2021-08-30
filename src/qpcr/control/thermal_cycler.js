@@ -1,5 +1,6 @@
 "use strict";
 
+const TemperatureMonitor = require("./temperature_monitor.js");
 /*
 const Plate = require("./plate");
 const HeatLid = require("./heat_lid");
@@ -93,6 +94,7 @@ class ThermalCycler {
     this.plate = plate;
     this.heatLids = heatLids;
     this.state = new StateIdle(null);
+    this.tempMonitor = new TemperatureMonitor(plate, heatLid, extraSensing);
   }
   setEventReceiver (receiver) {
     this.eventReceiver = receiver;
@@ -107,7 +109,6 @@ class ThermalCycler {
       } else {
         lid.off();
       }
-      
     }
     this.state = new StatePreheat(protocol);
     if (!(this.protocol.lid_temp > 0)) {
@@ -203,7 +204,11 @@ class ThermalCycler {
       }
     }
     if (this.eventReceiver != null && this.eventReceiver.onProgress != null) {
-      this.eventReceiver.onProgress(this.getStatus());
+      this.tempMonitor.getMeasurement((detail)=>{
+        let status = this.getStatus();
+        status.detail = detail;
+        this.eventReceiver.onProgress(status);
+      }, 1000);
     }
     let plateTargetTemp = this.state.plateTargetTemp();
     if (plateTargetTemp != null) {

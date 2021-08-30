@@ -28,8 +28,10 @@ class HeatUnit {
     this.pid = pid;
     this.sensing = sensing;
     this.output = output;
-    this.temperature = 0.0; // Celsius
-    this.targetTemperature = 0.0; // Celsius
+    this.temperature = 0.0; // Representative temperature (in Celsius)
+    this.targetTemperature = 0.0; // PID target temperature (in Celsius)
+    this.measurement = null; // Detailed temperature data object (may include multiple values)
+    this.measurementTimestamp = null;
   }
   start () {
     // Initialize hardware. This function is called once at the first run.
@@ -45,7 +47,9 @@ class HeatUnit {
     this.pid.setSetpoint(this.targetTemperature);
   }
   control (callback) {
-    this.sensing.measureTemperature ((temperature)=>{
+    this.sensing.measureTemperature ((temperature, detailedMeasurement)=>{
+      this.measurement = detailedMeasurement;
+      this.measurementTimestamp = new Date().getTime();
       this.temperature = temperature;
       this.pid.setValue(temperature);
       if (this.targetTemperature > 0) {
@@ -58,6 +62,20 @@ class HeatUnit {
   }
   getTemperature() {
     return this.temperature;
+  }
+  measureTemperature (callback, expirationMsec) {
+    if (expirationMsec > 0 && this.measurementTimestamp > 0 && this.measurementTimestamp + expirationMsec > new Date().getTime()) {
+      // Latest measurement data is cached. Callback immediately.
+      callback(this.measurement);
+    } else {
+      // Measurement data is expired or not existing
+      this.sensing.measureTemperature ((temperature, detailedMeasurement)=>{
+        this.measurement = detailedMeasurement;
+        this.measurementTimestamp = new Date().getTime();
+        this.temperature = temperature;
+        callback(this.measurement);
+      });
+    }
   }
   off() {
     this.output.off();
