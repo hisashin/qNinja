@@ -14,101 +14,95 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 Wire Wire Line
-	3150 3700 3350 3700
+	1250 4000 1450 4000
 Wire Wire Line
-	3150 3800 3350 3800
+	1250 4100 1450 4100
 Wire Wire Line
-	3150 3900 3350 3900
+	1250 4200 1450 4200
 Wire Wire Line
-	3150 4000 3350 4000
+	1250 4300 1450 4300
 Wire Wire Line
-	3150 4100 3350 4100
+	1250 4400 1450 4400
 Wire Wire Line
-	3150 4200 3350 4200
+	1250 4500 1450 4500
 Wire Wire Line
-	3150 4300 3350 4300
+	1250 4600 1450 4600
 Connection ~ 7600 4100
 Wire Wire Line
 	7600 4100 6200 4100
 Wire Wire Line
-	2450 3100 2250 3100
+	1450 2000 1250 2000
 Wire Wire Line
-	2450 3000 2250 3000
+	1450 1900 1250 1900
 Wire Wire Line
-	2250 1600 2450 1600
+	1250 2800 1450 2800
 Wire Wire Line
-	2250 1500 2450 1500
+	1250 2700 1450 2700
 Wire Wire Line
-	2250 1400 2450 1400
+	1250 2600 1450 2600
 Wire Wire Line
-	2250 1300 2450 1300
+	1250 2500 1450 2500
 Wire Wire Line
-	2250 1200 2450 1200
+	1250 2400 1450 2400
 Wire Wire Line
-	2250 1100 2450 1100
+	1250 2300 1450 2300
 Wire Wire Line
-	2250 1000 2450 1000
+	1250 2200 1450 2200
 Wire Wire Line
-	2250 900  2450 900 
+	1250 2100 1450 2100
 Wire Wire Line
-	2250 2900 2450 2900
+	1250 1800 1450 1800
 Wire Wire Line
-	2250 2800 2450 2800
+	1250 1700 1450 1700
 Wire Wire Line
-	2250 2700 2450 2700
+	1250 1600 1450 1600
 Wire Wire Line
-	2250 2600 2450 2600
+	1250 1500 1450 1500
 Wire Wire Line
-	2250 2500 2450 2500
+	1250 1400 1450 1400
 Wire Wire Line
-	2250 2400 2450 2400
+	1250 1300 1450 1300
 Wire Wire Line
-	2250 2300 2450 2300
+	1250 1200 1450 1200
 Wire Wire Line
-	2250 2200 2450 2200
+	1250 1100 1450 1100
 Wire Wire Line
-	2250 1800 2450 1800
+	1250 3000 1450 3000
 Wire Wire Line
-	2250 1700 2450 1700
-Text GLabel 2450 1700 2    50   Input ~ 0
+	1250 2900 1450 2900
+Text GLabel 1450 1600 2    50   Input ~ 0
 GNDA
-Text GLabel 2450 1800 2    50   Input ~ 0
-GNDA
-Text GLabel 2450 3000 2    50   Input ~ 0
-GNDA
-Text GLabel 2450 3100 2    50   Input ~ 0
-GNDA
-Text HLabel 2450 2800 2    50   Input ~ 0
+Text HLabel 1450 2800 2    50   Input ~ 0
 N_PD_OUT16
-Text HLabel 2450 1600 2    50   Input ~ 0
+Text HLabel 1450 2900 2    50   Input ~ 0
 N_PD_OUT15
-Text HLabel 2450 2600 2    50   Input ~ 0
+Text HLabel 1450 2700 2    50   Input ~ 0
 N_PD_OUT14
-Text HLabel 2450 1400 2    50   Input ~ 0
+Text HLabel 1450 3000 2    50   Input ~ 0
 N_PD_OUT13
-Text HLabel 2450 2400 2    50   Input ~ 0
+Text HLabel 1450 2600 2    50   Input ~ 0
 N_PD_OUT12
-Text HLabel 2450 1200 2    50   Input ~ 0
+Text HLabel 1450 3100 2    50   Input ~ 0
 N_PD_OUT11
-Text HLabel 2450 2200 2    50   Input ~ 0
+Text HLabel 1450 2500 2    50   Input ~ 0
 N_PD_OUT10
-Text HLabel 2450 1000 2    50   Input ~ 0
+Text HLabel 1450 3200 2    50   Input ~ 0
 N_PD_OUT9
-Text HLabel 2450 2300 2    50   Input ~ 0
+Text HLabel 1450 2000 2    50   Input ~ 0
 N_PD_OUT8
-Text HLabel 2450 900  2    50   Input ~ 0
+Text HLabel 1450 2100 2    50   Input ~ 0
 N_PD_OUT7
-Text HLabel 2450 2500 2    50   Input ~ 0
+Text HLabel 1450 1900 2    50   Input ~ 0
 N_PD_OUT6
-Text HLabel 2450 1100 2    50   Input ~ 0
+Text HLabel 1450 2200 2    50   Input ~ 0
 N_PD_OUT5
-Text HLabel 2450 2700 2    50   Input ~ 0
+Text HLabel 1450 1800 2    50   Input ~ 0
 N_PD_OUT4
-Text HLabel 2450 1300 2    50   Input ~ 0
+Text HLabel 1450 2300 2    50   Input ~ 0
 N_PD_OUT3
-Text HLabel 2450 2900 2    50   Input ~ 0
+Text HLabel 1450 1700 2    50   Input ~ 0
 N_PD_OUT2
-Text HLabel 2450 1500 2    50   Input ~ 0
+Text HLabel 1450 2400 2    50   Input ~ 0
 N_PD_OUT1
 Text HLabel 6900 3700 0    50   Input ~ 0
 N_PD_OUT16
@@ -450,62 +444,58 @@ Connection ~ 10700 4100
 Wire Wire Line
 	10700 4100 9300 4100
 Wire Wire Line
-	3150 4900 3350 4900
+	1250 3100 1450 3100
 Wire Wire Line
-	3150 3600 3350 3600
+	1250 3900 1450 3900
 Wire Wire Line
-	3150 5600 3350 5600
+	1250 3800 1450 3800
 Wire Wire Line
-	3150 5500 3350 5500
+	1250 3700 1450 3700
 Wire Wire Line
-	3150 5400 3350 5400
+	1250 3600 1450 3600
 Wire Wire Line
-	3150 5300 3350 5300
+	1250 3500 1450 3500
 Wire Wire Line
-	3150 5200 3350 5200
+	1250 3400 1450 3400
 Wire Wire Line
-	3150 5100 3350 5100
+	1250 3300 1450 3300
 Wire Wire Line
-	3150 5000 3350 5000
+	1250 3200 1450 3200
 Wire Wire Line
-	3150 4500 3350 4500
+	1250 4800 1450 4800
 Wire Wire Line
-	3150 4400 3350 4400
-Text GLabel 3350 4400 2    50   Input ~ 0
-GNDA
-Text GLabel 3350 4500 2    50   Input ~ 0
-GNDA
-Text HLabel 3350 5500 2    50   Input ~ 0
+	1250 4700 1450 4700
+Text HLabel 1450 4400 2    50   Input ~ 0
 S_PD_OUT16
-Text HLabel 3350 4300 2    50   Input ~ 0
+Text HLabel 1450 4500 2    50   Input ~ 0
 S_PD_OUT15
-Text HLabel 3350 5300 2    50   Input ~ 0
+Text HLabel 1450 4300 2    50   Input ~ 0
 S_PD_OUT14
-Text HLabel 3350 4100 2    50   Input ~ 0
+Text HLabel 1450 4600 2    50   Input ~ 0
 S_PD_OUT13
-Text HLabel 3350 5100 2    50   Input ~ 0
+Text HLabel 1450 4200 2    50   Input ~ 0
 S_PD_OUT12
-Text HLabel 3350 3900 2    50   Input ~ 0
+Text HLabel 1450 4700 2    50   Input ~ 0
 S_PD_OUT11
-Text HLabel 3350 4900 2    50   Input ~ 0
+Text HLabel 1450 4100 2    50   Input ~ 0
 S_PD_OUT10
-Text HLabel 3350 3700 2    50   Input ~ 0
+Text HLabel 1450 4800 2    50   Input ~ 0
 S_PD_OUT9
-Text HLabel 3350 5000 2    50   Input ~ 0
+Text HLabel 1450 3600 2    50   Input ~ 0
 S_PD_OUT8
-Text HLabel 3350 3600 2    50   Input ~ 0
+Text HLabel 1450 3900 2    50   Input ~ 0
 S_PD_OUT7
-Text HLabel 3350 5200 2    50   Input ~ 0
+Text HLabel 1450 3500 2    50   Input ~ 0
 S_PD_OUT6
-Text HLabel 3350 3800 2    50   Input ~ 0
+Text HLabel 1450 4000 2    50   Input ~ 0
 S_PD_OUT5
-Text HLabel 3350 5400 2    50   Input ~ 0
+Text HLabel 1450 3400 2    50   Input ~ 0
 S_PD_OUT4
-Text HLabel 3350 4000 2    50   Input ~ 0
+Text HLabel 1450 3700 2    50   Input ~ 0
 S_PD_OUT3
-Text HLabel 3350 5600 2    50   Input ~ 0
+Text HLabel 1450 3300 2    50   Input ~ 0
 S_PD_OUT2
-Text HLabel 3350 4200 2    50   Input ~ 0
+Text HLabel 1450 3800 2    50   Input ~ 0
 S_PD_OUT1
 Text HLabel 10000 3700 0    50   Input ~ 0
 S_PD_OUT16
@@ -997,4 +987,40 @@ Wire Wire Line
 	1250 6250 1450 6250
 Wire Wire Line
 	1450 6350 1250 6350
+Text GLabel 1450 1500 2    50   Input ~ 0
+GNDL
+Text GLabel 1450 -200 2    50   Input ~ 0
+VCCL
+Text HLabel 1450 700  2    50   Input ~ 0
+N_LED_OUT9
+Text HLabel 1450 800  2    50   Input ~ 0
+N_LED_OUT10
+Text HLabel 1450 900  2    50   Input ~ 0
+N_LED_OUT11
+Text HLabel 1450 1000 2    50   Input ~ 0
+N_LED_OUT12
+Text HLabel 1450 1100 2    50   Input ~ 0
+N_LED_OUT13
+Text HLabel 1450 1200 2    50   Input ~ 0
+N_LED_OUT14
+Text HLabel 1450 1300 2    50   Input ~ 0
+N_LED_OUT15
+Text HLabel 1450 1400 2    50   Input ~ 0
+N_LED_OUT16
+Text HLabel 1450 -100 2    50   Input ~ 0
+S_LED_OUT5
+Text HLabel 1450 0    2    50   Input ~ 0
+S_LED_OUT6
+Text HLabel 1450 100  2    50   Input ~ 0
+S_LED_OUT8
+Text HLabel 1450 200  2    50   Input ~ 0
+S_LED_OUT7
+Text HLabel 1450 300  2    50   Input ~ 0
+S_LED_OUT3
+Text HLabel 1450 400  2    50   Input ~ 0
+S_LED_OUT4
+Text HLabel 1450 500  2    50   Input ~ 0
+S_LED_OUT1
+Text HLabel 1450 600  2    50   Input ~ 0
+S_LED_OUT2
 $EndSCHEMATC
