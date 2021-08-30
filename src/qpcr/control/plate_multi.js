@@ -1,3 +1,4 @@
+"use strict";
 /* 
   Plate class represents a total system of the PCR plate.
   It consists of
@@ -5,7 +6,6 @@
    * 
   */
 
-  
 const PlateBlock = require('./plate_block.js');
 const PromiseQueue = require("../lib/promise_queue.js");
 // const PID = require("./heat_control/pid.js");
@@ -193,8 +193,15 @@ class Plate  {
       block.syncWith(rear);
     });
   }
+  measureTemperature (callback, expirationMsec) {
+    let obj = {
+      main: this.temperature,
+      air: this.temperature,
+      block: this.temperature
+    };
+    callback(obj);
+  }
 }
-
 module.exports = Plate;
 
 /*

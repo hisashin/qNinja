@@ -9,6 +9,7 @@ const fs = require('fs');
 
 // const ThermalCycler = require("./control/thermal_cycler");
 const ThermalCycler = require("./control/thermal_cycler_multi");
+const TemperatureMonitor = require("./control/temperature_monitor");
 const Optics = require("./control/optics");
 const OpticsAnalysis = require("./optics_analysis");
 
@@ -43,13 +44,22 @@ class NinjaQPCR {
     if (boardConf.getExtraSensing) {
       extraSensing = boardConf.getExtraSensing();
     }
-    this.thermalCycler = new ThermalCycler(boardConf.getPlate(), boardConf.getHeatLid(), extraSensing);
+    const plate = boardConf.getPlate();
+    const lid = boardConf.getHeatLid();
+    this.thermalCycler = new ThermalCycler(plate, lid, extraSensing);
+    this.tempMonitor = new TemperatureMonitor(plate, lid, extraSensing);
+    plate.start();
+    lid.start();
+    if (extraSensing) {
+      extraSensing.start();
+    }
     this.thermalCycler.setEventReceiver(this);
     this.optics = new Optics(boardConf.getLEDUnit(), boardConf.getFluorescenceSensingUnit(), boardConf.wellsCount(), boardConf.opticsChannelsCount());
     this.deviceState = DEVICE_STATE.IDLE;
     this.progress = null;
     this.analysis = null;
     this.session = null;
+    
   }
   setSession (session) {
     if (this.session) {
@@ -70,6 +80,7 @@ class NinjaQPCR {
   /* API */
   /* Event handler registration */
   setEventReceiver (receiver) {
+    // TODO directly register receiver to session objects.
     this.receiver = receiver;
     /*
       onThermalTransition(transition)
@@ -81,6 +92,13 @@ class NinjaQPCR {
       onFluorescenceEvent (data)
       onError(error)
     */
+  }
+  startMonitoringTemperature (onUpdate, intervalMsec) {
+    setInterval(()=>{
+      this.tempMonitor.getMeasurement((detail)=>{
+        onUpdate(detail);
+      }, intervalMsec/2);
+    }, intervalMsec);
   }
   
   /* Experiment Control */

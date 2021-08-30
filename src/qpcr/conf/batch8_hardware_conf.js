@@ -29,6 +29,7 @@ const PromiseQueue = require("../lib/promise_queue.js");
 
 const I2C_ADDR_PCA9955B = 0x05;
 
+
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
@@ -98,6 +99,9 @@ const MUX_MAP_PHOTODIODES_S = [
   [8,9,10,11,12,13,14,15], // Opt channel 0
   [7,6,5,4,3,2,1,0] // Opt channel 1
 ];
+const TEMPERATURE_CHANNELS_CONF = {
+  // label, property
+};
 /* 
   Measurement Interval and Data Rate
   Interval > 1000 / DataRate
@@ -147,7 +151,7 @@ class HardwareConf {
     {
       this.extraSensing = new ExtraSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP, 
         this.adcManager, ADC_CHANNEL_THERMISTORS, 
-        this.thermistorMux, [MUX_CHANNEL_THERMISTOR_AIR, MUX_CHANNEL_THERMISTOR_EXT1/*, MUX_CHANNEL_THERMISTOR_EXT2, MUX_CHANNEL_THERMISTOR_EXT3*/]);
+        this.thermistorMux, [MUX_CHANNEL_THERMISTOR_EXT1, MUX_CHANNEL_THERMISTOR_EXT2, MUX_CHANNEL_THERMISTOR_EXT3]);
     }
     // this.extraSensing
     try {
@@ -176,6 +180,9 @@ class HardwareConf {
   }
   opticsChannelsCount () {
     return OPTICS_CHANNELS_COUNT;
+  }
+  temperatureChannels () {
+    return TEMPERATURE_CHANNELS_CONF;
   }
   
   /* Getters of hardware units */
@@ -218,12 +225,19 @@ class PlateSensing {
       this.airSensing.measureTemperature((airTemperature)=>{
         // TODO sample temp simulation
         const temperature = plateTemperature;
-        callback(temperature);
+        // TODO use simulated temperature as main
+        const detailedMeasurement = {
+          main:temperature,
+          block:plateTemperature,
+          air:airTemperature
+        };
+        callback(temperature, detailedMeasurement);
       });
     });
   }
 }
 const USE_TEMP_SWITCHING = false;
+// Simple temperature sensing with a single thermistor
 class TemperatureSensing {
   constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
     this.thermistorLowTemp = thermistorLowTemp;
@@ -259,7 +273,10 @@ class TemperatureSensing {
           const temp = thermistor.getTemp(val);
           this.prevValue = temp;
           muxQueue.release(muxTaskId);
-          callback(temp);
+          const detailedMeasurement = {
+            main:temp
+          };
+          callback(temp, detailedMeasurement);
         });
       }, THERMISTOR_MUX_WAIT_MSEC);
     });
@@ -273,31 +290,45 @@ class ExtraSensing {
   constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannels) {
     // muxChannels
     this.units = [];
-    this.measurements = [];
+    this.measurement = {};
     muxChannels.forEach ((channel)=>{
       const unit = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, channel);
       this.units.push(unit);
-      this.measurements.push(0);
     });
+    this.measurement = {}; // Detailed temperature data object (may include multiple values)
+    this.measurementTimestamp = null;
   }
+  start () {}
   _measure(i, resolve) {
     const unit = this.units[i];
+    this.measurementTimestamp = new Date().getTime();
     if (unit) {
       unit.measureTemperature((temperature)=>{
-        this.measurements[i] = temperature;
+        this.measurement[i] = temperature;
         this._measure(i+1, resolve);
       });
       
     } else {
       resolve();
     }
-    
   }
   control (resolve) {
     this._measure(0, resolve);
   }
   data () {
     return this.measurements;
+  }
+  measureTemperature (callback, expirationMsec) {
+    if (expirationMsec > 0 && this.measurementTimestamp > 0 && this.measurementTimestamp + expirationMsec > new Date().getTime()) {
+      // Latest measurement data is cached. Callback immediately.
+      callback(this.measurement);
+    } else {
+      // Measurement data is expired or not existing
+      this._measure (0, ()=>{
+        this.measurementTimestamp = new Date().getTime();
+        callback(this.measurement);
+      });
+    }
   }
 }
 
@@ -514,10 +545,6 @@ class FluorescenceSensingUnit {
   measure(callback) {
     this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (_val)=>{
       const val = _val * 2;
-      /*
-      let debugLastMuxChannel = 0;
-      let debugLastMuxSwitch = 0;
-      */
       this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
       callback({v:val,s:this.isStrongSignal?"1M":"10M",x:debugLastMuxSwitch, y:debugLastMuxChannel});
     });

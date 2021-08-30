@@ -29,5 +29,12 @@
   "channels": {
     "count":2
   },
-  "hardware_conf":"dummy_hardware_multi_conf"
+  "temperature_measurement":
+  [
+    {"label":"Plate", "path": "plate.main"},
+    {"label":"Block", "path": "plate.block"},
+    {"label":"Air", "path": "plate.air"},
+    {"label":"Lid", "path": "plate.main"}
+  ],
+  "hardware_conf":"dummy_hardware_conf"
 }

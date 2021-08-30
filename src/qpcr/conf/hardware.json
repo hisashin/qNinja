@@ -26,6 +26,15 @@
       "B8"
     ]
   },
+  "temperature_measurement":
+  [
+    {"label":"Plate", "path": "plate.main"},
+    {"label":"Block", "path": "plate.block"},
+    {"label":"Air", "path": "plate.air"},
+    {"label":"Lid", "path": "plate.main"},
+    {"label":"Extra A", "path": "extra.0"},
+    {"label":"Extra B", "path": "extra.1"}
+  ],
   "channels": {
     "count":2
   },

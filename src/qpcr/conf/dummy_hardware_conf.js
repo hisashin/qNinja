@@ -42,6 +42,14 @@ class Plate {
   off () {
     // Do nothing
   }
+  measureTemperature (callback, expirationMsec) {
+    let obj = {
+      main: this.temperature,
+      air: this.temperature,
+      block: this.temperature
+    };
+    callback(obj);
+  }
   shutdown () {
     console.log("Shutting down dummy plate.");
     this.off();
@@ -65,6 +73,12 @@ class HeatLid {
   }
   off () {
     // Do nothing
+  }
+  measureTemperature (callback, expirationMsec) {
+    let obj = {
+      main: this.temperature
+    };
+    callback(obj);
   }
   shutdown () {
     console.log("Shutting down dummy heat lid.");

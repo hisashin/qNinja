@@ -686,6 +686,27 @@ class NinjaQPCRWebSocketServer {
         session.runOpticsDemo();
       }
     });
+    qpcr.startMonitoringTemperature ((data)=>{
+      /*
+      Mapping example:
+      const table = qpcr.getConfig().temperature_measurement;
+      table.forEach ((item)=>{
+        let pathElements = item.path.split(".");
+        let obj = data;
+        pathElements.forEach((element)=>{
+          let prop = element;
+          let parsed = parseInt(prop);
+          if (!isNaN(parsed)) {
+            prop = parsed;
+          }
+          obj = obj[prop];
+        });
+        console.log(item.label, obj)
+      });
+      console.log(JSON.stringify(data));
+      */
+      eventBus.publish("device.update.temperature", data);
+    }, 3000);
   }
   handleMessage (obj) {
     switch (obj.topic) {
@@ -845,6 +866,7 @@ class NinjaQPCRServer {
     const clientPort = (options.clientPort) ? options.clientPort:CLIENT_PORT_DEFAULT;
     const hardwareFile = (options.dummyHardware) ? "hardware_dummy.json" : "hardware.json";
     console.log("hardwareFile=%s", hardwareFile);
+    
     qpcr = new NinjaQPCR(hardwareFile);
     
     this.server = http.createServer();
