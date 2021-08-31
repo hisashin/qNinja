@@ -5,7 +5,6 @@ const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
 
 const i2c = require('i2c-bus');
-const raspi = require('raspi'); // For SoftPWM
 const pwm = require('raspi-soft-pwm');
 const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
