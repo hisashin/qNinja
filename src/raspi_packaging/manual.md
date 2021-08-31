@@ -72,7 +72,9 @@ Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://
 Type=Application
 ```
 
-Disable GPIO interrupts
-If running a newer Raspbian release, you will need to add the following line to /boot/config.txt and reboot:
-
+# Disable GPIO interrupts (for rpio.poll)
+Add the following line to /boot/config.txt
+```
 dtoverlay=gpio-no-irq
+
+```
