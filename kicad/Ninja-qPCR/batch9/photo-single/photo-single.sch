@@ -648,25 +648,25 @@ F 3 "~" H 3800 6750 50  0001 C CNN
 	1    3800 6750
 	1    0    0    -1  
 $EndComp
-Text HLabel 4200 6350 2    50   Input ~ 0
-S_LED_OUT5
-Text GLabel 4200 6450 2    50   Input ~ 0
-GNDL
-Text GLabel 4200 6550 2    50   Input ~ 0
-VCCL
-Text HLabel 4200 6650 2    50   Input ~ 0
-S_LED_OUT6
-Text HLabel 4200 6750 2    50   Input ~ 0
-S_LED_OUT8
-Text HLabel 4200 6850 2    50   Input ~ 0
-S_LED_OUT7
 Text HLabel 4200 6950 2    50   Input ~ 0
-S_LED_OUT3
+S_LED_OUT5
+Text GLabel 4200 6350 2    50   Input ~ 0
+GNDL
+Text GLabel 4200 6450 2    50   Input ~ 0
+VCCL
 Text HLabel 4200 7050 2    50   Input ~ 0
-S_LED_OUT4
-Text HLabel 4200 7150 2    50   Input ~ 0
-S_LED_OUT1
+S_LED_OUT6
 Text HLabel 4200 7250 2    50   Input ~ 0
+S_LED_OUT8
+Text HLabel 4200 7150 2    50   Input ~ 0
+S_LED_OUT7
+Text HLabel 4200 6750 2    50   Input ~ 0
+S_LED_OUT3
+Text HLabel 4200 6850 2    50   Input ~ 0
+S_LED_OUT4
+Text HLabel 4200 6550 2    50   Input ~ 0
+S_LED_OUT1
+Text HLabel 4200 6650 2    50   Input ~ 0
 S_LED_OUT2
 Wire Wire Line
 	4200 7250 4000 7250
@@ -688,78 +688,22 @@ Wire Wire Line
 	4200 6450 4000 6450
 Wire Wire Line
 	4200 6350 4000 6350
-Text GLabel 4200 5150 2    50   Input ~ 0
-GNDL
-Text GLabel 4200 5250 2    50   Input ~ 0
-VCCL
-Text HLabel 4200 5350 2    50   Input ~ 0
-N_LED_OUT9
-Text HLabel 4200 5450 2    50   Input ~ 0
-N_LED_OUT10
-Text HLabel 4200 5550 2    50   Input ~ 0
-N_LED_OUT11
-Text HLabel 4200 5650 2    50   Input ~ 0
-N_LED_OUT12
-Text HLabel 4200 5750 2    50   Input ~ 0
-N_LED_OUT13
-Text HLabel 4200 5850 2    50   Input ~ 0
-N_LED_OUT14
-Text HLabel 4200 5950 2    50   Input ~ 0
-N_LED_OUT15
-Text HLabel 4200 6050 2    50   Input ~ 0
-N_LED_OUT16
-Wire Wire Line
-	4000 5150 4200 5150
-Wire Wire Line
-	4200 5250 4000 5250
-Wire Wire Line
-	4000 5350 4200 5350
-Wire Wire Line
-	4200 5450 4000 5450
-Wire Wire Line
-	4000 5550 4200 5550
-Wire Wire Line
-	4200 5650 4000 5650
-Wire Wire Line
-	4000 5750 4200 5750
-Wire Wire Line
-	4200 5850 4000 5850
-Wire Wire Line
-	4000 5950 4200 5950
-Wire Wire Line
-	4200 6050 4000 6050
-Text HLabel 1650 2900 2    50   Input ~ 0
-N_LED_OUT9
-Text HLabel 1650 2800 2    50   Input ~ 0
-N_LED_OUT10
-Text HLabel 1650 2700 2    50   Input ~ 0
-N_LED_OUT11
-Text HLabel 1650 2600 2    50   Input ~ 0
-N_LED_OUT12
-Text HLabel 1650 2500 2    50   Input ~ 0
-N_LED_OUT13
-Text HLabel 1650 2400 2    50   Input ~ 0
-N_LED_OUT14
-Text HLabel 1650 2300 2    50   Input ~ 0
-N_LED_OUT15
 Text HLabel 1650 2200 2    50   Input ~ 0
+N_LED_OUT9
+Text HLabel 1650 2300 2    50   Input ~ 0
+N_LED_OUT10
+Text HLabel 1650 2400 2    50   Input ~ 0
+N_LED_OUT11
+Text HLabel 1650 2500 2    50   Input ~ 0
+N_LED_OUT12
+Text HLabel 1650 2600 2    50   Input ~ 0
+N_LED_OUT13
+Text HLabel 1650 2700 2    50   Input ~ 0
+N_LED_OUT14
+Text HLabel 1650 2800 2    50   Input ~ 0
+N_LED_OUT15
+Text HLabel 1650 2900 2    50   Input ~ 0
 N_LED_OUT16
-Text HLabel 1650 2100 2    50   Input ~ 0
-S_LED_OUT5
-Text HLabel 1650 2000 2    50   Input ~ 0
-S_LED_OUT6
-Text HLabel 1650 1900 2    50   Input ~ 0
-S_LED_OUT8
-Text HLabel 1650 1800 2    50   Input ~ 0
-S_LED_OUT7
-Text HLabel 1650 1700 2    50   Input ~ 0
-S_LED_OUT3
-Text HLabel 1650 1600 2    50   Input ~ 0
-S_LED_OUT4
-Text HLabel 1650 1500 2    50   Input ~ 0
-S_LED_OUT1
-Text HLabel 1650 1400 2    50   Input ~ 0
-S_LED_OUT2
 $Comp
 L Ninja-qPCR:Conn_01x60_Male J1
 U 1 1 612D996D
@@ -1216,4 +1160,60 @@ Wire Wire Line
 	7150 1950 7150 2150
 Wire Wire Line
 	7150 2150 7100 2150
+Text GLabel 4200 6050 2    50   Input ~ 0
+GNDL
+Text GLabel 4200 5950 2    50   Input ~ 0
+VCCL
+Text HLabel 4200 5850 2    50   Input ~ 0
+N_LED_OUT9
+Text HLabel 4200 5750 2    50   Input ~ 0
+N_LED_OUT10
+Text HLabel 4200 5650 2    50   Input ~ 0
+N_LED_OUT11
+Text HLabel 4200 5550 2    50   Input ~ 0
+N_LED_OUT12
+Text HLabel 4200 5450 2    50   Input ~ 0
+N_LED_OUT13
+Text HLabel 4200 5350 2    50   Input ~ 0
+N_LED_OUT14
+Text HLabel 4200 5250 2    50   Input ~ 0
+N_LED_OUT15
+Text HLabel 4200 5150 2    50   Input ~ 0
+N_LED_OUT16
+Wire Wire Line
+	4000 6050 4200 6050
+Wire Wire Line
+	4200 5950 4000 5950
+Wire Wire Line
+	4000 5850 4200 5850
+Wire Wire Line
+	4200 5750 4000 5750
+Wire Wire Line
+	4000 5650 4200 5650
+Wire Wire Line
+	4200 5550 4000 5550
+Wire Wire Line
+	4000 5450 4200 5450
+Wire Wire Line
+	4200 5350 4000 5350
+Wire Wire Line
+	4000 5250 4200 5250
+Wire Wire Line
+	4200 5150 4000 5150
+Text HLabel 1650 1500 2    50   Input ~ 0
+S_LED_OUT7
+Text HLabel 1650 1400 2    50   Input ~ 0
+S_LED_OUT8
+Text HLabel 1650 1600 2    50   Input ~ 0
+S_LED_OUT6
+Text HLabel 1650 1700 2    50   Input ~ 0
+S_LED_OUT5
+Text HLabel 1650 1800 2    50   Input ~ 0
+S_LED_OUT4
+Text HLabel 1650 1900 2    50   Input ~ 0
+S_LED_OUT3
+Text HLabel 1650 2000 2    50   Input ~ 0
+S_LED_OUT2
+Text HLabel 1650 2100 2    50   Input ~ 0
+S_LED_OUT1
 $EndSCHEMATC
