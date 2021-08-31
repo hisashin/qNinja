@@ -1,5 +1,5 @@
 "use strict";
-
+const fs = require('fs');
 /*
   Options
   --clientHost : Allowed access origin host
@@ -877,9 +877,13 @@ class NinjaQPCRServer {
     
   }
 }
+function handleSignal(signal) {
+  console.log("Received signal : %s" ${signal});
+  qpcr.shutdown();
+  fs.writeFileSync("/home/pi/shutdown.log", "Shutdown " + signal + new Date());
+  process.exit(1);
+}
+
 new NinjaQPCRServer().init();
-process.on('SIGINT', () => {
-    console.log('server.js Received SIGINT');
-    qpcr.shutdown();
-    process.exit(1);
-});
+
+process.on('exit', handleSignal);
