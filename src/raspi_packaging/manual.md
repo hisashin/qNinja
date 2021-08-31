@@ -71,3 +71,8 @@ Name=Ninja-qPCR
 Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8888?kiosk=true
 Type=Application
 ```
+
+Disable GPIO interrupts
+If running a newer Raspbian release, you will need to add the following line to /boot/config.txt and reboot:
+
+dtoverlay=gpio-no-irq

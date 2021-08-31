@@ -1,4 +1,5 @@
 "use strict";
+const { exec } = require("child_process");
 const fs = require('fs');
 /*
   Options
@@ -874,16 +875,24 @@ class NinjaQPCRServer {
     this.httpServer = new NinjaQPCRHTTPServer(this.server, clientHost, clientPort);
     this.webSocketSErver = new NinjaQPCRWebSocketServer(this.server);
     console.log("Ninja qPCR server started.");
-    
+    qpcr.shutdownSwitch.addShutdownHandler(()=>{
+      console.log("shutdown!!");
+      qpcr.shutdown();
+      exec('sudo shutdown -h -t 5', (error, stdout, stderr) => {
+        console.log("Error", error);
+        console.log("Stdout", stdout);
+        console.log("Stderr", stderr);
+      });
+      process.exit(1);
+    });
   }
 }
 function handleSignal(signal) {
-  console.log("Received signal : %s" ${signal});
+  console.log("Received signal : %s", signal);
   qpcr.shutdown();
   fs.writeFileSync("/home/pi/shutdown.log", "Shutdown " + signal + new Date());
   process.exit(1);
 }
 
 new NinjaQPCRServer().init();
-
-process.on('exit', handleSignal);
+process.on('SIGTERM', handleSignal);
