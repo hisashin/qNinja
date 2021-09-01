@@ -1,13 +1,24 @@
-# Installation
-* Insert SD card to Mac
-* Install Raspberry Pi OS LITE to a SD card (>8GB) with Imager (v1.4)
+# Flash RPi image to SD card
+* Insert SD card (>8GB) to Mac
+* Install Raspberry Pi OS (32-bit) with Imager (v1.4)
 
-# Setup
+# Setup (by touchscreen interface)
 * Insert SD card to RasPi
-* Power on
+* Connect RPi's USB port and the touchscreen's "touch" port
+  * Connecting both touch interface via USB hub and keyboard does not work correctly.
+* Connect RPI and the touchscreen by HDMI cable
+* Power on (GUI starts)
+* (By touchscreen interface) Left-top menu > Preferences > Raspberry Pi Configuration > System > Boot / Auto Login > To Console Autologin
+* (By touchscreen interface) Left-top menu > Logout > Shutdown
+
+# Setup by CLI
+* Connect items
+  * Power the touchscreen by 5V AC adapter (instead of RPi's USB port)
+  * Attach a keyboard to RPi's USB port
 * Login (user=pi, password=raspberry)
 * Config `sudo raspi-config`
   * Change keyboard layout (Localisation Options > Change Keyboard Layout > Change Keyboard Layout > Generic 105-key PC (intl.) > Japanese)
+    * Enable X shutdown by Ctrl+Alt+BS
   * Localisation Options > Change WLAN Country
   * Change User Password
   * Open "Network Options > Hostname" and input "ninjaqpcr". This config is applied to mDNS.
@@ -17,7 +28,12 @@
   * Network config (Wireless LAN)
     * Input Country (JP), SSID and password
       * or `sudo wpa_passphrase <SSID> <passphrase> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf`
-* Finish raspi-config and reboot (in dialog)
+  * Enable GUI auto-login
+    raspi-config
+    System options > Boot / Auto Login : Detktop autologin
+  * Display Options > Underscan (Remove black borders)
+  * Exit raspi-config
+* `sudo reboot`
 
 # Add SSH key (from PC)
 * `ssh-copy-id pi@ninjaqpcr.local` (Remove a line containing "ninjaqpcr.local" from ~/.ssh/known_hosts if needed)
@@ -43,6 +59,7 @@ mkdir ~/ninjaqpcr
 mkdir ~/ninjaqpcr/user_data
 mkdir ~/ninjaqpcr/user_data/protocol
 mkdir ~/ninjaqpcr/user_data/experiment
+mkdir ~/.config/autorun
 
 ```
 
@@ -53,6 +70,7 @@ cd /Users/maripo/git/Ninja-qPCR/src
 scp qpcr/user_data/protocol/* pi@ninjaqpcr.local:~/ninjaqpcr/user_data/protocol
 ./deploy.sh
 ./deploy_update.sh # Update packages
+scp raspi_packaging/ninjaqpcr.desktop pi@ninjaqpcr.local:~/.config/autorun/
 ```
 
 # Register startup script
@@ -65,16 +83,6 @@ scp qpcr/user_data/protocol/* pi@ninjaqpcr.local:~/ninjaqpcr/user_data/protocol
 ```
 NINJAQPCR_USER_DATA=/home/pi/ninjaqpcr/user_data
 NINJAQPCR_HOME=/usr/local/ninjaqpcr
-```
-
-# Launch Chromium on GUI launch
-* `mkdir ~/.config/autorun`
-* `vi ~/.config/autorun/ninjaqpcr.desktop`
-```
-[Desktop Entry]
-Name=Ninja-qPCR
-Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8888?kiosk=true
-Type=Application
 ```
 
 # Disable GPIO interrupts (for rpio.poll)
