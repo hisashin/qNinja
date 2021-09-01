@@ -1,0 +1,11 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C1,C6,C7";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";3;"22uF";;;
+2;"C2";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";1;"1uF";;;
+3;"C3";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";1;"2.2uF";;;
+4;"C4";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";1;"220nF";;;
+5;"C5";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";1;"10uF";;;
+6;"J1";"Pin_Header_Straight_1x03_Pitch2.54mm";1;"Conn_01x03_Female";;;
+7;"L1";"SRN6045TA-3R3Y";1;"22uH";;;
+8;"R1";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";1;"51.1k";;;
+9;"R2";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";1;"180k";;;
+10;"U1";"TPS63710DRRR";1;"TPS63710DRRR";;;

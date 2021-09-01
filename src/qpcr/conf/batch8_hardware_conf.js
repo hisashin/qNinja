@@ -5,7 +5,6 @@ const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
 
 const i2c = require('i2c-bus');
-const raspi = require('raspi'); // For SoftPWM
 const pwm = require('raspi-soft-pwm');
 const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
@@ -73,6 +72,7 @@ const PIN_NAME_PWM_FAN = 21; // Pin 29, GPIO 21
 const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
 const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
+const PIN_SHUTDOWN = 37; // TODO tmp
 
 /* Pin COnfig */
 const PLATE_KP = 1.0;
@@ -113,6 +113,27 @@ const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
 const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
 
 const muxQueue = new ExclusiveTaskQueue();
+
+class ShutdownPin {
+  constructor () {
+    this.handlers = [];
+    const PIN = PIN_SHUTDOWN;
+    rpio.open(PIN, rpio.INPUT, rpio.PULL_UP);
+    this.done = false;
+    rpio.poll(PIN, ()=>{
+      if (!this.done) {
+        this.done = true;
+        this.handlers.forEach((handler)=>{
+          handler();
+        });
+      }
+    }, rpio.POLL_LOW);
+  }
+  addShutdownHandler (handler) {
+    this.handlers.push(handler);
+  }
+}
+const shutdownPin = new ShutdownPin();
 
 class HardwareConf {
   constructor () {
@@ -204,6 +225,9 @@ class HardwareConf {
       this.ledUnit = new LEDUnit(pot, ledDriver);
     }
     return this.ledUnit;
+  }
+  getShutdownSwitch () {
+    return shutdownPin;
   }
   getFluorescenceSensingUnit() {
     // Generic 16ch MUX

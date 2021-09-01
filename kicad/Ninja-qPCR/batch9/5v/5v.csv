@@ -1,0 +1,15 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"U1";"BD9D323QWZ-E2";1;"BD9D323QWZ-E2";;;
+2;"C8,C9";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";2;"22uF";;;
+3;"J8";"Pin_Header_Straight_2x20_Pitch2.54mm";1;"Conn_02x20_Odd_Even";;;
+4;"J1";"BarrelJack_Horizontal";1;"Barrel_Jack_Switch";;;
+5;"J2,J4,J5";"Pin_Header_Straight_1x02_Pitch2.54mm";3;"Conn_01x02_Female";;;
+6;"C1";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";1;"330pF";;;
+7;"C2";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";1;"1uF";;;
+8;"C3,C4";"C_0603_1608Metric_Pad1.08x0.95mm_HandSolder";2;"0.1uF";;;
+9;"C5,C6";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";2;"10uF";;;
+10;"C7";"C_0805_2012Metric_Pad1.18x1.45mm_HandSolder";1;"22pF";;;
+11;"L1";"SRN6045TA-3R3Y";1;"3.3uF";;;
+12;"R1";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";1;"1.8k";;;
+13;"R2";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";1;"120k";;;
+14;"R3";"R_0603_1608Metric_Pad0.98x0.95mm_HandSolder";1;"22k";;;

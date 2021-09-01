@@ -46,6 +46,7 @@ class NinjaQPCR {
     }
     const plate = boardConf.getPlate();
     const lid = boardConf.getHeatLid();
+    this.shutdownSwitch = boardConf.getShutdownSwitch();
     this.thermalCycler = new ThermalCycler(plate, lid, extraSensing);
     this.tempMonitor = new TemperatureMonitor(plate, lid, extraSensing);
     plate.start();
