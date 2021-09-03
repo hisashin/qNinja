@@ -588,7 +588,6 @@ class HeatLidOutput {
   }
   setOutput (outputValue /* Range={0,1.0} */) {
     outputValue = Math.min(1.0, Math.max(0, outputValue));
-    console.log("Lid output", outputValue);
     this.pwm.write(outputValue);
   }
   off () {

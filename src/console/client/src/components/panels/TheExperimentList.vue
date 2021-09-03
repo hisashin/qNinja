@@ -20,7 +20,7 @@
           <option value="">Filter by status</option>
           <option value="finished">Finished</option>
           <option value="running">Running</option>
-          <option value="aborted">Aborted</option>
+          <option value="aborted">Cancelled</option>
           <option value="ready">Ready</option>
         </select>
         <label>

@@ -116,7 +116,6 @@ class ThermalCycler {
     console.log(this.protocol);
     this._startTimer();
     this.remainingTimeCalculator = new RemainingTimeCalculator(protocol);
-    console.log("ThermalCycler.start");
   }
   pause () {
     this._stopTimer();
@@ -140,12 +139,13 @@ class ThermalCycler {
     this.heatLid.off();
   }
   _startTimer () {
+    console.log("ThermalCycler._startTimer() 1");
     if (this.controlTempInterval != null){
       console.warn("ThermalCycler._startTimer timer is already working.");
       return;
     }
+      console.log("ThermalCycler._startTimer() 2");
     this.controlTempInterval = setInterval(()=>{ this.control(); }, TEMP_CONTROL_INTERVAL_MSEC);
-    
   }
   _stopTimer () {
     if (this.controlTempInterval != null) {
@@ -172,6 +172,7 @@ class ThermalCycler {
   _extraSensingControlTask (extraSensing) {
     return ()=>{
       return new Promise((resolve, reject)=>{
+        console.log("_extraSensingControlTask");
         extraSensing.control(resolve);
       });
     };

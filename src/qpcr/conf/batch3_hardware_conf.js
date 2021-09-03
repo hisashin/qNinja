@@ -514,9 +514,7 @@ class HeatLidOutput {
     rpio.open(PIN_NUM_SPI_SWITCH, rpio.OUTPUT, rpio.LOW);
   }
   setOutput (outputValue /* Range={0,1.0} */) {
-    // console.log("Lid output", outputValue);
     outputValue = Math.min(1.0, Math.max(0, outputValue));
-    //this.pwm.write(outputValue);
   }
   off () {
     //this.pwm.write(0);

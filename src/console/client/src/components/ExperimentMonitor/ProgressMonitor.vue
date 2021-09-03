@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="progress-monitor__row" v-if="progress.state.state!='preheat' && progress.state.state!='complete'">
+      <div class="progress-monitor__row" v-if="progress.state.state!='complete'">
         <div class="time-monitor">
           <div class="time-monitor__elapsed">{{ elapsedTime }} </div>
           <div class="time-monitor__estimated"> / {{ totalTime }}</div>
@@ -111,7 +111,7 @@
           <template v-if="deviceState != null">
           <button class="time-monitor__button" v-if="deviceState.pauseAvailable" @click="pause">Pause</button>
           <button class="time-monitor__button" v-if="deviceState.resumeAvailable" @click="resume">Resume</button>
-          <button class="time-monitor__button" v-if="deviceState.abortAvailable" @click="abort">Abort</button>
+          <button class="time-monitor__button" v-if="deviceState.abortAvailable" @click="cancel">Cancel</button>
           <button class="time-monitor__button" v-if="deviceState.finishAvailable" @click="finish">Finish</button>
           <button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>
           </template>
@@ -238,7 +238,12 @@ export default {
     },
     pause () { device.pause(); },
     resume () { device.resume(); },
-    abort () { device.abort(); },
+    cancel () { 
+      if (window.confirm("Are you sure you want to cancel the experiment?")) {
+        device.abort(); 
+        appState.home();
+      }
+    },
     finish () { 
       device.finish();
       appState.home();
