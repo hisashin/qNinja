@@ -148,6 +148,9 @@ export default {
       this.wellTemp = data.plate.main;
       this.lidTemp = data.lid.main;
     });
+    device.subscribe("device.update.shutdown", (topic, data)=>{
+      alert("The device is going to shut down.");
+    });
   },
   mounted: function () {
     appState.setViews(this.$refs);

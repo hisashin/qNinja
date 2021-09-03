@@ -733,13 +733,6 @@ class NinjaQPCRWebSocketServer {
         break;
     }
   }
-  pingResponse () {
-    const obj = {
-      topic:"ping",
-      data:{}
-    };
-    this._send(obj);
-  }
   start (experimentId) {
     em.getExperiment(experimentId, (experiment)=>{
       this.protocol = experiment.protocol;
@@ -774,69 +767,32 @@ class NinjaQPCRWebSocketServer {
     });
   }
   onThermalTransition (data) {
-    const obj = {
-      topic:"experiment.update.transition",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.transition", data);
   }
   onAutoPause (data) {
-    const obj = {
-      topic:"experiment.update.autoPause",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.autoPause", data);
   }
   onProgress (data) {
-    const obj = {
-      topic:"experiment.update.progress",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.progress", data);
   }
   onFluorescenceDataUpdate (data) {
-    const obj = {
-      topic:"experiment.update.fluorescence",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.fluorescence", data);
   }
   onMeltCurveDataUpdate (data) {
-    const obj = {
-      topic:"experiment.update.meltCurve",
-      data:data
-    };
-    console.log(obj)
-    this._send(obj);
+    eventBus.publish("experiment.update.meltCurve", data);
   }
   onFluorescenceEvent (data) {
-    const obj = {
-      topic:"experiment.update.fluorescenceEvent",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.fluorescenceEvent", data);
   }
-  onDeviceStateChange (state) {
-    const obj = {
-      topic:"device.update.transition",
-      data:state
-    };
-    this._send(obj);
+  onDeviceStateChange (data) {
+    eventBus.publish("experiment.update.transition", data);
   }
   onStart (data) {
-    const obj = {
-      topic:"experiment.update.start",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.start", data);
     this.isRunning = false;
   }
   onComplete (data) {
-    const obj = {
-      topic:"experiment.update.finish",
-      data:data
-    };
-    this._send(obj);
+    eventBus.publish("experiment.update.finish", data);
     this.isRunning = false;
   }
 }
@@ -879,23 +835,24 @@ class NinjaQPCRServer {
     if (qpcr.shutdownSwitch) {
       qpcr.shutdownSwitch.addShutdownHandler(()=>{
         console.log("shutdown!!");
+        eventBus.publish("device.update.shutdown", {});
         qpcr.shutdown();
         exec('sudo shutdown -h -t 5', (error, stdout, stderr) => {
           console.log("Error", error);
           console.log("Stdout", stdout);
           console.log("Stderr", stderr);
         });
-        process.exit(1);
+        process.exit(0);
       });
     }
   }
 }
 function handleSignal(signal) {
   console.log("Received signal : %s", signal);
+  eventBus.publish("device.update.shutdown", {});
   qpcr.shutdown();
-  fs.writeFileSync("/home/pi/shutdown.log", "Shutdown " + signal + new Date());
-  process.exit(1);
+  process.exit(0);
 }
 
 new NinjaQPCRServer().init();
-process.on('SIGTERM', handleSignal);
+process.on('SIGINT', handleSignal);
