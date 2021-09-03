@@ -221,6 +221,8 @@ class NinjaQPCRHTTPServer {
     return (req, res, map)=>{
       // Device state and experiment status
       res.writeHead(200,{'Content-Type': 'application/json'});
+      console.log("ExperimentLog=");
+      console.log(qpcr.experimentLog);
       res.write(JSON.stringify(qpcr.experimentLog));
       res.end();
     };
@@ -828,7 +830,6 @@ class NinjaQPCRWebSocketServer {
     };
     this._send(obj);
     this.isRunning = false;
-    
   }
   onComplete (data) {
     const obj = {
@@ -875,16 +876,18 @@ class NinjaQPCRServer {
     this.httpServer = new NinjaQPCRHTTPServer(this.server, clientHost, clientPort);
     this.webSocketSErver = new NinjaQPCRWebSocketServer(this.server);
     console.log("Ninja qPCR server started.");
-    qpcr.shutdownSwitch.addShutdownHandler(()=>{
-      console.log("shutdown!!");
-      qpcr.shutdown();
-      exec('sudo shutdown -h -t 5', (error, stdout, stderr) => {
-        console.log("Error", error);
-        console.log("Stdout", stdout);
-        console.log("Stderr", stderr);
+    if (qpcr.shutdownSwitch) {
+      qpcr.shutdownSwitch.addShutdownHandler(()=>{
+        console.log("shutdown!!");
+        qpcr.shutdown();
+        exec('sudo shutdown -h -t 5', (error, stdout, stderr) => {
+          console.log("Error", error);
+          console.log("Stdout", stdout);
+          console.log("Stderr", stderr);
+        });
+        process.exit(1);
       });
-      process.exit(1);
-    });
+    }
   }
 }
 function handleSignal(signal) {

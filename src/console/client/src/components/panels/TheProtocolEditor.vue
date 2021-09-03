@@ -3,7 +3,7 @@
     <!-- Modal (Select stage type) -->
     <b-modal
       id="add-stage-modal"
-      title="+ a Stage"
+      title="+ New Stage"
       hide-footer
     >
       <b-button
@@ -72,6 +72,7 @@
               </b-button>
               <b-button
                 variant="primary"
+                class="ml-1"
                 @click="submitCreateProtocol"
                 :disabled=hasError
                 v-show="isNew"
@@ -80,6 +81,7 @@
               </b-button>
               <b-button
                 variant="secondary"
+                class="ml-1"
                 @click="validateProtocol">
                 Validate
               </b-button>
@@ -93,12 +95,11 @@
             <ul class="protocol-editor-stages">
               <template v-for="(stage, index) in protocol.stages" >
                 <li class="protocol-editor-stages__add-button" :key="index + '_add'">
-                  <b-button
-                    pill
+                  <button class="round-button"
                     @click="openAddStageModal(index)"
                   >
                     +
-                  </b-button>
+                  </button>
                 </li>
                 <li class="protocol-editor-stages__stage protocol-editor-stage" :key="index + '_stage'">
                   <template v-if="stage.type==1">
@@ -163,22 +164,30 @@
                         <div class="protocol-editor-step__label">
                           Denaturing
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/><input
-                          v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
-                        <input
-                          v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3" type="number" step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/><input
+                              v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
+                            <input
+                              v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3" type="number" step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
                         
-                        <div v-if="stage.type==2">
+                        <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
                           
                           <span :class="'validation-label validation__stages__'+index+'__steps__0__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[0].data_collection.ramp_end" v-on:change="onChangeProtocol()">
@@ -191,23 +200,32 @@
                         <div class="protocol-editor-step__label">
                           Annealing
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
-                        <input
-                          v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
-                        <input
-                          v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3" type="number" step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
                         
-                        <div v-if="stage.type==2">
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
+                            <input
+                              v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
+                            <input
+                              v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3" type="number" step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
+                        
+                        <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
                           
                           <span :class="'validation-label validation__stages__'+index+'__steps__1__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[1].data_collection.ramp_end" v-on:change="onChangeProtocol()">
@@ -220,29 +238,36 @@
                         <div class="protocol-editor-step__label">
                           Extending
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
-                        <input
-                          v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
-                        <input
-                          v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3" type="number" step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
-                        <div v-if="stage.type==2">
-                          
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
+                            <input
+                              v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
+                            <input
+                              v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3" type="number" step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
+                        
+                        <div class="protocol-detail-step__data-collection">
                           <span :class="'validation-label validation__stages__'+index+'__steps__2__data_collection'"/>
                           <input type="checkbox" v-model="stage.steps[2].data_collection.ramp_end" v-on:change="onChangeProtocol()">
                           Ramp End
                           <input type="checkbox" v-model="stage.steps[2].data_collection.hold_end" v-on:change="onChangeProtocol()">
                           Hold End
-                          
                         </div>
                       </li>
                     </ul>
@@ -269,64 +294,91 @@
                         <div class="protocol-editor-step__label">
                           Denaturing
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
-                        <input
-                          v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
-                        <input
-                          v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3" type="number" step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__temp'"/>
+                            <input
+                              v-model.number="stage.steps[0].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__duration'"/>
+                            <input
+                              v-model.number="stage.steps[0].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3" type="number" step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
                         
                       </li>
                       <li class="protocol-editor-steps__step protocol-editor-step">
                         <div class="protocol-editor-step__label">
                           Cooling
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
-                        <input
-                          v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
-                        <input
-                          v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3" type="number" step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__temp'"/>
+                            <input
+                              v-model.number="stage.steps[1].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__duration'"/>
+                            <input
+                              v-model.number="stage.steps[1].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3" type="number" step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
+                        
                       </li>
                       <li class="protocol-editor-steps__step protocol-editor-step">
                         <div class="protocol-editor-step__label">
                           Melting
                         </div>
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
-                        <input
-                          v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
-                          class="input-temp input-temp--2" type="number"
-                        >℃
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
-                        <input
-                          v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
-                          class="input-duration input-duration--3"
-                          type="number"
-                          step="1"
-                        >sec
-                        <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
-                        <input
-                          v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
-                          class="input-speed" type="number" step="1"
-                        >℃/sec
+                        <div class="protocol-detail-step__values protocol-detail-values">
+                          <div class="protocol-detail-values__value protocol-detail-values__value--temp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__temp'"/>
+                            <input
+                              v-model.number="stage.steps[2].temp" v-on:input="onChangeProtocol()"
+                              class="input-temp input-temp--2" type="number"
+                            >℃
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--duration">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__duration'"/>
+                            <input
+                              v-model.number="stage.steps[2].duration" v-on:input="onChangeProtocol()"
+                              class="input-duration input-duration--3"
+                              type="number"
+                              step="1"
+                            >sec
+                          </div>
+                          <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                            <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
+                            <input
+                              v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="1"
+                            >℃/sec
+                          </div>
+                        </div>
+                        
+                        
                       </li>
                     </ul>
                   </template>
@@ -337,12 +389,11 @@
                 </li>
               </template>
               <li class="protocol-editor-stages__add-button">
-                <b-button
-                  pill
+                <button type="button" class="round-button"
                   @click="openAddStageModal(protocol.stages.length)"
                 >
                   +
-                </b-button>
+                </button>
               </li>
             </ul>
             </div>
