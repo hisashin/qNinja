@@ -67,7 +67,7 @@ export default {
       ()=>{
         // Error
         this.error = true;
-        this.protocols = [];
+        this.summaries = [];
       });
     },
     revealDetail: function (id) {

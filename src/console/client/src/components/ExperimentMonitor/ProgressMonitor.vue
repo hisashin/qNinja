@@ -165,6 +165,9 @@ export default {
   created: function () {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
+    device.subscribe("experiment.update.progress", (topic, data)=>{
+      console.log(data)
+    });
     device.addTransitionHandler({
       onStart:(obj)=>{
         this.protocol = obj.protocol;
