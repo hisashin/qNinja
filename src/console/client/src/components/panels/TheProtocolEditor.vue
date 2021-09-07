@@ -190,10 +190,14 @@
                         <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
                           
                           <span :class="'validation-label validation__stages__'+index+'__steps__0__data_collection'"/>
-                          <input type="checkbox" v-model="stage.steps[0].data_collection.ramp_end" v-on:change="onChangeProtocol()">
-                          Ramp End
-                          <input type="checkbox" v-model="stage.steps[0].data_collection.hold_end" v-on:change="onChangeProtocol()">
-                          Hold End
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[0].data_collection.ramp_end" v-on:change="onChangeProtocol()">
+                            Ramp End
+                          </label>
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[0].data_collection.hold_end" v-on:change="onChangeProtocol()">
+                            Hold End
+                          </label>
                         </div>
                       </li>
                       <li class="protocol-editor-steps__step protocol-editor-step">
@@ -228,10 +232,14 @@
                         <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
                           
                           <span :class="'validation-label validation__stages__'+index+'__steps__1__data_collection'"/>
-                          <input type="checkbox" v-model="stage.steps[1].data_collection.ramp_end" v-on:change="onChangeProtocol()">
-                          Ramp End
-                          <input type="checkbox" v-model="stage.steps[1].data_collection.hold_end" v-on:change="onChangeProtocol()">
-                          Hold End
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[1].data_collection.ramp_end" v-on:change="onChangeProtocol()">
+                            Ramp End
+                          </label>
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[1].data_collection.hold_end" v-on:change="onChangeProtocol()">
+                            Hold End
+                          </label>
                         </div>
                       </li>
                       <li class="protocol-editor-steps__step protocol-editor-step">
@@ -264,10 +272,14 @@
                         
                         <div class="protocol-detail-step__data-collection">
                           <span :class="'validation-label validation__stages__'+index+'__steps__2__data_collection'"/>
-                          <input type="checkbox" v-model="stage.steps[2].data_collection.ramp_end" v-on:change="onChangeProtocol()">
-                          Ramp End
-                          <input type="checkbox" v-model="stage.steps[2].data_collection.hold_end" v-on:change="onChangeProtocol()">
-                          Hold End
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[2].data_collection.ramp_end" v-on:change="onChangeProtocol()">
+                            Ramp End
+                          </label>
+                          <label>
+                            <input type="radio" :name="'data_collection'+index" v-model="stage.steps[2].data_collection.hold_end" v-on:change="onChangeProtocol()">
+                            Hold End
+                          </label>
                         </div>
                       </li>
                     </ul>
