@@ -36,8 +36,12 @@ class Plate {
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
-  control () {
+  control (callback) {
     this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
+    callback();
+  }
+  getTemperature () {
+    return this.temperature;
   }
   off () {
     // Do nothing
@@ -68,8 +72,12 @@ class HeatLid {
   setTargetTemperature (targetTemperature) {
     this.targetTemperature = targetTemperature;
   }
-  control () {
+  control (callback) {
     this.temperature = getDummyTemp(this.temperature, this.targetTemperature, TEMP_CONTROL_INTERVAL_MSEC);
+    callback();
+  }
+  getTemperature () {
+    return this.temperature;
   }
   off () {
     // Do nothing

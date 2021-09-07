@@ -147,7 +147,10 @@ class AppState {
   }
   run (experimentId) {
     device.runExperiment(experimentId);
-    this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
+    const subId = device.subscribe("experiment.update.start", (topic, data)=>{
+      device.unsubscribe(subId);
+      this.pushPanel(this.PANELS.EXPERIMENT_MONITOR);
+    });
   }
   
   startEditProtocol (id) {

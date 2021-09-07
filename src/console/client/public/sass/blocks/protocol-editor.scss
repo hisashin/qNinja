@@ -1,4 +1,19 @@
 /* Outline */
+.protocol-editor {
+  &-stages__stage {
+    &:not(:nth-last-child(2)) {
+      border-right:none!important;
+    }
+    
+  }
+}
+.protocol-detail {
+  &-stages__stage {
+    &:not(:last-child) {
+      border-right:none!important;
+    }
+  }
+}
 .protocol-editor, .protocol-detail {
   &__header {
     display: flex;
@@ -17,9 +32,6 @@
       border-top:1px solid #aaa;
       border-left:1px solid #aaa;
       border-right:1px solid #aaa;
-      &:not(:last-child) {
-      border-right:none!important;
-      }
     }
     &__add-button {
       width:60px;
@@ -45,10 +57,45 @@
     &__label {
       
     }
+    &__values {
+      
+    }
+  }
+  &-values {
+    display:flex;
+    &__value {
+      text-align: right;
+      &--temp {
+        min-width:4em;
+      }
+      &--duration {
+        min-width:3em;
+        
+      }
+      &--ramp {
+        min-width:4em;
+        
+      }
+    }
   }
 }
 .protocol-detail {
   &__protocol-name {
     /* H3 */
   }
+}
+.round-button {
+  
+    border-radius: 50%;
+    width:32px;
+    min-width:32px;
+    height: 32px;
+    padding: 6px;
+    background-color: #666;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    line-height: 100%;
+    box-sizing: border-box;
+    border-style: none;
 }

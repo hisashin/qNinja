@@ -46,7 +46,9 @@ class NinjaQPCR {
     }
     const plate = boardConf.getPlate();
     const lid = boardConf.getHeatLid();
-    this.shutdownSwitch = boardConf.getShutdownSwitch();
+    if (boardConf.getShutdownSwitch) {
+      this.shutdownSwitch = boardConf.getShutdownSwitch();
+    }
     this.thermalCycler = new ThermalCycler(plate, lid, extraSensing);
     this.tempMonitor = new TemperatureMonitor(plate, lid, extraSensing);
     plate.start();
@@ -108,6 +110,7 @@ class NinjaQPCR {
       console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
       return false;
     }
+    console.log("ninjaqpcr.js start()");
     this.experimentLog = experiment;
     this.experimentLog["hardware"] = this.hardwareConfig();
     this.experimentConf = experiment.config;

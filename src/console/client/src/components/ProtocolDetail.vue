@@ -24,9 +24,13 @@
                 <div class="protocol-detail-step__label">
                   Hold
                 </div>
-                <div class="protocol__steps__step__value">
+                <div class="protocol-detail-step__values protocol-detail-values">
+                  <div class="protocol-detail-values__value protocol-detail-values__value--temp">
                   {{ stage.steps[0].temp }}℃
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--duration">
                   {{ stage.steps[0].duration }}s
+                  </div>
                 </div>
               </li>
             </ul>
@@ -39,15 +43,21 @@
               <li v-for="(step, step_index) in stage.steps" class="protocol-detail-steps__step protocol-detail-step"
                 v-bind:key="step_index">
                 <div 
-                  v-if="step_index==0">Denaturing</div>
+                  v-if="step_index==0" class="protocol-detail-step__label">Denaturing</div>
                 <div 
-                  v-if="step_index==1">Annealing</div>
+                  v-if="step_index==1" class="protocol-detail-step__label">Annealing</div>
                 <div 
-                  v-if="step_index==2">Extending</div>
-                <div class="protocol__steps__step__value">
+                  v-if="step_index==2" class="protocol-detail-step__label">Extending</div>
+                <div class="protocol-detail-step__values protocol-detail-values">
+                  <div class="protocol-detail-values__value protocol-detail-values__value--temp">
                   {{ step.temp }}℃
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--duration">
                   {{ step.duration }}s
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
                   {{ step.ramp_speed }}℃/s
+                  </div>
                 </div>
                 <div v-if="step.data_collection">
                   Collect data at 
@@ -67,13 +77,19 @@
             <ul class="protocol-detail-steps">
               <li v-for="(step, step_index) in stage.steps" class="protocol-detail-steps__step protocol-detail-step"
                 v-bind:key="step_index">
-                <div v-if="step_index==0">Denaturing</div>
-                <div v-if="step_index==1">Cooling</div>
-                <div v-if="step_index==2">Melting</div>
-                <div class="protocol__steps__step__value">
+                <div v-if="step_index==0" class="protocol-detail-step__label">Denaturing</div>
+                <div v-if="step_index==1" class="protocol-detail-step__label">Cooling</div>
+                <div v-if="step_index==2" class="protocol-detail-step__label">Melting</div>
+                <div class="protocol-detail-step__values protocol-detail-values">
+                  <div class="protocol-detail-values__value protocol-detail-values__value--temp">
                   {{ step.temp }}℃
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--duration">
                   {{ step.duration }}s
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
                   {{ step.ramp_speed }}℃/s
+                  </div>
                 </div>
               </li>
             </ul>
@@ -85,13 +101,19 @@
             <ul class="protocol-detail-steps">
               <li v-for="(step, step_index) in stage.steps" class="protocol-detail-steps__step protocol-detail-step"
                 v-bind:key="step_index">
-                <div v-if="step_index==0">Denaturing</div>
-                <div v-if="step_index==1">Annealing</div>
-                <div v-if="step_index==2">Extending</div>
-                <div class="protocol__steps__step__value">
+                <div v-if="step_index==0" class="protocol-detail-step__label">Denaturing</div>
+                <div v-if="step_index==1" class="protocol-detail-step__label">Annealing</div>
+                <div v-if="step_index==2" class="protocol-detail-step__label">Extending</div>
+                <div class="protocol-detail-step__values protocol-detail-values">
+                  <div class="protocol-detail-values__value protocol-detail-values__value--temp">
                   {{ step.temp }}℃
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--duration">
                   {{ step.duration }}s
+                  </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
                   {{ step.ramp_speed }}℃/s
+                  </div>
                 </div>
               </li>
             </ul>
