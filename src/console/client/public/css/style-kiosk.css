@@ -684,9 +684,10 @@ html
 
 /* Layout variant for RPi kiosk */
 body {
-  width: 800px;
-  background-image: url("../img/LCD_800x480.png");
+  width: 1024px;
+  background-image: url("../img/LCD_1024x600.png");
   /* RPi LCD size checker */
+  background-color: #eee;
   background-repeat: no-repeat;
 }
 
@@ -726,7 +727,7 @@ body {
 }
 
 .device-summary {
-  width: 800px;
+  width: 1024px;
   z-index: 999;
   position: absolute;
   bottom: 0;

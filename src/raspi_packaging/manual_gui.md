@@ -73,6 +73,8 @@ scp qpcr/user_data/protocol/* pi@ninjaqpcr.local:~/ninjaqpcr/user_data/protocol
 scp raspi_packaging/ninjaqpcr.desktop pi@ninjaqpcr.local:~/.config/autorun/
 ```
 
+TODO : use /etc/xdg/lxsession/LXDE-pi/autostart
+
 # Register startup script
 * `sudo vi /etc/rc.local`
 * Add `/usr/local/ninjaqpcr/startup/startup.sh` above line `exit 0`
@@ -91,6 +93,13 @@ Add the following line to /boot/config.txt
 dtoverlay=gpio-no-irq
 
 ```
+
+# Display config
+
+vi /boot/config.txt
+
+framebuffer_width=1024
+framebuffer_height=600
 
 # Delete logs and settings
 ```

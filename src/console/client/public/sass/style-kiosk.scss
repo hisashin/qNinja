@@ -9,8 +9,9 @@
 @import 'blocks/experiment-monitor.scss';
 /* Layout variant for RPi kiosk */
 body {
-  width:800px;
-  background-image: url("../img/LCD_800x480.png"); /* RPi LCD size checker */
+  width:1024px;
+  background-image: url("../img/LCD_1024x600.png"); /* RPi LCD size checker */
+  background-color:#eee;
   background-repeat: no-repeat;
 }
 .main {
@@ -45,7 +46,7 @@ body {
 }
 
 .device-summary {
-  width:800px;
+  width:1024px;
   z-index:999;
   position:absolute;
   bottom:0;
