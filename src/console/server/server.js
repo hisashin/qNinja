@@ -690,24 +690,6 @@ class NinjaQPCRWebSocketServer {
       }
     });
     qpcr.startMonitoringTemperature ((data)=>{
-      /*
-      Mapping example:
-      const table = qpcr.getConfig().temperature_measurement;
-      table.forEach ((item)=>{
-        let pathElements = item.path.split(".");
-        let obj = data;
-        pathElements.forEach((element)=>{
-          let prop = element;
-          let parsed = parseInt(prop);
-          if (!isNaN(parsed)) {
-            prop = parsed;
-          }
-          obj = obj[prop];
-        });
-        console.log(item.label, obj)
-      });
-      console.log(JSON.stringify(data));
-      */
       eventBus.publish("device.update.temperature", data);
     }, 3000);
   }

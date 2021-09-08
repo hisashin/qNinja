@@ -8,9 +8,9 @@
         <!-- Device monitor -->
           <div class="header__device">
           <span>
-            Device: {{ connectionStatus }}
-            Well: {{ wellTemp }}
-            Well: {{ lidTemp }}
+            {{ connectionStatus }}
+            Well {{ wellTemp }}℃
+            Lid {{ lidTemp }}℃
           </span>
           <!-- Network -->
           <button
@@ -27,7 +27,7 @@
     <main class="main">
       <TheDeviceSummary v-show="selectedPanel!=panels.EXPERIMENT_MONITOR"/>
       <nav 
-        v-if="panelTitle"
+        v-if="panelTitle && selectedPanel!=panels.DASHBOARD"
         class="panel-nav">
         <BackButton v-show="backEnabled" />
         <h2 class="panel-nav__title">
@@ -44,7 +44,7 @@
       <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
       <TheOpticsMonitor ref="panelOpticsMonitor" v-show="selectedPanel==panels.OPTICS_MONITOR" />
       <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
-      <div>
+      <div class="debug">
       (Dev)
         <b-button class="mr-1 btn-sm"
           @click.stop="showTemplate">
@@ -145,8 +145,8 @@ export default {
       alert("TheMain.vue pong received.");
     });
     device.subscribe("device.update.temperature", (topic, data)=>{
-      this.wellTemp = data.plate.main;
-      this.lidTemp = data.lid.main;
+      this.wellTemp = data.plate.main.toFixed(1);
+      this.lidTemp = data.lid.main.toFixed(1);
     });
     device.subscribe("device.update.shutdown", (topic, data)=>{
       alert("The device is going to shut down.");

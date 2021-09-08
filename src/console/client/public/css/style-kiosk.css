@@ -352,6 +352,7 @@ a {
   border-top: 1px solid #aaa;
   border-left: 1px solid #aaa;
   border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
 }
 .protocol-editor-stages__add-button, .protocol-detail-stages__add-button {
   width: 60px;
@@ -363,6 +364,7 @@ a {
 }
 .protocol-editor-stage__title, .protocol-detail-stage__title {
   text-align: center;
+  font-size: 1.2rem;
 }
 .protocol-editor-steps__step, .protocol-detail-steps__step {
   border-top: 1px solid #aaa;
@@ -383,8 +385,14 @@ a {
   min-width: 4em;
 }
 
+.protocol-detail__header {
+  align-items: center;
+}
 .protocol-detail__protocol-name {
   /* H3 */
+}
+.protocol-detail__protocol-conf {
+  padding: 0 1em;
 }
 
 .round-button {
@@ -473,20 +481,29 @@ html
   padding: 0;
 }
 
+.panel-nav {
+  padding: 0 1em;
+}
 .panel-nav__back {
   display: inline-block;
-  background-image: url("../img/back.svg");
+  background-image: url(../img/back.svg);
   background-repeat: no-repeat;
   width: 20px;
-  height: 22px;
+  height: 27px;
   border: none;
   background-size: 14px 20px;
   background-color: #ffffff;
   background-position: center;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0 0.4em 0 0;
 }
 .panel-nav__title {
   display: inline-block;
   font-size: 1.2em;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
 }
 
 .section__title {
@@ -695,8 +712,12 @@ body {
   max-width: 100%;
 }
 
-.header {
+.debug {
   display: none;
+}
+
+.header {
+  /* display:none; */
 }
 
 /* Panel */

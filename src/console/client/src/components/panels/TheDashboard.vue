@@ -24,7 +24,7 @@
       </header>
       <ExperimentList :limit="4" ref="experimentList" :pagination="false" />
     </section>
-    <section class="section">
+    <section class="debug">
       <b-button class="mr-1 btn-sm"
         @click.stop="optics">
         Optics

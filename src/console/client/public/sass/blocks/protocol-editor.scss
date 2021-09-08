@@ -32,6 +32,7 @@
       border-top:1px solid #aaa;
       border-left:1px solid #aaa;
       border-right:1px solid #aaa;
+      border-bottom:1px solid #aaa;
     }
     &__add-button {
       width:60px;
@@ -46,6 +47,7 @@
   &-stage {
     &__title {
       text-align: center;
+      font-size:1.2rem;
     }
   }
   &-steps {
@@ -80,8 +82,15 @@
   }
 }
 .protocol-detail {
+  &__header {
+    align-items: center;
+    
+  }
   &__protocol-name {
     /* H3 */
+  }
+  &__protocol-conf {
+    padding: 0 1em;
   }
 }
 .round-button {

@@ -5,12 +5,14 @@
       <h3 class="protocol-detail__protocol-name">
         {{ protocol.name }}
       </h3>
-      <div>
-        Lid temp: {{ protocol.lid_temp }}
-      </div>
-      <div 
-        v-if="protocol.final_hold_temp>0">
-        Final hold temp: {{ protocol.final_hold_temp }}
+      <div class="protocol-detail__protocol-conf">
+        <span>
+          Lid {{ protocol.lid_temp }}℃
+        </span>
+        <span 
+          v-if="protocol.final_hold_temp>0">
+          Final hold {{ protocol.final_hold_temp }}℃
+        </span>
       </div>
     </div>
     <ul class="protocol-detail-stages">
@@ -38,7 +40,7 @@
           <template
             v-if="stage.type==2 && stage.steps.length>2">
             <h3 class="protocol-detail-stage__title">qPCR</h3>
-            Repeat {{ stage.cycles }} times
+            {{ stage.cycles }} cycles
             <ul class="protocol-detail-steps">
               <li v-for="(step, step_index) in stage.steps" class="protocol-detail-steps__step protocol-detail-step"
                 v-bind:key="step_index">
@@ -97,7 +99,7 @@
           <template
             v-if="stage.type==4 && stage.steps.length>2">
             <h3 class="protocol-detail-stage__title">Normal PCR</h3>
-            Repeat {{ stage.cycles }} times
+            {{ stage.cycles }} cycles
             <ul class="protocol-detail-steps">
               <li v-for="(step, step_index) in stage.steps" class="protocol-detail-steps__step protocol-detail-step"
                 v-bind:key="step_index">
