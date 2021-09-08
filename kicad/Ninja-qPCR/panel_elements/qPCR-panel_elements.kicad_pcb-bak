@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 132)
+    (drawings 133)
     (tracks 0)
     (zones 0)
     (modules 0)
@@ -199,7 +199,10 @@
     (uvia_drill 0.1)
   )
 
-  (gr_text "GAP\n2.0mm" (at 107.5 47.47) (layer Dwgs.User) (tstamp 6138103D)
+  (gr_text "Large : easier to paste\nSmall : reduce cost" (at 91 40.8) (layer Dwgs.User) (tstamp 61381184)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (gr_text "GAP\n2.0mm" (at 106.9 47.3) (layer Dwgs.User) (tstamp 6138103D)
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (gr_circle (center 97.5 52.5) (end 97.7375 52.5) (layer F.Paste) (width 0.475) (tstamp 6138103C))
@@ -214,7 +217,7 @@
   (gr_line (start 100 58.6) (end 100 60) (layer Edge.Cuts) (width 0.1) (tstamp 61381033))
   (gr_line (start 100 50) (end 95 50) (layer Edge.Cuts) (width 0.1) (tstamp 61381032))
   (gr_line (start 95 50) (end 95 60) (layer Edge.Cuts) (width 0.1) (tstamp 61381031))
-  (gr_text 5mm (at 98.02 47.78) (layer Dwgs.User) (tstamp 61381030)
+  (gr_text 5mm (at 97.7 48.1) (layer Dwgs.User) (tstamp 61381030)
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (gr_circle (center 97.5 52.5) (end 97.9 52.5) (layer F.Mask) (width 0.475) (tstamp 6138102F))
@@ -321,7 +324,7 @@
   (gr_circle (center 85.1 52.5) (end 85.575 52.5) (layer Edge.Cuts) (width 0.1) (tstamp 612FDD29))
   (gr_circle (center 66.9 52.5) (end 67.375 52.5) (layer Edge.Cuts) (width 0.1) (tstamp 612FDDB4))
   (gr_circle (center 66.9 52.5) (end 67.3 52.5) (layer F.Mask) (width 0.475) (tstamp 612FDDB1))
-  (gr_text 5mm (at 67.02 47.78) (layer Dwgs.User) (tstamp 60DA928D)
+  (gr_text 5mm (at 66.8 48.4) (layer Dwgs.User) (tstamp 60DA928D)
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (gr_line (start 64.4 50) (end 64.4 60) (layer Edge.Cuts) (width 0.1) (tstamp 612FDDAE))
@@ -336,7 +339,7 @@
   (gr_arc (start 70.2 58.6) (end 71 58.6) (angle -180) (layer Edge.Cuts) (width 0.1) (tstamp 612FDD99))
   (gr_arc (start 70.2 55) (end 69.4 55) (angle -180) (layer Edge.Cuts) (width 0.1) (tstamp 612FDD96))
   (gr_circle (center 66.9 52.5) (end 67.1375 52.5) (layer F.Paste) (width 0.475) (tstamp 612FDD93))
-  (gr_text "GAP\n1.6mm(minimum)" (at 76.5 47.5) (layer Dwgs.User) (tstamp 612FDD26)
+  (gr_text "GAP\n1.6mm(minimum)" (at 78 47.5) (layer Dwgs.User) (tstamp 612FDD26)
     (effects (font (size 1 1) (thickness 0.15)))
   )
 

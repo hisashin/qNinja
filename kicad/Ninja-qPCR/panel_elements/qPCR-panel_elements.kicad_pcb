@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 132)
+    (drawings 133)
     (tracks 0)
     (zones 0)
     (modules 0)
@@ -199,6 +199,9 @@
     (uvia_drill 0.1)
   )
 
+  (gr_text "Large : easier to paste\nSmall : cheaper" (at 91 40.8) (layer Dwgs.User) (tstamp 61381184)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
   (gr_text "GAP\n2.0mm" (at 106.9 47.3) (layer Dwgs.User) (tstamp 6138103D)
     (effects (font (size 1 1) (thickness 0.15)))
   )
