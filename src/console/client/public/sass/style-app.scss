@@ -14,3 +14,15 @@ body {
   max-width: 800px;
   margin: auto;
 }
+
+.plate-config {
+  &__section {
+    border: 1px solid red;
+    &--layout {
+    }
+    &--detail {
+    }
+    &--dilution-series {
+    }
+  }
+}

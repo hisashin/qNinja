@@ -1,5 +1,7 @@
 <template>
   <div class="panel panel--experiment-list">
+    <div class="panel__menu">
+    </div>
     <section class="section">
       <header class="section__header">
         <div class="section__header__menu">

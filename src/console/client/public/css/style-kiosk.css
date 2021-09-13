@@ -369,6 +369,9 @@ a {
 .protocol-editor-steps__step, .protocol-detail-steps__step {
   border-top: 1px solid #aaa;
 }
+.protocol-editor-step__data-collection, .protocol-detail-step__data-collection {
+  font-size: 0.75em;
+}
 .protocol-editor-values, .protocol-detail-values {
   display: flex;
 }
@@ -479,6 +482,16 @@ html
 .section__body__item:not(:last-child) {
   margin-bottom: 0.75rem;
   padding: 0;
+}
+
+.panel {
+  position: relative;
+}
+.panel__menu {
+  position: absolute;
+  right: 0;
+  top: -24px;
+  text-align: right;
 }
 
 .panel-nav {
@@ -699,6 +712,49 @@ html
   font-size: 0.9rem;
 }
 
+.dilution-series-table {
+  min-width: 80%;
+  border: 1px solid #ddd;
+}
+.dilution-series-table th, .dilution-series-table td {
+  border: 1px solid #ddd;
+}
+.dilution-series-table__header {
+  line-height: 100%;
+}
+.dilution-series-table__input--label {
+  width: 100px;
+}
+.dilution-series-table__input--start-quantity {
+  width: 40px;
+}
+.dilution-series-table__input--factor {
+  width: 40px;
+}
+.dilution-series-table__input--count {
+  width: 40px;
+}
+
+.wells-table {
+  border: 1px solid #ddd;
+}
+.wells-table th, .wells-table td {
+  border: 1px solid #ddd;
+}
+.wells-table__header {
+  line-height: 100%;
+}
+.wells-table__input--quantity {
+  width: 40px;
+}
+.wells-table__input--label {
+  width: 100px;
+}
+
+.pcr-table--well_picker {
+  min-width: 640px;
+}
+
 /* Layout variant for RPi kiosk */
 body {
   width: 1024px;
@@ -756,6 +812,35 @@ body {
   background-color: #ffffff;
   border-radius: 1em;
   border: 1px solid #aaa;
+}
+
+.plate-config {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 436px;
+  flex-wrap: wrap;
+}
+.plate-config__section {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+}
+.plate-config__section--layout {
+  order: 1;
+  height: 100px;
+  width: 55%;
+}
+.plate-config__section--detail {
+  order: 3;
+  height: 100%;
+  width: 45%;
+  overflow-y: scroll;
+}
+.plate-config__section--dilution-series {
+  order: 2;
+  flex-grow: 1;
+  width: 55%;
+  overflow-y: scroll;
 }
 
 /*# sourceMappingURL=style-kiosk.css.map */

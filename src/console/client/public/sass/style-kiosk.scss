@@ -58,3 +58,34 @@ body {
   border-radius: 1em;
   border: 1px solid #aaa;
 }
+
+
+.plate-config {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height:436px;
+  flex-wrap: wrap;;
+  &__section {
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+    &--layout {
+      order:1;
+      height:100px;
+      width:55%;
+    }
+    &--detail {
+      order:3;
+      height:100%;
+      width:45%;
+      overflow-y: scroll;
+    }
+    &--dilution-series {
+      order:2;
+      flex-grow: 1;
+      width:55%;
+      overflow-y: scroll;
+      
+    }
+  }
+}

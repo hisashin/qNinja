@@ -1,5 +1,7 @@
 <template>
   <div class="panel panel--dashboard">
+    <div class="panel__menu">
+    </div>
     <section class="section section--dashboard-protocols">
       <header class="section__header">
         <h2 class="section__title" >

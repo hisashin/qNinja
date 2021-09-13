@@ -139,3 +139,54 @@ $monitor-foreground: #007bff;
     font-size: 0.9rem;
   }
 }
+
+.pcr-table--well-layout {
+}
+.dilution-series-table {
+  min-width: 80%;
+  border: 1px solid #ddd;
+  th, td {
+    border: 1px solid #ddd;
+  }
+  &__header {
+    line-height:100%;
+  }
+  &__input {
+    &--label {
+      width:100px;
+    }
+    &--start-quantity {
+      width:40px;
+      
+    }
+    &--factor {
+      width:40px;
+      
+    }
+    &--count {
+      width:40px;
+      
+    }
+  }
+}
+.wells-table {
+  border: 1px solid #ddd;
+  th, td {
+    border: 1px solid #ddd;
+  }
+  &__header {
+    line-height:100%;
+  }
+  &__input {
+    &--quantity {
+      width:40px;
+    }
+    &--label {
+      width:100px;
+    }
+  }
+  
+}
+.pcr-table--well_picker {
+  min-width:640px;
+}

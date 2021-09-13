@@ -1,22 +1,35 @@
 <template>
   <div class="panel panel--experiment-editor">
+    <div class="panel__menu">
+      <b-button
+        v-if="!isStarted"
+          class="btn-sm mr-1"
+        @click.stop="saveAndRun">
+        Save and Run
+      </b-button>
+      <b-button
+        class="btn-sm mr-1"
+        @click.stop="save">
+        Save
+      </b-button>
+      <!--
+      <b-button v-show="isStarted"
+        class="ml-1"
+        @click.stop="updateConfig">
+        Save Conf
+      </b-button>
+      -->
+      <b-button
+        class="btn-sm mr-1"
+        @click.stop="deleteIt">
+        Delete
+      </b-button>
+    </div>
     <b-tabs content-class="tab-content" nav-wrapper-class="fuga" class="tabs tabs--primary">
       <b-tab title="Summary" active>
         <!-- Info section -->
         <section class="tab-content__section" v-if="experiment">
           <header class="tab-content__header">
-            <div class="tab-content__header-menu">
-              <b-button v-show="isStarted"
-                class="ml-1"
-                @click.stop="deleteIt">
-                Delete
-              </b-button>
-              <b-button v-show="isStarted"
-                class="ml-1"
-                @click.stop="updateInfo">
-                Save
-              </b-button>
-            </div>
           </header>
           <div class="tab-content__body">
             <dl class="labeled-list">
@@ -73,13 +86,6 @@
         <!-- Config Section  -->
         <section class="tab-content__section">
           <header class="tab-content__header">
-            <div class="tab-content__header-menu">
-              <b-button v-show="isStarted"
-                class="ml-1"
-                @click.stop="updateConfig">
-                Save
-              </b-button>
-            </div>
           </header>
           <div class="tab-content__body ">
             <ExperimentConfig ref="experimentConfig" />
@@ -208,21 +214,6 @@
       </div>
     </section>
     
-    <!-- Menu section -->
-    <div>
-      <b-button
-        v-if="!isStarted"
-        class="mr-1"
-        @click.stop="saveAndRun">
-        Save and Run
-      </b-button>
-      <b-button
-        v-if="!isStarted"
-        class="mr-1"
-        @click.stop="save">
-        Save
-      </b-button>
-    </div>
   </div>
 </template>
 <script>

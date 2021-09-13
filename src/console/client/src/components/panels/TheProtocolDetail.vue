@@ -1,15 +1,6 @@
 <template>
   <div class="panel panel--protocol-detail">
-    <section class="section">
-      <div class="section__body">
-        <div class="item detail-card">
-          <div class="detail-card__body">
-            <ProtocolDetail ref="protocolDetail" />
-          </div>
-        </div>
-      </div>
-    </section>
-    <nav class="section__nav section__nav--bottom">
+    <div class="panel__menu">
       <b-button class="mr-1"
         @click.stop="run">
         Run
@@ -26,7 +17,16 @@
         @click.stop="duplicate">
         Copy
       </b-button>
-    </nav>
+    </div>
+    <section class="section">
+      <div class="section__body">
+        <div class="item paragraph">
+          <div class="paragraph__body">
+            <ProtocolDetail ref="protocolDetail" />
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 

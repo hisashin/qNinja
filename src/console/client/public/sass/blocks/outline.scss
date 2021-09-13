@@ -34,6 +34,14 @@ html
 }
 
 .panel {
+  position:relative;
+  &__menu {
+    position: absolute;
+    right: 0;
+    top: -24px;
+    text-align: right;
+    
+  }
 }
 .panel-nav {
   padding: 0 1em;

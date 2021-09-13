@@ -1,5 +1,30 @@
 <template>
   <div class="panel panel--protocol-editor">
+    <div class="panel__menu">
+      <b-button
+        variant="primary"
+        @click="submitUpdateProtocol"
+        :disabled=hasError
+        v-show="!isNew"
+      >
+        Save
+      </b-button>
+      <b-button
+        variant="primary"
+        class="ml-1"
+        @click="submitCreateProtocol"
+        :disabled=hasError
+        v-show="isNew"
+      >
+        Save
+      </b-button>
+      <b-button
+        variant="secondary"
+        class="ml-1"
+        @click="validateProtocol">
+        Validate
+      </b-button>
+    </div>
     <!-- Modal (Select stage type) -->
     <b-modal
       id="add-stage-modal"
@@ -34,7 +59,7 @@
     <section class="section">
       <div class="section__body">
         <!-- Variant: Detail card -->
-        <div class="item detail-card">
+        <div class="item paragraph">
           <!-- Editor here. -->
           <div class="protocol-editor">
             <div class="protocol-editor__header">
@@ -62,29 +87,6 @@
                 >℃ (Optional)
                 
               </div>
-              <b-button
-                variant="primary"
-                @click="submitUpdateProtocol"
-                :disabled=hasError
-                v-show="!isNew"
-              >
-                Save
-              </b-button>
-              <b-button
-                variant="primary"
-                class="ml-1"
-                @click="submitCreateProtocol"
-                :disabled=hasError
-                v-show="isNew"
-              >
-                Save
-              </b-button>
-              <b-button
-                variant="secondary"
-                class="ml-1"
-                @click="validateProtocol">
-                Validate
-              </b-button>
             </div>
             <div v-show="hasError">
               This protocol has some errors.

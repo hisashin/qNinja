@@ -48,9 +48,9 @@ class Plate {
   }
   measureTemperature (callback, expirationMsec) {
     let obj = {
-      main: this.temperature,
-      air: this.temperature,
-      block: this.temperature
+      main: this.temperature + Math.random() * 0.3,
+      air: this.temperature + Math.random() * 0.3,
+      block: this.temperature + Math.random() * 0.3
     };
     callback(obj);
   }
@@ -84,7 +84,7 @@ class HeatLid {
   }
   measureTemperature (callback, expirationMsec) {
     let obj = {
-      main: this.temperature
+      main: this.temperature + Math.random() * 0.3
     };
     callback(obj);
   }

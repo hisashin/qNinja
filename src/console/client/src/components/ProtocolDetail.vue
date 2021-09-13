@@ -58,17 +58,16 @@
                   {{ step.duration }}s
                   </div>
                   <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
-                  {{ step.ramp_speed }}℃/s
+                    <span v-if="step.ramp_speed>0">
+                      {{ step.ramp_speed }}℃/s
+                    </span>
                   </div>
                 </div>
-                <div v-if="step.data_collection">
-                  Collect data at 
-                  <div v-if="step.data_collection.ramp_end">
-                    ramp end
-                  </div>
-                  <div v-if="step.data_collection.hold_end">
-                    hold end
-                  </div>
+                <div v-if="step.data_collection && step.data_collection.ramp_end" class="protocol-detail-step__data-collection">
+                  Collect data at ramp end
+                </div>
+                <div v-if="step.data_collection && step.data_collection.hold_end" class="protocol-detail-step__data-collection">
+                  Collect data at hold end
                 </div>
               </li>
             </ul>
@@ -90,7 +89,9 @@
                   {{ step.duration }}s
                   </div>
                   <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
-                  {{ step.ramp_speed }}℃/s
+                    <span v-if="step.ramp_speed>0">
+                      {{ step.ramp_speed }}℃/s
+                    </span>
                   </div>
                 </div>
               </li>
@@ -114,7 +115,9 @@
                   {{ step.duration }}s
                   </div>
                   <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
-                  {{ step.ramp_speed }}℃/s
+                    <span v-if="step.ramp_speed>0">
+                      {{ step.ramp_speed }}℃/s
+                    </span>
                   </div>
                 </div>
               </li>
