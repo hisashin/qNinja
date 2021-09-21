@@ -32,7 +32,7 @@ MUX_S0
 Text GLabel 7700 2500 2    50   Input ~ 0
 MUX_S1
 Text Notes 2050 4950 0    50   ~ 0
-IN=High : COM <-> NO\nIN=Low : COM <-> NC
+IN=High : COM <-> NO (Normally Open)\nIN=Low : COM <-> NC (Normally Closed)
 Wire Wire Line
 	3350 4200 3400 4200
 Wire Wire Line
@@ -52,7 +52,7 @@ AR Path="/60B09AA3/60D57FA5" Ref="R?"  Part="1"
 AR Path="/60BEA899/60D57FA5" Ref="R?"  Part="1" 
 AR Path="/614A49F9/60D57FA5" Ref="R19"  Part="1" 
 F 0 "R19" V 1293 3600 50  0000 C CNN
-F 1 "?k" V 1384 3600 50  0000 C CNN
+F 1 "10k" V 1384 3600 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 1430 3600 50  0001 C CNN
 F 3 "~" H 1500 3600 50  0001 C CNN
 	1    1500 3600
@@ -350,7 +350,7 @@ AR Path="/60B09AA3/60D549A8" Ref="R?"  Part="1"
 AR Path="/60BEA899/60D549A8" Ref="R?"  Part="1" 
 AR Path="/614A49F9/60D549A8" Ref="R20"  Part="1" 
 F 0 "R20" V 1293 4000 50  0000 C CNN
-F 1 "?k" V 1384 4000 50  0000 C CNN
+F 1 "47k" V 1384 4000 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 1430 4000 50  0001 C CNN
 F 3 "~" H 1500 4000 50  0001 C CNN
 	1    1500 4000
