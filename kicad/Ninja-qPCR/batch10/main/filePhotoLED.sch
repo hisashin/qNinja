@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 6
+Sheet 3 9
 Title ""
 Date ""
 Rev ""
@@ -46,61 +46,14 @@ Wire Wire Line
 Text GLabel 4100 2350 2    50   Input ~ 0
 GNDD
 $Comp
-L Ninja-qPCR:MCP4551T-502E_MS U10
+L Ninja-qPCR:MCP4551T-502E_MS U7
 U 1 1 60AF8D29
 P 2350 2050
-F 0 "U10" H 3150 2437 60  0000 C CNN
+F 0 "U7" H 3150 2437 60  0000 C CNN
 F 1 "MCP4551T-503E/MS" H 3150 2331 60  0000 C CNN
 F 2 "Ninja-qPCR:MCP4551T-502E&slash_MS" H 3150 2290 60  0001 C CNN
 F 3 "" H 2350 2050 60  0000 C CNN
 	1    2350 2050
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2600 4250 2400 4250
-Wire Wire Line
-	3050 4450 2400 4450
-Wire Wire Line
-	3400 4700 3200 4700
-Wire Wire Line
-	1550 4450 1600 4450
-Connection ~ 1550 4450
-Wire Wire Line
-	1550 4950 1550 4450
-Wire Wire Line
-	3050 4950 1550 4950
-Wire Wire Line
-	1450 4450 1550 4450
-Wire Wire Line
-	1450 4250 1600 4250
-$Comp
-L Jumper:Jumper_3_Open JP3
-U 1 1 60AF8D39
-P 3050 4700
-F 0 "JP3" V 3096 4787 50  0000 L CNN
-F 1 "Jumper_3_Open" V 3005 4787 50  0000 L CNN
-F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 3050 4700 50  0001 C CNN
-F 3 "~" H 3050 4700 50  0001 C CNN
-	1    3050 4700
-	0    -1   -1   0   
-$EndComp
-Text GLabel 1450 4250 0    50   Input ~ 0
-3V3D
-NoConn ~ 2600 4250
-Text GLabel 2500 4650 2    50   Input ~ 0
-GNDD
-$Comp
-L Ninja-qPCR:SN74LVC1G04DBVR U9
-U 1 1 60AF8D47
-P 2000 4450
-F 0 "U9" H 2000 4917 50  0000 C CNN
-F 1 "SN74LVC1GU04DCKR" H 2000 4826 50  0000 C CNN
-F 2 "Ninja-qPCR:SN74LVC1GU04DCKR" H 2000 4450 50  0001 L BNN
-F 3 "IPC-7351B" H 2000 4450 50  0001 L BNN
-F 4 "1.45mm" H 2000 4450 50  0001 L BNN "Field4"
-F 5 "AD" H 2000 4450 50  0001 L BNN "Field5"
-F 6 "Texas Instruments" H 2000 4450 50  0001 L BNN "Field6"
-	1    2000 4450
 	1    0    0    -1  
 $EndComp
 Text GLabel 1550 5800 0    50   Input ~ 0
@@ -112,10 +65,10 @@ GNDD
 Text GLabel 2550 5800 0    50   Input ~ 0
 VCC_LED
 $Comp
-L Device:C C16
+L Device:C C17
 U 1 1 60AF8D51
 P 1700 6050
-F 0 "C16" H 1815 6096 50  0000 L CNN
+F 0 "C17" H 1815 6096 50  0000 L CNN
 F 1 "0.1uF" H 1815 6005 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 1738 5900 50  0001 C CNN
 F 3 "~" H 1700 6050 50  0001 C CNN
@@ -123,10 +76,10 @@ F 3 "~" H 1700 6050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C17
+L Device:C C18
 U 1 1 60AF8D57
 P 2700 6050
-F 0 "C17" H 2815 6096 50  0000 L CNN
+F 0 "C18" H 2815 6096 50  0000 L CNN
 F 1 "0.1uF" H 2815 6005 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 2738 5900 50  0001 C CNN
 F 3 "~" H 2700 6050 50  0001 C CNN
@@ -151,112 +104,8 @@ Wire Wire Line
 	2700 5800 2700 5900
 Text GLabel 1450 4450 0    50   Input ~ 0
 PD_REF_PWM
-Text HLabel 3400 4700 2    50   Input ~ 0
+Text HLabel 1750 4450 2    50   Input ~ 0
 LED_BLANK
-$Comp
-L Connector:Conn_01x10_Male LEDN1
-U 1 1 60BF3ECD
-P 9750 1650
-F 0 "LEDN1" H 9722 1624 50  0000 R CNN
-F 1 "Conn_01x10_Male" H 9722 1533 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm" H 9750 1650 50  0001 C CNN
-F 3 "~" H 9750 1650 50  0001 C CNN
-	1    9750 1650
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x10_Male LEDS1
-U 1 1 60BFD371
-P 9750 2850
-F 0 "LEDS1" H 9722 2824 50  0000 R CNN
-F 1 "Conn_01x10_Male" H 9722 2733 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x10_Pitch2.54mm" H 9750 2850 50  0001 C CNN
-F 3 "~" H 9750 2850 50  0001 C CNN
-	1    9750 2850
-	-1   0    0    -1  
-$EndComp
-Text GLabel 9250 1450 0    50   Input ~ 0
-N_LED_OUT1
-Text GLabel 9250 1550 0    50   Input ~ 0
-N_LED_OUT2
-Text GLabel 9250 1650 0    50   Input ~ 0
-N_LED_OUT3
-Text GLabel 9250 1750 0    50   Input ~ 0
-N_LED_OUT4
-Text GLabel 9250 1850 0    50   Input ~ 0
-N_LED_OUT5
-Text GLabel 9250 1950 0    50   Input ~ 0
-N_LED_OUT6
-Text GLabel 9250 2050 0    50   Input ~ 0
-N_LED_OUT7
-Text GLabel 9250 2150 0    50   Input ~ 0
-N_LED_OUT8
-Text GLabel 9250 2650 0    50   Input ~ 0
-S_LED_OUT1
-Text GLabel 9250 2750 0    50   Input ~ 0
-S_LED_OUT2
-Text GLabel 9250 2850 0    50   Input ~ 0
-S_LED_OUT3
-Text GLabel 9250 2950 0    50   Input ~ 0
-S_LED_OUT4
-Text GLabel 9250 3050 0    50   Input ~ 0
-S_LED_OUT5
-Text GLabel 9250 3150 0    50   Input ~ 0
-S_LED_OUT6
-Text GLabel 9250 3250 0    50   Input ~ 0
-S_LED_OUT7
-Text GLabel 9250 3350 0    50   Input ~ 0
-S_LED_OUT8
-Wire Wire Line
-	9250 2650 9550 2650
-Wire Wire Line
-	9550 2750 9250 2750
-Wire Wire Line
-	9250 2850 9550 2850
-Wire Wire Line
-	9550 2950 9250 2950
-Wire Wire Line
-	9550 3050 9250 3050
-Wire Wire Line
-	9550 3150 9250 3150
-Wire Wire Line
-	9550 3250 9250 3250
-Wire Wire Line
-	9550 3350 9250 3350
-Wire Wire Line
-	9550 2150 9250 2150
-Wire Wire Line
-	9550 2050 9250 2050
-Wire Wire Line
-	9550 1950 9250 1950
-Wire Wire Line
-	9550 1850 9250 1850
-Wire Wire Line
-	9550 1750 9250 1750
-Wire Wire Line
-	9550 1650 9250 1650
-Wire Wire Line
-	9550 1550 9250 1550
-Wire Wire Line
-	9550 1450 9250 1450
-Text GLabel 9250 1350 0    50   Input ~ 0
-VCC_LED
-Text GLabel 9250 2550 0    50   Input ~ 0
-VCC_LED
-Text GLabel 9250 2450 0    50   Input ~ 0
-GNDD
-Text GLabel 9250 1250 0    50   Input ~ 0
-GNDD
-Wire Wire Line
-	9250 1250 9550 1250
-Wire Wire Line
-	9250 1350 9550 1350
-Wire Wire Line
-	9250 2450 9550 2450
-Wire Wire Line
-	9250 2550 9550 2550
-Wire Wire Line
-	2500 4650 2400 4650
 Text GLabel 5850 1550 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 5850 1450 0    50   Input ~ 0
@@ -302,10 +151,10 @@ GNDD
 Text GLabel 5850 1250 0    50   Input ~ 0
 3V3D
 $Comp
-L Ninja-qPCR:PCA9955B U11
+L Ninja-qPCR:PCA9955B U8
 U 1 1 60C002FE
 P 6150 1250
-F 0 "U11" H 6450 1475 50  0000 C CNN
+F 0 "U8" H 6450 1475 50  0000 C CNN
 F 1 "PCA9955B" H 6450 1384 50  0000 C CNN
 F 2 "Ninja-qPCR:PCA9955B" H 6150 1050 50  0001 C CNN
 F 3 "" H 6150 1050 50  0001 C CNN
@@ -374,10 +223,10 @@ Wire Wire Line
 Wire Wire Line
 	5850 1950 6050 1950
 $Comp
-L Device:R R7
+L Device:R R18
 U 1 1 60C38304
 P 5150 1750
-F 0 "R7" V 4943 1750 50  0000 C CNN
+F 0 "R18" V 4943 1750 50  0000 C CNN
 F 1 "47k" V 5034 1750 50  0000 C CNN
 F 2 "Resistors_SMD:R_0603_HandSoldering" V 5080 1750 50  0001 C CNN
 F 3 "~" H 5150 1750 50  0001 C CNN
@@ -403,4 +252,6 @@ Wire Wire Line
 Connection ~ 5950 2250
 Wire Wire Line
 	5300 1750 6050 1750
+Wire Wire Line
+	1450 4450 1750 4450
 $EndSCHEMATC
