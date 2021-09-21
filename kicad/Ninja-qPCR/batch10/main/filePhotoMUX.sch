@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 9 9
+Sheet 8 9
 Title ""
 Date ""
 Rev ""
@@ -183,9 +183,9 @@ GNDL
 Text GLabel 1650 1350 2    50   Input ~ 0
 GNDL
 Text GLabel 1650 1450 2    50   Input ~ 0
-VCCL
+VCC_LED
 Text GLabel 1650 1550 2    50   Input ~ 0
-VCCL
+VCC_LED
 Text HLabel 1650 1650 2    50   Input ~ 0
 S_LED_OUT8
 Text HLabel 1650 1750 2    50   Input ~ 0
@@ -216,8 +216,6 @@ Text HLabel 1650 2950 2    50   Input ~ 0
 N_LED_OUT14
 Text HLabel 1650 3050 2    50   Input ~ 0
 N_LED_OUT15
-Text HLabel 1650 3150 2    50   Input ~ 0
-N_LED_OUT16
 Text GLabel 1650 3250 2    50   Input ~ 0
 GNDL
 Text GLabel 1650 3350 2    50   Input ~ 0
@@ -555,4 +553,38 @@ Wire Wire Line
 	10550 5250 10350 5250
 Wire Wire Line
 	7450 4350 7750 4350
+Text GLabel 2300 1650 2    50   Input ~ 0
+S_LED_OUT8
+Text GLabel 2300 1750 2    50   Input ~ 0
+S_LED_OUT7
+Text GLabel 2300 1850 2    50   Input ~ 0
+S_LED_OUT6
+Text GLabel 2300 1950 2    50   Input ~ 0
+S_LED_OUT5
+Text GLabel 2300 2050 2    50   Input ~ 0
+S_LED_OUT4
+Text GLabel 2300 2150 2    50   Input ~ 0
+S_LED_OUT3
+Text GLabel 2300 2250 2    50   Input ~ 0
+S_LED_OUT2
+Text GLabel 2300 2350 2    50   Input ~ 0
+S_LED_OUT1
+Text GLabel 2300 2450 2    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 2300 2550 2    50   Input ~ 0
+N_LED_OUT7
+Text GLabel 2300 2650 2    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 2300 2750 2    50   Input ~ 0
+N_LED_OUT5
+Text GLabel 2300 2850 2    50   Input ~ 0
+N_LED_OUT4
+Text GLabel 2300 2950 2    50   Input ~ 0
+N_LED_OUT3
+Text GLabel 2300 3050 2    50   Input ~ 0
+N_LED_OUT2
+Text GLabel 2300 3150 2    50   Input ~ 0
+N_LED_OUT1
+Text HLabel 1650 3150 2    50   Input ~ 0
+N_LED_OUT16
 $EndSCHEMATC

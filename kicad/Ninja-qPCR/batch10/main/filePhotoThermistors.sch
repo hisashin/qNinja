@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 5 9
+Sheet 4 9
 Title ""
 Date ""
 Rev ""
@@ -58,8 +58,6 @@ F 3 "~" H 1500 3600 50  0001 C CNN
 	1    1500 3600
 	0    -1   1    0   
 $EndComp
-Wire Wire Line
-	3350 3800 4150 3800
 Text GLabel 850  3600 0    50   Input ~ 0
 3V3A
 $Comp
@@ -78,26 +76,6 @@ F 3 "" H 5150 2650 50  0001 C CNN
 	1    5150 2650
 	-1   0    0    -1  
 $EndComp
-$Comp
-L Jumper:Jumper_2_Open JP2
-U 1 1 60B18AB9
-P 2800 2650
-F 0 "JP2" H 2800 2885 50  0000 C CNN
-F 1 "Jumper_2_Open" H 2800 2794 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 2800 2650 50  0001 C CNN
-F 3 "~" H 2800 2650 50  0001 C CNN
-	1    2800 2650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3000 2650 4150 2650
-Wire Wire Line
-	4150 2650 4150 3800
-Connection ~ 4150 3800
-Wire Wire Line
-	4150 3800 4650 3800
-Text Notes 2200 2350 0    50   ~ 0
-Connet in case of switching trouble
 Text GLabel 3400 4200 2    50   Input ~ 0
 3V3D
 Text GLabel 7700 1900 2    50   Input ~ 0
@@ -383,8 +361,6 @@ Wire Wire Line
 Wire Wire Line
 	1750 3600 1650 3600
 Wire Wire Line
-	1750 4000 1700 4000
-Wire Wire Line
 	1350 4000 1150 4000
 Wire Wire Line
 	1150 4000 1150 3600
@@ -392,15 +368,12 @@ Connection ~ 1150 3600
 Wire Wire Line
 	1150 3600 1350 3600
 Wire Wire Line
-	1700 2650 1700 4000
-Connection ~ 1700 4000
-Wire Wire Line
-	1700 4000 1650 4000
-Wire Wire Line
-	1700 2650 2600 2650
-Wire Wire Line
 	3350 4300 3450 4300
 Wire Wire Line
 	3450 4300 3450 4500
 Connection ~ 3450 4500
+Wire Wire Line
+	3350 3800 4650 3800
+Wire Wire Line
+	1650 4000 1750 4000
 $EndSCHEMATC
