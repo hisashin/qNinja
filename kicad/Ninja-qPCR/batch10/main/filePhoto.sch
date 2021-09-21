@@ -152,31 +152,6 @@ Wire Wire Line
 	9400 3350 9400 3200
 Wire Wire Line
 	9950 3350 9850 3350
-$Comp
-L Connector:Conn_01x04_Male JSPI1
-U 1 1 614DBA50
-P 3000 6750
-F 0 "JSPI1" H 3108 7031 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 3108 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3000 6750 50  0001 C CNN
-F 3 "~" H 3000 6750 50  0001 C CNN
-	1    3000 6750
-	1    0    0    -1  
-$EndComp
-Text GLabel 3450 6950 2    50   Input ~ 0
-DEMOD_SPI_CS
-Text GLabel 3450 6650 2    50   Input ~ 0
-GNDD
-Text GLabel 3450 6850 2    50   Input ~ 0
-DEMOD_SPI_SDIO
-Wire Wire Line
-	3450 6650 3200 6650
-Wire Wire Line
-	3200 6750 3450 6750
-Wire Wire Line
-	3450 6850 3200 6850
-Wire Wire Line
-	3200 6950 3450 6950
 Text GLabel 6350 3100 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
@@ -185,7 +160,7 @@ U 1 1 614DBA5E
 P 7000 1800
 F 0 "R13" V 6793 1800 50  0000 C CNN
 F 1 "1M" V 6884 1800 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 1800 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6930 1800 50  0001 C CNN
 F 3 "~" H 7000 1800 50  0001 C CNN
 	1    7000 1800
 	0    -1   1    0   
@@ -244,17 +219,13 @@ F 3 "~" H 9450 2000 50  0001 C CNN
 $EndComp
 Text GLabel 9700 2000 2    50   Input ~ 0
 -1V
-Text Notes 5050 6350 0    50   ~ 0
-Debug pins\n(Photo measurement)
-Text GLabel 5450 6850 2    50   Input ~ 0
-PD_MUX_OUT
-Text HLabel 5450 6950 2    50   Input ~ 0
+Text HLabel 2450 6800 0    50   Input ~ 0
 AMP_OUT
 Text HLabel 5200 4150 2    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5450 6650 2    50   Input ~ 0
+Text HLabel 2450 6600 0    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5450 6750 2    50   Input ~ 0
+Text HLabel 2450 6700 0    50   Input ~ 0
 PHOTO_OUT_P
 Wire Wire Line
 	9300 1200 9000 1200
@@ -287,16 +258,6 @@ GNDA
 Wire Wire Line
 	2900 4650 3100 4650
 Wire Wire Line
-	5450 6650 5000 6650
-Wire Wire Line
-	5450 6750 5000 6750
-Wire Wire Line
-	5450 6950 5000 6950
-Wire Wire Line
-	5450 6850 5000 6850
-Text Notes 2800 6350 0    50   ~ 0
-ADA2200 SPI debug
-Wire Wire Line
 	9400 3200 9900 3200
 $Comp
 L Device:R R12
@@ -304,7 +265,7 @@ U 1 1 614DBA9C
 P 7000 850
 F 0 "R12" V 6793 850 50  0000 C CNN
 F 1 "10M" V 6884 850 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 850 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 6930 850 50  0001 C CNN
 F 3 "~" H 7000 850 50  0001 C CNN
 	1    7000 850 
 	0    -1   1    0   
@@ -334,45 +295,20 @@ Text GLabel 6700 5150 0    50   Input ~ 0
 Wire Wire Line
 	7300 2150 7300 2450
 Connection ~ 7300 2150
-$Comp
-L Connector:Conn_01x04_Male J12
-U 1 1 614DBAB0
-P 10100 1250
-F 0 "J12" H 10208 1531 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 10208 1440 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 10100 1250 50  0001 C CNN
-F 3 "~" H 10100 1250 50  0001 C CNN
-	1    10100 1250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10550 1450 10300 1450
-Wire Wire Line
-	10550 1150 10300 1150
-Text GLabel 10550 1250 2    50   Input ~ 0
+Text GLabel 2450 6500 0    50   Input ~ 0
 PD_MUX_OUT
-Wire Wire Line
-	10550 1250 10300 1250
-Text GLabel 10550 1350 2    50   Input ~ 0
-PD_MUX_OUT
-Wire Wire Line
-	10550 1350 10300 1350
-Text Notes 10100 900  0    50   ~ 0
-External gain resistors
 Text HLabel 7400 850  2    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 7400 2450 2    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10550 1450 2    50   Input ~ 0
+Text HLabel 2450 6400 0    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10550 1150 2    50   Input ~ 0
+Text HLabel 2450 6300 0    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 9450 1800 2    50   Input ~ 0
 AMP_GAIN_SW
 Text GLabel 9950 3350 2    50   Input ~ 0
 GNDA
-Text GLabel 3450 6750 2    50   Input ~ 0
-DEMOD_SPI_SCLK
 Wire Wire Line
 	1950 4450 2050 4450
 $Comp
@@ -403,17 +339,6 @@ Wire Wire Line
 	7450 5250 7450 5450
 Wire Wire Line
 	6950 5150 6700 5150
-$Comp
-L Connector:Conn_01x04_Male J11
-U 1 1 614DBADC
-P 4800 6750
-F 0 "J11" H 4908 7031 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 4908 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 4800 6750 50  0001 C CNN
-F 3 "~" H 4800 6750 50  0001 C CNN
-	1    4800 6750
-	1    0    0    -1  
-$EndComp
 Text GLabel 8050 3600 0    50   Input ~ 0
 -1V
 Text GLabel 6600 3950 0    50   Input ~ 0
@@ -740,4 +665,82 @@ Text Notes 1300 700  0    50   ~ 0
 NOTE : U10 pad was too big and shorten / Update footprint of U11 (smaller)
 Wire Wire Line
 	6700 5450 7450 5450
+$Comp
+L Connector:Conn_01x01_Male J12
+U 1 1 614D44F8
+P 2950 6400
+F 0 "J12" H 3000 6450 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6400 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6400 50  0001 C CNN
+F 3 "~" H 2950 6400 50  0001 C CNN
+	1    2950 6400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J13
+U 1 1 614D4C2B
+P 2950 6500
+F 0 "J13" H 3000 6550 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6500 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6500 50  0001 C CNN
+F 3 "~" H 2950 6500 50  0001 C CNN
+	1    2950 6500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J14
+U 1 1 614DBF83
+P 2950 6600
+F 0 "J14" H 3000 6650 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6600 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6600 50  0001 C CNN
+F 3 "~" H 2950 6600 50  0001 C CNN
+	1    2950 6600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J16
+U 1 1 614DBF97
+P 2950 6800
+F 0 "J16" H 3000 6850 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6800 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6800 50  0001 C CNN
+F 3 "~" H 2950 6800 50  0001 C CNN
+	1    2950 6800
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 6800 2750 6800
+Wire Wire Line
+	2450 6700 2750 6700
+Wire Wire Line
+	2450 6600 2750 6600
+Wire Wire Line
+	2450 6500 2750 6500
+Wire Wire Line
+	2450 6400 2750 6400
+Wire Wire Line
+	2450 6300 2750 6300
+$Comp
+L Connector:Conn_01x01_Male J11
+U 1 1 614D37E3
+P 2950 6300
+F 0 "J11" H 3000 6350 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6300 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6300 50  0001 C CNN
+F 3 "~" H 2950 6300 50  0001 C CNN
+	1    2950 6300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J15
+U 1 1 614DBF8D
+P 2950 6700
+F 0 "J15" H 3000 6750 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6700 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6700 50  0001 C CNN
+F 3 "~" H 2950 6700 50  0001 C CNN
+	1    2950 6700
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC

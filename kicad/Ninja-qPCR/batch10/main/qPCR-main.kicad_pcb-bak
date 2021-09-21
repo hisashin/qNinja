@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 9)
+    (drawings 8)
     (tracks 0)
     (zones 0)
     (modules 140)
@@ -5427,8 +5427,8 @@
     )
   )
 
-  (module Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown (layer F.Cu) (tedit 60D28555) (tstamp 614A00B8)
-    (at 108.5 94)
+  (module Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown (layer F.Cu) (tedit 60D28555) (tstamp 6149E267)
+    (at 108.2 89.5)
     (descr "Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf")
     (tags "raspberry pi 3a+ through hole")
     (path /60AF82D8)
@@ -6524,7 +6524,6 @@
       (net 88 "Net-(C39-Pad1)"))
   )
 
-  (gr_line (start 117.5 135) (end 213.5 135) (layer Edge.Cuts) (width 0.1) (tstamp 6149FF72))
   (gr_circle (center 208.5 146) (end 210.1 146) (layer Edge.Cuts) (width 0.1) (tstamp 61497491))
   (gr_circle (center 122.5 146) (end 124.1 146) (layer Edge.Cuts) (width 0.1) (tstamp 6149748E))
   (gr_circle (center 122.5 98.5) (end 124.1 98.5) (layer Edge.Cuts) (width 0.1))
