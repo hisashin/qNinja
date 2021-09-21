@@ -111,17 +111,22 @@ export default {
       this.autoPause = false;
     },
     onDisappear () {
+      console.log("TheExperimentMonitor.onDisappear unsub");
       device.unsubscribe(this.progressSubId);
     },
     onAppear () {
+      console.log("TheExperimentMonitor.onAppear");
       document.getElementById("measurement").innerHTML = "";
       this.progressSubId = device.subscribe("experiment.update.progress", (topic, obj)=>{
         try {
-          document.getElementById("measurement").innerHTML += [obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
+          console.log("TheExperimentMonitor.experiment.update.progress updated");
+          document.getElementById("measurement").innerHTML += (obj.plate + "\n"); //[obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
         } catch (e) {
           console.warn(e);
         }
       });
+      
+      console.log("TheExperimentMonitor.onAppear subscribing experiment.update.progress");
       client.fetchDeviceExperiment (
         (experiment)=>{
           this.experiment = experiment;
@@ -160,7 +165,6 @@ export default {
             });
             device.addProgressHandler({
               onProgress:(obj)=>{
-                console.log("TheExperimentMonitor.onProgress")
                 if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
                   this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
                 

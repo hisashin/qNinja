@@ -166,6 +166,7 @@ export default {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
     device.subscribe("experiment.update.progress", (topic, data)=>{
+      console.log("ProgressMonitor sub.");
       console.log(data)
     });
     device.addTransitionHandler({

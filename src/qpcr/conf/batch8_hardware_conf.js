@@ -41,9 +41,9 @@ const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
 /* Thermistor config */
 // http://localhost:8888/notebooks/PCR/Ninja_qPCR_thermistor_selection.ipynb
 const RES_LOW_TEMP = 47.0; // kOhm
-const RES_HIGH_TEMP = 47.0; // kOhm
-// const SWITCHING_TEMP = 66.0;
-const SWITCHING_TEMP = 999.0;
+const RES_HIGH_TEMP = 10.0; // kOhm
+const SWITCHING_TEMP = 66.0;
+// const SWITCHING_TEMP = 40.0;
 const R0 = 100.0;
 const BASE_TEMP = 25.0;
 const B_CONST = [
@@ -295,6 +295,8 @@ class TemperatureSensing {
       setTimeout(()=>{
         this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
           const temp = thermistor.getTemp(val);
+          if (this.muxChannel == MUX_CHANNEL_THERMISTOR_PLATE_BLOCK)
+            console.log("PIN=%d, ADC=%f, temp=%f", switchPinVal, val, temp);
           this.prevValue = temp;
           muxQueue.release(muxTaskId);
           const detailedMeasurement = {
@@ -378,6 +380,8 @@ class PlateOutput {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
     outputValue = Math.min(1.0, Math.max(-1, outputValue));
+    // outputValue = Math.min(0.9, Math.max(-0.9, outputValue));
+    console.log("plate output=%d", outputValue)
     if (outputValue > 0) {
       this.setPlateOutput(outputValue);
       this.setFanOutput(0);
@@ -461,8 +465,14 @@ class MUXWrapperThermistor {
 }
 
 // TODO LED map (well to channel
-const LED_WELL_TO_CHANNEL_MAP = [
+/*const LED_WELL_TO_CHANNEL_MAP = [
   7,6,5,4,3,2,1,0,
+  15,14,13,12,11,10,9,8
+];*/
+
+// TODO reverse (for debug)
+const LED_WELL_TO_CHANNEL_MAP = [
+  0,1,2,3,4,5,6,7,
   15,14,13,12,11,10,9,8
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
@@ -483,13 +493,12 @@ class LEDUnit {
   select (well) {
     this.pot.setWiper(0);
     this.flg = !this.flg;
-    // const channel = LED_WELL_TO_CHANNEL_MAP[well];
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
     // channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
     this.ledDriver.selectChannel(channel);
     if (well == 15) {
       // console.log("Well %d", hoge);
-      hoge = (hoge + 1) % 16;
+      hoge = (hoge + 1) % 8;
     }
   }
   off () {
@@ -506,7 +515,7 @@ const LARGE_GAIN_VALUE = 10.0; // MOhm
 const SMALL_GAIN_VALUE = 1.0; // MOhm
 
 const USE_GAIN_SWITCHING = false;
-const DEFAULT_IS_STRONG_SIGNAL = false; // Set "false" to use the larger gain
+const DEFAULT_IS_STRONG_SIGNAL = true; // Set "false" to use the larger gain
 // Photodiode
 class FluorescenceSensingUnit {
   constructor (mux, adcManager, adcChannel) {

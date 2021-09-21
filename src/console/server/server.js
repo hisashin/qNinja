@@ -816,7 +816,8 @@ class NinjaQPCRServer {
     console.log("Ninja qPCR server started.");
     if (qpcr.shutdownSwitch) {
       qpcr.shutdownSwitch.addShutdownHandler(()=>{
-        console.log("shutdown!!");
+        /*
+        console.log("shutdown pin became low.");
         eventBus.publish("device.update.shutdown", {});
         qpcr.shutdown();
         exec('sudo shutdown -h -t 5', (error, stdout, stderr) => {
@@ -825,6 +826,7 @@ class NinjaQPCRServer {
           console.log("Stderr", stderr);
         });
         process.exit(0);
+        */
       });
     }
   }
