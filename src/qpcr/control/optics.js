@@ -93,7 +93,7 @@ class Optics {
       this.startContinuousDataCollection(this.continuousCallback);
     }
   }
-  abort () {
+  cancel () {
     this.continuous = false;
     this.shouldResumeContinuous = false;
   }

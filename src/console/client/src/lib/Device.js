@@ -187,9 +187,9 @@ class Device {
     };
     this.send(obj);
   }
-  abort () {
+  cancel () {
     const obj = {
-      "topic":"experiment.command.abort"
+      "topic":"experiment.command.cancel"
     };
     this.send(obj);
   }

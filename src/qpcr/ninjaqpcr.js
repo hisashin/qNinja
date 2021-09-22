@@ -22,11 +22,11 @@ const MEASUREMENT_HOLD_END = 4;
 
 
 const DEVICE_STATE = {
-  IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, abortAvailable:false, finishAvailable:false },
-  RUNNING: { label:"running", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:true, abortAvailable:true, finishAvailable:false },
-  PAUSED: { label:"paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
-  AUTO_PAUSED: { label:"auto_paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, abortAvailable:true, finishAvailable:false },
-  COMPLETE: { label:"complete", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:false, abortAvailable:true, finishAvailable:true }
+  IDLE: { label:"idle", hasExperiment:false, startAvailable:true, resumeAvailable:false, pauseAvailable:false, cancelAvailable:false, finishAvailable:false },
+  RUNNING: { label:"running", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:true, cancelAvailable:true, finishAvailable:false },
+  PAUSED: { label:"paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, cancelAvailable:true, finishAvailable:false },
+  AUTO_PAUSED: { label:"auto_paused", hasExperiment:true, startAvailable:false, resumeAvailable:true, pauseAvailable:false, cancelAvailable:true, finishAvailable:false },
+  COMPLETE: { label:"complete", hasExperiment:true, startAvailable:false, resumeAvailable:false, pauseAvailable:false, cancelAvailable:true, finishAvailable:true }
 };
 
 /* QPCR Interface */
@@ -149,21 +149,21 @@ class NinjaQPCR {
   finishAutoPause () {
     this.thermalCycler.finishAutoPause();
   }
-  abort () {
-    if (!this.deviceState.abortAvailable) {
+  cancel () {
+    if (!this.deviceState.cancelAvailable) {
       console.warn("Unable to start experiment. Device is idle. deviceState=%s", this.deviceState.label);
       return false;
     }
-    this.thermalCycler.abort();
-    this.optics.abort();
+    this.thermalCycler.cancel();
+    this.optics.cancel();
     
-    this.experimentLog.status.status = "aborted";
+    this.experimentLog.status.status = "cancelled";
     this.experimentLog.status.end = new Date().getTime();
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.IDLE);
   }
   finish () {
-    if (!this.deviceState.abortAvailable) {
+    if (!this.deviceState.cancelAvailable) {
       console.warn("Unable to finish. Experiment is not finishAvailable. deviceState=%s", this.deviceState.finishAvailable);
       return false;
     }

@@ -111,7 +111,7 @@
           <template v-if="deviceState != null">
           <button class="time-monitor__button" v-if="deviceState.pauseAvailable" @click="pause">Pause</button>
           <button class="time-monitor__button" v-if="deviceState.resumeAvailable" @click="resume">Resume</button>
-          <button class="time-monitor__button" v-if="deviceState.abortAvailable" @click="cancel">Cancel</button>
+          <button class="time-monitor__button" v-if="deviceState.cancelAvailable" @click="cancel">Cancel</button>
           <button class="time-monitor__button" v-if="deviceState.finishAvailable" @click="finish">Finish</button>
           <button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>
           </template>
@@ -236,7 +236,7 @@ export default {
     resume () { device.resume(); },
     cancel () { 
       if (window.confirm("Are you sure you want to cancel the experiment?")) {
-        device.abort(); 
+        device.cancel(); 
         appState.home();
       }
     },
