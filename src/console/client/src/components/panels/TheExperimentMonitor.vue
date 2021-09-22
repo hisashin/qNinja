@@ -119,8 +119,7 @@ export default {
       document.getElementById("measurement").innerHTML = "";
       this.progressSubId = device.subscribe("experiment.update.progress", (topic, obj)=>{
         try {
-          console.log("TheExperimentMonitor.experiment.update.progress updated");
-          document.getElementById("measurement").innerHTML += (obj.plate + "\n"); //[obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
+          document.getElementById("measurement").innerHTML += (obj.plate + "\n");
         } catch (e) {
           console.warn(e);
         }

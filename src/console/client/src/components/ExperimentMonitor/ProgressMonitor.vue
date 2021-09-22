@@ -75,7 +75,7 @@
         <div class="temperature-monitor">
           <div class="temperature-monitor__label">
             Lid
-            <div class="temperature-monitor__value">{{ progress.lid }}/{{protocol.lid_temp}}℃</div>
+            <div class="temperature-monitor__value">{{ lidTemp }}/{{protocol.lid_temp}}℃</div>
           </div>
           <div class="temperature-monitor__meter">
             <meter class="temperature-monitor__meter-body"
@@ -145,30 +145,18 @@ export default {
       progress: null,
       stage: { step:[]},
       step: {},
-      stepElapsedSec: ""
+      stepElapsedSec: "",
+      elapsedTime: "-",
+      remainingTime: "-",
+      totalTime: "-",
+      plateTemp: "-"
     }
   },
   computed: {
-    elapsedTime: function () {
-      return Util.humanTime(this.progress.elapsed/1000);
-    },
-    remainingTime: function () {
-      return Util.humanTime(this.progress.remaining/1000);
-    },
-    totalTime: function () {
-      return Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
-    },
-    plateTemp: function () {
-      return (this.progress) ? Math.round(this.progress.plate) : 0;
-    }
   },
   created: function () {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
-    device.subscribe("experiment.update.progress", (topic, data)=>{
-      console.log("ProgressMonitor sub.");
-      console.log(data)
-    });
     device.addTransitionHandler({
       onStart:(obj)=>{
         this.protocol = obj.protocol;
@@ -181,22 +169,10 @@ export default {
         }
       }
     });
-    device.addProgressHandler({
-      onProgress:(progress)=>{
-        this.progress = progress;
-        if (this.protocol == null) {
-          return;
-        }
-        if (progress.state) {
-          this.selectStageAndStep();
-        }
-      }
-    });
     this.deviceState = device.getDeviceState();
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
         if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
-          console.log("Show modal.");
           this.$bvModal.show('finish-modal');
         }
         this.deviceState = state;
@@ -240,6 +216,22 @@ export default {
       this.connectionStatus = "Disconnected";
     
     },
+    applyProgress : function (progress) {
+    /*
+      console.log("applyProgress %d", new Date().getTime())
+      console.log(progress)
+      */
+      this.progress = progress;
+      
+      this.elapsedTime = Util.humanTime(this.progress.elapsed/1000);
+      this.remainingTime = Util.humanTime(this.progress.remaining/1000);
+      this.totalTime = Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
+      this.plateTemp = (this.progress) ? Math.round(this.progress.plate) : "-";
+      this.lidTemp = (this.progress) ? Math.round(this.progress.lid) : "-";
+      if (progress.state) {
+        this.selectStageAndStep();
+      }
+    },
     pause () { device.pause(); },
     resume () { device.resume(); },
     cancel () { 
@@ -247,6 +239,14 @@ export default {
         device.abort(); 
         appState.home();
       }
+    },
+    onAppear () {
+      this.sugId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
+        this.applyProgress(data);
+      });
+    },
+    onDisappear () {
+      device.unsubscribe(this.sugId);
     },
     finish () { 
       device.finish();
