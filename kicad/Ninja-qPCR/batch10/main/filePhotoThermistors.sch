@@ -53,7 +53,7 @@ AR Path="/60BEA899/60D57FA5" Ref="R?"  Part="1"
 AR Path="/614A49F9/60D57FA5" Ref="R17"  Part="1" 
 F 0 "R17" V 1293 3600 50  0000 C CNN
 F 1 "10k" V 1384 3600 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1430 3600 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 1430 3600 50  0001 C CNN
 F 3 "~" H 1500 3600 50  0001 C CNN
 	1    1500 3600
 	0    -1   1    0   
@@ -278,7 +278,6 @@ Wire Wire Line
 Wire Wire Line
 	5150 2400 5150 2500
 Connection ~ 5150 2500
-NoConn ~ 5200 2200
 Wire Wire Line
 	5200 2200 5350 2200
 Text GLabel 5050 4950 0    50   Input ~ 0
@@ -305,7 +304,6 @@ Wire Wire Line
 	5300 4950 5300 5100
 Text GLabel 4400 4000 0    50   Input ~ 0
 THERM_MUX_OUT
-NoConn ~ 5200 2000
 Wire Wire Line
 	5350 2000 5200 2000
 $Comp
@@ -351,7 +349,7 @@ AR Path="/60BEA899/60D549A8" Ref="R?"  Part="1"
 AR Path="/614A49F9/60D549A8" Ref="R18"  Part="1" 
 F 0 "R18" V 1293 4000 50  0000 C CNN
 F 1 "47k" V 1384 4000 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1430 4000 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 1430 4000 50  0001 C CNN
 F 3 "~" H 1500 4000 50  0001 C CNN
 	1    1500 4000
 	0    -1   1    0   
@@ -376,4 +374,8 @@ Wire Wire Line
 	3350 3800 4650 3800
 Wire Wire Line
 	1650 4000 1750 4000
+Text GLabel 5200 2000 0    50   Input ~ 0
+PD_TH1
+Text GLabel 5200 2200 0    50   Input ~ 0
+PD_TH2
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-292612089033217
+297576033487217
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19299,6 +19299,13 @@ NF-Transformer_P3356_ETAL
 0
 0
 Ninja-qPCR
+35TZV100M6.3X8
+
+
+0
+2
+2
+Ninja-qPCR
 74HC4067PW_118
 
 
@@ -19628,6 +19635,13 @@ raspberry pi 3a+ through hole
 40
 40
 Ninja-qPCR
+Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown_HDMI-R
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
 Raspberry_Pi_3A+_Run_PEN_Socketed_THT_FaceDown_MountingHoles
 Raspberry Pi 3A+ with Run and PEN using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
 raspberry pi 3a+ through hole
@@ -19839,6 +19853,13 @@ TS12A12511DCNR
 8
 Ninja-qPCR
 UWX1E101MCL1GB
+
+
+0
+2
+2
+Ninja-qPCR
+VLS6045EX-3R3N
 
 
 0

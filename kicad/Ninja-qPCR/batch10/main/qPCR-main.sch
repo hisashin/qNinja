@@ -22,7 +22,7 @@ AR Path="/60AEA148/60AF82D8" Ref="J?"  Part="1"
 AR Path="/60AC8F63/60AF82D8" Ref="J?"  Part="1" 
 F 0 "J2" H 2400 3615 50  0000 C CNN
 F 1 "Raspberry_Pi_3A_Plus_wpi" H 2400 3524 50  0000 C CNN
-F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown" H 1950 1350 50  0001 C CNN
+F 2 "Ninja-qPCR:Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown_HDMI-R" H 1950 1350 50  0001 C CNN
 F 3 "" H 1950 1350 50  0001 C CNN
 	1    2400 2400
 	1    0    0    -1  
@@ -140,7 +140,7 @@ AR Path="/5F7093B5/60AF834B" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF834B" Ref="R?"  Part="1" 
 F 0 "R8" V 7693 1650 50  0000 C CNN
 F 1 "47k" V 7784 1650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7830 1650 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 7830 1650 50  0001 C CNN
 F 3 "~" H 7900 1650 50  0001 C CNN
 	1    7900 1650
 	0    1    1    0   
@@ -155,7 +155,7 @@ AR Path="/5F7093B5/60AF8351" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF8351" Ref="R?"  Part="1" 
 F 0 "R6" V 7243 1400 50  0000 C CNN
 F 1 "150" V 7334 1400 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7380 1400 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 7380 1400 50  0001 C CNN
 F 3 "~" H 7450 1400 50  0001 C CNN
 	1    7450 1400
 	0    1    1    0   
@@ -220,7 +220,7 @@ AR Path="/5F7093B5/60AF83E3" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF83E3" Ref="R?"  Part="1" 
 F 0 "R4" V 5043 4700 50  0000 C CNN
 F 1 "47k" V 5134 4700 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 4700 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 5180 4700 50  0001 C CNN
 F 3 "~" H 5250 4700 50  0001 C CNN
 	1    5250 4700
 	0    1    1    0   
@@ -235,7 +235,7 @@ AR Path="/5F7093B5/60AF83E9" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF83E9" Ref="R?"  Part="1" 
 F 0 "R2" V 4593 4450 50  0000 C CNN
 F 1 "150" V 4684 4450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4730 4450 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 4730 4450 50  0001 C CNN
 F 3 "~" H 4800 4450 50  0001 C CNN
 	1    4800 4450
 	0    1    1    0   
@@ -426,7 +426,7 @@ AR Path="/5F7093B5/60AF8378" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF8378" Ref="R?"  Part="1" 
 F 0 "R7" V 7243 3950 50  0000 C CNN
 F 1 "150" V 7334 3950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7380 3950 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 7380 3950 50  0001 C CNN
 F 3 "~" H 7450 3950 50  0001 C CNN
 	1    7450 3950
 	0    1    1    0   
@@ -441,7 +441,7 @@ AR Path="/5F7093B5/60AF8372" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60AF8372" Ref="R?"  Part="1" 
 F 0 "R9" V 7693 4200 50  0000 C CNN
 F 1 "47k" V 7784 4200 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7830 4200 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 7830 4200 50  0001 C CNN
 F 3 "~" H 7900 4200 50  0001 C CNN
 	1    7900 4200
 	0    1    1    0   
@@ -489,25 +489,6 @@ DOPEN
 Text GLabel 4500 3100 0    50   Input ~ 0
 DLOCK
 $Comp
-L Connector:Conn_01x02_Male LCD1_POWER1
-U 1 1 60B95481
-P 1500 5800
-F 0 "LCD1_POWER1" H 1472 5774 50  0000 R CNN
-F 1 "Conn_01x02_Male" H 1472 5683 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 1500 5800 50  0001 C CNN
-F 3 "~" H 1500 5800 50  0001 C CNN
-	1    1500 5800
-	-1   0    0    -1  
-$EndComp
-Text GLabel 1200 5800 0    50   Input ~ 0
-5V_UPS
-Text GLabel 1200 5900 0    50   Input ~ 0
-GND
-Wire Wire Line
-	1300 5800 1200 5800
-Wire Wire Line
-	1300 5900 1200 5900
-$Comp
 L Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5_NONE LCD1
 U 1 1 60BA74A3
 P 1300 4700
@@ -528,7 +509,7 @@ AR Path="/5F7093B5/60BB1885" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60BB1885" Ref="R?"  Part="1" 
 F 0 "R3" V 5043 3350 50  0000 C CNN
 F 1 "47k" V 5134 3350 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 3350 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 5180 3350 50  0001 C CNN
 F 3 "~" H 5250 3350 50  0001 C CNN
 	1    5250 3350
 	0    1    1    0   
@@ -543,7 +524,7 @@ AR Path="/5F7093B5/60BB188B" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60BB188B" Ref="R?"  Part="1" 
 F 0 "R1" V 4593 3100 50  0000 C CNN
 F 1 "150" V 4684 3100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4730 3100 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 4730 3100 50  0001 C CNN
 F 3 "~" H 4800 3100 50  0001 C CNN
 	1    4800 3100
 	0    1    1    0   
@@ -614,7 +595,7 @@ AR Path="/5F7093B5/60BFB670" Ref="R?"  Part="1"
 AR Path="/60AC8F63/60BFB670" Ref="R?"  Part="1" 
 F 0 "R5" V 5243 1450 50  0000 C CNN
 F 1 "47k" V 5334 1450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5380 1450 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 5380 1450 50  0001 C CNN
 F 3 "~" H 5450 1450 50  0001 C CNN
 	1    5450 1450
 	0    1    1    0   
@@ -733,9 +714,7 @@ Text HLabel 3900 6850 0    50   Input ~ 0
 GPIO14
 Text HLabel 3900 6950 0    50   Input ~ 0
 GPIO22
-Text HLabel 3900 7050 0    50   Input ~ 0
-GPIO26
-Text HLabel 3900 7150 0    50   Input ~ 0
+Text HLabel 3900 7250 0    50   Input ~ 0
 GPIO28
 $Comp
 L Connector:Conn_01x01_Male J6
@@ -760,9 +739,9 @@ F 3 "~" H 4300 6850 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	4100 7150 3900 7150
+	4100 7250 3900 7250
 Wire Wire Line
-	4100 7050 3900 7050
+	4100 7150 3900 7150
 Wire Wire Line
 	4100 6950 3900 6950
 Wire Wire Line
@@ -915,65 +894,48 @@ $EndComp
 $Comp
 L Connector:Conn_01x01_Male J9
 U 1 1 60CC8925
-P 4300 7050
-F 0 "J9" H 4272 7074 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
-F 3 "~" H 4300 7050 50  0001 C CNN
-	1    4300 7050
-	-1   0    0    -1  
-$EndComp
-NoConn ~ 1550 2250
-NoConn ~ 1550 1450
-Text GLabel 3250 3350 2    50   Input ~ 0
-PD_TH2
-Text GLabel 1550 3250 0    50   Input ~ 0
-PD_TH1
-$Comp
-L Connector:Conn_01x01_Male J10
-U 1 1 60CC8AA5
 P 4300 7150
-F 0 "J10" H 4272 7174 50  0000 R CNN
+F 0 "J9" H 4272 7174 50  0000 R CNN
 F 1 "Conn_01x01_Male" H 4272 7083 50  0000 R CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7150 50  0001 C CNN
 F 3 "~" H 4300 7150 50  0001 C CNN
 	1    4300 7150
 	-1   0    0    -1  
 $EndComp
-Text Notes 800  850  0    50   ~ 0
-NOTE : C2&C6 too close / make clear polar C1 / Update U2 footprint / R12 cement too short footprint
+NoConn ~ 1550 2250
+NoConn ~ 1550 1450
 $Sheet
-S 9750 1800 900  300 
+S 9750 1400 900  300 
 U 614A3CBB
 F0 "Photo" 50
 F1 "filePhoto.sch" 50
 $EndSheet
 $Sheet
-S 9750 2900 900  350 
+S 9750 1900 900  350 
 U 614A4588
 F0 "PhotoLED" 50
 F1 "filePhotoLED.sch" 50
 $EndSheet
 $Sheet
-S 9750 3450 900  350 
+S 9750 2450 900  350 
 U 614A49F9
 F0 "PhotoThermistors" 50
 F1 "filePhotoThermistors.sch" 50
 $EndSheet
 $Sheet
-S 9750 5100 1150 350 
+S 9750 4100 1150 350 
 U 614A0EA3
 F0 "5V_UPS" 50
 F1 "file5V_UPS.sch" 50
 $EndSheet
 $Sheet
-S 9750 5650 1150 300 
+S 9750 4650 1150 300 
 U 614DADCA
 F0 "12V_UPS" 50
 F1 "file12V_UPS.sch" 50
 $EndSheet
 $Sheet
-S 9750 4550 1150 350 
+S 9750 3550 1150 350 
 U 614FDC7A
 F0 "3V3" 50
 F1 "file3V3.sch" 50
@@ -1021,15 +983,62 @@ Wire Wire Line
 Wire Wire Line
 	1450 6750 1650 6750
 $Sheet
-S 9750 4000 900  350 
+S 9750 3000 900  350 
 U 6154FC7E
 F0 "PhotoMUX" 50
 F1 "filePhotoMUX.sch" 50
 $EndSheet
 $Sheet
-S 9750 6200 1150 300 
+S 9750 5200 1150 300 
 U 614A3D56
 F0 "-1V" 50
 F1 "file-1V.sch" 50
 $EndSheet
+Text HLabel 3250 3350 2    50   Input ~ 0
+GPIO29
+Text HLabel 1550 3250 0    50   Input ~ 0
+GPIO25
+Text HLabel 3900 7350 0    50   Input ~ 0
+GPIO29
+Wire Wire Line
+	4100 7350 3900 7350
+$Comp
+L Connector:Conn_01x01_Male J20
+U 1 1 6165C395
+P 4300 7350
+F 0 "J20" H 4272 7374 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 7283 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7350 50  0001 C CNN
+F 3 "~" H 4300 7350 50  0001 C CNN
+	1    4300 7350
+	-1   0    0    -1  
+$EndComp
+Text HLabel 3900 7150 0    50   Input ~ 0
+GPIO26
+$Comp
+L Connector:Conn_01x01_Male J19
+U 1 1 6165C38B
+P 4300 7050
+F 0 "J19" H 4272 7074 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
+F 3 "~" H 4300 7050 50  0001 C CNN
+	1    4300 7050
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 7050 3900 7050
+Text HLabel 3900 7050 0    50   Input ~ 0
+GPIO25
+$Comp
+L Connector:Conn_01x01_Male J10
+U 1 1 60CC8AA5
+P 4300 7250
+F 0 "J10" H 4272 7274 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 7183 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7250 50  0001 C CNN
+F 3 "~" H 4300 7250 50  0001 C CNN
+	1    4300 7250
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC
