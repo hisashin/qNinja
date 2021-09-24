@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch10/main/qPCR-main.sch)
-    (date "2021 September 24, Friday 15:04:17")
+    (date "2021 September 24, Friday 18:34:31")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -477,7 +477,7 @@
       (tstamp 614DBB6E))
     (comp (ref U3)
       (value COM1305-0.032768-EXT-T-TR)
-      (footprint Ninja-qPCR:COM1305-0.032768-EXT-T-TR)
+      (footprint Ninja-qPCR:ASDK-32.768KHZ-LRT)
       (libsource (lib Ninja-qPCR) (part COM1305-0.032768-EXT-T-TR) (description ""))
       (sheetpath (names /Photo/) (tstamps /614A3CBB/))
       (tstamp 614DBB80))
@@ -980,7 +980,7 @@
       (tstamp 6150BB88))
     (comp (ref U18)
       (value SN74LVC1GU04DCKR)
-      (footprint Ninja-qPCR:SN74LVC1GU04DCKR)
+      (footprint Ninja-qPCR:SN74LVC1GU04DBVR)
       (datasheet IPC-7351B)
       (fields
         (field (name Field4) 1.45mm)
