@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch10/main/qPCR-main.sch)
-    (date "2021 September 24, Friday 13:39:27")
+    (date "2021 September 24, Friday 15:04:17")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -723,7 +723,7 @@
       (tstamp 614A02E1))
     (comp (ref D1)
       (value D_Schottky)
-      (footprint Diodes_SMD:D_SOD-323)
+      (footprint Ninja-qPCR:MSS1P3L-M3&slash_89A)
       (datasheet ~)
       (libsource (lib Device) (part D_Schottky) (description "Schottky diode"))
       (sheetpath (names /12V_UPS/) (tstamps /614DADCA/))
@@ -765,7 +765,7 @@
       (tstamp 614EDB25))
     (comp (ref R23)
       (value "8.2Ω 3W")
-      (footprint Resistors_ThroughHole:R_Axial_Power_L25.0mm_W9.0mm_P10.16mm_Vertical)
+      (footprint Resistors_ThroughHole:R_Axial_DIN0516_L15.5mm_D5.0mm_P20.32mm_Horizontal)
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))
       (sheetpath (names /12V_UPS/) (tstamps /614DADCA/))

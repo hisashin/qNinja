@@ -34,7 +34,7 @@ AR Path="/60B81B0D/614EDAEB" Ref="D?"  Part="1"
 AR Path="/614DADCA/614EDAEB" Ref="D1"  Part="1" 
 F 0 "D1" V 3354 2730 50  0000 L CNN
 F 1 "D_Schottky" V 3445 2730 50  0000 L CNN
-F 2 "Diodes_SMD:D_SOD-323" H 3400 2650 50  0001 C CNN
+F 2 "Ninja-qPCR:MSS1P3L-M3&slash_89A" H 3400 2650 50  0001 C CNN
 F 3 "~" H 3400 2650 50  0001 C CNN
 	1    3400 2650
 	0    1    1    0   
@@ -184,7 +184,7 @@ AR Path="/60B81B0D/614EDB30" Ref="R?"  Part="1"
 AR Path="/614DADCA/614EDB30" Ref="R23"  Part="1" 
 F 0 "R23" H 5300 2400 50  0000 R CNN
 F 1 "8.2Ω 3W" H 5500 2500 50  0000 R CNN
-F 2 "Resistors_ThroughHole:R_Axial_Power_L25.0mm_W9.0mm_P10.16mm_Vertical" V 5030 2550 50  0001 C CNN
+F 2 "Resistors_ThroughHole:R_Axial_DIN0516_L15.5mm_D5.0mm_P20.32mm_Horizontal" V 5030 2550 50  0001 C CNN
 F 3 "~" H 5100 2550 50  0001 C CNN
 	1    5100 2550
 	-1   0    0    1   
