@@ -183,7 +183,7 @@ export default {
       this.connected = false;
       this.connectionStatus = "Disconnected";
     
-    },
+    }
   }
 }
 </script>

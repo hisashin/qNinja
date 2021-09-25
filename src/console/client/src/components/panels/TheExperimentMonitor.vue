@@ -2,7 +2,6 @@
   <div class="panel panel--experiment-monitor">
     <div class="panel__menu">
     </div>
-    <strong>the experiment monitor</strong>
     <ProgressMonitor ref="progressMonitor"/>
     <section class="section" v-if="experiment">
       <header class="section__header">

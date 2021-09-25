@@ -4,6 +4,7 @@
       <div class="">
         <div class="plate-config">
           <div class="plate-config__section plate-config__section--layout">
+            <h3 class="plate-config__section-title">Plate layout</h3>
             <!-- Layout -->
             <table class="pcr-table plate-layout">
               <tr v-for="(row, row_index) in well_layout" v-bind:key="row_index">
@@ -16,6 +17,7 @@
             </table>
           </div>
           <div class="plate-config__section plate-config__section--detail">
+            <h3 class="plate-config__section-title">Wells</h3>
             <!-- Detail -->
             <table class="pcr-table wells-table">
               <tr class="wells-table__header">
@@ -59,7 +61,8 @@
             </table>
           </div>
           <div class="plate-config__section plate-config__section--dilution-series">
-          <!-- Dilution series -->
+            <h3 class="plate-config__section-title">Dilution series</h3>
+            <!-- Dilution series -->
             <table v-if="seriesCount" class="pcr-table dilution-series-table">
               <tr class="dilution-series-table__header">
                 <th></th>

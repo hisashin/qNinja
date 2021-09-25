@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- ProgressMonitor copied start -->
     <div v-if="protocol==null">Protocol is null</div>
     <div v-if="progress==null">Progress is null</div>
     <div v-if="deviceState==null">DeviceState is null</div>
@@ -157,6 +156,10 @@ export default {
   created: function () {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
+  
+    this.subId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
+      this.applyProgress(data);
+    });
     device.addTransitionHandler({
       onStart:(obj)=>{
         this.protocol = obj.protocol;
@@ -217,10 +220,6 @@ export default {
     
     },
     applyProgress : function (progress) {
-    /*
-      console.log("applyProgress %d", new Date().getTime())
-      console.log(progress)
-      */
       this.progress = progress;
       
       this.elapsedTime = Util.humanTime(this.progress.elapsed/1000);
@@ -239,14 +238,6 @@ export default {
         device.cancel(); 
         appState.home();
       }
-    },
-    onAppear () {
-      this.sugId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
-        this.applyProgress(data);
-      });
-    },
-    onDisappear () {
-      device.unsubscribe(this.sugId);
     },
     finish () { 
       device.finish();

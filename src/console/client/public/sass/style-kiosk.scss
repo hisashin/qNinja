@@ -65,13 +65,20 @@ body {
   flex-direction: column;
   background-color: white;
   height:436px;
-  flex-wrap: wrap;;
+  flex-wrap: wrap;
+  &__section-title {
+    height:24px;
+    font-size:1.2rem;
+    margin:0;
+    padding:0;
+    line-height: 24px;
+  }
   &__section {
     /* border: 1px solid red; */
     box-sizing: border-box;
     &--layout {
       order:1;
-      height:100px;
+      height:124px;
       width:55%;
     }
     &--detail {
