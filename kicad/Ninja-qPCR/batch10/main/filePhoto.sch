@@ -29,7 +29,7 @@ U 1 1 614DBA0B
 P 10850 3800
 F 0 "C9" H 10965 3846 50  0000 L CNN
 F 1 "0.1uF" H 10965 3755 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10888 3650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 10888 3650 50  0001 C CNN
 F 3 "~" H 10850 3800 50  0001 C CNN
 	1    10850 3800
 	1    0    0    -1  
@@ -62,8 +62,8 @@ L Device:R R11
 U 1 1 614DBA1D
 P 2750 4250
 F 0 "R11" V 2543 4250 50  0000 C CNN
-F 1 "10K" V 2634 4250 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2680 4250 50  0001 C CNN
+F 1 "10k" V 2634 4250 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 2680 4250 50  0001 C CNN
 F 3 "~" H 2750 4250 50  0001 C CNN
 	1    2750 4250
 	0    1    1    0   
@@ -73,8 +73,8 @@ L Device:R R10
 U 1 1 614DBA23
 P 1800 4450
 F 0 "R10" V 1593 4450 50  0000 C CNN
-F 1 "10K" V 1684 4450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 4450 50  0001 C CNN
+F 1 "10k" V 1684 4450 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 1730 4450 50  0001 C CNN
 F 3 "~" H 1800 4450 50  0001 C CNN
 	1    1800 4450
 	0    1    1    0   
@@ -113,7 +113,7 @@ U 1 1 614DBA38
 P 1800 5250
 F 0 "C2" V 1650 5100 50  0000 C CNN
 F 1 "4.7uF" V 1750 5100 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 1838 5100 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 1838 5100 50  0001 C CNN
 F 3 "~" H 1800 5250 50  0001 C CNN
 	1    1800 5250
 	0    1    1    0   
@@ -124,7 +124,7 @@ U 1 1 614DBA3E
 P 7000 1200
 F 0 "C5" V 6748 1200 50  0000 C CNN
 F 1 "22pF" V 6839 1200 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7038 1050 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 7038 1050 50  0001 C CNN
 F 3 "~" H 7000 1200 50  0001 C CNN
 	1    7000 1200
 	0    1    -1   0   
@@ -141,7 +141,7 @@ U 1 1 614DBA47
 P 9700 3350
 F 0 "C8" V 9448 3350 50  0000 C CNN
 F 1 "0.1uF" V 9539 3350 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9738 3200 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 9738 3200 50  0001 C CNN
 F 3 "~" H 9700 3350 50  0001 C CNN
 	1    9700 3350
 	0    1    1    0   
@@ -152,31 +152,6 @@ Wire Wire Line
 	9400 3350 9400 3200
 Wire Wire Line
 	9950 3350 9850 3350
-$Comp
-L Connector:Conn_01x04_Male JSPI1
-U 1 1 614DBA50
-P 3000 6750
-F 0 "JSPI1" H 3108 7031 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 3108 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x02_Pitch2.54mm" H 3000 6750 50  0001 C CNN
-F 3 "~" H 3000 6750 50  0001 C CNN
-	1    3000 6750
-	1    0    0    -1  
-$EndComp
-Text GLabel 3450 6950 2    50   Input ~ 0
-DEMOD_SPI_CS
-Text GLabel 3450 6650 2    50   Input ~ 0
-GNDD
-Text GLabel 3450 6850 2    50   Input ~ 0
-DEMOD_SPI_SDIO
-Wire Wire Line
-	3450 6650 3200 6650
-Wire Wire Line
-	3200 6750 3450 6750
-Wire Wire Line
-	3450 6850 3200 6850
-Wire Wire Line
-	3200 6950 3450 6950
 Text GLabel 6350 3100 0    50   Input ~ 0
 PD_MUX_OUT
 $Comp
@@ -185,7 +160,7 @@ U 1 1 614DBA5E
 P 7000 1800
 F 0 "R13" V 6793 1800 50  0000 C CNN
 F 1 "1M" V 6884 1800 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 1800 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 6930 1800 50  0001 C CNN
 F 3 "~" H 7000 1800 50  0001 C CNN
 	1    7000 1800
 	0    -1   1    0   
@@ -196,7 +171,7 @@ U 1 1 614DBA64
 P 7000 2150
 F 0 "C6" V 6748 2150 50  0000 C CNN
 F 1 "22pF" V 6839 2150 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7038 2000 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 7038 2000 50  0001 C CNN
 F 3 "~" H 7000 2150 50  0001 C CNN
 	1    7000 2150
 	0    1    -1   0   
@@ -236,25 +211,21 @@ L Device:R R15
 U 1 1 614DBA79
 P 9450 2000
 F 0 "R15" V 9243 2000 50  0000 C CNN
-F 1 "10K" V 9334 2000 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 9380 2000 50  0001 C CNN
+F 1 "10k" V 9334 2000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 9380 2000 50  0001 C CNN
 F 3 "~" H 9450 2000 50  0001 C CNN
 	1    9450 2000
 	0    -1   -1   0   
 $EndComp
 Text GLabel 9700 2000 2    50   Input ~ 0
 -1V
-Text Notes 5050 6350 0    50   ~ 0
-Debug pins\n(Photo measurement)
-Text GLabel 5450 6850 2    50   Input ~ 0
-PD_MUX_OUT
-Text HLabel 5450 6950 2    50   Input ~ 0
+Text HLabel 2450 6800 0    50   Input ~ 0
 AMP_OUT
 Text HLabel 5200 4150 2    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5450 6650 2    50   Input ~ 0
+Text HLabel 2450 6600 0    50   Input ~ 0
 PHOTO_OUT_N
-Text HLabel 5450 6750 2    50   Input ~ 0
+Text HLabel 2450 6700 0    50   Input ~ 0
 PHOTO_OUT_P
 Wire Wire Line
 	9300 1200 9000 1200
@@ -287,16 +258,6 @@ GNDA
 Wire Wire Line
 	2900 4650 3100 4650
 Wire Wire Line
-	5450 6650 5000 6650
-Wire Wire Line
-	5450 6750 5000 6750
-Wire Wire Line
-	5450 6950 5000 6950
-Wire Wire Line
-	5450 6850 5000 6850
-Text Notes 2800 6350 0    50   ~ 0
-ADA2200 SPI debug
-Wire Wire Line
 	9400 3200 9900 3200
 $Comp
 L Device:R R12
@@ -304,7 +265,7 @@ U 1 1 614DBA9C
 P 7000 850
 F 0 "R12" V 6793 850 50  0000 C CNN
 F 1 "10M" V 6884 850 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" V 6930 850 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 6930 850 50  0001 C CNN
 F 3 "~" H 7000 850 50  0001 C CNN
 	1    7000 850 
 	0    -1   1    0   
@@ -316,15 +277,15 @@ Text GLabel 8950 5250 2    50   Input ~ 0
 GNDD
 Text GLabel 8950 5150 2    50   Input ~ 0
 3V3D
-Text GLabel 6700 5450 0    50   Input ~ 0
+Text GLabel 6700 5250 0    50   Input ~ 0
 CLKIN
 $Comp
 L Device:R R14
 U 1 1 614DBAA7
 P 7100 5150
 F 0 "R14" V 6893 5150 50  0000 C CNN
-F 1 "10K" V 6984 5150 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7030 5150 50  0001 C CNN
+F 1 "10k" V 6984 5150 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 7030 5150 50  0001 C CNN
 F 3 "~" H 7100 5150 50  0001 C CNN
 	1    7100 5150
 	0    1    1    0   
@@ -334,45 +295,20 @@ Text GLabel 6700 5150 0    50   Input ~ 0
 Wire Wire Line
 	7300 2150 7300 2450
 Connection ~ 7300 2150
-$Comp
-L Connector:Conn_01x04_Male J12
-U 1 1 614DBAB0
-P 10100 1250
-F 0 "J12" H 10208 1531 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 10208 1440 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 10100 1250 50  0001 C CNN
-F 3 "~" H 10100 1250 50  0001 C CNN
-	1    10100 1250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10550 1450 10300 1450
-Wire Wire Line
-	10550 1150 10300 1150
-Text GLabel 10550 1250 2    50   Input ~ 0
+Text GLabel 2450 6500 0    50   Input ~ 0
 PD_MUX_OUT
-Wire Wire Line
-	10550 1250 10300 1250
-Text GLabel 10550 1350 2    50   Input ~ 0
-PD_MUX_OUT
-Wire Wire Line
-	10550 1350 10300 1350
-Text Notes 10100 900  0    50   ~ 0
-External gain resistors
 Text HLabel 7400 850  2    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 7400 2450 2    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10550 1450 2    50   Input ~ 0
+Text HLabel 2450 6400 0    50   Input ~ 0
 GAIN_SMALL
-Text HLabel 10550 1150 2    50   Input ~ 0
+Text HLabel 2450 6300 0    50   Input ~ 0
 GAIN_LARGE
 Text HLabel 9450 1800 2    50   Input ~ 0
 AMP_GAIN_SW
 Text GLabel 9950 3350 2    50   Input ~ 0
 GNDA
-Text GLabel 3450 6750 2    50   Input ~ 0
-DEMOD_SPI_SCLK
 Wire Wire Line
 	1950 4450 2050 4450
 $Comp
@@ -381,7 +317,7 @@ U 1 1 614DBACB
 P 1800 4700
 F 0 "C1" V 1650 4550 50  0000 C CNN
 F 1 "4.7uF" V 1750 4550 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 1838 4550 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 1838 4550 50  0001 C CNN
 F 3 "~" H 1800 4700 50  0001 C CNN
 	1    1800 4700
 	0    1    1    0   
@@ -398,26 +334,9 @@ GNDD
 Wire Wire Line
 	1550 4700 1650 4700
 Wire Wire Line
-	7500 5250 7450 5250
-Wire Wire Line
-	7450 5250 7450 5450
-Wire Wire Line
 	6950 5150 6700 5150
-$Comp
-L Connector:Conn_01x04_Male J11
-U 1 1 614DBADC
-P 4800 6750
-F 0 "J11" H 4908 7031 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 4908 6940 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 4800 6750 50  0001 C CNN
-F 3 "~" H 4800 6750 50  0001 C CNN
-	1    4800 6750
-	1    0    0    -1  
-$EndComp
 Text GLabel 8050 3600 0    50   Input ~ 0
 -1V
-Text GLabel 6600 3950 0    50   Input ~ 0
-3V3A
 Text GLabel 5300 2750 2    50   Input ~ 0
 GNDA
 Wire Wire Line
@@ -583,7 +502,7 @@ U 1 1 614DBB4F
 P 2550 1850
 F 0 "C3" H 2665 1896 50  0000 L CNN
 F 1 "0.1uF" H 2665 1805 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 2588 1700 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 2588 1700 50  0001 C CNN
 F 3 "~" H 2550 1850 50  0001 C CNN
 	1    2550 1850
 	1    0    0    -1  
@@ -605,7 +524,7 @@ U 1 1 614DBB5B
 P 5150 3000
 F 0 "C4" H 5265 3046 50  0000 L CNN
 F 1 "0.1uF" H 5265 2955 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5188 2850 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 5188 2850 50  0001 C CNN
 F 3 "~" H 5150 3000 50  0001 C CNN
 	1    5150 3000
 	1    0    0    -1  
@@ -639,7 +558,7 @@ U 1 1 614DBB6E
 P 8600 5450
 F 0 "C7" V 8450 5300 50  0000 C CNN
 F 1 "0.1uF" V 8550 5300 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8638 5300 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 8638 5300 50  0001 C CNN
 F 3 "~" H 8600 5450 50  0001 C CNN
 	1    8600 5450
 	0    1    1    0   
@@ -671,7 +590,7 @@ U 1 1 614DBB80
 P 7500 5150
 F 0 "U3" H 7925 5415 50  0000 C CNN
 F 1 "COM1305-0.032768-EXT-T-TR" H 7925 5324 50  0000 C CNN
-F 2 "Ninja-qPCR:COM1305-0.032768-EXT-T-TR" H 7500 5150 50  0001 C CNN
+F 2 "Ninja-qPCR:ASDK-32.768KHZ-LRT" H 7500 5150 50  0001 C CNN
 F 3 "" H 7500 5150 50  0001 C CNN
 	1    7500 5150
 	1    0    0    -1  
@@ -697,47 +616,84 @@ Wire Wire Line
 	5700 7300 5650 7300
 Wire Wire Line
 	5300 7300 5350 7300
-Text GLabel 7250 3950 2    50   Input ~ 0
-PD_TH1
-Text GLabel 7250 4250 2    50   Input ~ 0
-PD_TH2
 $Comp
-L Device:R R_TH1
-U 1 1 614DBB9B
-P 6950 3950
-F 0 "R_TH1" V 6743 3950 50  0000 C CNN
-F 1 "10K" V 6834 3950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 6880 3950 50  0001 C CNN
-F 3 "~" H 6950 3950 50  0001 C CNN
-	1    6950 3950
-	0    1    1    0   
+L Connector:Conn_01x01_Male J12
+U 1 1 614D44F8
+P 2950 6400
+F 0 "J12" H 3000 6450 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6400 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6400 50  0001 C CNN
+F 3 "~" H 2950 6400 50  0001 C CNN
+	1    2950 6400
+	-1   0    0    -1  
 $EndComp
 $Comp
-L Device:R R_TH2
-U 1 1 614DBBA1
-P 6950 4250
-F 0 "R_TH2" V 6743 4250 50  0000 C CNN
-F 1 "10K" V 6834 4250 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 6880 4250 50  0001 C CNN
-F 3 "~" H 6950 4250 50  0001 C CNN
-	1    6950 4250
-	0    1    1    0   
+L Connector:Conn_01x01_Male J13
+U 1 1 614D4C2B
+P 2950 6500
+F 0 "J13" H 3000 6550 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6500 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6500 50  0001 C CNN
+F 3 "~" H 2950 6500 50  0001 C CNN
+	1    2950 6500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J14
+U 1 1 614DBF83
+P 2950 6600
+F 0 "J14" H 3000 6650 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6600 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6600 50  0001 C CNN
+F 3 "~" H 2950 6600 50  0001 C CNN
+	1    2950 6600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J16
+U 1 1 614DBF97
+P 2950 6800
+F 0 "J16" H 3000 6850 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6800 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6800 50  0001 C CNN
+F 3 "~" H 2950 6800 50  0001 C CNN
+	1    2950 6800
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	7250 3950 7100 3950
+	2450 6800 2750 6800
 Wire Wire Line
-	7250 4250 7100 4250
+	2450 6700 2750 6700
 Wire Wire Line
-	6600 3950 6700 3950
+	2450 6600 2750 6600
 Wire Wire Line
-	6800 4250 6700 4250
+	2450 6500 2750 6500
 Wire Wire Line
-	6700 4250 6700 3950
-Connection ~ 6700 3950
+	2450 6400 2750 6400
 Wire Wire Line
-	6700 3950 6800 3950
-Text Notes 1300 700  0    50   ~ 0
-NOTE : U10 pad was too big and shorten / Update footprint of U11 (smaller)
+	2450 6300 2750 6300
+$Comp
+L Connector:Conn_01x01_Male J11
+U 1 1 614D37E3
+P 2950 6300
+F 0 "J11" H 3000 6350 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6300 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6300 50  0001 C CNN
+F 3 "~" H 2950 6300 50  0001 C CNN
+	1    2950 6300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J15
+U 1 1 614DBF8D
+P 2950 6700
+F 0 "J15" H 3000 6750 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 2600 6700 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2950 6700 50  0001 C CNN
+F 3 "~" H 2950 6700 50  0001 C CNN
+	1    2950 6700
+	-1   0    0    -1  
+$EndComp
 Wire Wire Line
-	6700 5450 7450 5450
+	6700 5250 7500 5250
 $EndSCHEMATC

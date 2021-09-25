@@ -1,4 +1,4 @@
-290842623451217
+302476590084217
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19299,6 +19299,13 @@ NF-Transformer_P3356_ETAL
 0
 0
 Ninja-qPCR
+35TZV100M6.3X8
+
+
+0
+2
+2
+Ninja-qPCR
 74HC4067PW_118
 
 
@@ -19369,6 +19376,13 @@ AP2210K-3.3TRG1
 5
 5
 Ninja-qPCR
+ASDK-32.768KHZ-LRT
+
+
+0
+4
+4
+Ninja-qPCR
 BD9D320EFJ-E2
 
 
@@ -19396,6 +19410,13 @@ COM1305-0.032768-EXT-T-TR
 0
 4
 4
+Ninja-qPCR
+CP_Radial_D12.5mm_P5.00mm
+CP, Radial series, Radial, pin pitch=5.00mm, , diameter=12.5mm, Electrolytic Capacitor
+CP Radial series Radial pin pitch 5.00mm  diameter 12.5mm Electrolytic Capacitor
+0
+2
+2
 Ninja-qPCR
 CP_Radial_D12.5mm_P5.00mm_L34mm
 CP, Radial series, Radial, pin pitch=5.00mm, , diameter=12.5mm, Electrolytic Capacitor
@@ -19530,6 +19551,13 @@ MPC506AU
 28
 28
 Ninja-qPCR
+MSS1P3L-M3&slash_89A
+
+
+0
+2
+2
+Ninja-qPCR
 NCP3170BDR2G
 
 
@@ -19621,6 +19649,13 @@ raspberry pi 3a+ through hole
 40
 40
 Ninja-qPCR
+Raspberry_Pi_3A+_3B+_4B_Zero_FaceDown_HDMI-R
+Raspberry Pi 3A+ using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
+raspberry pi 3a+ through hole
+0
+40
+40
+Ninja-qPCR
 Raspberry_Pi_3A+_Run_PEN_Socketed_THT_FaceDown_MountingHoles
 Raspberry Pi 3A+ with Run and PEN using through hole straight pin socket, 2x20, 2.54mm pitch, https://www.raspberrypi.org/documentation/hardware/raspberrypi/mechanical/rpi_MECH_3aplus.pdf
 raspberry pi 3a+ through hole
@@ -19669,6 +19704,13 @@ SN74LVC1G3157DCKR
 0
 6
 6
+Ninja-qPCR
+SN74LVC1GU04DBVR
+
+
+0
+5
+5
 Ninja-qPCR
 SN74LVC1GU04DCKR
 
@@ -19832,6 +19874,13 @@ TS12A12511DCNR
 8
 Ninja-qPCR
 UWX1E101MCL1GB
+
+
+0
+2
+2
+Ninja-qPCR
+VLS6045EX-3R3N
 
 
 0

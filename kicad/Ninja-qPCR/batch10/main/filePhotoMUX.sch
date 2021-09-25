@@ -14,12 +14,12 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Ninja-qPCR:SN74LVC1G04DBVR U11
+L Ninja-qPCR:SN74LVC1G04DBVR U18
 U 1 1 60B0D57A
 P 4750 6500
-F 0 "U11" H 4750 6967 50  0000 C CNN
+F 0 "U18" H 4750 6967 50  0000 C CNN
 F 1 "SN74LVC1GU04DCKR" H 4750 6876 50  0000 C CNN
-F 2 "Ninja-qPCR:SN74LVC1GU04DCKR" H 4750 6500 50  0001 L BNN
+F 2 "Ninja-qPCR:SN74LVC1GU04DBVR" H 4750 6500 50  0001 L BNN
 F 3 "IPC-7351B" H 4750 6500 50  0001 L BNN
 F 4 "1.45mm" H 4750 6500 50  0001 L BNN "Field4"
 F 5 "AD" H 4750 6500 50  0001 L BNN "Field5"
@@ -101,14 +101,14 @@ Text GLabel 5300 6700 2    50   Input ~ 0
 Text GLabel 4200 6300 0    50   Input ~ 0
 3V3D
 $Comp
-L Ninja-qPCR:CD74HC4067M96 U12
-U 1 1 60B0D59F
-P 6100 1250
-F 0 "U12" H 7400 1637 60  0000 C CNN
-F 1 "CD74HC4067M96" H 7400 1531 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7400 1490 60  0001 C CNN
-F 3 "" H 6100 1250 60  0000 C CNN
-	1    6100 1250
+L Ninja-qPCR:CD74HC4067M96 U19
+U 2 1 60B0D59F
+P 6050 4300
+F 0 "U19" H 7350 4687 60  0000 C CNN
+F 1 "CD74HC4067M96" H 7350 4581 60  0000 C CNN
+F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7350 4540 60  0001 C CNN
+F 3 "" H 6050 4300 60  0000 C CNN
+	2    6050 4300
 	-1   0    0    -1  
 $EndComp
 Text GLabel 3250 4400 0    50   Input ~ 0
@@ -154,14 +154,14 @@ Wire Wire Line
 Wire Wire Line
 	6200 5300 6050 5300
 $Comp
-L Ninja-qPCR:CD74HC4067M96 U12
-U 2 1 60B0D5A6
-P 6050 4300
-F 0 "U12" H 7350 4687 60  0000 C CNN
-F 1 "CD74HC4067M96" H 7350 4581 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7350 4540 60  0001 C CNN
-F 3 "" H 6050 4300 60  0000 C CNN
-	2    6050 4300
+L Ninja-qPCR:CD74HC4067M96 U19
+U 1 1 60B0D5A6
+P 6100 1250
+F 0 "U19" H 7400 1637 60  0000 C CNN
+F 1 "CD74HC4067M96" H 7400 1531 60  0000 C CNN
+F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7400 1490 60  0001 C CNN
+F 3 "" H 6100 1250 60  0000 C CNN
+	1    6100 1250
 	-1   0    0    -1  
 $EndComp
 $Comp
@@ -170,8 +170,8 @@ U 1 1 614C5E7E
 P 1150 3150
 AR Path="/614F8F7A/614C5E7E" Ref="J?"  Part="1" 
 AR Path="/614A4E6A/614C5E7E" Ref="J?"  Part="1" 
-AR Path="/6154FC7E/614C5E7E" Ref="J?"  Part="1" 
-F 0 "J?" H 1258 5231 50  0000 C CNN
+AR Path="/6154FC7E/614C5E7E" Ref="J18"  Part="1" 
+F 0 "J18" H 1258 5231 50  0000 C CNN
 F 1 "Conn_01x60_Male" H 1258 5140 50  0000 C CNN
 F 2 "Ninja-qPCR:FFC_60_Ali_HUISHUNFA" H 1150 3150 50  0001 C CNN
 F 3 "~" H 1150 3150 50  0001 C CNN
@@ -186,36 +186,6 @@ Text GLabel 1650 1450 2    50   Input ~ 0
 VCC_LED
 Text GLabel 1650 1550 2    50   Input ~ 0
 VCC_LED
-Text HLabel 1650 1650 2    50   Input ~ 0
-S_LED_OUT8
-Text HLabel 1650 1750 2    50   Input ~ 0
-S_LED_OUT7
-Text HLabel 1650 1850 2    50   Input ~ 0
-S_LED_OUT6
-Text HLabel 1650 1950 2    50   Input ~ 0
-S_LED_OUT5
-Text HLabel 1650 2050 2    50   Input ~ 0
-S_LED_OUT4
-Text HLabel 1650 2150 2    50   Input ~ 0
-S_LED_OUT3
-Text HLabel 1650 2250 2    50   Input ~ 0
-S_LED_OUT2
-Text HLabel 1650 2350 2    50   Input ~ 0
-S_LED_OUT1
-Text HLabel 1650 2450 2    50   Input ~ 0
-N_LED_OUT9
-Text HLabel 1650 2550 2    50   Input ~ 0
-N_LED_OUT10
-Text HLabel 1650 2650 2    50   Input ~ 0
-N_LED_OUT11
-Text HLabel 1650 2750 2    50   Input ~ 0
-N_LED_OUT12
-Text HLabel 1650 2850 2    50   Input ~ 0
-N_LED_OUT13
-Text HLabel 1650 2950 2    50   Input ~ 0
-N_LED_OUT14
-Text HLabel 1650 3050 2    50   Input ~ 0
-N_LED_OUT15
 Text GLabel 1650 3250 2    50   Input ~ 0
 GNDL
 Text GLabel 1650 3350 2    50   Input ~ 0
@@ -254,10 +224,6 @@ Text HLabel 1650 4950 2    50   Input ~ 0
 S_PD_OUT1
 Text GLabel 1650 5050 2    50   Input ~ 0
 GNDA
-Text HLabel 1650 5150 2    50   Input ~ 0
-TH2
-Text HLabel 1650 5250 2    50   Input ~ 0
-TH1
 Text GLabel 1650 5350 2    50   Input ~ 0
 GNDA
 Text HLabel 1650 5450 2    50   Input ~ 0
@@ -436,8 +402,8 @@ P 10350 4250
 AR Path="/60AF0518/6152C5C5" Ref="U?"  Part="1" 
 AR Path="/60C04E5C/6152C5C5" Ref="U?"  Part="2" 
 AR Path="/614A5737/6152C5C5" Ref="U?"  Part="2" 
-AR Path="/6154FC7E/6152C5C5" Ref="U?"  Part="2" 
-F 0 "U?" H 11650 4637 60  0000 C CNN
+AR Path="/6154FC7E/6152C5C5" Ref="U20"  Part="2" 
+F 0 "U20" H 11650 4637 60  0000 C CNN
 F 1 "CD74HC4067M96" H 11650 4531 60  0000 C CNN
 F 2 "Ninja-qPCR:SOP65P780X200-24N" H 11650 4490 60  0001 C CNN
 F 3 "" H 10350 4250 60  0000 C CNN
@@ -509,8 +475,8 @@ P 10300 1250
 AR Path="/60AF0518/6152C5E8" Ref="U?"  Part="2" 
 AR Path="/60C04E5C/6152C5E8" Ref="U?"  Part="1" 
 AR Path="/614A5737/6152C5E8" Ref="U?"  Part="1" 
-AR Path="/6154FC7E/6152C5E8" Ref="U?"  Part="1" 
-F 0 "U?" H 11600 1637 60  0000 C CNN
+AR Path="/6154FC7E/6152C5E8" Ref="U20"  Part="1" 
+F 0 "U20" H 11600 1637 60  0000 C CNN
 F 1 "CD74HC4067M96" H 11600 1531 60  0000 C CNN
 F 2 "Ninja-qPCR:SOP65P780X200-24N" H 11600 1490 60  0001 C CNN
 F 3 "" H 10300 1250 60  0000 C CNN
@@ -553,38 +519,40 @@ Wire Wire Line
 	10550 5250 10350 5250
 Wire Wire Line
 	7450 4350 7750 4350
-Text GLabel 2300 1650 2    50   Input ~ 0
+Text GLabel 1650 1650 2    50   Input ~ 0
 S_LED_OUT8
-Text GLabel 2300 1750 2    50   Input ~ 0
+Text GLabel 1650 1750 2    50   Input ~ 0
 S_LED_OUT7
-Text GLabel 2300 1850 2    50   Input ~ 0
+Text GLabel 1650 1850 2    50   Input ~ 0
 S_LED_OUT6
-Text GLabel 2300 1950 2    50   Input ~ 0
+Text GLabel 1650 1950 2    50   Input ~ 0
 S_LED_OUT5
-Text GLabel 2300 2050 2    50   Input ~ 0
+Text GLabel 1650 2050 2    50   Input ~ 0
 S_LED_OUT4
-Text GLabel 2300 2150 2    50   Input ~ 0
+Text GLabel 1650 2150 2    50   Input ~ 0
 S_LED_OUT3
-Text GLabel 2300 2250 2    50   Input ~ 0
+Text GLabel 1650 2250 2    50   Input ~ 0
 S_LED_OUT2
-Text GLabel 2300 2350 2    50   Input ~ 0
+Text GLabel 1650 2350 2    50   Input ~ 0
 S_LED_OUT1
-Text GLabel 2300 2450 2    50   Input ~ 0
+Text GLabel 1650 2450 2    50   Input ~ 0
 N_LED_OUT8
-Text GLabel 2300 2550 2    50   Input ~ 0
+Text GLabel 1650 2550 2    50   Input ~ 0
 N_LED_OUT7
-Text GLabel 2300 2650 2    50   Input ~ 0
+Text GLabel 1650 2650 2    50   Input ~ 0
 N_LED_OUT6
-Text GLabel 2300 2750 2    50   Input ~ 0
+Text GLabel 1650 2750 2    50   Input ~ 0
 N_LED_OUT5
-Text GLabel 2300 2850 2    50   Input ~ 0
+Text GLabel 1650 2850 2    50   Input ~ 0
 N_LED_OUT4
-Text GLabel 2300 2950 2    50   Input ~ 0
+Text GLabel 1650 2950 2    50   Input ~ 0
 N_LED_OUT3
-Text GLabel 2300 3050 2    50   Input ~ 0
+Text GLabel 1650 3050 2    50   Input ~ 0
 N_LED_OUT2
-Text GLabel 2300 3150 2    50   Input ~ 0
+Text GLabel 1650 3150 2    50   Input ~ 0
 N_LED_OUT1
-Text HLabel 1650 3150 2    50   Input ~ 0
-N_LED_OUT16
+Text GLabel 1650 5150 2    50   Input ~ 0
+PD_TH1
+Text GLabel 1650 5250 2    50   Input ~ 0
+PD_TH2
 $EndSCHEMATC
