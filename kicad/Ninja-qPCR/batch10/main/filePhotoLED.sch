@@ -61,7 +61,7 @@ Text GLabel 1550 5800 0    50   Input ~ 0
 Text GLabel 1550 6250 0    50   Input ~ 0
 GNDD
 Text GLabel 2550 6250 0    50   Input ~ 0
-GNDD
+GNDL
 Text GLabel 2550 5800 0    50   Input ~ 0
 VCC_LED
 $Comp
@@ -110,38 +110,26 @@ Text GLabel 5850 1550 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 5850 1450 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 7000 1250 2    50   Input ~ 0
-N_LED_OUT1
-Text GLabel 7000 1350 2    50   Input ~ 0
-N_LED_OUT2
-Text GLabel 7000 1450 2    50   Input ~ 0
-N_LED_OUT3
-Text GLabel 7000 1550 2    50   Input ~ 0
-N_LED_OUT4
-Text GLabel 7000 1650 2    50   Input ~ 0
-N_LED_OUT5
-Text GLabel 7000 1750 2    50   Input ~ 0
-N_LED_OUT6
-Text GLabel 7000 1850 2    50   Input ~ 0
-N_LED_OUT7
-Text GLabel 7000 1950 2    50   Input ~ 0
-N_LED_OUT8
-Text GLabel 7000 2050 2    50   Input ~ 0
-S_LED_OUT1
-Text GLabel 7000 2150 2    50   Input ~ 0
-S_LED_OUT2
-Text GLabel 7000 2250 2    50   Input ~ 0
-S_LED_OUT3
-Text GLabel 7000 2350 2    50   Input ~ 0
-S_LED_OUT4
-Text GLabel 7000 2450 2    50   Input ~ 0
-S_LED_OUT5
-Text GLabel 7000 2550 2    50   Input ~ 0
-S_LED_OUT6
-Text GLabel 7000 2650 2    50   Input ~ 0
-S_LED_OUT7
 Text GLabel 7000 2750 2    50   Input ~ 0
-S_LED_OUT8
+N_LED_OUT1
+Text GLabel 7000 2650 2    50   Input ~ 0
+N_LED_OUT2
+Text GLabel 7000 2550 2    50   Input ~ 0
+N_LED_OUT3
+Text GLabel 7000 2450 2    50   Input ~ 0
+N_LED_OUT4
+Text GLabel 7000 2350 2    50   Input ~ 0
+N_LED_OUT5
+Text GLabel 7000 2250 2    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 7000 2150 2    50   Input ~ 0
+N_LED_OUT7
+Text GLabel 7000 1250 2    50   Input ~ 0
+S_LED_OUT1
+Text GLabel 7000 1350 2    50   Input ~ 0
+S_LED_OUT2
+Text GLabel 7000 1450 2    50   Input ~ 0
+S_LED_OUT3
 Text HLabel 5850 1650 0    50   Input ~ 0
 LED_BLANK
 Text HLabel 5850 1950 0    50   Input ~ 0
@@ -254,4 +242,22 @@ Wire Wire Line
 	5300 1750 6050 1750
 Wire Wire Line
 	1450 4450 1750 4450
+Text GLabel 7000 1950 2    50   Input ~ 0
+S_LED_OUT8
+Text GLabel 7000 1850 2    50   Input ~ 0
+S_LED_OUT7
+Text GLabel 7000 1750 2    50   Input ~ 0
+S_LED_OUT6
+Text GLabel 7000 1650 2    50   Input ~ 0
+S_LED_OUT5
+Text GLabel 7000 2050 2    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 7000 1550 2    50   Input ~ 0
+S_LED_OUT4
+Text GLabel 2550 6600 0    50   Input ~ 0
+GNDL
+Text GLabel 2800 6600 2    50   Input ~ 0
+GNDD
+Wire Wire Line
+	2550 6600 2800 6600
 $EndSCHEMATC

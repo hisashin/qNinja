@@ -118,36 +118,20 @@ Text GLabel 6200 5300 2    50   Input ~ 0
 Text GLabel 6250 3150 2    50   Input ~ 0
 PD_MUX_OUT
 Text HLabel 6250 2250 2    50   Input ~ 0
-S_PD_OUT1
-Text HLabel 6250 2150 2    50   Input ~ 0
-S_PD_OUT2
-Text HLabel 6250 2350 2    50   Input ~ 0
-S_PD_OUT3
-Text HLabel 6250 2050 2    50   Input ~ 0
-S_PD_OUT4
-Text HLabel 6250 2450 2    50   Input ~ 0
-S_PD_OUT5
-Text HLabel 6250 1950 2    50   Input ~ 0
-S_PD_OUT6
-Text HLabel 6250 2550 2    50   Input ~ 0
-S_PD_OUT7
-Text HLabel 6250 1850 2    50   Input ~ 0
-S_PD_OUT8
-Text HLabel 6250 2650 2    50   Input ~ 0
 S_PD_OUT9
-Text HLabel 6250 1750 2    50   Input ~ 0
+Text HLabel 6250 2350 2    50   Input ~ 0
 S_PD_OUT10
-Text HLabel 6250 2750 2    50   Input ~ 0
+Text HLabel 6250 2450 2    50   Input ~ 0
 S_PD_OUT11
-Text HLabel 6250 1650 2    50   Input ~ 0
+Text HLabel 6250 2550 2    50   Input ~ 0
 S_PD_OUT12
-Text HLabel 6250 2850 2    50   Input ~ 0
+Text HLabel 6250 2650 2    50   Input ~ 0
 S_PD_OUT13
-Text HLabel 6250 1550 2    50   Input ~ 0
+Text HLabel 6250 2750 2    50   Input ~ 0
 S_PD_OUT14
-Text HLabel 6250 2950 2    50   Input ~ 0
+Text HLabel 6250 2850 2    50   Input ~ 0
 S_PD_OUT15
-Text HLabel 6250 1450 2    50   Input ~ 0
+Text HLabel 6250 2950 2    50   Input ~ 0
 S_PD_OUT16
 Wire Wire Line
 	3250 4400 3450 4400
@@ -262,17 +246,6 @@ Text GLabel 1650 7050 2    50   Input ~ 0
 GNDA
 Text GLabel 1650 7150 2    50   Input ~ 0
 GNDA
-Text GLabel 1650 7350 2    50   Input ~ 0
-GNDA
-Wire Wire Line
-	1650 7350 1500 7350
-Wire Wire Line
-	1350 7450 1500 7450
-Wire Wire Line
-	1500 7450 1500 7350
-Connection ~ 1500 7350
-Wire Wire Line
-	1500 7350 1350 7350
 Wire Wire Line
 	1650 7150 1350 7150
 Wire Wire Line
@@ -483,37 +456,35 @@ F 3 "" H 10300 1250 60  0000 C CNN
 	1    10300 1250
 	-1   0    0    -1  
 $EndComp
-Text HLabel 10450 1450 2    50   Input ~ 0
-N_PD_OUT1
-Text HLabel 10450 2950 2    50   Input ~ 0
-N_PD_OUT2
-Text HLabel 10450 1550 2    50   Input ~ 0
-N_PD_OUT3
 Text HLabel 10450 2850 2    50   Input ~ 0
-N_PD_OUT4
-Text HLabel 10450 1650 2    50   Input ~ 0
-N_PD_OUT5
+N_PD_OUT2
 Text HLabel 10450 2750 2    50   Input ~ 0
-N_PD_OUT6
-Text HLabel 10450 1750 2    50   Input ~ 0
-N_PD_OUT7
+N_PD_OUT3
 Text HLabel 10450 2650 2    50   Input ~ 0
-N_PD_OUT8
-Text HLabel 10450 1850 2    50   Input ~ 0
-N_PD_OUT9
+N_PD_OUT4
 Text HLabel 10450 2550 2    50   Input ~ 0
-N_PD_OUT10
-Text HLabel 10450 1950 2    50   Input ~ 0
-N_PD_OUT11
+N_PD_OUT5
 Text HLabel 10450 2450 2    50   Input ~ 0
-N_PD_OUT12
-Text HLabel 10450 2050 2    50   Input ~ 0
-N_PD_OUT13
+N_PD_OUT6
 Text HLabel 10450 2350 2    50   Input ~ 0
-N_PD_OUT14
-Text HLabel 10450 2150 2    50   Input ~ 0
-N_PD_OUT15
+N_PD_OUT7
 Text HLabel 10450 2250 2    50   Input ~ 0
+N_PD_OUT8
+Text HLabel 10450 1450 2    50   Input ~ 0
+N_PD_OUT9
+Text HLabel 10450 1550 2    50   Input ~ 0
+N_PD_OUT10
+Text HLabel 10450 1650 2    50   Input ~ 0
+N_PD_OUT11
+Text HLabel 10450 1750 2    50   Input ~ 0
+N_PD_OUT12
+Text HLabel 10450 1850 2    50   Input ~ 0
+N_PD_OUT13
+Text HLabel 10450 1950 2    50   Input ~ 0
+N_PD_OUT14
+Text HLabel 10450 2050 2    50   Input ~ 0
+N_PD_OUT15
+Text HLabel 10450 2150 2    50   Input ~ 0
 N_PD_OUT16
 Wire Wire Line
 	10550 5250 10350 5250
@@ -555,4 +526,28 @@ Text GLabel 1650 5150 2    50   Input ~ 0
 PD_TH1
 Text GLabel 1650 5250 2    50   Input ~ 0
 PD_TH2
+Text HLabel 6250 1450 2    50   Input ~ 0
+S_PD_OUT8
+Text HLabel 6250 1550 2    50   Input ~ 0
+S_PD_OUT7
+Text HLabel 6250 1650 2    50   Input ~ 0
+S_PD_OUT6
+Text HLabel 6250 1750 2    50   Input ~ 0
+S_PD_OUT5
+Text HLabel 6250 1850 2    50   Input ~ 0
+S_PD_OUT4
+Text HLabel 6250 1950 2    50   Input ~ 0
+S_PD_OUT3
+Text HLabel 6250 2050 2    50   Input ~ 0
+S_PD_OUT2
+Text HLabel 6250 2150 2    50   Input ~ 0
+S_PD_OUT1
+Text HLabel 10450 2950 2    50   Input ~ 0
+N_PD_OUT1
+NoConn ~ 1650 7350
+NoConn ~ 1650 7450
+Wire Wire Line
+	1650 7350 1350 7350
+Wire Wire Line
+	1650 7450 1350 7450
 $EndSCHEMATC

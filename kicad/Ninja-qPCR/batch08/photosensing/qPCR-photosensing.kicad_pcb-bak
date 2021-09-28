@@ -4070,7 +4070,7 @@
   (gr_circle (center 157.5 113.5) (end 160.5 113.5) (layer Dwgs.User) (width 0.15) (tstamp 60D8A302))
   (gr_circle (center 77 52.5) (end 80 52.5) (layer Dwgs.User) (width 0.15) (tstamp 60D8A2FD))
   (gr_circle (center 77 126) (end 80 126) (layer Dwgs.User) (width 0.15))
-  (gr_text 86.5x79.5mm (at 75.34 47.64) (layer Dwgs.User)
+  (gr_text 93.1x86.1mm (at 75.34 47.64) (layer Dwgs.User)
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (gr_line (start 117 98) (end 119.5 98) (layer Edge.Cuts) (width 0.1) (tstamp 60D577F5))
