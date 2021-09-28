@@ -19,29 +19,6 @@ Text HLabel 2900 4750 0    50   Input ~ 0
 AMP_OUT
 Text HLabel 5200 4250 2    50   Input ~ 0
 PHOTO_OUT_P
-Text GLabel 10700 3550 0    50   Input ~ 0
-3V3D
-Text GLabel 10700 4050 0    50   Input ~ 0
-GNDD
-$Comp
-L Device:C C9
-U 1 1 614DBA0B
-P 10850 3800
-F 0 "C9" H 10965 3846 50  0000 L CNN
-F 1 "0.1uF" H 10965 3755 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603" H 10888 3650 50  0001 C CNN
-F 3 "~" H 10850 3800 50  0001 C CNN
-	1    10850 3800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10700 4050 10850 4050
-Wire Wire Line
-	10850 4050 10850 3950
-Wire Wire Line
-	10850 3650 10850 3550
-Wire Wire Line
-	10850 3550 10700 3550
 Wire Wire Line
 	2900 4750 3100 4750
 Wire Wire Line
