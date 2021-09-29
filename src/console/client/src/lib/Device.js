@@ -42,7 +42,7 @@ class Device {
   }
   unsubscribe (subId) {
     this.topicManager.remove(subId);
-    console.log("Device.UNsubscribe count=%d", topic, this.topicManager.count);
+    console.log("Device.UNsubscribe count=%d", this.topicManager.count);
   }
   publish (topic, data) {
     const obj = {

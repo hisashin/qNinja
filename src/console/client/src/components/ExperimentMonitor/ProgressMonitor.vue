@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:100%">
     <div v-if="protocol==null">Protocol is null</div>
     <div v-if="progress==null">Progress is null</div>
     <div v-if="deviceState==null">DeviceState is null</div>

@@ -574,7 +574,9 @@ html
 .progress-monitor {
   width: 800px;
   border: 1px solid #ece1c0;
+  background-color: #ffffff;
   padding: 0.5em;
+  margin: 0 0 0.5em;
   border-radius: 0.5em;
 }
 .progress-monitor__row {
@@ -770,12 +772,16 @@ body {
   max-width: 100%;
 }
 
-.debug {
+.hidden-kiosk {
   display: none;
 }
 
-.header {
+.debug {
   /* display:none; */
+}
+
+.header {
+  display: none;
 }
 
 /* Panel */
@@ -810,10 +816,8 @@ body {
   z-index: 999;
   position: absolute;
   bottom: 0;
-  /* background-color:#fed; */
-  background-color: #ffffff;
-  border-radius: 1em;
-  border: 1px solid #aaa;
+  padding: 0.5rem;
+  background-color: #ffffffaa;
 }
 
 .plate-config {

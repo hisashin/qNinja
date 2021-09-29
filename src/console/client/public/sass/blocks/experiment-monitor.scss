@@ -2,7 +2,9 @@ $monitor-foreground: #007bff;
 .progress-monitor {
   width:800px;
   border:1px solid #ece1c0;
+  background-color:#ffffff;
   padding:0.5em;
+  margin: 0 0 0.5em;
   border-radius: 0.5em;
   &__row {
     display: flex;

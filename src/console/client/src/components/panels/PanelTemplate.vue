@@ -1,5 +1,9 @@
 <template>
   <div class="panel">
+    <div class="panel__menu">
+        <button type="button" class="btn btn-sm mr-1 btn-secondary"> Button A </button>
+        <button type="button" class="btn btn-sm mr-1 btn-secondary"> Button B </button>
+    </div>
     <section class="section">
       <header class="section__header">
         <h2 class="section__title" >Section Title</h2>

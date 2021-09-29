@@ -17,11 +17,14 @@ body {
 .main {
   max-width: 100%;
 }
-.debug {
+.hidden-kiosk {
   display:none;
 }
-.header {
+.debug {
   /* display:none; */
+}
+.header {
+  display:none;
 }
 /* Panel */
 .panel {
@@ -53,10 +56,8 @@ body {
   z-index:999;
   position:absolute;
   bottom:0;
-  /* background-color:#fed; */
-  background-color: #ffffff;
-  border-radius: 1em;
-  border: 1px solid #aaa;
+  padding: 0.5rem;
+  background-color:#ffffffaa;
 }
 
 
