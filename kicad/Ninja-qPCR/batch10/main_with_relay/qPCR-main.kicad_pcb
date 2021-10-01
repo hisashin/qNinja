@@ -7174,7 +7174,7 @@
   )
 
   (module Ninja-qPCR:EP2-3L3SAb (layer F.Cu) (tedit 6155D4D3) (tstamp 6155DA5B)
-    (at 127.261001 42.170001)
+    (at 141.22 70.8)
     (path /61568B3C)
     (fp_text reference K1 (at 10.5 -3.7 180) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -7214,7 +7214,7 @@
   )
 
   (module Ninja-qPCR:EX2-2U1S (layer F.Cu) (tedit 6155CF71) (tstamp 6155DA7C)
-    (at 153.9935 34.151001)
+    (at 154.53 77.75)
     (path /6156A934)
     (fp_text reference K2 (at 3.75 5.2) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
@@ -7940,7 +7940,7 @@
   (via (at 153.24 91.63) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE77))
   (via (at 161.48 91.16) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE79))
   (via (at 158.02 89.6) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE7B))
-  (via (at 162 88.56) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE7D))
+  (via (at 162 88.56) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 0) (tstamp 6154CE7D))
   (via (at 155.21 96.36) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE7F))
   (via (at 161.01 100.01) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE81))
   (via (at 155.39 100.27) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2) (tstamp 6154CE83))
