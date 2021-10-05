@@ -701,8 +701,8 @@ class NinjaQPCRWebSocketServer {
         this.resume(); break;
       case "experiment.command.finishAutoPause":
         this.finishAutoPause(); break;
-      case "experiment.command.abort":
-        this.abort(); break;
+      case "experiment.command.cancel":
+        this.cancel(); break;
       case "experiment.command.finish":
         this.finish(); break;
       case "experiment.command.runExperiment": {
@@ -734,8 +734,8 @@ class NinjaQPCRWebSocketServer {
   finish () {
     qpcr.finish(this.protocol);
   }
-  abort () {
-    qpcr.abort(this.protocol);
+  cancel () {
+    qpcr.cancel(this.protocol);
   }
   
   /* NinjaQPCR Event Handling */

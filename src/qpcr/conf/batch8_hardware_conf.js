@@ -295,8 +295,6 @@ class TemperatureSensing {
       setTimeout(()=>{
         this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
           const temp = thermistor.getTemp(val);
-          if (this.muxChannel == MUX_CHANNEL_THERMISTOR_PLATE_BLOCK)
-            console.log("PIN=%d, ADC=%f, temp=%f", switchPinVal, val, temp);
           this.prevValue = temp;
           muxQueue.release(muxTaskId);
           const detailedMeasurement = {

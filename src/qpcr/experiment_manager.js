@@ -78,7 +78,8 @@ class ExperimentManager {
     return experiment;
   }
   _generateDefaultName (experiment) {
-    let dateStr = new Date().toLocaleString();
+    let dateStr = new Date().toLocaleString([],{year: "numeric", month: "2-digit", day: "2-digit",hour: "2-digit", minute:"2-digit", "hour12":false});
+    console.log("dateStr=%s", dateStr);
     if (experiment.protocol && experiment.protocol.name) {
       return experiment.protocol.name + " " + dateStr;
     } else {

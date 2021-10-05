@@ -172,13 +172,15 @@ a {
 }
 
 .labeled-list__label {
-  flex-basis: 20%;
-  flex-grow: 1;
+  flex-basis: 15%;
+  flex-grow: 1.5;
+  text-align: right;
+  padding: 0 1em;
 }
 
 .labeled-list__content {
-  flex-basis: 80%;
-  flex-grow: 4;
+  flex-basis: 85%;
+  flex-grow: 8.5;
 }
 
 /* device-summary */
@@ -572,7 +574,9 @@ html
 .progress-monitor {
   width: 800px;
   border: 1px solid #ece1c0;
+  background-color: #ffffff;
   padding: 0.5em;
+  margin: 0 0 0.5em;
   border-radius: 0.5em;
 }
 .progress-monitor__row {
@@ -758,6 +762,10 @@ html
 .main {
   max-width: 800px;
   margin: auto;
+}
+
+.hidden-app {
+  display: none;
 }
 
 .plate-config__section {

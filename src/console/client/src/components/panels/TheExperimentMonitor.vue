@@ -2,7 +2,6 @@
   <div class="panel panel--experiment-monitor">
     <div class="panel__menu">
     </div>
-    <strong>the experiment monitor</strong>
     <ProgressMonitor ref="progressMonitor"/>
     <section class="section" v-if="experiment">
       <header class="section__header">
@@ -119,8 +118,7 @@ export default {
       document.getElementById("measurement").innerHTML = "";
       this.progressSubId = device.subscribe("experiment.update.progress", (topic, obj)=>{
         try {
-          console.log("TheExperimentMonitor.experiment.update.progress updated");
-          document.getElementById("measurement").innerHTML += (obj.plate + "\n"); //[obj.plate, obj.extra[0], obj.extra[1]].join("\t") + "\n";
+          document.getElementById("measurement").innerHTML += (obj.plate + "\n");
         } catch (e) {
           console.warn(e);
         }

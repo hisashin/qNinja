@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- ProgressMonitor copied start -->
+  <div style="width:100%">
     <div v-if="protocol==null">Protocol is null</div>
     <div v-if="progress==null">Progress is null</div>
     <div v-if="deviceState==null">DeviceState is null</div>
@@ -75,7 +74,7 @@
         <div class="temperature-monitor">
           <div class="temperature-monitor__label">
             Lid
-            <div class="temperature-monitor__value">{{ progress.lid }}/{{protocol.lid_temp}}℃</div>
+            <div class="temperature-monitor__value">{{ lidTemp }}/{{protocol.lid_temp}}℃</div>
           </div>
           <div class="temperature-monitor__meter">
             <meter class="temperature-monitor__meter-body"
@@ -111,7 +110,7 @@
           <template v-if="deviceState != null">
           <button class="time-monitor__button" v-if="deviceState.pauseAvailable" @click="pause">Pause</button>
           <button class="time-monitor__button" v-if="deviceState.resumeAvailable" @click="resume">Resume</button>
-          <button class="time-monitor__button" v-if="deviceState.abortAvailable" @click="cancel">Cancel</button>
+          <button class="time-monitor__button" v-if="deviceState.cancelAvailable" @click="cancel">Cancel</button>
           <button class="time-monitor__button" v-if="deviceState.finishAvailable" @click="finish">Finish</button>
           <button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>
           </template>
@@ -145,29 +144,21 @@ export default {
       progress: null,
       stage: { step:[]},
       step: {},
-      stepElapsedSec: ""
+      stepElapsedSec: "",
+      elapsedTime: "-",
+      remainingTime: "-",
+      totalTime: "-",
+      plateTemp: "-"
     }
   },
   computed: {
-    elapsedTime: function () {
-      return Util.humanTime(this.progress.elapsed/1000);
-    },
-    remainingTime: function () {
-      return Util.humanTime(this.progress.remaining/1000);
-    },
-    totalTime: function () {
-      return Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
-    },
-    plateTemp: function () {
-      return (this.progress) ? Math.round(this.progress.plate) : 0;
-    }
   },
   created: function () {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
-    device.subscribe("experiment.update.progress", (topic, data)=>{
-      console.log("ProgressMonitor sub.");
-      console.log(data)
+  
+    this.subId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
+      this.applyProgress(data);
     });
     device.addTransitionHandler({
       onStart:(obj)=>{
@@ -181,22 +172,10 @@ export default {
         }
       }
     });
-    device.addProgressHandler({
-      onProgress:(progress)=>{
-        this.progress = progress;
-        if (this.protocol == null) {
-          return;
-        }
-        if (progress.state) {
-          this.selectStageAndStep();
-        }
-      }
-    });
     this.deviceState = device.getDeviceState();
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
         if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
-          console.log("Show modal.");
           this.$bvModal.show('finish-modal');
         }
         this.deviceState = state;
@@ -240,11 +219,23 @@ export default {
       this.connectionStatus = "Disconnected";
     
     },
+    applyProgress : function (progress) {
+      this.progress = progress;
+      
+      this.elapsedTime = Util.humanTime(this.progress.elapsed/1000);
+      this.remainingTime = Util.humanTime(this.progress.remaining/1000);
+      this.totalTime = Util.humanTime((this.progress.remaining+this.progress.elapsed)/1000);
+      this.plateTemp = (this.progress) ? Math.round(this.progress.plate) : "-";
+      this.lidTemp = (this.progress) ? Math.round(this.progress.lid) : "-";
+      if (progress.state) {
+        this.selectStageAndStep();
+      }
+    },
     pause () { device.pause(); },
     resume () { device.resume(); },
     cancel () { 
       if (window.confirm("Are you sure you want to cancel the experiment?")) {
-        device.abort(); 
+        device.cancel(); 
         appState.home();
       }
     },

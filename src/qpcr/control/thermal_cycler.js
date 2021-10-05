@@ -134,7 +134,7 @@ class ThermalCycler {
   resume () {
     this._startTimer();
   }
-  abort () {
+  cancel () {
     this._stopTimer();
   }
   finish () {

@@ -37,10 +37,12 @@ class Device {
       topic: topic
     };
     const subId = this.topicManager.add(topic, subscription);
+    console.log("Device.subscribe %s count=%d", topic, this.topicManager.count);
     return subId;
   }
   unsubscribe (subId) {
     this.topicManager.remove(subId);
+    console.log("Device.UNsubscribe count=%d", this.topicManager.count);
   }
   publish (topic, data) {
     const obj = {
@@ -185,9 +187,9 @@ class Device {
     };
     this.send(obj);
   }
-  abort () {
+  cancel () {
     const obj = {
-      "topic":"experiment.command.abort"
+      "topic":"experiment.command.cancel"
     };
     this.send(obj);
   }

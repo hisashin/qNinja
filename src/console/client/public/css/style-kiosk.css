@@ -172,13 +172,15 @@ a {
 }
 
 .labeled-list__label {
-  flex-basis: 20%;
-  flex-grow: 1;
+  flex-basis: 15%;
+  flex-grow: 1.5;
+  text-align: right;
+  padding: 0 1em;
 }
 
 .labeled-list__content {
-  flex-basis: 80%;
-  flex-grow: 4;
+  flex-basis: 85%;
+  flex-grow: 8.5;
 }
 
 /* device-summary */
@@ -572,7 +574,9 @@ html
 .progress-monitor {
   width: 800px;
   border: 1px solid #ece1c0;
+  background-color: #ffffff;
   padding: 0.5em;
+  margin: 0 0 0.5em;
   border-radius: 0.5em;
 }
 .progress-monitor__row {
@@ -768,12 +772,16 @@ body {
   max-width: 100%;
 }
 
-.debug {
+.hidden-kiosk {
   display: none;
 }
 
-.header {
+.debug {
   /* display:none; */
+}
+
+.header {
+  display: none;
 }
 
 /* Panel */
@@ -808,10 +816,8 @@ body {
   z-index: 999;
   position: absolute;
   bottom: 0;
-  /* background-color:#fed; */
-  background-color: #ffffff;
-  border-radius: 1em;
-  border: 1px solid #aaa;
+  padding: 0.5rem;
+  background-color: #ffffffaa;
 }
 
 .plate-config {
@@ -821,13 +827,20 @@ body {
   height: 436px;
   flex-wrap: wrap;
 }
+.plate-config__section-title {
+  height: 24px;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+}
 .plate-config__section {
   /* border: 1px solid red; */
   box-sizing: border-box;
 }
 .plate-config__section--layout {
   order: 1;
-  height: 100px;
+  height: 124px;
   width: 55%;
 }
 .plate-config__section--detail {

@@ -15,7 +15,13 @@ body {
   margin: auto;
 }
 
+.hidden-app {
+  display:none;
+}
 .plate-config {
+  &__section-title {
+    
+  }
   &__section {
     border: 1px solid red;
     &--layout {

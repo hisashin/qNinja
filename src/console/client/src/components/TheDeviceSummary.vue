@@ -5,6 +5,13 @@
       <ProgressMonitor />
       <b-button pill variant="primary" @click="openExperimentMonitor">Open Experiment Monitor</b-button>
     </template>
+    <template v-else>
+      <div class="hidden-app progress-monitor">
+        {{ connectionStatus }}
+        Well {{ wellTemp }}℃
+        Lid {{ lidTemp }}℃
+      </div>
+    </template>
   </div>
 </template>
 
@@ -19,7 +26,9 @@ export default {
   data() {
     return {
       connected: false,
-      deviceState: null
+      deviceState: null,
+      wellTemp: "-",
+      lidTemp: "-"
     }
   },
   created: function () {
@@ -28,6 +37,10 @@ export default {
     this.deviceState = this.device.getDeviceState();
     this.connected = this.device.connected;
     this.device.addDeviceStateHandler(this);
+    device.subscribe("device.update.temperature", (topic, data)=>{
+      this.wellTemp = data.plate.main.toFixed(1);
+      this.lidTemp = data.lid.main.toFixed(1);
+    });
   },
   methods: {
     start: function () {

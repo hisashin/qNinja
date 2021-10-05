@@ -5,10 +5,11 @@ class TopicManager {
     this.topicRoot = {
       subTopic: "",
       topics: {},
-      subscribers: []
+      subscribers: [],
     };
     this.idMap = {};
     this.maxSubId = 0;
+    this.count = 0;
   }
   add (topic, item) {
     const path = topic.split(".");
@@ -33,6 +34,7 @@ class TopicManager {
     }
     node.subscribers.push({id:subId, item:item});
     this.idMap[subId] = topic;
+    this.count ++;
     return subId;
   }
   find (topic) {
@@ -98,6 +100,7 @@ class TopicManager {
       }
       depth -= 1;
     }
+    this.count --;
     return true;
   }
   _issueSubId () {
