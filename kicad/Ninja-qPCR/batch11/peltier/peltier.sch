@@ -401,8 +401,6 @@ Text GLabel 1450 1600 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 1450 1500 0    50   Input ~ 0
 5V
-Text GLabel 1450 1200 0    50   Input ~ 0
-12V
 Text Label 5850 2950 2    50   ~ 0
 POT_RES_A
 Text Label 5850 3150 2    50   ~ 0
@@ -414,8 +412,6 @@ Wire Wire Line
 	5950 2950 5850 2950
 Wire Wire Line
 	5850 3150 5950 3150
-Text GLabel 1450 1300 0    50   Input ~ 0
-GND
 $Comp
 L Device:C C3
 U 1 1 615C31C8
@@ -518,17 +514,6 @@ Wire Wire Line
 Text Notes 4800 3750 0    50   ~ 0
 Ripple 0.02V, 0.8A
 $Comp
-L Connector:Conn_01x02_Female J4
-U 1 1 615C2AE7
-P 1850 1200
-F 0 "J4" H 1742 1385 50  0000 C CNN
-F 1 "Conn_01x02_Female" H 1742 1294 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 1850 1200 50  0001 C CNN
-F 3 "~" H 1850 1200 50  0001 C CNN
-	1    1850 1200
-	1    0    0    -1  
-$EndComp
-$Comp
 L Connector:Conn_01x03_Male J5
 U 1 1 615C37B0
 P 1850 1600
@@ -546,12 +531,34 @@ Wire Wire Line
 Wire Wire Line
 	1650 1500 1450 1500
 Wire Wire Line
-	1450 1300 1650 1300
-Wire Wire Line
-	1650 1200 1450 1200
-Wire Wire Line
 	1750 2600 2150 2600
 NoConn ~ 2600 2900
 Wire Wire Line
 	2600 2900 2650 2900
+$Comp
+L Connector:Barrel_Jack_Switch J?
+U 1 1 615CB67F
+P 1900 5250
+F 0 "J?" H 1957 5567 50  0000 C CNN
+F 1 "Barrel_Jack_Switch" H 1957 5476 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 1950 5210 50  0001 C CNN
+F 3 "~" H 1950 5210 50  0001 C CNN
+	1    1900 5250
+	1    0    0    -1  
+$EndComp
+Text GLabel 2350 5150 2    50   Input ~ 0
+12V
+Text GLabel 2350 5350 2    50   Input ~ 0
+GND
+Wire Wire Line
+	2350 5150 2200 5150
+Wire Wire Line
+	2200 5350 2250 5350
+Wire Wire Line
+	2200 5250 2250 5250
+Wire Wire Line
+	2250 5250 2250 5350
+Connection ~ 2250 5350
+Wire Wire Line
+	2250 5350 2350 5350
 $EndSCHEMATC
