@@ -1,5 +1,11 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP Conn_01x60_Male
+D Generic connector, single row, 01x40, script generated (kicad-library-utils/schlib/autogen/connector/)
+K connector
+F ~
+$ENDCMP
+#
 $CMP TACTILE_4
 D MEC 5G single pole normally-open tactile switch
 K switch normally-open pushbutton push-button
