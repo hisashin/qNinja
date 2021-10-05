@@ -977,134 +977,282 @@ $EndComp
 $Comp
 L Connector:Conn_01x05_Male J13
 U 1 1 6160DAD3
-P 5150 5750
-F 0 "J13" H 5258 6131 50  0000 C CNN
-F 1 "Conn_01x05_Male" H 5258 6040 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 5150 5750 50  0001 C CNN
-F 3 "~" H 5150 5750 50  0001 C CNN
-	1    5150 5750
+P 4300 5550
+F 0 "J13" H 4408 5931 50  0000 C CNN
+F 1 "Conn_01x05_Male" H 4408 5840 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 4300 5550 50  0001 C CNN
+F 3 "~" H 4300 5550 50  0001 C CNN
+	1    4300 5550
 	1    0    0    -1  
 $EndComp
-Text HLabel 5500 5550 2    50   Input ~ 0
+Text HLabel 4650 5350 2    50   Input ~ 0
 H1
-Text HLabel 5500 5650 2    50   Input ~ 0
+Text HLabel 4650 5450 2    50   Input ~ 0
 H2
-Text HLabel 5500 5750 2    50   Input ~ 0
+Text HLabel 4650 5550 2    50   Input ~ 0
 H3
-Text HLabel 5500 5850 2    50   Input ~ 0
+Text HLabel 4650 5650 2    50   Input ~ 0
 H4
-Text HLabel 5500 5950 2    50   Input ~ 0
+Text HLabel 4650 5750 2    50   Input ~ 0
 H5
 Wire Wire Line
-	5500 5550 5350 5550
+	4650 5350 4500 5350
 Wire Wire Line
-	5350 5650 5500 5650
+	4500 5450 4650 5450
 Wire Wire Line
-	5350 5750 5500 5750
+	4500 5550 4650 5550
 Wire Wire Line
-	5350 5850 5500 5850
+	4500 5650 4650 5650
 Wire Wire Line
-	5350 5950 5500 5950
+	4500 5750 4650 5750
 $Comp
 L Ninja-qPCR:SiZ346DT U6
 U 1 1 615D95B9
-P 6350 5150
-F 0 "U6" H 7150 5537 60  0000 C CNN
-F 1 "SiZ346DT" H 7150 5431 60  0000 C CNN
-F 2 "Ninja-qPCR:SiZ346DT" H 7150 5390 60  0001 C CNN
-F 3 "" H 7950 4950 60  0000 C CNN
-	1    6350 5150
+P 4450 6350
+F 0 "U6" H 5250 6737 60  0000 C CNN
+F 1 "SiZ346DT" H 5250 6631 60  0000 C CNN
+F 2 "Ninja-qPCR:SiZ346DT" H 5250 6590 60  0001 C CNN
+F 3 "" H 6050 6150 60  0000 C CNN
+	1    4450 6350
 	1    0    0    -1  
 $EndComp
-Text HLabel 8150 5600 2    50   Input ~ 0
+Text HLabel 6250 6800 2    50   Input ~ 0
 H1
-Text HLabel 6250 5700 0    50   Input ~ 0
+Text HLabel 4350 6900 0    50   Input ~ 0
 H2
-Text HLabel 7950 5250 2    50   Input ~ 0
+Text HLabel 6050 6450 2    50   Input ~ 0
 H3
-Text HLabel 6250 5350 0    50   Input ~ 0
+Text HLabel 4350 6550 0    50   Input ~ 0
 H4
-Text HLabel 6250 5250 0    50   Input ~ 0
+Text HLabel 4350 6450 0    50   Input ~ 0
 H5
 Wire Wire Line
-	6350 5700 6250 5700
+	4450 6900 4350 6900
 Wire Wire Line
-	6350 5350 6250 5350
+	4450 6550 4350 6550
 Wire Wire Line
-	6350 5250 6300 5250
+	4450 6450 4400 6450
 Wire Wire Line
-	6350 5050 6300 5050
+	4450 6250 4400 6250
 Wire Wire Line
-	6300 5050 6300 5150
-Connection ~ 6300 5250
+	4400 6250 4400 6350
+Connection ~ 4400 6450
 Wire Wire Line
-	6300 5250 6250 5250
+	4400 6450 4350 6450
 Wire Wire Line
-	6350 5150 6300 5150
-Connection ~ 6300 5150
+	4450 6350 4400 6350
+Connection ~ 4400 6350
 Wire Wire Line
-	6300 5150 6300 5250
+	4400 6350 4400 6450
 Wire Wire Line
-	7850 5250 7950 5250
+	5950 6450 6050 6450
 Wire Wire Line
-	8150 5600 8050 5600
+	6250 6800 6150 6800
 Wire Wire Line
-	7950 5900 8050 5900
+	6050 7100 6150 7100
 Wire Wire Line
-	8050 5900 8050 5800
-Connection ~ 8050 5600
+	6150 7100 6150 7000
+Connection ~ 6150 6800
 Wire Wire Line
-	8050 5600 7950 5600
+	6150 6800 6050 6800
 Wire Wire Line
-	7950 5800 8050 5800
-Connection ~ 8050 5800
+	6050 7000 6150 7000
+Connection ~ 6150 7000
 Wire Wire Line
-	8050 5800 8050 5700
+	6150 7000 6150 6900
 Wire Wire Line
-	7950 5700 8050 5700
-Connection ~ 8050 5700
+	6050 6900 6150 6900
+Connection ~ 6150 6900
 Wire Wire Line
-	8050 5700 8050 5600
+	6150 6900 6150 6800
 $Comp
-L Connector:Conn_01x10_Male J?
-U 1 1 616A141E
-P 9500 6100
-F 0 "J?" H 9608 6681 50  0000 C CNN
-F 1 "Conn_01x10_Male" H 9608 6590 50  0000 C CNN
-F 2 "" H 9500 6100 50  0001 C CNN
-F 3 "~" H 9500 6100 50  0001 C CNN
-	1    9500 6100
+L Ninja-qPCR:AOZ2264QI-19 U7
+U 1 1 615E2052
+P 9800 4650
+F 0 "U7" H 9800 4775 50  0000 C CNN
+F 1 "AOZ2264QI-19" H 9800 4684 50  0000 C CNN
+F 2 "Ninja-qPCR:AOZ2264QI-19" H 9800 4650 50  0001 C CNN
+F 3 "" H 9800 4650 50  0001 C CNN
+	1    9800 4650
+	1    0    0    -1  
+$EndComp
+Text HLabel 9200 5150 0    50   Input ~ 0
+I1
+Text HLabel 9200 5350 0    50   Input ~ 0
+I2
+Text HLabel 9200 5650 0    50   Input ~ 0
+I3
+Text HLabel 10400 5850 2    50   Input ~ 0
+I4
+Text HLabel 10400 5750 2    50   Input ~ 0
+I5
+Text HLabel 9200 4750 0    50   Input ~ 0
+I6
+Text HLabel 10400 4750 2    50   Input ~ 0
+I7
+Text HLabel 10400 5250 2    50   Input ~ 0
+I10
+Text HLabel 10400 5950 2    50   Input ~ 0
+I12
+Text HLabel 10400 5150 2    50   Input ~ 0
+I20
+Wire Wire Line
+	9400 4750 9200 4750
+Text HLabel 9200 4850 0    50   Input ~ 0
+I21
+Wire Wire Line
+	9400 4850 9200 4850
+Wire Wire Line
+	9400 5150 9200 5150
+Wire Wire Line
+	9400 5350 9200 5350
+Wire Wire Line
+	9400 5650 9200 5650
+Text HLabel 9200 5750 0    50   Input ~ 0
+I23
+Wire Wire Line
+	9200 5750 9400 5750
+Wire Wire Line
+	10200 4750 10300 4750
+Wire Wire Line
+	10200 5050 10300 5050
+Wire Wire Line
+	10300 5050 10300 4950
+Connection ~ 10300 4750
+Wire Wire Line
+	10300 4750 10400 4750
+Wire Wire Line
+	10200 4850 10300 4850
+Connection ~ 10300 4850
+Wire Wire Line
+	10300 4850 10300 4750
+Wire Wire Line
+	10200 4950 10300 4950
+Connection ~ 10300 4950
+Wire Wire Line
+	10300 4950 10300 4850
+Wire Wire Line
+	10200 5150 10400 5150
+Wire Wire Line
+	10200 5250 10300 5250
+Wire Wire Line
+	10200 5650 10300 5650
+Wire Wire Line
+	10300 5650 10300 5550
+Connection ~ 10300 5250
+Wire Wire Line
+	10300 5250 10400 5250
+Wire Wire Line
+	10200 5350 10300 5350
+Connection ~ 10300 5350
+Wire Wire Line
+	10300 5350 10300 5250
+Wire Wire Line
+	10200 5450 10300 5450
+Connection ~ 10300 5450
+Wire Wire Line
+	10300 5450 10300 5350
+Wire Wire Line
+	10200 5550 10300 5550
+Connection ~ 10300 5550
+Wire Wire Line
+	10300 5550 10300 5450
+Wire Wire Line
+	10200 5750 10400 5750
+Wire Wire Line
+	10200 5850 10400 5850
+Wire Wire Line
+	10200 5950 10300 5950
+Wire Wire Line
+	10200 6350 10300 6350
+Wire Wire Line
+	10300 6350 10300 6250
+Connection ~ 10300 5950
+Wire Wire Line
+	10300 5950 10400 5950
+Wire Wire Line
+	10200 6050 10300 6050
+Connection ~ 10300 6050
+Wire Wire Line
+	10300 6050 10300 5950
+Wire Wire Line
+	10200 6150 10300 6150
+Connection ~ 10300 6150
+Wire Wire Line
+	10300 6150 10300 6050
+Wire Wire Line
+	10200 6250 10300 6250
+Connection ~ 10300 6250
+Wire Wire Line
+	10300 6250 10300 6150
+Text HLabel 7250 5100 2    50   Input ~ 0
+I1
+Text HLabel 7250 5200 2    50   Input ~ 0
+I2
+Text HLabel 7250 5300 2    50   Input ~ 0
+I3
+Text HLabel 7250 5400 2    50   Input ~ 0
+I4
+Text HLabel 7250 5500 2    50   Input ~ 0
+I5
+Text HLabel 7250 5600 2    50   Input ~ 0
+I6
+Text HLabel 7650 5500 0    50   Input ~ 0
+I10
+Text HLabel 7650 5600 0    50   Input ~ 0
+I7
+Text HLabel 7650 5400 0    50   Input ~ 0
+I12
+Text HLabel 7650 5300 0    50   Input ~ 0
+I20
+Text HLabel 7650 5200 0    50   Input ~ 0
+I21
+Text HLabel 7650 5100 0    50   Input ~ 0
+I23
+$Comp
+L Connector:Conn_01x06_Male J14
+U 1 1 618F77E7
+P 6850 5300
+F 0 "J14" H 6958 5681 50  0000 C CNN
+F 1 "Conn_01x06_Male" H 6958 5590 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x06_Pitch2.54mm" H 6850 5300 50  0001 C CNN
+F 3 "~" H 6850 5300 50  0001 C CNN
+	1    6850 5300
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x10_Male J?
-U 1 1 616A3AE2
-P 10550 6100
-F 0 "J?" H 10522 6074 50  0000 R CNN
-F 1 "Conn_01x10_Male" H 10522 5983 50  0000 R CNN
-F 2 "" H 10550 6100 50  0001 C CNN
-F 3 "~" H 10550 6100 50  0001 C CNN
-	1    10550 6100
+L Connector:Conn_01x06_Male J15
+U 1 1 618F8D1E
+P 8050 5300
+F 0 "J15" H 8022 5274 50  0000 R CNN
+F 1 "Conn_01x06_Male" H 8022 5183 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x06_Pitch2.54mm" H 8050 5300 50  0001 C CNN
+F 3 "~" H 8050 5300 50  0001 C CNN
+	1    8050 5300
 	-1   0    0    -1  
 $EndComp
-Text HLabel 9850 5700 2    50   Input ~ 0
-I1
-Text HLabel 9850 5800 2    50   Input ~ 0
-I2
-Text HLabel 9850 5900 2    50   Input ~ 0
-I3
-Text HLabel 9850 6000 2    50   Input ~ 0
-I4
-Text HLabel 9850 6100 2    50   Input ~ 0
-I5
-Text HLabel 9850 6200 2    50   Input ~ 0
-I6
-Text HLabel 9850 6300 2    50   Input ~ 0
-I7
-Text HLabel 9850 6400 2    50   Input ~ 0
-I8
-Text HLabel 9850 6500 2    50   Input ~ 0
-I9
-Text HLabel 9850 6600 2    50   Input ~ 0
-I10
+Wire Wire Line
+	7650 5600 7850 5600
+Wire Wire Line
+	7850 5500 7650 5500
+Wire Wire Line
+	7650 5400 7850 5400
+Wire Wire Line
+	7850 5300 7650 5300
+Wire Wire Line
+	7650 5200 7850 5200
+Wire Wire Line
+	7650 5100 7850 5100
+Wire Wire Line
+	7250 5100 7050 5100
+Wire Wire Line
+	7250 5200 7050 5200
+Wire Wire Line
+	7250 5300 7050 5300
+Wire Wire Line
+	7250 5400 7050 5400
+Wire Wire Line
+	7250 5500 7050 5500
+Wire Wire Line
+	7250 5600 7050 5600
 $EndSCHEMATC
