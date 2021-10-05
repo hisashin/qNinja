@@ -208,7 +208,7 @@ L Device:R R?
 U 1 1 615B7D54
 P 3900 3700
 F 0 "R?" H 3970 3746 50  0000 L CNN
-F 1 "R" H 3970 3655 50  0000 L CNN
+F 1 "5k" H 3970 3655 50  0000 L CNN
 F 2 "" V 3830 3700 50  0001 C CNN
 F 3 "~" H 3900 3700 50  0001 C CNN
 	1    3900 3700
@@ -541,6 +541,21 @@ Wire Wire Line
 	4650 2350 4650 2500
 Wire Wire Line
 	4350 2500 4650 2500
-Text Notes 4900 3900 0    50   ~ 0
-Delta=0.02V
+Text Notes 4800 3750 0    50   ~ 0
+Ripple 0.02V, 0.8A
+$Comp
+L Connector:Screw_Terminal_01x02 J?
+U 1 1 615C2239
+P 8200 1550
+F 0 "J?" H 8280 1542 50  0000 L CNN
+F 1 "Screw_Terminal_01x02" H 8280 1451 50  0000 L CNN
+F 2 "" H 8200 1550 50  0001 C CNN
+F 3 "~" H 8200 1550 50  0001 C CNN
+	1    8200 1550
+	1    0    0    -1  
+$EndComp
+Text Notes 8000 1400 0    50   ~ 0
+Peltier
+Text Notes 6500 4600 0    50   ~ 0
+Switch Potentiometer <=> Fixed Res
 $EndSCHEMATC
