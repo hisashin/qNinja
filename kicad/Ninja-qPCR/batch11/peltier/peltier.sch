@@ -29,7 +29,7 @@ L Device:R R2
 U 1 1 615B1D45
 P 2450 2300
 F 0 "R2" H 2520 2346 50  0000 L CNN
-F 1 "100k" H 2520 2255 50  0000 L CNN
+F 1 "150k" H 2520 2255 50  0000 L CNN
 F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 2380 2300 50  0001 C CNN
 F 3 "~" H 2450 2300 50  0001 C CNN
 	1    2450 2300
@@ -66,8 +66,6 @@ Wire Wire Line
 	2650 2600 2150 2600
 Text GLabel 1750 2600 0    50   Input ~ 0
 5V
-Text GLabel 4650 2350 1    50   Input ~ 0
-12V
 Wire Wire Line
 	3450 3000 3550 3000
 Wire Wire Line
@@ -182,8 +180,6 @@ F 3 "~" H 3800 3200 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	3650 3200 3600 3200
-Text GLabel 4700 3200 2    50   Input ~ 0
-REG_OUT
 Text Label 4050 3300 0    50   ~ 0
 FB_RES_A
 Text Label 4050 3400 0    50   ~ 0
@@ -237,8 +233,8 @@ L Device:C C6
 U 1 1 615C3ADF
 P 4550 3600
 F 0 "C6" H 4665 3646 50  0000 L CNN
-F 1 "100uF" H 4665 3555 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 4588 3450 50  0001 C CNN
+F 1 "47uF" H 4665 3555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 4588 3450 50  0001 C CNN
 F 3 "~" H 4550 3600 50  0001 C CNN
 	1    4550 3600
 	1    0    0    -1  
@@ -255,9 +251,7 @@ F 3 "" H 4550 3900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4550 3900 4550 3750
-Wire Wire Line
-	4700 3200 4550 3200
+	4550 3900 4550 3850
 Connection ~ 4550 3200
 $Comp
 L power:GND #PWR0106
@@ -322,7 +316,7 @@ U 1 1 615CF30F
 P 4350 2700
 F 0 "C5" H 4465 2746 50  0000 L CNN
 F 1 "22uF" H 4465 2655 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 4388 2550 50  0001 C CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 4388 2550 50  0001 C CNN
 F 3 "~" H 4350 2700 50  0001 C CNN
 	1    4350 2700
 	1    0    0    -1  
@@ -356,44 +350,44 @@ Connection ~ 4350 2900
 $Comp
 L Ninja-qPCR:MCP4551T-104 U2
 U 1 1 615B4F06
-P 5950 2650
-F 0 "U2" H 6750 3037 60  0000 C CNN
-F 1 "MCP4551T-104" H 6750 2931 60  0000 C CNN
-F 2 "Ninja-qPCR:MCP4551T-502E&slash_MS" H 6750 2890 60  0001 C CNN
-F 3 "" H 5950 2650 60  0000 C CNN
-	1    5950 2650
+P 6650 1950
+F 0 "U2" H 7450 2337 60  0000 C CNN
+F 1 "MCP4551T-104" H 7450 2231 60  0000 C CNN
+F 2 "Ninja-qPCR:MCP4551T-502E&slash_MS" H 7450 2190 60  0001 C CNN
+F 3 "" H 6650 1950 60  0000 C CNN
+	1    6650 1950
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR0109
 U 1 1 615B6E0E
-P 7650 3050
-F 0 "#PWR0109" H 7650 2800 50  0001 C CNN
-F 1 "GND" H 7655 2877 50  0000 C CNN
-F 2 "" H 7650 3050 50  0001 C CNN
-F 3 "" H 7650 3050 50  0001 C CNN
-	1    7650 3050
+P 8350 2350
+F 0 "#PWR0109" H 8350 2100 50  0001 C CNN
+F 1 "GND" H 8355 2177 50  0000 C CNN
+F 2 "" H 8350 2350 50  0001 C CNN
+F 3 "" H 8350 2350 50  0001 C CNN
+	1    8350 2350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7650 3050 7650 2950
+	8350 2350 8350 2250
 Wire Wire Line
-	7650 2950 7550 2950
-Text GLabel 5850 3550 0    50   Input ~ 0
+	8350 2250 8250 2250
+Text GLabel 6550 2850 0    50   Input ~ 0
 5V
 Wire Wire Line
-	5850 3550 5950 3550
-Text GLabel 5850 2650 0    50   Input ~ 0
+	6550 2850 6650 2850
+Text GLabel 6550 1950 0    50   Input ~ 0
 GND
 Wire Wire Line
-	5850 2650 5950 2650
+	6550 1950 6650 1950
 Wire Wire Line
-	5950 2750 5850 2750
+	6650 2050 6550 2050
 Wire Wire Line
-	5950 3250 5850 3250
-Text GLabel 5850 2750 0    50   Input ~ 0
+	6650 2550 6550 2550
+Text GLabel 6550 2050 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 5850 3250 0    50   Input ~ 0
+Text GLabel 6550 2550 0    50   Input ~ 0
 I2C_SDA
 Text GLabel 1450 1700 0    50   Input ~ 0
 I2C_SDA
@@ -401,17 +395,17 @@ Text GLabel 1450 1600 0    50   Input ~ 0
 I2C_SCL
 Text GLabel 1450 1500 0    50   Input ~ 0
 5V
-Text Label 5850 2950 2    50   ~ 0
+Text Label 6550 2250 2    50   ~ 0
 POT_RES_A
-Text Label 5850 3150 2    50   ~ 0
+Text Label 6550 2450 2    50   ~ 0
 POT_RES_B
-NoConn ~ 5850 3050
+NoConn ~ 6550 2350
 Wire Wire Line
-	5850 3050 5950 3050
+	6550 2350 6650 2350
 Wire Wire Line
-	5950 2950 5850 2950
+	6650 2250 6550 2250
 Wire Wire Line
-	5850 3150 5950 3150
+	6550 2450 6650 2450
 $Comp
 L Device:C C3
 U 1 1 615C31C8
@@ -443,75 +437,73 @@ Wire Wire Line
 $Comp
 L Connector:Conn_01x03_Male J2
 U 1 1 615DF263
-P 6550 4200
-F 0 "J2" H 6522 4224 50  0000 R CNN
-F 1 "Conn_01x03_Male" H 6522 4133 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 6550 4200 50  0001 C CNN
-F 3 "~" H 6550 4200 50  0001 C CNN
-	1    6550 4200
+P 7250 3500
+F 0 "J2" H 7222 3524 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 7222 3433 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7250 3500 50  0001 C CNN
+F 3 "~" H 7250 3500 50  0001 C CNN
+	1    7250 3500
 	-1   0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x03_Male J3
 U 1 1 615E1AD1
-P 6550 4900
-F 0 "J3" H 6522 4924 50  0000 R CNN
-F 1 "Conn_01x03_Male" H 6522 4833 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 6550 4900 50  0001 C CNN
-F 3 "~" H 6550 4900 50  0001 C CNN
-	1    6550 4900
+P 7250 4200
+F 0 "J3" H 7222 4224 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 7222 4133 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7250 4200 50  0001 C CNN
+F 3 "~" H 7250 4200 50  0001 C CNN
+	1    7250 4200
 	-1   0    0    -1  
 $EndComp
-Text Label 6250 4200 2    50   ~ 0
+Text Label 6950 3500 2    50   ~ 0
 FB_RES_A
-Text Label 6250 4900 2    50   ~ 0
+Text Label 6950 4200 2    50   ~ 0
 FB_RES_B
-Text Label 6250 4100 2    50   ~ 0
+Text Label 6950 3400 2    50   ~ 0
 POT_RES_A
-Text Label 6250 5000 2    50   ~ 0
+Text Label 6950 4300 2    50   ~ 0
 POT_RES_B
 Wire Wire Line
-	6350 4100 6250 4100
+	7050 3400 6950 3400
 Wire Wire Line
-	6250 4200 6350 4200
+	6950 3500 7050 3500
 Wire Wire Line
-	6250 4900 6350 4900
+	6950 4200 7050 4200
 $Comp
 L Connector:Conn_01x02_Female J1
 U 1 1 615F2016
-P 5950 4500
-F 0 "J1" H 5842 4685 50  0000 C CNN
-F 1 "Conn_01x02_Female" H 5842 4594 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 5950 4500 50  0001 C CNN
-F 3 "~" H 5950 4500 50  0001 C CNN
-	1    5950 4500
+P 6650 3800
+F 0 "J1" H 6542 3985 50  0000 C CNN
+F 1 "Conn_01x02_Female" H 6542 3894 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 6650 3800 50  0001 C CNN
+F 3 "~" H 6650 3800 50  0001 C CNN
+	1    6650 3800
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	6250 5000 6350 5000
+	6950 4300 7050 4300
 Wire Wire Line
-	6350 4300 6250 4300
+	7050 3600 6950 3600
 Wire Wire Line
-	6250 4500 6150 4500
+	6950 3800 6850 3800
 Wire Wire Line
-	6150 4600 6250 4600
+	6850 3900 6950 3900
 Wire Wire Line
-	6250 4800 6350 4800
+	6950 4100 7050 4100
 Wire Wire Line
-	6250 4300 6250 4500
+	6950 3600 6950 3800
 Wire Wire Line
-	6250 4600 6250 4800
+	6950 3900 6950 4100
 Text Notes 2250 2700 0    50   ~ 0
 Ceramic
 Text Notes 4600 2750 0    50   ~ 0
 Ceramic
-Text Notes 4800 3650 0    50   ~ 0
+Text Notes 4800 4000 0    50   ~ 0
 Ceramic
 Wire Wire Line
-	4650 2350 4650 2500
-Wire Wire Line
 	4350 2500 4650 2500
-Text Notes 4800 3750 0    50   ~ 0
+Text Notes 4800 4100 0    50   ~ 0
 Ripple 0.02V, 0.8A
 $Comp
 L Connector:Conn_01x03_Male J5
@@ -536,29 +528,90 @@ NoConn ~ 2600 2900
 Wire Wire Line
 	2600 2900 2650 2900
 $Comp
-L Connector:Barrel_Jack_Switch J?
+L Connector:Barrel_Jack_Switch J6
 U 1 1 615CB67F
-P 1900 5250
-F 0 "J?" H 1957 5567 50  0000 C CNN
-F 1 "Barrel_Jack_Switch" H 1957 5476 50  0000 C CNN
-F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 1950 5210 50  0001 C CNN
-F 3 "~" H 1950 5210 50  0001 C CNN
-	1    1900 5250
-	1    0    0    -1  
+P 1900 1050
+F 0 "J6" H 1957 1367 50  0000 C CNN
+F 1 "Barrel_Jack_Switch" H 1957 1276 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 1950 1010 50  0001 C CNN
+F 3 "~" H 1950 1010 50  0001 C CNN
+	1    1900 1050
+	-1   0    0    -1  
 $EndComp
-Text GLabel 2350 5150 2    50   Input ~ 0
+Text GLabel 1450 950  0    50   Input ~ 0
 12V
-Text GLabel 2350 5350 2    50   Input ~ 0
+Text GLabel 1450 1150 0    50   Input ~ 0
 GND
 Wire Wire Line
-	2350 5150 2200 5150
+	1450 950  1600 950 
 Wire Wire Line
-	2200 5350 2250 5350
+	1600 1150 1550 1150
 Wire Wire Line
-	2200 5250 2250 5250
+	1600 1050 1550 1050
 Wire Wire Line
-	2250 5250 2250 5350
-Connection ~ 2250 5350
+	1550 1050 1550 1150
+Connection ~ 1550 1150
 Wire Wire Line
-	2250 5350 2350 5350
+	1550 1150 1450 1150
+Wire Wire Line
+	4650 2350 4650 2500
+Text GLabel 4650 2350 1    50   Input ~ 0
+12V
+$Comp
+L Device:C C8
+U 1 1 615DBFE6
+P 4950 3600
+F 0 "C8" H 5065 3646 50  0000 L CNN
+F 1 "47uF" H 5065 3555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 4988 3450 50  0001 C CNN
+F 3 "~" H 4950 3600 50  0001 C CNN
+	1    4950 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 3750 4950 3850
+Wire Wire Line
+	4950 3850 4550 3850
+Connection ~ 4550 3850
+Wire Wire Line
+	4550 3850 4550 3750
+Text GLabel 5150 3200 2    50   Input ~ 0
+REG_OUT
+Wire Wire Line
+	4550 3200 4950 3200
+Wire Wire Line
+	4950 3450 4950 3200
+Connection ~ 4950 3200
+Wire Wire Line
+	4950 3200 5150 3200
+$Comp
+L Connector:Screw_Terminal_01x02 J4
+U 1 1 6160000E
+P 8300 950
+F 0 "J4" H 8218 1167 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 8218 1076 50  0000 C CNN
+F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 8300 950 50  0001 C CNN
+F 3 "~" H 8300 950 50  0001 C CNN
+	1    8300 950 
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8700 950  2    50   Input ~ 0
+REG_OUT
+$Comp
+L power:GND #PWR0110
+U 1 1 61601E7A
+P 8700 1150
+F 0 "#PWR0110" H 8700 900 50  0001 C CNN
+F 1 "GND" H 8705 977 50  0000 C CNN
+F 2 "" H 8700 1150 50  0001 C CNN
+F 3 "" H 8700 1150 50  0001 C CNN
+	1    8700 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8700 950  8500 950 
+Wire Wire Line
+	8500 1050 8700 1050
+Wire Wire Line
+	8700 1050 8700 1150
 $EndSCHEMATC
