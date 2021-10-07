@@ -1,7 +1,7 @@
 (export (version D)
   (design
-    (source /Users/maripo/git/Ninja-qPCR/kicad/Ninja-qPCR/batch11/peltier/peltier.sch)
-    (date "Wednesday, 06 October 2021 at 10:46:58")
+    (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch11/peltier/peltier.sch)
+    (date "2021 October 07, Thursday 05:35:23")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -37,7 +37,7 @@
       (tstamp 615B4693))
     (comp (ref L1)
       (value 3.3uH)
-      (footprint Ninja-qPCR:SRN6045TA-3R3Y)
+      (footprint Ninja-qPCR:104CDMCCDS-2R2MC)
       (datasheet ~)
       (libsource (lib Device) (part L) (description Inductor))
       (sheetpath (names /) (tstamps /))
@@ -270,11 +270,11 @@
         (pin (num 8) (name VDD) (type power_in)))))
   (libraries
     (library (logical Connector)
-      (uri "/Library/Application Support/kicad/library/Connector.lib"))
+      (uri /Users/shingo/github/kicad-symbols/Connector.lib))
     (library (logical Device)
-      (uri "/Library/Application Support/kicad/library/Device.lib"))
+      (uri /Users/shingo/github/kicad-symbols/Device.lib))
     (library (logical Ninja-qPCR)
-      (uri /Users/maripo/git/Ninja-qPCR/kicad/Ninja-qPCR/Ninja-qPCR.lib)))
+      (uri /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/Ninja-qPCR.lib)))
   (nets
     (net (code 1) (name "Net-(C2-Pad1)")
       (node (ref C2) (pin 1))
