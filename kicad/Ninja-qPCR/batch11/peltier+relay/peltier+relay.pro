@@ -1,4 +1,4 @@
-update=2021 October 08, Friday 15:21:18
+update=2021 October 08, Friday 19:27:06
 version=1
 last_client=pcbnew
 [general]
@@ -31,7 +31,7 @@ BoardThickness=1.6
 AllowMicroVias=0
 AllowBlindVias=0
 RequireCourtyardDefinitions=0
-ProhibitOverlappingCourtyards=1
+ProhibitOverlappingCourtyards=0
 MinTrackWidth=0.2
 MinViaDiameter=0.4
 MinViaDrill=0.3
