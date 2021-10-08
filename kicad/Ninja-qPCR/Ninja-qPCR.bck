@@ -1,5 +1,11 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP 8-PowerVDFN-N
+D N-MOSFET transistor, gate/source/drain
+K transistor NMOS N-MOS N-MOSFET
+F ~
+$ENDCMP
+#
 $CMP Conn_01x60_Male
 D Generic connector, single row, 01x40, script generated (kicad-library-utils/schlib/autogen/connector/)
 K connector
