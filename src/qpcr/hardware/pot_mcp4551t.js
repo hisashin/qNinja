@@ -25,7 +25,7 @@ class MCP4551T {
       this.i2c = i2c.openSync(this.i2cBusNumber);  //i2c1 or i2c2
     }
   }
-  
+  // 0 - 256
   setWiper (wiperVal) {
     const val0 = wiperVal >> 8 & 0x01;
     const val1 = wiperVal & 0xFF;

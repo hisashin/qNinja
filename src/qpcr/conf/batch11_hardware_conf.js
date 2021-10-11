@@ -33,7 +33,8 @@ const I2C_ADDR_PCA9955B = 0x05;
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
 const ADC_DEVICE_ADDR = 0x40;
-const POT_DEVICE_ADDR = 0x2F;
+const POT_LED_DEVICE_ADDR = 0x2F;
+const POT_PELTIER_REG_DEVICE_ADDR = 0x2E;
 
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = [3, 2]; // AIN3->P, AIN2->N
 const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
@@ -134,7 +135,6 @@ class ShutdownPin {
   }
 }
 const shutdownPin = new ShutdownPin();
-
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
@@ -157,7 +157,10 @@ class HardwareConf {
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
       const plateSensing = new PlateSensing(plateBlockSensing, airSensing);
-      const plateOutput = new PlateOutput(this.pwmPlate, this.pwmFan);
+      const pot = new MCP4551T(this.i2c, POT_PELTIER_REG_DEVICE_ADDR);
+      const relay = new Relay(PIN_PELTIER_RELAY_A, PIN_PELTIER_RELAY_B, PIN_PELTIER_RELAY_GATE);
+      this.peltier = new Peltier(pot, relay);
+      const plateOutput = new PlateOutput(this.pwmPlate, this.peltier, this.pwmFan);
       this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
     }
     {
@@ -220,9 +223,9 @@ class HardwareConf {
     console.log("getLEDUnit()");
     if (this.ledUnit == null) {
       console.log("getLEDUnit() create...");
-      const pot = new MCP4551T(this.i2c, POT_DEVICE_ADDR);
+      const potLED = new MCP4551T(this.i2c, POT_LED_DEVICE_ADDR);
       const ledDriver = new PCA9955B(this.i2c, I2C_ADDR_PCA9955B);
-      this.ledUnit = new LEDUnit(pot, ledDriver);
+      this.ledUnit = new LEDUnit(potLED, ledDriver);
     }
     return this.ledUnit;
   }
@@ -358,17 +361,19 @@ class ExtraSensing {
 
 class PlateOutput {
   // Combination of heater (PWM) and fan (PWM)
-  constructor (platePWM, fanPWM) {
-    this.platePWM = platePWM;
+  constructor (plateHeaterPWM, peltier, fanPWM) {
+    this.plateHeaterPWM = plateHeaterPWM;
+    this.peltier = peltier;
     this.fanPWM = fanPWM;
     this.plateActualOutput = 0.0;
     this.setFanOutput(1.0);
-    this.setPlateOutput(0);
+    this.setPlateHeaterOutput(0);
   }
-  setPlateOutput (value) {
+  setPlateHeaterOutput (value) {
     const actualOutput = Math.min(1.0, Math.min(value, this.plateActualOutput + 0.25));
-    this.platePWM.write(actualOutput);
-    // this.platePWM.write(value);
+    this.plateHeaterPWM.write(actualOutput);
+    // this.plateHeaterPWM.write(value);
+    // TODO peltier
     this.plateActualOutput = actualOutput;
   }
   setFanOutput (value) {
@@ -377,25 +382,100 @@ class PlateOutput {
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
-    outputValue = Math.min(1.0, Math.max(-1, outputValue));
-    // outputValue = Math.min(0.9, Math.max(-0.9, outputValue));
+    outputValue = Math.min(1.0, Math.max(-1, outputValue)); // -1 ... +1
     console.log("plate output=%d", outputValue)
     if (outputValue > 0) {
-      this.setPlateOutput(outputValue);
+      this.setPlateHeaterOutput(outputValue);
       this.setFanOutput(0);
     } else {
-      this.setPlateOutput(0);
+      this.setPlateHeaterOutput(0);
       this.setFanOutput(-outputValue);
     }
+    this.peltier.setOutput(outputValue);
   }
   off () {
-    this.setPlateOutput(0);
+    this.setPlateHeaterOutput(0);
     this.setFanOutput(0);
   }
   shutdown () {
     console.log("Shutting down PlateOutput.");
-      this.setPlateOutput(0);
+      this.setPlateHeaterOutput(0);
       this.setFanOutput(1.0);
+  }
+}
+const PELTIER_VOUT_MIN = 0.6;
+const PELTIER_REG_R1 = 5.0; // Regulator's feedback resistor (5kOhm)
+const PELTIER_REG_FB = 0.6; // Regulator feedback voltage
+const PELTIER_REG_POT_RAB = 100; // Full-scale resistance of potentiometer
+class Peltier {
+  constructor (pot, relay) {
+    this.pot = pot;
+    this.relay = relay;
+  }
+  start () {
+    
+  }
+  setOutput (value) {
+    // Calculate wiper value
+    if (value > 0) {
+      this.relay.setDirection(RelayDirection.HEAT);
+    } else if (value < 0) {
+      this.relay.setDirection(RelayDirection.COOL);
+    } else {
+      this.relay.setDirection(RelayDirection.OFF);
+    }
+    // TODO Map value to vOut
+    let vOut = Math.abs(value); // Required voltage
+    const r2 = (vOut/PELTIER_REG_FB - 1) * PELTIER_REG_R1; // kOhm
+    const nf = 256 * (PELTIER_REG_POT_RAB - r2) / PELTIER_REG_POT_RAB;
+    const n = Math.max(0, Math.min(Math.floor(nf), 256)) // 0 - 256
+    this.pot.setWiper(n);
+  }
+  shutdown () {
+    this.relay.off();
+  }
+}
+const PIN_PELTIER_RELAY_A = 0;
+const PIN_PELTIER_RELAY_B = 0;
+const RelayDirection = {
+  OFF: 0,
+  HEAT: 1,
+  COOL: 2
+};
+class Relay {
+  constructor (pinSwitchA, pinSwitchB, pinGate) {
+    // TODO remove pinGate
+    this.pinSwitchA = pinSwitchA;
+    this.pinSwitchB = pinSwitchB;
+    this.pinGate = pinGate;
+    this.direction = RelayDirection.OFF;
+  }
+  start () {
+    rpio.open(this.pinSwitchA, rpio.OUTPUT, rpio.LOW);
+    rpio.open(this.pinSwitchB, rpio.OUTPUT, rpio.LOW);
+    rpio.open(this.pinSwpinGate, rpio.OUTPUT, rpio.LOW);
+    
+  }
+  off () {
+    rpio.write(this.pinSwitchA, 0);
+    rpio.write(this.pinSwitchB, 0);
+    rpio.write(this.pinGate, 0);
+  }
+  setDirection (direction) {
+    if (direction == RelayDirection.OFF) {
+      this.off();
+    } else if (direction == RelayDirection.HEAT) {
+      rpio.write(this.pinSwitchA, 1);
+      rpio.write(this.pinSwitchB, 0);
+      rpio.write(this.pinGate, 1);
+    } else if (direction == RelayDirection.COOL) {
+      rpio.write(this.pinSwitchA, 0);
+      rpio.write(this.pinSwitchB, 1);
+      rpio.write(this.pinGate, 1);
+    }
+  }
+  shutdown () {
+    this.off();
   }
 }
 
