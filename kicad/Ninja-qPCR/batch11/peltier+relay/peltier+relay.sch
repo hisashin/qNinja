@@ -30,7 +30,7 @@ U 1 1 615B1D45
 P 4100 1400
 F 0 "R2" H 4170 1446 50  0000 L CNN
 F 1 "150k" H 4170 1355 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 4030 1400 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 4030 1400 50  0001 C CNN
 F 3 "~" H 4100 1400 50  0001 C CNN
 	1    4100 1400
 	1    0    0    -1  
@@ -114,7 +114,7 @@ U 1 1 615B4693
 P 4150 2800
 F 0 "C2" H 4265 2846 50  0000 L CNN
 F 1 "10uF" H 4265 2755 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 4188 2650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 4188 2650 50  0001 C CNN
 F 3 "~" H 4150 2800 50  0001 C CNN
 	1    4150 2800
 	1    0    0    -1  
@@ -205,7 +205,7 @@ U 1 1 615B7D54
 P 5550 2800
 F 0 "R3" H 5620 2846 50  0000 L CNN
 F 1 "5k" H 5620 2755 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 5480 2800 50  0001 C CNN
+F 2 "Resistors_SMD:R_0603" V 5480 2800 50  0001 C CNN
 F 3 "~" H 5550 2800 50  0001 C CNN
 	1    5550 2800
 	1    0    0    -1  
@@ -234,7 +234,7 @@ U 1 1 615C3ADF
 P 6200 2700
 F 0 "C6" H 6315 2746 50  0000 L CNN
 F 1 "47uF" H 6315 2655 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 6238 2550 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1210" H 6238 2550 50  0001 C CNN
 F 3 "~" H 6200 2700 50  0001 C CNN
 	1    6200 2700
 	1    0    0    -1  
@@ -278,7 +278,7 @@ U 1 1 615C767B
 P 3800 1900
 F 0 "C1" H 3915 1946 50  0000 L CNN
 F 1 "10uF" H 3915 1855 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 3838 1750 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 3838 1750 50  0001 C CNN
 F 3 "~" H 3800 1900 50  0001 C CNN
 	1    3800 1900
 	1    0    0    -1  
@@ -305,7 +305,7 @@ U 1 1 615CE6D3
 P 5700 1800
 F 0 "C4" H 5815 1846 50  0000 L CNN
 F 1 "1uF" H 5815 1755 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" H 5738 1650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 5738 1650 50  0001 C CNN
 F 3 "~" H 5700 1800 50  0001 C CNN
 	1    5700 1800
 	1    0    0    -1  
@@ -316,7 +316,7 @@ U 1 1 615CF30F
 P 6000 1800
 F 0 "C5" H 6115 1846 50  0000 L CNN
 F 1 "22uF" H 6115 1755 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 6038 1650 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1210" H 6038 1650 50  0001 C CNN
 F 3 "~" H 6000 1800 50  0001 C CNN
 	1    6000 1800
 	1    0    0    -1  
@@ -373,8 +373,6 @@ Wire Wire Line
 	10300 2100 10300 2000
 Wire Wire Line
 	10300 2000 10200 2000
-Text GLabel 8500 2600 0    50   Input ~ 0
-5V
 Wire Wire Line
 	8500 2600 8600 2600
 Text GLabel 8500 1700 0    50   Input ~ 0
@@ -393,12 +391,12 @@ Text GLabel 1700 2400 0    50   Input ~ 0
 I2C_SDA
 Text GLabel 1700 2300 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 1700 2200 0    50   Input ~ 0
+Text GLabel 1700 2100 0    50   Input ~ 0
 5V
 Text Label 8500 2000 2    50   ~ 0
 POT_RES_A
 Text Label 8500 2200 2    50   ~ 0
-POT_RES_B
+FB_RES_B
 NoConn ~ 8500 2100
 Wire Wire Line
 	8500 2100 8600 2100
@@ -412,7 +410,7 @@ U 1 1 615C31C8
 P 5300 2000
 F 0 "C3" V 5552 2000 50  0000 C CNN
 F 1 "0.1uF" V 5461 2000 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" H 5338 1850 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0603" H 5338 1850 50  0001 C CNN
 F 3 "~" H 5300 2000 50  0001 C CNN
 	1    5300 2000
 	0    -1   -1   0   
@@ -443,33 +441,18 @@ F 1 "Conn_01x03_Male" H 9172 3183 50  0000 R CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 9200 3250 50  0001 C CNN
 F 3 "~" H 9200 3250 50  0001 C CNN
 	1    9200 3250
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Conn_01x03_Male J3
-U 1 1 615E1AD1
-P 9200 3950
-F 0 "J3" H 9172 3974 50  0000 R CNN
-F 1 "Conn_01x03_Male" H 9172 3883 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 9200 3950 50  0001 C CNN
-F 3 "~" H 9200 3950 50  0001 C CNN
-	1    9200 3950
-	-1   0    0    -1  
+	-1   0    0    1   
 $EndComp
 Text Label 8900 3250 2    50   ~ 0
 FB_RES_A
-Text Label 8900 3950 2    50   ~ 0
+Text Label 9250 3650 0    50   ~ 0
 FB_RES_B
 Text Label 8900 3150 2    50   ~ 0
 POT_RES_A
-Text Label 8900 4050 2    50   ~ 0
-POT_RES_B
 Wire Wire Line
 	9000 3150 8900 3150
 Wire Wire Line
 	8900 3250 9000 3250
-Wire Wire Line
-	8900 3950 9000 3950
 $Comp
 L Connector:Conn_01x02_Female J1
 U 1 1 615F2016
@@ -482,19 +465,11 @@ F 3 "~" H 8600 3550 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	8900 4050 9000 4050
-Wire Wire Line
 	9000 3350 8900 3350
 Wire Wire Line
 	8900 3550 8800 3550
 Wire Wire Line
-	8800 3650 8900 3650
-Wire Wire Line
-	8900 3850 9000 3850
-Wire Wire Line
 	8900 3350 8900 3550
-Wire Wire Line
-	8900 3650 8900 3850
 Text Notes 3900 1800 0    50   ~ 0
 Ceramic
 Text Notes 6250 1850 0    50   ~ 0
@@ -505,23 +480,12 @@ Wire Wire Line
 	6000 1600 6300 1600
 Text Notes 6450 3200 0    50   ~ 0
 Ripple 0.02V, 0.8A
-$Comp
-L Connector:Conn_01x03_Male J5
-U 1 1 615C37B0
-P 2100 2300
-F 0 "J5" H 2072 2324 50  0000 R CNN
-F 1 "Conn_01x03_Male" H 2072 2233 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 2100 2300 50  0001 C CNN
-F 3 "~" H 2100 2300 50  0001 C CNN
-	1    2100 2300
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	1900 2400 1700 2400
 Wire Wire Line
 	1700 2300 1900 2300
 Wire Wire Line
-	1900 2200 1700 2200
+	1900 2100 1700 2100
 Wire Wire Line
 	3400 1700 3800 1700
 NoConn ~ 4250 2000
@@ -563,7 +527,7 @@ U 1 1 615DBFE6
 P 6600 2700
 F 0 "C8" H 6715 2746 50  0000 L CNN
 F 1 "47uF" H 6715 2655 50  0000 L CNN
-F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder" H 6638 2550 50  0001 C CNN
+F 2 "Capacitors_SMD:C_1210" H 6638 2550 50  0001 C CNN
 F 3 "~" H 6600 2700 50  0001 C CNN
 	1    6600 2700
 	1    0    0    -1  
@@ -584,17 +548,6 @@ Wire Wire Line
 Connection ~ 6600 2300
 Wire Wire Line
 	6600 2300 6800 2300
-$Comp
-L Connector:Screw_Terminal_01x02 J4
-U 1 1 6160000E
-P 1550 2950
-F 0 "J4" H 1468 3167 50  0000 C CNN
-F 1 "Screw_Terminal_01x02" H 1468 3076 50  0000 C CNN
-F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 1550 2950 50  0001 C CNN
-F 3 "~" H 1550 2950 50  0001 C CNN
-	1    1550 2950
-	-1   0    0    -1  
-$EndComp
 Text GLabel 1950 2950 2    50   Input ~ 0
 REG_OUT
 $Comp
@@ -645,21 +598,21 @@ Wire Wire Line
 $Comp
 L Connector:Screw_Terminal_01x02 HLID?
 U 1 1 61611349
-P 4900 5700
+P 6750 5100
 AR Path="/60B6F672/61611349" Ref="HLID?"  Part="1" 
-AR Path="/61611349" Ref="HLID1"  Part="1" 
+AR Path="/61611349" Ref="PEL1"  Part="1" 
 AR Path="/615FFA84/61611349" Ref="HLID?"  Part="1" 
-F 0 "HLID1" H 4900 5800 50  0000 C CNN
-F 1 "Screw_Terminal_01x02" H 4700 5500 50  0000 C CNN
-F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 4900 5700 50  0001 C CNN
-F 3 "~" H 4900 5700 50  0001 C CNN
-	1    4900 5700
+F 0 "PEL1" H 6750 5200 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 6550 4900 50  0000 C CNN
+F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 6750 5100 50  0001 C CNN
+F 3 "~" H 6750 5100 50  0001 C CNN
+	1    6750 5100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4550 5700 4700 5700
+	6400 5100 6550 5100
 Wire Wire Line
-	4450 5800 4700 5800
+	6300 5200 6550 5200
 $Comp
 L Device:Q_NPN_BCE Q2
 U 1 1 61611353
@@ -819,14 +772,10 @@ Text HLabel 4400 5450 0    50   Input ~ 0
 PEL_BLK
 Wire Wire Line
 	4600 5450 4550 5450
-Connection ~ 4550 5450
 Wire Wire Line
-	4550 5450 4550 5700
+	6400 4500 6400 4750
 Wire Wire Line
 	4400 5450 4450 5450
-Connection ~ 4450 5450
-Wire Wire Line
-	4450 5450 4450 5800
 Text HLabel 4200 5650 0    50   Input ~ 0
 PEL2
 Wire Wire Line
@@ -843,21 +792,14 @@ Wire Wire Line
 Connection ~ 9000 6000
 Wire Wire Line
 	9000 6000 8900 6000
-Connection ~ 9000 4950
 Wire Wire Line
 	9800 5250 9900 5250
 Wire Wire Line
 	9900 5250 9900 4950
 Wire Wire Line
-	9900 4950 9500 4950
-Connection ~ 9500 4950
-Wire Wire Line
 	8650 5250 8650 4950
 Wire Wire Line
 	8650 4950 8550 4950
-Wire Wire Line
-	8650 4950 9000 4950
-Connection ~ 8650 4950
 Text HLabel 3700 5200 0    50   Input ~ 0
 PEL1
 Text HLabel 5300 5200 2    50   Input ~ 0
@@ -882,17 +824,6 @@ Wire Wire Line
 	4450 5000 4450 5450
 Wire Wire Line
 	4550 5000 4550 5450
-$Comp
-L Ninja-qPCR:EX2-2U1S K2
-U 1 1 6164633B
-P 8700 5250
-F 0 "K2" H 9250 5653 60  0000 C CNN
-F 1 "EX2-2U1S" H 9250 5547 60  0000 C CNN
-F 2 "Ninja-qPCR:EX2-2U1S" H 9200 5940 60  0001 C CNN
-F 3 "" H 8700 5250 60  0000 C CNN
-	1    8700 5250
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8650 5250 8700 5250
 Text HLabel 9150 5850 0    50   Input ~ 0
@@ -927,21 +858,10 @@ F 3 "" H 3950 4800 60  0000 C CNN
 $EndComp
 Connection ~ 3800 4800
 Connection ~ 5200 4800
-Text GLabel 4150 4400 0    50   Input ~ 0
-12V
-Wire Wire Line
-	4250 4500 3800 4500
 Wire Wire Line
 	3800 4500 3800 4800
 Wire Wire Line
-	4250 4500 4250 4600
-Connection ~ 4250 4500
-Wire Wire Line
-	5200 4500 4250 4500
-Wire Wire Line
 	5200 4800 5200 4500
-Wire Wire Line
-	4250 4400 4250 4500
 Wire Wire Line
 	4150 4400 4250 4400
 $Comp
@@ -1039,4 +959,199 @@ Wire Wire Line
 Connection ~ 1800 1250
 Wire Wire Line
 	1800 1250 1700 1250
+$Comp
+L Connector:Conn_01x02_Female J4
+U 1 1 616E0F34
+P 1550 2950
+F 0 "J4" H 1442 3135 50  0000 C CNN
+F 1 "Conn_01x02_Female" H 1442 3044 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 1550 2950 50  0001 C CNN
+F 3 "~" H 1550 2950 50  0001 C CNN
+	1    1550 2950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x03_Male J8
+U 1 1 616E1BB7
+P 1550 3650
+F 0 "J8" H 1522 3674 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 1522 3583 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 1550 3650 50  0001 C CNN
+F 3 "~" H 1550 3650 50  0001 C CNN
+	1    1550 3650
+	1    0    0    -1  
+$EndComp
+Text GLabel 1950 3550 2    50   Input ~ 0
+PEL_SWA
+Text GLabel 1950 3650 2    50   Input ~ 0
+PEL_SWB
+Text GLabel 1950 3750 2    50   Input ~ 0
+PEL_PWM
+Wire Wire Line
+	1750 3550 1950 3550
+Wire Wire Line
+	1750 3650 1950 3650
+Wire Wire Line
+	1750 3750 1950 3750
+$Comp
+L Connector:Conn_01x01_Male J9
+U 1 1 617269D5
+P 1200 4200
+F 0 "J9" H 1308 4381 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 1308 4290 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x01_Pitch2.54mm" H 1200 4200 50  0001 C CNN
+F 3 "~" H 1200 4200 50  0001 C CNN
+	1    1200 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J11
+U 1 1 6172767C
+P 2000 4200
+F 0 "J11" H 1972 4224 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 1972 4133 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x01_Pitch2.54mm" H 2000 4200 50  0001 C CNN
+F 3 "~" H 2000 4200 50  0001 C CNN
+	1    2000 4200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1400 4200 1550 4200
+$Comp
+L Connector:Conn_01x01_Male J10
+U 1 1 61732A82
+P 1200 4350
+F 0 "J10" H 1308 4531 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 1308 4440 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x01_Pitch2.54mm" H 1200 4350 50  0001 C CNN
+F 3 "~" H 1200 4350 50  0001 C CNN
+	1    1200 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J12
+U 1 1 61732A8C
+P 2000 4350
+F 0 "J12" H 1972 4374 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 1972 4283 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x01_Pitch2.54mm" H 2000 4350 50  0001 C CNN
+F 3 "~" H 2000 4350 50  0001 C CNN
+	1    2000 4350
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1400 4350 1550 4350
+Text HLabel 1650 4000 2    50   Input ~ 0
+con1
+Text HLabel 1650 4500 2    50   Input ~ 0
+con2
+Wire Wire Line
+	1650 4500 1550 4500
+Wire Wire Line
+	1550 4500 1550 4350
+Connection ~ 1550 4350
+Wire Wire Line
+	1550 4350 1800 4350
+Wire Wire Line
+	1650 4000 1550 4000
+Wire Wire Line
+	1550 4000 1550 4200
+Connection ~ 1550 4200
+Wire Wire Line
+	1550 4200 1800 4200
+$Comp
+L Connector:Conn_01x05_Male J5
+U 1 1 617886D7
+P 2100 2300
+F 0 "J5" H 2072 2324 50  0000 R CNN
+F 1 "Conn_01x05_Male" H 2072 2233 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 2100 2300 50  0001 C CNN
+F 3 "~" H 2100 2300 50  0001 C CNN
+	1    2100 2300
+	-1   0    0    -1  
+$EndComp
+Text GLabel 1700 2200 0    50   Input ~ 0
+3V3
+Wire Wire Line
+	1900 2200 1700 2200
+$Comp
+L power:GND #PWR0114
+U 1 1 617A1BF7
+P 1800 2550
+F 0 "#PWR0114" H 1800 2300 50  0001 C CNN
+F 1 "GND" H 1805 2377 50  0000 C CNN
+F 2 "" H 1800 2550 50  0001 C CNN
+F 3 "" H 1800 2550 50  0001 C CNN
+	1    1800 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 2500 1800 2500
+Wire Wire Line
+	1800 2500 1800 2550
+Text GLabel 8500 2600 0    50   Input ~ 0
+3V3
+Wire Wire Line
+	8800 3650 9250 3650
+Text HLabel 6250 4500 0    50   Input ~ 0
+PEL_BLK
+Text HLabel 6450 4500 2    50   Input ~ 0
+PEL_RED
+Wire Wire Line
+	6300 4500 6250 4500
+Wire Wire Line
+	6400 4500 6450 4500
+$Comp
+L Connector:Conn_01x02_Female J3
+U 1 1 6189FB08
+P 6650 4750
+F 0 "J3" H 6542 4935 50  0000 C CNN
+F 1 "Conn_01x02_Female" H 6542 4844 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 6650 4750 50  0001 C CNN
+F 3 "~" H 6650 4750 50  0001 C CNN
+	1    6650 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6450 4750 6400 4750
+Wire Wire Line
+	6450 4850 6400 4850
+Wire Wire Line
+	6400 4850 6400 5100
+Wire Wire Line
+	6300 4500 6300 5200
+Text GLabel 4150 4400 0    50   Input ~ 0
+REG_OUT
+Wire Wire Line
+	4250 4400 4250 4600
+Text GLabel 3700 4500 0    50   Input ~ 0
+12V
+Text GLabel 5300 4500 2    50   Input ~ 0
+12V
+Wire Wire Line
+	5300 4500 5200 4500
+Wire Wire Line
+	3800 4500 3700 4500
+Text GLabel 8900 4750 0    50   Input ~ 0
+REG_OUT
+$Comp
+L Ninja-qPCR:EX2-2U1S K2
+U 1 1 6164633B
+P 8700 5250
+F 0 "K2" H 9250 5653 60  0000 C CNN
+F 1 "EX2-2U1S" H 9250 5547 60  0000 C CNN
+F 2 "Ninja-qPCR:EX2-2U1S" H 9200 5940 60  0001 C CNN
+F 3 "" H 8700 5250 60  0000 C CNN
+	1    8700 5250
+	1    0    0    -1  
+$EndComp
+Text GLabel 10000 4950 2    50   Input ~ 0
+12V
+Wire Wire Line
+	10000 4950 9900 4950
+Wire Wire Line
+	9000 4950 9000 4750
+Wire Wire Line
+	9000 4750 8900 4750
+Connection ~ 9000 4950
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=2021 October 08, Friday 12:48:50
+update=2021 October 08, Friday 19:27:06
 version=1
 last_client=pcbnew
 [general]
@@ -31,7 +31,7 @@ BoardThickness=1.6
 AllowMicroVias=0
 AllowBlindVias=0
 RequireCourtyardDefinitions=0
-ProhibitOverlappingCourtyards=1
+ProhibitOverlappingCourtyards=0
 MinTrackWidth=0.2
 MinViaDiameter=0.4
 MinViaDrill=0.3
@@ -43,6 +43,8 @@ TrackWidth2=0.25
 TrackWidth3=0.5
 TrackWidth4=0.75
 TrackWidth5=1
+TrackWidth6=2.54
+TrackWidth7=5.08
 ViaDiameter1=0.8
 ViaDrill1=0.4
 dPairWidth1=0.2
@@ -71,7 +73,7 @@ OthersTextUpright=1
 SolderMaskClearance=0
 SolderMaskMinWidth=0
 SolderPasteClearance=0
-SolderPasteRatio=0
+SolderPasteRatio=-0
 [pcbnew/Layer.F.Cu]
 Name=F.Cu
 Type=0
