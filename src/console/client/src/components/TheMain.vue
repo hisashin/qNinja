@@ -43,6 +43,7 @@
       <TheExperimentEditor ref="panelExperimentEditor" v-show="selectedPanel==panels.EXPERIMENT_EDITOR" />
       <TheExperimentMonitor ref="panelExperimentMonitor" v-show="selectedPanel==panels.EXPERIMENT_MONITOR" />
       <TheOpticsMonitor ref="panelOpticsMonitor" v-show="selectedPanel==panels.OPTICS_MONITOR" />
+      <ThePlateControlMonitor ref="panelPlateControlMonitor" v-show="selectedPanel==panels.PLATE_CONTROL_MONITOR" />
       <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
       <div class="debug">
       (Dev)
@@ -76,6 +77,7 @@ import TheProtocolDetail from './panels/TheProtocolDetail.vue'
 import TheProtocolEditor from './panels/TheProtocolEditor.vue'
 import TheProtocolList from './panels/TheProtocolList.vue'
 import TheOpticsMonitor from './panels/TheOpticsMonitor.vue'
+import ThePlateControlMonitor from './panels/ThePlateControlMonitor.vue'
 import PanelTemplate from './panels/PanelTemplate.vue'
 
 import BackButton from './BackButton.vue';
@@ -101,6 +103,7 @@ export default {
     PanelTemplate,
     TheDeviceSummary,
     TheOpticsMonitor,
+    ThePlateControlMonitor,
     BackButton
   },
   data() {

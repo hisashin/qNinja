@@ -18,7 +18,7 @@ if (!USE_DUMMY) {
 
 const session = new OpticsSession();
 qpcr.setSession(session);
-session.runOpticsDemo();
+session.start();
 eventBus.subscribe("optics.update", (topic, values)=>{
   console.log(_transformValues(values)[0][3]);
 });

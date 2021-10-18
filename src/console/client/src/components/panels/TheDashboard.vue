@@ -31,6 +31,10 @@
         @click.stop="optics">
         Optics
       </b-button>
+      <b-button class="mr-1 btn-sm"
+        @click.stop="plateControl">
+        PlateControl
+      </b-button>
     </section>
   </div>
 </template>
@@ -67,6 +71,9 @@ export default {
     },
     optics () {
       appState.pushPanel(appState.PANELS.OPTICS_MONITOR);
+    },
+    plateControl () {
+      appState.pushPanel(appState.PANELS.PLATE_CONTROL_MONITOR);
     }
   }
 }

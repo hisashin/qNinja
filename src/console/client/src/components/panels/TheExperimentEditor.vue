@@ -475,22 +475,26 @@ export default {
     },
     onSelectTabAmp: function () {
       console.log("onSelectTabAmp");
-      document.getElementById("tabAmpSide").appendChild(document.getElementById("analysisTable"));
+      if (document.getElementById("analysisTable"))
+        document.getElementById("tabAmpSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_AMP;
     },
     onSelectTabMelt: function () {
       console.log("onSelectTabMelt");
-      document.getElementById("tabMeltSide").appendChild(document.getElementById("analysisTable"));
+      if (document.getElementById("analysisTable"))
+        document.getElementById("tabMeltSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_MELT;
     },
     onSelectTabStdCurve: function () {
       console.log("onSelectTabStdCurve");
-      document.getElementById("tabStdCurveSide").appendChild(document.getElementById("analysisTable"));
+      if (document.getElementById("analysisTable"))
+        document.getElementById("tabStdCurveSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_STD_CURVE;
     },
     onSelectTabTemperature: function () {
       console.log("onSelectTabTemperature");
-      document.getElementById("tabTemperatureSide").appendChild(document.getElementById("analysisTable"));
+      if (document.getElementById("analysisTable"))
+        document.getElementById("tabTemperatureSide").appendChild(document.getElementById("analysisTable"));
       this.selectedTab = TAB_TEMPERATURE;
     },
     openColorPicker: function (index) {

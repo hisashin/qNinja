@@ -59,9 +59,6 @@ export default {
   },
   created: function () {
   },
-  title () {
-    "Optics Monitor"
-  },
   methods: {
     start () {
       device.publish("device.command.runOptics", {});

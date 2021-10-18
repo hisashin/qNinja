@@ -10,6 +10,7 @@ const fs = require('fs');
 const QPCR_PATH = "../../qpcr/";
 const NinjaQPCR = require(QPCR_PATH + "ninjaqpcr");
 const OpticsSession = require(QPCR_PATH + "session_optics.js");
+const PlateControlSession = require(QPCR_PATH + "session_plate_control.js");
 // const qpcr = new NinjaQPCR("hardware_dummy.json");
 let qpcr = null;
 const eventBus = require(QPCR_PATH + "lib/event_bus.js");
@@ -686,7 +687,14 @@ class NinjaQPCRWebSocketServer {
         const session = new OpticsSession();
         qpcr.setSession(session);
         // TODO receive command
-        session.runOpticsDemo();
+        session.start();
+      }
+      if (topic == "device.command.runPlateControl") {
+        // TODO check device availability
+        const session = new PlateControlSession();
+        qpcr.setSession(session);
+        // TODO receive command
+        session.start();
       }
     });
     qpcr.startMonitoringTemperature ((data)=>{

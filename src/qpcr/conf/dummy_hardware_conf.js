@@ -29,6 +29,8 @@ class Plate {
   constructor () {
     this.temperature = 25;
     this.targetTemperature = 25;
+    this.sensing = {};
+    this.output = {};
   }
   start () {
     // Initialize hardware. This function is called once at the first run.

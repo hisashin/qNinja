@@ -35,7 +35,7 @@ class OpticsSession {
     }
     return this.measurement;
   }
-  runOpticsDemo () {
+  start () {
     console.log("runOpticsDemo");
     this.optics.start();
     this.opticsStarted = true;
