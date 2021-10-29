@@ -5,7 +5,11 @@
   (Thermistor + 3bit MUX + ADC)
   Pins: MUX_S0-3 
   */
+const rpio = require('rpio');
 const MUX8ch = require("../hardware/mux_8ch.js");
+const R_SWITCH_PIN = 26;
+rpio.open(R_SWITCH_PIN, rpio.OUTPUT, rpio.LOW);
+let switchHigh = false;
 
 const PIN_NUM_PD_MUX_1 = 16; //GPIO4 (Mux channel)
 const PIN_NUM_PD_MUX_2 = 12; //GPIO1 (Mux channel)
@@ -23,7 +27,6 @@ const CHANNELS_COUNT = 6;
   ADC Ch0 -> GNDA
       Ch1 -> THERM_MUX_OUT
 */
-
 const ADS122C04IPWR = require("../hardware/adc_ads122c04ipwr.js");
 // const ADS1219IPWR = require("../hardware/adc_ads1219ipwr.js");
 const Thermistor = require("../hardware/thermistor.js");
@@ -60,6 +63,12 @@ setInterval(()=>{
       console.log(temps);
       adc.debug();
       muxCh = (muxCh + 1) % CHANNELS_COUNT;
+      if (muxCh == 0) {
+        switchHigh = !switchHigh;
+        console.log("HIGH=%d R=%f", switchHigh, RES);
+      }
+
+    rpio.write(R_SWITCH_PIN, (switchHigh)?rpio.HIGH:rpio.LOW);
     });
   }, 250);
 },500);

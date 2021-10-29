@@ -90,7 +90,8 @@ const MUX_CHANNEL_THERMISTOR_EXT1 = 3;
 const MUX_CHANNEL_THERMISTOR_EXT2 = 4;
 const MUX_CHANNEL_THERMISTOR_EXT3 = 5;
 
-// Channel name (Not index)
+// Well name -> Channel index
+/*
 const MUX_MAP_PHOTODIODES_N = [
   [15,14,13,12,11,10,9,8], // Opt channel 1
     [0,1,2,3,4,5,6,7], // Opt channel 0
@@ -99,6 +100,15 @@ const MUX_MAP_PHOTODIODES_S = [
   [8,9,10,11,12,13,14,15], // Opt channel 0
   [7,6,5,4,3,2,1,0] // Opt channel 1
 ];
+*/
+const MUX_MAP_PHOTODIODES_N = [
+  [6,4,2,0,8,10,12,14],
+  [7,5,,3,1,9,11,13,15]
+];
+const MUX_MAP_PHOTODIODES_S = [
+  [14,12,10,8,0,2,4,6],
+  [15,13,11,9,1,3,5,7]
+]
 const TEMPERATURE_CHANNELS_CONF = {
   // label, property
 };
@@ -409,6 +419,7 @@ class GenericGPIOMuxWrapper {
     
     this.selArgv = parseInt(process.argv[2]);
     this.channelArgv = parseInt(process.argv[3]);
+    console.log("Sel=%d, Ch=%d", this.selArgv, this.channelArgv);
   }
   start () {
     this.openDone = true;
@@ -444,7 +455,7 @@ class GenericGPIOMuxWrapper {
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
     // console.log(this.openDone, muxChannel, muxSwitchVal, dir);
-    // console.log("W %d O %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
+    // console.log("W %d C %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
   }
 }
 class MUXWrapperThermistor {
@@ -470,8 +481,8 @@ class MUXWrapperThermistor {
 
 // TODO reverse (for debug)
 const LED_WELL_TO_CHANNEL_MAP = [
-  0,1,2,3,4,5,6,7,
-  15,14,13,12,11,10,9,8
+  8,9,10,11,12,13,14,15,
+  0,1,2,3,4,5,6,7
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 let hoge = 0;
@@ -492,11 +503,12 @@ class LEDUnit {
     this.pot.setWiper(0);
     this.flg = !this.flg;
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    // channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
+    channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
     this.ledDriver.selectChannel(channel);
+    // this.ledDriver.off();
     if (well == 15) {
-      // console.log("Well %d", hoge);
-      hoge = (hoge + 1) % 8;
+      console.log("Well %d", hoge);
+      hoge = (hoge + 1) % 16;
     }
   }
   off () {
@@ -556,10 +568,13 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
+      /*
       if (hoge%2==0)
         this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
       else
         this.isStrongSignal = !DEFAULT_IS_STRONG_SIGNAL;
+        */
+        this.isStrongSignal = false;
     }
     rpio.write(PIN_NUM_AMP_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
   }

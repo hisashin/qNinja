@@ -20,7 +20,8 @@ const session = new OpticsSession();
 qpcr.setSession(session);
 session.start();
 eventBus.subscribe("optics.update", (topic, values)=>{
-  console.log(_transformValues(values)[0][3]);
+  console.log("VALUES")
+  console.log(_transformValues(values));
 });
 function _transformValues (values) {
   let data = [];
@@ -30,10 +31,10 @@ function _transformValues (values) {
       let id = block * 8 + i;
       let obj = {};
       obj.id = id;
-      obj.c0 = values[0][i].v;
-      obj.s0 = values[0][i].s;
-      obj.c1 = values[1][i].v;
-      obj.s1 = values[1][i].s;
+      obj.c0 = values[id].vl * 100;
+      obj.s0 = values[id].vs * 100;
+      // obj.c1 = values[id].v;
+      // obj.s1 = values[id].s;
       row.push(obj);
     }
     data.push(row);

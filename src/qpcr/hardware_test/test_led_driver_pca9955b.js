@@ -6,7 +6,7 @@ const rpio = require('rpio');
 
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 
-const SPI_CHANNEL = "/dev/spidev0.0";
+const DELAY = 1000;
 const CHANNEL_OFFSET = 0;
 const CHANNEL_COUNT = 16; //16;
 const PIN_LATCH = 15;
@@ -16,6 +16,11 @@ const VALUE_SPI_SWITCH_MUX = rpio.LOW;
 const I2C_ADDR_PCA9955B = 0x05;
 
 const I2C_CHANNEL = 1; // SDA1 & SCL1
+const LED_WELL_TO_CHANNEL_MAP = [
+  
+  8,9,10,11,12,13,14,15,
+  0,1,2,3,4,5,6,7
+];
 
 rpio.open(32, rpio.INPUT);
 
@@ -42,7 +47,6 @@ const interval = setInterval(()=>{
     }
   }
   */
-  ledDriver.selectChannel(channel);
   /*
   if (channel % 2 == 0) {
     ledDriver.onAll();
@@ -50,8 +54,13 @@ const interval = setInterval(()=>{
     ledDriver.offAll();
   }
   */
-  console.log("Ch=%d", channel)
   const ch = CHANNEL_OFFSET + channel;
+  console.log("Ch=%d", ch);
+  /*
+  const v = (ch>8)?rpio.LOW:rpio.HIGH;
+  rpio.write(VALUE_SPI_SWITCH_MUX, v);
+  */
+  ledDriver.selectChannel(LED_WELL_TO_CHANNEL_MAP[ch]);
   channel = (channel + 1) % CHANNEL_COUNT;
   
-}, 200);
+}, DELAY);
