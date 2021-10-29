@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name qPCR-main-rescue)(type Legacy)(uri ${KIPRJMOD}/qPCR-main-rescue.lib)(options "")(descr ""))
-)
