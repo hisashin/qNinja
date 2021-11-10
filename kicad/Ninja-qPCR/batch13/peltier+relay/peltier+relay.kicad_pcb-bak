@@ -1818,7 +1818,7 @@
   (gr_circle (center 174.05 113.19) (end 174.525 113.19) (layer Edge.Cuts) (width 0.1) (tstamp 617BCDC4))
   (gr_poly (pts (xy 174.005 100.89) (xy 160.23 100.89) (xy 160.23 99.34) (xy 161.96 99.34) (xy 161.96 98.67) (xy 165.17 98.67) (xy 165.18 98.22) (xy 166.1 97.34) (xy 166.12 92.51) (xy 173.995 92.51)) (layer F.Cu) (width 0.1))
   (gr_poly (pts (xy 166.63 102.32) (xy 159.56 102.31) (xy 159.56 101.22) (xy 166.63 101.22)) (layer F.Cu) (width 0.1))
-  (gr_text batch12/peltier+relay (at 113.4 84.14) (layer F.SilkS) (tstamp 6160BC7E)
+  (gr_text batch13/peltier+relay (at 113.4 84.14) (layer F.SilkS) (tstamp 6160BC7E)
     (effects (font (size 1.5 1.5) (thickness 0.25)))
   )
   (gr_text 79.671x32.73mm (at 104.902 78.74) (layer Dwgs.User)
