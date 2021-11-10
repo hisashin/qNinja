@@ -1,7 +1,7 @@
 (export (version D)
   (design
-    (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch12/peltier+relay/peltier+relay.sch)
-    (date "2021 October 29, Friday 19:33:12")
+    (source /Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch13/peltier+relay/peltier+relay.sch)
+    (date "2021 November 10, Wednesday 18:06:47")
     (tool "Eeschema (5.1.6-0-10_14)")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -17,7 +17,7 @@
   (components
     (comp (ref U1)
       (value AOZ2264QI-19)
-      (footprint Ninja-qPCR:AOZ2264QI-19)
+      (footprint Ninja-qPCR:AOZ2264QI-19-Long)
       (libsource (lib Ninja-qPCR) (part AOZ2264QI-19) (description ""))
       (sheetpath (names /) (tstamps /))
       (tstamp 615B3E6F))
