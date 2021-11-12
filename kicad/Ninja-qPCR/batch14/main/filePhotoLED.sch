@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 3 9
+Sheet 3 10
 Title ""
 Date ""
 Rev ""
@@ -42,16 +42,16 @@ I2C_SDA
 Text GLabel 2200 2950 0    50   Input ~ 0
 3V3D
 Wire Wire Line
-	4100 2350 3950 2350
+	4100 2350 4000 2350
 Text GLabel 4100 2350 2    50   Input ~ 0
 GNDD
 $Comp
-L Ninja-qPCR:MCP4551T-502E_MS U6
+L Ninja-qPCR:MCP4551T-104 U6
 U 1 1 60AF8D29
 P 2350 2050
 F 0 "U6" H 3150 2437 60  0000 C CNN
 F 1 "MCP4551T-503E/MS" H 3150 2331 60  0000 C CNN
-F 2 "Ninja-qPCR:MCP4551T-502E&slash_MS" H 3150 2290 60  0001 C CNN
+F 2 "Ninja-qPCR:MCP4551T-104E&slash_MF" H 3150 2290 60  0001 C CNN
 F 3 "" H 2350 2050 60  0000 C CNN
 	1    2350 2050
 	1    0    0    -1  
@@ -114,17 +114,15 @@ Text GLabel 7000 2550 2    50   Input ~ 0
 N_LED_OUT3
 Text GLabel 7000 2450 2    50   Input ~ 0
 N_LED_OUT4
-Text GLabel 7000 2350 2    50   Input ~ 0
+Text GLabel 7000 2050 2    50   Input ~ 0
 N_LED_OUT5
-Text GLabel 7000 2250 2    50   Input ~ 0
-N_LED_OUT6
 Text GLabel 7000 2150 2    50   Input ~ 0
+N_LED_OUT6
+Text GLabel 7000 2250 2    50   Input ~ 0
 N_LED_OUT7
-Text GLabel 7000 1250 2    50   Input ~ 0
-S_LED_OUT1
-Text GLabel 7000 1350 2    50   Input ~ 0
+Text GLabel 7000 1750 2    50   Input ~ 0
 S_LED_OUT2
-Text GLabel 7000 1450 2    50   Input ~ 0
+Text GLabel 7000 1850 2    50   Input ~ 0
 S_LED_OUT3
 Text HLabel 5850 1950 0    50   Input ~ 0
 LED_IREF
@@ -234,17 +232,17 @@ Wire Wire Line
 Connection ~ 5950 2250
 Wire Wire Line
 	5300 1750 6050 1750
-Text GLabel 7000 1950 2    50   Input ~ 0
+Text GLabel 7000 1250 2    50   Input ~ 0
 S_LED_OUT8
-Text GLabel 7000 1850 2    50   Input ~ 0
+Text GLabel 7000 1350 2    50   Input ~ 0
 S_LED_OUT7
-Text GLabel 7000 1750 2    50   Input ~ 0
+Text GLabel 7000 1450 2    50   Input ~ 0
 S_LED_OUT6
-Text GLabel 7000 1650 2    50   Input ~ 0
-S_LED_OUT5
-Text GLabel 7000 2050 2    50   Input ~ 0
-N_LED_OUT8
 Text GLabel 7000 1550 2    50   Input ~ 0
+S_LED_OUT5
+Text GLabel 7000 2350 2    50   Input ~ 0
+N_LED_OUT8
+Text GLabel 7000 1950 2    50   Input ~ 0
 S_LED_OUT4
 Text GLabel 2550 6600 0    50   Input ~ 0
 GNDL
@@ -254,4 +252,13 @@ Wire Wire Line
 	2550 6600 2800 6600
 Text GLabel 5850 1650 0    50   Input ~ 0
 PD_REF_PWM
+Wire Wire Line
+	3950 2250 4000 2250
+Wire Wire Line
+	4000 2250 4000 2350
+Connection ~ 4000 2350
+Wire Wire Line
+	4000 2350 3950 2350
+Text GLabel 7000 1650 2    50   Input ~ 0
+S_LED_OUT1
 $EndSCHEMATC

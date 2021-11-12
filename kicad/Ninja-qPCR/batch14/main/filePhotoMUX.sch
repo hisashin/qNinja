@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 8 9
+Sheet 8 10
 Title ""
 Date ""
 Rev ""
@@ -106,7 +106,7 @@ U 2 1 60B0D59F
 P 6050 4300
 F 0 "U19" H 7350 4687 60  0000 C CNN
 F 1 "CD74HC4067M96" H 7350 4581 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7350 4540 60  0001 C CNN
+F 2 "Ninja-qPCR:CD74HC4067M96" H 7350 4540 60  0001 C CNN
 F 3 "" H 6050 4300 60  0000 C CNN
 	2    6050 4300
 	-1   0    0    -1  
@@ -117,21 +117,21 @@ Text GLabel 6200 5300 2    50   Input ~ 0
 3V3D
 Text GLabel 6250 3150 2    50   Input ~ 0
 PD_MUX_OUT
-Text HLabel 6250 2250 2    50   Input ~ 0
-S_PD_OUT9
-Text HLabel 6250 2350 2    50   Input ~ 0
-S_PD_OUT10
-Text HLabel 6250 2450 2    50   Input ~ 0
-S_PD_OUT11
-Text HLabel 6250 2550 2    50   Input ~ 0
-S_PD_OUT12
-Text HLabel 6250 2650 2    50   Input ~ 0
-S_PD_OUT13
-Text HLabel 6250 2750 2    50   Input ~ 0
-S_PD_OUT14
-Text HLabel 6250 2850 2    50   Input ~ 0
-S_PD_OUT15
 Text HLabel 6250 2950 2    50   Input ~ 0
+S_PD_OUT9
+Text HLabel 6250 2850 2    50   Input ~ 0
+S_PD_OUT10
+Text HLabel 6250 2750 2    50   Input ~ 0
+S_PD_OUT11
+Text HLabel 6250 2650 2    50   Input ~ 0
+S_PD_OUT12
+Text HLabel 6250 2550 2    50   Input ~ 0
+S_PD_OUT13
+Text HLabel 6250 2450 2    50   Input ~ 0
+S_PD_OUT14
+Text HLabel 6250 2350 2    50   Input ~ 0
+S_PD_OUT15
+Text HLabel 6250 2250 2    50   Input ~ 0
 S_PD_OUT16
 Wire Wire Line
 	3250 4400 3450 4400
@@ -143,7 +143,7 @@ U 1 1 60B0D5A6
 P 6100 1250
 F 0 "U19" H 7400 1637 60  0000 C CNN
 F 1 "CD74HC4067M96" H 7400 1531 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 7400 1490 60  0001 C CNN
+F 2 "Ninja-qPCR:CD74HC4067M96" H 7400 1490 60  0001 C CNN
 F 3 "" H 6100 1250 60  0000 C CNN
 	1    6100 1250
 	-1   0    0    -1  
@@ -378,7 +378,7 @@ AR Path="/614A5737/6152C5C5" Ref="U?"  Part="2"
 AR Path="/6154FC7E/6152C5C5" Ref="U20"  Part="2" 
 F 0 "U20" H 11650 4637 60  0000 C CNN
 F 1 "CD74HC4067M96" H 11650 4531 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 11650 4490 60  0001 C CNN
+F 2 "Ninja-qPCR:CD74HC4067M96" H 11650 4490 60  0001 C CNN
 F 3 "" H 10350 4250 60  0000 C CNN
 	2    10350 4250
 	-1   0    0    -1  
@@ -451,24 +451,24 @@ AR Path="/614A5737/6152C5E8" Ref="U?"  Part="1"
 AR Path="/6154FC7E/6152C5E8" Ref="U20"  Part="1" 
 F 0 "U20" H 11600 1637 60  0000 C CNN
 F 1 "CD74HC4067M96" H 11600 1531 60  0000 C CNN
-F 2 "Ninja-qPCR:SOP65P780X200-24N" H 11600 1490 60  0001 C CNN
+F 2 "Ninja-qPCR:CD74HC4067M96" H 11600 1490 60  0001 C CNN
 F 3 "" H 10300 1250 60  0000 C CNN
 	1    10300 1250
 	-1   0    0    -1  
 $EndComp
-Text HLabel 10450 2850 2    50   Input ~ 0
-N_PD_OUT2
-Text HLabel 10450 2750 2    50   Input ~ 0
-N_PD_OUT3
-Text HLabel 10450 2650 2    50   Input ~ 0
-N_PD_OUT4
-Text HLabel 10450 2550 2    50   Input ~ 0
-N_PD_OUT5
-Text HLabel 10450 2450 2    50   Input ~ 0
-N_PD_OUT6
 Text HLabel 10450 2350 2    50   Input ~ 0
+N_PD_OUT2
+Text HLabel 10450 2450 2    50   Input ~ 0
+N_PD_OUT3
+Text HLabel 10450 2550 2    50   Input ~ 0
+N_PD_OUT4
+Text HLabel 10450 2650 2    50   Input ~ 0
+N_PD_OUT5
+Text HLabel 10450 2750 2    50   Input ~ 0
+N_PD_OUT6
+Text HLabel 10450 2850 2    50   Input ~ 0
 N_PD_OUT7
-Text HLabel 10450 2250 2    50   Input ~ 0
+Text HLabel 10450 2950 2    50   Input ~ 0
 N_PD_OUT8
 Text HLabel 10450 1450 2    50   Input ~ 0
 N_PD_OUT9
@@ -542,7 +542,7 @@ Text HLabel 6250 2050 2    50   Input ~ 0
 S_PD_OUT2
 Text HLabel 6250 2150 2    50   Input ~ 0
 S_PD_OUT1
-Text HLabel 10450 2950 2    50   Input ~ 0
+Text HLabel 10450 2250 2    50   Input ~ 0
 N_PD_OUT1
 NoConn ~ 1650 7350
 NoConn ~ 1650 7450

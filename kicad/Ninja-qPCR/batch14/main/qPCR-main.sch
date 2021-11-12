@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 9
+Sheet 1 10
 Title ""
 Date ""
 Rev ""
@@ -694,8 +694,6 @@ Text HLabel 1550 2950 0    50   Input ~ 0
 GPIO22
 Text HLabel 3250 2950 2    50   Input ~ 0
 GPIO26
-Text HLabel 3250 3250 2    50   Input ~ 0
-GPIO28
 Wire Wire Line
 	1550 2750 1700 2750
 Wire Wire Line
@@ -714,8 +712,6 @@ Text HLabel 3900 6850 0    50   Input ~ 0
 GPIO14
 Text HLabel 3900 6950 0    50   Input ~ 0
 GPIO22
-Text HLabel 3900 7250 0    50   Input ~ 0
-GPIO28
 $Comp
 L Connector:Conn_01x01_Male J6
 U 1 1 60C484F3
@@ -739,9 +735,7 @@ F 3 "~" H 4300 6850 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	4100 7250 3900 7250
-Wire Wire Line
-	4100 7150 3900 7150
+	4100 7050 3900 7050
 Wire Wire Line
 	4100 6950 3900 6950
 Wire Wire Line
@@ -894,12 +888,12 @@ $EndComp
 $Comp
 L Connector:Conn_01x01_Male J9
 U 1 1 60CC8925
-P 4300 7150
-F 0 "J9" H 4272 7174 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7083 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7150 50  0001 C CNN
-F 3 "~" H 4300 7150 50  0001 C CNN
-	1    4300 7150
+P 4300 7050
+F 0 "J9" H 4272 7074 50  0000 R CNN
+F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
+F 3 "~" H 4300 7050 50  0001 C CNN
+	1    4300 7050
 	-1   0    0    -1  
 $EndComp
 NoConn ~ 1550 2250
@@ -994,51 +988,18 @@ U 614A3D56
 F0 "-1V" 50
 F1 "file-1V.sch" 50
 $EndSheet
-Text HLabel 3250 3350 2    50   Input ~ 0
-GPIO29
-Text HLabel 1550 3250 0    50   Input ~ 0
-GPIO25
-Text HLabel 3900 7350 0    50   Input ~ 0
-GPIO29
-Wire Wire Line
-	4100 7350 3900 7350
-$Comp
-L Connector:Conn_01x01_Male J20
-U 1 1 6165C395
-P 4300 7350
-F 0 "J20" H 4272 7374 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7283 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7350 50  0001 C CNN
-F 3 "~" H 4300 7350 50  0001 C CNN
-	1    4300 7350
-	-1   0    0    -1  
-$EndComp
-Text HLabel 3900 7150 0    50   Input ~ 0
-GPIO26
-$Comp
-L Connector:Conn_01x01_Male J19
-U 1 1 6165C38B
-P 4300 7050
-F 0 "J19" H 4272 7074 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 6983 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7050 50  0001 C CNN
-F 3 "~" H 4300 7050 50  0001 C CNN
-	1    4300 7050
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	4100 7050 3900 7050
 Text HLabel 3900 7050 0    50   Input ~ 0
-GPIO25
-$Comp
-L Connector:Conn_01x01_Male J10
-U 1 1 60CC8AA5
-P 4300 7250
-F 0 "J10" H 4272 7274 50  0000 R CNN
-F 1 "Conn_01x01_Male" H 4272 7183 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 4300 7250 50  0001 C CNN
-F 3 "~" H 4300 7250 50  0001 C CNN
-	1    4300 7250
-	-1   0    0    -1  
-$EndComp
+GPIO26
+$Sheet
+S 9750 5750 1150 300 
+U 618EA4AA
+F0 "SheetPeltier" 50
+F1 "filePeltier.sch" 50
+$EndSheet
+Text GLabel 1550 3250 0    50   Input ~ 0
+PEL_REG_EN
+Text GLabel 3250 3250 2    50   Input ~ 0
+PEL_SWA
+Text GLabel 3250 3350 2    50   Input ~ 0
+PEL_SWB
 $EndSCHEMATC

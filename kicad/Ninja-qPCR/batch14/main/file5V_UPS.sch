@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 5 9
+Sheet 5 10
 Title ""
 Date ""
 Rev ""
@@ -233,7 +233,7 @@ U 1 1 614A029D
 P 6300 4050
 F 0 "C16" H 6185 4004 50  0000 R CNN
 F 1 "10uF" H 6185 4095 50  0000 R CNN
-F 2 "Capacitors_SMD:C_0603" H 6338 3900 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805" H 6338 3900 50  0001 C CNN
 F 3 "~" H 6300 4050 50  0001 C CNN
 	1    6300 4050
 	1    0    0    1   
