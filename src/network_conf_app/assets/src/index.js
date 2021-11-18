@@ -63,7 +63,12 @@ window.onload = ()=>{
   loadConf();
 };
 let app = null;
+let isKiosk = false;
 function initApp() {
+  isKiosk = location.href.indexOf("?kiosk=true") > 0;
+  if (isKiosk) {
+    VirtualKeyboard.initKeyboard();
+  }
   app = new Vue({
     el: '#app',
     data: {
@@ -72,7 +77,8 @@ function initApp() {
       saved:false,
       changed:0,
       country:"",
-      countries:COUNTRIES
+      countries:COUNTRIES,
+      isKiosk:isKiosk
     },
     methods: {
       remove: function (id) {
@@ -110,13 +116,18 @@ function initApp() {
           }
         });
       },
+      shutdown: function () {
+        requestData("/shutdown", {}, "POST", (responseData)=>{});
+      },
       save:function () {
         const dataObj = {
           country: this.country,
           networks: this.networks
         };
         const data = JSON.parse(JSON.stringify(dataObj));
+        console.log(data)
         requestData("/update", data, "POST", (responseData)=>{
+          console.log(responseData);
           this.clearErrors();
           if (responseData.isValid) {
             this.saved = true;

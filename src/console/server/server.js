@@ -1,6 +1,7 @@
 "use strict";
 const { exec } = require("child_process");
 const fs = require('fs');
+const DATA_DIR_ROOT = process.env.NINJAQPCR_USER_DATA || "/home/pi/ninjaqpcr/user_data";
 /*
   Options
   --clientHost : Allowed access origin host
@@ -30,6 +31,7 @@ const WebSocketServer = require('websocket').server;
 const WEBSOCKET_PORT = "2222";
 const CLIENT_HOST_DEFAULT = "ninjaqpcr.local";
 const CLIENT_PORT_DEFAULT = "8080";
+let isDummyHardware = false;
 
 const protocolPager = new Pager(
   // Defaults
@@ -689,12 +691,62 @@ class NinjaQPCRWebSocketServer {
         // TODO receive command
         session.start();
       }
-      if (topic == "device.command.runPlateControl") {
+      else if (topic == "device.command.runPlateControl") {
         // TODO check device availability
         const session = new PlateControlSession();
         qpcr.setSession(session);
         // TODO receive command
         session.start();
+      }
+      else if (topic == "device.command.shutdown") {
+        eventBus.publish("device.update.shutdown", {});
+        qpcr.shutdown();
+        if (isDummyHardware) {
+          console.log("It is dummy hardware.");
+        } else {
+          const cmd = "sudo shutdown -h now";
+          console.log(cmd);
+          exec(cmd, (error, stdout, stderr) => {
+            console.log("Error", error);
+            console.log("Stdout", stdout);
+            console.log("Stderr", stderr);
+          });
+        }
+
+      }
+      else if (topic == "device.command.reboot") {
+        eventBus.publish("device.update.reboot", {});
+        qpcr.shutdown();
+        if (isDummyHardware) {
+          console.log("It is dummy hardware.");
+        } else {
+          const cmd = "sudo reboot";
+          console.log(cmd);
+          exec(cmd, (error, stdout, stderr) => {
+            console.log("Error", error);
+            console.log("Stdout", stdout);
+            console.log("Stderr", stderr);
+          });
+        }
+
+      }
+      else if (topic == "device.command.rebootAP") {
+        console.log("Rebooting in AP mode.");
+
+        eventBus.publish("device.update.rebootAP", {});
+        qpcr.shutdown();
+        if (isDummyHardware) {
+          console.log("It is dummy hardware.");
+        } else {
+          const cmd = "touch " + DATA_DIR_ROOT + "/boot_ap.dat; sudo reboot";
+          console.log(cmd);
+          exec(cmd, (error, stdout, stderr) => {
+            console.log("Error", error);
+            console.log("Stdout", stdout);
+            console.log("Stderr", stderr);
+          });
+        }
+        process.exit(0);
       }
     });
     qpcr.startMonitoringTemperature ((data)=>{
@@ -813,6 +865,9 @@ class NinjaQPCRServer {
     const clientHost = (options.clientHost) ? options.clientHost:CLIENT_HOST_DEFAULT;
     const clientPort = (options.clientPort) ? options.clientPort:CLIENT_PORT_DEFAULT;
     const hardwareFile = (options.dummyHardware) ? "hardware_dummy.json" : "hardware.json";
+    if (options.dummyHardware) {
+      isDummyHardware = true;
+    }
     console.log("hardwareFile=%s", hardwareFile);
     
     qpcr = new NinjaQPCR(hardwareFile);

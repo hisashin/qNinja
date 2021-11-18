@@ -48,6 +48,18 @@
       <div class="debug">
       (Dev)
         <b-button class="mr-1 btn-sm"
+          @click.stop="rebootAP">
+          AP mode
+        </b-button>
+        <b-button class="mr-1 btn-sm"
+          @click.stop="reboot">
+          Reboot
+        </b-button>
+        <b-button class="mr-1 btn-sm"
+          @click.stop="shutdown">
+          Shutdown
+        </b-button>
+        <b-button class="mr-1 btn-sm"
           @click.stop="showTemplate">
           Panel Template
         </b-button>
@@ -154,6 +166,12 @@ export default {
     device.subscribe("device.update.shutdown", (topic, data)=>{
       alert("The device is going to shut down.");
     });
+    device.subscribe("device.update.rebootAP", (topic, data)=>{
+      alert("The device is going to reboot in AP mode.");
+    });
+    device.subscribe("device.update.reboot", (topic, data)=>{
+      alert("The device is going to restart.");
+    });
   },
   mounted: function () {
     appState.setViews(this.$refs);
@@ -167,6 +185,18 @@ export default {
     presentPanel(panel, toPanel) {
       this.selectedPanel = panel;
       this.panelTitle = (toPanel.title) ? toPanel.title() : "N/A";
+    },
+    rebootAP () {
+      // Reboot in AP mode
+      device.publish("device.command.rebootAP", {});
+    },
+    reboot () {
+      // Simply reboot
+      device.publish("device.command.reboot", {});
+    },
+    shutdown () {
+      // Reboot in AP mode
+      device.publish("device.command.shutdown", {});
     },
     showTemplate () {
       appState.pushPanel(appState.PANELS.TEMPLATE);

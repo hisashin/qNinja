@@ -73,7 +73,7 @@ NINJAQPCR_HOME=/usr/local/ninjaqpcr
 ```
 [Desktop Entry]
 Name=Ninja-qPCR
-Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8888?kiosk=true
+Exec=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8080?kiosk=true
 Type=Application
 ```
 
