@@ -7,20 +7,20 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.6-0-10_14)"
     },
-    "CreationDate":  "2021-10-29T19:28:25+09:00"
+    "CreationDate":  "2021-09-30T00:47:32+09:00"
   },
   "GeneralSpecs":
   {
     "ProjectId":
     {
-      "Name": "peltier+relay",
-      "GUID": "70656c74-6965-4722-9b72-656c61792e6b",
+      "Name": "qPCR-main",
+      "GUID": "71504352-2d6d-4616-996e-2e6b69636164",
       "Revision": "rev?"
     },
     "Size":
     {
-      "X": 79.771,
-      "Y": 32.830
+      "X": 100.100,
+      "Y": 100.100
     },
     "LayerNumber": 2,
     "BoardThickness":  1.600
@@ -29,10 +29,10 @@
   [
     {
       "Layers": "Outer",
-      "PadToPad":  0.200,
-      "PadToTrack":  0.200,
-      "TrackToTrack":  0.200,
-      "MinLineWidth":  0.250,
+      "PadToPad":  0.102,
+      "PadToTrack":  0.102,
+      "TrackToTrack":  0.102,
+      "MinLineWidth":  0.127,
       "TrackToRegion":  0.508,
       "RegionToRegion":  0.508
     }
@@ -40,47 +40,47 @@
   "FilesAttributes":
   [
     {
-      "Path":  "peltier+relay-F_Cu.gtl",
+      "Path":  "qPCR-main-F_Cu.gtl",
       "FileFunction":  "Copper,L1,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-B_Cu.gbl",
+      "Path":  "qPCR-main-B_Cu.gbl",
       "FileFunction":  "Copper,L2,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-F_Paste.gtp",
+      "Path":  "qPCR-main-F_Paste.gtp",
       "FileFunction":  "SolderPaste,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-B_Paste.gbp",
+      "Path":  "qPCR-main-B_Paste.gbp",
       "FileFunction":  "SolderPaste,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-F_SilkS.gto",
+      "Path":  "qPCR-main-F_SilkS.gto",
       "FileFunction":  "Legend,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-B_SilkS.gbo",
+      "Path":  "qPCR-main-B_SilkS.gbo",
       "FileFunction":  "Legend,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "peltier+relay-F_Mask.gts",
+      "Path":  "qPCR-main-F_Mask.gts",
       "FileFunction":  "SolderMask,Top",
       "FilePolarity":  "Negative"
     },
     {
-      "Path":  "peltier+relay-B_Mask.gbs",
+      "Path":  "qPCR-main-B_Mask.gbs",
       "FileFunction":  "SolderMask,Bot",
       "FilePolarity":  "Negative"
     },
     {
-      "Path":  "peltier+relay-Edge_Cuts.gm1",
+      "Path":  "qPCR-main-Edge_Cuts.gm1",
       "FileFunction":  "Profile",
       "FilePolarity":  "Positive"
     }
