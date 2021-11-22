@@ -57,15 +57,11 @@ F 3 "~" H 1800 4450 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3100 4950 1750 4950
-Wire Wire Line
 	3100 4250 2900 4250
 Text GLabel 2500 4250 0    50   Input ~ 0
 3V3D
 Wire Wire Line
 	2500 4250 2600 4250
-Text GLabel 1750 4950 0    50   Input ~ 0
-DEMOD_SPI_SCLK
 Text HLabel 9900 3200 2    50   Input ~ 0
 AMP_OUT
 Wire Wire Line
@@ -74,16 +70,8 @@ Connection ~ 9400 3200
 Wire Wire Line
 	6850 850  6700 850 
 Wire Wire Line
-	3100 4350 2600 4350
-Wire Wire Line
-	3100 5050 2900 5050
-Text GLabel 2600 4350 0    50   Input ~ 0
-DEMOD_SPI_CS
-Text GLabel 2900 5050 0    50   Input ~ 0
-DEMOD_SPI_SDIO
-Wire Wire Line
-	3100 5150 2900 5150
-NoConn ~ 2900 5150
+	3100 4950 2900 4950
+NoConn ~ 2900 4950
 $Comp
 L Device:C C2
 U 1 1 614DBA38
@@ -167,8 +155,6 @@ Wire Wire Line
 	7300 1800 7150 1800
 Wire Wire Line
 	6700 1800 6850 1800
-Text GLabel 5200 4350 2    50   Input ~ 0
-XOUT
 Text GLabel 2500 4550 0    50   Input ~ 0
 CLKIN
 Wire Wire Line
@@ -322,8 +308,6 @@ Wire Wire Line
 	5200 4150 5100 4150
 Wire Wire Line
 	5200 4250 5100 4250
-Wire Wire Line
-	5200 4350 5100 4350
 Wire Wire Line
 	5200 4750 5100 4750
 Text GLabel 5300 7300 0    50   Input ~ 0
@@ -673,4 +657,16 @@ F 3 "~" H 2950 6700 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6700 5250 7500 5250
+NoConn ~ 2900 5050
+NoConn ~ 2900 5150
+NoConn ~ 5200 4350
+Wire Wire Line
+	5200 4350 5100 4350
+Wire Wire Line
+	2900 5050 3100 5050
+Wire Wire Line
+	2900 5150 3100 5150
+NoConn ~ 2900 4350
+Wire Wire Line
+	2900 4350 3100 4350
 $EndSCHEMATC
