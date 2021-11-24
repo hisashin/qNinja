@@ -796,4 +796,23 @@ Wire Wire Line
 Wire Wire Line
 	9600 2100 9600 2200
 Connection ~ 9600 2200
+$Comp
+L power:GND #PWR?
+U 1 1 6197F46C
+P 6450 5550
+AR Path="/6197F46C" Ref="#PWR?"  Part="1" 
+AR Path="/5F7519D0/6197F46C" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/6197F46C" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/6197F46C" Ref="#PWR?"  Part="1" 
+AR Path="/615FFA84/6197F46C" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/6197F46C" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 6450 5300 50  0001 C CNN
+F 1 "GND" H 6455 5377 50  0000 C CNN
+F 2 "" H 6450 5550 50  0001 C CNN
+F 3 "" H 6450 5550 50  0001 C CNN
+	1    6450 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6450 5400 6450 5550
 $EndSCHEMATC

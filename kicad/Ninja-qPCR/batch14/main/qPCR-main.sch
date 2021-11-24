@@ -450,25 +450,25 @@ Wire Wire Line
 	5500 4050 5750 4050
 Wire Wire Line
 	5650 4150 5650 4250
-Text GLabel 1150 4900 0    50   Input ~ 0
+Text GLabel 1100 4150 0    50   Input ~ 0
 I2C_SDA
-Text GLabel 1150 5000 0    50   Input ~ 0
+Text GLabel 1100 4250 0    50   Input ~ 0
 I2C_SCL
-Text GLabel 1150 5100 0    50   Input ~ 0
+Text GLabel 1100 4350 0    50   Input ~ 0
 GND
-Text GLabel 1150 4700 0    50   Input ~ 0
+Text GLabel 1100 3950 0    50   Input ~ 0
 5V_UPS
 Wire Wire Line
-	1150 4700 1300 4700
+	1100 3950 1250 3950
 Wire Wire Line
-	1300 4900 1150 4900
+	1250 4150 1100 4150
 Wire Wire Line
-	1300 5000 1150 5000
+	1250 4250 1100 4250
 Wire Wire Line
-	1300 5100 1150 5100
-NoConn ~ 1200 4800
+	1250 4350 1100 4350
+NoConn ~ 1150 4050
 Wire Wire Line
-	1200 4800 1300 4800
+	1150 4050 1250 4050
 Wire Wire Line
 	3050 2650 3100 2650
 Connection ~ 3100 2650
@@ -491,12 +491,12 @@ DLOCK
 $Comp
 L Ninja-qPCR:RPI_LCD_TOUCH_7INCH_M2.5_NONE LCD1
 U 1 1 60BA74A3
-P 1300 4700
-F 0 "LCD1" H 1675 4925 50  0000 C CNN
-F 1 "RPI_LCD_TOUCH_7INCH" H 1675 4834 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 1300 4700 50  0001 C CNN
-F 3 "" H 1300 4700 50  0001 C CNN
-	1    1300 4700
+P 1250 3950
+F 0 "LCD1" H 1625 4175 50  0000 C CNN
+F 1 "RPI_LCD_TOUCH_7INCH" H 1625 4084 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 1250 3950 50  0001 C CNN
+F 3 "" H 1250 3950 50  0001 C CNN
+	1    1250 3950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1002,4 +1002,97 @@ Text GLabel 3250 3250 2    50   Input ~ 0
 PEL_SWA
 Text GLabel 3250 3350 2    50   Input ~ 0
 PEL_SWB
+Text GLabel 2800 5000 2    50   Input ~ 0
+12V
+Wire Wire Line
+	2600 5000 2700 5000
+$Comp
+L Connector:Conn_01x24_Male J19
+U 1 1 61AA886A
+P 2400 5200
+F 0 "J19" H 2508 6481 50  0000 C CNN
+F 1 "Conn_01x24_Male" H 2508 6390 50  0000 C CNN
+F 2 "Ninja-qPCR:ATX24" H 2400 5200 50  0001 C CNN
+F 3 "~" H 2400 5200 50  0001 C CNN
+	1    2400 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 5100 2700 5100
+Wire Wire Line
+	2700 5100 2700 5000
+Connection ~ 2700 5000
+Wire Wire Line
+	2700 5000 2800 5000
+$Comp
+L power:GND #PWR0110
+U 1 1 61A277A3
+P 2800 4500
+AR Path="/61A277A3" Ref="#PWR0110"  Part="1" 
+AR Path="/5F7519D0/61A277A3" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/61A277A3" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F91/61A277A3" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0110" H 2800 4250 50  0001 C CNN
+F 1 "GND" H 2805 4327 50  0000 C CNN
+F 2 "" H 2800 4500 50  0001 C CNN
+F 3 "" H 2800 4500 50  0001 C CNN
+	1    2800 4500
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2600 5600 2700 5600
+Wire Wire Line
+	2600 4300 2700 4300
+Wire Wire Line
+	2700 4300 2700 4500
+Wire Wire Line
+	2700 4500 2600 4500
+Wire Wire Line
+	2600 4700 2700 4700
+Wire Wire Line
+	2700 4700 2700 4500
+Connection ~ 2700 4500
+Wire Wire Line
+	2600 5500 2700 5500
+Wire Wire Line
+	2700 5500 2700 5600
+Connection ~ 2700 5600
+Wire Wire Line
+	2700 4500 2800 4500
+Wire Wire Line
+	2600 5700 2700 5700
+Wire Wire Line
+	2700 5700 2700 5600
+Wire Wire Line
+	2600 5800 2700 5800
+Wire Wire Line
+	2700 5800 2700 5700
+Connection ~ 2700 5700
+Wire Wire Line
+	2600 5900 2700 5900
+Wire Wire Line
+	2700 5900 2700 5800
+Connection ~ 2700 5800
+Connection ~ 2700 5900
+$Comp
+L power:GND #PWR0111
+U 1 1 61B11235
+P 2800 5900
+AR Path="/61B11235" Ref="#PWR0111"  Part="1" 
+AR Path="/5F7519D0/61B11235" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/61B11235" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F91/61B11235" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0111" H 2800 5650 50  0001 C CNN
+F 1 "GND" H 2805 5727 50  0000 C CNN
+F 2 "" H 2800 5900 50  0001 C CNN
+F 3 "" H 2800 5900 50  0001 C CNN
+	1    2800 5900
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2800 5900 2700 5900
+Wire Wire Line
+	2700 6400 2700 5900
+Wire Wire Line
+	2600 6400 2700 6400
 $EndSCHEMATC

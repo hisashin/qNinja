@@ -1,4 +1,4 @@
-320786480179217
+324097436722217
 Air_Coils_SML_NEOSID
 Neosid_Air-Coil_SML_1turn_HDM0131A
 
@@ -19404,6 +19404,13 @@ AOZ2264QI-19-Long
 23
 23
 Ninja-qPCR
+AOZ2264QI-19-Long2
+
+
+0
+23
+23
+Ninja-qPCR
 AOZ6663DI-01
 DD Package; 8-Lead Plastic DFN (3mm x 3mm) (see Linear Technology DFN_8_05-08-1698.pdf)
 DFN 0.5
@@ -19424,6 +19431,13 @@ ASDK-32.768KHZ-LRT
 0
 4
 4
+Ninja-qPCR
+ATX24
+
+
+0
+24
+24
 Ninja-qPCR
 BD9D320EFJ-E2
 
