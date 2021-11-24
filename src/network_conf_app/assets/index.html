@@ -6,6 +6,7 @@
   <title>Ninja-qPCR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/keyboard.css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
@@ -54,12 +55,13 @@
                 <div class="col-9">
                   <template v-if="network.passphraseUpdated">
                     <!-- Updating passphrase -->
-                    <input v-model="network.passphrase" type="password">
+                    <input v-model="network.passphrase" v-if="isKiosk" type="password">
+                    <input v-model="network.passphrase" v-if="!isKiosk">
                     <span class="small text-secondary py-2">Edited</span>
                   </template>
                   <template v-else>
                     <!-- Dummy Field -->
-                    <input v-model="network.passphrase_dummy" v-on:focus="startEditPassphrase(network.id)" type="password">
+                    <input v-model="network.passphrase_dummy_kiosk" v-on:focus="startEditPassphrase(network.id)" type="text">
                   </template>
                 </div>
                 <div class="col-3 text-right">Priority</div>
@@ -78,10 +80,14 @@
         </div>
         <!-- UIs -->
         <div class="col-12 py-1">
-          <button v-on:click="add()" class="btn btn-outline-primary">Add</button>
+          <button v-on:click="add()" class="btn btn-outline-primary">Add another network</button>
         </div>
         <div class="col-8 py-1">
           <button v-on:click="save()" class="btn btn-primary btn-block">Save</button>
+        </div>
+        <div class="col-8 py-1">
+          <button v-on:click="reboot()" class="btn btn-outline-primary btn-block">&#9211;Restart without saving</button>
+          <button v-on:click="shutdown" class="btn btn-outline-primary btn-block">&#9211;Shutdown</button>
         </div>
         <div class="col-12 py-1" v-if="saved">
           <div class="alert alert-primary">
@@ -102,9 +108,11 @@
           Please join the network and access <a href="http://ninjaqpcr.local">http://ninjaqpcr.local</a>.
         </p>
     </div>
-    <script type="text/javascript" src="/src/vue.min.js"></script>
+    <!--<script type="text/javascript" src="/src/vue.min.js"></script>-->
+    <script type="text/javascript" src="/src/vue.js"></script>
     <script type="text/javascript" src="/src/countries.js"></script>
     <script type="text/javascript" src="/src/index.js"></script>
+    <script type="text/javascript" src="/src/keyboard.js"></script>
     <ul id="errors">
     </ul>
   </main>

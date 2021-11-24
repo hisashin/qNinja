@@ -8,4 +8,5 @@ sleep 3
 sudo /usr/sbin/dhcpd -cf /usr/local/ninjaqpcr/startup/conf/dhcpd.conf -lf /usr/local/ninjaqpcr/startup/log/lease.log &
 sudo /usr/sbin/hostapd /usr/local/ninjaqpcr/startup/conf/hostapd.conf &
 cd /usr/local/ninjaqpcr/network_conf_app
+rm /home/pi/ninjaqpcr/user_data/boot_ap.dat
 sudo node wifi_conf.js &

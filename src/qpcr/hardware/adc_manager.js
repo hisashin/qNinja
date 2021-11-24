@@ -21,9 +21,15 @@ class ADCManager {
     this.readQueue.push({channel:channel, callback:callback});
     this._readNext();
   }
-  readDiffChannelValue(pChannel, nChannel, callback) {
-    this.readQueue.push({diff:true, pChannel:pChannel, nChannel:nChannel, callback:callback});
-    this._readNext();
+  readDiffChannelValue(pChannel, nChannel, callback, errorHandler) {
+    try {
+      this.readQueue.push({diff:true, pChannel:pChannel, nChannel:nChannel, callback:callback});
+      this._readNext();
+    } catch (e) {
+      if (errorHandler) {
+        errorHandler(e)
+      }
+    }
   }
   _selectChannel (readConf) {
     if (readConf.diff) {
