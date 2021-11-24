@@ -707,4 +707,8 @@ $EndComp
 Wire Wire Line
 	4250 5650 4250 5800
 Connection ~ 4250 5650
+Text Notes 4250 2200 0    50   ~ 0
+SIRA88BDP-T1-GE3
+Text Notes 4200 1650 0    50   ~ 0
+SRP1265C-150M
 $EndSCHEMATC
