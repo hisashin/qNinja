@@ -465,7 +465,7 @@ P 5000 1500
 F 0 "L?" H 5000 1725 50  0000 C CNN
 F 1 "SRP1265C-220M" H 5000 1634 50  0000 C CNN
 F 2 "" H 5000 1700 50  0001 C CNN
-F 3 "" H 5000 1700 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/bourns-inc/srp1265c-220m/11633469" H 5000 1700 50  0001 C CNN
 	1    5000 1500
 	1    0    0    -1  
 $EndComp
@@ -534,13 +534,11 @@ U 1 1 619ECC82
 P 4450 2000
 F 0 "Q?" H 4450 2565 50  0000 C CNN
 F 1 "SIRA88BDP-T1-GE3" H 4450 2474 50  0000 C CNN
-F 2 "" H 4450 2550 50  0001 C CNN
-F 3 "" H 4450 2550 50  0001 C CNN
+F 2 "Ninja-qPCR:PowerPAK_SO-8_Long" H 4450 2550 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/vishay-siliconix/SIRA88BDP-T1-GE3/10321634?s=N4IgTCBcDaIMoEkBKBBAHGgQgEQAogF0BfIA" H 4450 2550 50  0001 C CNN
 	1    4450 2000
 	1    0    0    -1  
 $EndComp
-Text Notes 4850 2000 0    50   ~ 0
-SIRA88BDP-T1-GE3
 Text Notes 4050 950  0    50   ~ 0
 Ceramic
 Text GLabel 5450 1500 2    50   Input ~ 0

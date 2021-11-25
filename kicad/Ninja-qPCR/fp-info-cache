@@ -1,4 +1,4 @@
-18860311715249363
+18865225162092363
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -57974,6 +57974,20 @@ PCA9955B
 29
 29
 Ninja-qPCR
+PowerPAK_SO-8
+
+
+0
+8
+8
+Ninja-qPCR
+PowerPAK_SO-8_Long
+
+
+0
+8
+8
+Ninja-qPCR
 PushPin
 
 
@@ -58062,8 +58076,8 @@ SIRA88BDP-T1-GE3
 
 
 0
-0
-0
+9
+9
 Ninja-qPCR
 SN74LV4051APWR
 
@@ -58148,6 +58162,13 @@ SRN6045TA-3R3Y
 0
 2
 2
+Ninja-qPCR
+SRP1265C
+
+
+0
+0
+0
 Ninja-qPCR
 SW_TH_Tactile_Omron_B3F-10xx
 SW_TH_Tactile_Omron_B3F-10xx_https://www.omron.com/ecb/products/pdf/en-b3f.pdf
