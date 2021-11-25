@@ -186,8 +186,6 @@ F 3 "" H 4250 5800 50  0001 C CNN
 	1    4250 5800
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	4250 5400 4250 5650
 $Comp
 L Device:R R6
 U 1 1 61611394
@@ -242,21 +240,12 @@ Wire Wire Line
 	6400 4500 6400 4750
 Wire Wire Line
 	4400 5450 4450 5450
-Text HLabel 4200 5650 0    50   Input ~ 0
-PEL2
-Wire Wire Line
-	4200 5650 4250 5650
-Text HLabel 8900 6000 0    50   Input ~ 0
-PEL2
 Wire Wire Line
 	9500 5850 9500 6000
 Wire Wire Line
 	9500 6000 9000 6000
 Wire Wire Line
 	9000 5850 9000 6000
-Connection ~ 9000 6000
-Wire Wire Line
-	9000 6000 8900 6000
 Wire Wire Line
 	9800 5250 9900 5250
 Wire Wire Line
@@ -451,9 +440,6 @@ Wire Wire Line
 	9000 4750 8900 4750
 Connection ~ 9000 4950
 Wire Wire Line
-	4250 5650 4250 5800
-Connection ~ 4250 5650
-Wire Wire Line
 	5350 1000 5350 850 
 Connection ~ 5350 1500
 Wire Wire Line
@@ -630,4 +616,25 @@ Wire Wire Line
 	4000 2100 4200 2100
 Wire Wire Line
 	3950 850  3950 1000
+Wire Wire Line
+	4250 5400 4250 5800
+$Comp
+L power:GND #PWR?
+U 1 1 619FF3DC
+P 9000 6100
+AR Path="/619FF3DC" Ref="#PWR?"  Part="1" 
+AR Path="/5F7519D0/619FF3DC" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/619FF3DC" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/619FF3DC" Ref="#PWR?"  Part="1" 
+AR Path="/615FFA84/619FF3DC" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 9000 5850 50  0001 C CNN
+F 1 "GND" H 9005 5927 50  0000 C CNN
+F 2 "" H 9000 6100 50  0001 C CNN
+F 3 "" H 9000 6100 50  0001 C CNN
+	1    9000 6100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9000 6000 9000 6100
+Connection ~ 9000 6000
 $EndSCHEMATC
