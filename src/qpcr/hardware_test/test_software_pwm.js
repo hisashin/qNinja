@@ -10,7 +10,7 @@ raspi.init(() => {
     new pwm.SoftPWM(23),
     new pwm.SoftPWM(24),
     */
-    new pwm.SoftPWM(26)
+    new pwm.SoftPWM(37)
   ];
   for (let i=0; i<leds.length; i++) {
     const led = leds[i];

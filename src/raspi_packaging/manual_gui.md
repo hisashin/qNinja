@@ -4,6 +4,8 @@
 
 # Setup (by touchscreen interface)
 * Insert SD card to RasPi
+
+## Touchscreen of Mouse
 * Connect RPi's USB port and the touchscreen's "touch" port
   * Connecting both touch interface via USB hub and keyboard does not work correctly.
 * Connect RPI and the touchscreen by HDMI cable
@@ -11,26 +13,31 @@
 * (By touchscreen interface) Left-top menu > Preferences > Raspberry Pi Configuration > System > Boot / Auto Login > To Console Autologin
 * (By touchscreen interface) Left-top menu > Logout > Shutdown
 
+## Keyboard
+* Attach a keyboard to RPi's USB port
+* Waiting for X startup
+* Exit X by pressing Ctrl + Alt + F1
+
 # Setup by CLI
 * Connect items
   * Power the touchscreen by 5V AC adapter (instead of RPi's USB port)
   * Attach a keyboard to RPi's USB port
 * Login (user=pi, password=raspberry)
 * Config `sudo raspi-config`
-  * Change keyboard layout (Localisation Options > Change Keyboard Layout > Change Keyboard Layout > Generic 105-key PC (intl.) > Japanese)
+  * Change keyboard layout (Localisation Options > Keyboard > Generic 105-key PC (intl.) > Japanese)
     * Enable X shutdown by Ctrl+Alt+BS
-  * Localisation Options > Change WLAN Country
-  * Change User Password
-  * Open "Network Options > Hostname" and input "ninjaqpcr". This config is applied to mDNS.
+  * Localisation Options > WLAN Country
+    * Select your country based on physical location
+  * Change User Password (System options > Password)
+  * Open "System options > Hostname" and input "ninjaqpcr". This config is applied to mDNS.
   * Enable functionalities
     * Interfacing options > I2C
     * Interfacing options > SSH
-  * Network config (Wireless LAN)
+  * Network config (System options > Wireless LAN)
     * Input Country (JP), SSID and password
       * or `sudo wpa_passphrase <SSID> <passphrase> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf`
   * Enable GUI auto-login
-    raspi-config
-    System options > Boot / Auto Login : Detktop autologin
+    * System options > Boot / Auto Login : Detktop autologin
   * Display Options > Underscan (Remove black borders)
   * Exit raspi-config
 * `sudo reboot`
@@ -43,7 +50,8 @@
 # Install packages (apt & npm)
 ```
 sudo apt update
-sudo apt install nodejs npm hostapd isc-dhcp-server wiringpi libcap2-bin
+# sudo apt install nodejs npm hostapd isc-dhcp-server wiringpi libcap2-bin
+sudo apt install nodejs npm hostapd isc-dhcp-server libcap2-bin
 sudo apt-get update --fix-missing
 sudo setcap cap_net_bind_service=+ep /usr/bin/node
 sudo npm install --global http-server
