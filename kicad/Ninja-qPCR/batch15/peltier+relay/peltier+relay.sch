@@ -39,25 +39,12 @@ Wire Wire Line
 Connection ~ 1800 1850
 Wire Wire Line
 	1800 1850 1700 1850
-Text GLabel 1950 2950 2    50   Input ~ 0
+Text GLabel 1950 3050 2    50   Input ~ 0
 REG_OUT
-$Comp
-L power:GND #PWR0110
-U 1 1 61601E7A
-P 1950 3150
-F 0 "#PWR0110" H 1950 2900 50  0001 C CNN
-F 1 "GND" H 1955 2977 50  0000 C CNN
-F 2 "" H 1950 3150 50  0001 C CNN
-F 3 "" H 1950 3150 50  0001 C CNN
-	1    1950 3150
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1950 2950 1750 2950
 Wire Wire Line
 	1750 3050 1950 3050
-Wire Wire Line
-	1950 3050 1950 3150
 $Comp
 L pspice:DIODE D2
 U 1 1 61611331
@@ -170,22 +157,6 @@ Wire Wire Line
 	5650 5550 5500 5550
 Wire Wire Line
 	5950 5550 6050 5550
-$Comp
-L power:GND #PWR0112
-U 1 1 61611382
-P 4250 5800
-AR Path="/61611382" Ref="#PWR0112"  Part="1" 
-AR Path="/5F7519D0/61611382" Ref="#PWR?"  Part="1" 
-AR Path="/5F7093B5/61611382" Ref="#PWR?"  Part="1" 
-AR Path="/60AC8F63/61611382" Ref="#PWR?"  Part="1" 
-AR Path="/615FFA84/61611382" Ref="#PWR?"  Part="1" 
-F 0 "#PWR0112" H 4250 5550 50  0001 C CNN
-F 1 "GND" H 4255 5627 50  0000 C CNN
-F 2 "" H 4250 5800 50  0001 C CNN
-F 3 "" H 4250 5800 50  0001 C CNN
-	1    4250 5800
-	1    0    0    -1  
-$EndComp
 $Comp
 L Device:R R6
 U 1 1 61611394
@@ -316,8 +287,6 @@ Wire Wire Line
 	3800 4500 3800 4800
 Wire Wire Line
 	5200 4800 5200 4500
-Wire Wire Line
-	4150 4400 4250 4400
 $Comp
 L Connector:Barrel_Jack_Switch J7
 U 1 1 6168C9ED
@@ -356,12 +325,12 @@ F 3 "~" H 1550 2950 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x03_Male J8
+L Connector:Conn_01x04_Male J8
 U 1 1 616E1BB7
 P 1550 3650
 F 0 "J8" H 1522 3674 50  0000 R CNN
 F 1 "Conn_01x03_Male" H 1522 3583 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 1550 3650 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm" H 1550 3650 50  0001 C CNN
 F 3 "~" H 1550 3650 50  0001 C CNN
 	1    1550 3650
 	1    0    0    -1  
@@ -405,10 +374,6 @@ Wire Wire Line
 	6400 4850 6400 5100
 Wire Wire Line
 	6300 4500 6300 5200
-Text GLabel 4150 4400 0    50   Input ~ 0
-REG_OUT
-Wire Wire Line
-	4250 4400 4250 4600
 Text GLabel 3700 4500 0    50   Input ~ 0
 12V
 Text GLabel 5300 4500 2    50   Input ~ 0
@@ -417,7 +382,7 @@ Wire Wire Line
 	5300 4500 5200 4500
 Wire Wire Line
 	3800 4500 3700 4500
-Text GLabel 8900 4750 0    50   Input ~ 0
+Text GLabel 9000 6100 3    50   Input ~ 0
 REG_OUT
 $Comp
 L Ninja-qPCR:EX2-2U1S K2
@@ -436,8 +401,6 @@ Wire Wire Line
 	10000 4950 9900 4950
 Wire Wire Line
 	9000 4950 9000 4750
-Wire Wire Line
-	9000 4750 8900 4750
 Connection ~ 9000 4950
 Wire Wire Line
 	5350 1000 5350 850 
@@ -618,23 +581,21 @@ Wire Wire Line
 	3950 850  3950 1000
 Wire Wire Line
 	4250 5400 4250 5800
-$Comp
-L power:GND #PWR?
-U 1 1 619FF3DC
-P 9000 6100
-AR Path="/619FF3DC" Ref="#PWR?"  Part="1" 
-AR Path="/5F7519D0/619FF3DC" Ref="#PWR?"  Part="1" 
-AR Path="/5F7093B5/619FF3DC" Ref="#PWR?"  Part="1" 
-AR Path="/60AC8F63/619FF3DC" Ref="#PWR?"  Part="1" 
-AR Path="/615FFA84/619FF3DC" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 9000 5850 50  0001 C CNN
-F 1 "GND" H 9005 5927 50  0000 C CNN
-F 2 "" H 9000 6100 50  0001 C CNN
-F 3 "" H 9000 6100 50  0001 C CNN
-	1    9000 6100
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9000 6000 9000 6100
 Connection ~ 9000 6000
+Text GLabel 4250 5800 3    50   Input ~ 0
+REG_OUT
+Text GLabel 4250 4200 1    50   Input ~ 0
+12V
+Wire Wire Line
+	4250 4200 4250 4600
+Text GLabel 1950 2950 2    50   Input ~ 0
+12V
+Text GLabel 9000 4750 1    50   Input ~ 0
+12V
+Text GLabel 1950 3850 2    50   Input ~ 0
+GND
+Wire Wire Line
+	1950 3850 1750 3850
 $EndSCHEMATC
