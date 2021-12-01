@@ -1,0 +1,27 @@
+G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,(5.1.6-0-10_14)*
+G04 #@! TF.CreationDate,2021-11-25T16:37:17+09:00*
+G04 #@! TF.ProjectId,peltier+relay,70656c74-6965-4722-9b72-656c61792e6b,rev?*
+G04 #@! TF.SameCoordinates,Original*
+G04 #@! TF.FileFunction,Legend,Bot*
+G04 #@! TF.FilePolarity,Positive*
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW (5.1.6-0-10_14)) date 2021-11-25 16:37:17*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%ADD10C,0.120000*%
+G04 APERTURE END LIST*
+D10*
+X140260499Y-112110000D02*
+G75*
+G03*
+X140260499Y-112110000I-381000J0D01*
+G01*
+X111911000Y-102869499D02*
+G75*
+G03*
+X111911000Y-102869499I-381000J0D01*
+G01*
+M02*
