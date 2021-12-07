@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title ""
 Date ""
 Rev ""
@@ -598,4 +598,10 @@ Text GLabel 1950 3850 2    50   Input ~ 0
 GND
 Wire Wire Line
 	1950 3850 1750 3850
+$Sheet
+S 7100 -250 1850 450 
+U 61A9C88B
+F0 "SheetTmp" 50
+F1 "fileTmp.sch" 50
+$EndSheet
 $EndSCHEMATC
