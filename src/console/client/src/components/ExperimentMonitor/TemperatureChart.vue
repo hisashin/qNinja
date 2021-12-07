@@ -73,10 +73,9 @@ export default {
   },
   methods: {
     add: function(timestamp, plate, lid) {
-      console.log("TemperatureChart.add");
       this.channelPlate.addData({t:timestamp, v:plate});
       this.channelLid.addData({t:timestamp, v:lid});
-      this.maxTime = Math.max(this.maxTime, time/1000);
+      this.maxTime = Math.max(this.maxTime, timestamp/1000);
       this.updateGraphRange();
       this.graph.update();
     },

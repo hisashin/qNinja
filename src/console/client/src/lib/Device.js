@@ -92,7 +92,6 @@ class Device {
         case "experiment.update.progress":
           this.progressHandlers.forEach((handler)=>{
             this.progress = obj.data;
-            console.log(obj.data);
             if (handler.onProgress) {
               handler.onProgress(obj.data);
             }

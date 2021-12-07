@@ -5,7 +5,6 @@ const OPTICS_CHANNELS_COUNT = 2;
 const WELLS_COUNT = 16;
 
 const i2c = require('i2c-bus');
-const pwm = require('raspi-soft-pwm');
 const rpio = require('rpio');
 const PID = require("../control/heat_control/pid.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
@@ -25,9 +24,13 @@ const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
 const PromiseQueue = require("../lib/promise_queue.js");
+const PIGPIO_PORT = 8888;
+//const pigpio = require('pigpio-client').pigpio({port:PIGPIO_PORT});
+const PIGPIO = require('../lib/pigpio_client_wrapper.js');
+PIGPIO.init({port:PIGPIO_PORT});
+// const pwm = require('raspi-soft-pwm');
 
 const I2C_ADDR_PCA9955B = 0x05;
-
 
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
@@ -66,9 +69,9 @@ const PIN_NUM_PD_MUX_3 = 10; //GPIO16 (Mux channel)
 const PIN_NUM_PD_MUX_4 = 8; //GPIO15 (Mux channel)
 const PIN_NUM_AMP_GAIN_SWITCH = 7;// GPIO7
 const PIN_NUM_THERMISTOR_R = 26;// Pin 26, GPIO 11
-const PIN_NAME_PWM_PLATE_HEATER = 23; // Pin 33, GPIO23
-const PIN_NAME_PWM_LID_HEATER = 2; // Pin 13, GPIO2
-const PIN_NAME_PWM_FAN = 21; // Pin 29, GPIO 21
+const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13
+const PIN_BCM_NUM_PWM_LID_HEATER = 27; // Pin 13, GPIO2, BCM 27
+const PIN_BCM_NUM_PWM_FAN = 5; // Pin 29, GPIO 21, BCM 5
 const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
 const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
@@ -145,6 +148,16 @@ class ShutdownPin {
 }
 const shutdownPin = new ShutdownPin();
 
+class SoftPWM {
+  constructor (pinNumBCM) {
+    console.log("SoftPWM pinNumBCM=%d",pinNumBCM)
+    this.pin = pigpio.gpio(pinNumBCM);
+  }
+  write (duty/* 0-1.0 */) {
+     this.pin.analogWrite(duty/256.0);
+  }
+}
+
 class HardwareConf {
   constructor () {
     this.ledUnit = null;
@@ -152,9 +165,9 @@ class HardwareConf {
     const adc = new ADS122C04IPWR(this.i2c, ADC_DEVICE_ADDR);
     this.adc = adc;
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
-    this.pwmPlate = new pwm.SoftPWM(PIN_NAME_PWM_PLATE_HEATER);
-    this.pwmLid = new pwm.SoftPWM(PIN_NAME_PWM_LID_HEATER);
-    this.pwmFan = new pwm.SoftPWM(PIN_NAME_PWM_FAN);
+    this.pwmPlate = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_PLATE_HEATER);
+    this.pwmLid = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_LID_HEATER);
+    this.pwmFan = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_FAN);
     this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
     const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
     const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
