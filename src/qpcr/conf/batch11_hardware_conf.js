@@ -25,6 +25,8 @@ const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
 const PromiseQueue = require("../lib/promise_queue.js");
+const PIGPIO_PORT = 8888;
+const pigpio = require('pigpio-client').pigpio({port:PIGPIO_PORT});
 
 const I2C_ADDR_PCA9955B = 0x05;
 

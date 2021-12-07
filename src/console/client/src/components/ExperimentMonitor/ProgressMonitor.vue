@@ -112,7 +112,7 @@
           <button class="time-monitor__button" v-if="deviceState.resumeAvailable" @click="resume">Resume</button>
           <button class="time-monitor__button" v-if="deviceState.cancelAvailable" @click="cancel">Cancel</button>
           <button class="time-monitor__button" v-if="deviceState.finishAvailable" @click="finish">Finish</button>
-          <button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>
+          <!--<button class="time-monitor__button" v-if="deviceState.startAvailable" @click="start">Start</button>-->
           </template>
           
         </div>
@@ -196,11 +196,8 @@ export default {
       this.stage = this.protocol.stages[this.progress.state.stage];
       if (this.stage != null) {
         this.step = this.stage.steps[this.progress.state.step];
-      } else {
-        // TODO ignore this warning on preheating phase
-        if (this.progress.state.state=='preheat') {
-          console.warn("this.stage is null")
-        }
+      } else if (this.progress.state.state!='preheat') {
+          console.warn("this.stage is null");
       }
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
     },
