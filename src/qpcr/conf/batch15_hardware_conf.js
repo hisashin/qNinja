@@ -24,19 +24,21 @@ const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
 const PromiseQueue = require("../lib/promise_queue.js");
+const Relay = require("../hardware/relay.js");
+const Peltier = require("../hardware/peltier.js");
+
 const PIGPIO_PORT = 8888;
-//const pigpio = require('pigpio-client').pigpio({port:PIGPIO_PORT});
 const PIGPIO = require('../lib/pigpio_client_wrapper.js');
 PIGPIO.init({port:PIGPIO_PORT});
-// const pwm = require('raspi-soft-pwm');
 
-const I2C_ADDR_PCA9955B = 0x05;
 
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
-const ADC_DEVICE_ADDR = 0x40;
-const POT_DEVICE_ADDR = 0x2F;
+const I2C_ADDR_PCA9955B = 0x05;
+// const I2C_ADDR_PCA9955B = 0x70;
+const I2C_ADDR_ADC = 0x40;
+const I2C_ADDR_POT = 0x2F;
 
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = [3, 2]; // AIN3->P, AIN2->N
 const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
@@ -62,20 +64,25 @@ const THERMISTOR_POSITION = false; /* Thermistor is connected to 0V line */
 */
 const PIN_NUM_VIN_SENSE = 11; //GPIO0
 
-const PIN_NUM_MUX_SELECT = 22; // GPIO6
-const PIN_NUM_PD_MUX_1 = 16; //GPIO4 (Mux channel)
-const PIN_NUM_PD_MUX_2 = 12; //GPIO1 (Mux channel)
-const PIN_NUM_PD_MUX_3 = 10; //GPIO16 (Mux channel)
-const PIN_NUM_PD_MUX_4 = 8; //GPIO15 (Mux channel)
-const PIN_NUM_AMP_GAIN_SWITCH = 7;// GPIO7
+const PIN_NUM_MUX_SELECT = 22; // Pin22, GPIO6
+const PIN_NUM_PD_MUX_1 = 16; // Pin 16, GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_2 = 12; // Pin 12, GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_3 = 10; // Pin 10, GPIO16 (Mux channel)
+const PIN_NUM_PD_MUX_4 = 8; // Pin 8, GPIO15 (Mux channel)
+const PIN_NUM_AMP_GAIN_SWITCH = 7;// Pin 7, GPIO7
 const PIN_NUM_THERMISTOR_R = 26;// Pin 26, GPIO 11
-const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13
+const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13 (Hardware PWM available)
 const PIN_BCM_NUM_PWM_LID_HEATER = 27; // Pin 13, GPIO2, BCM 27
 const PIN_BCM_NUM_PWM_FAN = 5; // Pin 29, GPIO 21, BCM 5
+const PIN_BCM_NUM_PWM_PELTIER = 12; // Pin 32, GPIO26, BCM 12 (Hardware PWM available)
+
+const PIN_PELTIER_RELAY_A = 36; // Pin 36, GPIO27
+const PIN_PELTIER_RELAY_B = 38; // Pin 38, GPIO28
+
 const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
-const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
+const PIN_NUM_DOOR_LOCK = 36; // Pin 37, GPIO25
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
-const PIN_SHUTDOWN = 37; // TODO tmp
+const PIN_SHUTDOWN = PIN_NUM_VIN_SENSE; // TODO tmp
 
 /* Pin COnfig */
 const PLATE_KP = 1.0;
@@ -94,7 +101,7 @@ const MUX_CHANNEL_THERMISTOR_EXT2 = 4;
 const MUX_CHANNEL_THERMISTOR_EXT3 = 5;
 
 // Well name -> Channel index
-/*
+
 const MUX_MAP_PHOTODIODES_N = [
   [15,14,13,12,11,10,9,8], // Opt channel 1
     [0,1,2,3,4,5,6,7], // Opt channel 0
@@ -103,7 +110,8 @@ const MUX_MAP_PHOTODIODES_S = [
   [8,9,10,11,12,13,14,15], // Opt channel 0
   [7,6,5,4,3,2,1,0] // Opt channel 1
 ];
-*/
+
+/*
 const MUX_MAP_PHOTODIODES_N = [
   [6,4,2,0,8,10,12,14],
   [7,5,,3,1,9,11,13,15]
@@ -112,6 +120,7 @@ const MUX_MAP_PHOTODIODES_S = [
   [14,12,10,8,0,2,4,6],
   [15,13,11,9,1,3,5,7]
 ]
+*/
 const TEMPERATURE_CHANNELS_CONF = {
   // label, property
 };
@@ -162,12 +171,14 @@ class HardwareConf {
   constructor () {
     this.ledUnit = null;
     this.i2c = i2c.openSync(I2C_CHANNEL);
-    const adc = new ADS122C04IPWR(this.i2c, ADC_DEVICE_ADDR);
+    const adc = new ADS122C04IPWR(this.i2c, I2C_ADDR_ADC);
     this.adc = adc;
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
     this.pwmPlate = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_PLATE_HEATER);
     this.pwmLid = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_LID_HEATER);
     this.pwmFan = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_FAN);
+    const FREQ_PELTIER = 1E5;
+    this.pwmPeltier = new PIGPIO.HardPWM(PIN_BCM_NUM_PWM_PELTIER, FREQ_PELTIER);
     this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
     const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
     const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
@@ -180,7 +191,20 @@ class HardwareConf {
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
       const plateSensing = new PlateSensing(plateBlockSensing, airSensing);
-      const plateOutput = new PlateOutput(this.pwmPlate, this.pwmFan);
+      
+      const relay = new Relay(PIN_PELTIER_RELAY_A, PIN_PELTIER_RELAY_B);
+      const peltierAbsControl = {
+        start: ()=>{
+        },
+        setOutput: (vOut)=>{
+          this.pwmPeltier.write(vOut);
+        },
+        off: ()=>{
+          this.pwmPeltier.write(0);
+        }
+      }
+      this.peltier = new Peltier(peltierAbsControl, relay);
+      const plateOutput = new PlateOutput(this.pwmPlate, this.peltier, this.pwmFan);
       this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
     }
     {
@@ -243,7 +267,7 @@ class HardwareConf {
     console.log("getLEDUnit()");
     if (this.ledUnit == null) {
       console.log("getLEDUnit() create...");
-      const pot = new MCP4551T(this.i2c, POT_DEVICE_ADDR);
+      const pot = new MCP4551T(this.i2c, I2C_ADDR_POT);
       const ledDriver = new PCA9955B(this.i2c, I2C_ADDR_PCA9955B);
       this.ledUnit = new LEDUnit(pot, ledDriver);
     }
@@ -379,19 +403,22 @@ class ExtraSensing {
   }
 }
 
+
 class PlateOutput {
   // Combination of heater (PWM) and fan (PWM)
-  constructor (platePWM, fanPWM) {
-    this.platePWM = platePWM;
+  constructor (plateHeaterPWM, peltier, fanPWM) {
+    this.plateHeaterPWM = plateHeaterPWM;
+    this.peltier = peltier;
     this.fanPWM = fanPWM;
     this.plateActualOutput = 0.0;
     this.setFanOutput(1.0);
-    this.setPlateOutput(0);
+    this.setPlateHeaterOutput(0);
   }
-  setPlateOutput (value) {
+  setPlateHeaterOutput (value) {
     const actualOutput = Math.min(1.0, Math.min(value, this.plateActualOutput + 0.25));
-    this.platePWM.write(actualOutput);
-    // this.platePWM.write(value);
+    this.plateHeaterPWM.write(actualOutput);
+    // this.plateHeaterPWM.write(value);
+    // TODO peltier
     this.plateActualOutput = actualOutput;
   }
   setFanOutput (value) {
@@ -400,24 +427,24 @@ class PlateOutput {
   start () {
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
-    outputValue = Math.min(1.0, Math.max(-1, outputValue));
-    // outputValue = Math.min(0.9, Math.max(-0.9, outputValue));
+    outputValue = Math.min(1.0, Math.max(-1, outputValue)); // -1 ... +1
     console.log("plate output=%d", outputValue)
     if (outputValue > 0) {
-      this.setPlateOutput(outputValue);
+      this.setPlateHeaterOutput(outputValue);
       this.setFanOutput(0);
     } else {
-      this.setPlateOutput(0);
+      this.setPlateHeaterOutput(0);
       this.setFanOutput(-outputValue);
     }
+    this.peltier.setOutput(outputValue);
   }
   off () {
-    this.setPlateOutput(0);
+    this.setPlateHeaterOutput(0);
     this.setFanOutput(0);
   }
   shutdown () {
     console.log("Shutting down PlateOutput.");
-      this.setPlateOutput(0);
+      this.setPlateHeaterOutput(0);
       this.setFanOutput(1.0);
   }
 }
@@ -494,8 +521,8 @@ class MUXWrapperThermistor {
 
 // TODO reverse (for debug)
 const LED_WELL_TO_CHANNEL_MAP = [
-  8,9,10,11,12,13,14,15,
-  0,1,2,3,4,5,6,7
+  11,10,9,8,12,13,14,15,
+  4,5,6,7,3,2,1,0
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 let hoge = 0;
@@ -516,8 +543,9 @@ class LEDUnit {
     this.pot.setWiper(0);
     this.flg = !this.flg;
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
+    channel = LED_WELL_TO_CHANNEL_MAP[hoge%8]; // Debug
     this.ledDriver.selectChannel(channel);
+    console.log("Well=%d Channel=%d", well, channel);
     // this.ledDriver.off();
     if (well == 15) {
       console.log("Well %d", hoge);

@@ -7,11 +7,11 @@ const bcmSoft = parseInt(process.argv[4]);
 
 
 
-var freq1 = 1E5;
+var freq = 1E5;
 console.log("HardwarePWM bcm=%d SoftwarePWM bcm=%d", bcmHard, bcmSoft)
 
 PIGPIO.init({port:port});
-const gpioHard = new PIGPIO.HardPWM(bcmHard, freq1);
+const gpioHard = new PIGPIO.HardPWM(bcmHard, freq);
 const gpioSoft =  new PIGPIO.SoftPWM(bcmSoft);
 
 let i = 1;

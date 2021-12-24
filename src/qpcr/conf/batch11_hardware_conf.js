@@ -24,6 +24,8 @@ const MUX16ch = require("../hardware/mux_16ch.js");
 const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
+const Relay = require("../hardware/relay.js");
+const Peltier = require("../hardware/peltier.js");
 const PromiseQueue = require("../lib/promise_queue.js");
 const PIGPIO_PORT = 8888;
 const pigpio = require('pigpio-client').pigpio({port:PIGPIO_PORT});
@@ -161,7 +163,20 @@ class HardwareConf {
       const plateSensing = new PlateSensing(plateBlockSensing, airSensing);
       const pot = new MCP4551T(this.i2c, POT_PELTIER_REG_DEVICE_ADDR);
       const relay = new Relay(PIN_PELTIER_RELAY_A, PIN_PELTIER_RELAY_B, PIN_PELTIER_RELAY_GATE);
-      this.peltier = new Peltier(pot, relay);
+
+      const peltierAbsControl = {
+        start: ()=>{
+          
+        },
+        setOutput: (vOut)=>{
+          const r2 = (vOut/PELTIER_REG_FB - 1) * PELTIER_REG_R1; // kOhm
+          const nf = 256 * (PELTIER_REG_POT_RAB - r2) / PELTIER_REG_POT_RAB;
+          const n = Math.max(0, Math.min(Math.floor(nf), 256)) // 0 - 256
+          pot.setWiper(n);
+        },
+        off: ()=>{}
+      }
+      this.peltier = new Peltier(peltierAbsControl, relay);
       const plateOutput = new PlateOutput(this.pwmPlate, this.peltier, this.pwmFan);
       this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
     }
@@ -409,77 +424,9 @@ const PELTIER_VOUT_MIN = 0.6;
 const PELTIER_REG_R1 = 5.0; // Regulator's feedback resistor (5kOhm)
 const PELTIER_REG_FB = 0.6; // Regulator feedback voltage
 const PELTIER_REG_POT_RAB = 100; // Full-scale resistance of potentiometer
-class Peltier {
-  constructor (pot, relay) {
-    this.pot = pot;
-    this.relay = relay;
-  }
-  start () {
-    
-  }
-  setOutput (value) {
-    // Calculate wiper value
-    if (value > 0) {
-      this.relay.setDirection(RelayDirection.HEAT);
-    } else if (value < 0) {
-      this.relay.setDirection(RelayDirection.COOL);
-    } else {
-      this.relay.setDirection(RelayDirection.OFF);
-    }
-    // TODO Map value to vOut
-    let vOut = Math.abs(value); // Required voltage
-    const r2 = (vOut/PELTIER_REG_FB - 1) * PELTIER_REG_R1; // kOhm
-    const nf = 256 * (PELTIER_REG_POT_RAB - r2) / PELTIER_REG_POT_RAB;
-    const n = Math.max(0, Math.min(Math.floor(nf), 256)) // 0 - 256
-    this.pot.setWiper(n);
-  }
-  shutdown () {
-    this.relay.off();
-  }
-}
+
 const PIN_PELTIER_RELAY_A = 0;
 const PIN_PELTIER_RELAY_B = 0;
-const RelayDirection = {
-  OFF: 0,
-  HEAT: 1,
-  COOL: 2
-};
-class Relay {
-  constructor (pinSwitchA, pinSwitchB, pinGate) {
-    // TODO remove pinGate
-    this.pinSwitchA = pinSwitchA;
-    this.pinSwitchB = pinSwitchB;
-    this.pinGate = pinGate;
-    this.direction = RelayDirection.OFF;
-  }
-  start () {
-    rpio.open(this.pinSwitchA, rpio.OUTPUT, rpio.LOW);
-    rpio.open(this.pinSwitchB, rpio.OUTPUT, rpio.LOW);
-    rpio.open(this.pinSwpinGate, rpio.OUTPUT, rpio.LOW);
-    
-  }
-  off () {
-    rpio.write(this.pinSwitchA, 0);
-    rpio.write(this.pinSwitchB, 0);
-    rpio.write(this.pinGate, 0);
-  }
-  setDirection (direction) {
-    if (direction == RelayDirection.OFF) {
-      this.off();
-    } else if (direction == RelayDirection.HEAT) {
-      rpio.write(this.pinSwitchA, 1);
-      rpio.write(this.pinSwitchB, 0);
-      rpio.write(this.pinGate, 1);
-    } else if (direction == RelayDirection.COOL) {
-      rpio.write(this.pinSwitchA, 0);
-      rpio.write(this.pinSwitchB, 1);
-      rpio.write(this.pinGate, 1);
-    }
-  }
-  shutdown () {
-    this.off();
-  }
-}
 
 /* 4bit GPIO MUX  + Switch */
 let debugLastMuxChannel = 0;
@@ -543,12 +490,6 @@ class MUXWrapperThermistor {
     rpio.write(this.muxSwitch, 0);
   }
 }
-
-// TODO LED map (well to channel
-/*const LED_WELL_TO_CHANNEL_MAP = [
-  7,6,5,4,3,2,1,0,
-  15,14,13,12,11,10,9,8
-];*/
 
 // TODO reverse (for debug)
 const LED_WELL_TO_CHANNEL_MAP = [

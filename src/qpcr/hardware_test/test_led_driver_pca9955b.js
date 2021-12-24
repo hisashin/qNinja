@@ -13,7 +13,8 @@ const PIN_LATCH = 15;
 const PIN_NAME_BLANK= 23; //26(ADA) 23 (Free)
 const PIN_NUM_SPI_SWITCH = 18; //GPIO5
 const VALUE_SPI_SWITCH_MUX = rpio.LOW;
-const I2C_ADDR_PCA9955B = 0x05;
+// const I2C_ADDR_PCA9955B = 0x05;
+const I2C_ADDR_PCA9955B = 0x70;
 
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 const LED_WELL_TO_CHANNEL_MAP = [
@@ -60,7 +61,7 @@ const interval = setInterval(()=>{
   const v = (ch>8)?rpio.LOW:rpio.HIGH;
   rpio.write(VALUE_SPI_SWITCH_MUX, v);
   */
-  ledDriver.selectChannel(LED_WELL_TO_CHANNEL_MAP[ch]);
+  ledDriver.selectChannel(/*LED_WELL_TO_CHANNEL_MAP[ch]*/ch);
   channel = (channel + 1) % CHANNEL_COUNT;
   
 }, DELAY);
