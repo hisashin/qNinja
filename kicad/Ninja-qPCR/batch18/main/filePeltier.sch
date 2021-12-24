@@ -1,0 +1,537 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 10 10
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L pspice:DIODE D5
+U 1 1 61908FC5
+P 6600 3750
+F 0 "D5" V 6646 3622 50  0000 R CNN
+F 1 "DIODE" V 6555 3622 50  0000 R CNN
+F 2 "Diodes_SMD:D_SMA" H 6600 3750 50  0001 C CNN
+F 3 "~" H 6600 3750 50  0001 C CNN
+	1    6600 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L pspice:DIODE D4
+U 1 1 61908FCB
+P 5200 3750
+F 0 "D4" V 5250 3500 50  0000 L CNN
+F 1 "DIODE" V 5150 3400 50  0000 L CNN
+F 2 "Diodes_SMD:D_SMA" H 5200 3750 50  0001 C CNN
+F 3 "~" H 5200 3750 50  0001 C CNN
+	1    5200 3750
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	6450 3550 6600 3550
+Wire Wire Line
+	6600 3950 6450 3950
+Wire Wire Line
+	5350 3950 5200 3950
+$Comp
+L Connector:Screw_Terminal_01x02 HLID?
+U 1 1 61908FD4
+P 10350 4450
+AR Path="/60B6F672/61908FD4" Ref="HLID?"  Part="1" 
+AR Path="/61908FD4" Ref="HLID?"  Part="1" 
+AR Path="/615FFA84/61908FD4" Ref="HLID?"  Part="1" 
+AR Path="/618EA4AA/61908FD4" Ref="PEL1"  Part="1" 
+F 0 "PEL1" H 10350 4550 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 10150 4250 50  0000 C CNN
+F 2 "Ninja-qPCR:TB_SeeedOPL_320110028" H 10350 4450 50  0001 C CNN
+F 3 "~" H 10350 4450 50  0001 C CNN
+	1    10350 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_NPN_BEC Q7
+U 1 1 61908FDC
+P 5100 4300
+F 0 "Q7" H 4950 4200 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 4650 4100 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 5300 4400 50  0001 C CNN
+F 3 "~" H 5100 4300 50  0001 C CNN
+	1    5100 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 3950 5200 4100
+Connection ~ 5200 3950
+$Comp
+L Device:R R?
+U 1 1 61908FE4
+P 7200 4300
+AR Path="/61908FE4" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/61908FE4" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/61908FE4" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/61908FE4" Ref="R?"  Part="1" 
+AR Path="/615FFA84/61908FE4" Ref="R?"  Part="1" 
+AR Path="/618EA4AA/61908FE4" Ref="R34"  Part="1" 
+F 0 "R34" V 6993 4300 50  0000 C CNN
+F 1 "10k" V 7084 4300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 7130 4300 50  0001 C CNN
+F 3 "~" H 7200 4300 50  0001 C CNN
+	1    7200 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Q_NPN_BEC Q8
+U 1 1 61908FEA
+P 6700 4300
+F 0 "Q8" H 6550 4200 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 6300 4100 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 6900 4400 50  0001 C CNN
+F 3 "~" H 6700 4300 50  0001 C CNN
+	1    6700 4300
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6600 4500 6600 4650
+Wire Wire Line
+	6600 3950 6600 4100
+Connection ~ 6600 3950
+Wire Wire Line
+	7050 4300 6900 4300
+Wire Wire Line
+	7350 4300 7450 4300
+$Comp
+L power:GND #PWR?
+U 1 1 61908FFB
+P 5200 4650
+AR Path="/61908FFB" Ref="#PWR?"  Part="1" 
+AR Path="/5F7519D0/61908FFB" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/61908FFB" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/61908FFB" Ref="#PWR?"  Part="1" 
+AR Path="/615FFA84/61908FFB" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/61908FFB" Ref="#PWR0109"  Part="1" 
+F 0 "#PWR0109" H 5200 4400 50  0001 C CNN
+F 1 "GND" H 5205 4477 50  0000 C CNN
+F 2 "" H 5200 4650 50  0001 C CNN
+F 3 "" H 5200 4650 50  0001 C CNN
+	1    5200 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 4150 5650 4400
+$Comp
+L Device:R R?
+U 1 1 61909002
+P 4600 4300
+AR Path="/61909002" Ref="R?"  Part="1" 
+AR Path="/5F7519D0/61909002" Ref="R?"  Part="1" 
+AR Path="/5F7093B5/61909002" Ref="R?"  Part="1" 
+AR Path="/60AC8F63/61909002" Ref="R?"  Part="1" 
+AR Path="/615FFA84/61909002" Ref="R?"  Part="1" 
+AR Path="/618EA4AA/61909002" Ref="R31"  Part="1" 
+F 0 "R31" V 4393 4300 50  0000 C CNN
+F 1 "10k" V 4484 4300 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603" V 4530 4300 50  0001 C CNN
+F 3 "~" H 4600 4300 50  0001 C CNN
+	1    4600 4300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5200 4500 5200 4650
+Wire Wire Line
+	4900 4300 4750 4300
+Wire Wire Line
+	4450 4300 4250 4300
+Text HLabel 6000 4200 2    50   Input ~ 0
+PEL_RED
+Text HLabel 5800 4200 0    50   Input ~ 0
+PEL_BLK
+Wire Wire Line
+	6000 4200 5950 4200
+Wire Wire Line
+	5800 4200 5850 4200
+Wire Wire Line
+	9150 4150 9150 4300
+Wire Wire Line
+	9150 4300 8650 4300
+Wire Wire Line
+	8650 4150 8650 4300
+Connection ~ 8650 4300
+Wire Wire Line
+	9450 3550 9550 3550
+Text HLabel 5100 3950 0    50   Input ~ 0
+PEL1
+Text HLabel 6700 3950 2    50   Input ~ 0
+PEL3
+Wire Wire Line
+	5100 3950 5200 3950
+Wire Wire Line
+	6600 3950 6700 3950
+Text HLabel 8250 3950 0    50   Input ~ 0
+PEL1
+Text HLabel 9550 3950 2    50   Input ~ 0
+PEL3
+Wire Wire Line
+	8250 3950 8350 3950
+Wire Wire Line
+	9450 3950 9550 3950
+Text GLabel 7450 4300 2    50   Input ~ 0
+PEL_SWB
+Text GLabel 4250 4300 0    50   Input ~ 0
+PEL_SWA
+Wire Wire Line
+	5850 3750 5850 4200
+Wire Wire Line
+	5950 3750 5950 4200
+Wire Wire Line
+	8300 3550 8350 3550
+Text HLabel 8800 4150 0    50   Input ~ 0
+PEL_BLK
+Text HLabel 9000 4150 2    50   Input ~ 0
+PEL_RED
+Wire Wire Line
+	8950 3750 8950 4150
+Wire Wire Line
+	8950 4150 9000 4150
+Wire Wire Line
+	8850 3750 8850 4150
+Wire Wire Line
+	8850 4150 8800 4150
+Text GLabel 8200 3150 0    50   Input ~ 0
+12V
+Wire Wire Line
+	5350 3550 5200 3550
+Connection ~ 5350 3550
+Wire Wire Line
+	5400 3550 5350 3550
+$Comp
+L Ninja-qPCR:EP2-3L3SAb K1
+U 1 1 6190903D
+P 5350 3550
+F 0 "K1" H 5900 3953 60  0000 C CNN
+F 1 "EP2-3L3SAb" H 5900 3847 60  0000 C CNN
+F 2 "Ninja-qPCR:EP2-3L3SAb" H 5850 4240 60  0001 C CNN
+F 3 "" H 5350 3550 60  0000 C CNN
+	1    5350 3550
+	1    0    0    -1  
+$EndComp
+Connection ~ 5200 3550
+Connection ~ 6600 3550
+Text GLabel 5800 4400 2    50   Input ~ 0
+REG_OUT
+Wire Wire Line
+	5650 3150 5650 3350
+Text GLabel 5100 3150 0    50   Input ~ 0
+12V
+Text GLabel 8750 4450 2    50   Input ~ 0
+REG_OUT
+Wire Wire Line
+	10150 4450 10000 4450
+Wire Wire Line
+	8650 4300 8650 4450
+$Comp
+L power:GND #PWR?
+U 1 1 61AA9639
+P 6600 4650
+AR Path="/61AA9639" Ref="#PWR?"  Part="1" 
+AR Path="/5F7519D0/61AA9639" Ref="#PWR?"  Part="1" 
+AR Path="/5F7093B5/61AA9639" Ref="#PWR?"  Part="1" 
+AR Path="/60AC8F63/61AA9639" Ref="#PWR?"  Part="1" 
+AR Path="/615FFA84/61AA9639" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/61AA9639" Ref="#PWR0112"  Part="1" 
+F 0 "#PWR0112" H 6600 4400 50  0001 C CNN
+F 1 "GND" H 6605 4477 50  0000 C CNN
+F 2 "" H 6600 4650 50  0001 C CNN
+F 3 "" H 6600 4650 50  0001 C CNN
+	1    6600 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6600 3150 5650 3150
+Wire Wire Line
+	6600 3150 6600 3550
+Connection ~ 5650 3150
+Wire Wire Line
+	5650 3150 5200 3150
+Wire Wire Line
+	5200 3150 5200 3550
+Connection ~ 5200 3150
+Wire Wire Line
+	5200 3150 5100 3150
+Wire Wire Line
+	5650 4400 5800 4400
+Wire Wire Line
+	8650 4450 8750 4450
+$Comp
+L Ninja-qPCR:EX2-2U1S K2
+U 1 1 61909097
+P 8350 3550
+F 0 "K2" H 8900 3953 60  0000 C CNN
+F 1 "EX2-2U1S" H 8900 3847 60  0000 C CNN
+F 2 "Ninja-qPCR:EX2-2U1S" H 8850 4240 60  0001 C CNN
+F 3 "" H 8350 3550 60  0000 C CNN
+	1    8350 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 3150 8300 3150
+Wire Wire Line
+	9550 3150 9550 3550
+Wire Wire Line
+	8300 3150 8300 3550
+Connection ~ 8300 3150
+Wire Wire Line
+	8300 3150 8650 3150
+Wire Wire Line
+	8650 3150 8650 3350
+Connection ~ 8650 3150
+Wire Wire Line
+	8650 3150 9150 3150
+Wire Wire Line
+	9150 3150 9150 3350
+Connection ~ 9150 3150
+Wire Wire Line
+	9150 3150 9550 3150
+Text HLabel 10000 4450 0    50   Input ~ 0
+PEL_RED
+Text HLabel 10000 4550 0    50   Input ~ 0
+PEL_BLK
+Wire Wire Line
+	10150 4550 10000 4550
+Wire Wire Line
+	3400 2900 3400 2750
+Connection ~ 3400 3400
+Wire Wire Line
+	3500 3400 3400 3400
+$Comp
+L Ninja-qPCR:SRP1265C-220M L?
+U 1 1 61AADFE5
+P 3050 3400
+AR Path="/618EA4AA/61AB1812/61AADFE5" Ref="L?"  Part="1" 
+AR Path="/618EA4AA/61AADFE5" Ref="L3"  Part="1" 
+F 0 "L3" H 3050 3625 50  0000 C CNN
+F 1 "SRP1265C-220M" H 3050 3534 50  0000 C CNN
+F 2 "Ninja-qPCR:SRP1265C" H 3050 3600 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/bourns-inc/srp1265c-220m/11633469" H 3050 3600 50  0001 C CNN
+	1    3050 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 4500 2050 4400
+$Comp
+L power:GND #PWR?
+U 1 1 61AADFEC
+P 2050 4500
+AR Path="/618EA4AA/61AB1812/61AADFEC" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/61AADFEC" Ref="#PWR0101"  Part="1" 
+F 0 "#PWR0101" H 2050 4250 50  0001 C CNN
+F 1 "GND" H 2055 4327 50  0000 C CNN
+F 2 "" H 2050 4500 50  0001 C CNN
+F 3 "" H 2050 4500 50  0001 C CNN
+	1    2050 4500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 4100 2050 4000
+$Comp
+L Device:R R?
+U 1 1 61AADFF3
+P 2050 4250
+AR Path="/618EA4AA/61AB1812/61AADFF3" Ref="R?"  Part="1" 
+AR Path="/618EA4AA/61AADFF3" Ref="R33"  Part="1" 
+F 0 "R33" H 2120 4296 50  0000 L CNN
+F 1 "47k" H 2120 4205 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" V 1980 4250 50  0001 C CNN
+F 3 "~" H 2050 4250 50  0001 C CNN
+	1    2050 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 4300 2800 4500
+Connection ~ 2800 4300
+Wire Wire Line
+	2750 4300 2800 4300
+Wire Wire Line
+	2800 4200 2800 4300
+Connection ~ 2800 4200
+Wire Wire Line
+	2750 4200 2800 4200
+Wire Wire Line
+	2800 4100 2800 4200
+Wire Wire Line
+	2750 4100 2800 4100
+Wire Wire Line
+	2800 3600 2800 3700
+Connection ~ 2800 3600
+Wire Wire Line
+	2750 3600 2800 3600
+Wire Wire Line
+	2800 3700 2800 3800
+Connection ~ 2800 3700
+Wire Wire Line
+	2750 3700 2800 3700
+Wire Wire Line
+	2800 3800 2800 3900
+Connection ~ 2800 3800
+Wire Wire Line
+	2750 3800 2800 3800
+Wire Wire Line
+	2800 3400 2800 3600
+Wire Wire Line
+	2800 3900 2750 3900
+$Comp
+L Ninja-qPCR:SIRA88BDP-T1-GE3 Q?
+U 1 1 61AAE00C
+P 2500 3900
+AR Path="/618EA4AA/61AB1812/61AAE00C" Ref="Q?"  Part="1" 
+AR Path="/618EA4AA/61AAE00C" Ref="Q9"  Part="1" 
+F 0 "Q9" H 2500 4465 50  0000 C CNN
+F 1 "SIRA88BDP-T1-GE3" H 2500 4374 50  0000 C CNN
+F 2 "Ninja-qPCR:PowerPAK_SO-8_Long" H 2500 4450 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/vishay-siliconix/SIRA88BDP-T1-GE3/10321634?s=N4IgTCBcDaIMoEkBKBBAHGgQgEQAogF0BfIA" H 2500 4450 50  0001 C CNN
+	1    2500 3900
+	1    0    0    -1  
+$EndComp
+Text Notes 2100 2850 0    50   ~ 0
+Ceramic
+Text GLabel 3500 3400 2    50   Input ~ 0
+REG_OUT
+$Comp
+L power:GND #PWR?
+U 1 1 61AAE014
+P 2000 3250
+AR Path="/618EA4AA/61AB1812/61AAE014" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/61AAE014" Ref="#PWR0102"  Part="1" 
+F 0 "#PWR0102" H 2000 3000 50  0001 C CNN
+F 1 "GND" H 2005 3077 50  0000 C CNN
+F 2 "" H 2000 3250 50  0001 C CNN
+F 3 "" H 2000 3250 50  0001 C CNN
+	1    2000 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 61AAE01A
+P 2000 3050
+AR Path="/618EA4AA/61AB1812/61AAE01A" Ref="C?"  Part="1" 
+AR Path="/618EA4AA/61AAE01A" Ref="C9"  Part="1" 
+F 0 "C9" H 2115 3096 50  0000 L CNN
+F 1 "22uF" H 2115 3005 50  0000 L CNN
+F 2 "Capacitors_SMD:C_1210" H 2038 2900 50  0001 C CNN
+F 3 "~" H 2000 3050 50  0001 C CNN
+	1    2000 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 2750 2800 2750
+Wire Wire Line
+	3400 3400 3200 3400
+Wire Wire Line
+	3400 3200 3400 3400
+$Comp
+L Device:C C?
+U 1 1 61AAE023
+P 3400 3050
+AR Path="/618EA4AA/61AB1812/61AAE023" Ref="C?"  Part="1" 
+AR Path="/618EA4AA/61AAE023" Ref="C43"  Part="1" 
+F 0 "C43" H 3515 3096 50  0000 L CNN
+F 1 "22uF" H 3515 3005 50  0000 L CNN
+F 2 "Capacitors_SMD:C_1210" H 3438 2900 50  0001 C CNN
+F 3 "~" H 3400 3050 50  0001 C CNN
+	1    3400 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 2750 2800 2900
+Text GLabel 1800 2750 0    50   Input ~ 0
+12V
+Connection ~ 2800 3400
+Wire Wire Line
+	2800 3200 2800 3400
+$Comp
+L Device:D_Schottky D?
+U 1 1 61AAE02D
+P 2800 3050
+AR Path="/618EA4AA/61AB1812/61AAE02D" Ref="D?"  Part="1" 
+AR Path="/618EA4AA/61AAE02D" Ref="D6"  Part="1" 
+F 0 "D6" V 2754 3130 50  0000 L CNN
+F 1 "D_Schottky" V 2845 3130 50  0000 L CNN
+F 2 "Ninja-qPCR:MSS1P3L-M3&slash_89A" H 2800 3050 50  0001 C CNN
+F 3 "~" H 2800 3050 50  0001 C CNN
+	1    2800 3050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2900 3400 2800 3400
+$Comp
+L power:GND #PWR?
+U 1 1 61AAE034
+P 2800 4500
+AR Path="/618EA4AA/61AB1812/61AAE034" Ref="#PWR?"  Part="1" 
+AR Path="/618EA4AA/61AAE034" Ref="#PWR0103"  Part="1" 
+F 0 "#PWR0103" H 2800 4250 50  0001 C CNN
+F 1 "GND" H 2805 4327 50  0000 C CNN
+F 2 "" H 2800 4500 50  0001 C CNN
+F 3 "" H 2800 4500 50  0001 C CNN
+	1    2800 4500
+	1    0    0    -1  
+$EndComp
+Text GLabel 1350 4000 0    50   Input ~ 0
+PEL_PWM
+Wire Wire Line
+	2000 3250 2000 3200
+Connection ~ 2800 2750
+Wire Wire Line
+	1800 2750 2000 2750
+Connection ~ 2000 2750
+Wire Wire Line
+	2000 2750 2800 2750
+Wire Wire Line
+	1800 4000 2050 4000
+Connection ~ 2050 4000
+Wire Wire Line
+	2050 4000 2250 4000
+Wire Wire Line
+	2000 2750 2000 2900
+$Comp
+L Device:R R?
+U 1 1 61AEC8B0
+P 1650 4000
+AR Path="/618EA4AA/61AB1812/61AEC8B0" Ref="R?"  Part="1" 
+AR Path="/618EA4AA/61AEC8B0" Ref="R32"  Part="1" 
+F 0 "R32" H 1720 4046 50  0000 L CNN
+F 1 "150" H 1720 3955 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603" V 1580 4000 50  0001 C CNN
+F 3 "~" H 1650 4000 50  0001 C CNN
+	1    1650 4000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1350 4000 1500 4000
+Text GLabel 5000 2400 2    50   Input ~ 0
+REG_OUT
+Text GLabel 5000 2300 2    50   Input ~ 0
+12V
+$Comp
+L Connector:Conn_01x02_Male J10
+U 1 1 61B63FB4
+P 4600 2300
+F 0 "J10" H 4708 2481 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 4708 2390 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 4600 2300 50  0001 C CNN
+F 3 "~" H 4600 2300 50  0001 C CNN
+	1    4600 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5000 2300 4800 2300
+Wire Wire Line
+	4800 2400 5000 2400
+$EndSCHEMATC
