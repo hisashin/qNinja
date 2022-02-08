@@ -32,5 +32,5 @@ eventBus.subscribe("plate.update", (topic, values)=>{
 process.on('SIGINT', () => {
     console.log('demo_plate_control_batch11.js Received SIGINT');
     session.shutdown();
-    process.exit(1);
+    qpcr.exit();
 });

@@ -153,17 +153,18 @@ export default {
     },
     setData: function (data) {
       // Expects experiment.log.fluorescence.qpcr
+      console.log("AmplificationChart.setData");
       this.graph.clearData();
       data.forEach((measurement)=>{
         this.eachSeries((c, w, i)=>{
-          this.subChannelsData[i].addData({y:measurement.v[c][w], x:measurement.cycle});
+          // GraphSubChannelXY.addData
+          this.subChannelsData[i].addData({y:measurement.v[c][w].v, x:measurement.cycle});
         });
       });
       this.graph.update();
     },
     setAnalysis: function (analysis) {
       console.log("AplificationChart.setAnalysis");
-      console.log(analysis)
       this.analysis = analysis;
       if (this.analysis.baseline && this.analysis.baseline.length > 0) {
         this._updateBaseline();

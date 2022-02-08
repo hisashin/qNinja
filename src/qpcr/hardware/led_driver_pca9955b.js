@@ -81,6 +81,15 @@ class PCA9955B {
     }
     this.applyLED();
   }
+  selectChannels (chs) {
+    for (let i=0; i<LED_COUNT; i++) {
+      this.leds[i] = false;
+    }
+    chs.forEach((ch)=>{
+      this.leds[ch] = true;
+    });
+    this.applyLED();
+  }
   
   onAll () {
     for (let i=0; i<LED_COUNT; i++) {

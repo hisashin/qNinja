@@ -346,6 +346,7 @@ export default {
     },
     /* Panel transition */
     setExperiment (experiment) {
+      console.log("TheExperimentEditor.setExperiment");
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
@@ -369,7 +370,6 @@ export default {
       
       if (this.isStarted && experiment.log) {
         if (experiment.log.temp) {
-          console.log("setExperiment 1.1");
           this.$refs.temperatureChart.set(
             experiment.log.temp.time, 
             experiment.log.temp.plate, 
@@ -378,7 +378,7 @@ export default {
         }
         if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
           this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
-            this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
+          this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
           this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
           this.$refs.amplificationChart.setAnalysis(experiment.analysis);
         }

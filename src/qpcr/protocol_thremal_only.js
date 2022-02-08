@@ -11,15 +11,15 @@ const MEASUREMENT_HOLD_END = 4;
 const protocol = {
   name: "Thermal Protocol",
   id:"457DE8E9-604D-4CE6-9E7A-4E10CD9D9160",
-  lid_temp: 50, // Set "0" to disable lid heating
+  lid_temp: 100, // Set "0" to disable lid heating
   stages: [
     {
       type: Constants.StageType.MELT_CURVE,
-      cycles: 3,
+      cycles: 10,
       steps: [
-        { label:"denature", duration:10, temp:50.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-        { label:"cool", duration:10, temp:30.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-        { label:"melt", duration:10, temp:40.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
+        { label:"denature", duration:60, temp:85.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+        { label:"cool", duration:60, temp:50.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
+        { label:"melt", duration:60, temp:68.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
       ]
     }
   ]

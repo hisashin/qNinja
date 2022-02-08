@@ -184,6 +184,9 @@ class ExperimentManager {
   }
   
   export (experiment, property) {
+    console.log("ExperimentManager.export")
+    console.log(property)
+    console.log(property)
     if (property == "temp") {
       return this._exportTemp(experiment);
     }
@@ -213,7 +216,7 @@ class ExperimentManager {
       return "Hardware config is empty.";
     }
     if (!experiment.log.fluorescence || !experiment.log.fluorescence.qpcr) {
-      return " No fluorescence data.";
+      return " No amplification data.";
     }
     let table = [];
     const chCount = experiment.hardware.channels.count;
@@ -226,13 +229,13 @@ class ExperimentManager {
       }
     }
     table.push(header);
-    const qpcrData = experiment.log.fluorescence.qpcr;
-    for (let i=0; i<qpcrData.length; i++) {
-      const data = qpcr[i];
+    const meltData = experiment.log.fluorescence.qpcr;
+    for (let i=0; i<meltData.length; i++) {
+      const data = meltData[i];
       let line = [ data.t, data.cycle];
       for (let ch=0; ch<chCount; ch++) {
         for (let well=0; well<wellCount; well++) {
-          line.push(data.v[ch][well]);
+          line.push(data.v[ch][well].v);
         }
       }
       table.push(line);
@@ -241,7 +244,35 @@ class ExperimentManager {
   }
   
   _exportMeltCurve (experiment) {
-    return "TODO";
+    if (!experiment.hardware) {
+      return "Hardware config is empty.";
+    }
+    if (!experiment.log.fluorescence || !experiment.log.fluorescence.melt_curve) {
+      return " No melt curve data.";
+    }
+    let table = [];
+    const chCount = experiment.hardware.channels.count;
+    const wellCount = experiment.hardware.wells.count;
+    
+    let header = ["time","temp"];
+    for (let c=0; c<chCount; c++) {
+      for (let w=0; w<wellCount; w++) {
+        header.push("Ch " + (c+1) + "/" + experiment.hardware.wells.names[w]);
+      }
+    }
+    table.push(header);
+    const qpcrData = experiment.log.fluorescence.melt_curve;
+    for (let i=0; i<qpcrData.length; i++) {
+      const data = qpcrData[i];
+      let line = [ data.t, data.temp];
+      for (let ch=0; ch<chCount; ch++) {
+        for (let well=0; well<wellCount; well++) {
+          line.push(data.v[ch][well].v);
+        }
+      }
+      table.push(line);
+    }
+    return this._toCsv(table);
   }
   _toCsv (table) {
     return table.map(line=>line.join("\t")).join("\n");

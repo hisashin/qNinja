@@ -32,6 +32,7 @@ class HeatUnit {
     this.targetTemperature = 0.0; // PID target temperature (in Celsius)
     this.measurement = null; // Detailed temperature data object (may include multiple values)
     this.measurementTimestamp = null;
+    this.isOff = true;
   }
   start () {
     // Initialize hardware. This function is called once at the first run.
@@ -39,10 +40,11 @@ class HeatUnit {
     this.output.start();
   }
   setTargetTemperature (targetTemperature) {
+    this.isOff = false;
     if (this.targetTemperature == targetTemperature) {
       return;
     }
-    console.log("setTargetTemperature %f", targetTemperature);
+    // console.log("setTargetTemperature %f", targetTemperature);
     this.targetTemperature = targetTemperature;
     this.pid.setSetpoint(this.targetTemperature);
   }
@@ -52,9 +54,8 @@ class HeatUnit {
       this.measurementTimestamp = new Date().getTime();
       this.temperature = temperature;
       this.pid.setValue(temperature);
-      if (this.targetTemperature > 0) {
+      if (this.targetTemperature > 0 && !this.isOff) {
         const outputValue = this.pid.getOutput();
-        console.log("Temp=%f, Target=%f, Out=%f", this.temperature, this.targetTemperature, outputValue);
         this.output.setOutput(outputValue);
       }
       callback();
@@ -78,10 +79,12 @@ class HeatUnit {
     }
   }
   off() {
+    this.isOff = true;
     this.output.off();
   }
   shutdown () {
     console.log("Shutting down HeatUnit.");
+    this.isOff = true;
     if (this.output.shutdown) {
       this.output.shutdown();
     } else {

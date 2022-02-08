@@ -746,7 +746,7 @@ class NinjaQPCRWebSocketServer {
             console.log("Stderr", stderr);
           });
         }
-        process.exit(0);
+        qpcr.exit();
       }
     });
     qpcr.startMonitoringTemperature ((data)=>{
@@ -888,7 +888,7 @@ class NinjaQPCRServer {
           console.log("Stdout", stdout);
           console.log("Stderr", stderr);
         });
-        process.exit(0);
+        qpcr.exit();
         */
       });
     }
@@ -898,7 +898,7 @@ function handleSignal(signal) {
   console.log("Received signal : %s", signal);
   eventBus.publish("device.update.shutdown", {});
   qpcr.shutdown();
-  process.exit(0);
+  qpcr.exit();
 }
 
 new NinjaQPCRServer().init();

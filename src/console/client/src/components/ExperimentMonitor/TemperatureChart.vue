@@ -58,7 +58,6 @@ export default {
     this.timeOffset = 0;
   },
   mounted: function () {
-    console.log("TemperatureChart.mounted");
     this.minTime = 0;
     this.maxTime = 120;
     this.timeOffset = 0;

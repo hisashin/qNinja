@@ -12,7 +12,6 @@ class Peltier {
       this.relay.start();
     }
     setOutput (value) {
-      // Calculate wiper value
       if (value > 0) {
         this.relay.setDirection(Relay.Direction.FORWARD);
       } else if (value < 0) {
@@ -20,11 +19,9 @@ class Peltier {
       } else {
         this.relay.setDirection(Relay.Direction.OFF);
       }
-      // TODO Map value to vOut
-      let vOut = Math.abs(value); // Required voltage
-      this.absOutput.setOutput(vOut);
+      this.absOutput.setOutput(Math.abs(value));
     }
-    shutdown () {
+    off () {
       this.relay.off();
       if (this.absOutput.off) {
         this.absOutput.off();

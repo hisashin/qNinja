@@ -1,8 +1,10 @@
 "use strict";
+const { forEach } = require("async");
 const PromiseQueue = require("../lib/promise_queue.js");
 
 /* Excitation and fluorescence measurement */
 // const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
+const MEASUREMENT_COUNT = 3;
 class Optics {
   constructor (ledUnit, fluorescenceSensingUnit, wellsCount, opticsChannelsCount) {
     // new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
@@ -37,21 +39,49 @@ class Optics {
   _taskSelectPhotodiode (wellIndex, opticalChannel) {
     return ()=>{
       return new Promise((resolve, reject)=>{
+        // console.log("_taskSelectPhotodiode %d %d", wellIndex, opticalChannel);
         this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, ()=>{
           resolve();
         });
       });
     };
   }
+
+  _processMeasurements (series) {
+    return series.sort((a,b)=>{return b.v-a.v})[1];
+  }
+  _avg (series) {
+    let sum = 0;
+    series.forEach((s) =>{
+      sum += s.v;
+    });
+    return sum/series.length;
+  }
+  _second (series) {
+    const sorted = series.map(s=>s.v).sort((a,b)=>{return b-a});
+    return sorted[1];
+  }
   
   _taskMeasure (wellIndex, opticalChannel, values) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        this.fluorescenceSensingUnit.measure((v)=>{
-          values[opticalChannel][wellIndex] = v;
-          this.fluorescenceSensingUnit.release();
-          resolve();
-        });
+        let series = [];
+        const measurementCount = this.fluorescenceSensingUnit.measurementCount();
+        for (let i=0; i<measurementCount; i++) {
+          setTimeout(()=>{
+            this.fluorescenceSensingUnit.measure((v)=>{
+              series.push(v);
+              if (i==measurementCount-1) {
+                this.fluorescenceSensingUnit.release();
+                values[opticalChannel][wellIndex] = this._processMeasurements(series);
+                if (wellIndex == 1 && opticalChannel == 0) {
+                }
+                resolve();
+              }
+            });
+
+          }, this.fluorescenceSensingUnit.excitationDuration()*(i+2));
+        }
       });
     };
   }
@@ -104,6 +134,7 @@ class Optics {
   measureAll (callback) {
     this.oneShotCallbacks.push(callback);
     if (this.isMeasuring) {
+      console.log("Return. Measure all is already running.");
       // measure all task is already running
       return;
     }
@@ -127,7 +158,7 @@ class Optics {
       queue.push(this._taskSelectLED(wellIndex));
       for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
         queue.push(this._taskSelectPhotodiode(wellIndex, opticsChannel));
-        queue.push(this._taskDelay(this.fluorescenceSensingUnit.excitationDuration()));
+        // queue.push(this._taskDelay(this.fluorescenceSensingUnit.excitationDuration()));
         queue.push(this._taskMeasure(wellIndex, opticsChannel, values));
       }
     }

@@ -3,7 +3,7 @@
 * Install Raspberry Pi OS LITE to a SD card (>8GB) with Imager (v1.4)
 
 # Setup
-* Insert SD card to RasPi
+* Insert SD card to RasPi board
 * Power on
 * Login (user=pi, password=raspberry)
 * Config `sudo raspi-config`

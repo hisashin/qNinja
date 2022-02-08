@@ -37,7 +37,7 @@ class Device {
       topic: topic
     };
     const subId = this.topicManager.add(topic, subscription);
-    console.log("Device.subscribe %s count=%d", topic, this.topicManager.count);
+    console.log("Device.subscribe topic=%s count=%d", topic, this.topicManager.count);
     return subId;
   }
   unsubscribe (subId) {

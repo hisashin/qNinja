@@ -1,5 +1,5 @@
 const eventBus = require("./lib/event_bus.js");
-// Run optics demo with batch3 boards.
+// Run optics demo. It calls measureAll every 3s
 class OpticsSession {
   constructor () {
     eventBus.subscribe("optics.command", (topic, data)=>{
