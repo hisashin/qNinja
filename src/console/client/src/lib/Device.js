@@ -8,9 +8,6 @@ class Device {
     this.count = 0;
     this.connectionEventHandlers = [];
     this.deviceStateHandlers = [];
-    this.transitionHandlers = [];
-    this.progressHandlers = [];
-    this.fluorescenceUpdateHandlers = [];
     
     this.deviceState = null;
     this.experimentProgress = null;
@@ -80,66 +77,8 @@ class Device {
       targets.forEach((subscriber)=>{
         subscriber.handler(topic, obj.data);
       });
-      // TODO remove.
+      // TODO remove. UI should directly subscribe to topics.
       switch (obj.topic) {
-        case "experiment.update.transition":
-          this.transitionHandlers.forEach((handler)=>{
-            if (handler.onTransition) {
-              handler.onTransition(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.progress":
-          this.progressHandlers.forEach((handler)=>{
-            this.progress = obj.data;
-            if (handler.onProgress) {
-              handler.onProgress(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.fluorescence":
-          this.fluorescenceUpdateHandlers.forEach((handler)=>{
-            if (handler.onFluorescenceUpdate) {
-              handler.onFluorescenceUpdate(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.meltCurve":
-          this.fluorescenceUpdateHandlers.forEach((handler)=>{
-            if (handler.onMeltCurveUpdate) {
-              handler.onMeltCurveUpdate(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.fluorescenceEvent":
-          this.fluorescenceUpdateHandlers.forEach((handler)=>{
-            if (handler.onFluorescenceEvent) {
-              handler.onFluorescenceEvent(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.autoPause":
-          this.transitionHandlers.forEach((handler)=>{
-            if (handler.onAutoPause) {
-              handler.onAutoPause(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.start":
-          this.transitionHandlers.forEach((handler)=>{
-            if (handler.onStart) {
-              console.log(obj)
-              handler.onStart(obj.data);
-            }
-          });
-          break;
-        case "experiment.update.finish":
-          this.transitionHandlers.forEach((handler)=>{
-            if (handler.onComplete) {
-              handler.onComplete(obj.data);
-            }
-          });
-          break;
         case "device.update.transition":
           this.setDeviceState(obj.data);
           break;
@@ -226,27 +165,6 @@ class Device {
       return;
     }
     this.deviceStateHandlers.push(obj);
-  }
-  addTransitionHandler (obj) {
-    if (this.transitionHandlers.indexOf(obj) > -1) {
-      console.warn("Device.addTransitionHandler: This object is already registered. Skip.");
-      return;
-    }
-    this.transitionHandlers.push(obj);
-  }
-  addProgressHandler (obj) {
-    if (this.progressHandlers.indexOf(obj) > -1) {
-      console.warn("Device.addProgressHandler: This object is already registered. Skip.");
-      return;
-    }
-    this.progressHandlers.push(obj);
-  }
-  addFluorescenceUpdateHandler (obj) {
-    if (this.fluorescenceUpdateHandlers.indexOf(obj) > -1) {
-      console.warn("Device.addFluorescenceUpdateHandler: This object is already registered. Skip.");
-      return;
-    }
-    this.fluorescenceUpdateHandlers.push(obj);
   }
   
   getDeviceState () {

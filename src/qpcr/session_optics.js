@@ -27,11 +27,14 @@ class OpticsSession {
   transform (values) {
     for (let i=0; i<16; i++) {
       let v = values[0][i];
+      /*
       if (v.s=="10M") {
         this.measurement[i].vl = v.v;
       } else {
         this.measurement[i].vs = v.v;
       }
+      */
+      this.measurement[i] = v;
     }
     return this.measurement;
   }
@@ -48,7 +51,7 @@ class OpticsSession {
         });
         eventBus.publish("optics.update.measurement", this.transform(values));
       });
-    }, 3000);
+    }, 4000);
   }
   shutdown () {
     console.log("Shutting down demo_optics_batch8");

@@ -109,6 +109,7 @@ const MUX_CHANNEL_THERMISTOR_EXT3 = 5;
 const MUX_CHANNEL_THERMISTOR_PD1 = 6;
 const MUX_CHANNEL_THERMISTOR_PD2 = 7;
 
+
 // Well name -> Channel index
 
 const MUX_MAP_PHOTODIODES_N = [
@@ -288,7 +289,6 @@ class HardwareConf {
   getLEDUnit () {
     console.log("getLEDUnit()");
     if (this.ledUnit == null) {
-      console.log("getLEDUnit() create...");
       const pot = new MCP4551T(this.i2c, I2C_ADDR_POT);
       const ledDriver = new PCA9955B(this.i2c, I2C_ADDR_PCA9955B);
       this.ledUnit = new LEDUnit(pot, ledDriver);
@@ -350,15 +350,11 @@ class TemperatureSensing {
   }
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
-      /*
-      rpio.write(PIN_NUM_PD_MUX_1, 0);
-      rpio.write(PIN_NUM_PD_MUX_2, 0);
-      rpio.write(PIN_NUM_PD_MUX_3, 0);
-      rpio.write(PIN_NUM_PD_MUX_4, 0);
-      */
       this.mux.selectChannel(this.muxChannel);
+      const muxTimestamp = new Date();
       let thermistor = null;
       let switchPinVal = 0;
+      
       if (this.prevValue < this.switchingTemp) {
         thermistor = this.thermistorLowTemp;
       } else {
@@ -369,9 +365,17 @@ class TemperatureSensing {
       // Prev value
       // Switch
       setTimeout(()=>{
-        this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
+        this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val, raw)=>{
           const temp = thermistor.getTemp(val);
-          this.prevValue = temp;
+          if ((temp > 120 || temp < 10) && 
+          (this.muxChannel == MUX_CHANNEL_THERMISTOR_PLATE_BLOCK || this.muxChannel == MUX_CHANNEL_THERMISTOR_LID)) {
+            const interval = new Date().getTime() - muxTimestamp.getTime()
+            console.log("IRREGULAR %d\t%f\t%f\t%f<=>%f", this.muxChannel, val, temp, this.prevValue,this.switchingTemp);
+            console.log(raw)
+            console.log(this.prevRaw)
+          }
+          this.prevRaw = raw;
+
           muxQueue.release(muxTaskId);
           const detailedMeasurement = {
             main:temp
@@ -564,7 +568,6 @@ const LED_WELL_TO_CHANNEL_MAP = [
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 let hoge = 0;
-let wiper = 0;
 class LEDUnit {
   constructor (pot, ledDriver) {
     console.log("LEDUnit.init()")
@@ -577,37 +580,13 @@ class LEDUnit {
     this.pot.initialize();
     this.ledDriver.setBlankControlMode();
   }
-  select (well) {
-    // well = 1;
-    if (well == 0) {
-      wiper = (wiper + 1) % 16;
-      process.stdout.write(wiper + "\t");
+  select (well, wiper) {
+    if (! (wiper > 0) ) {
+      wiper = 0;
     }
     this.pot.setWiper(wiper);
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    // channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
     this.ledDriver.selectChannel(channel);
-    /*
-    if (hoge % 2 == 0) {
-      this.ledDriver.selectChannels([11,10,9,8,12,13,14,15]);
-    } else {
-      this.ledDriver.selectChannels([4,5,6,7,3,2,1,0]);
-    }
-    */
-    // this.ledDriver.onAll();
-    // console.log("Well=%d Channel=%d", well, channel);
-    // this.ledDriver.off();
-    if (well == 15) {
-      /*
-      if (hoge % 2 == 0) {
-        console.log("NORTH");
-      }  else {
-        console.log("SOUTH");
-      }
-      */
-      //console.log("Well %d", hoge);
-      hoge = (hoge + 1) % 16;
-    }
   }
   
   off () {
@@ -695,7 +674,7 @@ class FluorescenceSensingUnit {
     this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (_val)=>{
       const val = _val * 2;
       this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
-      callback({v:val,s:this.isStrongSignal?"1M":"10M",x:debugLastMuxSwitch, y:debugLastMuxChannel});
+      callback({v:val/*,s:this.isStrongSignal?"1M":"10M"*/});
     });
   }
   shutdown () {

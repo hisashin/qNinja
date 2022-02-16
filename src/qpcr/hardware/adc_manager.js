@@ -50,14 +50,14 @@ class ADCManager {
         console.log(e);
     }
     this.adc.sync();
-    const timeoutMsec = 1 + 1000/this.dataRate;
+    const timeoutMsec = 2 + 1000/this.dataRate;
     setTimeout(()=>{
-      this.adc.readConversionData((val)=>{
+      this.adc.readConversionData((val, raw)=>{
         this._isReading = false;
         if (this.readQueue.length > 0) {
           this._readNext();
         }
-        read.callback(val);
+        read.callback(val, raw);
       });
     }, timeoutMsec);
   }

@@ -1,12 +1,120 @@
 "use strict";
-const { forEach } = require("async");
 const PromiseQueue = require("../lib/promise_queue.js");
 
 /* Excitation and fluorescence measurement */
-// const MEASUREMENT_INTERVAL_MSEC = 10000; // 10sec
 const MEASUREMENT_COUNT = 3;
+
+class OpticsUnit  {
+  constructor(ledUnit, fluorescenceSensingUnit) {
+    this.ledUnit = ledUnit;
+    this.fluorescenceSensingUnit = fluorescenceSensingUnit;
+  }
+  
+  // Delay
+  _taskDelay (ms) {
+    return new Promise ((resolve, reject)=>{
+      // console.log("Start wait %d", ms);
+      setTimeout(resolve, ms);
+    });
+  }
+  _taskSelectLED (wellIndex, wiper) {
+    return new Promise((resolve, reject)=>{
+      this.ledUnit.select(wellIndex, wiper);
+      resolve();
+    });
+  }
+  
+  _taskSelectPhotodiode (wellIndex, opticalChannel) {
+    return new Promise((resolve, reject)=>{
+      this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, ()=>{
+        resolve();
+      });
+    });
+  }
+  _taskMeasure () {
+    return new Promise((resolve, reject)=>{
+      this.fluorescenceSensingUnit.measure((v)=>{
+        resolve(v);
+      });
+    });
+
+  }
+
+  _processMeasurements (series) {
+    return series.sort((a,b)=>{return b.v-a.v})[1];
+  }
+  _isSaturated (signal) {
+    return signal > 1.2;
+  }
+  _ledIntensity (wiper) {
+    return 750 / (750 + 50000 * wiper / 256)
+  }
+  async _configure (well, opticalChannel) {
+    // Gain & intensity config
+
+    const MAX_WIPER = 2;
+    let wiper = 1;
+    let measurement = null;
+    while (wiper < MAX_WIPER) {
+      let saturated = false;
+      await this._taskSelectLED(well, wiper);
+      for (let i=0; i<3; i++) {
+        await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
+        measurement = await this._taskMeasure();
+        saturated = this._isSaturated(measurement.v)
+        if (saturated) {
+          break;
+        }
+      }
+      if (!saturated) {
+        break;
+      }
+      wiper ++;
+    }
+    
+    /*
+    // Test with fixed wiper value
+    let wiper = 2;
+    await this._taskSelectLED(well, wiper);
+    await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
+    */
+    let conf = {wiper:wiper, int: this._ledIntensity(wiper)};
+    return conf;
+  }
+
+  calcFluo (raw, wiper) {
+    if (wiper <= 1)  return raw;
+    return raw * 1.3; // TODO
+  }
+  
+  async measure (well, opticalChannel, callback) {
+    await this._taskSelectPhotodiode(well, opticalChannel);
+    const conf = await this._configure(well, opticalChannel);
+    let series = [];
+    const measurementCount = this.fluorescenceSensingUnit.measurementCount();
+    for (let i=0; i<measurementCount; i++) {
+      await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
+      const measurement = await this._taskMeasure();
+      series.push(measurement); 
+    }
+    this.fluorescenceSensingUnit.release();
+    // Raw value
+    let v = this._processMeasurements(series);
+    v.w = conf.wiper;
+    v.i = conf.int;
+    v.r = v.v;
+    v.v = this.calcFluo(v.r, conf.wiper);
+    callback(v);
+
+  }
+
+}
+/*
+  fluo
+*/
 class Optics {
   constructor (ledUnit, fluorescenceSensingUnit, wellsCount, opticsChannelsCount) {
+    this.opticsUnit = new OpticsUnit(ledUnit, fluorescenceSensingUnit);
     // new Optics(hardwareConf.getLEDUnit(), hardwareConf.getFluorescenceSensingUnit(), hardwareConf.wellsCount(), hardwareConf.opticsChannelsCount());
     this.ledUnit = ledUnit;
     this.fluorescenceSensingUnit = fluorescenceSensingUnit;
@@ -19,82 +127,23 @@ class Optics {
       // Channel array?
     ];
     this.isMeasuring = false;
-    this.oneShotCallbacks = [];
-    this.continuousCallback = null;
-    this.continuous = false;
-    this.shouldResumeContinuous = false;
-    this.devugValue = null;
+    this.measureAllCallbacks = [];
   }
   /* Promise queue tasks */
   
-  _taskSelectLED (wellIndex) {
+
+  _taskMeasure (wellIndex, opticalChannel, values) {
     return ()=>{
       return new Promise((resolve, reject)=>{
-        this.ledUnit.select(wellIndex);
-        resolve();
-      });
-    };
-  }
-  
-  _taskSelectPhotodiode (wellIndex, opticalChannel) {
-    return ()=>{
-      return new Promise((resolve, reject)=>{
-        // console.log("_taskSelectPhotodiode %d %d", wellIndex, opticalChannel);
-        this.fluorescenceSensingUnit.select(wellIndex, opticalChannel, ()=>{
+        this.opticsUnit.measure(wellIndex, opticalChannel, (result)=>{
+          values[opticalChannel][wellIndex] = result;
           resolve();
+
         });
       });
     };
   }
-
-  _processMeasurements (series) {
-    return series.sort((a,b)=>{return b.v-a.v})[1];
-  }
-  _avg (series) {
-    let sum = 0;
-    series.forEach((s) =>{
-      sum += s.v;
-    });
-    return sum/series.length;
-  }
-  _second (series) {
-    const sorted = series.map(s=>s.v).sort((a,b)=>{return b-a});
-    return sorted[1];
-  }
   
-  _taskMeasure (wellIndex, opticalChannel, values) {
-    return ()=>{
-      return new Promise((resolve, reject)=>{
-        let series = [];
-        const measurementCount = this.fluorescenceSensingUnit.measurementCount();
-        for (let i=0; i<measurementCount; i++) {
-          setTimeout(()=>{
-            this.fluorescenceSensingUnit.measure((v)=>{
-              series.push(v);
-              if (i==measurementCount-1) {
-                this.fluorescenceSensingUnit.release();
-                values[opticalChannel][wellIndex] = this._processMeasurements(series);
-                if (wellIndex == 1 && opticalChannel == 0) {
-                }
-                resolve();
-              }
-            });
-
-          }, this.fluorescenceSensingUnit.excitationDuration()*(i+2));
-        }
-      });
-    };
-  }
-  
-  // Delay
-  _taskDelay (ms) {
-    return ()=>{
-      return new Promise ((resolve, reject)=>{
-        // console.log("Start wait %d", ms);
-        setTimeout(resolve, ms);
-      });
-    };
-  }
   
   start () {
     console.log("Optics.start");
@@ -113,26 +162,15 @@ class Optics {
     }
   }
   pause () {
-    this.shouldResumeContinuous = this.continuous;
-    this.continuous = false;
   }
   resume () {
-    this.continuous = this.shouldResumeContinuous;
-    this.continuous = this.shouldResumeContinuous = false;
-    if (this.continuous) {
-      this.startContinuousDataCollection(this.continuousCallback);
-    }
   }
   cancel () {
-    this.continuous = false;
-    this.shouldResumeContinuous = false;
   }
   finish () {
-    this.continuous = false;
-    this.shouldResumeContinuous = false;
   }
   measureAll (callback) {
-    this.oneShotCallbacks.push(callback);
+    this.measureAllCallbacks.push(callback);
     if (this.isMeasuring) {
       console.log("Return. Measure all is already running.");
       // measure all task is already running
@@ -147,52 +185,32 @@ class Optics {
     let queue = [];
     let values = [];
     
-    for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
+    for (let opticalChannel=0; opticalChannel<this.opticsChannelsCount; opticalChannel++) {
       values.push([]);
       for (let wellIndex=0; wellIndex<this.wellsCount; wellIndex++) {
-        values[opticsChannel].push(0);
+        values[opticalChannel].push(0);
       }
     }
     
     for (let wellIndex=0; wellIndex<this.wellsCount; wellIndex++) {
-      queue.push(this._taskSelectLED(wellIndex));
-      for (let opticsChannel=0; opticsChannel<this.opticsChannelsCount; opticsChannel++) {
-        queue.push(this._taskSelectPhotodiode(wellIndex, opticsChannel));
-        // queue.push(this._taskDelay(this.fluorescenceSensingUnit.excitationDuration()));
-        queue.push(this._taskMeasure(wellIndex, opticsChannel, values));
+      for (let opticalChannel=0; opticalChannel<this.opticsChannelsCount; opticalChannel++) {
+       queue.push(this._taskMeasure(wellIndex, opticalChannel, values));
       }
     }
     
     new PromiseQueue(queue).exec().then(()=>{
       this.ledUnit.off();
-      if (this.oneShotCallbacks.length > 0) {
-        this.oneShotCallbacks.forEach((callback)=>{
+      if (this.measureAllCallbacks.length > 0) {
+        this.measureAllCallbacks.forEach((callback)=>{
           callback(values);
         });
-        this.oneShotCallbacks = [];
-      }
-      if (this.continuous && this.continuousCallback != null) {
-        this.continuousCallback(values);
-      }
-      if (this.continuous) {
-        // Next time
-        const elapsed = new Date().getTime() - lastMeasurementTimestamp.getTime();
-        const next = Math.max(0, this.fluorescenceSensingUnit.measurementAllMinInterval() - elapsed);
-        setTimeout(()=>{ this._measureAll() }, next);
+        this.measureAllCallbacks = [];
       }
       this.isMeasuring = false;
     },
     (e)=>{
       console.log(e)
     });
-  }
-  startContinuousDataCollection (callback) {
-    this.continuous = true;
-    this.continuousCallback = callback;
-    this._measureAll();
-  }
-  stopContinuousDataCollection () {
-    this.continuous = false;
   }
   _roundFluorescence (value) {
     return Math.round(value * this.ROUND_POSITION) / this.ROUND_POSITION;

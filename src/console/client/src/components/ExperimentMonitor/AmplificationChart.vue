@@ -79,6 +79,9 @@ export default {
     
   },
   methods: {
+    clear () {
+      console.log("TODO AmplificationChart.clear()");
+    },
     // Well iterator
     eachSeries (func /* function(channel, well, dataIndex) */ ) {
       for (let c=0; c<this.channelsCount; c++) {

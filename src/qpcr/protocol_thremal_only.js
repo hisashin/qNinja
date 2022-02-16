@@ -17,9 +17,9 @@ const protocol = {
       type: Constants.StageType.MELT_CURVE,
       cycles: 10,
       steps: [
-        { label:"denature", duration:60, temp:85.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-        { label:"cool", duration:60, temp:50.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-        { label:"melt", duration:60, temp:68.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
+        { label:"denature", duration:60, temp:85.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} },
+        { label:"cool", duration:60, temp:50.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} },
+        { label:"melt", duration:60, temp:68.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} }
       ]
     }
   ]

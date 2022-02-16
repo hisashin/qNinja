@@ -71,6 +71,9 @@ export default {
     this.graph = graph;
   },
   methods: {
+    clear () {
+      console.log("TODO TemperatureChart.clear()");
+    },
     add: function(timestamp, plate, lid) {
       this.channelPlate.addData({t:timestamp, v:plate});
       this.channelLid.addData({t:timestamp, v:lid});

@@ -827,7 +827,7 @@ class NinjaQPCRWebSocketServer {
     eventBus.publish("experiment.update.fluorescenceEvent", data);
   }
   onDeviceStateChange (data) {
-    eventBus.publish("experiment.update.transition", data);
+    eventBus.publish("device.update.transition", data);
   }
   onStart (data) {
     eventBus.publish("experiment.update.start", data);

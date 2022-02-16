@@ -136,21 +136,18 @@ export default {
     appState.setPanelContainer(this);
     this.connected = device.connected;
     device.addConnectionEventHandler(this);
-    device.addTransitionHandler({
-      onStart: (obj)=>{
+
+    device.subscribe("experiment.update.start", (topic, data)=>{
         console.log("Experiment started.");
         this.status = DEVICE_STATUS_RUNNING;
-      },
-      onComplete: (obj)=>{
+    });
+    device.subscribe("experiment.update.finish", (topic, data)=>{
         console.log("Experiment is complete!");
         this.status = DEVICE_STATUS_FINISHED;
-      },
-      onAutoPause: (obj)=>{
+    });
+    device.subscribe("experiment.update.autoPause", (topic, data)=>{
         console.log("Experiment is paused automatically by protocol!");
         this.status = DEVICE_STATUS_AUTO_PAUSE;
-      },
-      onTransition:(obj)=>{
-      }
     });
     appState.setNavigationHandler((panelStack)=>{
       this.backEnabled = (panelStack.length > 1);

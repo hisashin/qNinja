@@ -197,8 +197,7 @@ class ADS1219IPWR {
         val = 0;
       }
       origVal = val;
-      callback(origVal/0x800000); // TODO debug
-      // callback( Math.max(0, val / (1.0 * 0x00800000))); // For single-ended
+      callback(origVal/0x800000, buffVal);
     });
   }
   

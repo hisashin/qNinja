@@ -19,7 +19,7 @@ const example_hold_stage = {
   cycles: 1,
   pause_after: false,
   steps: [
-    { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} }
+    { label:"hold", temp:DEMO_TEMP_HIGH, duration:5.0, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} }
   ]
 };
 
@@ -29,9 +29,9 @@ const example_pcr_stage = {
   cycles:  10,
   pause_after: false,
   steps: [
-    { label:"denature", temp:DEMO_TEMP_HIGH, duration: 5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"anneal", temp:DEMO_TEMP_LOW, duration:5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"extend", temp:DEMO_TEMP_MEDIUM, duration:5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false, hold_continuous:false} }
+    { label:"denature", temp:DEMO_TEMP_HIGH, duration: 5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false} },
+    { label:"anneal", temp:DEMO_TEMP_LOW, duration:5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false} },
+    { label:"extend", temp:DEMO_TEMP_MEDIUM, duration:5.0, data_collection:{ramp_end:true, hold_end:false, ramp_continuous:false} }
   ]
 };
 
@@ -40,9 +40,9 @@ const example_melt_curve_stage = {
   cycles: 1,
   pause_after: false,
   steps: [
-    { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"cool", duration:5, temp:DEMO_TEMP_LOW, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false, hold_continuous:false} },
-    { label:"melt", ramp_speed: 0.05, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:true, measurement_interval_temp: 0.5, hold_continuous:false} }
+    { label:"denature", duration:5, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} },
+    { label:"cool", duration:5, temp:DEMO_TEMP_LOW, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:false} },
+    { label:"melt", ramp_speed: 0.05, duration:5.0, temp:DEMO_TEMP_HIGH, data_collection:{ramp_end:false, hold_end:false, ramp_continuous:true, measurement_interval_temp: 0.5} }
   ]
 };
 

@@ -156,25 +156,25 @@ export default {
   created: function () {
     this.protocol = device.getProtocol();
     device.addConnectionEventHandler(this);
-  
-    this.subId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
+    device.subscribe("experiment.update.progress", (topic, data, id)=>{
       this.applyProgress(data);
     });
-    device.addTransitionHandler({
-      onStart:(obj)=>{
-        this.protocol = obj.protocol;
-      },
-      onTransition:(obj)=>{
+    device.subscribe("device.update.transition", (topic, obj, id)=>{
         let status = obj.to;
         if (obj.to == null) { return; }
         if (this.protocol == null) {
           return;
         }
-      }
+    });
+    device.subscribe("experiment.update.start", (topic, obj)=>{
+        this.protocol = obj.protocol;
+
     });
     this.deviceState = device.getDeviceState();
     device.addDeviceStateHandler({
       onDeviceStateChange: (state)=>{
+        console.log("onDeviceStateChange");
+        console.log(state)
         if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
           this.$bvModal.show('finish-modal');
         }

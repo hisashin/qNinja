@@ -56,6 +56,9 @@ export default {
   mounted: function () {
   },
   methods: {
+    clear () {
+      console.log("TODO MeltCurveChart.clear()");
+    },
     // Well iterator
     eachSeries (func /* function(channel, well, dataIndex) */ ) {
       for (let c=0; c<this.channelsCount; c++) {

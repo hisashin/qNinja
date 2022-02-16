@@ -19,8 +19,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           }
         ]
@@ -37,8 +36,7 @@
             "data_collection": {
               "ramp_end": true,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           },
           {
@@ -48,8 +46,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           },
           {
@@ -59,8 +56,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           }
         ]
@@ -77,8 +73,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           },
           {
@@ -88,8 +83,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": false,
-              "hold_continuous": false
+              "ramp_continuous": false
             }
           },
           {
@@ -100,8 +94,7 @@
             "data_collection": {
               "ramp_end": false,
               "hold_end": false,
-              "ramp_continuous": true,
-              "hold_continuous": false
+              "ramp_continuous": true
             }
           }
         ]

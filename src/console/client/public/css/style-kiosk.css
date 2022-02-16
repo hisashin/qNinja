@@ -358,6 +358,7 @@ a {
 }
 .protocol-editor-stages__add-button, .protocol-detail-stages__add-button {
   width: 60px;
+  height: 60px;
   margin: -18px -30px 0;
   flex-grow: 0;
   flex-shrink: 0;
@@ -372,7 +373,7 @@ a {
   border-top: 1px solid #aaa;
 }
 .protocol-editor-step__data-collection, .protocol-detail-step__data-collection {
-  font-size: 0.75em;
+  /* font-size: 0.75em; */
 }
 .protocol-editor-values, .protocol-detail-values {
   display: flex;

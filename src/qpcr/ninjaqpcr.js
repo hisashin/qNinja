@@ -250,7 +250,6 @@ class NinjaQPCR {
     const from = this._getStep(data.from); // Nullable
     const to = this._getStep(data.to); // Nullable
     this.experimentLog.log.events.push(data.to);
-    this.optics.stopContinuousDataCollection();
     this.stopContinuousDataCollection();
     if (data.from.state == 'ramp') {
       if (from != null && from.data_collection != null && from.data_collection.ramp_end==true) {
@@ -282,7 +281,6 @@ class NinjaQPCR {
         console.log("Starting continuous data collection (ramp)");
 
         this.startContinuousDataCollection(from, to, (temp)=>{
-              console.log("MEASUREALL ramp continuous");
               this.optics.measureAll(
                 (values)=>{
                   console.log("MEASUREALL.done");
@@ -291,16 +289,6 @@ class NinjaQPCR {
                 });
 
         });
-      }
-    }
-    if (data.to.state == 'hold') {
-      if (to != null && to.data_collection != null && to.data_collection.hold_continuous==true) {
-        console.log("Starting continuous data collection (hold)");
-        this.optics.startContinuousDataCollection(
-          (values)=>{
-            console.log("Hold continuous.");
-            this.onFluorescenceDataUpdate(data.to, MEASUREMENT_HOLD_CONTINUOUS, values);
-          });
       }
     }
     const toStage = this.protocol.stages[data.to.stage];
@@ -331,9 +319,6 @@ class NinjaQPCR {
       experimentManager.update(this.experimentLog, null, null);
       console.log("ThermalCyclerTransition SAVE");
     }
-  }
-  stopContinuousDataCollection () {
-    this.onProgressFunc = null;
   }
   startContinuousDataCollection (from, to, callback) {
     console.log("NinjaQPCR.startContinuousDataCollection");
@@ -474,6 +459,8 @@ class NinjaQPCR {
   // Set device state and notify the event
   _setDeviceState (state) {
     this.deviceState = state;
+    console.log("_setDeviceState")
+    console.log(state)
     setTimeout(()=>{
       if (this.receiver != null && this.receiver.onDeviceStateChange) {
         this.receiver.onDeviceStateChange(this.deviceState);
