@@ -644,7 +644,7 @@
     (uuid 00000000-0000-0000-0000-00006150bb1d)
     (property "Reference" "U16" (id 0) (at 149.225 99.695 0))
     (property "Value" "CJT1117-3.3" (id 1) (at 149.225 102.0064 0))
-    (property "Footprint" "TO_SOT_Packages_SMD:SOT-223" (id 2) (at 148.59 105.41 0)
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-223" (id 2) (at 148.59 105.41 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 148.59 105.41 0)
