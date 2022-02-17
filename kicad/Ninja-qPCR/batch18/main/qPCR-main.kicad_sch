@@ -1801,6 +1801,13 @@
       (effects (font (size 1.27 1.27)) hide)
     )
   )
+  (global_label "ADC_DRDY" (shape input) (at 82.55 64.77 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid 824eb860-b790-4fb4-9756-3c97186182dd)
+    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 94.369 64.6906 0)
+      (effects (font (size 1.27 1.27)) (justify left) hide)
+    )
+  )
   (global_label "12V" (shape input) (at 140.97 66.04 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 9112ddd5-10d5-48b8-954f-f1d5adcacbd9)
@@ -2009,10 +2016,6 @@
   (hierarchical_label "FAN" (shape input) (at 39.37 72.39 180)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid d3dd7cdb-b730-487d-804d-99150ba318ef)
-  )
-  (hierarchical_label "ADC_DRDY" (shape input) (at 82.55 64.77 0)
-    (effects (font (size 1.27 1.27)) (justify left))
-    (uuid db1ed10a-ef86-43bf-93dc-9be76327f6d2)
   )
   (hierarchical_label "GPIO14" (shape input) (at 39.37 64.77 180)
     (effects (font (size 1.27 1.27)) (justify right))
@@ -3193,14 +3196,11 @@
     (path "/00000000-0000-0000-0000-000060cc8925"
       (reference "J9") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
-    (path "/00000000-0000-0000-0000-0000618ea4aa/00000000-0000-0000-0000-000061b63fb4"
-      (reference "J10") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
-    )
     (path "/8e8cc273-fd2b-40e1-9731-70f0ee8299b8"
       (reference "J11") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
-    (path "/00000000-0000-0000-0000-0000614a3cbb/e368a700-3d12-49fc-bd9b-ddf2fd07b6f0"
-      (reference "J12") (unit 1) (value "Conn_01x08_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x08_P1.27mm_Vertical")
+    (path "/00000000-0000-0000-0000-0000614a3cbb/66821bac-ceac-4e07-bdbb-fae6fd06f7e3"
+      (reference "J12") (unit 1) (value "Conn_01x06_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614d4c2b"
       (reference "J13") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
@@ -3226,8 +3226,8 @@
     (path "/00000000-0000-0000-0000-0000614a3cbb/15fc4742-c05d-4909-8ccc-131495d3c9a4"
       (reference "J20") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
-    (path "/00000000-0000-0000-0000-0000614a3cbb/ff404d94-c427-4b5c-9a67-c7de5d2fe8a6"
-      (reference "J21") (unit 1) (value "Conn_01x08_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x08_P1.27mm_Vertical")
+    (path "/00000000-0000-0000-0000-0000614a3cbb/9a543a2e-86c3-4108-85d1-8e2c4568cbd6"
+      (reference "J21") (unit 1) (value "Conn_01x05_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x05_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/ea5a8138-5eb3-4611-9809-24d80e896ac9"
       (reference "J22") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
@@ -3247,17 +3247,14 @@
     (path "/00000000-0000-0000-0000-0000614a3cbb/48f91964-a008-448d-8f8c-801b4af03bee"
       (reference "J27") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
-    (path "/00000000-0000-0000-0000-0000614a49f9/ee28b4e3-24a0-43c9-8e9f-793494308241"
-      (reference "J28") (unit 1) (value "Conn_01x08_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x08_P1.27mm_Vertical")
+    (path "/00000000-0000-0000-0000-0000614a49f9/2a9ee592-11f4-453e-8153-7f97035c11ab"
+      (reference "J28") (unit 1) (value "Conn_01x09_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x09_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbb8f"
       (reference "JP1") (unit 1) (value "SolderJumper_2_Bridged") (footprint "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm")
     )
-    (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edb3a"
-      (reference "JP2") (unit 1) (value "Jumper") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
-    )
-    (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edbee"
-      (reference "JP3") (unit 1) (value "Jumper") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm")
+    (path "/00000000-0000-0000-0000-0000614dadca/29ee64bd-b852-4185-8ce0-b22d00a7c47d"
+      (reference "JP2") (unit 1) (value "Jumper_3_Open") (footprint "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/1253062f-f3f3-480c-8cf5-3fdf8d5db879"
       (reference "JP4") (unit 1) (value "Jumper_3_Open") (footprint "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm")
@@ -3494,7 +3491,7 @@
       (reference "U14") (unit 1) (value "TL431DBZ") (footprint "Package_TO_SOT_SMD:SOT-23")
     )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edc10"
-      (reference "U15") (unit 1) (value "TL431DBZ") (footprint "Package_TO_SOT_SMD:SOT-223")
+      (reference "U15") (unit 1) (value "TL431DBZ") (footprint "Package_TO_SOT_SMD:SOT-23")
     )
     (path "/00000000-0000-0000-0000-0000614fdc7a/00000000-0000-0000-0000-00006150bb1d"
       (reference "U16") (unit 1) (value "CJT1117-3.3") (footprint "Package_TO_SOT_SMD:SOT-223")
