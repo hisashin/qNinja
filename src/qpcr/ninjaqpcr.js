@@ -107,7 +107,7 @@ class NinjaQPCR {
   /* Experiment Control */
   start (experiment) {
     if (!this.deviceState.startAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to start the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     console.log("ninjaqpcr.js start()");
@@ -126,7 +126,7 @@ class NinjaQPCR {
   }
   pause () {
     if (!this.deviceState.pauseAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to pause the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.pause();
@@ -134,10 +134,11 @@ class NinjaQPCR {
     this.experimentLog.status.status = "paused";
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.PAUSED);
+    return true;
   }
   resume () {
     if (!this.deviceState.resumeAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to resume the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.resume();
@@ -145,13 +146,15 @@ class NinjaQPCR {
     this.experimentLog.status.status = "running";
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.RUNNING);
+    return true;
   }
   finishAutoPause () {
     this.thermalCycler.finishAutoPause();
+    return true;
   }
   cancel () {
     if (!this.deviceState.cancelAvailable) {
-      console.warn("Unable to start experiment. Device is idle. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to cancel experiment. Device is idle. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.cancel();
@@ -161,15 +164,17 @@ class NinjaQPCR {
     this.experimentLog.status.end = new Date().getTime();
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.IDLE);
+    return true;
   }
   finish () {
-    if (!this.deviceState.cancelAvailable) {
-      console.warn("Unable to finish. Experiment is not finishAvailable. deviceState=%s", this.deviceState.finishAvailable);
+    if (!this.deviceState.finishAvailable) {
+      console.warn("Unable to finish the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.finish();
     this.optics.finish();
     this._setDeviceState(DEVICE_STATE.IDLE);
+    return true;
   }
   
   /* Geters */
@@ -459,8 +464,6 @@ class NinjaQPCR {
   // Set device state and notify the event
   _setDeviceState (state) {
     this.deviceState = state;
-    console.log("_setDeviceState")
-    console.log(state)
     setTimeout(()=>{
       if (this.receiver != null && this.receiver.onDeviceStateChange) {
         this.receiver.onDeviceStateChange(this.deviceState);

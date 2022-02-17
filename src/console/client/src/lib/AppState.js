@@ -119,9 +119,27 @@ class AppState {
         this.panelContainer.presentPanel(panelId, toPanel);
         this._didNavigate();
       }
-      
     });
-    
+  }
+  revealDetailLatestExperiment (context) {
+    console.log("AppState.revealDetailLatestExperiment")
+    this._confirmLeavePanel(()=>{
+      while (this.panelStack.length > 1) {
+        this.panelStack.pop();
+      }
+      client.fetchExperiments({}, 
+        (res)=>{
+          const list = res.data;
+          if (list.length == 0) {
+            this.toast(context, "Error", "Experiment data not found.");
+            return;
+          }
+          this.revealDetailExperiment (list[0].id);
+        },
+        ()=>{
+          this.toast(context, "Error", "Failed to load experiment data.");
+        });
+    });
   }
   // Call custom confirmation handler and wait for its result.
   _confirmLeavePanel (callback) {
@@ -142,7 +160,6 @@ class AppState {
     return this.getPanel(this.panelStack[this.panelStack.length-1]);
   }
   _didNavigate () {
-    //console.log("didNavigate")
     if (this.navigationHandler) {
       this.navigationHandler(this.panelStack);
     }
@@ -218,21 +235,7 @@ class AppState {
   
   init () {
     /* HTTP request methods */
-    client.fetchDevice(
-      (data)=>{
-        device.config = data.config;
-        if (data.hasExperiment) {
-          client.fetchDeviceExperiment(
-            (data)=>{
-              device.setExperiment(data);
-            }, 
-            ()=>{});
-        }
-        device.setDeviceState(data);
-      }, (error)=>{
-        console.error(error);
-      }
-    );
+    device.init();
   }
   
   draftExperimentWithProtocol (id) {

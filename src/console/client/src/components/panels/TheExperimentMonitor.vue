@@ -46,7 +46,6 @@
 </template>
 <script>
 import device from "../../lib/Device.js";
-import appState from "../../lib/AppState.js";
 import client from "../../lib/RestClient.js";
 
 import ProtocolDetail from '../ProtocolDetail.vue';
@@ -81,10 +80,6 @@ export default {
   },
   methods: {
     title () { return "Experiment Monitor" },
-    onFluorescenceUpdate: function (data) {
-      let timestamp = new Date().getTime() - startTime.getTime();
-      this.$refs.amplificationChart.add(data);
-    },
     onMeltCurveUpdate: function (data) {
       let timestamp = new Date().getTime() - startTime.getTime();
       this.$refs.meltCurveChart.add(timestamp, data);
@@ -113,7 +108,7 @@ export default {
     subscribe (topic, handler) {
       this.subs.push(device.subscribe(topic, handler));
     },
-    onDisappear () {
+    removeExperiment () {
       if (this.experiment) {
         console.log("TheExperimentMonitor.onDisappear UNsub all.");
         this.experiment = null;
@@ -123,6 +118,10 @@ export default {
         this.$refs.meltCurveChart.clear();
       }
       this.subs = [];
+      device.experiment.removeObserver(this.experimentObserverId);
+    },
+    onDisappear () {
+      this.removeExperiment();
     },
     onAppear () {
       console.log("TheExperimentMonitor.onAppear");
@@ -135,62 +134,64 @@ export default {
         }
       });
       
-      console.log("TheExperimentMonitor.onAppear subscribing experiment.update.progress");
-      client.fetchDeviceExperiment (
-        (experiment)=>{
-          this.experiment = experiment;
-          this.$nextTick(()=>{
-            this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
-            // Set past data
-            this.$refs.temperatureChart.set(
-              experiment.log.temp.time, 
-              experiment.log.temp.plate, 
-              experiment.log.temp.lid);
-            try {
-              this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
-              this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
+
+      this.experimentObserverId = device.experiment.observe((experiment)=>{
+        console.log("TheExperimentMonitor experiment");
+        console.log(experiment)
+        this.removeExperiment();
+        this.experiment = experiment;
+        if (!experiment) return;
+        this.$nextTick(()=>{
+          this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
+          // Set past data
+          this.$refs.temperatureChart.set(
+            experiment.log.temp.time, 
+            experiment.log.temp.plate, 
+            experiment.log.temp.lid);
+          try {
+            this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
+            this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
+          
+          } catch (ex) {
+            console.log(ex);
+          }
+          if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
+            this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
+            this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
+            this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
+          }
+          
+          try {
+            this.$refs.progressMonitor.reset();
+            this.$refs.progressMonitor.protocol = this.experiment.protocol;
             
-            } catch (ex) {
-              console.log(ex);
-            }
-            if (experiment.log.fluorescence && experiment.log.fluorescence.melt_curve) {
-              this.$refs.meltCurveChart.setHardwareConf(experiment.hardware);
-              this.$refs.meltCurveChart.setData(experiment.log.fluorescence.melt_curve);
-              this.$refs.meltCurveChart.setAnalysis(experiment.analysis);
-            }
-            
-            try {
-              this.$refs.progressMonitor.reset();
-              this.$refs.progressMonitor.protocol = this.experiment.protocol;
-              
-            } catch (ex) {
-              console.log(ex);
-            }
-            this.subscribe("experiment.update.finish", (topic, obj)=>{
-                console.log("onComplete");
-                startTime = new Date();
-            });
-            this.subscribe("experiment.update.onAutoPause", (topic, obj)=>{
-                console.log("TheExperimentMonitor AutoPause event received.");
-                this.autoPause = true;
-            });
-            this.subscribe("experiment.update.progress", (topic, obj)=>{
-              if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
-                this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
-              }
-            });
-            this.subscribe("experiment.update.fluorescence", (topic, obj)=>{
-              this.onFluorescenceUpdate(obj);
-            });
-            this.subscribe("experiment.update.meltCurve", (topic, obj)=>{
-              this.onMeltCurveUpdate(obj);
-            });
-            this.subscribe("experiment.update.fluorescence", (topic, obj)=>{
-              this.onFluorescenceEvent(obj);
-            });
+          } catch (ex) {
+            console.log(ex);
+          }
+          this.subscribe("experiment.update.finish", (topic, obj)=>{
+              console.log("onComplete");
+              startTime = new Date();
           });
-        }, 
-        ()=>{}
+          this.subscribe("experiment.update.onAutoPause", (topic, obj)=>{
+              console.log("TheExperimentMonitor AutoPause event received.");
+              this.autoPause = true;
+          });
+          this.subscribe("experiment.update.progress", (topic, obj)=>{
+            if (!(obj.state && (obj.state.state == 'preheat' && obj.state.state == 'complete'))) {
+              this.$refs.temperatureChart.add(obj.elapsed, obj.plate, obj.lid);
+            }
+          });
+          this.subscribe("experiment.update.fluorescence", (topic, obj)=>{
+            this.$refs.amplificationChart.add(obj);
+          });
+          this.subscribe("experiment.update.meltCurve", (topic, obj)=>{
+            this.onMeltCurveUpdate(obj);
+          });
+          this.subscribe("experiment.update.fluorescence", (topic, obj)=>{
+            this.onFluorescenceEvent(obj);
+          });
+        });
+        }
       );
     }
   }

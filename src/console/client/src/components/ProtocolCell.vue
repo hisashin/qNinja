@@ -53,8 +53,9 @@ export default {
     }
   },
   created: function () {
-    this.deviceState = device.getDeviceState();
-    device.addDeviceStateHandler(this);
+    device.deviceState.observe((state)=>{
+      this.deviceState = state;
+    });
   },
   methods: {
     run: function(id) {
@@ -79,9 +80,6 @@ export default {
     },
     duplicate: function() {
       console.log("ProtocolCell.duplicate");
-    },
-    onDeviceStateChange: function (deviceState) {
-      this.deviceState = deviceState;
     }
   }
 }

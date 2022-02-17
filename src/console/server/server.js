@@ -783,19 +783,19 @@ class NinjaQPCRWebSocketServer {
     });
   }
   pause () {
-    qpcr.pause(this.protocol);
+    qpcr.pause();
   }
   resume () {
-    qpcr.resume(this.protocol);
+    qpcr.resume();
   }
   finishAutoPause () {
     qpcr.finishAutoPause();
   }
   finish () {
-    qpcr.finish(this.protocol);
+    qpcr.finish();
   }
   cancel () {
-    qpcr.cancel(this.protocol);
+    qpcr.cancel();
   }
   
   /* NinjaQPCR Event Handling */

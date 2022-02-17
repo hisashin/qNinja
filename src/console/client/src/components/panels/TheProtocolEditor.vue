@@ -424,7 +424,6 @@
 </template>
 
 <script>
-import network from "../../lib/Device.js";
 import appState from "../../lib/AppState.js";
 import client from "../../lib/RestClient.js";
 import Constants from "../../lib/constants.js";
