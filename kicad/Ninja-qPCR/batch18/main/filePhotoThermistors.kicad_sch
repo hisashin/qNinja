@@ -1359,7 +1359,7 @@
     (uuid 2a9ee592-11f4-453e-8153-7f97035c11ab)
     (property "Reference" "J28" (id 0) (at 231.14 112.1623 0))
     (property "Value" "Conn_01x09_Male" (id 1) (at 231.14 114.9374 0))
-    (property "Footprint" "Connector_PinHeader_1.27mm:PinHeader_1x09_P1.27mm_Vertical" (id 2) (at 230.505 126.365 0)
+    (property "Footprint" "Connector_PinSocket_1.27mm:PinSocket_1x09_P1.27mm_Vertical" (id 2) (at 230.505 126.365 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 230.505 126.365 0)

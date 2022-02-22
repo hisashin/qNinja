@@ -3188,22 +3188,22 @@
       (reference "J11") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/66821bac-ceac-4e07-bdbb-fae6fd06f7e3"
-      (reference "J12") (unit 1) (value "Conn_01x06_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x06_P1.27mm_Vertical")
+      (reference "J12") (unit 1) (value "Conn_01x06_Male") (footprint "Connector_PinSocket_1.27mm:PinSocket_1x06_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614d4c2b"
-      (reference "J13") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
+      (reference "J13") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbf83"
-      (reference "J14") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
+      (reference "J14") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbf8d"
-      (reference "J15") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
+      (reference "J15") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbf97"
-      (reference "J16") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
+      (reference "J16") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edb1f"
-      (reference "J17") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J17") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-0000614c5e7e"
       (reference "J18") (unit 1) (value "Conn_01x60_Male") (footprint "Ninja-qPCR:FFC_60_Ali_HUISHUNFA")
@@ -3215,28 +3215,28 @@
       (reference "J20") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/9a543a2e-86c3-4108-85d1-8e2c4568cbd6"
-      (reference "J21") (unit 1) (value "Conn_01x05_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x05_P1.27mm_Vertical")
+      (reference "J21") (unit 1) (value "Conn_01x05_Male") (footprint "Connector_PinSocket_1.27mm:PinSocket_1x05_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/ea5a8138-5eb3-4611-9809-24d80e896ac9"
-      (reference "J22") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J22") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/1c65221c-4387-40e1-bbb0-eaa0ba27fc81"
       (reference "J23") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/3e3d0fd3-73c9-4c94-8329-4baf2a168d7b"
-      (reference "J24") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J24") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/1de54d68-5a1f-4886-b947-395f23432fcf"
-      (reference "J25") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J25") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/b996fc80-804c-49ec-9e86-163ac873c867"
-      (reference "J26") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J26") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/48f91964-a008-448d-8f8c-801b4af03bee"
-      (reference "J27") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
+      (reference "J27") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a49f9/2a9ee592-11f4-453e-8153-7f97035c11ab"
-      (reference "J28") (unit 1) (value "Conn_01x09_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x09_P1.27mm_Vertical")
+      (reference "J28") (unit 1) (value "Conn_01x09_Male") (footprint "Connector_PinSocket_1.27mm:PinSocket_1x09_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbb8f"
       (reference "JP1") (unit 1) (value "SolderJumper_2_Bridged") (footprint "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm")
