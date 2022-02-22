@@ -6561,7 +6561,7 @@
       (net 76 "Net-(C21-Pad1)") (pintype "passive") (tstamp df32840e-2912-4088-b54c-9a85f64c0265))
     (pad "2" thru_hole oval locked (at 20.32 0 90) (size 2.4 2.4) (drill 1.2) (layers *.Cu *.Mask)
       (net 14 "Net-(D2-Pad1)") (pintype "passive") (tstamp c332fa55-4168-4f55-88a5-f82c7c21040b))
-    (model "${KISYS3DMOD}/Resistor_THT.3dshapes/R_Axial_DIN0516_L15.5mm_D5.0mm_P20.32mm_Horizontal.wrl"
+    (model "${KISYS3DMOD}/Resistors_THT.3dshapes/R_Axial_DIN0516_L15.5mm_D5.0mm_P20.32mm_Horizontal.wrl"
       (offset (xyz 0 0 0))
       (scale (xyz 0.393701 0.393701 0.393701))
       (rotate (xyz 0 0 0))
