@@ -2995,9 +2995,6 @@
     (path "/00000000-0000-0000-0000-0000618ea4aa/00000000-0000-0000-0000-000061aa9639"
       (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
     )
-    (path "/00000000-0000-0000-0000-0000614a0ea3/69f51366-e564-496e-bfad-408245cb8df2"
-      (reference "#PWR0113") (unit 1) (value "GND") (footprint "")
-    )
     (path "/00000000-0000-0000-0000-0000614a0ea3/d9df4706-58da-4a90-a1fe-b2924e00b116"
       (reference "#PWR0114") (unit 1) (value "GND") (footprint "")
     )
@@ -3057,9 +3054,6 @@
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/862404ad-623e-4a2f-ae2c-79c39541eefe"
       (reference "C16") (unit 1) (value "22uF") (footprint "Capacitor_SMD:C_1210_3225Metric")
-    )
-    (path "/00000000-0000-0000-0000-0000614a0ea3/3cb3cc87-2c9f-443f-8ec7-6725edfb9a8d"
-      (reference "C17") (unit 1) (value "22uF") (footprint "Capacitor_SMD:C_1210_3225Metric")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/565897a5-1ad1-4637-8b3b-d16e5334d477"
       (reference "C18") (unit 1) (value "330pF") (footprint "Capacitor_SMD:C_0402_1005Metric")
@@ -3361,11 +3355,8 @@
     (path "/00000000-0000-0000-0000-0000614a49f9/00000000-0000-0000-0000-000060d549a8"
       (reference "R18") (unit 1) (value "47k_HP") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
-    (path "/00000000-0000-0000-0000-0000614a0ea3/86404492-8ee4-4ce1-8d6f-80899bd99b1c"
-      (reference "R19") (unit 1) (value "150k") (footprint "Resistor_SMD:R_0603_1608Metric")
-    )
-    (path "/00000000-0000-0000-0000-0000614a0ea3/c447d27c-ba20-4740-9c8b-255208c3568b"
-      (reference "R20") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
+    (path "/00000000-0000-0000-0000-0000614a0ea3/8e03dd6d-803c-4542-b3e0-9449138b9fa6"
+      (reference "R19") (unit 1) (value "150") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edb04"
       (reference "R21") (unit 1) (value "47k") (footprint "Resistor_SMD:R_0603_1608Metric")
@@ -3470,7 +3461,7 @@
       (reference "U9") (unit 2) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/f1fcc67b-4b79-46ff-b827-f446a7ce2c07"
-      (reference "U10") (unit 1) (value "AP6503") (footprint "Ninja-qPCR:AP6503")
+      (reference "U10") (unit 1) (value "BD9329AEFJ-E2") (footprint "Package_SO:HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias")
     )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edbf8"
       (reference "U11") (unit 1) (value "TL431DBZ") (footprint "Package_TO_SOT_SMD:SOT-23")
