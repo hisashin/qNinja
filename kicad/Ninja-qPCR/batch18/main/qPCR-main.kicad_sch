@@ -3641,7 +3641,7 @@
     (path "/00000000-0000-0000-0000-0000618ea4aa/00000000-0000-0000-0000-000061aa9639"
       (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
     )
-    (path "/00000000-0000-0000-0000-0000614fdc7a/0bdabfe7-1991-42f1-aaf7-5bdec483a478"
+    (path "/00000000-0000-0000-0000-0000614fdc7a/a6fcccb2-01b6-44ce-a6b0-a8fab91e9be4"
       (reference "#PWR0113") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/d9df4706-58da-4a90-a1fe-b2924e00b116"
@@ -3656,7 +3656,7 @@
     (path "/00000000-0000-0000-0000-0000614a49f9/60175ce3-18b8-466c-bcd0-ec2bc692191a"
       (reference "#PWR0117") (unit 1) (value "GND") (footprint "")
     )
-    (path "/00000000-0000-0000-0000-0000614fdc7a/995d123b-fd72-4fc5-b968-8c6c912e02fc"
+    (path "/00000000-0000-0000-0000-0000614fdc7a/9cd4c1ed-effd-4cc5-8ff9-8e40f089da46"
       (reference "#PWR0118") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbacb"
@@ -4163,8 +4163,8 @@
     (path "/00000000-0000-0000-0000-0000614fdc7a/00000000-0000-0000-0000-00006150bb1d"
       (reference "U16") (unit 1) (value "CJT1117-3.3") (footprint "Package_TO_SOT_SMD:SOT-223")
     )
-    (path "/00000000-0000-0000-0000-0000614fdc7a/b93cb722-e276-469b-bdbd-99a1ab49e525"
-      (reference "U17") (unit 1) (value "MCP1755T-3302E/OT") (footprint "Package_TO_SOT_SMD:SOT-23-5")
+    (path "/00000000-0000-0000-0000-0000614fdc7a/b168ed7f-2c63-4dbc-90bf-bf3adb3795ed"
+      (reference "U17") (unit 1) (value "MCP1755T-3302E_OT") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-000060b0d57a"
       (reference "U18") (unit 1) (value "SN74LVC1GU04DCKR") (footprint "Ninja-qPCR:SN74LVC1GU04DBVR")
@@ -4184,8 +4184,8 @@
     (path "/00000000-0000-0000-0000-0000614a3d56/00000000-0000-0000-0000-00006149d339"
       (reference "U21") (unit 1) (value "TPS63710DRRR") (footprint "Ninja-qPCR:TPS63710DRRR")
     )
-    (path "/00000000-0000-0000-0000-0000614fdc7a/b5538da8-dc55-4948-af09-a435011bb161"
-      (reference "U22") (unit 1) (value "MCP1755T-3302E/DC") (footprint "Package_TO_SOT_SMD:SOT-223-6")
+    (path "/00000000-0000-0000-0000-0000614fdc7a/3338e061-df5b-48f6-a1b9-c59392b97673"
+      (reference "U22") (unit 1) (value "MCP1755T-3302E_DC") (footprint "Package_TO_SOT_SMD:SOT-223-6")
     )
   )
 )
