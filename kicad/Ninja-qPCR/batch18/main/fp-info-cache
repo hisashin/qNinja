@@ -1,4 +1,4 @@
-21766859317725692
+21768505015547210
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -59625,6 +59625,13 @@ FFC_60_Ali_HUISHUNFA
 0
 62
 62
+Ninja-qPCR
+HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias
+HSOP, 8 Pin (https://www.st.com/resource/en/datasheet/l5973d.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+HSOP SO
+0
+20
+9
 Ninja-qPCR
 I2C_SSD1306_LCD
 

@@ -3641,6 +3641,9 @@
     (path "/00000000-0000-0000-0000-0000618ea4aa/00000000-0000-0000-0000-000061aa9639"
       (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
     )
+    (path "/00000000-0000-0000-0000-0000614fdc7a/0bdabfe7-1991-42f1-aaf7-5bdec483a478"
+      (reference "#PWR0113") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-0000614a0ea3/d9df4706-58da-4a90-a1fe-b2924e00b116"
       (reference "#PWR0114") (unit 1) (value "GND") (footprint "")
     )
@@ -3652,6 +3655,9 @@
     )
     (path "/00000000-0000-0000-0000-0000614a49f9/60175ce3-18b8-466c-bcd0-ec2bc692191a"
       (reference "#PWR0117") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-0000614fdc7a/995d123b-fd72-4fc5-b968-8c6c912e02fc"
+      (reference "#PWR0118") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbacb"
       (reference "C1") (unit 1) (value "4.7uF") (footprint "Capacitor_SMD:C_0805_2012Metric")
@@ -4137,7 +4143,7 @@
       (reference "U9") (unit 2) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/f1fcc67b-4b79-46ff-b827-f446a7ce2c07"
-      (reference "U10") (unit 1) (value "BD9329AEFJ-E2") (footprint "Package_SO:HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias")
+      (reference "U10") (unit 1) (value "BD9329AEFJ-E2") (footprint "Ninja-qPCR:HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias")
     )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edbf8"
       (reference "U11") (unit 1) (value "TL431DBZ") (footprint "Package_TO_SOT_SMD:SOT-23")
@@ -4157,8 +4163,8 @@
     (path "/00000000-0000-0000-0000-0000614fdc7a/00000000-0000-0000-0000-00006150bb1d"
       (reference "U16") (unit 1) (value "CJT1117-3.3") (footprint "Package_TO_SOT_SMD:SOT-223")
     )
-    (path "/00000000-0000-0000-0000-0000614fdc7a/00000000-0000-0000-0000-00006150bad4"
-      (reference "U17") (unit 1) (value "AP2210K-3.3TRG1") (footprint "Ninja-qPCR:AP2210K-3.3TRG1")
+    (path "/00000000-0000-0000-0000-0000614fdc7a/b93cb722-e276-469b-bdbd-99a1ab49e525"
+      (reference "U17") (unit 1) (value "MCP1755T-3302E/OT") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-000060b0d57a"
       (reference "U18") (unit 1) (value "SN74LVC1GU04DCKR") (footprint "Ninja-qPCR:SN74LVC1GU04DBVR")
@@ -4177,6 +4183,9 @@
     )
     (path "/00000000-0000-0000-0000-0000614a3d56/00000000-0000-0000-0000-00006149d339"
       (reference "U21") (unit 1) (value "TPS63710DRRR") (footprint "Ninja-qPCR:TPS63710DRRR")
+    )
+    (path "/00000000-0000-0000-0000-0000614fdc7a/b5538da8-dc55-4948-af09-a435011bb161"
+      (reference "U22") (unit 1) (value "MCP1755T-3302E/DC") (footprint "Package_TO_SOT_SMD:SOT-223-6")
     )
   )
 )
