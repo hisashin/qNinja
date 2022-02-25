@@ -20,7 +20,9 @@
         <div class="item item--tabbed">
           <b-tabs pills content-class="item--tabbed__content" nav-wrapper-class="item--tabbed__tabs" active>
             <b-tab title="Temperature">
-              <TemperatureChart ref="temperatureChart" />
+              <div style="width:800px;height:640px;">
+                <TemperatureChart ref="temperatureChart" />
+              </div>
             </b-tab>
             <b-tab
               title="Amplification"

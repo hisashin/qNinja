@@ -91,14 +91,18 @@ const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
 const PIN_SHUTDOWN = PIN_NUM_VIN_SENSE; // TODO tmp
 
-/* Pin COnfig */
-const PLATE_KP = 0.8;
-const PLATE_KI = 0.02;
-const PLATE_KD = 0.02;
+// PID config
+const PLATE_PID =  [
+  { kp:0.60, ki:0.035, kd:0.01 },
+  { kp:0.62, ki:0.035, kd:0.01, minValue: 50 },
+  { kp:0.68, ki:0.035, kd:0.01, minValue:80 }
+];
 
-const HEATER_KP = 0.4;
-const HEATER_KI = 0.04;
-const HEATER_KD = 0.02;
+const LID_PID =  [
+  { kp:0.25, ki:0.06, kd:0.005 },
+  { kp:0.20, ki:0.03, kd:0.005, minValue:50 },
+  { kp:0.30, ki:0.02, kd:0.001, minValue:90 }
+];
 
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK = 0;
 const MUX_CHANNEL_THERMISTOR_AIR = 1;
@@ -229,13 +233,13 @@ class HardwareConf {
       }
       this.peltier = new Peltier(peltierAbsControl, relay);
       const plateOutput = new PlateOutput(this.pwmPlate, this.peltier, this.pwmFan);
-      this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
+      this.plate = new HeatUnit(new PID(PLATE_PID), plateSensing, plateOutput);
     }
     {
       const lidSensing = new TemperatureSensing(thermistorConfAli, 
         this.adcManager, ADC_CHANNEL_THERMISTORS, 
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_LID);
-      const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
+      const pid = new PID(LID_PID, true);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid);
       this.lid = new HeatUnit(pid, lidSensing, output);
@@ -473,10 +477,15 @@ class PlateOutput {
     this.peltier.setOutput(outputValue);
   }
   off () {
-    // console.trace();
     this.setPlateHeaterOutput(0);
-    this.setFanOutput(0);
+    this.setFanOutput(0.0);
     this.peltier.off(0);
+  }
+  cool () {
+    this.setPlateHeaterOutput(0);
+    this.setFanOutput(1.0);
+    this.peltier.off(0);
+
   }
   shutdown () {
     console.log("Shutting down PlateOutput.");

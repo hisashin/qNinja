@@ -10,7 +10,7 @@ class Thermistor {
   }
 }
 const TEMP_TOLERANCE_LID = 1.0;
-const TEMP_TOLERANCE_PLATE = 1.0;
+const TEMP_TOLERANCE_PLATE = 0.5;
 const DUMMY_TEMP_TRANSITION_PER_SEC = 5.0;
 const TEMP_CONTROL_INTERVAL_MSEC = 500;
 
@@ -132,6 +132,8 @@ class ThermalCycler {
   }
   cancel () {
     this._stopTimer();
+    this.plate.off();
+    this.heatLid.off();
   }
   finish () {
     this._stopTimer();

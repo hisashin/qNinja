@@ -3,7 +3,7 @@
 const Plate = require('./plate_multi.js');
 const HeatModel = require('./heat_model.js');
 const PlateBlock = require('./plate_block.js');
-const PID = require("./heat_control/pid.js");
+const PID = require("./heat_control/pid_simple.js");
 
 const DEFAULT_TEMP = 25.0;
 class DummyAir {

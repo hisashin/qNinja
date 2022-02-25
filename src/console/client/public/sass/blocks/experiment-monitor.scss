@@ -192,3 +192,9 @@ $monitor-foreground: #007bff;
 .pcr-table--well_picker {
   min-width:640px;
 }
+.temperature-chart {
+  &__graph {
+    width:800px;
+    height:600px;
+  }
+}

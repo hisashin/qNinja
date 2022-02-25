@@ -557,11 +557,26 @@ html
 }
 
 /* Tabbed section */
-.item--tabbed__tabs {
+.item--tabbed__content {
   padding: 0.5em;
+  display: flex;
+  flex-direction: row;
+}
+.item--tabbed__content__main {
+  width: 70%;
+  flex-basis: 70%;
+}
+.item--tabbed__content__side {
+  width: 30%;
+  flex-basis: 30%;
+  overflow-x: scroll;
+}
+.item--tabbed__content__full {
+  width: 100%;
+  flex-basis: 100%;
 }
 
-.item--tabbed__content {
+.item--tabbed__tabs {
   padding: 0.5em;
 }
 
@@ -758,6 +773,14 @@ html
 
 .pcr-table--well_picker {
   min-width: 640px;
+}
+
+.temperature-chart {
+  width: 100%;
+}
+.temperature-chart__graph {
+  width: 800px;
+  height: 600px;
 }
 
 /* Layout variant for RPi kiosk */

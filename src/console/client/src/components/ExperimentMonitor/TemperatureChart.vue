@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <div style="width:400px;height:200px">
-      <canvas
+  <div class="temperature-chart">
+    <div>
+      <canvas class="temperature-chart__graph"
         ref="canvas"
-        width="400"
-        height="200"
-        style="width:400px,height:200px"
+        width="800"
+        height="400"
+        style="width:800px,height:400px"
       />
     </div>
     <b-button class="mr-1 btn-sm"

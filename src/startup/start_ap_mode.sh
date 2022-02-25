@@ -10,3 +10,4 @@ sudo /usr/sbin/hostapd /usr/local/ninjaqpcr/startup/conf/hostapd.conf &
 cd /usr/local/ninjaqpcr/network_conf_app
 rm /home/pi/ninjaqpcr/user_data/boot_ap.dat
 sudo node wifi_conf.js &
+

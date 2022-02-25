@@ -51,7 +51,7 @@ class OpticsUnit  {
   }
   async _configure (well, opticalChannel) {
     // Gain & intensity config
-
+    /*
     const MAX_WIPER = 2;
     let wiper = 1;
     let measurement = null;
@@ -71,13 +71,12 @@ class OpticsUnit  {
       }
       wiper ++;
     }
-    
-    /*
+    */
     // Test with fixed wiper value
-    let wiper = 2;
+    let wiper = 0;
     await this._taskSelectLED(well, wiper);
     await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
-    */
+    
     let conf = {wiper:wiper, int: this._ledIntensity(wiper)};
     return conf;
   }

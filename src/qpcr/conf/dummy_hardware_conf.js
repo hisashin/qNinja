@@ -1,6 +1,6 @@
 "use strict";
 // This dummy hardware conf uses legacy Plate implementation. Use "dummy_hardware_multi_conf.js" instead.
-const PID = require("../control/heat_control/pid.js");
+const PID = require("../control/heat_control/pid_simple.js");
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const BoxMuller = require("../util/box_muller.js");
 

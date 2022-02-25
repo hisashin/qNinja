@@ -27,7 +27,7 @@
 # Install packages (apt & npm)
 ```
 sudo apt update
-sudo apt install nodejs npm hostapd isc-dhcp-server wiringpi libcap2-bin
+sudo apt install nodejs npm hostapd isc-dhcp-server wiringpi libcap2-bin lightdm
 sudo apt-get update --fix-missing
 sudo setcap cap_net_bind_service=+ep /usr/bin/node
 sudo npm install --global http-server

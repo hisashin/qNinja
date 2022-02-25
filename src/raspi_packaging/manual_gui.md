@@ -38,6 +38,8 @@
       * or `sudo wpa_passphrase <SSID> <passphrase> | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf`
   * Enable GUI auto-login
     * System options > Boot / Auto Login : Detktop autologin
+  * Disable screen sleep
+    * Display Options > Screen Blanking > NO
   * Display Options > Underscan (Remove black borders)
   * Exit raspi-config
 * `sudo reboot`
@@ -51,7 +53,7 @@
 ```
 sudo apt update
 # sudo apt install nodejs npm hostapd isc-dhcp-server wiringpi libcap2-bin
-sudo apt install nodejs npm hostapd isc-dhcp-server libcap2-bin
+sudo apt install nodejs npm hostapd isc-dhcp-server libcap2-bin lightdm
 sudo apt-get update --fix-missing
 sudo setcap cap_net_bind_service=+ep /usr/bin/node
 sudo npm install --global http-server
@@ -78,10 +80,23 @@ cd /Users/maripo/git/Ninja-qPCR/src
 scp qpcr/user_data/protocol/* pi@ninjaqpcr.local:~/ninjaqpcr/user_data/protocol
 ./deploy.sh
 ./deploy_update.sh # Update packages
-scp raspi_packaging/ninjaqpcr.desktop pi@ninjaqpcr.local:~/.config/autorun/
 ```
 
-TODO : use /etc/xdg/lxsession/LXDE-pi/autostart
+# Set X Startup script
+```
+sudo vi /etc/xdg/lxsession/LXDE-pi/autostart
+```
+and paste
+
+```
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+
+```
+
+
+/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8080?kiosk=true
 
 # Register startup script
 * `sudo vi /etc/rc.local`

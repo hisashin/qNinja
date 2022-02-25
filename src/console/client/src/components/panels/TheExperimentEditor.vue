@@ -176,13 +176,10 @@
                     </b-tab>
                     <b-tab title="Temperature" @click="onSelectTabTemperature()">
                       <div class="item--tabbed__content">
-                        <div class="item--tabbed__content__main" ref="tabTemperatureMain">
+                        <div class="item--tabbed__content__full" ref="tabTemperatureMain">
                           <TemperatureChart ref="temperatureChart" />
                           Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
                           <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
-                        </div>
-                        <div class="item--tabbed__content__side" id="tabTemperatureSide">
-                          
                         </div>
                       </div>
                     </b-tab>
@@ -510,19 +507,3 @@ export default {
   }
 }
 </script>
-<style>
-.item--tabbed__content {
-  display:flex;
-  flex-direction:row;
-}
-.item--tabbed__content__main {
-  width:70%;
-  flex-basis: 70%;
-
-}
-.item--tabbed__content__side {
-    width:30%;
-    flex-basis: 30%;
-    overflow-x: scroll;
-}
-</style>
