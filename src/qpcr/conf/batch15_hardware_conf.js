@@ -36,7 +36,6 @@ const Relay = require("../hardware/relay.js");
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
 const I2C_ADDR_PCA9955B = 0x05;
-// const I2C_ADDR_PCA9955B = 0x70;
 const I2C_ADDR_ADC = 0x40;
 const I2C_ADDR_POT = 0x2F;
 
@@ -72,10 +71,10 @@ const THERMISTOR_POSITION = false; /* Thermistor is connected to 0V line */
 const PIN_NUM_VIN_SENSE = 11; //GPIO0
 
 const PIN_NUM_MUX_SELECT = 22; // Pin22, GPIO6
-const PIN_NUM_PD_MUX_1 = 16; // Pin 16, GPIO4 (Mux channel)
-const PIN_NUM_PD_MUX_2 = 12; // Pin 12, GPIO1 (Mux channel)
-const PIN_NUM_PD_MUX_3 = 8; // Pin 8, GPIO15 (Mux channel)
-const PIN_NUM_PD_MUX_4 = 10; // Pin 10, GPIO16 (Mux channel) (working)
+const PIN_NUM_PD_MUX_S0 = 16; // Pin 16, GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_S1 = 12; // Pin 12, GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_S2 = 8; // Pin 8, GPIO15 (Mux channel)
+const PIN_NUM_PD_MUX_S3 = 10; // Pin 10, GPIO16 (Mux channel)
 const PIN_NUM_AMP_GAIN_SWITCH = 7;// Pin 7, GPIO7
 const PIN_NUM_THERMISTOR_R = 26;// Pin 26, GPIO 11
 const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13 (Hardware PWM available)
@@ -194,7 +193,7 @@ class HardwareConf {
     const FREQ_PELTIER = 1E5;
     this.pwmPeltier = new PIGPIO.HardPWM(PIN_BCM_NUM_PWM_PELTIER, FREQ_PELTIER);
 
-    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
+    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2);
     /*
     const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
     const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
@@ -506,7 +505,7 @@ const DEBUG_MUX_CH = parseInt(process.argv[3]);
 */
 class GenericGPIOMuxWrapper {
   constructor () {
-    this.mux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2, PIN_NUM_PD_MUX_S3);
     this.muxSwitch = PIN_NUM_MUX_SELECT;
     
     this.selArgv = parseInt(process.argv[2]);
@@ -551,7 +550,7 @@ class GenericGPIOMuxWrapper {
 }
 class MUXWrapperThermistor {
   constructor () {
-    this.mux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
+    this.mux = new MUX8ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2);
     this.muxSwitch = PIN_NUM_MUX_SELECT;
   }
   start () {
