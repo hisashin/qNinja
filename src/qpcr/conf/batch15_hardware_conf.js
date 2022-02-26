@@ -92,15 +92,15 @@ const PIN_SHUTDOWN = PIN_NUM_VIN_SENSE; // TODO tmp
 
 // PID config
 const PLATE_PID =  [
-  { kp:0.60, ki:0.035, kd:0.01 },
-  { kp:0.62, ki:0.035, kd:0.01, minValue: 50 },
-  { kp:0.68, ki:0.035, kd:0.01, minValue:80 }
+  { kp:0.60, ki:0.035, kd:0.005 },
+  { kp:0.60, ki:0.035, kd:0.005, minValue: 50 },
+  { kp:0.35, ki:0.035, kd:0.005, minValue:80 }
 ];
 
 const LID_PID =  [
   { kp:0.25, ki:0.06, kd:0.005 },
-  { kp:0.20, ki:0.03, kd:0.005, minValue:50 },
-  { kp:0.30, ki:0.02, kd:0.001, minValue:90 }
+  { kp:0.30, ki:0.035, kd:0.005, minValue:50 },
+  { kp:0.35, ki:0.025, kd:0.001, minValue:90 }
 ];
 
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK = 0;
