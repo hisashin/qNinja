@@ -1,5 +1,5 @@
 "use strict";
-const PID = require("../control/heat_control/pid.js");
+const PID = require("../control/heat_control/pid_simple.js");
 
 const HeatUnit = require("../control/heat_control/heat_unit.js");
 const demoPlate = require("../control/plate_multi_demo.js");

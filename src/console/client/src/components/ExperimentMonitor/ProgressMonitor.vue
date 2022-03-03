@@ -5,9 +5,10 @@
     <div v-if="deviceState==null">DeviceState is null</div>
     <div class="progress-monitor"
       v-if="protocol!=null && progress!=null && deviceState != null">
+      <!-- Modal dialog to finish the experiment -->
       <b-modal
         id="finish-modal"
-        title="Completed!"
+        title="The experiment is complete"
         hide-footer
       >
         <b-button 
@@ -15,6 +16,25 @@
           block @click="finish"
         >
           Stop the device
+        </b-button>
+      </b-modal>
+      <!-- Modal dialog to show the experiment result -->
+      <b-modal
+        id="result-modal"
+        title="The experiment is complete!"
+        hide-footer
+      >
+        <b-button 
+          variant="primary"
+          block @click="home"
+        >
+          Home
+        </b-button>
+        <b-button 
+          variant="primary"
+          block @click="result"
+        >
+          Result
         </b-button>
       </b-modal>
       <div class="progress-monitor__row">
@@ -148,41 +168,36 @@ export default {
       elapsedTime: "-",
       remainingTime: "-",
       totalTime: "-",
-      plateTemp: "-"
+      plateTemp: "-",
     }
   },
   computed: {
   },
   created: function () {
-    this.protocol = device.getProtocol();
-    device.addConnectionEventHandler(this);
-  
-    this.subId = device.subscribe("experiment.update.progress", (topic, data, id)=>{
+    device.subscribe("experiment.update.progress", (topic, data, id)=>{
       this.applyProgress(data);
     });
-    device.addTransitionHandler({
-      onStart:(obj)=>{
-        this.protocol = obj.protocol;
-      },
-      onTransition:(obj)=>{
+    device.subscribe("device.update.transition", (topic, obj, id)=>{
         let status = obj.to;
         if (obj.to == null) { return; }
         if (this.protocol == null) {
           return;
         }
-      }
     });
-    this.deviceState = device.getDeviceState();
-    device.addDeviceStateHandler({
-      onDeviceStateChange: (state)=>{
-        if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
-          this.$bvModal.show('finish-modal');
-        }
-        this.deviceState = state;
-      },
-      onUpdateProtocol: (protocol)=>{
+    device.protocol.observe((protocol)=>{
         this.protocol = protocol;
+
+    });
+    device.deviceState.observe((state)=>{
+      this.closeModals(); 
+      if (this.deviceState && !this.deviceState.finishAvailable && state.finishAvailable) {
+        this.$bvModal.show('finish-modal');
       }
+      if (this.deviceState && this.deviceState.hasExperiment && !state.hasExperiment) {
+        // The device become "idle"
+        this.$bvModal.show('result-modal');
+      }
+      this.deviceState = state;
     });
   },
   methods: {
@@ -202,19 +217,7 @@ export default {
       this.stepElapsedSec = numeral(this.progress.state.stepElapsed/1000).format("0.00");
     },
     reset () {
-      this.$bvModal.hide('finish-modal');
-    },
-    onConnectionOpen: function () {
-      console.log("onConnectionOpen");
-      this.protocol = device.getProtocol();
-      this.connected = true;
-      this.connectionStatus = "Connected";
-    },
-    onConnectionClose: function () {
-      this.protocol = null;
-      this.connected = false;
-      this.connectionStatus = "Disconnected";
-    
+      this.closeModals(); 
     },
     applyProgress : function (progress) {
       this.progress = progress;
@@ -238,8 +241,18 @@ export default {
     },
     finish () { 
       device.finish();
+    },
+    home () { 
+      this.closeModals(); 
       appState.home();
+    },
+    result () {
+      this.closeModals(); 
+      appState.revealDetailLatestExperiment(this);
+    },
+    closeModals () {
       this.$bvModal.hide('finish-modal');
+      this.$bvModal.hide('result-modal');
     }
     
   }

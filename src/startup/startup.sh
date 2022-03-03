@@ -16,18 +16,14 @@ rm -f /home/pi/.cache/chromium/Default/Cache/*
 if [ -f "$AP_MODE_FILE" ]; then
     touch /home/pi/ninjaqpcr/user_data/boot_ap_detected.dat
     sudo /usr/local/ninjaqpcr/startup/start_ap_mode.sh
-else 
-    touch /home/pi/ninjaqpcr/user_data/boot_ap_notfound.dat
-    sudo /usr/local/ninjaqpcr/startup/start_normal_mode.sh
+else
+    if iwgetid | grep -q 'wlan'; then
+        echo 'WiFi Connected'
+        sudo /usr/local/ninjaqpcr/startup/start_normal_mode.sh
+    else
+        echo 'WiFi not connected'
+        sudo /usr/local/ninjaqpcr/startup/start_ap_mode.sh
+    fi 
 fi
 exit 0
 
-echo "$val"
-if [ $val = 1 ]; then
-  echo "GPIO0 HIGH (AP mode)"
-  # sudo /usr/local/ninjaqpcr/startup/start_ap_mode.sh
-  sudo /usr/local/ninjaqpcr/startup/start_normal_mode.sh
-else
-  echo "GPIO0 LOW (Normal mode)"
-  sudo /usr/local/ninjaqpcr/startup/start_normal_mode.sh
-fi

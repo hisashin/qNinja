@@ -1,27 +1,13 @@
 "use strict";
 
-const { thermistorMux } = require("../../conf/batch15_hardware_conf");
-
 /*
-  The coefficients vary according to temperature ranges.
+  Very simple implementation.
 */
 class PID {
-  constructor (option, debug) {
-    this.debug = debug;
-    this.ranges = option;
-    this.ranges.sort((a,b)=>{
-      if (b.minValue == null) {
-        return -1;
-      }
-      if (a.minValue == null) {
-        return 11;
-      }
-      return b.minValue - a.minValue;
-    });
-    this.range = option[option.length - 1];
-    this.kp = this.range.kp;
-    this.ki = this.range.ki;
-    this.kd = this.range.kd;
+  constructor (kp, ki, kd) {
+    this.kp = kp;
+    this.ki = ki;
+    this.kd = kd;
     this.value = 0.0;
     this.intervalSec = 1.0; // Default: 1sec
     this.setpoint = 0.0;
@@ -62,24 +48,18 @@ class PID {
     this.value = value;
   }
   getOutput () {
-    let newRange = this.ranges.find((range)=>{return range.minValue == null || range.minValue < this.value});
-    if (newRange != this.range) {
-      this.range = newRange;
-      this.kp = this.range.kp;
-      this.ki = this.range.ki;
-      this.kd = this.range.kd;
-      if (this.debug) {
-  
-        console.log("PID Range switched.");
-        console.log(newRange)
-      }
-
-    }
     let output = - (this.p * this.kp + this.i * this.ki + this.d * this.kd);
     output = Math.min(this.upper, Math.max(this.lower, output));
+    /*
+    console.log("v=%f/%f, (%f*%f, %f*%f, %f*%f)=>%f", 
+      this.value, this.setpoint,
+      this.p, this.kp, 
+      this.i, this.ki, 
+      this.d, this.kd, 
+      output);
+    */
     return output;
   }
 }
 
 module.exports = PID;
-

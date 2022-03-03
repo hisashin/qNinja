@@ -227,6 +227,7 @@ class ThermalCycler {
     };
   }
   shutdown () {
+    this._stopTimer();
     console.log("ThermalCycler.shutdown()");
     try {
       this.plate.shutdown();

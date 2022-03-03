@@ -190,7 +190,7 @@
                         </div>
                         
                         <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
-                          
+                          &#128248;
                           <span :class="'validation-label validation__stages__'+index+'__steps__0__data_collection'"/>
                           <label>
                             <input type="radio" :name="'data_collection'+index" v-model="stage.steps[0].data_collection.ramp_end" v-on:change="onChangeProtocol()">
@@ -232,7 +232,7 @@
                         </div>
                         
                         <div v-if="stage.type==2" class="protocol-detail-step__data-collection">
-                          
+                          &#128248;
                           <span :class="'validation-label validation__stages__'+index+'__steps__1__data_collection'"/>
                           <label>
                             <input type="radio" :name="'data_collection'+index" v-model="stage.steps[1].data_collection.ramp_end" v-on:change="onChangeProtocol()">
@@ -273,6 +273,7 @@
                         </div>
                         
                         <div class="protocol-detail-step__data-collection">
+                          &#128248;
                           <span :class="'validation-label validation__stages__'+index+'__steps__2__data_collection'"/>
                           <label>
                             <input type="radio" :name="'data_collection'+index" v-model="stage.steps[2].data_collection.ramp_end" v-on:change="onChangeProtocol()">
@@ -391,7 +392,10 @@
                             >℃/sec
                           </div>
                         </div>
-                        
+                        Measurement Interval <input
+                              v-model.number="stage.steps[2].data_collection.measurement_interval_temp" v-on:input="onChangeProtocol()"
+                              class="input-speed" type="number" step="0.1"
+                            >℃
                         
                       </li>
                     </ul>
@@ -420,7 +424,6 @@
 </template>
 
 <script>
-import network from "../../lib/Device.js";
 import appState from "../../lib/AppState.js";
 import client from "../../lib/RestClient.js";
 import Constants from "../../lib/constants.js";
@@ -452,7 +455,7 @@ const DEFAULT_STAGE_MELT_CURVE = { type: Constants.StageType.MELT_CURVE,
   cycles:1, 
   steps:[ {label:"denature", temp:94, duration:10, ramp_speed:4, data_collection:{}}, 
   {label:"cool", temp:55, duration:5, ramp_speed:4, data_collection:[]}, 
-  {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:{"ramp_end":false, "hold_end":false, "ramp_continuous":true, "hold_continuous":false}} ] };
+  {label:"melt", temp:94, duration:15, ramp_speed:0.05, data_collection:{"ramp_end":false, "hold_end":false, "ramp_continuous":true, "measurement_interval_temp":0.5, "hold_continuous":false}} ] };
 const DEFAULT_STAGE_PCR = { type: Constants.StageType.PCR, 
   cycles:30, 
   steps:[ {label:"denature", temp:94, duration:15, data_collection:{}}, 

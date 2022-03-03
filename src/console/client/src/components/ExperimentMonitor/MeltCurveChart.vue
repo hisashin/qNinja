@@ -56,6 +56,9 @@ export default {
   mounted: function () {
   },
   methods: {
+    clear () {
+      console.log("TODO MeltCurveChart.clear()");
+    },
     // Well iterator
     eachSeries (func /* function(channel, well, dataIndex) */ ) {
       for (let c=0; c<this.channelsCount; c++) {
@@ -122,6 +125,7 @@ export default {
     },
     setData: function (data) {
       // Expects experiment.log.fluorescence.melt_curve
+      console.log("MeltCurveChart.setData");
       this.graph.clearData();
       
       // TODO set -dF/dT server-side
@@ -130,10 +134,11 @@ export default {
           this.eachSeries((c, w, i)=>{
             const m = data[mIndex];
             const mNext = data[mIndex+1];
-            this.subChannelsData[i].addData({
-              f:m.v[c][w], 
+            const meltData = {
+              f:m.v[c][w].v, 
               d: (-mNext.v[c][w]+m.v[c][w])/(mNext.temp-m.temp), 
-              t:m.temp});
+              t:m.temp}
+            this.subChannelsData[i].addData(meltData);
           });
         }
       }

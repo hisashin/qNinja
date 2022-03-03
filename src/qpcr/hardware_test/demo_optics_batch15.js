@@ -20,21 +20,20 @@ const session = new OpticsSession();
 qpcr.setSession(session);
 session.start();
 eventBus.subscribe("optics.update", (topic, values)=>{
-  console.log("VALUES")
-  console.log(_transformValues(values));
+  // console.log("----");
+  // console.log(values.map(v=>v.v + "\t" + v.r + "\t" + v.w).join("\n"))
+  // if (measurementCount%2==1)
+  console.log(values[4])
 });
 function _transformValues (values) {
   let data = [];
+  // Separate North & South
   for (let block = 0; block < 2; block++) {
     let row = [];
     for (let i=0; i<8; i++) {
       let id = block * 8 + i;
       let obj = {};
       obj.id = id;
-      obj.c0 = values[id].vl * 100;
-      obj.s0 = values[id].vs * 100;
-      // obj.c1 = values[id].v;
-      // obj.s1 = values[id].s;
       row.push(obj);
     }
     data.push(row);
@@ -44,5 +43,7 @@ function _transformValues (values) {
 process.on('SIGINT', () => {
     console.log('demo_optics_batch8.js Received SIGINT');
     session.shutdown();
-    process.exit(1);
+    qpcr.exit();
 });
+
+

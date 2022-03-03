@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <div style="width:400px;height:200px">
-      <canvas
+  <div class="temperature-chart">
+    <div>
+      <canvas class="temperature-chart__graph"
         ref="canvas"
-        width="400"
-        height="200"
-        style="width:400px,height:200px"
+        width="800"
+        height="400"
+        style="width:800px,height:400px"
       />
     </div>
     <b-button class="mr-1 btn-sm"
@@ -58,7 +58,6 @@ export default {
     this.timeOffset = 0;
   },
   mounted: function () {
-    console.log("TemperatureChart.mounted");
     this.minTime = 0;
     this.maxTime = 120;
     this.timeOffset = 0;
@@ -72,6 +71,9 @@ export default {
     this.graph = graph;
   },
   methods: {
+    clear () {
+      console.log("TODO TemperatureChart.clear()");
+    },
     add: function(timestamp, plate, lid) {
       this.channelPlate.addData({t:timestamp, v:plate});
       this.channelLid.addData({t:timestamp, v:lid});

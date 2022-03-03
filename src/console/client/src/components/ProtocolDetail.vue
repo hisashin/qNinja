@@ -93,6 +93,11 @@
                       {{ step.ramp_speed }}℃/s
                     </span>
                   </div>
+                  <div class="protocol-detail-values__value protocol-detail-values__value--ramp">
+                    <span v-if="step.data_collection.measurement_interval_temp>0">
+                      {{ step.data_collection.measurement_interval_temp }}℃
+                    </span>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -173,3 +178,4 @@ export default {
 
 <style>
 </style>
+

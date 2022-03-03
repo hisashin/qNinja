@@ -8,13 +8,13 @@
         <!-- Device monitor -->
           <div class="header__device">
           <span>
-            {{ connectionStatus }}
+            {{ connectionStatus.message }}
             Well {{ wellTemp }}℃
             Lid {{ lidTemp }}℃
           </span>
           <!-- Network -->
           <button
-            v-show="!connected"
+            v-show="!connectionStatus.connected"
             
             class="btn btn-link"
             @click="reConnect"
@@ -46,7 +46,7 @@
       <ThePlateControlMonitor ref="panelPlateControlMonitor" v-show="selectedPanel==panels.PLATE_CONTROL_MONITOR" />
       <PanelTemplate ref="panelTemplate" v-show="selectedPanel==panels.TEMPLATE" />
       <div class="debug">
-      (Dev)
+      (Dev. menu)
         <b-button class="mr-1 btn-sm"
           @click.stop="rebootAP">
           AP mode
@@ -66,6 +66,10 @@
         <b-button class="mr-1 btn-sm"
           @click.stop="home">
           Home
+        </b-button>
+        <b-button class="mr-1 btn-sm"
+          @click.stop="revealDetailLatestExperiment">
+          Last Experiment
         </b-button>
         <b-button class="mr-1 btn-sm"
           @click.stop="ping">
@@ -126,31 +130,28 @@ export default {
       selectedPanel:appState.PANELS.DASHBOARD,
       backEnabled: false,
       panelTitle: "",
-      connectionStatus: "Disconnected",
-      connected: false,
+      connectionStatus: device.Connection.DISCONNECTED,
       wellTemp: "-",
       lidTemp: "-"
     }
   },
   created: function () {
     appState.setPanelContainer(this);
-    this.connected = device.connected;
-    device.addConnectionEventHandler(this);
-    device.addTransitionHandler({
-      onStart: (obj)=>{
+    device.connectionStatus.observe((status)=>{
+      this.connectionStatus = status;
+    });
+
+    device.subscribe("experiment.update.start", (topic, data)=>{
         console.log("Experiment started.");
         this.status = DEVICE_STATUS_RUNNING;
-      },
-      onComplete: (obj)=>{
+    });
+    device.subscribe("experiment.update.finish", (topic, data)=>{
         console.log("Experiment is complete!");
         this.status = DEVICE_STATUS_FINISHED;
-      },
-      onAutoPause: (obj)=>{
+    });
+    device.subscribe("experiment.update.autoPause", (topic, data)=>{
         console.log("Experiment is paused automatically by protocol!");
         this.status = DEVICE_STATUS_AUTO_PAUSE;
-      },
-      onTransition:(obj)=>{
-      }
     });
     appState.setNavigationHandler((panelStack)=>{
       this.backEnabled = (panelStack.length > 1);
@@ -208,14 +209,8 @@ export default {
     ping () {
       device.publish("ping", {});
     },
-    onConnectionOpen: function () {
-      this.connected = true;
-      this.connectionStatus = "Connected";
-    },
-    onConnectionClose: function () {
-      this.connected = false;
-      this.connectionStatus = "Disconnected";
-    
+    revealDetailLatestExperiment () {
+      appState.revealDetailLatestExperiment(this);
     }
   }
 }

@@ -107,7 +107,7 @@ class NinjaQPCR {
   /* Experiment Control */
   start (experiment) {
     if (!this.deviceState.startAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to start the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     console.log("ninjaqpcr.js start()");
@@ -126,7 +126,7 @@ class NinjaQPCR {
   }
   pause () {
     if (!this.deviceState.pauseAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to pause the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.pause();
@@ -134,10 +134,11 @@ class NinjaQPCR {
     this.experimentLog.status.status = "paused";
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.PAUSED);
+    return true;
   }
   resume () {
     if (!this.deviceState.resumeAvailable) {
-      console.warn("Unable to start experiment. An experiment is pauseAvailable. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to resume the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.resume();
@@ -145,13 +146,15 @@ class NinjaQPCR {
     this.experimentLog.status.status = "running";
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.RUNNING);
+    return true;
   }
   finishAutoPause () {
     this.thermalCycler.finishAutoPause();
+    return true;
   }
   cancel () {
     if (!this.deviceState.cancelAvailable) {
-      console.warn("Unable to start experiment. Device is idle. deviceState=%s", this.deviceState.label);
+      console.warn("Unable to cancel experiment. Device is idle. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.cancel();
@@ -161,15 +164,17 @@ class NinjaQPCR {
     this.experimentLog.status.end = new Date().getTime();
     experimentManager.update(this.experimentLog, null, null);
     this._setDeviceState(DEVICE_STATE.IDLE);
+    return true;
   }
   finish () {
-    if (!this.deviceState.cancelAvailable) {
-      console.warn("Unable to finish. Experiment is not finishAvailable. deviceState=%s", this.deviceState.finishAvailable);
+    if (!this.deviceState.finishAvailable) {
+      console.warn("Unable to finish the experiment. deviceState=%s", this.deviceState.label);
       return false;
     }
     this.thermalCycler.finish();
     this.optics.finish();
     this._setDeviceState(DEVICE_STATE.IDLE);
+    return true;
   }
   
   /* Geters */
@@ -250,13 +255,12 @@ class NinjaQPCR {
     const from = this._getStep(data.from); // Nullable
     const to = this._getStep(data.to); // Nullable
     this.experimentLog.log.events.push(data.to);
-    this.optics.stopContinuousDataCollection();
+    this.stopContinuousDataCollection();
     if (data.from.state == 'ramp') {
       if (from != null && from.data_collection != null && from.data_collection.ramp_end==true) {
         console.log("RAMP FINISH. Measure fluorescence.")
         this.optics.measureAll(
           (values)=>{
-            console.log("Ramp end.");
             // One-shot fluorescence measurement
             this.notifyFluorescenceEvent("measure");
             this.onFluorescenceDataUpdate(data.from, MEASUREMENT_RAMP_END, values);
@@ -280,22 +284,16 @@ class NinjaQPCR {
     if (data.to.state == 'ramp') {
       if (to != null && to.data_collection != null && to.data_collection.ramp_continuous==true) {
         console.log("Starting continuous data collection (ramp)");
-        this.optics.startContinuousDataCollection(
-          (values)=>{
-            console.log("Ramp continuous.");
-            this.onFluorescenceDataUpdate(data.to, MEASUREMENT_RAMP_CONTINUOUS, values);
-          }
-        );
-      }
-    }
-    if (data.to.state == 'hold') {
-      if (to != null && to.data_collection != null && to.data_collection.hold_continuous==true) {
-        console.log("Starting continuous data collection (hold)");
-        this.optics.startContinuousDataCollection(
-          (values)=>{
-            console.log("Hold continuous.");
-            this.onFluorescenceDataUpdate(data.to, MEASUREMENT_HOLD_CONTINUOUS, values);
-          });
+
+        this.startContinuousDataCollection(from, to, (temp)=>{
+              this.optics.measureAll(
+                (values)=>{
+                  console.log("MEASUREALL.done");
+                  this.notifyFluorescenceEvent("measure");
+                  this.onFluorescenceDataUpdate(data.to, MEASUREMENT_RAMP_CONTINUOUS, values, temp);
+                });
+
+        });
       }
     }
     const toStage = this.protocol.stages[data.to.stage];
@@ -303,8 +301,8 @@ class NinjaQPCR {
     // For debug
     let debug = {
       type: (toStage!=null)?toStage.type:0,
-      current:this.progress.plate,
-      cycle:this.progress.state.cycle
+      current:(this.progress)?this.progress.plate:25,
+      cycle:(this.progress)?this.progress.state.cycle:25
     };
     if (toStage && toStage.steps.length == 3) {
       debug.low = toStage.steps[1].temp;
@@ -326,6 +324,34 @@ class NinjaQPCR {
       experimentManager.update(this.experimentLog, null, null);
       console.log("ThermalCyclerTransition SAVE");
     }
+  }
+  startContinuousDataCollection (from, to, callback) {
+    console.log("NinjaQPCR.startContinuousDataCollection");
+    console.log(from)
+    console.log(to)
+    const fromTemp = from.temp;
+    const toTemp = to.temp;
+    let tempIntervalConf = Math.abs(to.data_collection.measurement_interval_temp);
+    if (!(tempIntervalConf > 0)) {
+      tempIntervalConf = 1.0;
+    }
+    let tempInterval = tempIntervalConf * 
+      ((fromTemp < toTemp) ? 1 : 0);
+
+    let nextMeasurementTemp = fromTemp;
+    this.onProgressFunc = (data)=>{
+      const temp = data.plate;
+      if ((fromTemp < toTemp && temp >= nextMeasurementTemp)
+        ||
+        (fromTemp  >= toTemp && temp  <= nextMeasurementTemp)) {
+          callback(temp);
+          console.log("temp=%f, nextMeasurementTemp=%f", nextMeasurementTemp, nextMeasurementTemp);
+          nextMeasurementTemp = nextMeasurementTemp + tempInterval;
+      }
+    };
+  }
+  stopContinuousDataCollection (option) {
+    this.onProgressFunc = null;
   }
   onAutoPause (data) {
     if (!this.receiver.onAutoPause) {
@@ -352,13 +378,16 @@ class NinjaQPCR {
     if (this.receiver != null && this.receiver.onProgress) {
       this.receiver.onProgress(data);
     }
+    if (this.onProgressFunc) {
+      this.onProgressFunc(data);
+    }
   }
   getProgress () {
     return this.progress || {};
   }
   
-  /* Handling ThermalCycler's events */
-  onFluorescenceDataUpdate (step, measurementType, values) {
+  /* Handling Optics events */
+  onFluorescenceDataUpdate (step, measurementType, values, temp /* Optional */) {
     // New
     const stage = this.protocol.stages[step.stage];
     let data = {};
@@ -371,6 +400,7 @@ class NinjaQPCR {
       }
     } else if (stage.type == Constants.StageType.MELT_CURVE) {
       data = this._addFluorescenceMeltCurveLog(step, values);
+      data.temp = temp
       if (this.receiver != null && this.receiver.onMeltCurveDataUpdate) {
         this.receiver.onMeltCurveDataUpdate(data);
       }
@@ -440,6 +470,12 @@ class NinjaQPCR {
       }
     }, 1);
   }
+  /* 
+    Shutdown hardware 
+
+    Do not exit process immediately after calling this function.
+    It takes a few msecs to turn all components off.
+    */
   shutdown () {
     console.log("NinjaQPCR.shutdown()");
     try {
@@ -452,6 +488,13 @@ class NinjaQPCR {
     } catch (e) {
       console.warn(e);
     }
+  }
+  exit () {
+    setTimeout(()=>{
+      console.log("NinjaQPCR exit()");
+      process.exit(0);
+    }, 2000);
+
   }
 }
 

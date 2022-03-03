@@ -15,3 +15,4 @@ echo "Syncing startup"
 $RSYNC ./startup/ $RASPI:/usr/local/ninjaqpcr/startup --exclude='.DS_Store'
 echo "Syncing network_conf_app"
 $RSYNC ./network_conf_app/ $RASPI:/usr/local/ninjaqpcr/network_conf_app
+

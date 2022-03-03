@@ -1,13 +1,13 @@
 <template>
   <div class="device-summary">
-    <template v-if="connected && deviceState!=null && deviceState.hasExperiment">
+    <template v-if="connectionStatus.connected && deviceState!=null && deviceState.hasExperiment">
       <!-- Progress summary -->
       <ProgressMonitor />
       <b-button pill variant="primary" @click="openExperimentMonitor">Open Experiment Monitor</b-button>
     </template>
     <template v-else>
       <div class="hidden-app progress-monitor">
-        {{ connectionStatus }}
+        {{ connectionStatus.message }}
         Well {{ wellTemp }}℃
         Lid {{ lidTemp }}℃
       </div>
@@ -25,18 +25,19 @@ export default {
   },
   data() {
     return {
-      connected: false,
+      connectionStatus: device.Connection.DISCONNECTED,
       deviceState: null,
       wellTemp: "-",
       lidTemp: "-"
     }
   },
   created: function () {
-    this.device = device;
-    this.device.addConnectionEventHandler(this);
-    this.deviceState = this.device.getDeviceState();
-    this.connected = this.device.connected;
-    this.device.addDeviceStateHandler(this);
+    device.connectionStatus.observe((status)=>{
+      this.connectionStatus = status;
+    });
+    device.deviceState.observe((state)=>{
+      this.deviceState = state;
+    });
     device.subscribe("device.update.temperature", (topic, data)=>{
       this.wellTemp = data.plate.main.toFixed(1);
       this.lidTemp = data.lid.main.toFixed(1);
@@ -47,18 +48,6 @@ export default {
     },
     openExperimentMonitor () {
     appState.pushPanel(appState.PANELS.EXPERIMENT_MONITOR);
-    },
-    onConnectionOpen: function () {
-      this.connected = true;
-      this.connectionStatus = "Connected";
-    },
-    onConnectionClose: function () {
-      this.connected = false;
-      this.connectionStatus = "Disconnected";
-    
-    },
-    onDeviceStateChange: function (deviceState){
-      this.deviceState = deviceState;
     }
   }
 }

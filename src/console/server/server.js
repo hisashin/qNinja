@@ -746,7 +746,7 @@ class NinjaQPCRWebSocketServer {
             console.log("Stderr", stderr);
           });
         }
-        process.exit(0);
+        qpcr.exit();
       }
     });
     qpcr.startMonitoringTemperature ((data)=>{
@@ -783,19 +783,19 @@ class NinjaQPCRWebSocketServer {
     });
   }
   pause () {
-    qpcr.pause(this.protocol);
+    qpcr.pause();
   }
   resume () {
-    qpcr.resume(this.protocol);
+    qpcr.resume();
   }
   finishAutoPause () {
     qpcr.finishAutoPause();
   }
   finish () {
-    qpcr.finish(this.protocol);
+    qpcr.finish();
   }
   cancel () {
-    qpcr.cancel(this.protocol);
+    qpcr.cancel();
   }
   
   /* NinjaQPCR Event Handling */
@@ -827,7 +827,7 @@ class NinjaQPCRWebSocketServer {
     eventBus.publish("experiment.update.fluorescenceEvent", data);
   }
   onDeviceStateChange (data) {
-    eventBus.publish("experiment.update.transition", data);
+    eventBus.publish("device.update.transition", data);
   }
   onStart (data) {
     eventBus.publish("experiment.update.start", data);
@@ -888,7 +888,7 @@ class NinjaQPCRServer {
           console.log("Stdout", stdout);
           console.log("Stderr", stderr);
         });
-        process.exit(0);
+        qpcr.exit();
         */
       });
     }
@@ -898,7 +898,7 @@ function handleSignal(signal) {
   console.log("Received signal : %s", signal);
   eventBus.publish("device.update.shutdown", {});
   qpcr.shutdown();
-  process.exit(0);
+  qpcr.exit();
 }
 
 new NinjaQPCRServer().init();

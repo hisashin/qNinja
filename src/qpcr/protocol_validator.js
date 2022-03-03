@@ -11,7 +11,7 @@ const RULE_DATA_COLLECTION = {
   ramp_end: { type:"boolean", required:false },
   hold_end: { type:"boolean", required:false },
   ramp_continuous: { type:"boolean", required:false },
-  hold_continuous: { type:"boolean", required:false },
+  measurement_interval_temp: { type:"number", required:false, min:0.1, max: 10.0 }
 };
 const RULE_STEP = {
   label: { type:"string", required:true, min_length:1, max_length:255 },

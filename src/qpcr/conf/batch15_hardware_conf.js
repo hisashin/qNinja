@@ -11,32 +11,33 @@ const HeatUnit = require("../control/heat_control/heat_unit.js");
 const ExclusiveTaskQueue = require("../lib/exclusive_task_queue.js");
 // const demoPlate = require("../control/plate_multi_demo.js"); // Use it if you are runnint qPCR cycle without real haat unit.
 const Plate = require("../control/plate_multi.js");
-const HeatLidMulti = require("../control/heat_lid_multi.js");
-const PlateBlock = require("../control/plate_block.js");
+// const HeatLidMulti = require("../control/heat_lid_multi.js");
+// const PlateBlock = require("../control/plate_block.js");
 const Thermistor = require("../hardware/thermistor.js");
 
 // Hardware lilbraries
 const ADS122C04IPWR = require("../hardware/adc_ads122c04ipwr.js");
 const ADCManager = require("../hardware/adc_manager.js");
-const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
+// const ADG731BSUZ = require("../hardware/mux_adg731bsuz.js");
 const MUX16ch = require("../hardware/mux_16ch.js");
 const MUX8ch = require("../hardware/mux_8ch.js");
 const MCP4551T = require("../hardware/pot_mcp4551t.js");
 const PCA9955B = require("../hardware/led_driver_pca9955b.js");
-const PromiseQueue = require("../lib/promise_queue.js");
+// const PromiseQueue = require("../lib/promise_queue.js");
+
 const PIGPIO_PORT = 8888;
-//const pigpio = require('pigpio-client').pigpio({port:PIGPIO_PORT});
 const PIGPIO = require('../lib/pigpio_client_wrapper.js');
 PIGPIO.init({port:PIGPIO_PORT});
-// const pwm = require('raspi-soft-pwm');
+const Peltier = require("../hardware/peltier.js");
+const Relay = require("../hardware/relay.js");
 
-const I2C_ADDR_PCA9955B = 0x05;
 
 // Pins
 const I2C_CHANNEL = 1; // SDA1 & SCL1
 
-const ADC_DEVICE_ADDR = 0x40;
-const POT_DEVICE_ADDR = 0x2F;
+const I2C_ADDR_PCA9955B = 0x05;
+const I2C_ADDR_ADC = 0x40;
+const I2C_ADDR_POT = 0x2F;
 
 const ADC_CHANNEL_FLUORESCENCE_MEASUREMENT = [3, 2]; // AIN3->P, AIN2->N
 const ADC_CHANNEL_THERMISTORS = [1, 0]; // AIN0->P, AIN1->N
@@ -49,10 +50,17 @@ const SWITCHING_TEMP = 66.0;
 // const SWITCHING_TEMP = 40.0;
 const R0 = 100.0;
 const BASE_TEMP = 25.0;
-const B_CONST = [
-  { minTemp:0.0, bConst:4250, voltageLimit:0.0 }, // 4250 for 0-50 deg 
-  { minTemp:50.0, bConst:4311, voltageLimit:0.0 }, // 4311 for 50-85 deg 
+const B_CONST_NX = [
+  // { minTemp:0.0, bConst:4250, voltageLimit:0.0 }, // 4250 for 0-50 deg 
+  // { minTemp:50.0, bConst:4311, voltageLimit:0.0 }, // 4311 for 50-85 deg 
   { minTemp:85.0, bConst:4334, voltageLimit:0.0 } // 4334 for 85-100 deg 
+];
+const B_CONST_AKI = [
+  { minTemp:0.0, bConst:4334, voltageLimit:0.0 },
+];
+const B_CONST_ALI = [
+  { minTemp:0.0, bConst:3950, voltageLimit:0.0 },
+
 ];
 const THERMISTOR_POSITION = false; /* Thermistor is connected to 0V line */
 
@@ -62,29 +70,38 @@ const THERMISTOR_POSITION = false; /* Thermistor is connected to 0V line */
 */
 const PIN_NUM_VIN_SENSE = 11; //GPIO0
 
-const PIN_NUM_MUX_SELECT = 22; // GPIO6
-const PIN_NUM_PD_MUX_1 = 16; //GPIO4 (Mux channel)
-const PIN_NUM_PD_MUX_2 = 12; //GPIO1 (Mux channel)
-const PIN_NUM_PD_MUX_3 = 10; //GPIO16 (Mux channel)
-const PIN_NUM_PD_MUX_4 = 8; //GPIO15 (Mux channel)
-const PIN_NUM_AMP_GAIN_SWITCH = 7;// GPIO7
+const PIN_NUM_MUX_SELECT = 22; // Pin22, GPIO6
+const PIN_NUM_PD_MUX_S0 = 16; // Pin 16, GPIO4 (Mux channel)
+const PIN_NUM_PD_MUX_S1 = 12; // Pin 12, GPIO1 (Mux channel)
+const PIN_NUM_PD_MUX_S2 = 8; // Pin 8, GPIO15 (Mux channel)
+const PIN_NUM_PD_MUX_S3 = 10; // Pin 10, GPIO16 (Mux channel)
+const PIN_NUM_AMP_GAIN_SWITCH = 7;// Pin 7, GPIO7
 const PIN_NUM_THERMISTOR_R = 26;// Pin 26, GPIO 11
-const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13
+const PIN_BCM_NUM_PWM_PLATE_HEATER = 13; // Pin 33, GPIO23, BCM 13 (Hardware PWM available)
 const PIN_BCM_NUM_PWM_LID_HEATER = 27; // Pin 13, GPIO2, BCM 27
 const PIN_BCM_NUM_PWM_FAN = 5; // Pin 29, GPIO 21, BCM 5
+const PIN_BCM_NUM_PWM_PELTIER = 12; // Pin 32, GPIO26, BCM 12 (Hardware PWM available)
+
+const PIN_PELTIER_RELAY_A = 36; // Pin 36, GPIO27
+const PIN_PELTIER_RELAY_B = 38; // Pin 38, GPIO28
+
 const PIN_NUM_DOOR_OPEN = 35; // Pin 35, GPIO24
-const PIN_NUM_DOOR_LOCK = 36; // Pin 36, GPIO 27
+// const PIN_NUM_DOOR_LOCK = 36; // Pin 37, GPIO25
 const PIN_NUM_ADC_DRDY = 24; // Pin 24, GPIO10
-const PIN_SHUTDOWN = 37; // TODO tmp
+const PIN_SHUTDOWN = PIN_NUM_VIN_SENSE; // TODO tmp
 
-/* Pin COnfig */
-const PLATE_KP = 1.0;
-const PLATE_KI = 0.02;
-const PLATE_KD = 0.02;
+// PID config
+const PLATE_PID =  [
+  { kp:0.60, ki:0.035, kd:0.005 },
+  { kp:0.60, ki:0.035, kd:0.005, minValue: 50 },
+  { kp:0.35, ki:0.035, kd:0.005, minValue:80 }
+];
 
-const HEATER_KP = 1.0;
-const HEATER_KI = 1.0;
-const HEATER_KD = 1.0;
+const LID_PID =  [
+  { kp:0.25, ki:0.06, kd:0.005 },
+  { kp:0.30, ki:0.035, kd:0.005, minValue:50 },
+  { kp:0.35, ki:0.025, kd:0.001, minValue:90 }
+];
 
 const MUX_CHANNEL_THERMISTOR_PLATE_BLOCK = 0;
 const MUX_CHANNEL_THERMISTOR_AIR = 1;
@@ -92,26 +109,21 @@ const MUX_CHANNEL_THERMISTOR_LID = 2;
 const MUX_CHANNEL_THERMISTOR_EXT1 = 3;
 const MUX_CHANNEL_THERMISTOR_EXT2 = 4;
 const MUX_CHANNEL_THERMISTOR_EXT3 = 5;
+const MUX_CHANNEL_THERMISTOR_PD1 = 6;
+const MUX_CHANNEL_THERMISTOR_PD2 = 7;
+
 
 // Well name -> Channel index
-/*
+
 const MUX_MAP_PHOTODIODES_N = [
-  [15,14,13,12,11,10,9,8], // Opt channel 1
-    [0,1,2,3,4,5,6,7], // Opt channel 0
+  [7,5,3,1,15,13,11,9], // Opt channel 1
+    [6,4,2,0,14,12,10,8], // Opt channel 0
 ];
 const MUX_MAP_PHOTODIODES_S = [
-  [8,9,10,11,12,13,14,15], // Opt channel 0
-  [7,6,5,4,3,2,1,0] // Opt channel 1
+  [8,10,12,14,0,2,4,6], // Opt channel 0
+  [9,11,13,15,1,3,5,7] // Opt channel 1
 ];
-*/
-const MUX_MAP_PHOTODIODES_N = [
-  [6,4,2,0,8,10,12,14],
-  [7,5,,3,1,9,11,13,15]
-];
-const MUX_MAP_PHOTODIODES_S = [
-  [14,12,10,8,0,2,4,6],
-  [15,13,11,9,1,3,5,7]
-]
+
 const TEMPERATURE_CHANNELS_CONF = {
   // label, property
 };
@@ -119,11 +131,21 @@ const TEMPERATURE_CHANNELS_CONF = {
   Measurement Interval and Data Rate
   Interval > 1000 / DataRate
 */
-const ADC_DATA_RATE = 90;
-const THERMISTOR_MUX_WAIT_MSEC = 20;
-const DEBUG_COEFF = 1;
-const EXCITATION_DURATION_MSEC = 25 * DEBUG_COEFF;
-const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000 * DEBUG_COEFF;
+/*
+
+DATA_RATE[20] = DATA_RATE_20SPS;
+DATA_RATE[45] = DATA_RATE_45SPS;
+DATA_RATE[90] = DATA_RATE_90SPS;
+DATA_RATE[175] = DATA_RATE_175SPS;
+DATA_RATE[330] = DATA_RATE_330SPS;
+DATA_RATE[600] = DATA_RATE_600SPS;
+DATA_RATE[1000] = DATA_RATE_1000SPS;
+*/
+const ADC_DATA_RATE = 600//330;
+const THERMISTOR_MUX_WAIT_MSEC = 5;
+const EXCITATION_DURATION_MSEC = Math.ceil(1000/ADC_DATA_RATE);
+const FLUO_MEASUREMENT_COUNT = 8;
+const MEASUREMENT_ALL_MIN_INTERVAL_MSEC = 4000;
 
 const muxQueue = new ExclusiveTaskQueue();
 
@@ -162,42 +184,70 @@ class HardwareConf {
   constructor () {
     this.ledUnit = null;
     this.i2c = i2c.openSync(I2C_CHANNEL);
-    const adc = new ADS122C04IPWR(this.i2c, ADC_DEVICE_ADDR);
+    const adc = new ADS122C04IPWR(this.i2c, I2C_ADDR_ADC);
     this.adc = adc;
     this.adcManager = new ADCManager(adc, ADC_DATA_RATE);
     this.pwmPlate = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_PLATE_HEATER);
     this.pwmLid = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_LID_HEATER);
     this.pwmFan = new PIGPIO.SoftPWM(PIN_BCM_NUM_PWM_FAN);
-    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
+    const FREQ_PELTIER = 1E5;
+    this.pwmPeltier = new PIGPIO.HardPWM(PIN_BCM_NUM_PWM_PELTIER, FREQ_PELTIER);
+
+    this.thermistorMux = new MUX8ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2);
+    /*
     const thermistorLowTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP);
     const thermistorHighTemp = new Thermistor(B_CONST, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP);
+    */
+    // NX
+    const thermistorConfNx = { low:new Thermistor(B_CONST_NX, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP), 
+      high:new Thermistor(B_CONST_NX, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP), 
+      switchingTemp: SWITCHING_TEMP };
+    const thermistorConfAki = { low:new Thermistor(B_CONST_AKI, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP), 
+      high:new Thermistor(B_CONST_AKI, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP), 
+      switchingTemp: SWITCHING_TEMP };
+    const thermistorConfAli = { low:new Thermistor(B_CONST_ALI, R0, BASE_TEMP, THERMISTOR_POSITION , RES_LOW_TEMP), 
+      high:new Thermistor(B_CONST_ALI, R0, BASE_TEMP, THERMISTOR_POSITION , RES_HIGH_TEMP), 
+      switchingTemp: SWITCHING_TEMP };
     
     {
-      const plateBlockSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP,
+      const plateBlockSensing = new TemperatureSensing(thermistorConfAli,
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_PLATE_BLOCK);
-      const airSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP,
+      const airSensing = new TemperatureSensing(thermistorConfNx,
         this.adcManager, ADC_CHANNEL_THERMISTORS,
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_AIR);
       const plateSensing = new PlateSensing(plateBlockSensing, airSensing);
-      const plateOutput = new PlateOutput(this.pwmPlate, this.pwmFan);
-      this.plate = new HeatUnit(new PID(PLATE_KP, PLATE_KI, PLATE_KD), plateSensing, plateOutput);
+      
+      const relay = new Relay(PIN_PELTIER_RELAY_A, PIN_PELTIER_RELAY_B);
+      const peltierAbsControl = {
+        start: ()=>{
+        },
+        setOutput: (vOut)=>{
+          // console.log("peltierAbsControl.setOutput %f", vOut);
+          this.pwmPeltier.write(vOut);
+        },
+        off: ()=>{
+          this.pwmPeltier.write(0);
+        }
+      }
+      this.peltier = new Peltier(peltierAbsControl, relay);
+      const plateOutput = new PlateOutput(this.pwmPlate, this.peltier, this.pwmFan);
+      this.plate = new HeatUnit(new PID(PLATE_PID), plateSensing, plateOutput);
     }
     {
-      const lidSensing = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP, 
+      const lidSensing = new TemperatureSensing(thermistorConfAli, 
         this.adcManager, ADC_CHANNEL_THERMISTORS, 
         this.thermistorMux, MUX_CHANNEL_THERMISTOR_LID);
-      const pid = new PID(HEATER_KP, HEATER_KI, HEATER_KD);
+      const pid = new PID(LID_PID, true);
       pid.setOutputRange(0, 1.0);
       const output = new HeatLidOutput(this.pwmLid);
       this.lid = new HeatUnit(pid, lidSensing, output);
     }
     {
-      this.extraSensing = new ExtraSensing(thermistorLowTemp, thermistorHighTemp, SWITCHING_TEMP, 
+      this.extraSensing = new ExtraSensing(thermistorConfNx, 
         this.adcManager, ADC_CHANNEL_THERMISTORS, 
         this.thermistorMux, [MUX_CHANNEL_THERMISTOR_EXT1, MUX_CHANNEL_THERMISTOR_EXT2, MUX_CHANNEL_THERMISTOR_EXT3]);
     }
-    // this.extraSensing
     try {
       this.adcManager.start();
       this.adc.initialize();
@@ -242,8 +292,7 @@ class HardwareConf {
   getLEDUnit () {
     console.log("getLEDUnit()");
     if (this.ledUnit == null) {
-      console.log("getLEDUnit() create...");
-      const pot = new MCP4551T(this.i2c, POT_DEVICE_ADDR);
+      const pot = new MCP4551T(this.i2c, I2C_ADDR_POT);
       const ledDriver = new PCA9955B(this.i2c, I2C_ADDR_PCA9955B);
       this.ledUnit = new LEDUnit(pot, ledDriver);
     }
@@ -271,8 +320,8 @@ class PlateSensing {
     this.plateBlockSensing.measureTemperature((plateTemperature)=>{
       this.airSensing.measureTemperature((airTemperature)=>{
         // TODO sample temp simulation
-        const temperature = plateTemperature;
         // TODO use simulated temperature as main
+        const temperature = plateTemperature;
         const detailedMeasurement = {
           main:temperature,
           block:plateTemperature,
@@ -286,10 +335,11 @@ class PlateSensing {
 const USE_TEMP_SWITCHING = false;
 // Simple temperature sensing with a single thermistor
 class TemperatureSensing {
-  constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannel) {
-    this.thermistorLowTemp = thermistorLowTemp;
-    this.thermistorHighTemp = thermistorHighTemp;
-    this.switchingTemp = switchingTemp;
+  constructor (conf, adcManager, adcChannel, mux, muxChannel) {
+    // { low:thermistorLowTemp, high:thermistorHighTemp, switchingTemp: SWITCHING_TEMP }
+    this.thermistorLowTemp = conf.low;
+    this.thermistorHighTemp = conf.high;
+    this.switchingTemp = conf.switchingTemp;
     this.adcManager = adcManager;
     this.adcChannel = adcChannel;
     this.mux = mux;
@@ -304,8 +354,10 @@ class TemperatureSensing {
   measureTemperature(callback) {
     const muxTaskId = muxQueue.request(()=>{
       this.mux.selectChannel(this.muxChannel);
+      const muxTimestamp = new Date();
       let thermistor = null;
       let switchPinVal = 0;
+      
       if (this.prevValue < this.switchingTemp) {
         thermistor = this.thermistorLowTemp;
       } else {
@@ -316,9 +368,17 @@ class TemperatureSensing {
       // Prev value
       // Switch
       setTimeout(()=>{
-        this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val)=>{
+        this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (val, raw)=>{
           const temp = thermistor.getTemp(val);
-          this.prevValue = temp;
+          if ((temp > 120 || temp < 10) && 
+          (this.muxChannel == MUX_CHANNEL_THERMISTOR_PLATE_BLOCK || this.muxChannel == MUX_CHANNEL_THERMISTOR_LID)) {
+            const interval = new Date().getTime() - muxTimestamp.getTime()
+            console.log("IRREGULAR %d\t%f\t%f\t%f<=>%f", this.muxChannel, val, temp, this.prevValue,this.switchingTemp);
+            console.log(raw)
+            console.log(this.prevRaw)
+          }
+          this.prevRaw = raw;
+
           muxQueue.release(muxTaskId);
           const detailedMeasurement = {
             main:temp
@@ -334,12 +394,12 @@ class TemperatureSensing {
 }
 /* Thermistor array */
 class ExtraSensing {
-  constructor (thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, muxChannels) {
+  constructor (thermistorConf, adcManager, adcChannel, mux, muxChannels) {
     // muxChannels
     this.units = [];
     this.measurement = {};
     muxChannels.forEach ((channel)=>{
-      const unit = new TemperatureSensing(thermistorLowTemp, thermistorHighTemp, switchingTemp, adcManager, adcChannel, mux, channel);
+      const unit = new TemperatureSensing(thermistorConf, adcManager, adcChannel, mux, channel);
       this.units.push(unit);
     });
     this.measurement = {}; // Detailed temperature data object (may include multiple values)
@@ -378,61 +438,78 @@ class ExtraSensing {
     }
   }
 }
-
 class PlateOutput {
   // Combination of heater (PWM) and fan (PWM)
-  constructor (platePWM, fanPWM) {
-    this.platePWM = platePWM;
+  constructor (plateHeaterPWM, peltier, fanPWM) {
+    this.plateHeaterPWM = plateHeaterPWM;
+    this.peltier = peltier;
     this.fanPWM = fanPWM;
     this.plateActualOutput = 0.0;
     this.setFanOutput(1.0);
-    this.setPlateOutput(0);
+    this.setPlateHeaterOutput(0);
   }
-  setPlateOutput (value) {
+  setPlateHeaterOutput (value) {
     const actualOutput = Math.min(1.0, Math.min(value, this.plateActualOutput + 0.25));
-    this.platePWM.write(actualOutput);
-    // this.platePWM.write(value);
+    this.plateHeaterPWM.write(actualOutput);
+    // this.plateHeaterPWM.write(value);
+    // TODO peltier
     this.plateActualOutput = actualOutput;
   }
   setFanOutput (value) {
     this.fanPWM.write(value);
   }
   start () {
+    this.peltier.start();
   }
   setOutput (outputValue /* Range={-1,1.0} */) {
-    outputValue = Math.min(1.0, Math.max(-1, outputValue));
-    // outputValue = Math.min(0.9, Math.max(-0.9, outputValue));
-    console.log("plate output=%d", outputValue)
+    if (this.disposed) {
+      return;
+    }
+    outputValue = Math.min(1.0, Math.max(-1, outputValue)); // -1 ... +1
     if (outputValue > 0) {
-      this.setPlateOutput(outputValue);
+      this.setPlateHeaterOutput(outputValue);
       this.setFanOutput(0);
     } else {
-      this.setPlateOutput(0);
+      this.setPlateHeaterOutput(0);
       this.setFanOutput(-outputValue);
     }
+    this.peltier.setOutput(outputValue);
   }
   off () {
-    this.setPlateOutput(0);
-    this.setFanOutput(0);
+    this.setPlateHeaterOutput(0);
+    this.setFanOutput(0.0);
+    this.peltier.off(0);
+  }
+  cool () {
+    this.setPlateHeaterOutput(0);
+    this.setFanOutput(1.0);
+    this.peltier.off(0);
+
   }
   shutdown () {
     console.log("Shutting down PlateOutput.");
-      this.setPlateOutput(0);
-      this.setFanOutput(1.0);
+    this.setPlateHeaterOutput(0);
+    this.setFanOutput(1.0);
+    this.peltier.off(0);
+    this.disposed = true;
+    console.log("Shutting down PlateOutput...done");
   }
 }
 
 /* 4bit GPIO MUX  + Switch */
 let debugLastMuxChannel = 0;
 let debugLastMuxSwitch = 0;
+/*
+const DEBUG_LED_CH = parseInt(process.argv[2]);
+const DEBUG_MUX_CH = parseInt(process.argv[3]);
+*/
 class GenericGPIOMuxWrapper {
   constructor () {
-    this.mux = new MUX16ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3, PIN_NUM_PD_MUX_4);
+    this.mux = new MUX16ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2, PIN_NUM_PD_MUX_S3);
     this.muxSwitch = PIN_NUM_MUX_SELECT;
     
     this.selArgv = parseInt(process.argv[2]);
     this.channelArgv = parseInt(process.argv[3]);
-    console.log("Sel=%d, Ch=%d", this.selArgv, this.channelArgv);
   }
   start () {
     this.openDone = true;
@@ -440,7 +517,7 @@ class GenericGPIOMuxWrapper {
     this.mux.initialize();
   }
   select (wellIndex, channel) {
-    const channelOffset = channel;
+    // wellIndex = 1;
     let muxSwitchVal = 0;
     let muxChannel = 0;
     let dir = "";
@@ -455,14 +532,14 @@ class GenericGPIOMuxWrapper {
         muxChannel = MUX_MAP_PHOTODIODES_S[channel][wellIndex-8];
         dir = "S";
     }
+    /*
     if (this.selArgv >= 0) {
       muxSwitchVal = this.selArgv;
-      
     }
     if (this.channelArgv >= 0) {
-      muxChannel = this.channelArgv;
-      
+      muxChannel = this.channelArgv; 
     }
+    */
     debugLastMuxChannel = muxChannel;
     debugLastMuxSwitch = muxSwitchVal;
     rpio.write(this.muxSwitch, muxSwitchVal);
@@ -473,7 +550,7 @@ class GenericGPIOMuxWrapper {
 }
 class MUXWrapperThermistor {
   constructor () {
-    this.mux = new MUX8ch(PIN_NUM_PD_MUX_1, PIN_NUM_PD_MUX_2, PIN_NUM_PD_MUX_3);
+    this.mux = new MUX8ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2);
     this.muxSwitch = PIN_NUM_MUX_SELECT;
   }
   start () {
@@ -494,8 +571,8 @@ class MUXWrapperThermistor {
 
 // TODO reverse (for debug)
 const LED_WELL_TO_CHANNEL_MAP = [
-  8,9,10,11,12,13,14,15,
-  0,1,2,3,4,5,6,7
+  11,10,9,8,12,13,14,15,
+  4,5,6,7,3,2,1,0
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
 let hoge = 0;
@@ -506,28 +583,25 @@ class LEDUnit {
     console.log(ledDriver);
     this.pot = pot;
     this.ledDriver = ledDriver;
-    this.flg = true;
   }
   start () {
     this.pot.initialize();
     this.ledDriver.setBlankControlMode();
   }
-  select (well) {
-    this.pot.setWiper(0);
-    this.flg = !this.flg;
-    let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    channel = LED_WELL_TO_CHANNEL_MAP[hoge]; // Debug
-    this.ledDriver.selectChannel(channel);
-    // this.ledDriver.off();
-    if (well == 15) {
-      console.log("Well %d", hoge);
-      hoge = (hoge + 1) % 16;
+  select (well, wiper) {
+    if (! (wiper > 0) ) {
+      wiper = 0;
     }
+    this.pot.setWiper(wiper);
+    let channel = LED_WELL_TO_CHANNEL_MAP[well];
+    this.ledDriver.selectChannel(channel);
   }
+  
   off () {
     this.ledDriver.off();
   }
   shutdown () {
+    this.disposed = true;
     console.log("Shutting down LED unit.");
   }
 }
@@ -537,8 +611,10 @@ const SMALL_GAIN_SIG = 1;
 const LARGE_GAIN_VALUE = 10.0; // MOhm
 const SMALL_GAIN_VALUE = 1.0; // MOhm
 
+let fuga = false;
+
 const USE_GAIN_SWITCHING = false;
-const DEFAULT_IS_STRONG_SIGNAL = true; // Set "false" to use the larger gain
+const DEFAULT_IS_STRONG_SIGNAL = false; // Set "false" to use the larger gain
 // Photodiode
 class FluorescenceSensingUnit {
   constructor (mux, adcManager, adcChannel) {
@@ -562,8 +638,12 @@ class FluorescenceSensingUnit {
     this.mux.start();
   }
   excitationDuration () { return EXCITATION_DURATION_MSEC; }
+  measurementCount () { return FLUO_MEASUREMENT_COUNT; }
   measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   _select (wellIndex, opticalChannel) {
+    if (wellIndex == 0 && opticalChannel == 0) {
+      fuga = !fuga;
+    }
     this.mux.select(wellIndex, opticalChannel);
     // Switch gain according to previous measurement
     this.opticalChannel = opticalChannel;
@@ -581,15 +661,12 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
-      /*
-      if (hoge%2==0)
-        this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
-      else
-        this.isStrongSignal = !DEFAULT_IS_STRONG_SIGNAL;
-        */
-        this.isStrongSignal = false;
+      // this.isStrongSignal = fuga;
+      // this.isStrongSignal = false;
+      this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
     }
-    rpio.write(PIN_NUM_AMP_GAIN_SWITCH, (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG);
+    const w = (this.isStrongSignal)? SMALL_GAIN_SIG:LARGE_GAIN_SIG;
+    rpio.write(PIN_NUM_AMP_GAIN_SWITCH, w);
   }
   select (wellIndex, opticalChannel, callback) {
     this.muxTaskId = muxQueue.request(()=>{
@@ -605,10 +682,11 @@ class FluorescenceSensingUnit {
     this.adcManager.readDiffChannelValue(this.adcChannel[0], this.adcChannel[1], (_val)=>{
       const val = _val * 2;
       this.measuredValues[this.opticalChannel][this.wellIndex] = {v:val,s:this.isStrongSignal};
-      callback({v:val,s:this.isStrongSignal?"1M":"10M",x:debugLastMuxSwitch, y:debugLastMuxChannel});
+      callback({v:val/*,s:this.isStrongSignal?"1M":"10M"*/});
     });
   }
   shutdown () {
+    this.disposed = true;
     console.log("Shutting down photosensing unit.");
   }
 }
@@ -622,16 +700,22 @@ class HeatLidOutput {
   start () {
   }
   setOutput (outputValue /* Range={0,1.0} */) {
+    if (this.disposed) {
+      return;
+    }
     outputValue = Math.min(1.0, Math.max(0, outputValue));
     this.pwm.write(outputValue);
   }
   off () {
     this.pwm.write(0);
+    console.log("PWM Off");
   }
   shutdown () {
     console.log("Shutting down HeatLidOutput.");
     this.off();
+    this.disposed = true;
   }
 }
 
 module.exports = new HardwareConf();
+

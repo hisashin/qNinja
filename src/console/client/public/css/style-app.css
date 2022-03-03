@@ -358,6 +358,7 @@ a {
 }
 .protocol-editor-stages__add-button, .protocol-detail-stages__add-button {
   width: 60px;
+  height: 60px;
   margin: -18px -30px 0;
   flex-grow: 0;
   flex-shrink: 0;
@@ -372,7 +373,7 @@ a {
   border-top: 1px solid #aaa;
 }
 .protocol-editor-step__data-collection, .protocol-detail-step__data-collection {
-  font-size: 0.75em;
+  /* font-size: 0.75em; */
 }
 .protocol-editor-values, .protocol-detail-values {
   display: flex;
@@ -556,11 +557,26 @@ html
 }
 
 /* Tabbed section */
-.item--tabbed__tabs {
+.item--tabbed__content {
   padding: 0.5em;
+  display: flex;
+  flex-direction: row;
+}
+.item--tabbed__content__main {
+  width: 70%;
+  flex-basis: 70%;
+}
+.item--tabbed__content__side {
+  width: 30%;
+  flex-basis: 30%;
+  overflow-x: scroll;
+}
+.item--tabbed__content__full {
+  width: 100%;
+  flex-basis: 100%;
 }
 
-.item--tabbed__content {
+.item--tabbed__tabs {
   padding: 0.5em;
 }
 
@@ -757,6 +773,13 @@ html
 
 .pcr-table--well_picker {
   min-width: 640px;
+}
+.temperature-chart {
+  width: 100%;
+}
+.temperature-chart__graph {
+  width: 800px;
+  height: 600px;
 }
 
 .main {

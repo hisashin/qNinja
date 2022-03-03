@@ -192,7 +192,7 @@ class NinjaQPCRDemo {
   onComplete (data) {
     console.log(data);
     qpcr.shutdown();
-    process.exit(1);
+    qpcr.exit();
   }
   onThermalTransition (data) {
     console.log(data);
@@ -203,13 +203,51 @@ class NinjaQPCRDemo {
     setTimeout(()=>{qpcr.finishAutoPause();}, 5000);
   }
   onProgress (data) {
-    console.log(data);
-  }
-  onFluorescenceDataUpdate (data) {
-    console.log(data);
+    console.log("NINJA\tPROGRESS\t%d\t%f\t%f", data.elapsed, data.lid, data.plate);
   }
   onMeltCurveDataUpdate (data) {
+    const dataToShow = data.v[0].map(well=>well.v);
+    /*
+    console.log(data.temp)
+    console.log(dataToShow);
+    */
+    console.log("NINJA\tMELT\t%f\t%s", data.temp,dataToShow.join("\t"));
+  }
+  onFluorescenceDataUpdate (data) {
     // console.log(data);
+    /*
+{
+  t: 288394,
+  v: [
+    [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object]
+    ],
+    [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object]
+    ]
+  ],
+  stage: 1,
+  cycle: 3,
+  step: 0
+}
+    */
+    const dataToShow = data.v[0].map(well=>well.v);
+    console.log(dataToShow);
+    console.log("NINJA\tFLUO\t%d\t%s", data.cycle,dataToShow.join("\t"));
   }
   onFluorescenceEvent (data) {
     // optics.start / optics.stop / optics.measure / optics.baseline
@@ -226,5 +264,5 @@ new NinjaQPCRDemo().start();
 process.on('SIGINT', () => {
     console.log('demo_local_run.js Received SIGINT');
     qpcr.shutdown();
-    process.exit(1);
+    qpcr.exit();
 });

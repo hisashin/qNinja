@@ -40,14 +40,14 @@ class PCA9955B {
     }
   }
   writeSeq (startAddr, values) {
-    const firstBit = startAddr | (0b01 << 7);
-    let regValues = [firstBit].concat(values); // Auto-increment + First reg address
+    const firstVal = startAddr | (0b01 << 7);
+    let regValues = [firstVal].concat(values); // Auto-increment + First reg address
     this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
     // console.log(regValues.map(v=>v.toString(2)))
   }
   writeSeqSameValues (startAddr, value, count) {
-    const firstBit = startAddr | (0b01 << 7);
-    let regValues = [firstBit];
+    const firstVal = startAddr | (0b01 << 7);
+    let regValues = [firstVal];
     for (let i=0; i<count; i++) {
       regValues.push(value);
     }
@@ -79,6 +79,15 @@ class PCA9955B {
     for (let i=0; i<LED_COUNT; i++) {
       this.leds[i] = (ch == i);
     }
+    this.applyLED();
+  }
+  selectChannels (chs) {
+    for (let i=0; i<LED_COUNT; i++) {
+      this.leds[i] = false;
+    }
+    chs.forEach((ch)=>{
+      this.leds[ch] = true;
+    });
     this.applyLED();
   }
   

@@ -176,13 +176,10 @@
                     </b-tab>
                     <b-tab title="Temperature" @click="onSelectTabTemperature()">
                       <div class="item--tabbed__content">
-                        <div class="item--tabbed__content__main" ref="tabTemperatureMain">
+                        <div class="item--tabbed__content__full" ref="tabTemperatureMain">
                           <TemperatureChart ref="temperatureChart" />
                           Export <button  class="btn btn-link" @click.stop="exportExperiment('temp')" >JSON</button> / 
                           <button  class="btn btn-link" @click.stop="exportExperiment('temp','csv')" >CSV</button>
-                        </div>
-                        <div class="item--tabbed__content__side" id="tabTemperatureSide">
-                          
                         </div>
                       </div>
                     </b-tab>
@@ -346,6 +343,7 @@ export default {
     },
     /* Panel transition */
     setExperiment (experiment) {
+      console.log("TheExperimentEditor.setExperiment");
       this.experiment = experiment;
       this.isStarted = experiment.status.start > 0;
       this.$refs.protocolDetail.setProtocol(this.experiment.protocol);
@@ -369,7 +367,6 @@ export default {
       
       if (this.isStarted && experiment.log) {
         if (experiment.log.temp) {
-          console.log("setExperiment 1.1");
           this.$refs.temperatureChart.set(
             experiment.log.temp.time, 
             experiment.log.temp.plate, 
@@ -378,7 +375,7 @@ export default {
         }
         if (experiment.log.fluorescence && experiment.log.fluorescence.qpcr) {
           this.$refs.amplificationChart.setHardwareConf(experiment.hardware);
-            this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
+          this.$refs.amplificationChart.setAppearanceConf(this.getAppearanceConf());
           this.$refs.amplificationChart.setData(experiment.log.fluorescence.qpcr);
           this.$refs.amplificationChart.setAnalysis(experiment.analysis);
         }
@@ -510,19 +507,3 @@ export default {
   }
 }
 </script>
-<style>
-.item--tabbed__content {
-  display:flex;
-  flex-direction:row;
-}
-.item--tabbed__content__main {
-  width:70%;
-  flex-basis: 70%;
-
-}
-.item--tabbed__content__side {
-    width:30%;
-    flex-basis: 30%;
-    overflow-x: scroll;
-}
-</style>
