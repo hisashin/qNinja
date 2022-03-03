@@ -2102,6 +2102,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c210293b-1d7a-4e96-92e9-058784106727)
   )
+  (text "NOTE: MUX_SELECT/MUX_SELECT_INV replaced @ PhotoMUX"
+    (at 19.05 17.78 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid f2c68fa2-22b1-4d73-b8ee-43f56e437bb6)
+  )
 
   (global_label "MUX_S3" (shape input) (at 82.55 46.99 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))

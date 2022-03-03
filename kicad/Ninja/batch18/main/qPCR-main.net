@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "/Users/shingo/github/Ninja-qPCR/kicad/Ninja-qPCR/batch18/main/qPCR-main.kicad_sch")
-    (date "2022 February 25, Friday 06:50:42")
+    (date "2022 March 02, Wednesday 12:59:55")
     (tool "Eeschema (6.0.1-0)")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -2597,7 +2597,7 @@
       (node (ref "U6") (pin "6") (pinfunction "P0W") (pintype "unspecified")))
     (net (code "26") (name "/PhotoMUX/MUX_SELECT_INV")
       (node (ref "U18") (pin "4") (pintype "output"))
-      (node (ref "U19") (pin "15") (pinfunction "*E") (pintype "input")))
+      (node (ref "U20") (pin "15") (pinfunction "*E") (pintype "input")))
     (net (code "27") (name "/PhotoMUX/N_PD_OUT1")
       (node (ref "J18") (pin "43") (pinfunction "Pin_43") (pintype "passive"))
       (node (ref "U20") (pin "23") (pinfunction "I8") (pintype "input")))
@@ -3001,7 +3001,7 @@
     (net (code "82") (name "MUX_SELECT")
       (node (ref "J2") (pin "22") (pinfunction "GPIO6") (pintype "bidirectional"))
       (node (ref "U18") (pin "2") (pintype "input"))
-      (node (ref "U20") (pin "15") (pinfunction "*E") (pintype "input")))
+      (node (ref "U19") (pin "15") (pinfunction "*E") (pintype "input")))
     (net (code "83") (name "N_LED_OUT1")
       (node (ref "J18") (pin "20") (pinfunction "Pin_20") (pintype "passive"))
       (node (ref "U7") (pin "23") (pinfunction "LED15") (pintype "input")))
