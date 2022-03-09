@@ -23,7 +23,8 @@ eventBus.subscribe("optics.update", (topic, values)=>{
   // console.log("----");
   // console.log(values.map(v=>v.v + "\t" + v.r + "\t" + v.w).join("\n"))
   // if (measurementCount%2==1)
-  console.log(values[4])
+  console.log(values[4].r)
+  // console.log(values)
 });
 function _transformValues (values) {
   let data = [];

@@ -575,7 +575,6 @@ const LED_WELL_TO_CHANNEL_MAP = [
   4,5,6,7,3,2,1,0
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
-let hoge = 0;
 class LEDUnit {
   constructor (pot, ledDriver) {
     console.log("LEDUnit.init()")
@@ -588,15 +587,26 @@ class LEDUnit {
     this.pot.initialize();
     this.ledDriver.setBlankControlMode();
   }
-  select (well, wiper) {
-    if (! (wiper > 0) ) {
-      wiper = 0;
+  /**
+   * 
+   * @param {number} well Well index
+   * @param {number} iref IREF value (sent to LED driver)
+   */
+  select (well, iref) {
+    if (! (iref > 0) ) {
+      iref = 255;
     }
-    this.pot.setWiper(wiper);
+    // this.pot.setWiper(wiper);
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    this.ledDriver.selectChannel(channel);
+    this.ledDriver.setIREF (channel, iref);
+    setTimeout(()=>{
+      this.ledDriver.selectChannel(channel);
+    }, 1);
   }
   
+  /**
+   * Turn off LED driver
+   */
   off () {
     this.ledDriver.off();
   }

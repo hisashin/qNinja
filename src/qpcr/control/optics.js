@@ -1,5 +1,8 @@
 "use strict";
 const PromiseQueue = require("../lib/promise_queue.js");
+const MAX_IREF = 255;
+const MIN_IREF = 64;
+const IREF_STEP = 0.85;
 
 /* Excitation and fluorescence measurement */
 const MEASUREMENT_COUNT = 3;
@@ -11,15 +14,25 @@ class OpticsUnit  {
   }
   
   // Delay
+  /**
+   * Promise delay
+   * @param {number} ms Msec to delay
+   * @returns {Promise}
+   */
   _taskDelay (ms) {
     return new Promise ((resolve, reject)=>{
-      // console.log("Start wait %d", ms);
       setTimeout(resolve, ms);
     });
   }
-  _taskSelectLED (wellIndex, wiper) {
+  /**
+   * Promise "LEDUnit.select"
+   * @param {number} wellIndex Well index (0..15)
+   * @param {number} iref IREF of channel (sent to LED driver)
+   * @returns {Promise}
+   */
+  _taskSelectLED (wellIndex, iref) {
     return new Promise((resolve, reject)=>{
-      this.ledUnit.select(wellIndex, wiper);
+      this.ledUnit.select(wellIndex, iref);
       resolve();
     });
   }
@@ -46,18 +59,17 @@ class OpticsUnit  {
   _isSaturated (signal) {
     return signal > 1.2;
   }
-  _ledIntensity (wiper) {
-    return 750 / (750 + 50000 * wiper / 256)
+  _ledIntensity (intensity) {
+    return 750 / (750 + 50000 * intensity / 256)
   }
   async _configure (well, opticalChannel) {
     // Gain & intensity config
     /*
-    const MAX_WIPER = 2;
-    let wiper = 1;
+    let iref = MAX_IREF;
     let measurement = null;
-    while (wiper < MAX_WIPER) {
+    while (iref > MIN_IREF) {
       let saturated = false;
-      await this._taskSelectLED(well, wiper);
+      await this._taskSelectLED(well, iref);
       for (let i=0; i<3; i++) {
         await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
         measurement = await this._taskMeasure();
@@ -69,21 +81,28 @@ class OpticsUnit  {
       if (!saturated) {
         break;
       }
-      wiper ++;
+      iref = Math.floor(iref * IREF_STEP);
     }
     */
-    // Test with fixed wiper value
-    let wiper = 0;
-    await this._taskSelectLED(well, wiper);
+    // Test with fixed intensity value
+    
+    
+    let iref = parseInt(process.argv[2]);
+    await this._taskSelectLED(well, iref);
     await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
     
-    let conf = {wiper:wiper, int: this._ledIntensity(wiper)};
+    let conf = {iref:iref,int:iref/MAX_IREF};
     return conf;
   }
 
-  calcFluo (raw, wiper) {
-    if (wiper <= 1)  return raw;
-    return raw * 1.3; // TODO
+  /**
+   * 
+   * @param {number} raw Raw measurement value
+   * @param {number} intensity Intensity of LED (0 to 1)
+   * @returns {number} Computed fluo value
+   */
+  _calcFluo (raw, intensity) {
+    return raw * MAX_IREF / intensity;
   }
   
   async measure (well, opticalChannel, callback) {
@@ -99,10 +118,9 @@ class OpticsUnit  {
     this.fluorescenceSensingUnit.release();
     // Raw value
     let v = this._processMeasurements(series);
-    v.w = conf.wiper;
     v.i = conf.int;
     v.r = v.v;
-    v.v = this.calcFluo(v.r, conf.wiper);
+    v.v = this._calcFluo(v.r, conf.intensity);
     callback(v);
 
   }
