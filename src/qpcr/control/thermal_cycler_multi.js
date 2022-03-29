@@ -361,7 +361,7 @@ class StateStepRamp {
     this.stepIndex = stepIndex
     this.stage = protocol.stages[stageIndex];
     this.step = this.stage.steps[stepIndex];
-    this.isFastRamp = (this.step.ramp_speed == null);
+    this.isFastRamp = (!(this.step.ramp_speed > 0));
     if (!this.isFastRamp) {
       this.rampSpeed = Math.abs(this.step.ramp_speed); // Degree per sec
     }

@@ -184,7 +184,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>
@@ -226,7 +226,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>
@@ -267,7 +267,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>
@@ -328,7 +328,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__0__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[0].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>
@@ -357,7 +357,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__1__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[1].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>
@@ -388,7 +388,7 @@
                             <span :class="'validation-label validation__stages__'+index+'__steps__2__ramp_speed'"/>
                             <input
                               v-model.number="stage.steps[2].ramp_speed" v-on:input="onChangeProtocol()"
-                              class="input-speed" type="number" step="1"
+                              class="input-speed" type="number"
                             >℃/sec
                           </div>
                         </div>

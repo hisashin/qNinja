@@ -7,7 +7,6 @@
 const Constants = require("./constants");
 const fs = require('fs');
 
-// const ThermalCycler = require("./control/thermal_cycler");
 const ThermalCycler = require("./control/thermal_cycler_multi");
 const TemperatureMonitor = require("./control/temperature_monitor");
 const Optics = require("./control/optics");

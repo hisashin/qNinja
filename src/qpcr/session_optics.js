@@ -51,7 +51,7 @@ class OpticsSession {
         });
         eventBus.publish("optics.update.measurement", this.transform(values));
       });
-    }, 4000);
+    }, 3500);
   }
   shutdown () {
     console.log("Shutting down demo_optics_batch8");

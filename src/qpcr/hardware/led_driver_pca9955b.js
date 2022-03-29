@@ -47,7 +47,7 @@ class PCA9955B {
   // Call this to get ready for blank control (by OD pin)
   setBlankControlMode () {
     // Enable  auto increment
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([0x00, 0b10001001]));
+    this.i2c.i2cWriteSync(this.address, 2, Buffer.from([0x00, 0b10001001]));
     this._writeRegisterSeqSameValues(0x18, 0xFF, 16); // Current value
   }
 
