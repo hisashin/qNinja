@@ -14,6 +14,11 @@ const REG_ADDR_LEDOUT3 = 0x05;
 const LED_COUNT = 16;
 
 class PCA9955B {
+  /**
+   * 
+   * @param {(number|i2c-bus)} i2c Number of I2C bus or i2c-bus object
+   * @param {!number} address Device address
+   */
   constructor (i2c, address) {
     if (typeof(i2c)=="number") {
       console.log("ADC channel is specified by bus number.");
@@ -39,48 +44,27 @@ class PCA9955B {
         console.log("ADC channel opened: %d", this.i2cBusNumber);
     }
   }
-  writeSeq (startAddr, values) {
-    const firstVal = startAddr | (0b01 << 7);
-    let regValues = [firstVal].concat(values); // Auto-increment + First reg address
-    this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
-    // console.log(regValues.map(v=>v.toString(2)))
-  }
-  writeSeqSameValues (startAddr, value, count) {
-    const firstVal = startAddr | (0b01 << 7);
-    let regValues = [firstVal];
-    for (let i=0; i<count; i++) {
-      regValues.push(value);
-    }
-    // console.log(regValues.map(v=>v.toString(2)))
-    this.i2c.i2cWriteSync(this.address, regValues.length, new Buffer(regValues));
-  }
   // Call this to get ready for blank control (by OD pin)
   setBlankControlMode () {
     // Enable  auto increment
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([0x00, 0b10001001]));
-    // this.writeSeqSameValues(0x08, 0x00, 16); // PWM
-    this.writeSeqSameValues(0x18, 0xFF, 16); // Current value
+    this.i2c.i2cWriteSync(this.address, 2, Buffer.from([0x00, 0b10001001]));
+    this._writeRegisterSeqSameValues(0x18, 0xFF, 16); // Current value
   }
-  applyLED () {
-    let regValues = [];
-    // let regValues = [0x02]; // Auto-increment + First reg address
-    for (let groupIndex = 0; groupIndex < LED_COUNT/4; groupIndex++) {
-      let regVal = 0b00000000;
-      for (let i=0; i<4; i++) {
-        let modeVal = (this.leds[groupIndex * 4 + i]) ? 0b01 : 0b00;
-        regVal = regVal | (modeVal << (i*2));
-      }
-      regValues.push(regVal);
-    }
-    this.writeSeq(REG_ADDR_LEDOUT0, regValues);
-  }
-  // Select single channel
+
+  /**
+   * On single channel
+   * @param {!number} ch Channel index
+   */
   selectChannel (ch) {
     for (let i=0; i<LED_COUNT; i++) {
       this.leds[i] = (ch == i);
     }
-    this.applyLED();
+    this._applyLEDSelection();
   }
+  /**
+   * On multiple channels
+   * @param {!number[]} chs Array of activated channels
+   */
   selectChannels (chs) {
     for (let i=0; i<LED_COUNT; i++) {
       this.leds[i] = false;
@@ -88,23 +72,49 @@ class PCA9955B {
     chs.forEach((ch)=>{
       this.leds[ch] = true;
     });
-    this.applyLED();
+    this._applyLEDSelection();
+  }
+
+  /**
+   * Set output gain control value for specified channel
+   * @param {!number} ch Traget channel (0 - 15)
+   * @param {!number} iref IREFn value (0 - 255)
+   */
+  setIREF (ch, iref) {
+    if (ch < 0 || ch > 15) {
+      throw "Parameter ch should be within 0-15";
+    }
+    if (iref < 0 || iref > 255) {
+      throw "Parameter iref should be within 0-255";
+    }
+    const registerAddress = ch + 0x18;
+    this._writeRegisterSingle (registerAddress, iref);
   }
   
+  /**
+   * On all channels
+   */
   onAll () {
     for (let i=0; i<LED_COUNT; i++) {
       this.leds[i] = true;
     }
-    this.applyLED();
+    this._applyLEDSelection();
   }
   
+  /**
+   * Off all channels
+   */
   offAll () {
     for (let i=0; i<LED_COUNT; i++) {
       this.leds[i] = false;
     }
-    this.applyLED();
+    this._applyLEDSelection();
   }
   
+  /**
+   * Set PWM duty
+   * @param {!number} val 
+   */
   setDuty (val) {
     if (this.useBlankPWM) {
       this.blank.write(val);
@@ -113,6 +123,35 @@ class PCA9955B {
   
   off () {
     this.offAll();
+  }
+
+  _writeRegisterSingle (regAddr, value) {
+    this.i2c.i2cWriteSync(this.address, 2, Buffer.from([regAddr, value]));
+  }
+  _writeRegisterSeq (startAddr, values) {
+    const firstVal = startAddr | (0b01 << 7);
+    let regValues = [firstVal].concat(values); // Auto-increment + First reg address
+    this.i2c.i2cWriteSync(this.address, regValues.length, Buffer.from(regValues));
+  }
+  _writeRegisterSeqSameValues (startAddr, value, count) {
+    const firstVal = startAddr | (0b01 << 7);
+    let regValues = [firstVal];
+    for (let i=0; i<count; i++) {
+      regValues.push(value);
+    }
+    this.i2c.i2cWriteSync(this.address, regValues.length, Buffer.from(regValues));
+  }
+  _applyLEDSelection () {
+    let regValues = [];
+    for (let groupIndex = 0; groupIndex < LED_COUNT/4; groupIndex++) {
+      let regVal = 0b00000000;
+      for (let i=0; i<4; i++) {
+        let modeVal = (this.leds[groupIndex * 4 + i]) ? 0b01 : 0b00;
+        regVal = regVal | (modeVal << (i*2));
+      }
+      regValues.push(regVal);
+    }
+    this._writeRegisterSeq(REG_ADDR_LEDOUT0, regValues);
   }
 }
 module.exports = PCA9955B;

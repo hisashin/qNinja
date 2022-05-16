@@ -107,7 +107,7 @@ class ADS1219IPWR {
   }
   writeRegister (addr, value) {
     const addrVal = COMMAND_WREG | (0b11&addr) << 2;
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([addrVal, value]));
+    this.i2c.i2cWriteSync(this.address, 2, Buffer.from([addrVal, value]));
     this.sync();
   }
   selectDataRate (rate) {

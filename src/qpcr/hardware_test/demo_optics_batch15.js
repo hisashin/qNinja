@@ -2,6 +2,7 @@
 
 const USE_DUMMY = false;
 const hardwareFile = (USE_DUMMY) ? "hardware_dummy.json" : "hardware.json";
+console.log(hardwareFile)
 const NinjaQPCR = require("../ninjaqpcr.js");
 const eventBus = require("../lib/event_bus.js");
 const OpticsSession = require("../session_optics.js");
@@ -9,6 +10,7 @@ const OpticsSession = require("../session_optics.js");
 const qpcr = new NinjaQPCR(hardwareFile);
 // const hardwareConf = require(hardwareFiile);
 const Optics = qpcr.optics;
+const TARGET_TUBE = parseInt(process.argv[2]);
 
 const SINGLE_TARGET_WELL_INDEX = 7;
 let rpio = null;
@@ -23,7 +25,9 @@ eventBus.subscribe("optics.update", (topic, values)=>{
   // console.log("----");
   // console.log(values.map(v=>v.v + "\t" + v.r + "\t" + v.w).join("\n"))
   // if (measurementCount%2==1)
-  console.log(values[4])
+  console.log("%f\t%f\t%d",values[TARGET_TUBE].r, values[TARGET_TUBE].v, values[TARGET_TUBE].iref)
+  // console.log(values[4])
+  // console.log(JSON.stringify(values))
 });
 function _transformValues (values) {
   let data = [];

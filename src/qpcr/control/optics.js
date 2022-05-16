@@ -1,5 +1,10 @@
 "use strict";
 const PromiseQueue = require("../lib/promise_queue.js");
+const MAX_IREF = 191;
+const MIN_IREF = 127;
+const IREF_STEP = 32;
+
+let debugIref = 255;
 
 /* Excitation and fluorescence measurement */
 const MEASUREMENT_COUNT = 3;
@@ -11,15 +16,25 @@ class OpticsUnit  {
   }
   
   // Delay
+  /**
+   * Promise delay
+   * @param {number} ms Msec to delay
+   * @returns {Promise}
+   */
   _taskDelay (ms) {
     return new Promise ((resolve, reject)=>{
-      // console.log("Start wait %d", ms);
       setTimeout(resolve, ms);
     });
   }
-  _taskSelectLED (wellIndex, wiper) {
+  /**
+   * Promise "LEDUnit.select"
+   * @param {number} wellIndex Well index (0..15)
+   * @param {number} iref IREF of channel (sent to LED driver)
+   * @returns {Promise}
+   */
+  _taskSelectLED (wellIndex, iref) {
     return new Promise((resolve, reject)=>{
-      this.ledUnit.select(wellIndex, wiper);
+      this.ledUnit.select(wellIndex, iref);
       resolve();
     });
   }
@@ -43,25 +58,35 @@ class OpticsUnit  {
   _processMeasurements (series) {
     return series.sort((a,b)=>{return b.v-a.v})[1];
   }
-  _isSaturated (signal) {
-    return signal > 1.2;
+  /**
+   * 
+   * @param {number} signal Signal strength
+   * @param {number} iref Iref value of LED driver
+   * @returns 
+   */
+  _isSaturated (signal, iref) {
+    const threshold = 1.2 - 0.4 * (iref - MIN_IREF)/(MAX_IREF-MIN_IREF);
+    return signal > threshold;
   }
-  _ledIntensity (wiper) {
-    return 750 / (750 + 50000 * wiper / 256)
-  }
+  /**
+   * 
+   * @param {number} well Index of well
+   * @param {number} opticalChannel Index of optical channel
+   * @returns {{iref:number, int:number}}
+   */
   async _configure (well, opticalChannel) {
     // Gain & intensity config
-    /*
-    const MAX_WIPER = 2;
-    let wiper = 1;
+    
+    let iref = MAX_IREF;
     let measurement = null;
-    while (wiper < MAX_WIPER) {
+    
+    while (iref > MIN_IREF) {
       let saturated = false;
-      await this._taskSelectLED(well, wiper);
+      await this._taskSelectLED(well, iref);
       for (let i=0; i<3; i++) {
         await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
         measurement = await this._taskMeasure();
-        saturated = this._isSaturated(measurement.v)
+        saturated = this._isSaturated(measurement.v, iref)
         if (saturated) {
           break;
         }
@@ -69,23 +94,42 @@ class OpticsUnit  {
       if (!saturated) {
         break;
       }
-      wiper ++;
+      iref = iref - IREF_STEP;
     }
-    */
-    // Test with fixed wiper value
-    let wiper = 0;
-    await this._taskSelectLED(well, wiper);
-    await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
     
-    let conf = {wiper:wiper, int: this._ledIntensity(wiper)};
+    // Test with fixed intensity value 
+    
+    /*
+    iref = debugIref;//parseInt(process.argv[3]);
+    await this._taskSelectLED(well, iref);
+    await this._taskDelay(this.fluorescenceSensingUnit.excitationDuration());
+    */
+    let conf = {iref:iref,int:iref/MAX_IREF};
     return conf;
   }
 
-  calcFluo (raw, wiper) {
-    if (wiper <= 1)  return raw;
-    return raw * 1.3; // TODO
+  /**
+   * 
+   * @param {number} raw Raw measurement value
+   * @param {number} iref IREF of LED driver (0-255)
+   * @returns {number} Computed fluo value
+   */
+  _calcFluo (raw, iref) {
+    const exponent = 1 - raw * 0.6;
+    const irefConv = Math.pow(iref/MAX_IREF, exponent) * MAX_IREF;
+    return raw * MAX_IREF / irefConv
   }
+  /**
+   * @callback measureCallback
+   * @param {{v:number, i:number, r:number}}} value
+   */
   
+  /**
+   * 
+   * @param {number} well Index of well
+   * @param {number} opticalChannel Index of optical channel
+   * @param {measureCallback} callback 
+   */
   async measure (well, opticalChannel, callback) {
     await this._taskSelectPhotodiode(well, opticalChannel);
     const conf = await this._configure(well, opticalChannel);
@@ -99,10 +143,10 @@ class OpticsUnit  {
     this.fluorescenceSensingUnit.release();
     // Raw value
     let v = this._processMeasurements(series);
-    v.w = conf.wiper;
     v.i = conf.int;
+    v.iref = conf.iref;
     v.r = v.v;
-    v.v = this.calcFluo(v.r, conf.wiper);
+    v.v = this._calcFluo(v.r, conf.iref);
     callback(v);
 
   }
@@ -169,6 +213,10 @@ class Optics {
   finish () {
   }
   measureAll (callback) {
+    debugIref = debugIref - 8;
+    if (debugIref < MIN_IREF) {
+      debugIref = MAX_IREF;
+    }
     this.measureAllCallbacks.push(callback);
     if (this.isMeasuring) {
       console.log("Return. Measure all is already running.");
@@ -228,6 +276,7 @@ class Optics {
     });
     return data;
   }
+
   shutdown () {
     console.log("Optics.shutdown()");
     if (this.ledUnit && this.ledUnit.shutdown) {

@@ -499,10 +499,7 @@ class PlateOutput {
 /* 4bit GPIO MUX  + Switch */
 let debugLastMuxChannel = 0;
 let debugLastMuxSwitch = 0;
-/*
-const DEBUG_LED_CH = parseInt(process.argv[2]);
-const DEBUG_MUX_CH = parseInt(process.argv[3]);
-*/
+
 class GenericGPIOMuxWrapper {
   constructor () {
     this.mux = new MUX16ch(PIN_NUM_PD_MUX_S0, PIN_NUM_PD_MUX_S1, PIN_NUM_PD_MUX_S2, PIN_NUM_PD_MUX_S3);
@@ -512,10 +509,14 @@ class GenericGPIOMuxWrapper {
     this.channelArgv = parseInt(process.argv[3]);
   }
   start () {
-    this.openDone = true;
     rpio.open(this.muxSwitch, rpio.OUTPUT, rpio.LOW);
     this.mux.initialize();
   }
+  /**
+   * 
+   * @param {number} wellIndex Well index (0..15)
+   * @param {number} channel Optical channel (0..1)
+   */
   select (wellIndex, channel) {
     // wellIndex = 1;
     let muxSwitchVal = 0;
@@ -532,19 +533,10 @@ class GenericGPIOMuxWrapper {
         muxChannel = MUX_MAP_PHOTODIODES_S[channel][wellIndex-8];
         dir = "S";
     }
-    /*
-    if (this.selArgv >= 0) {
-      muxSwitchVal = this.selArgv;
-    }
-    if (this.channelArgv >= 0) {
-      muxChannel = this.channelArgv; 
-    }
-    */
     debugLastMuxChannel = muxChannel;
     debugLastMuxSwitch = muxSwitchVal;
     rpio.write(this.muxSwitch, muxSwitchVal);
     this.mux.selectChannel(muxChannel);
-    // console.log(this.openDone, muxChannel, muxSwitchVal, dir);
     // console.log("W %d C %d M %d S %d @%d", wellIndex, channel, muxChannel, muxSwitchVal, new Date().getTime()%10000);
   }
 }
@@ -562,20 +554,11 @@ class MUXWrapperThermistor {
     rpio.write(this.muxSwitch, 0);
   }
 }
-
-// TODO LED map (well to channel
-/*const LED_WELL_TO_CHANNEL_MAP = [
-  7,6,5,4,3,2,1,0,
-  15,14,13,12,11,10,9,8
-];*/
-
-// TODO reverse (for debug)
 const LED_WELL_TO_CHANNEL_MAP = [
   11,10,9,8,12,13,14,15,
   4,5,6,7,3,2,1,0
 ];
 // LED unit with given potentiometer & led driver (Not dependent on specific hardware implementation)
-let hoge = 0;
 class LEDUnit {
   constructor (pot, ledDriver) {
     console.log("LEDUnit.init()")
@@ -586,17 +569,30 @@ class LEDUnit {
   }
   start () {
     this.pot.initialize();
+    this.pot.setWiper(0);
     this.ledDriver.setBlankControlMode();
+    this.ledDriver.offAll();
   }
-  select (well, wiper) {
-    if (! (wiper > 0) ) {
-      wiper = 0;
+  /**
+   * 
+   * @param {number} well Well index
+   * @param {number} iref IREF value (sent to LED driver)
+   */
+  select (well, iref) {
+    if (! (iref > 0) ) {
+      iref = 255;
     }
-    this.pot.setWiper(wiper);
+    // this.pot.setWiper(wiper);
     let channel = LED_WELL_TO_CHANNEL_MAP[well];
-    this.ledDriver.selectChannel(channel);
+    this.ledDriver.setIREF (channel, iref);
+    setTimeout(()=>{
+      this.ledDriver.selectChannel(channel);
+    }, 1);
   }
   
+  /**
+   * Turn off LED driver
+   */
   off () {
     this.ledDriver.off();
   }
@@ -610,8 +606,6 @@ const LARGE_GAIN_SIG = 0;
 const SMALL_GAIN_SIG = 1;
 const LARGE_GAIN_VALUE = 10.0; // MOhm
 const SMALL_GAIN_VALUE = 1.0; // MOhm
-
-let fuga = false;
 
 const USE_GAIN_SWITCHING = false;
 const DEFAULT_IS_STRONG_SIGNAL = false; // Set "false" to use the larger gain
@@ -641,9 +635,6 @@ class FluorescenceSensingUnit {
   measurementCount () { return FLUO_MEASUREMENT_COUNT; }
   measurementAllMinInterval () { return MEASUREMENT_ALL_MIN_INTERVAL_MSEC; }
   _select (wellIndex, opticalChannel) {
-    if (wellIndex == 0 && opticalChannel == 0) {
-      fuga = !fuga;
-    }
     this.mux.select(wellIndex, opticalChannel);
     // Switch gain according to previous measurement
     this.opticalChannel = opticalChannel;
@@ -661,7 +652,6 @@ class FluorescenceSensingUnit {
         this.isStrongSignal = true;
       }
     } else {
-      // this.isStrongSignal = fuga;
       // this.isStrongSignal = false;
       this.isStrongSignal = DEFAULT_IS_STRONG_SIGNAL;
     }

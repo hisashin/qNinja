@@ -86,7 +86,7 @@ class ADS1219IPWR {
     }
     const currentVal = this.readConfigurationRegister();
     const val = (0b11110011 & currentVal) | (rateBits << 2)
-    this.i2c.i2cWriteSync(this.address, 2, new Buffer([COMMAND_WREG, val]));
+    this.i2c.i2cWriteSync(this.address, 2, Buffer.from([COMMAND_WREG, val]));
     this.i2c.sendByteSync(this.address, COMMAND_SSYNC);
   }
   

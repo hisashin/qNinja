@@ -29,15 +29,15 @@ class MCP4551T {
   setWiper (wiperVal) {
     const val0 = wiperVal >> 8 & 0x01;
     const val1 = wiperVal & 0xFF;
-    this.i2c.i2cWriteSync(this.deviceAddress, 2, new Buffer([val0, val1]));
+    this.i2c.i2cWriteSync(this.deviceAddress, 2, Buffer.from([val0, val1]));
   }
   incrementWiper () {
     const val = 0x04;
-    this.i2c.i2cWriteSync(this.deviceAddress, 1, new Buffer([val]));
+    this.i2c.i2cWriteSync(this.deviceAddress, 1, Buffer.from([val]));
   }
   decrementWiper () {
     const val = 0x08;
-    this.i2c.i2cWriteSync(this.deviceAddress, 1, new Buffer([val]));
+    this.i2c.i2cWriteSync(this.deviceAddress, 1, Buffer.from([val]));
   }
 }
 module.exports = MCP4551T;

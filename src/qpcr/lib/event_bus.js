@@ -1,6 +1,7 @@
 "use strict";
 
 const TopicManager = require("./topic_manager.js");
+let debug = [];
 class EventBus {
   constructor () {
     this.tm = new TopicManager();
@@ -25,6 +26,11 @@ class EventBus {
   publish (topic, data) {
     if (typeof(topic) != 'string') {
       throw "EventBus.subscribe topic should be <string> type.";
+    }
+    if (!debug.includes(topic)) {
+      debug.push(topic);
+      console.log(topic);
+      console.log(JSON.stringify(data))
     }
     const targets = this.tm.find(topic);
     targets.forEach((subscriber)=>{
