@@ -1,6 +1,10 @@
-# Open Source $300 Real Time PCR "Ninja qPCR"
+# Open Source $300 Real Time PCR and LAMP machine "qNinja"
 
 ![Image](https://raw.githubusercontent.com/hisashin/Ninja/master/images/photo/Ninja2.jpg)
+
+# $50 qLAMP machine "[qNinja Lite](https://github.com/hisashin/qNinjaLite)" is also available
+
+![Image](https://raw.githubusercontent.com/hisashin/NinjaLite/master/images/photo/LiteOpen.jpg)
 
 ## Reference Links
 - [COVID-19 detectors, $300 Real Time PCR & $50 LAMP (Hackaday)](https://hackaday.io/project/174501-covid-19-detectors-300-real-time-pcr-50-lamp)
@@ -15,4 +19,4 @@
 
 ## Related Projects
 - [NinjaPCR](https://github.com/hisashin/NinjaPCR)
-- [NinjaLite](https://github.com/hisashin/NinjaLite)
+- [qNinjaLite](https://github.com/hisashin/qNinjaLite)
