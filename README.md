@@ -8,11 +8,6 @@
 
 ## Reference Links
 - [qNinja portal](https://qninja.hisa.dev)
-- [COVID-19 detectors, $300 Real Time PCR & $50 LAMP (Hackaday)](https://hackaday.io/project/174501-covid-19-detectors-300-real-time-pcr-50-lamp)
-- [Project overview Youtube (English)](https://youtu.be/CTHiPsfS8_k)
-- [Project overview Youtube (Japanese)](https://www.youtube.com/watch?v=D_qZ6llMb-4)
-- [Shingo](https://www.facebook.com/hisakawa) shares latest updates on Facebook
-- [Autodesk Gellery](https://gallery.autodesk.com/projects/152314/ninja-qpcr) for 3D model
 
 ## Documents
 - [How to setup Raspberry Pi for Ninja qPCR safely](doc/setup_raspi.md)
