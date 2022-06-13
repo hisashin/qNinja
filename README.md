@@ -8,11 +8,3 @@
 
 ## Reference Links
 - [qNinja portal](https://qninja.hisa.dev)
-
-## Documents
-- [How to setup Raspberry Pi for Ninja qPCR safely](doc/setup_raspi.md)
-- [Latest component diagram](https://www.facebook.com/hisakawa/posts/10158882870144481)
-
-## Related Projects
-- [NinjaPCR](https://github.com/hisashin/NinjaPCR)
-- [qNinjaLite](https://github.com/hisashin/qNinjaLite)
