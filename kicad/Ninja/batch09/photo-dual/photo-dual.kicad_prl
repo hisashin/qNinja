@@ -62,11 +62,11 @@
       35,
       36
     ],
-    "visible_layers": "001ffff_80000001",
+    "visible_layers": "fffffff_ffffffff",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "photo-single.kicad_prl",
+    "filename": "photo-dual.kicad_prl",
     "version": 3
   },
   "project": {
