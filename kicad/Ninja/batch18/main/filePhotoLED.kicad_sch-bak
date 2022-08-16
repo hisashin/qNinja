@@ -284,7 +284,7 @@
 
 
   (no_connect (at 111.887 118.364) (uuid 36c6ecfe-0eea-4e54-b404-63c57a713dac))
-  (no_connect (at 126.492 88.011) (uuid 36c6ecfe-0eea-4e54-b404-63c57a713dad))
+  (no_connect (at 126.492 88.011) (uuid 36c6ecfe-0eea-4e54-b404-63c57a713dac))
 
   (bus_entry (at 118.745 186.69) (size 2.54 2.54)
     (stroke (width 0) (type default) (color 0 0 0 0))
