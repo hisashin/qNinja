@@ -3371,7 +3371,7 @@
       (reference "R35") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/cec5c445-cad6-4108-aedc-5c3dbc07730d"
-      (reference "R36") (unit 1) (value "47k") (footprint "Resistor_SMD:R_0603_1608Metric")
+      (reference "R36") (unit 1) (value "75k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/84c6ade4-472b-49ab-bf5d-7989d8cac908"
       (reference "R37") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")

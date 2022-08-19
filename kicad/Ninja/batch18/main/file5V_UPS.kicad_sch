@@ -1468,7 +1468,7 @@
     (property "Reference" "R36" (id 0) (at 115.062 83.6676 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "47k" (id 1) (at 115.062 85.979 0)
+    (property "Value" "75k" (id 1) (at 115.062 85.979 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Resistor_SMD:R_0603_1608Metric" (id 2) (at 118.618 84.836 90)
