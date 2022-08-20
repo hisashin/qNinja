@@ -3196,12 +3196,6 @@
     (path "/e6eeafef-ad10-4547-aac9-2a9ab1b63b09"
       (reference "J5") (unit 1) (value "Conn_01x10_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x10_P2.54mm_Vertical")
     )
-    (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614d4c2b"
-      (reference "J13") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x01_P1.27mm_Vertical")
-    )
-    (path "/00000000-0000-0000-0000-0000614a3cbb/00000000-0000-0000-0000-0000614dbf97"
-      (reference "J16") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x01_P1.27mm_Vertical")
-    )
     (path "/00000000-0000-0000-0000-0000614dadca/00000000-0000-0000-0000-0000614edb1f"
       (reference "J17") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
@@ -3212,7 +3206,7 @@
       (reference "J19") (unit 1) (value "Conn_01x08_Male") (footprint "Ninja-qPCR:ATX8")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/1c65221c-4387-40e1-bbb0-eaa0ba27fc81"
-      (reference "J23") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical")
+      (reference "J23") (unit 1) (value "Conn_01x01_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x01_P1.27mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000614a3cbb/3e3d0fd3-73c9-4c94-8329-4baf2a168d7b"
       (reference "J24") (unit 1) (value "Conn_01x02_Male") (footprint "Connector_PinHeader_1.27mm:PinHeader_1x02_P1.27mm_Vertical")
