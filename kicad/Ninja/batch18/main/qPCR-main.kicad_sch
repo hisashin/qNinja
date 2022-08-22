@@ -3405,7 +3405,7 @@
       (reference "U7") (unit 1) (value "AOZ6600") (footprint "Ninja-qPCR:AOZ6605PI-1")
     )
     (path "/00000000-0000-0000-0000-0000614a49f9/00000000-0000-0000-0000-000060c7338a"
-      (reference "U8") (unit 1) (value "TS12A12511DCNR") (footprint "Package_TO_SOT_SMD:SOT-23-8")
+      (reference "U8") (unit 1) (value "TS12A12511DCNR") (footprint "Ninja-qPCR:SOT-23-8-8.3mil")
     )
     (path "/00000000-0000-0000-0000-0000614a0ea3/9b77487b-c2a9-493a-9f81-80427c1cb2e3"
       (reference "U9") (unit 1) (value "REG_TO252-3") (footprint "Ninja-qPCR:REG_TO252-3")
@@ -3435,16 +3435,16 @@
       (reference "U18") (unit 1) (value "SN74LVC1GU04DCKR") (footprint "Ninja-qPCR:SN74LVC1GU04DBVR")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-000060b0d5a6"
-      (reference "U19") (unit 1) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
+      (reference "U19") (unit 1) (value "CD74HC4067M96") (footprint "Ninja-qPCR:SSOP-24_5.3x8.2mm_P0.65mm-0.83mil")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-000060b0d59f"
-      (reference "U19") (unit 2) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
+      (reference "U19") (unit 2) (value "CD74HC4067M96") (footprint "Ninja-qPCR:SSOP-24_5.3x8.2mm_P0.65mm-0.83mil")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-00006152c5e8"
-      (reference "U20") (unit 1) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
+      (reference "U20") (unit 1) (value "CD74HC4067M96") (footprint "Ninja-qPCR:SSOP-24_5.3x8.2mm_P0.65mm-0.83mil")
     )
     (path "/00000000-0000-0000-0000-00006154fc7e/00000000-0000-0000-0000-00006152c5c5"
-      (reference "U20") (unit 2) (value "CD74HC4067M96") (footprint "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm")
+      (reference "U20") (unit 2) (value "CD74HC4067M96") (footprint "Ninja-qPCR:SSOP-24_5.3x8.2mm_P0.65mm-0.83mil")
     )
   )
 )

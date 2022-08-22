@@ -767,7 +767,7 @@
     (property "Value" "TS12A12511DCNR" (id 1) (at 64.77 84.3026 0)
       (effects (font (size 1.524 1.524)))
     )
-    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-8" (id 2) (at 64.77 85.344 0)
+    (property "Footprint" "Ninja-qPCR:SOT-23-8-8.3mil" (id 2) (at 64.77 85.344 0)
       (effects (font (size 1.524 1.524)) hide)
     )
     (property "Datasheet" "" (id 3) (at 85.09 91.44 0)

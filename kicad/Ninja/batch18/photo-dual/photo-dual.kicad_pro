@@ -115,6 +115,7 @@
       },
       "track_widths": [
         0.0,
+        0.254,
         0.762
       ],
       "via_dimensions": [],
@@ -337,7 +338,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "photo-single.kicad_pro",
+    "filename": "photo-dual.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -369,7 +370,7 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "photo-single.net",
+      "netlist": "photo-dual.net",
       "specctra_dsn": "",
       "step": "",
       "vrml": ""
@@ -416,7 +417,7 @@
   },
   "sheets": [
     [
-      "7f44c6af-4dc5-410b-a7ea-124056f22d0e",
+      "b931dac0-b4cb-4667-b142-d57fbff21381",
       ""
     ]
   ],
