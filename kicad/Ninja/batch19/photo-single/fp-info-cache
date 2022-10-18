@@ -1,4 +1,4 @@
-22138231239243639
+22134801175243431
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -60123,25 +60123,11 @@ ADS1219IPWR
 16
 16
 Ninja-qPCR
-ALI_I2C_LCD
-
-
-0
-4
-4
-Ninja-qPCR
 ALI_USB
 
 
 0
 10
-10
-Ninja-qPCR
-ALI_microSD
-Micro SD, SMD, reverse on-board, right-angle, push-pull (https://www.hirose.com/product/en/download_file/key_name/DM3BT-DSF-PEJS/category/Drawing%20(2D)/doc_file_id/44097/?file_category_id=6&item_id=06090029900&is_series=)
-Micro SD
-0
-13
 10
 Ninja-qPCR
 AOZ2264QI-19
@@ -60353,6 +60339,13 @@ HSOP SO
 0
 20
 9
+Ninja-qPCR
+I2C_SSD1306_LCD
+
+
+0
+4
+4
 Ninja-qPCR
 IND_VLS5045EX-4R7M
 
@@ -60589,7 +60582,7 @@ SFH2200_2201_2240
 Diode SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
 diode
 0
-4
+2
 2
 Ninja-qPCR
 SFH2400
@@ -60836,13 +60829,6 @@ TS12A12511DCNR
 0
 8
 8
-Ninja-qPCR
-TSSOP-16_4.4x5mm_P0.65mm
-TSSOP, 16 Pin (JEDEC MO-153 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=MO-153), generated with kicad-footprint-generator ipc_gullwing_generator.py
-TSSOP SO
-0
-16
-16
 Ninja-qPCR
 UWX1E101MCL1GB
 

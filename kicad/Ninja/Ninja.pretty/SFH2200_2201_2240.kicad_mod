@@ -17,18 +17,6 @@
     (tstamp 5dfef82a-8485-4c7c-abcc-723721b54c46)
   )
   (fp_poly (pts
-      (xy -1.821205 1.749973)
-      (xy -2.28 1.75)
-      (xy -2.28 -1.75)
-      (xy -1.806205 -1.750027)
-    ) (layer "F.Cu") (width 0.12) (fill solid) (tstamp d1ae9cb4-0998-466f-bc71-42636b2c21f0))
-  (fp_poly (pts
-      (xy 2.285 1.45)
-      (xy 1.815 1.45)
-      (xy 1.815 -1.45)
-      (xy 2.285 -1.45)
-    ) (layer "F.Cu") (width 0) (fill solid) (tstamp e86fe666-b441-45e3-b3f9-d9b62ced4a45))
-  (fp_poly (pts
       (xy -1.965 -0.15)
       (xy -2.565 -0.15)
       (xy -2.565 -1.15)
@@ -60,7 +48,9 @@
   (fp_line (start 1.6 -0.8) (end -1.2 -0.8) (layer "F.Fab") (width 0.1) (tstamp 3bc3d0de-5db9-4c4e-8194-c3b1a2476155))
   (fp_line (start 1.6 0.8) (end 1.6 -0.8) (layer "F.Fab") (width 0.1) (tstamp 69e4cf94-de7b-4137-be9e-8040b07d447d))
   (fp_line (start -1.6 0.8) (end 1.6 0.8) (layer "F.Fab") (width 0.1) (tstamp a81eeb6d-8ab2-40d0-af23-e5af471b9ef7))
+  (pad "1" smd roundrect (at -2.045 0) (size 0.59 3.62) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.05084745763) (tstamp a7d9373a-b2b7-4679-8e18-28d2f9fa895d))
   (pad "1" smd roundrect (at -2.265 0) (size 0.9 3.1) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.2) (tstamp f55b2062-702a-4421-9ce1-b716bf19bec5))
+  (pad "2" smd roundrect (at 2.05 0) (size 0.47 2.9) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.06382978723) (tstamp 38c721b6-e78e-4171-8bf8-dd9a24431dea))
   (pad "2" smd roundrect (at 2.265 0) (size 0.9 2.6) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.2) (tstamp f6582e0a-091d-48a5-91b1-a6e76689891f))
   (model "${KICAD6_3DMODEL_DIR}/Diode_SMD.3dshapes/D_1206_3216Metric.wrl"
     (offset (xyz 0 0 0))
