@@ -2,14 +2,14 @@ name: Deploy
 
 on:
   push:
-    branches: [ production ]
+    branches: [ prod ]
 
 env:
   SERVICE_NAME: qNinja
-  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_CF_DEPLOY }}
   CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  SLACK_USERNAME: Ninja
+  SLACK_WEBHOOK: ${{ secrets.SLACK_URL }}
+  SLACK_USERNAME: qNinja
   SLACK_CHANNEL: pcr
 
 permissions:
@@ -34,7 +34,7 @@ jobs:
 
     - name: Build
       run: |
-        #npm install
+        npm install
         #gulp
 
     - name: Configure AWS credentials
