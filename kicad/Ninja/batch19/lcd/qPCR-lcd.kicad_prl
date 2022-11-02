@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 0,
+    "active_layer": 44,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_nets": [],
@@ -62,11 +62,11 @@
       35,
       36
     ],
-    "visible_layers": "00091ff_ffffffff",
+    "visible_layers": "800ffff_ffffffff",
     "zone_display_mode": 1
   },
   "meta": {
-    "filename": "qPCR-main.kicad_prl",
+    "filename": "qPCR-lcd.kicad_prl",
     "version": 3
   },
   "project": {

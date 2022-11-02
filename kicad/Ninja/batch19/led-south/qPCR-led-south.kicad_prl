@@ -62,11 +62,11 @@
       35,
       36
     ],
-    "visible_layers": "00091ff_ffffffff",
+    "visible_layers": "001ffff_80000001",
     "zone_display_mode": 1
   },
   "meta": {
-    "filename": "qPCR-main.kicad_prl",
+    "filename": "qPCR-led-south.kicad_prl",
     "version": 3
   },
   "project": {
