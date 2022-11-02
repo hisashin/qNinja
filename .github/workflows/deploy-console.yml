@@ -32,10 +32,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
-      run: |
-        npm install
-        #gulp
+    #- name: Build
+    #  run: |
+    #    npm install
+    #    gulp
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
