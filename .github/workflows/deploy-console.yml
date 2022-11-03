@@ -48,7 +48,7 @@ jobs:
     
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync console/ s3://qpcr-ninja/production/c/
+        aws s3 sync console/ s3://qpcr-ninja/production/
         aws cloudfront create-invalidation --distribution-id ${{ env.CF_DISTRIBUTION_ID }} --paths /c/*
 
     - name: Slack Notification on Success
