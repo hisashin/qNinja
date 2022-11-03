@@ -3,14 +3,14 @@ name: Deploy qNinja Console
 
 on:
   push:
-    branches: [ prod ]
+    branches: [ master ]
     paths:
       - console/**
 
 env:
   SERVICE_NAME: qNinja
   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_CF_DEPLOY }}
-  CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
+  CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID_MASTER }}
   SLACK_WEBHOOK: ${{ secrets.SLACK_URL }}
   SLACK_USERNAME: qNinja
   SLACK_CHANNEL: pcr
@@ -48,19 +48,19 @@ jobs:
     
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync console/ s3://qpcr-ninja/production/
+        aws s3 sync console/ s3://qpcr-ninja/${{ env.GITHUB_REF_NAME }}/
         aws cloudfront create-invalidation --distribution-id ${{ env.CF_DISTRIBUTION_ID }} --paths /*
 
     - name: Slack Notification on Success
       if: ${{ success() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Success
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Success (Prod)
         SLACK_COLOR: good
 
     - name: Slack Notification on Failure
       if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Failure
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Failure (Prod)
         SLACK_COLOR: danger
