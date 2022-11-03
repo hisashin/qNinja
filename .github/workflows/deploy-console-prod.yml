@@ -48,19 +48,19 @@ jobs:
     
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync console/ s3://qpcr-ninja/${{ env.GITHUB_REF_NAME }}/
+        aws s3 sync console/ s3://qpcr-ninja/${GITHUB_REF##*/}/
         aws cloudfront create-invalidation --distribution-id ${{ env.CF_DISTRIBUTION_ID }} --paths /*
 
     - name: Slack Notification on Success
       if: ${{ success() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Success (Prod)
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Success (prod)
         SLACK_COLOR: good
 
     - name: Slack Notification on Failure
       if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Failure (Prod)
+        SLACK_TITLE: ${{ env.SERVICE_NAME }} Console Deploy Failure (prod)
         SLACK_COLOR: danger
