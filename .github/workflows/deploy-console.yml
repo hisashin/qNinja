@@ -4,6 +4,8 @@ name: Deploy
 on:
   push:
     branches: [ prod ]
+    paths:
+      - console/**
 
 env:
   SERVICE_NAME: qNinja
