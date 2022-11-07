@@ -1618,6 +1618,7 @@
   (gr_circle (center 95 124.5) (end 94.6 124.5) (layer "F.Mask") (width 0.475) (fill none) (tstamp 00000000-0000-0000-0000-000060daf835))
   (gr_circle (center 167 126) (end 166.6 126) (layer "F.Mask") (width 0.475) (fill none) (tstamp 00000000-0000-0000-0000-000060daf861))
   (gr_circle (center 94 73) (end 93.6 73) (layer "F.Mask") (width 0.475) (fill none) (tstamp 00000000-0000-0000-0000-000060dbcaff))
+  (gr_line (start 183.359 128.5) (end 183.359 71.5) (layer "Dwgs.User") (width 0.1) (tstamp 8413c2dd-6145-453c-8420-680e41d2ac12))
   (gr_circle (center 172 82) (end 170.4 82) (layer "Edge.Cuts") (width 0.1) (fill none) (tstamp 00000000-0000-0000-0000-000060d662b4))
   (gr_circle (center 88.8 82) (end 87.2 82) (layer "Edge.Cuts") (width 0.1) (fill none) (tstamp 00000000-0000-0000-0000-000060d662b7))
   (gr_line (start 119.060497 74.455302) (end 118.706944 74.101749) (layer "Edge.Cuts") (width 0.1) (tstamp 00000000-0000-0000-0000-000060d6a624))
