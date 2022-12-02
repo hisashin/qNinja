@@ -2110,6 +2110,9 @@
   (gr_text "108x58mm" (at 68.256 70.52) (layer "Dwgs.User") (tstamp 68e68233-4f66-4bc4-85ea-ee71578b21dc)
     (effects (font (size 1 1) (thickness 0.15)))
   )
+  (gr_text "TODO up1.02mm" (at 185 100) (layer "Dwgs.User") (tstamp 9dd51ce4-2970-4651-8d47-a63d5fd18aa1)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
 
   (segment (start 172.686 105.78) (end 172.686 118.519) (width 3.81) (layer "F.Cu") (net 1) (tstamp 143953ad-e97a-4355-91e8-5b358b24a2c8))
   (segment (start 170.245992 88.270008) (end 171.840494 86.675506) (width 0.21082) (layer "F.Cu") (net 1) (tstamp 488ea541-2829-44c4-a29b-7cdc31533810))
