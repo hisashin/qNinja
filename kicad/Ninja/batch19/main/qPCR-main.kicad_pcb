@@ -7272,6 +7272,9 @@
   (gr_text "100x116mm" (at 78.2 29.4) (layer "Dwgs.User") (tstamp b3d89762-54ee-4dc0-8c86-98a5d2a2dca5)
     (effects (font (size 1 1) (thickness 0.15)))
   )
+  (gr_text "Q9 pad is too big for stencil. check other similar holes." (at 105.45 23.6) (layer "Dwgs.User") (tstamp ce566586-66d0-406c-81da-725af293cf30)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
 
   (segment (start 103.94 42.76) (end 103.94 40.22) (width 0.21082) (layer "F.Cu") (net 1) (tstamp 041a2d70-86b0-4665-b722-f5d40fe0f5c1))
   (segment (start 106.837505 111.165257) (end 106.860893 111.141869) (width 0.21082) (layer "F.Cu") (net 1) (tstamp 07e5d8a4-2fae-4341-978e-e4a65667a8a8))
