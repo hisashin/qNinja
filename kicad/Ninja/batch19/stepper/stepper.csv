@@ -1,0 +1,12 @@
+"Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
+1;"J2";"PinHeader_1x05_P2.54mm_Vertical";1;"Conn_01x05_Male";;;
+2;"J3";"PinHeader_1x02_P2.54mm_Vertical";1;"Conn_01x02_Male";;;
+3;"J1";"PinHeader_1x04_P2.54mm_Vertical";1;"Conn_01x04_Male";;;
+4;"C4";"C_0805_2012Metric";1;"10uF";;;
+5;"RSENB1,RSENA1";"R_0603_1608Metric";2;"R";;;
+6;"J4";"BarrelJack_Horizontal";1;"Barrel_Jack_Switch";;;
+7;"U1";"TSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm_ThermalVias";1;"MP6507GF-Z";;;
+8;"C2";"C_0603_1608Metric";1;"0.1uF";;;
+9;"C5";"C_0603_1608Metric";1;"0.1uF(Low ESR ceramic)";;;
+10;"C1";"C_0805_2012Metric";1;"4.7uF";;;
+11;"C3";"35TZV100M6.3X8";1;"100uF";;;
