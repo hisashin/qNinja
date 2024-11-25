@@ -16,7 +16,7 @@
     "js-yaml": "^3.13.1",
     "uuid": "^3.3.2",
     "winston": "^3.2.1",
-    "ws": "^6.2.1"
+    "ws": "^6.2.2"
   },
   "scripts": {
     "start": "export NODE_ENV=dev && nodemon Ninja-qPCR-server.js"
